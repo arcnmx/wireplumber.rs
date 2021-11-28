@@ -1,0 +1,47 @@
+[options]
+library = "Wp"
+version = "0.4"
+target_path = "."
+min_cfg_version = "0.4"
+work_mode = "normal"
+split_build_rs = true
+
+external_libraries = ["GLib", "GObject", "Gio"]
+generate = [
+	"Wp.ObjectFeatures",
+	"Wp.Proxy",
+	"Wp.Properties", "Wp.PropertiesItem",
+	"Wp.ConstraintType", "Wp.ConstraintVerb",
+	"Wp.ObjectInterest",
+	"Wp.PipewireObject",
+	"Wp.GlobalProxy",
+	"Wp.Plugin", "Wp.ComponentLoader", "Wp.Core",
+	"Wp.SessionItem", "Wp.SessionItemFeatures",
+	"Wp.SiAcquisition", "Wp.SiLink", "Wp.SiLinkable", "Wp.SiAdapter", "Wp.SiFactory",
+	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder", "Wp.SpaPodParser",
+	"Wp.State", "Wp.TransitionStep",
+	"Wp.ProxyFeatures",
+	"Wp.PluginFeatures",
+	"Wp.NodeFeatures",
+	"Wp.Object",
+	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Node", "Wp.Link", "Wp.Metadata", "Wp.Port",
+	"Wp.ObjectManager",
+	"Wp.Direction",
+	"Wp.NodeState",
+	"Wp.SpaPod",
+	"Wp.ImplEndpoint",
+	"Wp.Transition", "Wp.FeatureActivationTransition",
+	"Wp.SiEndpoint", "Wp.ImplMetadata",
+	"Wp.ImplModule", "Wp.ImplNode",
+	"Wp.InitFlags", "Wp.InterestMatch", "Wp.InterestMatchFlags",
+	"Wp.Iterator", #"Wp.IteratorMethods",
+	"Wp.LibraryErrorEnum",
+	"Wp.LookupDirs",
+	"Wp.MetadataFeatures",
+	#"Wp.PipewireObject", ""
+]
+
+manual = [
+	#"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
+	#"GLib.Error", "GLib.Variant",
+]

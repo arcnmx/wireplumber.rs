@@ -1,0 +1,32 @@
+[package]
+name = "wireplumber"
+version = "0.0.1"
+authors = ["arcnmx"]
+build = "build.rs"
+edition = "2018"
+
+description = "Wireplumber GObject bindings"
+keywords = ["pipewire", "wireplumber", "gobject"]
+
+documentation = "http://docs.rs/wireplumber/"
+repository = "https://github.com/arcnmx/wireplumber.rs"
+readme = "README.md"
+license = "MIT"
+
+[badges]
+maintenance = { status = "passively-maintained" }
+
+[dependencies]
+libc = "*"
+glib = "*"
+gio = "*"
+pipewire = "*"
+libspa = "*"
+ffi = { path = "sys", package = "wireplumber-sys" }
+bitflags = "*"
+
+[features]
+default = []
+
+[workspace]
+members = ["sys"]

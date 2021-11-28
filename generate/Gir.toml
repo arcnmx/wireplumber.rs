@@ -1,0 +1,9 @@
+[options]
+library = "Wp"
+version = "0.4"
+target_path = "."
+min_cfg_version = "0.4"
+work_mode = "sys"
+split_build_rs = true
+
+external_libraries = ["GLib", "GObject", "Gio"]

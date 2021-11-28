@@ -1,0 +1,41 @@
+[package]
+name = "wireplumber-sys"
+version = "0.0.1"
+edition = "2021"
+build = "../generate/build.rs"
+
+[package.metadata.system-deps.wireplumber_0_4]
+name = "wireplumber-0.4"
+version = "0.4"
+
+[package.metadata.system-deps.wireplumber_0_4.v0_4_2]
+version = "0.4.2"
+
+[package.metadata.system-deps.wireplumber_0_4.v0_4_3]
+version = "0.4.3"
+
+[package.metadata.docs.rs]
+features = ["dox"]
+
+[lib]
+name = "wp_sys"
+
+[dependencies]
+libc = "0.2"
+glib = { version = "*", package = "glib-sys" }
+gobject = { version = "*", package = "gobject-sys" }
+gio = { version = "*", package = "gio-sys" }
+pipewire = { version = "*", package = "pipewire-sys" }
+libspa = { version = "*", package = "libspa-sys" }
+
+[build-dependencies]
+system-deps = "6"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]
+v0_4_2 = []
+v0_4_3 = ["v0_4_2"]
+dox = []
