@@ -22,6 +22,7 @@
       -i '///_:type[not(@name) and @c:type="pw_permission"]' -t attr -n name -v guint64 \
       -u '///_:constant[@c:type="WP_LOG_LEVEL_TRACE"]/@value' -v $((1<<8)) \
       -u '///_:constant[@c:type="WP_PIPEWIRE_OBJECT_FEATURES_ALL"]/@value' -v $((992|17)) \
+      -i '///_:record[@c:type="WpIteratorMethods"]' -t attr -n glib:get-type -v wp_iterator_methods_get_type \
       -u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
       -i '/_:repository/_:namespace' -t elem -n package \
       "$wireplumber/$girName" > $out/$girName

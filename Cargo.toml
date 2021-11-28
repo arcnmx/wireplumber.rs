@@ -22,7 +22,7 @@ glib = "*"
 gio = "*"
 pipewire = "*"
 libspa = "*"
-ffi = { path = "sys", package = "wireplumber-sys" }
+ffi = { path = "sys", package = "wireplumber-sys", features = ["v0_4_3"] }
 bitflags = "*"
 
 [features]
