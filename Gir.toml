@@ -17,24 +17,22 @@ generate = [
 	"Wp.GlobalProxy",
 	"Wp.Plugin", "Wp.ComponentLoader", "Wp.Core",
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
-	"Wp.SiAcquisition", "Wp.SiLink", "Wp.SiLinkable", "Wp.SiAdapter", "Wp.SiFactory",
-	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder", "Wp.SpaPodParser",
+	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
+	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder",
 	"Wp.State", "Wp.TransitionStep",
 	"Wp.ProxyFeatures",
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
 	"Wp.Object",
-	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Node", "Wp.Link", "Wp.Metadata", "Wp.Port",
+	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Node", "Wp.Link", "Wp.Port",
 	"Wp.ObjectManager",
 	"Wp.Direction",
 	"Wp.NodeState",
-	"Wp.SpaPod",
 	"Wp.ImplEndpoint",
-	"Wp.Transition", "Wp.FeatureActivationTransition",
+	"Wp.FeatureActivationTransition",
 	"Wp.SiEndpoint", "Wp.ImplMetadata",
 	"Wp.ImplModule", "Wp.ImplNode",
 	"Wp.InitFlags", "Wp.InterestMatch", "Wp.InterestMatchFlags",
-	"Wp.Iterator", "Wp.IteratorMethods",
 	"Wp.LibraryErrorEnum",
 	"Wp.LookupDirs",
 	"Wp.MetadataFeatures",
@@ -42,7 +40,57 @@ generate = [
 
 manual = [
 	"Wp.SpaType", "Wp.SpaIdTable", "Wp.SpaIdValue",
+	"Wp.IteratorMethods",
 	"GLib.Error", "GLib.Variant", "GLib.MainContext", "GLib.Source", "GLib.SourceFunc", "GLib.DestroyNotify", "GLib.Quark", "GLib.LogLevelFlags", "GLib.LogField", "GLib.LogWriterOutput",
 	"GObject.Closure", "GObject.Value", "GObject.Object",
-	#"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
+	"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
 ]
+
+[[object]]
+name = "Wp.SiAcquisition"
+status = "generate"
+	[[object.function]]
+	name = "acquire"
+	ignore = true
+
+[[object]]
+name = "Wp.SiAdapter"
+status = "generate"
+	[[object.function]]
+	name = "set_ports_format"
+	ignore = true
+
+[[object]]
+name = "Wp.Metadata"
+status = "generate"
+	[[object.function]]
+	name = "find"
+	ignore = true
+
+[[object]]
+name = "Wp.Transition"
+status = "generate"
+	[[object.function]]
+	name = "return_error"
+	ignore = true
+
+[[object]]
+name = "Wp.SpaPod"
+status = "generate"
+	[[object.function]]
+	name = "get_spa_type"
+	ignore = true
+
+[[object]]
+name = "Wp.SpaPodParser"
+status = "generate"
+	[[object.function]]
+	name = "new_object"
+	ignore = true
+
+[[object]]
+name = "Wp.Iterator"
+status = "generate"
+	[[object.function]]
+	name = "new"
+	ignore = true
