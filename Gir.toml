@@ -35,7 +35,7 @@ generate = [
 	"Wp.InitFlags", "Wp.InterestMatch", "Wp.InterestMatchFlags",
 	"Wp.LibraryErrorEnum",
 	"Wp.LookupDirs",
-	"Wp.MetadataFeatures",
+	"Wp.MetadataFeatures", "Wp.Metadata",
 ]
 
 manual = [
@@ -58,13 +58,6 @@ name = "Wp.SiAdapter"
 status = "generate"
 	[[object.function]]
 	name = "set_ports_format"
-	ignore = true
-
-[[object]]
-name = "Wp.Metadata"
-status = "generate"
-	[[object.function]]
-	name = "find"
 	ignore = true
 
 [[object]]

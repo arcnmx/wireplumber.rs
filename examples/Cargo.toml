@@ -1,0 +1,14 @@
+[package]
+name = "wp-examples"
+version = "0.0.0"
+authors = ["arcnmx"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3"
+wireplumber = { version = "0.1.0", path = "../" }
+pipewire-sys = "0.4"
+glib = { version = "0.14" }
+ctrlc = { version = "3.0", features = ["termination"] }
+serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"
