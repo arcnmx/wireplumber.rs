@@ -1,7 +1,7 @@
 [package]
 name = "wireplumber-sys"
-version = "0.0.1"
-edition = "2021"
+version = "0.1.0"
+edition = "2018"
 build = "../generate/build.rs"
 
 [package.metadata.system-deps.wireplumber_0_4]
@@ -22,11 +22,11 @@ name = "wp_sys"
 
 [dependencies]
 libc = "0.2"
-glib = { version = "*", package = "glib-sys" }
-gobject = { version = "*", package = "gobject-sys" }
-gio = { version = "*", package = "gio-sys" }
-pipewire = { version = "*", package = "pipewire-sys" }
-libspa = { version = "*", package = "libspa-sys" }
+glib = { version = "0.14", package = "glib-sys" }
+gobject = { version = "0.14", package = "gobject-sys" }
+gio = { version = "0.14", package = "gio-sys" }
+pipewire = { version = "0.4", package = "pipewire-sys" }
+libspa = { version = "0.4", package = "libspa-sys" }
 
 [build-dependencies]
 system-deps = "6"
