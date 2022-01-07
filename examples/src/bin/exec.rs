@@ -1,3 +1,7 @@
+//! # wpexec example
+//!
+//! Based on [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c).
+
 use anyhow::Context;
 use glib::Variant;
 use anyhow::{Result, format_err};
@@ -13,6 +17,7 @@ async fn main_async(core: &Core, exec_script: &str, args: Option<&Variant>) -> R
 		.context("failed to load the lua-scripting module")?;
 	core.load_component(exec_script, "script/lua", args)
 		.context("failed to load the lua script")?;
+
 	core.connect_future().await?;
 
 	let p = Plugin::find(&core, "lua-scripting").unwrap();
@@ -22,9 +27,6 @@ async fn main_async(core: &Core, exec_script: &str, args: Option<&Variant>) -> R
 }
 
 fn main() -> Result<()> {
-	// roughly based on: https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c
-	// https://coaxion.net/blog/2018/04/glib-gio-async-operations-and-rust-futures-async-await/#futures-glib for reference
-
 	let mut argv = env::args().skip(1);
 	let exec_script = argv.next().unwrap_or_else(||
 		concat!(env!("CARGO_MANIFEST_DIR"), "/script.lua").into()

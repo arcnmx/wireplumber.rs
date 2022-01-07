@@ -59,6 +59,7 @@ in {
         (cargo "test-sys" "test -p wireplumber-sys")
         (cargo "build" "build")
         (cargo "test" "test")
+        (cargo "workspace" "build --workspace")
       ];
     };
   };
