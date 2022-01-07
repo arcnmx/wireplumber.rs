@@ -15,7 +15,7 @@ generate = [
 	"Wp.ObjectInterest",
 	"Wp.PipewireObject",
 	"Wp.GlobalProxy",
-	"Wp.Plugin", "Wp.ComponentLoader", "Wp.Core",
+	"Wp.Plugin", "Wp.ComponentLoader",
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
 	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
 	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder",
@@ -45,6 +45,13 @@ manual = [
 	"GObject.Closure", "GObject.Value", "GObject.Object",
 	"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
 ]
+
+[[object]]
+name = "Wp.Core"
+status = "generate"
+	[[object.function]]
+	name = "clone"
+	ignore = true
 
 [[object]]
 name = "Wp.SiAcquisition"

@@ -33,13 +33,6 @@ impl Core {
         }
     }
 
-    #[doc(alias = "wp_core_clone")]
-    pub fn clone(&self) -> Option<Core> {
-        unsafe {
-            from_glib_full(ffi::wp_core_clone(self.to_glib_none().0))
-        }
-    }
-
     #[doc(alias = "wp_core_connect")]
     pub fn connect(&self) -> bool {
         unsafe {

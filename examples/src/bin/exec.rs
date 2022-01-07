@@ -1,37 +1,20 @@
 use anyhow::Context;
-use futures::channel::oneshot;
-use glib::g_warning;
-use wireplumber::Plugin;
-use wireplumber::PluginFeatures;
-use wireplumber::prelude::*;
-use pipewire_sys as pw;
-use glib::{MainLoop, Variant};
+use glib::Variant;
 use anyhow::{Result, format_err};
 use std::cell::RefCell;
 use std::rc::Rc;
 use std::env;
 
-use wireplumber::{Core, Properties};
+use wireplumber::prelude::*;
+use wireplumber::{Core, Properties, Plugin, PluginFeatures, Log, pw};
 
-async fn load_script(core: &Core, exec_script: &str, args: Option<&Variant>) -> Result<()> {
+async fn main_async(core: &Core, exec_script: &str, args: Option<&Variant>) -> Result<()> {
 	core.load_component("libwireplumber-module-lua-scripting", "module", None)
 		.context("failed to load the lua-scripting module")?;
 	core.load_component(exec_script, "script/lua", args)
 		.context("failed to load the lua script")?;
-	let (tx, rx) = oneshot::channel();
-	let tx = Rc::new(RefCell::new(Some(tx)));
-	core.connect_connected(move |_core| {
-		match tx.borrow_mut().take() {
-			Some(tx) => tx.send(()).unwrap_or_else(|e| {
-				g_warning!("wpexec", "Failed to signal connected: {:?}", e)
-			}),
-			None => (),
-		}
-	});
-	if !core.connect() {
-		return Err(format_err!("failed to connect to pipewire"))
-	}
-	rx.await?;
+	core.connect_future().await?;
+
 	let p = Plugin::find(&core, "lua-scripting").unwrap();
 	p.activate_future(PluginFeatures::ENABLED.bits()).await
 		.context("failed to activate lua-scripting module")?;
@@ -51,50 +34,29 @@ fn main() -> Result<()> {
 		Some(args) => todo!(),
 	};
 
-	env::set_var("WIREPLUMBER_DEBUG", "3");
-	wireplumber::init(wireplumber::InitFlags::ALL);
-	/*unsafe {
-		wp::wp_log_set_level(std::ffi::CStr::from_bytes_with_nul(b"5\0").unwrap().as_ptr());
-	}*/
+	Log::set_level("3");
+	Core::init(Default::default());
 
 	let main_res = Rc::new(RefCell::new(None));
 
-	let mainloop = MainLoop::new(None, false);
-	let context = mainloop.context();
-	context.push_thread_default();
-
-	ctrlc::set_handler({
-		let mainloop = mainloop.clone();
-		move || mainloop.quit()
-	}).unwrap();
-
-	// TODO: prop constructors? or just use the non-sys pipewire crate?
-	let pw_key_app_name = std::ffi::CStr::from_bytes_with_nul(pw::PW_KEY_APP_NAME).unwrap();
 	let props = Properties::new_empty();
-	props.set(pw_key_app_name.to_str().unwrap(), Some("wpexec"));
+	props.set(pw::PW_KEY_APP_NAME, Some("wpexec"));
 
-	let core = Rc::new(Core::new(Some(&context), Some(&props)));
-	let _disconnect_handler = core.connect_disconnected({
-		let mainloop = mainloop.clone();
-		move |_core| mainloop.quit()
-	});
+	Core::run(Some(&props), |context, mainloop, core| {
+		ctrlc::set_handler({
+			let mainloop = mainloop.clone();
+			move || mainloop.quit()
+		}).unwrap();
 
-	context.spawn_local({
-		let core = core.clone();
-		let mainloop = mainloop.clone();
 		let main_res = main_res.clone();
-		async move {
-			let res = load_script(&core, &exec_script, args).await;
+		context.spawn_local(async move {
+			let res = main_async(&core, &exec_script, args).await;
 			if res.is_err() {
 				mainloop.quit();
 			}
 			*main_res.borrow_mut() = Some(res)
-		}
+		});
 	});
-	mainloop.run();
-	context.pop_thread_default();
-
-	core.disconnect();
 
 	let main_res = main_res.borrow_mut().take();
 	match main_res {

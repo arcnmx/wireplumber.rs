@@ -5,13 +5,17 @@ pub use auto::*;
 pub use ffi;
 
 pub type SpaType = i32;
-pub type SpaIdTable = *const ();
+pub type SpaIdTable = glib::ffi::gconstpointer;
 pub type SpaIdValue = glib::ffi::gconstpointer;
 
+pub mod pw;
 pub mod prelude;
 
 mod core;
 pub use crate::core::*;
+
+mod log;
+pub use crate::log::*;
 
 mod proxy;
 pub use proxy::*;
@@ -36,10 +40,3 @@ pub use si::*;
 
 mod interest;
 pub use interest::*;
-
-#[doc(alias = "wp_init")]
-pub fn init(flags: InitFlags) {
-	unsafe {
-		ffi::wp_init(flags.bits())
-	}
-}

@@ -62,3 +62,9 @@ impl Properties {
 		ffi::wp_properties_update_from_dict(self.to_glib_none().0, dict) as usize
 	}
 }
+
+impl Default for Properties {
+	fn default() -> Self {
+		Self::new_empty()
+	}
+}
