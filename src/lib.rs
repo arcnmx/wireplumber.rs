@@ -11,6 +11,8 @@ pub type SpaIdValue = glib::ffi::gconstpointer;
 pub mod pw;
 pub mod prelude;
 
+mod error;
+
 mod core;
 pub use crate::core::*;
 
