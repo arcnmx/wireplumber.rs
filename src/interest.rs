@@ -1,6 +1,7 @@
 use crate::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch, Properties};
 use glib::{translate::IntoGlib, IsA, Object, Variant, ToVariant, ObjectExt, StaticType};
 use std::str::FromStr;
+use std::convert::TryFrom;
 
 impl ObjectInterest {
 	/*#[doc(alias = "wp_object_interest_matches")]
@@ -21,54 +22,55 @@ impl ObjectInterest {
 	}
 }
 
+#[derive(Clone, Debug)]
 pub struct Constraint {
-	pub ty: ConstraintType,
+	pub type_: ConstraintType,
 	pub subject: String,
 	pub verb: ConstraintVerb,
 	pub value: Option<Variant>,
 }
 
 impl Constraint {
-	pub fn has<S: Into<String>>(ty: ConstraintType, subject: S, present: bool) -> Self {
+	pub fn has<S: Into<String>>(type_: ConstraintType, subject: S, present: bool) -> Self {
 		Self {
-			ty,
+			type_,
 			subject: subject.into(),
 			verb: if present { ConstraintVerb::IsPresent } else { ConstraintVerb::IsAbsent },
 			value: None,
 		}
 	}
 
-	pub fn compare<S: Into<String>>(ty: ConstraintType, subject: S, value: Variant, equal: bool) -> Self {
+	pub fn compare<S: Into<String>>(type_: ConstraintType, subject: S, value: Variant, equal: bool) -> Self {
 		Self {
-			ty,
+			type_,
 			subject: subject.into(),
 			verb: if equal { ConstraintVerb::Equals } else { ConstraintVerb::NotEquals },
 			value: Some(value),
 		}
 	}
 
-	pub fn matches<S: Into<String>>(ty: ConstraintType, subject: S, pattern: &str) -> Self {
+	pub fn matches<S: Into<String>>(type_: ConstraintType, subject: S, pattern: &str) -> Self {
 		Self {
-			ty,
+			type_,
 			subject: subject.into(),
 			verb: ConstraintVerb::Matches,
 			value: Some(pattern.to_variant()),
 		}
 	}
 
-	pub fn in_range<S: Into<String>, V: ToVariant>(ty: ConstraintType, subject: S, low: V, high: V) -> Self {
+	pub fn in_range<S: Into<String>, V: ToVariant>(type_: ConstraintType, subject: S, low: V, high: V) -> Self {
 		Self {
-			ty,
+			type_,
 			subject: subject.into(),
 			verb: ConstraintVerb::InRange,
 			value: Some((low.to_variant(), high.to_variant()).to_variant()),
 		}
 	}
 
-	pub fn in_list<S: Into<String>, V: ToVariant, I: Iterator<Item=V>>(ty: ConstraintType, subject: S, one_of: I) -> Self {
+	pub fn in_list<S: Into<String>, V: ToVariant, I: Iterator<Item=V>>(type_: ConstraintType, subject: S, one_of: I) -> Self {
 		let values: Vec<_> = one_of.map(|v| v.to_variant()).collect();
 		Self {
-			ty,
+			type_,
 			subject: subject.into(),
 			verb: ConstraintVerb::InRange,
 			value: Some(Variant::from_tuple(&values)),
@@ -76,7 +78,7 @@ impl Constraint {
 	}
 
 	pub fn add_to(&self, interest: &ObjectInterest) {
-		interest.add_constraint(self.ty, &self.subject, self.verb, self.value.as_ref())
+		interest.add_constraint(self.type_, &self.subject, self.verb, self.value.as_ref())
 	}
 }
 
@@ -93,6 +95,23 @@ impl FromStr for ConstraintVerb {
 			"is-present" | "+" => ConstraintVerb::IsPresent,
 			"is-absent" | "-" => ConstraintVerb::IsAbsent,
 			_ => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, format!("unknown constraint verb {}", s))),
+		})
+	}
+}
+
+impl TryFrom<char> for ConstraintVerb {
+	type Error = <Self as FromStr>::Err;
+
+	fn try_from(value: char) -> Result<Self, Self::Error> {
+		Ok(match value {
+			'=' => ConstraintVerb::Equals,
+			'!' => ConstraintVerb::NotEquals,
+			'c' => ConstraintVerb::InList,
+			'~' => ConstraintVerb::InRange,
+			'#' => ConstraintVerb::Matches,
+			'+' => ConstraintVerb::IsPresent,
+			'-' => ConstraintVerb::IsAbsent,
+			_ => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, format!("unknown constraint verb {}", value))),
 		})
 	}
 }
@@ -127,6 +146,12 @@ impl ConstraintVerb {
 			ConstraintVerb::__Unknown(_) => panic!("unknown constraint verb"),
 			_ => self.into_glib() as u8 as char,
 		}
+	}
+}
+
+impl Into<char> for ConstraintVerb {
+	fn into(self) -> char {
+		self.symbol()
 	}
 }
 

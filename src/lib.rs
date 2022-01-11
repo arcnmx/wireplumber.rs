@@ -19,7 +19,7 @@ mod core;
 pub use crate::core::*;
 
 mod log;
-pub use crate::log::*;
+pub use log::*;
 
 mod proxy;
 pub use proxy::*;
