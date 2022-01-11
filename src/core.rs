@@ -78,31 +78,22 @@ impl Core {
 		}
 	}
 
-	#[cfg(any(feature = "futures-channel", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "futures")))]
-	pub async fn connect_future(&self) -> Result<(), glib::BoolError> {
-		use glib::g_warning;
-		use std::cell::RefCell;
+	#[cfg(any(feature = "enable-futures", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "enable-futures")))]
+	pub fn connect_future(&self) -> impl std::future::Future<Output=Result<(), glib::Error>> {
+		use futures_util::{TryFutureExt, future};
+		use glib_signal::ObjectSignalExt;
+		use glib::Error;
+		use crate::LibraryErrorEnum;
 
-		// TODO: a more generic async signal stream to use here
-		let (tx, rx) = futures_channel::oneshot::channel();
-		let tx = Rc::new(RefCell::new(Some(tx)));
-		self.connect_connected(move |_core| {
-			match tx.borrow_mut().take() {
-				Some(tx) => tx.send(()).unwrap_or_else(|e| {
-					g_warning!("wpexec", "Failed to signal connected: {:?}", e)
-				}),
-				None => (),
-			}
-		});
+		let connect = self.signal_stream(Self::SIGNAL_CONNECTED);
 
-		if !self.connect() {
-			Err(glib::bool_error!("failed to connect to pipewire"))
+		let res = if self.connect() {
+			Ok(connect.once())
 		} else {
-			rx.await
-				.map_err(|e| glib::bool_error!("failed to connect to pipewire: {:?}", e))?;
-			Ok(())
-		}
+			Err(Error::new(LibraryErrorEnum::OperationFailed, "failed to connect to pipewire"))
+		};
+		future::ready(res).and_then(|connect| connect.map_err(From::from).map_ok(drop))
 	}
 
 	pub fn run<F: FnOnce(&MainContext, MainLoop, Rc<Core>)>(props: Option<&Properties>, setup: F) {
