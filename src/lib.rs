@@ -1,3 +1,5 @@
+#![cfg_attr(feature = "dox", feature(doc_cfg))]
+
 #[allow(unused_imports)]
 mod auto;
 
