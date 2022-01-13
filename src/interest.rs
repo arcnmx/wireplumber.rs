@@ -68,12 +68,12 @@ impl Constraint {
 	}
 
 	pub fn in_list<S: Into<String>, V: ToVariant, I: Iterator<Item=V>>(type_: ConstraintType, subject: S, one_of: I) -> Self {
-		let values: Vec<_> = one_of.map(|v| v.to_variant()).collect();
+		let values = one_of.map(|v| v.to_variant());
 		Self {
 			type_,
 			subject: subject.into(),
 			verb: ConstraintVerb::InRange,
-			value: Some(Variant::from_tuple(&values)),
+			value: Some(Variant::tuple_from_iter(values)),
 		}
 	}
 

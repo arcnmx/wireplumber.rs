@@ -99,18 +99,19 @@ impl Core {
 	pub fn run<F: FnOnce(&MainContext, MainLoop, Rc<Core>)>(props: Option<&Properties>, setup: F) {
 		let mainloop = MainLoop::new(None, false);
 		let context = mainloop.context();
-		context.push_thread_default();
+		let core = context.with_thread_default(|| {
+			let core = Rc::new(Core::new(Some(&context), props));
+			let _disconnect_handler = core.connect_disconnected({
+				let mainloop = mainloop.clone();
+				move |_core| mainloop.quit()
+			});
 
-		let core = Rc::new(Core::new(Some(&context), props));
-		let _disconnect_handler = core.connect_disconnected({
-			let mainloop = mainloop.clone();
-			move |_core| mainloop.quit()
-		});
+			setup(&context, mainloop.clone(), core.clone());
 
-		setup(&context, mainloop.clone(), core.clone());
+			mainloop.run();
 
-		mainloop.run();
-		context.pop_thread_default();
+			core
+		}).unwrap();
 
 		core.disconnect();
 	}
