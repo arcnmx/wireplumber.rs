@@ -205,6 +205,15 @@ impl Core {
         }))
     }
 
+    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    #[doc(alias = "wp_core_sync_closure")]
+    pub fn sync_closure<P: IsA<gio::Cancellable>>(&self, cancellable: Option<&P>, closure: &glib::Closure) -> bool {
+        unsafe {
+            from_glib(ffi::wp_core_sync_closure(self.to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.to_glib_none().0))
+        }
+    }
+
     #[doc(alias = "wp_core_timeout_add")]
     pub fn timeout_add<P: Fn() -> bool + 'static>(&self, timeout_ms: u32, function: P) -> glib::Source {
         let function_data: Box_<P> = Box_::new(function);

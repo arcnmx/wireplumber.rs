@@ -9,6 +9,10 @@
 use pipewire::*;
 use libspa::*;
 
+use glib_sys as glib;
+use gobject_sys as gobject;
+use gio_sys as gio;
+
 #[allow(unused_imports)]
 use libc::{c_int, c_char, c_uchar, c_float, c_uint, c_double,
     c_short, c_ushort, c_long, c_ulong,
@@ -196,6 +200,20 @@ pub struct WpEndpointClass {
 impl ::std::fmt::Debug for WpEndpointClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpEndpointClass @ {:p}", self))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct WpFactoryClass {
+    pub parent_class: WpGlobalProxyClass,
+}
+
+impl ::std::fmt::Debug for WpFactoryClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpFactoryClass @ {:p}", self))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -800,6 +818,16 @@ impl ::std::fmt::Debug for WpEndpoint {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpEndpoint @ {:p}", self))
          .field("parent_instance", &self.parent_instance)
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpFactory(c_void);
+
+impl ::std::fmt::Debug for WpFactory {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpFactory @ {:p}", self))
          .finish()
     }
 }
@@ -1435,6 +1463,9 @@ extern "C" {
     pub fn wp_core_is_connected(self_: *mut WpCore) -> gboolean;
     pub fn wp_core_load_component(self_: *mut WpCore, component: *const c_char, type_: *const c_char, args: *mut glib::GVariant, error: *mut *mut glib::GError) -> gboolean;
     pub fn wp_core_sync(self_: *mut WpCore, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer) -> gboolean;
+    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    pub fn wp_core_sync_closure(self_: *mut WpCore, cancellable: *mut gio::GCancellable, closure: *mut gobject::GClosure) -> gboolean;
     pub fn wp_core_sync_finish(self_: *mut WpCore, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
     pub fn wp_core_timeout_add(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     pub fn wp_core_timeout_add_closure(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, closure: *mut gobject::GClosure);
@@ -1453,6 +1484,11 @@ extern "C" {
     pub fn wp_endpoint_get_direction(self_: *mut WpEndpoint) -> WpDirection;
     pub fn wp_endpoint_get_media_class(self_: *mut WpEndpoint) -> *const c_char;
     pub fn wp_endpoint_get_name(self_: *mut WpEndpoint) -> *const c_char;
+
+    //=========================================================================
+    // WpFactory
+    //=========================================================================
+    pub fn wp_factory_get_type() -> GType;
 
     //=========================================================================
     // WpFeatureActivationTransition
@@ -1536,6 +1572,9 @@ extern "C" {
     // WpObject
     //=========================================================================
     pub fn wp_object_get_type() -> GType;
+    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    pub fn wp_object_abort_activation(self_: *mut WpObject, msg: *const c_char);
     pub fn wp_object_activate(self_: *mut WpObject, features: WpObjectFeatures, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
     pub fn wp_object_activate_closure(self_: *mut WpObject, features: WpObjectFeatures, cancellable: *mut gio::GCancellable, closure: *mut gobject::GClosure);
     pub fn wp_object_activate_finish(self_: *mut WpObject, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
@@ -1583,7 +1622,6 @@ extern "C" {
     pub fn wp_proxy_get_interface_type(self_: *mut WpProxy, version: *mut u32) -> *const c_char;
     pub fn wp_proxy_get_pw_proxy(self_: *mut WpProxy) -> *mut pw_proxy;
     pub fn wp_proxy_set_pw_proxy(self_: *mut WpProxy, proxy: *mut pw_proxy);
-    pub fn wp_proxy_watch_bind_error(proxy: *mut WpProxy, transition: *mut WpTransition);
 
     //=========================================================================
     // WpSessionItem

@@ -114,6 +114,7 @@ impl Results {
 }
 
 #[test]
+#[cfg(feature = "v0_4_6")]
 fn cross_validate_constants_with_c() {
     let mut c_constants: Vec<(String, String)> = Vec::new();
 
@@ -154,6 +155,7 @@ fn cross_validate_constants_with_c() {
 }
 
 #[test]
+#[cfg(feature = "v0_4_6")]
 fn cross_validate_layout_with_c() {
     let mut c_layouts = Vec::new();
 
@@ -225,6 +227,7 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
     ("WpDirection", Layout {size: size_of::<WpDirection>(), alignment: align_of::<WpDirection>()}),
     ("WpEndpoint", Layout {size: size_of::<WpEndpoint>(), alignment: align_of::<WpEndpoint>()}),
     ("WpEndpointClass", Layout {size: size_of::<WpEndpointClass>(), alignment: align_of::<WpEndpointClass>()}),
+    ("WpFactoryClass", Layout {size: size_of::<WpFactoryClass>(), alignment: align_of::<WpFactoryClass>()}),
     ("WpFeatureActivationTransitionClass", Layout {size: size_of::<WpFeatureActivationTransitionClass>(), alignment: align_of::<WpFeatureActivationTransitionClass>()}),
     ("WpGlobalProxy", Layout {size: size_of::<WpGlobalProxy>(), alignment: align_of::<WpGlobalProxy>()}),
     ("WpGlobalProxyClass", Layout {size: size_of::<WpGlobalProxyClass>(), alignment: align_of::<WpGlobalProxyClass>()}),

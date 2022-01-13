@@ -4,7 +4,6 @@
 // DO NOT EDIT
 
 use crate::Object;
-use crate::Transition;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -41,9 +40,6 @@ pub trait ProxyExt: 'static {
 
     //#[doc(alias = "wp_proxy_set_pw_proxy")]
     //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Fundamental: Pointer>);
-
-    #[doc(alias = "wp_proxy_watch_bind_error")]
-    fn watch_bind_error<P: IsA<Transition>>(&self, transition: &P);
 
     #[doc(alias = "bound")]
     fn connect_bound<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -87,12 +83,6 @@ impl<O: IsA<Proxy>> ProxyExt for O {
     //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Fundamental: Pointer>) {
     //    unsafe { TODO: call ffi:wp_proxy_set_pw_proxy() }
     //}
-
-    fn watch_bind_error<P: IsA<Transition>>(&self, transition: &P) {
-        unsafe {
-            ffi::wp_proxy_watch_bind_error(self.as_ref().to_glib_none().0, transition.as_ref().to_glib_none().0);
-        }
-    }
 
     fn connect_bound<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn bound_trampoline<P: IsA<Proxy>, F: Fn(&P, u32) + 'static>(this: *mut ffi::WpProxy, object: libc::c_uint, f: glib::ffi::gpointer) {

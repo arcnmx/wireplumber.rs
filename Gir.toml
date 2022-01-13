@@ -24,7 +24,7 @@ generate = [
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
 	"Wp.Object",
-	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Node", "Wp.Link", "Wp.Port",
+	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Node", "Wp.Link", "Wp.Port",
 	"Wp.ObjectManager",
 	"Wp.Direction",
 	"Wp.NodeState",

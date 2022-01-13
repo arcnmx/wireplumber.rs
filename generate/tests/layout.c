@@ -18,6 +18,7 @@ int main() {
     printf("%s;%zu;%zu\n", "WpDirection", sizeof(WpDirection), alignof(WpDirection));
     printf("%s;%zu;%zu\n", "WpEndpoint", sizeof(WpEndpoint), alignof(WpEndpoint));
     printf("%s;%zu;%zu\n", "WpEndpointClass", sizeof(WpEndpointClass), alignof(WpEndpointClass));
+    printf("%s;%zu;%zu\n", "WpFactoryClass", sizeof(WpFactoryClass), alignof(WpFactoryClass));
     printf("%s;%zu;%zu\n", "WpFeatureActivationTransitionClass", sizeof(WpFeatureActivationTransitionClass), alignof(WpFeatureActivationTransitionClass));
     printf("%s;%zu;%zu\n", "WpGlobalProxy", sizeof(WpGlobalProxy), alignof(WpGlobalProxy));
     printf("%s;%zu;%zu\n", "WpGlobalProxyClass", sizeof(WpGlobalProxyClass), alignof(WpGlobalProxyClass));

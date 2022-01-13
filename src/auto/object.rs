@@ -28,6 +28,11 @@ glib::wrapper! {
 pub const NONE_OBJECT: Option<&Object> = None;
 
 pub trait ObjectExt: 'static {
+    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    #[doc(alias = "wp_object_abort_activation")]
+    fn abort_activation(&self, msg: &str);
+
     #[doc(alias = "wp_object_activate")]
     fn activate<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, features: ObjectFeatures, cancellable: Option<&P>, callback: Q);
 
@@ -63,6 +68,14 @@ pub trait ObjectExt: 'static {
 }
 
 impl<O: IsA<Object>> ObjectExt for O {
+    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    fn abort_activation(&self, msg: &str) {
+        unsafe {
+            ffi::wp_object_abort_activation(self.as_ref().to_glib_none().0, msg.to_glib_none().0);
+        }
+    }
+
     fn activate<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, features: ObjectFeatures, cancellable: Option<&P>, callback: Q) {
         let user_data: Box_<Q> = Box_::new(callback);
         unsafe extern "C" fn activate_trampoline<Q: FnOnce(Result<(), glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {

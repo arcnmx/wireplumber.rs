@@ -18,6 +18,9 @@ pub use self::device::{Device};
 mod endpoint;
 pub use self::endpoint::{Endpoint, NONE_ENDPOINT};
 
+mod factory;
+pub use self::factory::{Factory};
+
 mod feature_activation_transition;
 pub use self::feature_activation_transition::{FeatureActivationTransition};
 
