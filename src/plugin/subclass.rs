@@ -213,12 +213,14 @@ impl SourceHandlesCell {
 }
 
 pub trait SimplePlugin: ObjectSubclass {
-	type Args: FromVariant;
+	type Args;
 
 	fn instance_ref(&self) -> Self::Type {
 		// TODO: use glib_signal::BorrowedObject?
 		self.instance()
 	}
+
+	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error>;
 
 	fn init_args(&self, args: Self::Args) { let _ = args; unimplemented!() }
 	fn new_plugin(core: &Core, args: Self::Args) -> Self::Type where
@@ -301,53 +303,13 @@ impl<T: ModuleExport> ModuleExport for ModuleWrapper<T> {
 
 impl<T: SimplePlugin> ModuleExport for T where
 	T::Type: IsA<GObject> + IsA<Plugin>,
-	T::Args: FromAnyVariant<Error=Error>,
 {
 	fn init(core: Core, args: Option<Variant>) -> Result<(), Error> {
 		// TODO: support optional args? annoying to do this properly though...
-		let args = FromAnyVariant::from_a_variant(args.as_ref())?;
-			//.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))?;
+		let args = T::decode_args(args)?;
 		let plugin = T::new_plugin(&core, args);
 		plugin.register();
 		Ok(())
-	}
-}
-
-pub trait FromAnyVariant: Sized {
-	type Error: Debug;
-
-	fn from_a_variant(args: Option<&Variant>) -> Result<Self, Self::Error>;
-}
-
-pub struct FromAnyVariantWrapVariant<T>(pub T);
-
-impl<T: FromVariant> FromAnyVariant for FromAnyVariantWrapVariant<T> {
-	type Error = VariantTypeMismatchError;
-
-	fn from_a_variant(args: Option<&Variant>) -> Result<Self, Self::Error> {
-		match args {
-			Some(args) => args.try_get(),
-			None => ().to_variant().try_get(),
-		}.map(Self)
-	}
-}
-
-impl<T: FromVariant> FromAnyVariant for T {
-	type Error = Error;
-
-	fn from_a_variant(args: Option<&Variant>) -> Result<Self, Self::Error> {
-		let ty = args.map(|v| v.type_());
-
-		let args_var: Result<FromAnyVariantWrapVariant<T>, _> = FromAnyVariant::from_a_variant(args);
-		match args_var {
-			Ok(args) => Ok(args.0),
-			Err(e_var) => {
-				// TODO: fallback to human-readable "jsonish" decoding via serde instead
-				Err(
-					Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e_var))
-				)
-			},
-		}
 	}
 }
 

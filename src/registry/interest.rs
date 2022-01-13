@@ -326,3 +326,194 @@ impl ConstraintType {
 		}
 	}
 }
+
+#[cfg(feature = "serde")]
+mod impl_serde {
+	use super::{Constraint, ConstraintVerb, ConstraintType};
+	use glib_serde::{prelude::*, AnyVariant};
+	use glib::{Variant, ToVariant};
+	use serde::{Deserialize, Deserializer, Serialize, Serializer, de::{self, Error as _, Visitor, SeqAccess, MapAccess, Unexpected}, ser::SerializeStruct};
+	use std::str::FromStr;
+	use std::borrow::Cow;
+	use std::fmt;
+
+	impl<'de> Deserialize<'de> for ConstraintVerb {
+		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+			<Cow<String>>::deserialize(deserializer)
+				.and_then(|s| Self::from_str(&s).map_err(D::Error::custom))
+		}
+	}
+
+	impl Serialize for ConstraintVerb {
+		fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+			self.symbol().serialize(serializer)
+		}
+	}
+
+	impl<'de> Deserialize<'de> for ConstraintType {
+		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+			<Cow<String>>::deserialize(deserializer)
+				.and_then(|s| Self::from_str(&s).map_err(D::Error::custom))
+		}
+	}
+
+	impl Serialize for ConstraintType {
+		fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+			self.name().serialize(serializer)
+		}
+	}
+
+	impl Serialize for Constraint {
+		fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+			let compact = !serializer.is_human_readable();
+			let mut state = serializer.serialize_struct("Constraint", 4)?;
+			state.serialize_field("type", &self.type_)?;
+			state.serialize_field("subject", &self.subject)?;
+			state.serialize_field("verb", &self.verb)?;
+			state.serialize_field("value", &self.value.as_ref().map(|v| v.as_serializable()))?;
+			state.end()
+		}
+	}
+
+	impl<'de> Deserialize<'de> for Constraint {
+		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+			enum Field { Type, Subject, Verb, Value }
+
+			impl<'de> Deserialize<'de> for Field {
+				fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Field, D::Error> {
+					struct FieldVisitor;
+
+					impl<'de> Visitor<'de> for FieldVisitor {
+						type Value = Field;
+
+						fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+							formatter.write_str("`type` or `subject` or `verb` or `value`")
+						}
+
+						fn visit_str<E: de::Error>(self, value: &str) -> Result<Field, E> {
+							match value {
+								"type" => Ok(Field::Type),
+								"subject" => Ok(Field::Subject),
+								"verb" => Ok(Field::Verb),
+								"value" => Ok(Field::Value),
+								_ => Err(E::unknown_field(value, FIELDS)),
+							}
+						}
+					}
+
+					deserializer.deserialize_identifier(FieldVisitor)
+				}
+			}
+
+			struct ConstraintVisitor;
+
+			impl<'de> Visitor<'de> for ConstraintVisitor {
+				type Value = Constraint;
+
+				fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+					formatter.write_str("struct Constraint")
+				}
+
+				fn visit_seq<V: SeqAccess<'de>>(self, mut seq: V) -> Result<Self::Value, V::Error> {
+					let mut len = 0;
+
+					let mut subject: String = seq.next_element()?
+						.ok_or_else(|| V::Error::invalid_length(len, &self))?; len += 1;
+
+					let type_ = match ConstraintType::from_str(&subject) {
+						Ok(type_) => {
+							subject = seq.next_element()?
+								.ok_or_else(|| V::Error::invalid_length(len, &self))?; len += 1;
+							type_
+						},
+						Err(_) => ConstraintType::default(),
+					};
+
+					let verb = seq.next_element()?
+						.ok_or_else(|| V::Error::invalid_length(len, &self))?; len += 1;
+
+					let value = match verb {
+						ConstraintVerb::__Unknown(v) => return Err(V::Error::invalid_value(Unexpected::Signed(v.into()), &"constraint verb")),
+						ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent => None,
+						ConstraintVerb::Equals | ConstraintVerb::NotEquals => Some(
+							seq.next_element::<AnyVariant>()?
+								.ok_or_else(|| V::Error::invalid_length(len, &"constraint value"))?
+								.into()
+						),
+						ConstraintVerb::Matches => Some(
+							seq.next_element::<&str>()?
+								.ok_or_else(|| V::Error::invalid_length(len, &"constraint match pattern"))?
+								.to_variant()
+						),
+						ConstraintVerb::InRange => Some(Variant::tuple_from_iter([
+								seq.next_element::<AnyVariant>()?
+									.ok_or_else(|| V::Error::invalid_length(len, &"constraint range min"))?
+									.into_variant(),
+								seq.next_element::<AnyVariant>()?
+									.ok_or_else(|| V::Error::invalid_length(len + 1, &"constraint range max"))?
+									.into_variant(),
+						])),
+						ConstraintVerb::InList => {
+							let mut values: Vec<glib::Variant> = Vec::with_capacity(seq.size_hint().unwrap_or(0));
+							while let Some(value) = seq.next_element::<AnyVariant>()? {
+								values.push(value.into());
+							}
+							Some(glib::Variant::tuple_from_iter(values))
+						},
+					};
+
+					Ok(Constraint {
+						type_,
+						subject,
+						verb,
+						value,
+					})
+				}
+
+				fn visit_map<V: MapAccess<'de>>(self, mut map: V) -> Result<Self::Value, V::Error> {
+					let mut type_ = None;
+					let mut subject = None;
+					let mut verb = None;
+					let mut value = None::<Option<AnyVariant>>;
+					while let Some(key) = map.next_key()? {
+						match key {
+							Field::Type => {
+								if type_.is_some() {
+									return Err(V::Error::duplicate_field("type"));
+								}
+								type_ = Some(map.next_value()?);
+							},
+							Field::Subject => {
+								if subject.is_some() {
+									return Err(V::Error::duplicate_field("subject"));
+								}
+								subject = Some(map.next_value()?);
+							},
+							Field::Verb => {
+								if verb.is_some() {
+									return Err(V::Error::duplicate_field("verb"));
+								}
+								verb = Some(map.next_value()?);
+							},
+							Field::Value => {
+								if value.is_some() {
+									return Err(V::Error::duplicate_field("value"));
+								}
+								value = Some(map.next_value()?);
+							},
+						}
+					}
+					Ok(Constraint {
+						type_: type_.ok_or_else(|| V::Error::missing_field("type"))?,
+						subject: subject.ok_or_else(|| V::Error::missing_field("subject"))?,
+						verb: verb.ok_or_else(|| V::Error::missing_field("verb"))?,
+						value: value.unwrap_or_default().map(Into::into),
+					})
+				}
+			}
+
+			const FIELDS: &'static [&'static str] = &["type", "subject", "verb", "value"];
+			deserializer.deserialize_struct("Constraint", FIELDS, ConstraintVisitor)
+		}
+	}
+}

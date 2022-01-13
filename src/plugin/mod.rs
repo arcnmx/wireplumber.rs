@@ -33,8 +33,9 @@
 //! ```
 //!
 //! ```no_run
-//! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};
 //! use wireplumber::prelude::*;
+//! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};
+//! use wireplumber::error;
 //! use std::future::Future;
 //! use std::cell::RefCell;
 //! use std::pin::Pin;
@@ -67,6 +68,15 @@
 //!
 //!   fn init_args(&self, args: Self::Args) {
 //!     self.arg.replace(args);
+//!   }
+//!
+//!   fn decode_args(args: Option<glib::Variant>) -> Result<Self::Args, error::Error> {
+//!     args.map(|args| match () {
+//!       #[cfg(feature = "glib-serde")]
+//!       _ => glib_serde::from_variant(&args),
+//!       #[cfg(not(feature = "glib-serde"))]
+//!       _ => args.try_get(),
+//!     }).transpose().map_err(error::invalid_argument)
 //!   }
 //! }
 //!
@@ -102,5 +112,4 @@ pub use subclass::{
 	SimplePlugin, simple_plugin_subclass,
 	SimplePluginObject,
 	ModuleExport, ModuleWrapper, plugin_export,
-	FromAnyVariant, FromAnyVariantWrapVariant,
 };

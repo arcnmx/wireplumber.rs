@@ -250,6 +250,12 @@ impl SimplePlugin for StaticLink {
 	fn init_args(&self, args: Self::Args) {
 		self.args.set(args).unwrap();
 	}
+
+	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
+		args.map(|args| glib_serde::from_variant(&args))
+			.unwrap_or(Ok(Default::default()))
+			.map_err(error::invalid_argument)
+	}
 }
 
 // macros take care of entry point boilerplate by impl'ing a bunch of traits for us

@@ -238,7 +238,7 @@ impl Args {
 		Ok(match self.json_arg {
 			None => None,
 			Some(ref json) => {
-				let variant: Variant = todo!();
+				let variant: Variant = serde_json::from_str::<glib_serde::AnyVariant>(json)?.into();
 				Some(variant)
 			},
 		})

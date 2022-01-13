@@ -415,6 +415,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "glib-serde"
+version = "0.1.0"
+source = "git+https://github.com/arcnmx/glib-serde.git?branch=revamp#9c8bbdbbd7b0dadc1f755ab99c28ccc7651c345b"
+dependencies = [
+ "glib",
+ "serde",
+]
+
+[[package]]
 name = "glib-signal"
 version = "0.1.0"
 source = "git+https://github.com/arcnmx/glib-signal.rs.git#e5555864e03f74e95c79f941273d5ac0e407a84f"
@@ -512,6 +521,12 @@ checksum = "a9a9d19fa1e79b6215ff29b9d6880b706147f16e9b1dbb1e4e5947b5b02bc5e3"
 dependencies = [
  "either",
 ]
+
+[[package]]
+name = "itoa"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1aab8fc367588b89dcee83ab0fd66b72b50b72fa1904d7095045ace2b0c81c35"
 
 [[package]]
 name = "lazy_static"
@@ -860,6 +875,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde_json"
+version = "1.0.79"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8e8d9fa5c3b304765ce1fd9c4c8a3de2c8db365a5b91be52f186efc675681d95"
+dependencies = [
+ "itoa",
+ "ryu",
+ "serde",
+]
+
+[[package]]
 name = "shell-words"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1142,6 +1168,7 @@ dependencies = [
  "futures-util",
  "gio",
  "glib",
+ "glib-serde",
  "glib-signal",
  "libc",
  "libspa",
@@ -1150,6 +1177,7 @@ dependencies = [
  "pipewire-sys",
  "pkg-config",
  "semver",
+ "serde",
  "wireplumber-sys",
 ]
 
@@ -1177,8 +1205,10 @@ dependencies = [
  "ctrlc",
  "futures",
  "glib",
+ "glib-serde",
  "pipewire-sys",
  "serde",
+ "serde_json",
  "wireplumber",
 ]
 
