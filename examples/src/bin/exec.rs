@@ -15,7 +15,7 @@ use wireplumber::{Core, Properties, Plugin, PluginFeatures, Log, pw};
 async fn main_async(core: &Core, exec_script: &str, args: Option<&Variant>) -> Result<()> {
 	core.load_component("libwireplumber-module-lua-scripting", "module", None)
 		.context("failed to load the lua-scripting module")?;
-	core.load_component(exec_script, "script/lua", args)
+	core.load_lua_script(exec_script, args)
 		.context("failed to load the lua script")?;
 
 	core.connect_future().await?;

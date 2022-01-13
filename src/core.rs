@@ -1,7 +1,7 @@
 use glib::{translate::{from_glib_full, ToGlibPtr, IntoGlib}, MainContext, MainLoop};
 use pipewire_sys::{pw_core, pw_context};
 use std::{ptr::NonNull, rc::Rc};
-use crate::{Core, InitFlags, Properties};
+use crate::{Core, InitFlags, Properties, lua::ToLuaVariant};
 
 impl Core {
 	#[doc(alias = "wp_init")]
@@ -76,6 +76,11 @@ impl Core {
 			NonNull::new(ffi::wp_core_get_pw_context(self.to_glib_none().0))
 				.expect("pw_context for WpCore")
 		}
+	}
+
+	#[doc(alias = "wp_core_load_component")]
+	pub fn load_lua_script<A: ToLuaVariant>(&self, script_path: &str, args: A) -> Result<(), glib::Error> {
+		self.load_component(script_path, "script/lua", args.to_lua_variant()?.as_deref())
 	}
 
 	#[cfg(any(feature = "enable-futures", feature = "dox"))]
