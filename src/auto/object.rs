@@ -87,7 +87,7 @@ impl<O: IsA<Object>> ObjectExt for O {
         }
         let callback = activate_trampoline::<Q>;
         unsafe {
-            ffi::wp_object_activate(self.as_ref().to_glib_none().0, features, cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), Box_::into_raw(user_data) as *mut _);
+            ffi::wp_object_activate(self.as_ref().to_glib_none().0, features.into_glib(), cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), Box_::into_raw(user_data) as *mut _);
         }
     }
 
@@ -107,19 +107,19 @@ impl<O: IsA<Object>> ObjectExt for O {
 
     fn activate_closure<P: IsA<gio::Cancellable>>(&self, features: ObjectFeatures, cancellable: Option<&P>, closure: &glib::Closure) {
         unsafe {
-            ffi::wp_object_activate_closure(self.as_ref().to_glib_none().0, features, cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.to_glib_full());
+            ffi::wp_object_activate_closure(self.as_ref().to_glib_none().0, features.into_glib(), cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.to_glib_full());
         }
     }
 
     fn deactivate(&self, features: ObjectFeatures) {
         unsafe {
-            ffi::wp_object_deactivate(self.as_ref().to_glib_none().0, features);
+            ffi::wp_object_deactivate(self.as_ref().to_glib_none().0, features.into_glib());
         }
     }
 
     fn active_features(&self) -> ObjectFeatures {
         unsafe {
-            ffi::wp_object_get_active_features(self.as_ref().to_glib_none().0)
+            from_glib(ffi::wp_object_get_active_features(self.as_ref().to_glib_none().0))
         }
     }
 
@@ -131,13 +131,13 @@ impl<O: IsA<Object>> ObjectExt for O {
 
     fn supported_features(&self) -> ObjectFeatures {
         unsafe {
-            ffi::wp_object_get_supported_features(self.as_ref().to_glib_none().0)
+            from_glib(ffi::wp_object_get_supported_features(self.as_ref().to_glib_none().0))
         }
     }
 
     fn update_features(&self, activated: ObjectFeatures, deactivated: ObjectFeatures) {
         unsafe {
-            ffi::wp_object_update_features(self.as_ref().to_glib_none().0, activated, deactivated);
+            ffi::wp_object_update_features(self.as_ref().to_glib_none().0, activated.into_glib(), deactivated.into_glib());
         }
     }
 

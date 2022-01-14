@@ -8,7 +8,6 @@ split_build_rs = true
 
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [
-	"Wp.ObjectFeatures",
 	"Wp.Proxy",
 	"Wp.Properties", "Wp.PropertiesItem",
 	"Wp.ConstraintType", "Wp.ConstraintVerb",
@@ -94,3 +93,8 @@ status = "generate"
 	[[object.function]]
 	name = "new"
 	ignore = true
+
+[[object]]
+name = "Wp.ObjectFeatures"
+status = "manual"
+conversion_type = "scalar"

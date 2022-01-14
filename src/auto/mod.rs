@@ -145,9 +145,6 @@ pub use self::flags::ProxyFeatures;
 pub use self::flags::SessionItemFeatures;
 pub use self::flags::SpaDeviceFeatures;
 
-mod alias;
-pub use self::alias::ObjectFeatures;
-
 #[doc(hidden)]
 pub mod traits {
     pub use super::endpoint::EndpointExt;

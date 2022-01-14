@@ -94,7 +94,7 @@ impl ObjectManager {
     #[doc(alias = "wp_object_manager_request_object_features")]
     pub fn request_object_features(&self, object_type: glib::types::Type, wanted_features: ObjectFeatures) {
         unsafe {
-            ffi::wp_object_manager_request_object_features(self.to_glib_none().0, object_type.into_glib(), wanted_features);
+            ffi::wp_object_manager_request_object_features(self.to_glib_none().0, object_type.into_glib(), wanted_features.into_glib());
         }
     }
 

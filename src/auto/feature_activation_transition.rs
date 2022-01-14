@@ -22,7 +22,7 @@ impl FeatureActivationTransition {
     #[doc(alias = "get_requested_features")]
     pub fn requested_features(&self) -> ObjectFeatures {
         unsafe {
-            ffi::wp_feature_activation_transition_get_requested_features(self.to_glib_none().0)
+            from_glib(ffi::wp_feature_activation_transition_get_requested_features(self.to_glib_none().0))
         }
     }
 }

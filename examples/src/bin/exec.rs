@@ -21,7 +21,7 @@ async fn main_async(core: &Core, exec_script: &str, args: Option<&Variant>) -> R
 	core.connect_future().await?;
 
 	let p = Plugin::find(&core, "lua-scripting").unwrap();
-	p.activate_future(PluginFeatures::ENABLED.bits()).await
+	p.activate_future(PluginFeatures::ENABLED).await
 		.context("failed to activate lua-scripting module")?;
 	Ok(())
 }
