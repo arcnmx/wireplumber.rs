@@ -36,7 +36,7 @@ fn main() -> Result<()> {
 		Some(args) => todo!(),
 	};
 
-	Log::set_level("3");
+	Log::set_default_level("3");
 	Core::init(Default::default());
 
 	let main_res = Rc::new(RefCell::new(None));

@@ -1,5 +1,6 @@
 use glib::{LogLevelFlags, translate::{IntoGlib, ToGlibPtr, from_glib}};
 use libspa_sys::spa_log;
+use std::env;
 
 pub struct Log(());
 
@@ -19,9 +20,15 @@ impl Log {
 
 	#[doc(alias = "wp_log_set_level")]
 	pub fn set_level(level: &str) {
-		std::env::set_var("WIREPLUMBER_DEBUG", level); // XXX: this doesn't seem to work properly otherwise?
+		env::set_var("WIREPLUMBER_DEBUG", level); // XXX: this doesn't seem to work properly otherwise?
 		unsafe {
 			ffi::wp_log_set_level(level.to_glib_none().0)
+		}
+	}
+
+	pub fn set_default_level(level: &str) {
+		if env::var_os("WIREPLUMBER_DEBUG").is_none() {
+			Self::set_level(level)
 		}
 	}
 
