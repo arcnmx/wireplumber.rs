@@ -1,5 +1,5 @@
 { config, channels, pkgs, lib, ... }: with pkgs; with lib; let
-  inherit (channels.arc.packages) wireplumber;
+  wireplumber = pkgs.wireplumber or channels.arc.packages.wireplumber-0_4_4;
   importShell = writeText "shell.nix" ''
     import ${builtins.unsafeDiscardStringContext config.shell.drvPath}
   '';
