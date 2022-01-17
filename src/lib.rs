@@ -6,6 +6,13 @@ mod auto;
 pub use auto::*;
 pub use ffi;
 
+/// Export dependencies for use from macros
+#[doc(hidden)]
+pub mod lib {
+	pub use glib;
+	pub use gio;
+}
+
 pub type Result<T> = std::result::Result<T, glib::Error>;
 pub type SpaType = i32;
 pub type SpaIdTable = glib::ffi::gconstpointer;
@@ -19,6 +26,7 @@ mod error;
 mod core;
 pub use crate::core::*;
 
+#[macro_use]
 mod log;
 pub use log::*;
 

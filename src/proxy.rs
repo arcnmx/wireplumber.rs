@@ -198,7 +198,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 		let this = self.as_ref();
 		self.with_pw_property_cstr(key, move |cstr| match cstr.to_str() {
 			Err(e) => {
-				glib::g_warning!(crate::Log::domain(), "pw_property {} ({:?}) was not valid UTF-8: {:?}", key, cstr, e);
+				wp_warning!(self: this, "pw_property {} ({:?}) was not valid UTF-8: {:?}", key, cstr, e);
 				None
 			},
 			Ok(str) => Some(f(str)),
