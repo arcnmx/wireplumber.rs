@@ -6,6 +6,8 @@ min_cfg_version = "0.4"
 work_mode = "normal"
 split_build_rs = true
 generate_display_trait = false
+# trust_return_value_nullability = true # TODO: manually go through everything...
+single_version_file = "generate/src/Gir.version"
 
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [
@@ -53,28 +55,28 @@ name = "Wp.SiAcquisition"
 status = "generate"
 	[[object.function]]
 	name = "acquire"
-	ignore = true
+	manual = true
 
 [[object]]
 name = "Wp.SiAdapter"
 status = "generate"
 	[[object.function]]
 	name = "set_ports_format"
-	ignore = true
+	manual = true
 
 [[object]]
 name = "Wp.Transition"
 status = "generate"
 	[[object.function]]
 	name = "return_error"
-	ignore = true
+	manual = true
 
 [[object]]
 name = "Wp.SpaPod"
 status = "generate"
 	[[object.function]]
 	name = "get_spa_type"
-	ignore = true
+	manual = true
 
 [[object]]
 name = "Wp.SpaPodParser"
@@ -106,7 +108,7 @@ name = "Wp.PipewireObject"
 status = "generate"
 	[[object.function]]
 	name = "get_property"
-	ignore = true
+	manual = true
 
 # enums
 

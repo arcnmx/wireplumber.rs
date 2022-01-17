@@ -32,7 +32,10 @@
   '';
   gir-dirs = concatMapStringsSep " " (dev: "--girs-directories ${dev}/share/gir-1.0") [ wireplumber-gir gobject-introspection.dev ];
   gir = writeShellScriptBin "gir" ''
-    exec ${gir-rs}/bin/gir ${gir-dirs} "$@"
+    ${gir-rs}/bin/gir ${gir-dirs} "$@"
+    if [[ $# -eq 0 && -d src/auto ]]; then
+      sed -i -e '/^\/\/ from \/nix/d' src/auto/*.rs
+    fi
   '';
   todo = writeShellScriptBin "todo" ''
     cd ${toString ./.}
