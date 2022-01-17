@@ -6,8 +6,8 @@
 #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
 #![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
 
-use pipewire::*;
-use libspa::*;
+use pipewire::{pw_core, pw_context, pw_proxy, pw_properties, pw_impl_node};
+use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 
 use glib_sys as glib;
 use gobject_sys as gobject;
