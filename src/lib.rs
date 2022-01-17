@@ -6,6 +6,7 @@ mod auto;
 pub use auto::*;
 pub use ffi;
 
+pub type Result<T> = std::result::Result<T, glib::Error>;
 pub type SpaType = i32;
 pub type SpaIdTable = glib::ffi::gconstpointer;
 pub type SpaIdValue = glib::ffi::gconstpointer;
