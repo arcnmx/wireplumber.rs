@@ -10,7 +10,7 @@ generate_display_trait = false
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [
 	"Wp.Proxy",
-	"Wp.Properties", "Wp.PropertiesItem",
+	"Wp.PropertiesItem",
 	"Wp.ObjectInterest",
 	"Wp.PipewireObject",
 	"Wp.GlobalProxy",
@@ -83,6 +83,12 @@ status = "generate"
 	[[object.function]]
 	name = "new_object"
 	ignore = true
+
+[[object]]
+name = "Wp.Properties"
+status = "generate"
+	[[object.derive]]
+	name = "PartialEq, Eq, PartialOrd, Ord, Hash" # defaults excluding Debug
 
 [[object]]
 name = "Wp.Iterator"

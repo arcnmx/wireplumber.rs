@@ -21,4 +21,5 @@ pub use crate::{
 	SiAdapterExt2 as _,
 	SiAcquisitionExt2 as _,
 	TransitionExt2 as _,
+	pw::PipewirePropertyStringIterExt as _,
 };

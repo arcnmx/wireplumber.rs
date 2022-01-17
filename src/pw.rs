@@ -1,7 +1,8 @@
-use std::{ops::Deref, ffi::CStr, str};
+use std::{ops::Deref, ffi::CStr, fmt::{self, Write}, str::{self, FromStr}};
 
 pub use pipewire_sys as ffi;
 
+#[derive(Copy, Clone)]
 #[repr(transparent)]
 pub struct PipewireKey(&'static [u8]);
 
@@ -14,7 +15,7 @@ impl PipewireKey {
 	}
 
 	#[inline]
-	pub fn as_str(&self) -> &'static str {
+	pub fn as_str<'a>(&self) -> &'a str {
 		unsafe {
 			str::from_utf8_unchecked(self.as_cstr().to_bytes())
 		}
@@ -28,6 +29,170 @@ impl Deref for PipewireKey {
 	fn deref(&self) -> &Self::Target {
 		self.as_str()
 	}
+}
+
+impl AsRef<str> for PipewireKey {
+	fn as_ref(&self) -> &str {
+		self.as_str()
+	}
+}
+
+impl<'a> Into<&'a str> for PipewireKey {
+	fn into(self) -> &'a str {
+		self.as_str()
+	}
+}
+
+impl<'a, 'b> Into<&'a str> for &'b PipewireKey {
+	fn into(self) -> &'a str {
+		self.as_str()
+	}
+}
+
+impl Into<String> for PipewireKey {
+	fn into(self) -> String {
+		self.as_str().into()
+	}
+}
+
+impl<'a> Into<String> for &'a PipewireKey {
+	fn into(self) -> String {
+		self.as_str().into()
+	}
+}
+
+pub trait FromPipewirePropertyString: Sized {
+	type Error: fmt::Debug;
+
+	fn from_pipewire_string(value: &str) -> Result<Self, Self::Error>;
+}
+
+pub trait ToPipewirePropertyString {
+	type Output: AsRef<str>;
+
+	fn pipewire_string(self) -> Self::Output;
+}
+
+pub struct PipewirePropertyStringIter<T>(pub T);
+
+pub trait PipewirePropertyStringIterExt: Sized {
+	fn pipewire_string_iter(self) -> PipewirePropertyStringIter<Self> {
+		PipewirePropertyStringIter(self)
+	}
+}
+
+impl<T: IntoIterator<Item=I>, I: ToPipewirePropertyString> PipewirePropertyStringIterExt for PipewirePropertyStringIter<T> { }
+
+impl<T: IntoIterator<Item=I>, I: ToPipewirePropertyString> ToPipewirePropertyString for PipewirePropertyStringIter<T> {
+	type Output = String;
+
+	fn pipewire_string(self) -> Self::Output {
+		let mut out = String::new();
+		for (i, v) in self.0.into_iter().enumerate() {
+			let prefix = if i == 0 { "" } else { "," };
+			let item = v.pipewire_string();
+			let _ = write!(&mut out, "{}{}", prefix, item.as_ref());
+		}
+		out
+	}
+}
+
+impl<T: ToPipewirePropertyString> ToPipewirePropertyString for Vec<T> {
+	type Output = String;
+
+	fn pipewire_string(self) -> Self::Output {
+		PipewirePropertyStringIter(self).pipewire_string()
+	}
+}
+
+impl<'a, T> ToPipewirePropertyString for &'a Vec<T> where
+	&'a T: ToPipewirePropertyString,
+{
+	type Output = String;
+
+	fn pipewire_string(self) -> Self::Output {
+		PipewirePropertyStringIter(self.iter()).pipewire_string()
+	}
+}
+
+impl<'a, T> ToPipewirePropertyString for &'a [T] where
+	&'a T: ToPipewirePropertyString,
+{
+	type Output = String;
+
+	fn pipewire_string(self) -> Self::Output {
+		PipewirePropertyStringIter(self).pipewire_string()
+	}
+}
+
+impl ToPipewirePropertyString for bool {
+	type Output = &'static str;
+
+	fn pipewire_string(self) -> Self::Output {
+		if self {
+			"true"
+		} else {
+			"false"
+		}
+	}
+}
+
+macro_rules! pipewire_primitives {
+	($($ty:ty,)*) => {
+		$(
+			impl ToPipewirePropertyString for $ty {
+				type Output = String;
+
+				fn pipewire_string(self) -> Self::Output {
+					self.to_string()
+				}
+			}
+			impl FromPipewirePropertyString for $ty {
+				type Error = <$ty as FromStr>::Err;
+
+				fn from_pipewire_string(value: &str) -> Result<Self, Self::Error> {
+					FromStr::from_str(value)
+				}
+			}
+		)*
+	};
+	(@AsRef $($ty:ty,)*) => {
+		$(
+			impl ToPipewirePropertyString for $ty {
+				type Output = Self;
+
+				fn pipewire_string(self) -> Self::Output {
+					self
+				}
+			}
+		)*
+	};
+	(@&AsRef $($ty:ty,)*) => {
+		$(
+			impl<'a> ToPipewirePropertyString for &'a $ty {
+				type Output = Self;
+
+				fn pipewire_string(self) -> Self::Output {
+					self
+				}
+			}
+		)*
+	};
+}
+
+pipewire_primitives! {
+	u8, i8,
+	u16, i16,
+	u32, i32,
+	u64, i64,
+	f32, f64,
+	usize, isize,
+}
+pipewire_primitives! { @AsRef
+	String, glib::GString,
+}
+pipewire_primitives! { @&AsRef
+	str,
 }
 
 macro_rules! pipewire_keys {

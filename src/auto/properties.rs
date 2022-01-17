@@ -7,7 +7,7 @@ use crate::Iterator;
 use glib::translate::*;
 
 glib::wrapper! {
-    #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    #[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Properties(Shared<ffi::WpProperties>);
 
     match fn {
