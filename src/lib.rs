@@ -51,6 +51,15 @@ pub use impl_node::*;
 mod transition;
 pub use transition::*;
 
+mod node;
+pub use node::*;
+
+mod link;
+pub use link::*;
+
+mod port;
+pub use port::*;
+
 mod properties;
 pub use properties::*;
 
