@@ -1,7 +1,14 @@
-use crate::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch, Properties};
-use glib::{translate::IntoGlib, IsA, Object, Variant, ToVariant, ObjectExt, StaticType};
+use crate::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch, Properties, PipewireObject, ValueIterator};
+use crate::prelude::*;
+use glib::{FromVariant, StaticVariantType, VariantTy, VariantClass};
+use glib::{translate::{IntoGlib, from_glib}, Object, Variant};
+use glib::prelude::*;
+use std::iter::FromIterator;
+use std::marker::PhantomData;
 use std::str::FromStr;
 use std::convert::TryFrom;
+use std::borrow::{Cow, Borrow};
+use std::ops::Deref;
 
 impl ObjectInterest {
 	/*#[doc(alias = "wp_object_interest_matches")]
@@ -20,9 +27,92 @@ impl ObjectInterest {
 	pub fn matches_props(&self, props: &Properties) -> bool {
 		self.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), None::<&Object>, Some(props), None) == InterestMatch::all()
 	}
+
+	#[doc(alias = "wp_object_interest_matches")]
+	pub fn matches_pw_object<O: IsA<PipewireObject>>(&self, object: &O) -> bool {
+		self.matches_props(&object.as_ref().properties().unwrap())
+	}
 }
 
 #[derive(Clone, Debug)]
+#[repr(transparent)]
+pub struct Interest<T: StaticType> {
+	interest: ObjectInterest,
+	_type: PhantomData<T>,
+}
+
+impl<T: StaticType> Interest<T> {
+	pub fn new() -> Self {
+		unsafe {
+			Self::wrap_unchecked(ObjectInterest::new_type(T::static_type()))
+		}
+	}
+
+	pub unsafe fn wrap_unchecked(interest: ObjectInterest) -> Self {
+		Self {
+			interest,
+			_type: PhantomData,
+		}
+	}
+
+	pub fn inner(&self) -> &ObjectInterest {
+		&self.interest
+	}
+
+	pub fn into_inner(self) -> ObjectInterest {
+		self.interest
+	}
+
+	pub fn matches_object(&self, object: &T) -> bool where T: IsA<glib::Object> {
+		// TODO: automatically determine whether to match pw props or gobject props!
+		// the logic should be the same as in ffi::wp_object_interest_matches
+		// also rename this to just `matches`?
+		self.interest.matches_object(object)
+	}
+
+	pub fn filter<C: InterestContainer<T>>(&self, container: &C) -> ValueIterator::<T> {
+		container.filter(self)
+	}
+
+	pub fn lookup<C: InterestContainer<T>>(&self, container: &C) -> Option<T> {
+		container.lookup(self)
+	}
+
+	// TODO: helpers for adding constraints that skip the `Type` arg
+	// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?
+}
+
+pub trait InterestContainer<T: StaticType> {
+	fn filter(&self, interest: &Interest<T>) -> ValueIterator<T>;
+	fn lookup(&self, interest: &Interest<T>) -> Option<T>;
+}
+
+impl<T: StaticType> Deref for Interest<T> {
+	type Target = ObjectInterest;
+
+	fn deref(&self) -> &Self::Target {
+		self.inner()
+	}
+}
+
+impl<C: Borrow<Constraint>, T: StaticType> Extend<C> for Interest<T> {
+	fn extend<I: IntoIterator<Item=C>>(&mut self, iter: I) {
+		for constraint in iter {
+			constraint.borrow().add_to(&self)
+		}
+	}
+}
+
+impl<C: Borrow<Constraint>, T: StaticType> FromIterator<C> for Interest<T> {
+	fn from_iter<I: IntoIterator<Item=C>>(iter: I) -> Self {
+		let mut interest = Self::new();
+		interest.extend(iter);
+		interest
+	}
+}
+
+#[must_use]
+#[derive(Clone, Debug, Variant)]
 pub struct Constraint {
 	pub type_: ConstraintType,
 	pub subject: String,
@@ -40,12 +130,12 @@ impl Constraint {
 		}
 	}
 
-	pub fn compare<S: Into<String>>(type_: ConstraintType, subject: S, value: Variant, equal: bool) -> Self {
+	pub fn compare<S: Into<String>, V: ToVariant>(type_: ConstraintType, subject: S, value: V, equal: bool) -> Self {
 		Self {
 			type_,
 			subject: subject.into(),
 			verb: if equal { ConstraintVerb::Equals } else { ConstraintVerb::NotEquals },
-			value: Some(value),
+			value: Some(value.to_variant()),
 		}
 	}
 
@@ -63,7 +153,7 @@ impl Constraint {
 			type_,
 			subject: subject.into(),
 			verb: ConstraintVerb::InRange,
-			value: Some((low.to_variant(), high.to_variant()).to_variant()),
+			value: Some((low, high).to_variant()),
 		}
 	}
 
@@ -116,6 +206,33 @@ impl TryFrom<char> for ConstraintVerb {
 	}
 }
 
+impl StaticVariantType for ConstraintVerb {
+	fn static_variant_type() -> Cow<'static, VariantTy> {
+		<<Self as IntoGlib>::GlibType as StaticVariantType>::static_variant_type()
+	}
+}
+
+impl FromVariant for ConstraintVerb {
+	fn from_variant(variant: &Variant) -> Option<Self> {
+		match variant.classify() {
+			VariantClass::String =>
+				variant.get::<String>()
+				.and_then(|s| Self::from_str(&s).ok()),
+			_ => unsafe {
+				Some(from_glib(variant.get()?))
+			},
+		}
+	}
+}
+
+impl ToVariant for ConstraintVerb {
+	fn to_variant(&self) -> Variant {
+		std::str::from_utf8(&[self.symbol() as u8])
+			.unwrap()
+			.to_variant()
+	}
+}
+
 impl ConstraintVerb {
 	pub fn value_type(&self) -> Option<()> {
 		match self {
@@ -155,6 +272,12 @@ impl Into<char> for ConstraintVerb {
 	}
 }
 
+impl Default for ConstraintType {
+	fn default() -> Self {
+		ConstraintType::PwProperty
+	}
+}
+
 impl FromStr for ConstraintType {
 	type Err = std::io::Error; // TODO: actual error type
 
@@ -165,6 +288,31 @@ impl FromStr for ConstraintType {
 			"gobject" => ConstraintType::GProperty,
 			_ => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, format!("unknown constraint type {}", s))),
 		})
+	}
+}
+
+impl StaticVariantType for ConstraintType {
+	fn static_variant_type() -> Cow<'static, VariantTy> {
+		<<Self as IntoGlib>::GlibType as StaticVariantType>::static_variant_type()
+	}
+}
+
+impl FromVariant for ConstraintType {
+	fn from_variant(variant: &Variant) -> Option<Self> {
+		match variant.classify() {
+			VariantClass::String =>
+				variant.get::<String>()
+				.and_then(|s| Self::from_str(&s).ok()),
+			_ => unsafe {
+				Some(from_glib(variant.get()?))
+			},
+		}
+	}
+}
+
+impl ToVariant for ConstraintType {
+	fn to_variant(&self) -> Variant {
+		self.name().to_variant()
 	}
 }
 
