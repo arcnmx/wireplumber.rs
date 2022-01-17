@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["arcnmx"]
 build = "build.rs"
 edition = "2018"
+resolver = "2"
 
 description = "Wireplumber GObject bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
