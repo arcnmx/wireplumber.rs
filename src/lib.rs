@@ -30,8 +30,14 @@ pub use crate::core::*;
 mod log;
 pub use log::*;
 
+mod object;
+pub use object::*;
+
 mod object_manager;
 pub use object_manager::*;
+
+mod plugin;
+pub use plugin::*;
 
 mod proxy;
 pub use proxy::*;
