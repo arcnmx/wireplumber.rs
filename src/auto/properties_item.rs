@@ -17,6 +17,8 @@ glib::wrapper! {
 }
 
 impl PropertiesItem {
+    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
     #[doc(alias = "wp_properties_item_get_key")]
     #[doc(alias = "get_key")]
     pub fn key(&self) -> Option<glib::GString> {
@@ -25,6 +27,8 @@ impl PropertiesItem {
         }
     }
 
+    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
     #[doc(alias = "wp_properties_item_get_value")]
     #[doc(alias = "get_value")]
     pub fn value(&self) -> Option<glib::GString> {

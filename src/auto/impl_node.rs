@@ -34,10 +34,6 @@ impl ImplNode {
 
     //#[doc(alias = "pw-impl-node")]
     //pub fn pw_impl_node(&self) -> /*Unimplemented*/Fundamental: Pointer {
-    //    unsafe {
-    //        let mut value = glib::Value::from_type(</*Unknown type*/ as StaticType>::static_type());
-    //        glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"pw-impl-node\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-    //        value.get().expect("Return Value for property `pw-impl-node` getter")
-    //    }
+    //    glib::ObjectExt::property(self, "pw-impl-node")
     //}
 }

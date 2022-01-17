@@ -16,6 +16,9 @@ glib::wrapper! {
 }
 
 impl Plugin {
+        pub const NONE: Option<&'static Plugin> = None;
+    
+
     #[doc(alias = "wp_plugin_find")]
     pub fn find(core: &Core, plugin_name: &str) -> Option<Plugin> {
         unsafe {
@@ -23,8 +26,6 @@ impl Plugin {
         }
     }
 }
-
-pub const NONE_PLUGIN: Option<&Plugin> = None;
 
 pub trait PluginExt: 'static {
     #[doc(alias = "wp_plugin_get_name")]

@@ -2,101 +2,97 @@
 // DO NOT EDIT
 
 mod client;
-pub use self::client::{Client};
+pub use self::client::Client;
 
 mod component_loader;
-pub use self::component_loader::{ComponentLoader, NONE_COMPONENT_LOADER};
+pub use self::component_loader::ComponentLoader;
 
 mod core;
-pub use self::core::{Core};
+pub use self::core::Core;
 
 mod device;
-pub use self::device::{Device};
+pub use self::device::Device;
 
 mod endpoint;
-pub use self::endpoint::{Endpoint, NONE_ENDPOINT};
+pub use self::endpoint::Endpoint;
 
 mod factory;
-pub use self::factory::{Factory};
+pub use self::factory::Factory;
 
 mod feature_activation_transition;
-pub use self::feature_activation_transition::{FeatureActivationTransition};
+pub use self::feature_activation_transition::FeatureActivationTransition;
 
 mod global_proxy;
-pub use self::global_proxy::{GlobalProxy, NONE_GLOBAL_PROXY};
+pub use self::global_proxy::GlobalProxy;
 
 mod impl_endpoint;
-pub use self::impl_endpoint::{ImplEndpoint};
+pub use self::impl_endpoint::ImplEndpoint;
 
 mod impl_metadata;
-pub use self::impl_metadata::{ImplMetadata};
+pub use self::impl_metadata::ImplMetadata;
 
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 mod impl_module;
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
-pub use self::impl_module::{ImplModule};
+pub use self::impl_module::ImplModule;
 
 mod impl_node;
-pub use self::impl_node::{ImplNode};
+pub use self::impl_node::ImplNode;
 
 mod link;
-pub use self::link::{Link};
+pub use self::link::Link;
 
 mod metadata;
-pub use self::metadata::{Metadata, NONE_METADATA};
+pub use self::metadata::Metadata;
 
 mod node;
-pub use self::node::{Node};
+pub use self::node::Node;
 
 mod object;
-pub use self::object::{Object, NONE_OBJECT};
+pub use self::object::Object;
 
 mod object_manager;
-pub use self::object_manager::{ObjectManager};
+pub use self::object_manager::ObjectManager;
 
 mod pipewire_object;
-pub use self::pipewire_object::{PipewireObject, NONE_PIPEWIRE_OBJECT};
+pub use self::pipewire_object::PipewireObject;
 
 mod plugin;
-pub use self::plugin::{Plugin, NONE_PLUGIN};
+pub use self::plugin::Plugin;
 
 mod port;
-pub use self::port::{Port};
+pub use self::port::Port;
 
 mod proxy;
-pub use self::proxy::{Proxy, NONE_PROXY};
+pub use self::proxy::Proxy;
 
 mod session_item;
-pub use self::session_item::{SessionItem, NONE_SESSION_ITEM};
+pub use self::session_item::SessionItem;
 
 mod si_acquisition;
-pub use self::si_acquisition::{SiAcquisition, NONE_SI_ACQUISITION};
+pub use self::si_acquisition::SiAcquisition;
 
 mod si_adapter;
-pub use self::si_adapter::{SiAdapter, NONE_SI_ADAPTER};
+pub use self::si_adapter::SiAdapter;
 
 mod si_endpoint;
-pub use self::si_endpoint::{SiEndpoint, NONE_SI_ENDPOINT};
+pub use self::si_endpoint::SiEndpoint;
 
 mod si_factory;
-pub use self::si_factory::{SiFactory, NONE_SI_FACTORY};
+pub use self::si_factory::SiFactory;
 
 mod si_link;
-pub use self::si_link::{SiLink, NONE_SI_LINK};
+pub use self::si_link::SiLink;
 
 mod si_linkable;
-pub use self::si_linkable::{SiLinkable, NONE_SI_LINKABLE};
+pub use self::si_linkable::SiLinkable;
 
 mod spa_device;
-pub use self::spa_device::{SpaDevice};
+pub use self::spa_device::SpaDevice;
 
 mod state;
-pub use self::state::{State};
+pub use self::state::State;
 
 mod transition;
-pub use self::transition::{Transition, NONE_TRANSITION};
+pub use self::transition::Transition;
 
 mod iterator;
 pub use self::iterator::Iterator;

@@ -16,6 +16,9 @@ glib::wrapper! {
 }
 
 impl SiFactory {
+        pub const NONE: Option<&'static SiFactory> = None;
+    
+
     #[doc(alias = "wp_si_factory_new_simple")]
     pub fn new_simple(factory_name: &str, si_type: glib::types::Type) -> SiFactory {
         unsafe {
@@ -31,14 +34,12 @@ impl SiFactory {
     }
 
     #[doc(alias = "wp_si_factory_register")]
-    pub fn register<P: IsA<SiFactory>>(core: &Core, factory: &P) {
+    pub fn register(core: &Core, factory: &impl IsA<SiFactory>) {
         unsafe {
             ffi::wp_si_factory_register(core.to_glib_none().0, factory.as_ref().to_glib_full());
         }
     }
 }
-
-pub const NONE_SI_FACTORY: Option<&SiFactory> = None;
 
 pub trait SiFactoryExt: 'static {
     #[doc(alias = "wp_si_factory_construct")]

@@ -25,6 +25,9 @@ glib::wrapper! {
 }
 
 impl Metadata {
+        pub const NONE: Option<&'static Metadata> = None;
+    
+
     #[doc(alias = "wp_metadata_iterator_item_extract")]
     pub fn iterator_item_extract(item: &glib::Value) -> (u32, glib::GString, glib::GString, glib::GString) {
         unsafe {
@@ -38,8 +41,6 @@ impl Metadata {
         }
     }
 }
-
-pub const NONE_METADATA: Option<&Metadata> = None;
 
 pub trait MetadataExt: 'static {
     #[doc(alias = "wp_metadata_clear")]

@@ -21,7 +21,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_SI_LINK: Option<&SiLink> = None;
+impl SiLink {
+        pub const NONE: Option<&'static SiLink> = None;
+    
+}
 
 pub trait SiLinkExt: 'static {
     #[doc(alias = "wp_si_link_get_in_item")]

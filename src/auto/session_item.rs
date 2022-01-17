@@ -23,8 +23,11 @@ glib::wrapper! {
 }
 
 impl SessionItem {
+        pub const NONE: Option<&'static SessionItem> = None;
+    
+
     #[doc(alias = "wp_session_item_handle_proxy_destroyed")]
-    pub fn handle_proxy_destroyed<P: IsA<Proxy>, Q: IsA<SessionItem>>(proxy: &P, item: &Q) {
+    pub fn handle_proxy_destroyed(proxy: &impl IsA<Proxy>, item: &impl IsA<SessionItem>) {
         unsafe {
             ffi::wp_session_item_handle_proxy_destroyed(proxy.as_ref().to_glib_none().0, item.as_ref().to_glib_none().0);
         }
@@ -37,8 +40,6 @@ impl SessionItem {
         }
     }
 }
-
-pub const NONE_SESSION_ITEM: Option<&SessionItem> = None;
 
 pub trait SessionItemExt: 'static {
     #[doc(alias = "wp_session_item_configure")]

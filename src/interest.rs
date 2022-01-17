@@ -18,7 +18,7 @@ impl ObjectInterest {
 
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_props(&self, props: &Properties) -> bool {
-		self.matches_full::<Object>(InterestMatchFlags::CHECK_ALL, Properties::static_type(), None, Some(props), None) == InterestMatch::all()
+		self.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), None::<&Object>, Some(props), None) == InterestMatch::all()
 	}
 }
 

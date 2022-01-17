@@ -20,20 +20,23 @@ glib::wrapper! {
 }
 
 impl Transition {
+        pub const NONE: Option<&'static Transition> = None;
+    
+
     //#[doc(alias = "wp_transition_new")]
-    //pub fn new<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + 'static>(type_: glib::types::Type, source_object: Option<&glib::Object>, cancellable: Option<&P>, callback: Q) -> Transition {
+    //pub fn new<P: FnOnce(Result<(), glib::Error>) + 'static>(type_: glib::types::Type, source_object: Option<&glib::Object>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) -> Transition {
     //    unsafe { TODO: call ffi:wp_transition_new() }
     //}
 
     #[doc(alias = "wp_transition_new_closure")]
-    pub fn new_closure<P: IsA<glib::Object>, Q: IsA<gio::Cancellable>>(type_: glib::types::Type, source_object: Option<&P>, cancellable: Option<&Q>, closure: Option<&glib::Closure>) -> Transition {
+    pub fn new_closure(type_: glib::types::Type, source_object: Option<&impl IsA<glib::Object>>, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: Option<&glib::Closure>) -> Transition {
         unsafe {
             from_glib_none(ffi::wp_transition_new_closure(type_.into_glib(), source_object.map(|p| p.as_ref()).to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.to_glib_none().0))
         }
     }
 
     #[doc(alias = "wp_transition_finish")]
-    pub fn finish<P: IsA<gio::AsyncResult>>(res: &P) -> Result<(), glib::Error> {
+    pub fn finish(res: &impl IsA<gio::AsyncResult>) -> Result<(), glib::Error> {
         unsafe {
             let mut error = ptr::null_mut();
             let _ = ffi::wp_transition_finish(res.as_ref().to_glib_none().0, &mut error);
@@ -41,8 +44,6 @@ impl Transition {
         }
     }
 }
-
-pub const NONE_TRANSITION: Option<&Transition> = None;
 
 pub trait TransitionExt: 'static {
     #[doc(alias = "wp_transition_advance")]

@@ -53,7 +53,7 @@ impl SpaDevice {
     }
 
     #[doc(alias = "wp_spa_device_store_managed_object")]
-    pub fn store_managed_object<P: IsA<glib::Object>>(&self, id: u32, object: Option<&P>) {
+    pub fn store_managed_object(&self, id: u32, object: Option<&impl IsA<glib::Object>>) {
         unsafe {
             ffi::wp_spa_device_store_managed_object(self.to_glib_none().0, id, object.map(|p| p.as_ref()).to_glib_full());
         }
@@ -61,11 +61,7 @@ impl SpaDevice {
 
     //#[doc(alias = "spa-device-handle")]
     //pub fn spa_device_handle(&self) -> /*Unimplemented*/Fundamental: Pointer {
-    //    unsafe {
-    //        let mut value = glib::Value::from_type(</*Unknown type*/ as StaticType>::static_type());
-    //        glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"spa-device-handle\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-    //        value.get().expect("Return Value for property `spa-device-handle` getter")
-    //    }
+    //    glib::ObjectExt::property(self, "spa-device-handle")
     //}
 
     #[doc(alias = "create-object")]

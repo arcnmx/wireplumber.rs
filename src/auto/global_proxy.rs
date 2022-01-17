@@ -21,7 +21,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_GLOBAL_PROXY: Option<&GlobalProxy> = None;
+impl GlobalProxy {
+        pub const NONE: Option<&'static GlobalProxy> = None;
+    
+}
 
 pub trait GlobalProxyExt: 'static {
     #[doc(alias = "wp_global_proxy_bind")]

@@ -16,7 +16,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_SI_LINKABLE: Option<&SiLinkable> = None;
+impl SiLinkable {
+        pub const NONE: Option<&'static SiLinkable> = None;
+    
+}
 
 pub trait SiLinkableExt: 'static {
     #[doc(alias = "wp_si_linkable_get_acquisition")]

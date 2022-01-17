@@ -20,7 +20,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_PROXY: Option<&Proxy> = None;
+impl Proxy {
+        pub const NONE: Option<&'static Proxy> = None;
+    
+}
 
 pub trait ProxyExt: 'static {
     #[doc(alias = "wp_proxy_get_bound_id")]

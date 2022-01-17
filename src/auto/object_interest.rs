@@ -52,7 +52,7 @@ impl ObjectInterest {
     //}
 
     #[doc(alias = "wp_object_interest_matches_full")]
-    pub fn matches_full<P: IsA<glib::Object>>(&self, flags: InterestMatchFlags, object_type: glib::types::Type, object: Option<&P>, pw_props: Option<&Properties>, pw_global_props: Option<&Properties>) -> InterestMatch {
+    pub fn matches_full(&self, flags: InterestMatchFlags, object_type: glib::types::Type, object: Option<&impl IsA<glib::Object>>, pw_props: Option<&Properties>, pw_global_props: Option<&Properties>) -> InterestMatch {
         unsafe {
             from_glib(ffi::wp_object_interest_matches_full(self.to_glib_none().0, flags.into_glib(), object_type.into_glib(), object.map(|p| p.as_ref()).to_glib_none().0, pw_props.to_glib_none().0, pw_global_props.to_glib_none().0))
         }

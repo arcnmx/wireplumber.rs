@@ -25,11 +25,14 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_PIPEWIRE_OBJECT: Option<&PipewireObject> = None;
+impl PipewireObject {
+        pub const NONE: Option<&'static PipewireObject> = None;
+    
+}
 
 pub trait PipewireObjectExt: 'static {
     #[doc(alias = "wp_pipewire_object_enum_params")]
-    fn enum_params<P: IsA<gio::Cancellable>, Q: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&P>, callback: Q);
+    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
 
     
     fn enum_params_future(&self, id: Option<&str>, filter: Option<&SpaPod>) -> Pin<Box_<dyn std::future::Future<Output = Result<Option<Iterator>, glib::Error>> + 'static>>;
@@ -69,16 +72,16 @@ pub trait PipewireObjectExt: 'static {
 }
 
 impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
-    fn enum_params<P: IsA<gio::Cancellable>, Q: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&P>, callback: Q) {
-        let user_data: Box_<Q> = Box_::new(callback);
-        unsafe extern "C" fn enum_params_trampoline<Q: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
+    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
+        let user_data: Box_<P> = Box_::new(callback);
+        unsafe extern "C" fn enum_params_trampoline<P: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
             let mut error = ptr::null_mut();
             let ret = ffi::wp_pipewire_object_enum_params_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(from_glib_full(ret)) } else { Err(from_glib_full(error)) };
-            let callback: Box_<Q> = Box_::from_raw(user_data as *mut _);
+            let callback: Box_<P> = Box_::from_raw(user_data as *mut _);
             callback(result);
         }
-        let callback = enum_params_trampoline::<Q>;
+        let callback = enum_params_trampoline::<P>;
         unsafe {
             ffi::wp_pipewire_object_enum_params(self.as_ref().to_glib_none().0, id.to_glib_none().0, filter.to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), Box_::into_raw(user_data) as *mut _);
         }

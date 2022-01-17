@@ -17,7 +17,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_SI_ADAPTER: Option<&SiAdapter> = None;
+impl SiAdapter {
+        pub const NONE: Option<&'static SiAdapter> = None;
+    
+}
 
 pub trait SiAdapterExt: 'static {
     #[doc(alias = "wp_si_adapter_get_ports_format")]

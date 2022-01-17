@@ -38,18 +38,10 @@ impl ImplMetadata {
     }
 
     pub fn name(&self) -> Option<glib::GString> {
-        unsafe {
-            let mut value = glib::Value::from_type(<glib::GString as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"name\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `name` getter")
-        }
+        glib::ObjectExt::property(self, "name")
     }
 
     pub fn properties(&self) -> Option<Properties> {
-        unsafe {
-            let mut value = glib::Value::from_type(<Properties as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"properties\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `properties` getter")
-        }
+        glib::ObjectExt::property(self, "properties")
     }
 }

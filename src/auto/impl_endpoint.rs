@@ -24,17 +24,13 @@ glib::wrapper! {
 
 impl ImplEndpoint {
     #[doc(alias = "wp_impl_endpoint_new")]
-    pub fn new<P: IsA<SiEndpoint>>(core: &Core, item: &P) -> ImplEndpoint {
+    pub fn new(core: &Core, item: &impl IsA<SiEndpoint>) -> ImplEndpoint {
         unsafe {
             from_glib_full(ffi::wp_impl_endpoint_new(core.to_glib_none().0, item.as_ref().to_glib_none().0))
         }
     }
 
     pub fn item(&self) -> Option<SiEndpoint> {
-        unsafe {
-            let mut value = glib::Value::from_type(<SiEndpoint as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"item\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `item` getter")
-        }
+        glib::ObjectExt::property(self, "item")
     }
 }

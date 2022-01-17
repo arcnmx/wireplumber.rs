@@ -14,5 +14,3 @@ glib::wrapper! {
         type_ => || ffi::wp_factory_get_type(),
     }
 }
-
-impl Factory {}

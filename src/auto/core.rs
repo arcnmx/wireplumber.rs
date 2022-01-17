@@ -174,16 +174,16 @@ impl Core {
     }
 
     #[doc(alias = "wp_core_sync")]
-    pub fn sync<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, cancellable: Option<&P>, callback: Q) -> bool {
-        let user_data: Box_<Q> = Box_::new(callback);
-        unsafe extern "C" fn sync_trampoline<Q: FnOnce(Result<(), glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
+    pub fn sync<P: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) -> bool {
+        let user_data: Box_<P> = Box_::new(callback);
+        unsafe extern "C" fn sync_trampoline<P: FnOnce(Result<(), glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
             let mut error = ptr::null_mut();
             let _ = ffi::wp_core_sync_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) };
-            let callback: Box_<Q> = Box_::from_raw(user_data as *mut _);
+            let callback: Box_<P> = Box_::from_raw(user_data as *mut _);
             callback(result);
         }
-        let callback = sync_trampoline::<Q>;
+        let callback = sync_trampoline::<P>;
         unsafe {
             from_glib(ffi::wp_core_sync(self.to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), Box_::into_raw(user_data) as *mut _))
         }
@@ -205,7 +205,7 @@ impl Core {
     #[cfg(any(feature = "v0_4_6", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
     #[doc(alias = "wp_core_sync_closure")]
-    pub fn sync_closure<P: IsA<gio::Cancellable>>(&self, cancellable: Option<&P>, closure: &glib::Closure) -> bool {
+    pub fn sync_closure(&self, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: &glib::Closure) -> bool {
         unsafe {
             from_glib(ffi::wp_core_sync_closure(self.to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.to_glib_none().0))
         }

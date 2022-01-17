@@ -96,11 +96,7 @@ impl ObjectManager {
     }
 
     pub fn core(&self) -> Option<Core> {
-        unsafe {
-            let mut value = glib::Value::from_type(<Core as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"core\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `core` getter")
-        }
+        glib::ObjectExt::property(self, "core")
     }
 
     #[doc(alias = "installed")]
@@ -170,7 +166,7 @@ impl ObjectManager {
 }
 
 impl Default for ObjectManager {
-    fn default() -> Self {
-        Self::new()
-    }
-}
+                     fn default() -> Self {
+                         Self::new()
+                     }
+                 }

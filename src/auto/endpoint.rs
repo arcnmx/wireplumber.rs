@@ -23,7 +23,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_ENDPOINT: Option<&Endpoint> = None;
+impl Endpoint {
+        pub const NONE: Option<&'static Endpoint> = None;
+    
+}
 
 pub trait EndpointExt: 'static {
     #[doc(alias = "wp_endpoint_get_direction")]

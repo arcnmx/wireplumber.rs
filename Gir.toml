@@ -12,7 +12,6 @@ single_version_file = "generate/src/Gir.version"
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [
 	"Wp.Proxy",
-	"Wp.PropertiesItem",
 	"Wp.ObjectInterest",
 	"Wp.GlobalProxy",
 	"Wp.Plugin", "Wp.ComponentLoader",
@@ -90,6 +89,12 @@ name = "Wp.Properties"
 status = "generate"
 	[[object.derive]]
 	name = "PartialEq, Eq, PartialOrd, Ord, Hash" # defaults excluding Debug
+
+[[object]]
+name = "Wp.PropertiesItem"
+status = "generate"
+# TODO: work around gir bug, 0.14 omitted the entire struct properly
+cfg_condition = 'feature = "v0_4_2"'
 
 [[object]]
 name = "Wp.Iterator"

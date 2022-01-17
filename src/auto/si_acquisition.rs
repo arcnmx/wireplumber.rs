@@ -18,15 +18,18 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_SI_ACQUISITION: Option<&SiAcquisition> = None;
+impl SiAcquisition {
+        pub const NONE: Option<&'static SiAcquisition> = None;
+    
+}
 
 pub trait SiAcquisitionExt: 'static {
     #[doc(alias = "wp_si_acquisition_release")]
-    fn release<P: IsA<SiLink>, Q: IsA<SiLinkable>>(&self, acquisitor: &P, item: &Q);
+    fn release(&self, acquisitor: &impl IsA<SiLink>, item: &impl IsA<SiLinkable>);
 }
 
 impl<O: IsA<SiAcquisition>> SiAcquisitionExt for O {
-    fn release<P: IsA<SiLink>, Q: IsA<SiLinkable>>(&self, acquisitor: &P, item: &Q) {
+    fn release(&self, acquisitor: &impl IsA<SiLink>, item: &impl IsA<SiLinkable>) {
         unsafe {
             ffi::wp_si_acquisition_release(self.as_ref().to_glib_none().0, acquisitor.as_ref().to_glib_none().0, item.as_ref().to_glib_none().0);
         }

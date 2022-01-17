@@ -13,6 +13,7 @@ glib::wrapper! {
     }
 }
 
-impl ComponentLoader {}
-
-pub const NONE_COMPONENT_LOADER: Option<&ComponentLoader> = None;
+impl ComponentLoader {
+        pub const NONE: Option<&'static ComponentLoader> = None;
+    
+}

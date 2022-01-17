@@ -20,7 +20,10 @@ glib::wrapper! {
     }
 }
 
-pub const NONE_SI_ENDPOINT: Option<&SiEndpoint> = None;
+impl SiEndpoint {
+        pub const NONE: Option<&'static SiEndpoint> = None;
+    
+}
 
 pub trait SiEndpointExt: 'static {
     #[doc(alias = "wp_si_endpoint_get_registration_info")]
