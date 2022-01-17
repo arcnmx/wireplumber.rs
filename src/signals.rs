@@ -31,14 +31,14 @@ def_signal! {
 	impl Notifies<"object-added" as ObjectAdded> for crate::ObjectManager {
 		impl {const SIGNAL_OBJECT_ADDED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		fn(&self, crate::Object)
+		fn(&self, glib::Object)
 	}
 }
 def_signal! {
 	impl Notifies<"object-removed" as ObjectRemoved> for crate::ObjectManager {
 		impl {const SIGNAL_OBJECT_REMOVED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		fn(&self, crate::Object)
+		fn(&self, glib::Object)
 	}
 }
 
