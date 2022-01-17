@@ -1,5 +1,5 @@
 use glib::{value::FromValue, StaticType};
-use std::{iter::{self, FusedIterator, FromIterator}, marker::PhantomData};
+use std::{iter::{self, FusedIterator, FromIterator}, marker::PhantomData, fmt};
 
 use glib::{translate::{from_glib_full, ToGlibPtr, IntoGlib}, ffi::gpointer, ObjectType, Value, Type};
 
@@ -89,6 +89,15 @@ impl<T> ValueIterator<T> {
 impl<T: StaticType> Default for ValueIterator<T> {
 	fn default() -> Self {
 		Self::with_inner(crate::Iterator::empty(T::static_type()))
+	}
+}
+
+impl<T: StaticType> fmt::Debug for ValueIterator<T> {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		let name = format!("ValueIterator<{}>", T::static_type().name());
+		f.debug_tuple(&name)
+			.field(&self.iter)
+			.finish()
 	}
 }
 
