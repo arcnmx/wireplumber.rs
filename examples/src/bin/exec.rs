@@ -155,6 +155,7 @@ impl Args {
 	fn plugins(&self) -> Vec<&str> {
 		match self.module_type {
 			ModuleType::Lua => vec!["lua-scripting"],
+			ModuleType::Wireplumber if self.plugins.is_empty() && self.module.is_none() => vec!["static-link"],
 			ModuleType::Wireplumber => self.plugins.iter().map(|s| s.as_str()).collect(),
 			ModuleType::Pipewire => todo!(),
 		}
@@ -163,9 +164,18 @@ impl Args {
 	fn module(&self) -> Option<&str> {
 		match self.module {
 			Some(ref module) => Some(module),
-			None if self.module_type.is_lua() =>
-				Some(concat!(env!("CARGO_MANIFEST_DIR"), "/script.lua").into()),
-			_ => None,
+			None => match self.module_type {
+				ModuleType::Lua =>
+					Some(concat!(env!("CARGO_MANIFEST_DIR"), "/script.lua")),
+				ModuleType::Wireplumber => {
+					let module_path = concat!(env!("OUT_DIR"), "/../../../examples/libstatic_link_module.so"); // TODO: .so is so linux
+					if fs::metadata(module_path).is_err() {
+						warning!(domain: LOG_DOMAIN, "example module not found, try: cargo build -p wp-examples --example static-link-module");
+					}
+					Some(module_path)
+				},
+				_ => None,
+			},
 		}
 	}
 

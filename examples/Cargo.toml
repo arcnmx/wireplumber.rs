@@ -3,6 +3,7 @@ name = "wp-examples"
 version = "0.0.0"
 authors = ["arcnmx"]
 edition = "2018"
+build = "build.rs"
 
 [[example]]
 name = "static-link-module"
