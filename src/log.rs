@@ -1,4 +1,4 @@
-use glib::{LogLevelFlags, translate::{IntoGlib, ToGlibPtr, from_glib}};
+use glib::{LogLevelFlags, translate::{IntoGlib, ToGlibPtr, from_glib}, error::ErrorDomain};
 use libspa_sys::spa_log;
 use std::env;
 
@@ -10,6 +10,10 @@ impl Log {
 
 	/*#[doc(alias = "WP_OBJECT_FORMAT")]
 	pub const OBJECT_FORMAT: CStr = ffi::WP_OBJECT_FORMAT;*/
+
+	pub fn domain() -> &'static str {
+		crate::LibraryErrorEnum::domain().as_str()
+	}
 
 	#[doc(alias = "wp_log_level_is_enabled")]
 	pub fn level_is_enabled(flags: LogLevelFlags) -> bool {
