@@ -9,7 +9,6 @@ use glib::value::FromValue;
 use glib::value::ToValue;
 use glib::StaticType;
 use glib::Type;
-use std::fmt;
 
 bitflags! {
     #[doc(alias = "WpInitFlags")]
@@ -24,12 +23,6 @@ bitflags! {
         const SET_GLIB_LOG = ffi::WP_INIT_SET_GLIB_LOG as u32;
         #[doc(alias = "WP_INIT_ALL")]
         const ALL = ffi::WP_INIT_ALL as u32;
-    }
-}
-
-impl fmt::Display for InitFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
     }
 }
 
@@ -97,12 +90,6 @@ bitflags! {
     }
 }
 
-impl fmt::Display for InterestMatch {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for InterestMatch {
     type GlibType = ffi::WpInterestMatch;
@@ -158,12 +145,6 @@ bitflags! {
         const NONE = ffi::WP_INTEREST_MATCH_FLAGS_NONE as u32;
         #[doc(alias = "WP_INTEREST_MATCH_FLAGS_CHECK_ALL")]
         const CHECK_ALL = ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL as u32;
-    }
-}
-
-impl fmt::Display for InterestMatchFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
     }
 }
 
@@ -231,12 +212,6 @@ bitflags! {
     }
 }
 
-impl fmt::Display for LookupDirs {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for LookupDirs {
     type GlibType = ffi::WpLookupDirs;
@@ -290,12 +265,6 @@ bitflags! {
     pub struct MetadataFeatures: u32 {
         #[doc(alias = "WP_METADATA_FEATURE_DATA")]
         const DATA = ffi::WP_METADATA_FEATURE_DATA as u32;
-    }
-}
-
-impl fmt::Display for MetadataFeatures {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
     }
 }
 
@@ -355,12 +324,6 @@ bitflags! {
     }
 }
 
-impl fmt::Display for NodeFeatures {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for NodeFeatures {
     type GlibType = ffi::WpNodeFeatures;
@@ -414,12 +377,6 @@ bitflags! {
     pub struct PluginFeatures: u32 {
         #[doc(alias = "WP_PLUGIN_FEATURE_ENABLED")]
         const ENABLED = ffi::WP_PLUGIN_FEATURE_ENABLED as u32;
-    }
-}
-
-impl fmt::Display for PluginFeatures {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
     }
 }
 
@@ -491,12 +448,6 @@ bitflags! {
     }
 }
 
-impl fmt::Display for ProxyFeatures {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for ProxyFeatures {
     type GlibType = ffi::WpProxyFeatures;
@@ -555,12 +506,6 @@ bitflags! {
     }
 }
 
-impl fmt::Display for SessionItemFeatures {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for SessionItemFeatures {
     type GlibType = ffi::WpSessionItemFeatures;
@@ -614,12 +559,6 @@ bitflags! {
     pub struct SpaDeviceFeatures: u32 {
         #[doc(alias = "WP_SPA_DEVICE_FEATURE_ENABLED")]
         const ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED as u32;
-    }
-}
-
-impl fmt::Display for SpaDeviceFeatures {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        <Self as fmt::Debug>::fmt(self, f)
     }
 }
 
