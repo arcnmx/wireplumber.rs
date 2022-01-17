@@ -5,5 +5,19 @@ target_path = "."
 min_cfg_version = "0.4"
 work_mode = "sys"
 split_build_rs = true
+single_version_file = "src/Gir-sys.version"
 
 external_libraries = ["GLib", "GObject", "Gio"]
+
+[[object]]
+name = "Wp.SpaType"
+fundamental_type = true
+status = "manual"
+
+[[object]]
+name = "Wp.IteratorMethods"
+status = "generate"
+	[[object.function]]
+	# this is not a real glib type
+	name = "get_type"
+	ignore = true

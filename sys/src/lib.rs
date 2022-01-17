@@ -4,3 +4,5 @@
 mod sys;
 
 pub use sys::*;
+
+pub type WpSpaType = libc::c_uint;
