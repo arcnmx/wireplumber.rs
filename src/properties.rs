@@ -1,11 +1,11 @@
 use glib::translate::{from_glib_full, ToGlibPtr};
-use std::{ptr::NonNull, iter::{self, FromIterator}, fmt};
+use std::{ptr::NonNull, iter, fmt};
 use libspa_sys::spa_dict;
 use pipewire_sys::pw_properties;
 
-use crate::{Properties, ValueIterator, pw::ToPipewirePropertyString};
+use crate::{Properties, pw::ToPipewirePropertyString};
 #[cfg(feature = "v0_4_2")]
-use crate::PropertiesItem;
+use crate::{PropertiesItem, ValueIterator};
 
 impl Properties {
 	pub fn new_clone(props: &Self) -> Properties {
@@ -130,7 +130,7 @@ mod properties_item {
 	}
 }
 
-impl FromIterator<(String, String)> for Properties {
+impl iter::FromIterator<(String, String)> for Properties {
 	fn from_iter<T: IntoIterator<Item=(String, String)>>(iter: T) -> Self {
 		let mut props = Self::new_empty();
 		props.extend(iter);
