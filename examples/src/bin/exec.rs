@@ -3,15 +3,18 @@
 //! Based on [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c).
 
 use anyhow::Context;
-use glib::{Variant, g_info};
+use glib::Variant;
 use clap::{Parser, ArgEnum};
 use anyhow::{Result, format_err};
 use std::cell::RefCell;
 use std::rc::Rc;
-use std::env;
+use std::path::Path;
+use std::{env, fs};
 
 use wireplumber::prelude::*;
-use wireplumber::{Core, Properties, Plugin, PluginFeatures, Log, pw};
+use wireplumber::{Core, Properties, Plugin, PluginFeatures, Log, pw, info, warning};
+
+const LOG_DOMAIN: &'static str = "wpexec.rs";
 
 #[derive(ArgEnum, Copy, Clone, Debug)]
 enum ModuleType {
@@ -42,15 +45,29 @@ struct Args {
 
 async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	let path = args.module().unwrap(); // NOTE: already checked this in main()
+	let path = {
+		let path = Path::new(path);
+		if !args.module_type.is_script() && path.is_absolute() {
+			let path = fs::canonicalize(path)?;
+			let (dir, file) = (path.parent().unwrap(), path.file_name().unwrap());
+			env::set_var("WIREPLUMBER_MODULE_DIR", dir);
+			Some(file.to_string_lossy().into_owned())
+		} else {
+			None
+		}
+	}.unwrap_or(path.into());
+
 	let variant_args = args.variant()?;
+	if let Some(module) = args.module_type.loader_module() {
+		core.load_component(module, "module", None)
+			.with_context(|| format!("failed to load the {:?} scripting module", args.module_type))?;
+	}
 	if args.module_type.is_lua() {
-		core.load_component("libwireplumber-module-lua-scripting", "module", None)
-			.context("failed to load the lua-scripting module")?;
-		core.load_lua_script(path, variant_args)
+		core.load_lua_script(&path, variant_args)
 			.context("failed to load the lua script")?;
 	} else {
-		core.load_component(path, args.module_type.loader_type(), variant_args.as_ref())
-			.with_context(|| format!("failed to load the {} {}", path, args.module_type.loader_type()))?;
+		core.load_component(&path, args.module_type.loader_type(), variant_args.as_ref())
+			.with_context(|| format!("failed to load {} as a {}", path, args.module_type.loader_type()))?;
 	}
 
 	core.connect_future().await?;
@@ -62,13 +79,15 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 			.with_context(|| format!("failed to activate {:?} plugin", plugin_name))?;
 	}
 	if plugin_names.is_empty() {
-		g_info!("wpexec", "skipped activation, no plugin specified");
+		info!(domain: LOG_DOMAIN, "skipped activation, no plugin specified");
 	}
 
 	Ok(())
 }
 
 fn main() -> Result<()> {
+	Log::set_default_level("3");
+
 	let args = Args::parse();
 
 	if args.module().is_none() {
@@ -77,13 +96,12 @@ fn main() -> Result<()> {
 
 	let _ = args.variant()?; // bail out early if invalid args provided
 
-	Log::set_default_level("3");
 	Core::init(Default::default());
 
 	let main_res = Rc::new(RefCell::new(None));
 
 	let props = Properties::new_empty();
-	props.set(pw::PW_KEY_APP_NAME, Some("wpexec"));
+	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
 
 	Core::run(Some(&props), |context, mainloop, core| {
 		ctrlc::set_handler({
@@ -111,6 +129,17 @@ fn main() -> Result<()> {
 impl ModuleType {
 	fn is_lua(&self) -> bool {
 		matches!(self, ModuleType::Lua)
+	}
+
+	fn is_script(&self) -> bool {
+		self.is_lua()
+	}
+
+	fn loader_module(&self) -> Option<&'static str> {
+		match self {
+			ModuleType::Lua => Some("libwireplumber-module-lua-scripting"),
+			_ => None,
+		}
 	}
 
 	fn loader_type(&self) -> &'static str {
