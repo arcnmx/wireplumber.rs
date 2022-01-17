@@ -12,7 +12,6 @@ generate = [
 	"Wp.Proxy",
 	"Wp.PropertiesItem",
 	"Wp.ObjectInterest",
-	"Wp.PipewireObject",
 	"Wp.GlobalProxy",
 	"Wp.Plugin", "Wp.ComponentLoader",
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
@@ -101,6 +100,13 @@ status = "generate"
 name = "Wp.ObjectFeatures"
 status = "manual"
 conversion_type = "scalar"
+
+[[object]]
+name = "Wp.PipewireObject"
+status = "generate"
+	[[object.function]]
+	name = "get_property"
+	ignore = true
 
 # enums
 

@@ -1,11 +1,15 @@
-use glib::{IsA, translate::{ToGlibPtr, FromGlib, IntoGlib}, ffi::gconstpointer};
+use std::ffi::{CStr, CString};
+use std::fmt;
+
+use glib::{Error, IsA, translate::{ToGlibPtr, FromGlib, IntoGlib}, ffi::gconstpointer};
 use pipewire_sys::pw_proxy;
-use crate::{Proxy, PipewireObject};
+use crate::{Proxy, PipewireObject, pw::{self, FromPipewirePropertyString}, LibraryErrorEnum};
 
 #[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
 pub struct ObjectFeatures(pub u32); // TODO: consider keeping this as u32, and just keep the inherent impls (requires no changes to `auto`)
 
 impl ObjectFeatures {
+	pub const NONE: Self = Self(0);
 	pub const ALL: Self = Self(ffi::WP_OBJECT_FEATURES_ALL);
 
 	pub fn with_bits(bits: u32) -> Self {
@@ -121,6 +125,8 @@ pub trait ProxyExt2: 'static {
 
 	#[doc(alias = "wp_proxy_set_pw_proxy")]
 	fn set_pw_proxy_raw(&self, proxy: *mut pw_proxy);
+
+	// TODO: bound_id() -> Option<>
 }
 
 impl<O: IsA<Proxy>> ProxyExt2 for O {
@@ -141,12 +147,69 @@ pub trait PipewireObjectExt2: 'static {
 	#[doc(alias = "wp_pipewire_object_get_native_info")]
 	#[doc(alias = "get_native_info")]
 	fn native_info(&self) -> gconstpointer;
+
+	fn object_id(&self) -> Result<u32, Error>;
+
+	#[doc(alias = "wp_pipewire_object_get_property")]
+	#[doc(alias = "get_property")]
+	fn get_pw_property(&self, key: &str) -> Option<String>;
+	fn get_pw_property_cstring(&self, key: &str) -> Option<CString>;
+
+	fn with_pw_property_cstr<R, F: FnOnce(&CStr) -> R>(&self, key: &str, f: F) -> Option<R>;
+	fn with_pw_property<R, F: FnOnce(&str) -> R>(&self, key: &str, f: F) -> Option<R>;
+
+	#[doc(alias = "wp_pipewire_object_get_property")]
+	#[doc(alias = "get_property")]
+	fn pw_property<T: FromPipewirePropertyString>(&self, key: &str) -> Result<T, Error>;
 }
 
 impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 	fn native_info(&self) -> gconstpointer {
 		unsafe {
 			ffi::wp_pipewire_object_get_native_info(self.as_ref().to_glib_none().0)
+		}
+	}
+
+	fn object_id(&self) -> Result<u32, Error> {
+		self.pw_property(pw::PW_KEY_OBJECT_ID)
+	}
+
+	fn get_pw_property_cstring(&self, key: &str) -> Option<CString> {
+		self.with_pw_property_cstr(key, |cstr| cstr.to_owned())
+	}
+
+	fn get_pw_property(&self, key: &str) -> Option<String> {
+		self.with_pw_property(key, |str| str.to_owned())
+	}
+
+	fn with_pw_property_cstr<R, F: FnOnce(&CStr) -> R>(&self, key: &str, f: F) -> Option<R> {
+		let this = self.as_ref();
+		unsafe {
+			let value = ffi::wp_pipewire_object_get_property(this.to_glib_none().0, key.to_glib_none().0);
+			if value.is_null() {
+				None
+			} else {
+				Some(f(CStr::from_ptr(value)))
+			}
+		}
+	}
+
+	fn with_pw_property<R, F: FnOnce(&str) -> R>(&self, key: &str, f: F) -> Option<R> {
+		let this = self.as_ref();
+		self.with_pw_property_cstr(key, move |cstr| match cstr.to_str() {
+			Err(e) => {
+				glib::g_warning!(crate::Log::domain(), "pw_property {} ({:?}) was not valid UTF-8: {:?}", key, cstr, e);
+				None
+			},
+			Ok(str) => Some(f(str)),
+		}).flatten()
+	}
+
+	fn pw_property<T: FromPipewirePropertyString>(&self, key: &str) -> Result<T, Error> {
+		match self.with_pw_property(key, T::from_pipewire_string) {
+			None => Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("pw_property {} not found", key))),
+			Some(Err(e)) => Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("pw_property {} failed to parse: {:?}", key, e))),
+			Some(Ok(v)) => Ok(v),
 		}
 	}
 }
