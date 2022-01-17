@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::{Node, Port, Interest, ValueIterator, ObjectInterest, InterestContainer, pw};
+use std::fmt;
 
 impl Node {
 	#[doc(alias = "wp_node_new_ports_iterator")]
@@ -36,6 +37,18 @@ impl Node {
 	}
 
 	// TODO: props_future
+}
+
+impl fmt::Display for Node {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		if let Some(res) = self.with_pw_property(pw::PW_KEY_NODE_NAME, |name| {
+			f.write_str(name)
+		}) {
+			return res
+		}
+
+		write!(f, "pw.node({})", AsRef::<crate::PipewireObject>::as_ref(self))
+	}
 }
 
 impl InterestContainer<Port> for Node {

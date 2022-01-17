@@ -213,3 +213,19 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 		}
 	}
 }
+
+impl fmt::Display for PipewireObject {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		if let Some(res) = self.with_pw_property(pw::PW_KEY_OBJECT_PATH, |path| {
+			f.write_str(path)
+		}) {
+			return res
+		}
+
+		f.write_str("pw.object")?;
+
+		self.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| {
+			write!(f, "({})", id)
+		}).unwrap_or(Ok(()))
+	}
+}
