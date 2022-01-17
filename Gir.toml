@@ -5,12 +5,12 @@ target_path = "."
 min_cfg_version = "0.4"
 work_mode = "normal"
 split_build_rs = true
+generate_display_trait = false
 
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [
 	"Wp.Proxy",
 	"Wp.Properties", "Wp.PropertiesItem",
-	"Wp.ConstraintType", "Wp.ConstraintVerb",
 	"Wp.ObjectInterest",
 	"Wp.PipewireObject",
 	"Wp.GlobalProxy",
@@ -18,21 +18,18 @@ generate = [
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
 	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
 	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder",
-	"Wp.State", "Wp.TransitionStep",
+	"Wp.State",
 	"Wp.ProxyFeatures",
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
 	"Wp.Object",
 	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Node", "Wp.Link", "Wp.Port",
 	"Wp.ObjectManager",
-	"Wp.Direction",
-	"Wp.NodeState",
 	"Wp.ImplEndpoint",
 	"Wp.FeatureActivationTransition",
 	"Wp.SiEndpoint", "Wp.ImplMetadata",
 	"Wp.ImplModule", "Wp.ImplNode",
 	"Wp.InitFlags", "Wp.InterestMatch", "Wp.InterestMatchFlags",
-	"Wp.LibraryErrorEnum",
 	"Wp.LookupDirs",
 	"Wp.MetadataFeatures", "Wp.Metadata",
 ]
@@ -98,3 +95,35 @@ status = "generate"
 name = "Wp.ObjectFeatures"
 status = "manual"
 conversion_type = "scalar"
+
+# enums
+
+[[object]]
+name = "Wp.ConstraintVerb"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.ConstraintType"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.Direction"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.LibraryErrorEnum"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.NodeState"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.TransitionStep"
+status = "generate"
+generate_display_trait = true

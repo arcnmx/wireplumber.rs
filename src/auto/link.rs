@@ -10,7 +10,6 @@ use crate::PipewireObject;
 use crate::Properties;
 use crate::Proxy;
 use glib::translate::*;
-use std::fmt;
 use std::mem;
 
 glib::wrapper! {
@@ -46,11 +45,5 @@ impl Link {
             let input_port = input_port.assume_init();
             (output_node, output_port, input_node, input_port)
         }
-    }
-}
-
-impl fmt::Display for Link {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("Link")
     }
 }

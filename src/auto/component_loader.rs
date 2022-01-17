@@ -5,7 +5,6 @@
 
 use crate::Object;
 use crate::Plugin;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpComponentLoader")]
@@ -19,9 +18,3 @@ glib::wrapper! {
 impl ComponentLoader {}
 
 pub const NONE_COMPONENT_LOADER: Option<&ComponentLoader> = None;
-
-impl fmt::Display for ComponentLoader {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("ComponentLoader")
-    }
-}

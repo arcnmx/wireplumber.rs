@@ -7,7 +7,6 @@ use crate::Core;
 use crate::Object;
 use glib::object::IsA;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpPlugin")]
@@ -49,11 +48,5 @@ impl<O: IsA<Plugin>> PluginExt for O {
         unsafe {
             ffi::wp_plugin_register(self.as_ref().to_glib_full());
         }
-    }
-}
-
-impl fmt::Display for Plugin {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("Plugin")
     }
 }

@@ -5,7 +5,6 @@
 
 use crate::Properties;
 use glib::translate::*;
-use std::fmt;
 use std::ptr;
 
 glib::wrapper! {
@@ -62,11 +61,5 @@ impl State {
             let _ = ffi::wp_state_save(self.to_glib_none().0, props.to_glib_none().0, &mut error);
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
         }
-    }
-}
-
-impl fmt::Display for State {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("State")
     }
 }

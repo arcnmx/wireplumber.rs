@@ -10,7 +10,6 @@ use crate::PipewireObject;
 use crate::Properties;
 use crate::Proxy;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpDevice")]
@@ -28,11 +27,5 @@ impl Device {
         unsafe {
             from_glib_full(ffi::wp_device_new_from_factory(core.to_glib_none().0, factory_name.to_glib_none().0, properties.to_glib_full()))
         }
-    }
-}
-
-impl fmt::Display for Device {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("Device")
     }
 }

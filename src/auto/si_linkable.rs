@@ -8,7 +8,6 @@ use crate::SessionItem;
 use crate::SiAcquisition;
 use glib::object::IsA;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpSiLinkable")]
@@ -42,11 +41,5 @@ impl<O: IsA<SiLinkable>> SiLinkableExt for O {
         unsafe {
             from_glib_full(ffi::wp_si_linkable_get_ports(self.as_ref().to_glib_none().0, context.to_glib_none().0))
         }
-    }
-}
-
-impl fmt::Display for SiLinkable {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("SiLinkable")
     }
 }

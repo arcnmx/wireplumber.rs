@@ -7,7 +7,6 @@ use crate::GlobalProxy;
 use crate::Object;
 use crate::PipewireObject;
 use crate::Proxy;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpFactory")]
@@ -19,9 +18,3 @@ glib::wrapper! {
 }
 
 impl Factory {}
-
-impl fmt::Display for Factory {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("Factory")
-    }
-}

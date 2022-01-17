@@ -6,7 +6,6 @@
 use crate::ObjectFeatures;
 use crate::Transition;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpFeatureActivationTransition")]
@@ -24,11 +23,5 @@ impl FeatureActivationTransition {
         unsafe {
             from_glib(ffi::wp_feature_activation_transition_get_requested_features(self.to_glib_none().0))
         }
-    }
-}
-
-impl fmt::Display for FeatureActivationTransition {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("FeatureActivationTransition")
     }
 }

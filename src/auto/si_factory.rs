@@ -7,7 +7,6 @@ use crate::Core;
 use crate::SessionItem;
 use glib::object::IsA;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpSiFactory")]
@@ -63,11 +62,5 @@ impl<O: IsA<SiFactory>> SiFactoryExt for O {
         unsafe {
             from_glib_none(ffi::wp_si_factory_get_name(self.as_ref().to_glib_none().0))
         }
-    }
-}
-
-impl fmt::Display for SiFactory {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("SiFactory")
     }
 }

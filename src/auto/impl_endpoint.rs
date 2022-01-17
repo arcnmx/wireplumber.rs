@@ -14,7 +14,6 @@ use glib::object::IsA;
 use glib::object::ObjectType as ObjectType_;
 use glib::translate::*;
 use glib::StaticType;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpImplEndpoint")]
@@ -39,11 +38,5 @@ impl ImplEndpoint {
             glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"item\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().expect("Return Value for property `item` getter")
         }
-    }
-}
-
-impl fmt::Display for ImplEndpoint {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("ImplEndpoint")
     }
 }

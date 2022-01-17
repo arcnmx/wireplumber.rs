@@ -12,7 +12,6 @@ use crate::Proxy;
 use glib::object::ObjectType as ObjectType_;
 use glib::translate::*;
 use glib::StaticType;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpImplMetadata")]
@@ -54,11 +53,5 @@ impl ImplMetadata {
             glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"properties\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().expect("Return Value for property `properties` getter")
         }
-    }
-}
-
-impl fmt::Display for ImplMetadata {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("ImplMetadata")
     }
 }

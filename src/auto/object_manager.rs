@@ -13,7 +13,6 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use std::boxed::Box as Box_;
-use std::fmt;
 use std::mem::transmute;
 
 glib::wrapper! {
@@ -175,11 +174,5 @@ impl ObjectManager {
 impl Default for ObjectManager {
     fn default() -> Self {
         Self::new()
-    }
-}
-
-impl fmt::Display for ObjectManager {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("ObjectManager")
     }
 }

@@ -8,7 +8,6 @@ use crate::SessionItem;
 use crate::SpaPod;
 use glib::object::IsA;
 use glib::translate::*;
-use std::fmt;
 use std::ptr;
 
 glib::wrapper! {
@@ -35,11 +34,5 @@ impl<O: IsA<SiAdapter>> SiAdapterExt for O {
             let ret = from_glib_full(ffi::wp_si_adapter_get_ports_format(self.as_ref().to_glib_none().0, &mut mode));
             (ret, from_glib_full(mode))
         }
-    }
-}
-
-impl fmt::Display for SiAdapter {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("SiAdapter")
     }
 }

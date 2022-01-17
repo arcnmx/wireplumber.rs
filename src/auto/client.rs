@@ -8,7 +8,6 @@ use crate::Object;
 use crate::PipewireObject;
 use crate::Proxy;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpClient")]
@@ -38,11 +37,5 @@ impl Client {
         unsafe {
             ffi::wp_client_update_permissions_array(self.to_glib_none().0, n_perm, permissions.to_glib_none().0);
         }
-    }
-}
-
-impl fmt::Display for Client {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("Client")
     }
 }

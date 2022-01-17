@@ -9,7 +9,6 @@ use crate::SiLink;
 use crate::SiLinkable;
 use glib::object::IsA;
 use glib::translate::*;
-use std::fmt;
 use std::ptr;
 
 glib::wrapper! {
@@ -33,11 +32,5 @@ impl<O: IsA<SiAcquisition>> SiAcquisitionExt for O {
         unsafe {
             ffi::wp_si_acquisition_release(self.as_ref().to_glib_none().0, acquisitor.as_ref().to_glib_none().0, item.as_ref().to_glib_none().0);
         }
-    }
-}
-
-impl fmt::Display for SiAcquisition {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("SiAcquisition")
     }
 }

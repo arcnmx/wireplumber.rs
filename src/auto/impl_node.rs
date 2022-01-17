@@ -10,7 +10,6 @@ use crate::Properties;
 use crate::Proxy;
 use glib::object::ObjectType as ObjectType_;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpImplNode")]
@@ -43,10 +42,4 @@ impl ImplNode {
     //        value.get().expect("Return Value for property `pw-impl-node` getter")
     //    }
     //}
-}
-
-impl fmt::Display for ImplNode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("ImplNode")
-    }
 }

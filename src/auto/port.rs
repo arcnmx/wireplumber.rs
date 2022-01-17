@@ -9,7 +9,6 @@ use crate::Object;
 use crate::PipewireObject;
 use crate::Proxy;
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WpPort")]
@@ -27,11 +26,5 @@ impl Port {
         unsafe {
             from_glib(ffi::wp_port_get_direction(self.to_glib_none().0))
         }
-    }
-}
-
-impl fmt::Display for Port {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("Port")
     }
 }
