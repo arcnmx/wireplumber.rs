@@ -35,12 +35,21 @@ generate = [
 ]
 
 manual = [
-	"Wp.SpaType", "Wp.SpaIdTable", "Wp.SpaIdValue",
+	"Wp.SpaIdTable", "Wp.SpaIdValue",
 	"Wp.IteratorMethods",
 	"GLib.Error", "GLib.Variant", "GLib.MainContext", "GLib.Source", "GLib.SourceFunc", "GLib.DestroyNotify", "GLib.Quark", "GLib.LogLevelFlags", "GLib.LogField", "GLib.LogWriterOutput",
 	"GObject.Closure", "GObject.Value", "GObject.Object",
 	"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
 ]
+
+[[object]]
+name = "Wp.SpaType"
+status = "generate"
+fundamental_type = false # it technically may be, but gir rquires it to be Shared<> so :(
+boxed_inline = true
+conversion_type = "scalar"
+	[[object.derive]]
+	name = "PartialEq, Eq, PartialOrd, Ord, Hash"
 
 [[object]]
 name = "Wp.Core"

@@ -228,7 +228,7 @@ impl SpaPod {
             let mut value = ptr::null_mut();
             let ret = from_glib(ffi::wp_spa_pod_get_control(self.to_glib_none().0, offset.as_mut_ptr(), &mut ctl_type, &mut value));
             let offset = offset.assume_init();
-            if ret { Some((offset, from_glib_full(ctl_type), from_glib_full(value))) } else { None }
+            if ret { Some((offset, from_glib_none(ctl_type), from_glib_full(value))) } else { None }
         }
     }
 
@@ -336,7 +336,7 @@ impl SpaPod {
             let mut key = ptr::null();
             let mut value = ptr::null_mut();
             let ret = from_glib(ffi::wp_spa_pod_get_property(self.to_glib_none().0, &mut key, &mut value));
-            if ret { Some((from_glib_full(key), from_glib_full(value))) } else { None }
+            if ret { Some((from_glib_none(key), from_glib_none(value))) } else { None }
         }
     }
 
@@ -365,7 +365,7 @@ impl SpaPod {
         unsafe {
             let mut value = ptr::null();
             let ret = from_glib(ffi::wp_spa_pod_get_string(self.to_glib_none().0, &mut value));
-            if ret { Some(from_glib_full(value)) } else { None }
+            if ret { Some(from_glib_none(value)) } else { None }
         }
     }
 

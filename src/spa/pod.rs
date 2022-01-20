@@ -12,10 +12,7 @@ impl SpaPod {
 	#[doc(alias = "get_spa_type")]
 	pub fn spa_type(&self) -> Option<SpaType> {
 		unsafe {
-			match ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0) {
-				ffi::WP_SPA_TYPE_INVALID => None,
-				value => Some(value as _),
-			}
+			from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0))
 		}
 	}
 }
