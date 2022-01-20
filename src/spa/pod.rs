@@ -1,5 +1,5 @@
 use libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
-use crate::pw::SpaPropertyKey;
+use crate::pw::{SpaPropertyKey, PipewireObject};
 use crate::spa::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
 use crate::prelude::*;
 
@@ -187,6 +187,63 @@ impl SpaPod {
 		})
 	}
 
+	#[cfg(any(feature = "experimental", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+	pub fn struct_fields(&self, length_prefix: bool) -> crate::Result<std::vec::IntoIter<(String, SpaPod)>> {
+		let mut params = self.iterator();
+
+		let length: Option<i32> = if length_prefix {
+			Some(params.next()
+				.ok_or_else(|| Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("pod struct {:?} is missing expected length prefix", self),
+				)).and_then(|pod| (&pod).try_into()
+					.map_err(|e| Error::new(
+						LibraryErrorEnum::InvalidArgument,
+						&format!("pod struct {:?} length could not be parsed from {:?}: {:?}", self, pod, e),
+					))
+				)?)
+		} else {
+			None
+		};
+		let length = match length {
+			Some(len) if len < 0 => return Err(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				&format!("pod struct {:?} has invalid length {}", self, len),
+			)),
+			Some(len) => Some(len as usize),
+			None => None,
+		};
+		let mut values = Vec::with_capacity(length.unwrap_or_default());
+
+		// TODO: use a proper chunks(2) iterator here?
+		while let Some(key) = params.next() {
+			if let Some(length) = length {
+				if values.len() >= length {
+					return Err(Error::new(
+						LibraryErrorEnum::InvalidArgument,
+						&format!("too many entries in pod struct {:?}: {:?}", self, values),
+					))
+				}
+			}
+
+			let key: String = (&key).try_into()
+				.map_err(|e| Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("key {:?} was not a string: {:?}", key, e),
+				))?;
+			let value = match params.next() {
+				Some(v) => v,
+				None => return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unexpected key {:?} due to uneven amount of params on {:?}", key, self),
+				)),
+			};
+			values.push((key, value));
+		}
+		Ok(values.into_iter())
+	}
+
 	pub fn spa_properties(&self) -> impl Iterator<Item=(Result<SpaIdValue, ffi::WpSpaType>, SpaPod)> {
 		let type_ = self.spa_type();
 		let values = type_.and_then(|ty| ty.values_table());
@@ -236,6 +293,37 @@ impl SpaPod {
 		} else {
 			wp_warning!("failed to set spa key {:?} of type {:?} to {:?}", key, pod, value);
 			None
+		}
+	}
+
+	#[cfg(any(feature = "experimental", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+	pub fn apply<O: IsA<PipewireObject>>(&self, obj: &O) -> crate::Result<()> {
+		if !self.is_object() {
+			return Err(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				&format!("failed to apply spa pod to {:?}: {:?} is not an object", obj, self),
+			))
+		}
+
+		let type_ = self.spa_type().unwrap();
+		let name = match type_.number() {
+			libspa_sys::SPA_TYPE_OBJECT_Props => "Props",
+			libspa_sys::SPA_TYPE_OBJECT_ParamRoute => "Route",
+			_ => return Err(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				&format!("could not apply unknown spa type {:?} to {:?}", type_, obj),
+			)),
+		};
+
+		let flags = Default::default();
+		if obj.set_param(name, flags, self) {
+			Ok(())
+		} else {
+			Err(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				&format!("failed to apply param {} to {:?}", name, obj),
+			))
 		}
 	}
 }

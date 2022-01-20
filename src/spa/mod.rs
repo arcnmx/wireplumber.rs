@@ -37,6 +37,10 @@ mod id_table;
 mod id_value;
 #[cfg(any(feature = "v0_4_8", feature = "dox"))]
 mod json;
+#[cfg(any(feature = "experimental", feature = "dox"))]
+mod props;
+#[cfg(any(feature = "experimental", feature = "dox"))]
+mod route;
 mod traits;
 #[cfg(feature = "libspa")]
 mod libspa_pod;
@@ -47,3 +51,7 @@ pub use id_value::SpaIdValue;
 pub use libspa_pod::DebugValue;
 
 pub use traits::{SpaPrimitive, SpaValue, SpaBool};
+#[cfg(any(feature = "experimental", feature = "dox"))]
+pub use props::SpaProps;
+#[cfg(any(feature = "experimental", feature = "dox"))]
+pub use route::{SpaRoute, SpaRoutes};
