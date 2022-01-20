@@ -63,10 +63,7 @@ impl<T: StaticType> Interest<T> {
 		self.interest
 	}
 
-	pub fn matches_object(&self, object: &T) -> bool where T: IsA<glib::Object> {
-		// TODO: automatically determine whether to match pw props or gobject props!
-		// the logic should be the same as in ffi::wp_object_interest_matches
-		// also rename this to just `matches`?
+	pub fn matches_object<O: IsA<glib::Object>>(&self, object: &O) -> bool where T: IsA<O> {
 		self.interest.matches_object(object)
 	}
 
