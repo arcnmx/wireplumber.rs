@@ -6,7 +6,7 @@ use std::convert::TryInto;
 use std::iter::FromIterator;
 use std::{mem, ptr};
 use std::slice::from_raw_parts;
-use crate::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue, ValueIterator, LibraryErrorEnum};
+use crate::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue, ValueIterator, LibraryErrorEnum, pw::SpaPropertyKey};
 use crate::prelude::*;
 
 impl SpaPod {
@@ -188,6 +188,45 @@ impl SpaPod {
 			))
 	}
 
+	pub fn find_spa_property<K: SpaPropertyKey>(&self, key: &K) -> Option<SpaPod> {
+		let values = self.spa_type().and_then(|ty| ty.values_table());
+		let find_id = match key.spa_property_key_with_table(values) {
+			Ok(id) => id,
+			Err(e) => {
+				wp_warning!("unknown spa key {:?} for {:?}: {:?}", key, self, e);
+				return None
+			},
+		};
+		self.spa_properties().find(|&(id, ..)| SpaIdValue::result_number(id) == find_id)
+			.map(|(_, pod)| pod)
+	}
+
+	pub fn spa_property<T, K: SpaPropertyKey>(&self, key: &K) -> Option<T> where
+		for<'a> &'a SpaPod: TryInto<T>,
+		for<'a> <&'a SpaPod as TryInto<T>>::Error: std::fmt::Debug,
+	{
+		self.find_spa_property(key)
+			.and_then(|pod| match TryInto::try_into(&pod) {
+				Ok(v) => Some(v),
+				Err(e) => {
+					wp_warning!("failed to convert spa key {:?} for {:?}: {:?}", key, self, e);
+					None
+				},
+			})
+	}
+
+	pub fn set_spa_property<K: SpaPropertyKey>(&self, key: &K, value: &SpaPod) -> Option<SpaPod> {
+		let pod = match self.find_spa_property(key) {
+			Some(pod) => pod,
+			None => todo!(),
+		};
+		if pod.set_pod(value) {
+			Some(pod)
+		} else {
+			wp_warning!("failed to set spa key {:?} of type {:?} to {:?}", key, pod, value);
+			None
+		}
+	}
 }
 
 impl<T: SpaValue> FromIterator<T> for SpaPod {

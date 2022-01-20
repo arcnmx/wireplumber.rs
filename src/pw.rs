@@ -1,6 +1,9 @@
-use std::{ops::Deref, ffi::CStr, fmt::{self, Write}, str::{self, FromStr}};
+use std::{ops::Deref, ffi::CStr, fmt::{self, Write}, str::{self, FromStr}, convert::Infallible};
 
 pub use pipewire_sys as ffi;
+pub use libspa_sys as spa;
+
+use crate::{SpaIdTable, SpaIdValue};
 
 #[derive(Copy, Clone)]
 #[repr(transparent)]
@@ -234,4 +237,51 @@ pipewire_keys! {
 	PW_KEY_FORMAT_DSP,
 	PW_KEY_AUDIO_CHANNEL, PW_KEY_AUDIO_RATE, PW_KEY_AUDIO_CHANNELS, PW_KEY_AUDIO_FORMAT,
 	PW_KEY_VIDEO_RATE, PW_KEY_VIDEO_FORMAT, PW_KEY_VIDEO_SIZE,
+}
+
+pub trait SpaPropertyKey: fmt::Debug {
+	type Error: fmt::Debug;
+
+	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<crate::ffi::WpSpaType, Self::Error>;
+}
+
+pub trait SpaPropertyKeyId: SpaPropertyKey<Error=Infallible> {
+	fn spa_property_key(&self) -> crate::ffi::WpSpaType;
+}
+
+impl<T: SpaPropertyKeyId> SpaPropertyKey for T {
+	type Error = Infallible;
+
+	fn spa_property_key_with_table(&self, _table: Option<SpaIdTable>) -> Result<crate::ffi::WpSpaType, Self::Error> {
+		Ok(self.spa_property_key())
+	}
+}
+
+impl SpaPropertyKeyId for crate::ffi::WpSpaType {
+	fn spa_property_key(&self) -> crate::ffi::WpSpaType {
+		*self
+	}
+}
+
+impl SpaPropertyKeyId for crate::SpaIdValue {
+	fn spa_property_key(&self) -> crate::ffi::WpSpaType {
+		self.number()
+	}
+}
+
+impl SpaPropertyKey for str {
+	type Error = (); // TODO
+
+	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<crate::ffi::WpSpaType, Self::Error> {
+		table.and_then(|table| table.find_value_from_short_name(self))
+			.map(|v| v.number())
+			.or_else(|| SpaIdValue::parse_unknown_name(self))
+			.ok_or(())
+	}
+}
+
+impl<'a, T: SpaPropertyKeyId> SpaPropertyKeyId for &'a T {
+	fn spa_property_key(&self) -> crate::ffi::WpSpaType {
+		T::spa_property_key(*self)
+	}
 }

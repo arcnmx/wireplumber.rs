@@ -1,4 +1,4 @@
-use crate::{SpaPodBuilder, SpaValue};
+use crate::{SpaPodBuilder, SpaValue, pw::SpaPropertyKey};
 use glib::translate::ToGlibPtr;
 use glib::ffi::gconstpointer;
 use std::iter::FromIterator;
@@ -16,6 +16,17 @@ impl SpaPodBuilder {
 		unsafe {
 			ffi::wp_spa_pod_builder_add_pointer(self.to_glib_none().0, type_name.to_glib_none().0, value)
 		}
+	}
+
+	pub fn add_object_property<V: SpaValue, K: SpaPropertyKey>(&self, key: &K, value: V) -> bool {
+		let table = None; // TODO: store from `new_object`?
+		let id = match key.spa_property_key_with_table(table) {
+			Ok(id) => id,
+			Err(e) => return false,
+		};
+		self.add_property_id(id);
+		value.add_to_builder(&self);
+		true
 	}
 }
 
