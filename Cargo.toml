@@ -15,7 +15,7 @@ readme = "README.md"
 license = "MIT"
 
 [package.metadata.docs.rs]
-features = ["dox", "v0_4_6"]
+features = ["dox", "v0_4_6", "enable-libspa", "enable-futures"]
 
 [badges]
 maintenance = { status = "passively-maintained" }
@@ -38,8 +38,9 @@ pkg-config = "0.3"
 semver = "1.0"
 
 [features]
-default = ["libspa"]
+default = []
 enable-futures = ["futures-util", "glib-signal/enable-futures"]
+enable-libspa = ["libspa"]
 v0_4_2 = ["ffi/v0_4_2"]
 v0_4_3 = ["ffi/v0_4_3", "v0_4_2"]
 v0_4_6 = ["ffi/v0_4_6", "v0_4_3"]

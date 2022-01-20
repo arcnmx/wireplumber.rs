@@ -12,7 +12,7 @@ path = "src/static-link.rs"
 
 [dependencies]
 futures = "0.3"
-wireplumber = { version = "0.1", features = ["enable-futures", "v0_4_3"], path = "../" }
+wireplumber = { version = "0.1", features = ["enable-futures", "enable-libspa", "v0_4_3"], path = "../" }
 pipewire-sys = "0.4"
 glib = { version = "0.16", git = "https://github.com/gtk-rs/gtk-rs-core" }
 glib-signal = { version = "0.1.0", git = "https://github.com/arcnmx/glib-signal.rs.git" }

@@ -50,6 +50,25 @@ impl SpaPod {
 		}
 	}
 
+	fn parse_<R, F: FnOnce(&SpaPodParser, Option<&str>) -> R>(&self, f: F) -> Result<R, Error> {
+		let (parser, id_name) = match () {
+			_ if self.is_object() => Ok(SpaPodParser::new_object(self)),
+			_ if self.is_struct() => Ok((SpaPodParser::new_struct(self), None)),
+			_ => Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unsupported SPA type {:?}", self.spa_type()))),
+		}?;
+		let res = f(&parser, id_name);
+		parser.end();
+		Ok(res)
+	}
+
+	pub(crate) fn parse_struct<R, F: FnOnce(&SpaPodParser) -> R>(&self, f: F) -> R {
+		self.parse_(|parser, _| f(parser)).unwrap()
+	}
+
+	pub(crate) fn parse_object<R, F: FnOnce(&SpaPodParser, Option<&str>) -> R>(&self, f: F) -> R {
+		self.parse_(|parser, id_name| f(parser, id_name)).unwrap()
+	}
+
 	pub unsafe fn as_bytes(&self) -> &[u8] {
 		// TODO: this is unsafe because we cannot check if this is a FLAG_CONSTANT pod or not
 		let pod = self.spa_pod_raw();
