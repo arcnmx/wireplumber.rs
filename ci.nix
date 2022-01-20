@@ -55,7 +55,7 @@ in {
     ci.gh-actions.enable = true;
     cache.cachix.arc.enable = true;
     channels = {
-      nixpkgs = "21.11";
+      nixpkgs = mkIf (builtins.getEnv "CI_PLATFORM" != "impure") "21.11";
       rust = "master";
       arc = "master";
     };

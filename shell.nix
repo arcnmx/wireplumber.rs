@@ -1,1 +1,1 @@
-{ pkgs ? import <nixpkgs> { }, ci ? import <ci> { inherit pkgs; } }: ci.config.shell
+{ pkgs ? null, ci ? import <ci> (builtins.removeAttrs args [ "ci" ]), ... }@args: ci.config.shell
