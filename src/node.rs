@@ -20,8 +20,18 @@ impl Node {
 		self.lookup_port_full(interest)
 	}
 
-	pub fn device_index(&self) -> crate::Result<usize> {
-		self.pw_property("card.profile.device")
+	pub fn device_index(&self) -> crate::Result<Option<u32>> {
+		self.pw_property_optional("card.profile.device")
+	}
+
+	pub fn device_id(&self) -> crate::Result<Option<u32>> {
+		self.pw_property_optional(pw::PW_KEY_DEVICE_ID)
+	}
+
+	pub fn device_details(&self) -> crate::Result<Option<(u32, Option<u32>)>> {
+		self.device_id().and_then(|id| self.device_index().map(|index|
+			id.map(|id| (id, index))
+		))
 	}
 
 	pub fn name(&self) -> Option<String> {

@@ -1,9 +1,13 @@
+use std::future::Future;
 use std::ffi::{CStr, CString};
 use std::fmt;
+use std::pin::Pin;
 
 use glib::{Error, IsA, translate::{ToGlibPtr, FromGlib, IntoGlib}, ffi::gconstpointer};
 use pipewire_sys::pw_proxy;
+use crate::{ValueIterator, SpaPod};
 use crate::{Proxy, PipewireObject, pw::{self, FromPipewirePropertyString}, LibraryErrorEnum};
+use crate::prelude::*;
 
 #[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
 pub struct ObjectFeatures(pub u32); // TODO: consider keeping this as u32, and just keep the inherent impls (requires no changes to `auto`)
@@ -161,6 +165,10 @@ pub trait PipewireObjectExt2: 'static {
 	#[doc(alias = "wp_pipewire_object_get_property")]
 	#[doc(alias = "get_property")]
 	fn pw_property<T: FromPipewirePropertyString>(&self, key: &str) -> Result<T, Error>;
+	fn pw_property_optional<T: FromPipewirePropertyString>(&self, key: &str) -> Result<Option<T>, Error>;
+
+	#[doc(alias = "wp_pipewire_object_enum_params")]
+	fn params_future(&self, id: Option<&str>, filter: Option<&SpaPod>) -> Pin<Box<dyn Future<Output=Result<ValueIterator<SpaPod>, Error>> + 'static>>;
 }
 
 impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
@@ -211,6 +219,19 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 			Some(Err(e)) => Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("pw_property {} failed to parse: {:?}", key, e))),
 			Some(Ok(v)) => Ok(v),
 		}
+	}
+
+	fn pw_property_optional<T: FromPipewirePropertyString>(&self, key: &str) -> Result<Option<T>, Error> {
+		self.with_pw_property(key, T::from_pipewire_string)
+			.transpose()
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("pw_property {} failed to parse: {:?}", key, e)))
+	}
+
+	fn params_future(&self, id: Option<&str>, filter: Option<&SpaPod>) -> Pin<Box<dyn Future<Output=Result<ValueIterator<SpaPod>, Error>> + 'static>> {
+		let res = self.enum_params_future(id, filter);
+		Box::pin(async move {
+			res.await.map(|r| ValueIterator::with_inner(r.unwrap()))
+		})
 	}
 }
 
