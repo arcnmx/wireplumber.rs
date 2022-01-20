@@ -6,7 +6,7 @@ use std::convert::TryInto;
 use std::iter::FromIterator;
 use std::{mem, ptr};
 use std::slice::from_raw_parts;
-use crate::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, ValueIterator, LibraryErrorEnum};
+use crate::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue, ValueIterator, LibraryErrorEnum};
 use crate::prelude::*;
 
 impl SpaPod {
@@ -147,6 +147,13 @@ impl SpaPod {
 		})
 	}
 
+	pub fn array_iterator<T: SpaPrimitive>(&self) -> impl Iterator<Item=T> {
+		// TODO: assert type via T!!!
+		self.array_pointers().map(|p| unsafe {
+			*(p as *const T)
+		})
+	}
+
 	#[doc(alias = "wp_spa_pod_get_spa_pod")]
 	#[doc(alias = "get_spa_pod")]
 	pub fn spa_pod_raw(&self) -> &spa_pod {
@@ -179,5 +186,12 @@ impl SpaPod {
 				),
 				pod,
 			))
+	}
+
+}
+
+impl<T: SpaValue> FromIterator<T> for SpaPod {
+	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
+		SpaPodBuilder::from_iter(iter).end().unwrap()
 	}
 }
