@@ -31,9 +31,10 @@ pub use crate::pw::{
 	ProxyExt as _, ProxyExt2 as _,
 };
 
+pub use crate::plugin::PluginExt as _;
+
 pub use crate::auto::traits::{
 	ObjectExt as _,
-	PluginExt as _,
 	TransitionExt as _,
 };
 

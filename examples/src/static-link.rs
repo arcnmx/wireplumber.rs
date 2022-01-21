@@ -13,7 +13,8 @@ use wireplumber::prelude::*;
 const LOG_DOMAIN: &'static str = "static-link";
 
 use wireplumber::{
-	Properties, Core, Node, pw, Object, Link, Port, ObjectFeatures, AsyncPluginImpl, SimplePlugin,
+	Properties, Core, Node, pw, Object, Link, Port, ObjectFeatures,
+	plugin::{self, AsyncPluginImpl, SimplePlugin},
 	registry::{ConstraintType, Constraint, Interest, ObjectManager},
 	info, warning,
 };
@@ -190,8 +191,8 @@ impl SimplePlugin for StaticLink {
 	}
 }
 
-wireplumber::simple_plugin_subclass! {
+plugin::simple_plugin_subclass! {
 	impl ObjectSubclass for LOG_DOMAIN as StaticLink { }
 }
 
-wireplumber::plugin_export!(StaticLink);
+plugin::plugin_export!(StaticLink);

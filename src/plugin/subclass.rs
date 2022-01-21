@@ -145,8 +145,8 @@ macro_rules! simple_plugin_subclass {
 	(impl ObjectSubclass for $name:tt as $ty:ty { $($subclass:tt)* }) => {
 		#[$crate::lib::glib::object_subclass]
 		impl $crate::lib::glib::subclass::types::ObjectSubclass for $ty {
-			type Type = $crate::SimplePluginObject<Self>;
-			type ParentType = $crate::Plugin;
+			type Type = $crate::plugin::SimplePluginObject<Self>;
+			type ParentType = $crate::plugin::Plugin;
 			const NAME: &'static str = $name;
 			$($subclass)*
 		}
@@ -155,6 +155,7 @@ macro_rules! simple_plugin_subclass {
 		impl $crate::ObjectImpl for $ty { }
 	};
 }
+pub use simple_plugin_subclass;
 
 pub trait ModuleExport {
 	fn init(core: Core, args: Option<Variant>) -> Result<(), Error>;
@@ -239,7 +240,7 @@ impl<T: FromVariant> FromAnyVariant for T {
 #[macro_export]
 macro_rules! plugin_export {
 	($desc:ty) => {
-		$crate::plugin_export! { @nowrap $crate::ModuleWrapper::<$desc> }
+		$crate::plugin::plugin_export! { @nowrap $crate::plugin::ModuleWrapper::<$desc> }
 	};
 	(@nowrap $desc:ty) => {
 		#[no_mangle]
@@ -252,7 +253,7 @@ macro_rules! plugin_export {
 
 			let core = unsafe { glib::translate::from_glib_none(core.as_ptr()) };
 			let args = unsafe { glib::translate::from_glib_none(args) };
-			match <$desc as $crate::ModuleExport>::init(core, args) {
+			match <$desc as $crate::plugin::ModuleExport>::init(core, args) {
 				Ok(()) => true.into_glib(),
 				Err(e) => {
 					*error.as_ptr() = e.to_glib_full() as *mut _;
@@ -262,3 +263,4 @@ macro_rules! plugin_export {
 		}
 	};
 }
+pub use plugin_export;
