@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["glib_signal"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"struct\" href=\"glib_signal/struct.ConnectEof.html\" title=\"struct glib_signal::ConnectEof\">ConnectEof</a>","synthetic":false,"types":["glib_signal::signal_stream::ConnectEof"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

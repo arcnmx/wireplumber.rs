@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["wireplumber"] = [{"text":"impl <a class=\"trait\" href=\"https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.FromGlib.html\" title=\"trait glib::translate::FromGlib\">FromGlib</a>&lt;<a class=\"primitive\" href=\"https://doc.rust-lang.org/nightly/std/primitive.u32.html\">u32</a>&gt; for <a class=\"struct\" href=\"wireplumber/struct.ObjectFeatures.html\" title=\"struct wireplumber::ObjectFeatures\">ObjectFeatures</a>","synthetic":false,"types":["wireplumber::proxy::ObjectFeatures"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

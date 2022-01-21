@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["glib_signal"] = [{"text":"impl&lt;O:&nbsp;<a class=\"trait\" href=\"https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html\" title=\"trait glib::object::ObjectType\">ObjectType</a>, T&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html\" title=\"trait core::ops::drop::Drop\">Drop</a> for <a class=\"struct\" href=\"glib_signal/struct.SignalStream.html\" title=\"struct glib_signal::SignalStream\">SignalStream</a>&lt;O, T&gt;","synthetic":false,"types":["glib_signal::signal_stream::SignalStream"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

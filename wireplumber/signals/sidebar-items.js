@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Bound",""],["Changed",""],["Connected",""],["CreateObject",""],["Disconnected",""],["EndpointPropertiesChanged",""],["Error",""],["Installed",""],["ObjectAdded",""],["ObjectRemoved",""],["ObjectsChanged",""],["ParamsChanged",""],["PortsChanged",""],["PwProxyCreated",""],["PwProxyDestroyed",""],["SpaObjectRemoved",""],["StateChanged",""]]});

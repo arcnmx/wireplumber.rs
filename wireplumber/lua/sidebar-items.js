@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LuaVariant","Arguments for use from lua scripts."]],"trait":[["ToLuaVariant",""]]});
