@@ -1,6 +1,6 @@
 use glib::{translate::{from_glib_full, ToGlibPtr, IntoGlib}, MainContext, MainLoop};
 use pipewire_sys::{pw_core, pw_context};
-use std::{ptr::NonNull, rc::Rc};
+use std::ptr::NonNull;
 use crate::{Core, InitFlags, Properties, lua::ToLuaVariant};
 
 impl Core {
@@ -101,11 +101,11 @@ impl Core {
 		future::ready(res).and_then(|connect| connect.map_err(From::from).map_ok(drop))
 	}
 
-	pub fn run<F: FnOnce(&MainContext, MainLoop, Rc<Core>)>(props: Option<&Properties>, setup: F) {
+	pub fn run<F: FnOnce(&MainContext, MainLoop, Core)>(props: Option<&Properties>, setup: F) {
 		let mainloop = MainLoop::new(None, false);
 		let context = mainloop.context();
 		let core = context.with_thread_default(|| {
-			let core = Rc::new(Core::new(Some(&context), props));
+			let core = Core::new(Some(&context), props);
 			let _disconnect_handler = core.connect_disconnected({
 				let mainloop = mainloop.clone();
 				move |_core| mainloop.quit()
