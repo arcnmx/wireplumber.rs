@@ -7,7 +7,8 @@
 //! use futures_util::StreamExt;
 //! use wireplumber::{
 //!   prelude::*,
-//!   Core, Node, ObjectManager, Interest, Object, ObjectFeatures,
+//!   registry::{ObjectManager, Interest},
+//!   Core, Node, Object, ObjectFeatures,
 //! };
 //!
 //! async fn watch_nodes(core: &Core) {

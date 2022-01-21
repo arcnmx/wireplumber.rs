@@ -1,6 +1,16 @@
 use glib::{ObjectType, Cast};
 
-use crate::{ObjectManager, Interest, ValueIterator, ObjectInterest, InterestContainer};
+use crate::ValueIterator;
+
+pub use crate::auto::{
+	ObjectManager,
+	ObjectInterest,
+	ConstraintType, ConstraintVerb,
+	InterestMatch, InterestMatchFlags,
+};
+
+mod interest;
+pub use interest::{Constraint, Interest, InterestContainer};
 
 impl ObjectManager {
 	#[doc(alias = "wp_object_manager_new_iterator")]

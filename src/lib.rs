@@ -31,6 +31,7 @@ pub mod prelude;
 
 pub mod local;
 pub mod session;
+pub mod registry;
 
 mod error;
 
@@ -43,9 +44,6 @@ pub use log::*;
 
 mod object;
 pub use object::*;
-
-mod object_manager;
-pub use object_manager::*;
 
 mod plugin;
 pub use plugin::*;
@@ -73,9 +71,6 @@ pub use properties::*;
 
 mod spa;
 pub use spa::*;
-
-mod interest;
-pub use interest::*;
 
 pub mod lua;
 

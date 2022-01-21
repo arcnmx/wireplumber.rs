@@ -12,7 +12,11 @@ use wireplumber::prelude::*;
 
 const LOG_DOMAIN: &'static str = "static-link";
 
-use wireplumber::{ObjectManager, Interest, Properties, Core, Node, ConstraintType, pw, Object, Constraint, Link, Port, ObjectFeatures, AsyncPluginImpl, SimplePlugin, info, warning};
+use wireplumber::{
+	Properties, Core, Node, pw, Object, Link, Port, ObjectFeatures, AsyncPluginImpl, SimplePlugin,
+	registry::{ConstraintType, Constraint, Interest, ObjectManager},
+	info, warning,
+};
 
 #[derive(Debug, Clone, Variant)]
 struct PortMapping {
