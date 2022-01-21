@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["wireplumber__module_init",""]],"struct":[["StaticLink",""],["StaticLinkArgs",""]]});
