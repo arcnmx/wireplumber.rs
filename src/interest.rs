@@ -67,6 +67,16 @@ impl<T: StaticType> Interest<T> {
 		self.interest.matches_object(object)
 	}
 
+	pub fn constrain<'o, O: IsA<glib::Object>>(&self, object: &'o O) -> Option<&'o T> where T: IsA<O> {
+		if self.matches_object(object) {
+			Some(unsafe {
+				object.unsafe_cast_ref()
+			})
+		} else {
+			None
+		}
+	}
+
 	pub fn filter<C: InterestContainer<T>>(&self, container: &C) -> ValueIterator::<T> {
 		container.filter(self)
 	}
