@@ -1,7 +1,11 @@
 use glib::translate::{IntoGlib, from_glib};
 use glib::Quark;
-use crate::LibraryErrorEnum;
 use glib::error::ErrorDomain;
+
+pub use crate::auto::LibraryErrorEnum;
+pub use glib::Error;
+
+pub type Result<T> = std::result::Result<T, Error>;
 
 impl ErrorDomain for LibraryErrorEnum {
 	#[doc(alias = "WP_DOMAIN_LIBRARY")]

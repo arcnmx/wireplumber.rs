@@ -51,7 +51,7 @@ pub use glib::{
 /// this crate uses the prelude too!
 #[allow(unused_imports)]
 pub(crate) use crate::{
-	LibraryErrorEnum,
+	error::{LibraryErrorEnum, Error},
 	util::ValueIterator,
 	log::{
 		wp_trace, wp_debug, wp_info, wp_warning, wp_critical,

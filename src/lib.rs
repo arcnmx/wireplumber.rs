@@ -24,8 +24,6 @@ pub mod lib {
 	pub use gio;
 }
 
-pub type Result<T> = std::result::Result<T, glib::Error>;
-
 pub mod pw;
 pub mod prelude;
 
@@ -38,7 +36,8 @@ pub mod object;
 pub mod spa;
 pub mod util;
 
-mod error;
+pub mod error;
+pub use error::{Result, Error};
 
 mod core;
 pub use crate::core::{Core, InitFlags};
