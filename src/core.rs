@@ -18,7 +18,7 @@ impl Core {
 		}
 	}
 
-	#[cfg_attr(feature = "v0_4_2", deprecated = "use find_file instead")]
+	#[cfg_attr(feature = "v0_4_2", deprecated = "use `find_file` instead")]
 	#[doc(alias = "wp_get_config_dir")]
 	pub fn config_dir() -> String {
 		unsafe {
@@ -26,7 +26,7 @@ impl Core {
 		}
 	}
 
-	#[cfg_attr(feature = "v0_4_2", deprecated = "use find_file instead")]
+	#[cfg_attr(feature = "v0_4_2", deprecated = "use `find_file` instead")]
 	#[doc(alias = "wp_get_data_dir")]
 	pub fn data_dir() -> String {
 		unsafe {
