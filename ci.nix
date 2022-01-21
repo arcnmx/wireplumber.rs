@@ -1,5 +1,6 @@
 { config, channels, pkgs, env, lib, ... }: with pkgs; with lib; let
   wireplumber = pkgs.wireplumber or channels.arc.packages.wireplumber-0_4_4;
+  rustdoc-stripper = pkgs.rustdoc-stripper or channels.arc.packages.rustdoc-stripper;
   importShell = config: writeText "shell.nix" ''
     import ${builtins.unsafeDiscardStringContext config.shell.drvPath}
   '';
@@ -52,6 +53,10 @@
   todo = writeShellScriptBin "todo" ''
     cd ${toString ./.}
     exec ${gir}/bin/gir -m not_bound
+  '';
+  gdoc = writeShellScriptBin "gdoc" ''
+    cd ${toString ./.}
+    exec ${gir}/bin/gir --doc-target-path ${toString ./generate/src/docs.md} -m doc
   '';
   RUSTDOCFLAGS = concatLists (mapAttrsToList (crate: url: [ "--extern-html-root-url" "${crate}=${url}" ]) rec {
     #glib = "https://gtk-rs.org/gtk-rs-core/stable/latest/docs/";
@@ -175,7 +180,7 @@ in {
       default = with pkgs; config.rustChannel.mkShell {
         rustTools = optional config.enableDev "rust-analyzer";
         buildInputs = [ wireplumber pipewire glib ];
-        nativeBuildInputs = [ gir todo xmlstarlet pkg-config ];
+        nativeBuildInputs = [ gir todo gdoc rustdoc-stripper xmlstarlet pkg-config ];
         RUSTDOCFLAGS = optionals config.enableDocs RUSTDOCFLAGS;
         GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         LIBCLANG_PATH = "${libclang.lib}/lib";
