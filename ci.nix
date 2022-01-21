@@ -3,6 +3,10 @@
   importShell = config: writeText "shell.nix" ''
     import ${builtins.unsafeDiscardStringContext config.shell.drvPath}
   '';
+  versionFeature =
+    if versionAtLeast wireplumber.version "0.4.6" then "--features v0_4_6"
+    else if versionAtLeast wireplumber.version "0.4.3" then "--features v0_4_3"
+    else "";
   cargo = config: name: command: ci.command {
     name = "cargo-${name}";
     command = ''
@@ -83,9 +87,9 @@ in {
     tasks = {
       build.inputs = [
         (cargo config "build-sys" "build -p wireplumber-sys")
-        (cargo config "test-sys" "test -p wireplumber-sys")
+        (cargo config "test-sys" "test -p wireplumber-sys ${versionFeature}")
         (cargo config "build" "build")
-        (cargo config "test" "test --workspace")
+        (cargo config "test" "test --workspace ${versionFeature}")
         (cargo config "workspace" "build --workspace --examples --bins")
       ];
     };
@@ -96,8 +100,8 @@ in {
           command = concatMapStringsSep "\n" (c: "nix-shell ${importShell config} --run ${escapeShellArg c}") [
             "cargo clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${config.rustChannel.hostTarget.triple}/doc" # `cargo clean --doc` does nothing afaict?
             "cargo doc --no-deps -p glib-signal" # can't pass --features because cargo is garbage :<
-            "cargo doc --no-deps --workspace --features dox"
-            "cargo doc --no-deps --workspace --examples --features dox"
+            "cargo doc --no-deps --workspace --all-features"
+            "cargo doc --no-deps --workspace --examples --all-features"
           ];
           docsDep = config.tasks.docs-all.drv;
           impure = true;
