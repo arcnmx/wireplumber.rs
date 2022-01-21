@@ -8,6 +8,7 @@ use std::pin::Pin;
 use std::iter;
 use std::future::Future;
 
+use serde::{Serialize, Deserialize};
 use futures::{FutureExt, StreamExt, future};
 use futures::channel::mpsc;
 use glib::{Variant, Error, SourceId};
@@ -30,7 +31,7 @@ const LOG_DOMAIN: &'static str = "static-link";
 
 /// A list of user-specified [Constraints](Constraint)
 /// used to find each end of the port to be linked.
-#[derive(Debug, Clone, Variant)]
+#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
 pub struct PortMapping {
 	/// A description of the output ports to link.
 	///
@@ -42,24 +43,31 @@ pub struct PortMapping {
 	input: Vec<Constraint>,
 }
 
+/// serde boolean default
+#[doc(hidden)]
+fn true_() -> bool { true }
+
 /// User configuration for the [StaticLink] plugin
-#[derive(Debug, Clone, Variant)]
+#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
 pub struct StaticLinkArgs {
 	/// The source node to link to `input`
 	output: Vec<Constraint>,
 	/// The sink node to link to `output`
 	input: Vec<Constraint>,
 	/// Describes how to link the ports of the `input` node to the `output`
+	#[serde(default, rename = "mappings")]
 	port_mappings: Vec<PortMapping>,
 	/// Whether to mark any created links as `link.passive`
 	///
 	/// Defaults to `true`
+	#[serde(default = "true_")]
 	passive: bool,
 	/// Whether to mark any created links as `object.linger`
 	///
 	/// A lingering link will remain in place even after this module's parent process has exited.
 	///
 	/// Defaults to `true`
+	#[serde(default = "true_")]
 	linger: bool,
 }
 
