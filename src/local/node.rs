@@ -1,8 +1,12 @@
-use glib::{translate::{ToGlibPtr, ToGlibPtrMut, from_glib_full}, Value, Cast, Object, Type};
+use glib::{translate::{ToGlibPtr, ToGlibPtrMut, from_glib_full}, Value, Object, Type};
+use glib::prelude::*;
 use pipewire_sys::pw_impl_node;
 use std::ptr::NonNull;
 
-use crate::{ImplNode, Core};
+use crate::{
+	Core,
+	local::ImplNode,
+};
 
 impl ImplNode {
 	#[doc(alias = "wp_impl_node_new_wrap")]

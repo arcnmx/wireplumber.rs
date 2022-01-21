@@ -29,6 +29,8 @@ pub type Result<T> = std::result::Result<T, glib::Error>;
 pub mod pw;
 pub mod prelude;
 
+pub mod local;
+
 mod error;
 
 mod core;
@@ -52,9 +54,6 @@ pub use proxy::*;
 
 mod iterator;
 pub use iterator::*;
-
-mod impl_node;
-pub use impl_node::*;
 
 mod transition;
 pub use transition::*;

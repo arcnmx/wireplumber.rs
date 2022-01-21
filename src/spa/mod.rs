@@ -1,7 +1,6 @@
 #[path = "type.rs"]
 mod type_;
 mod pod;
-mod device;
 mod parser;
 mod builder;
 mod id_table;
