@@ -144,7 +144,7 @@
 <span id="141">141</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">translate</span>::{<span class="ident">from_glib_full</span>, <span class="ident">ToGlibPtr</span>, <span class="ident">IntoGlib</span>}, <span class="ident">MainContext</span>, <span class="ident">MainLoop</span>};
 <span class="kw">use</span> <span class="ident">pipewire_sys</span>::{<span class="ident">pw_core</span>, <span class="ident">pw_context</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ptr::NonNull</span>, <span class="ident">rc::Rc</span>};
+<span class="kw">use</span> <span class="ident">std::ptr::NonNull</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Core</span>, <span class="ident">InitFlags</span>, <span class="ident">Properties</span>, <span class="ident">lua::ToLuaVariant</span>};
 
 <span class="kw">impl</span> <span class="ident">Core</span> {
@@ -245,11 +245,11 @@
 		<span class="ident">future::ready</span>(<span class="ident">res</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">connect</span><span class="op">|</span> <span class="ident">connect</span>.<span class="ident">map_err</span>(<span class="ident">From::from</span>).<span class="ident">map_ok</span>(<span class="ident">drop</span>))
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">MainContext</span>, <span class="ident">MainLoop</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Core</span><span class="op">&gt;</span>)<span class="op">&gt;</span>(<span class="ident">props</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Properties</span><span class="op">&gt;</span>, <span class="ident">setup</span>: <span class="ident">F</span>) {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">MainContext</span>, <span class="ident">MainLoop</span>, <span class="ident">Core</span>)<span class="op">&gt;</span>(<span class="ident">props</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Properties</span><span class="op">&gt;</span>, <span class="ident">setup</span>: <span class="ident">F</span>) {
 		<span class="kw">let</span> <span class="ident">mainloop</span> <span class="op">=</span> <span class="ident">MainLoop::new</span>(<span class="prelude-val">None</span>, <span class="bool-val">false</span>);
 		<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">mainloop</span>.<span class="ident">context</span>();
 		<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">with_thread_default</span>(<span class="op">|</span><span class="op">|</span> {
-			<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">Rc::new</span>(<span class="ident">Core::new</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">context</span>), <span class="ident">props</span>));
+			<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">Core::new</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">context</span>), <span class="ident">props</span>);
 			<span class="kw">let</span> <span class="ident">_disconnect_handler</span> <span class="op">=</span> <span class="ident">core</span>.<span class="ident">connect_disconnected</span>({
 				<span class="kw">let</span> <span class="ident">mainloop</span> <span class="op">=</span> <span class="ident">mainloop</span>.<span class="ident">clone</span>();
 				<span class="kw">move</span> <span class="op">|</span><span class="ident">_core</span><span class="op">|</span> <span class="ident">mainloop</span>.<span class="ident">quit</span>()
