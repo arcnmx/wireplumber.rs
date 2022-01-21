@@ -1,6 +1,9 @@
-//! # wpexec example
+//! wpexec example
 //!
-//! Based on [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c).
+//! An example showing how to write a simple WirePlumber service.
+//! Following along with the [source code](../src/exec/exec.rs.html) is recommended.
+//!
+//! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
 use anyhow::Context;
 use glib::Variant;
@@ -43,6 +46,10 @@ struct Args {
 	module: Option<String>,
 }
 
+/// Load the script specified by [Args] and connect to the PipeWire daemon.
+///
+/// Once this function returns, the script will continue to run in the background until
+/// the service is interrupted.
 async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	let path = args.module().unwrap(); // NOTE: already checked this in main()
 	let path = {
@@ -85,34 +92,50 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	Ok(())
 }
 
+/// Main entry point responsible for WirePlumber and PipeWire initialization.
+///
+/// This sets up the process with logging and SIGINT handlers before passing
+/// a [Core](wireplumber::Core) on to [main_async] to run the application logic.
+///
+/// See also: [Core::run]
 fn main() -> Result<()> {
+	// info logging by default so we can see what's going on
 	Log::set_default_level("3");
 
+	// let clap build a CLI from argv for us
 	let args = Args::parse();
 
 	if args.module().is_none() {
 		return Err(format_err!("no default module available for {:?}", args.module_type))
 	}
 
-	let _ = args.variant()?; // bail out early if invalid args provided
+	// bail out early if invalid args are provided
+	let _ = args.variant()?;
 
+	// initialize the wireplumber and pipewire libraries
 	Core::init(Default::default());
 
+	// set up a cell to store the result of our main operation in
 	let main_res = Rc::new(RefCell::new(None));
 
+	// tell the pipewire daemon a little bit about ourselves
 	let props = Properties::new_empty();
 	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
 
+	// run a (blocking) glib::MainLoop with associated core
 	Core::run(Some(&props), |context, mainloop, core| {
 		ctrlc::set_handler({
+			// exit this loop if we receive a SIGINT
 			let mainloop = mainloop.clone();
 			move || mainloop.quit()
 		}).unwrap();
 
 		let main_res = main_res.clone();
 		context.spawn_local(async move {
+			// set up the requested module or script...
 			let res = main_async(&core, &args).await;
 			if res.is_err() {
+				// bail out if we couldn't successfully load it after all
 				mainloop.quit();
 			}
 			*main_res.borrow_mut() = Some(res)
@@ -122,6 +145,7 @@ fn main() -> Result<()> {
 	let main_res = main_res.borrow_mut().take();
 	match main_res {
 		Some(res) => res,
+		// we didn't get far enough to store the result; likely it timed out or something
 		None => Err(format_err!("could not connect to pipewire")),
 	}
 }
@@ -135,6 +159,11 @@ impl ModuleType {
 		self.is_lua()
 	}
 
+	/// A module that provides the necessary loader
+	///
+	/// While wireplumber has built-in support for loading modules, the Lua scripting engine is itself
+	/// implemented as a module, which must be loaded first. Afterwards, lua scripts may be loaded
+	/// as modules (well, components) themselves.
 	fn loader_module(&self) -> Option<&'static str> {
 		match self {
 			ModuleType::Lua => Some("libwireplumber-module-lua-scripting"),
@@ -142,6 +171,9 @@ impl ModuleType {
 		}
 	}
 
+	/// The type name expected by a [wireplumber::ComponentLoader]
+	///
+	/// This is passed on to [Core::load_component].
 	fn loader_type(&self) -> &'static str {
 		match self {
 			ModuleType::Lua => "script/lua",
@@ -152,6 +184,10 @@ impl ModuleType {
 }
 
 impl Args {
+	/// The [Plugin] names to load as part of initialization
+	///
+	/// For example, the [ModuleType::Lua] module provides a `lua-scripting` plugin that's responsible
+	/// for loading and running lua scripts.
 	fn plugins(&self) -> Vec<&str> {
 		match self.module_type {
 			ModuleType::Lua => vec!["lua-scripting"],
@@ -161,6 +197,10 @@ impl Args {
 		}
 	}
 
+	/// The module or script to load
+	///
+	/// This can be a full path or often just be a name if WirePlumber knows where to find it
+	/// (the rules for this are convoluted though, so I won't get into that here)
 	fn module(&self) -> Option<&str> {
 		match self.module {
 			Some(ref module) => Some(module),
@@ -179,6 +219,11 @@ impl Args {
 		}
 	}
 
+	/// A JSON-like blob of data to pass as an argument to the script or module to be loaded
+	///
+	/// In practice this must be a dictionary or array because lua scripts can't work with other
+	/// types of data as the top-level container, but more specific types may be usable by other
+	/// modules. See [wireplumber::lua] for a more detailed explanation.
 	fn variant(&self) -> Result<Option<Variant>> {
 		Ok(match self.json_arg {
 			None => None,
