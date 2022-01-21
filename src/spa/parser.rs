@@ -1,4 +1,5 @@
 use crate::{SpaPodParser, SpaPod};
+use crate::prelude::*;
 use glib::translate::{ToGlibPtr, from_glib, from_glib_full};
 use glib::ffi::gconstpointer;
 use std::slice::from_raw_parts;

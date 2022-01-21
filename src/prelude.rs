@@ -47,3 +47,13 @@ pub use glib::{
 	IsA as _,
 	StaticType as _,
 };
+
+/// this crate uses the prelude too!
+#[allow(unused_imports)]
+pub(crate) use crate::{
+	LibraryErrorEnum,
+	util::ValueIterator,
+	log::{
+		wp_trace, wp_debug, wp_info, wp_warning, wp_critical,
+	},
+};

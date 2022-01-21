@@ -24,15 +24,12 @@ pub mod lib {
 	pub use gio;
 }
 
-#[macro_use]
-mod log;
-pub use log::*;
-
 pub type Result<T> = std::result::Result<T, glib::Error>;
 
 pub mod pw;
 pub mod prelude;
 
+pub mod log;
 pub mod local;
 pub mod session;
 pub mod registry;
@@ -45,6 +42,8 @@ mod error;
 
 mod core;
 pub use crate::core::{Core, InitFlags};
+
+pub use log::Log;
 
 pub mod lua;
 

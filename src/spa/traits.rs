@@ -1,7 +1,7 @@
 use glib::{translate::{GlibNoneError, IntoGlib, from_glib}, Error};
 use glib::ffi::gboolean;
-
-use crate::{SpaPodBuilder, SpaPod, LibraryErrorEnum};
+use crate::spa::{SpaPodBuilder, SpaPod};
+use crate::prelude::*;
 use std::convert::{TryFrom, TryInto};
 
 pub trait SpaPrimitive: SpaValue + Copy + Into<<Self as SpaValue>::Owned> {

@@ -5,6 +5,7 @@ use glib::prelude::*;
 use std::ptr::{self, NonNull};
 use std::fmt;
 use crate::spa::{SpaType, SpaIdTable};
+use crate::prelude::*;
 
 // glib::wrapper creates an incorrect FromValue impl :<
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
