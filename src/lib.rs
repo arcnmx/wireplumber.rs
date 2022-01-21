@@ -38,15 +38,13 @@ pub mod session;
 pub mod registry;
 pub mod plugin;
 pub mod object;
+pub mod spa;
 pub mod util;
 
 mod error;
 
 mod core;
 pub use crate::core::*;
-
-mod spa;
-pub use spa::*;
 
 pub mod lua;
 
@@ -55,4 +53,5 @@ pub mod signals;
 /// gir needs to know where to find these
 pub(crate) use crate::{
 	object::ObjectFeatures,
+	spa::{SpaIdTable, SpaIdValue},
 };

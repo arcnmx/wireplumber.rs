@@ -1,4 +1,5 @@
-use crate::{SpaPodBuilder, SpaValue, pw::SpaPropertyKey};
+use crate::spa::{SpaPodBuilder, SpaValue};
+use crate::pw::SpaPropertyKey;
 use glib::translate::ToGlibPtr;
 use glib::ffi::gconstpointer;
 use std::iter::FromIterator;

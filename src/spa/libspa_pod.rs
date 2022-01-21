@@ -10,8 +10,11 @@ use std::{convert::{TryInto, TryFrom}, borrow::Cow};
 use std::ptr::NonNull;
 use std::fmt;
 use crate::{
-	SpaPod, SpaType, SpaIdTable, SpaIdValue, LibraryErrorEnum,
-	SpaPodBuilder, SpaValue, SpaPrimitive, SpaBool,
+	LibraryErrorEnum,
+	spa::{
+		SpaPod, SpaType, SpaIdTable, SpaIdValue,
+		SpaPodBuilder, SpaValue, SpaPrimitive, SpaBool,
+	},
 };
 
 impl SpaPod {
