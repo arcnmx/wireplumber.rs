@@ -1,3 +1,17 @@
+//! Extension traits
+//!
+//! Wildcard imports give you access to all the goodies:
+//!
+//! ```
+//! use wireplumber::prelude::*;
+//! use wireplumber::{PipewireObject, pw};
+//!
+//! fn get_id(obj: &PipewireObject) -> u32 {
+//!   obj.pw_property(pw::PW_KEY_OBJECT_ID)
+//!     .expect("how do you not know who you are")
+//! }
+//! ```
+
 pub use crate::auto::traits::{
 	EndpointExt as _,
 	GlobalProxyExt as _,
