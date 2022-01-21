@@ -195,10 +195,6 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
 <span class="kw">use</span> <span class="ident">std::iter</span>;
 <span class="kw">use</span> <span class="ident">std::future::Future</span>;
@@ -215,9 +211,8 @@
 <span class="kw">const</span> <span class="ident">LOG_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;static-link&quot;</span>;
 
 <span class="kw">use</span> <span class="ident">wireplumber</span>::{<span class="ident">ObjectManager</span>, <span class="ident">Interest</span>, <span class="ident">Properties</span>, <span class="ident">Core</span>, <span class="ident">Node</span>, <span class="ident">ConstraintType</span>, <span class="ident">pw</span>, <span class="ident">Object</span>, <span class="ident">Constraint</span>, <span class="ident">Link</span>, <span class="ident">Port</span>, <span class="ident">ObjectFeatures</span>, <span class="ident">AsyncPluginImpl</span>, <span class="ident">SimplePlugin</span>, <span class="ident">info</span>, <span class="ident">warning</span>};
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>};
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Variant</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Variant</span>)]</span>
 <span class="kw">struct</span> <span class="ident">PortMapping</span> {
 	<span class="ident">output</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
 	<span class="ident">input</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
@@ -225,15 +220,12 @@
 
 <span class="kw">fn</span> <span class="ident">true_</span>() -&gt; <span class="ident">bool</span> { <span class="bool-val">true</span> }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Variant</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Variant</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaticLinkArgs</span> {
 	<span class="ident">output</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
 	<span class="ident">input</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
-	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">default</span>, <span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;mappings&quot;</span>)]</span>
 	<span class="ident">port_mappings</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PortMapping</span><span class="op">&gt;</span>,
-	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;true_&quot;</span>)]</span>
 	<span class="ident">passive</span>: <span class="ident">bool</span>,
-	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;true_&quot;</span>)]</span>
 	<span class="ident">linger</span>: <span class="ident">bool</span>,
 }
 

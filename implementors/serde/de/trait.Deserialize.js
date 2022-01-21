@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["static_link_module"] = [{"text":"impl&lt;'de&gt; <a class=\"trait\" href=\"https://docs.rs/serde/1.0.133/serde/de/trait.Deserialize.html\" title=\"trait serde::de::Deserialize\">Deserialize</a>&lt;'de&gt; for <a class=\"struct\" href=\"static_link_module/struct.StaticLinkArgs.html\" title=\"struct static_link_module::StaticLinkArgs\">StaticLinkArgs</a>","synthetic":false,"types":["static_link_module::StaticLinkArgs"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
