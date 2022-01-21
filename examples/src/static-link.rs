@@ -8,7 +8,6 @@ use futures::channel::mpsc;
 use glib::{Variant, Error, SourceId};
 use glib::prelude::*;
 use glib::once_cell::unsync::OnceCell;
-use glib_signal::ObjectSignalExt;
 use wireplumber::prelude::*;
 
 const LOG_DOMAIN: &'static str = "static-link";

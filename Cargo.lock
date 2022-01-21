@@ -1176,7 +1176,6 @@ dependencies = [
  "ctrlc",
  "futures",
  "glib",
- "glib-signal",
  "pipewire-sys",
  "serde",
  "wireplumber",

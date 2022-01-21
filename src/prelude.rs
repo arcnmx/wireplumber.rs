@@ -23,3 +23,10 @@ pub use crate::{
 	TransitionExt2 as _,
 	pw::PipewirePropertyStringIterExt as _,
 };
+
+pub use glib_signal::ObjectSignalExt as _;
+pub use glib::{
+	Cast as _,
+	IsA as _,
+	StaticType as _,
+};
