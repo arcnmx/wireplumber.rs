@@ -5,6 +5,10 @@ authors = ["arcnmx"]
 edition = "2018"
 build = "build.rs"
 
+[[bin]]
+name = "wpexec"
+path = "src/bin/exec.rs"
+
 [[example]]
 name = "static-link-module"
 crate-type = ["cdylib"]
