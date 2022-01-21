@@ -33,12 +33,12 @@ pub use crate::pw::{
 
 pub use crate::plugin::PluginExt as _;
 
-pub use crate::util::{
-	TransitionExt as _, TransitionExt2 as _,
+pub use crate::object::{
+	ObjectExt as _,
 };
 
-pub use crate::auto::traits::{
-	ObjectExt as _,
+pub use crate::util::{
+	TransitionExt as _, TransitionExt2 as _,
 };
 
 pub use glib_signal::ObjectSignalExt as _;

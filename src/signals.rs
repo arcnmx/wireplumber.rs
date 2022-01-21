@@ -8,7 +8,8 @@
 //! use wireplumber::{
 //!   prelude::*,
 //!   registry::{ObjectManager, Interest},
-//!   Core, Node, Object, ObjectFeatures,
+//!   object::{Object, ObjectFeatures},
+//!   Core, Node,
 //! };
 //!
 //! async fn watch_nodes(core: &Core) {

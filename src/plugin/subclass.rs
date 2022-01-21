@@ -2,7 +2,8 @@ use glib::{translate::{ToGlibPtr, from_glib_none, from_glib_borrow, Borrowed}, V
 use glib::subclass::prelude::*;
 use glib::prelude::*;
 use std::{panic::catch_unwind, marker::PhantomData, future::Future, ops::Deref};
-use crate::{Core, LibraryErrorEnum, Plugin, Object, Transition, ObjectImpl, PluginFeatures};
+use crate::{Core, LibraryErrorEnum, Plugin, Transition, PluginFeatures};
+use crate::object::{Object, ObjectImpl};
 use crate::prelude::*;
 
 pub trait PluginImpl: ObjectImpl + PluginImplExt {
@@ -152,7 +153,7 @@ macro_rules! simple_plugin_subclass {
 		}
 
 		impl $crate::lib::glib::subclass::object::ObjectImpl for $ty { }
-		impl $crate::ObjectImpl for $ty { }
+		impl $crate::object::ObjectImpl for $ty { }
 	};
 }
 pub use simple_plugin_subclass;
