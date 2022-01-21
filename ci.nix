@@ -85,8 +85,8 @@ in {
         (cargo config "build-sys" "build -p wireplumber-sys")
         (cargo config "test-sys" "test -p wireplumber-sys")
         (cargo config "build" "build")
-        (cargo config "test" "test")
-        (cargo config "workspace" "build --workspace")
+        (cargo config "test" "test --workspace")
+        (cargo config "workspace" "build --workspace --examples --bins")
       ];
     };
     jobs = {

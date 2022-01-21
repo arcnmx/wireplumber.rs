@@ -14,9 +14,8 @@ use wireplumber::prelude::*;
 const LOG_DOMAIN: &'static str = "static-link";
 
 use wireplumber::{ObjectManager, Interest, Properties, Core, Node, ConstraintType, pw, Object, Constraint, Link, Port, ObjectFeatures, AsyncPluginImpl, SimplePlugin, info, warning};
-use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
+#[derive(Debug, Clone, Variant)]
 struct PortMapping {
 	output: Vec<Constraint>,
 	input: Vec<Constraint>,
@@ -24,15 +23,12 @@ struct PortMapping {
 
 fn true_() -> bool { true }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
+#[derive(Debug, Clone, Variant)]
 pub struct StaticLinkArgs {
 	output: Vec<Constraint>,
 	input: Vec<Constraint>,
-	#[serde(default, rename = "mappings")]
 	port_mappings: Vec<PortMapping>,
-	#[serde(default = "true_")]
 	passive: bool,
-	#[serde(default = "true_")]
 	linger: bool,
 }
 
