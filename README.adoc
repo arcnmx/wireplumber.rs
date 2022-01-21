@@ -1,4 +1,4 @@
-= Wireplumber Rust Bindings
+= WirePlumber Rust Bindings
 
 TODO/WIP
 

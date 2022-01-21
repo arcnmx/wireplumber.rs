@@ -1,14 +1,14 @@
 #![doc(html_root_url = "https://arcnmx.github.io/wireplumber.rs/")]
 #![cfg_attr(feature = "dox", feature(doc_cfg))]
 
-//! [Wireplumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
+//! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
 //!
 //! This crate provides a high-level interface to [PipeWire](https://pipewire.org/)'s [API](https://docs.pipewire.org/page_api.html)
 //! via libwireplumber.
 //!
 //! # Upstream Documentation
 //!
-//! Wireplumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)
+//! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)
 //! may also be helpful.
 
 #[allow(unused_imports)]

@@ -6,7 +6,7 @@ build = "build.rs"
 edition = "2018"
 resolver = "2"
 
-description = "Wireplumber bindings"
+description = "WirePlumber bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
 
 documentation = "http://arcnmx.github.io/wireplumber.rs/wireplumber/"
