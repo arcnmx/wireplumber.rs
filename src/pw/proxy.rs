@@ -6,8 +6,8 @@ use std::pin::Pin;
 use glib::{Error, translate::ToGlibPtr, ffi::gconstpointer};
 use glib::prelude::*;
 use pipewire_sys::pw_proxy;
-use crate::{ValueIterator, SpaPod};
-use crate::{Proxy, PipewireObject, pw::{self, FromPipewirePropertyString}, LibraryErrorEnum};
+use crate::SpaPod;
+use crate::{Proxy, PipewireObject, pw::{self, FromPipewirePropertyString}, util::ValueIterator, LibraryErrorEnum};
 use crate::prelude::*;
 
 impl crate::ProxyFeatures {

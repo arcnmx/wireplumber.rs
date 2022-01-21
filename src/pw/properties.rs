@@ -5,7 +5,7 @@ use pipewire_sys::pw_properties;
 
 use crate::{Properties, pw::ToPipewirePropertyString};
 #[cfg(feature = "v0_4_2")]
-use crate::{PropertiesItem, ValueIterator};
+use crate::{PropertiesItem, util::ValueIterator};
 
 impl Properties {
 	pub fn new_clone(props: &Self) -> Properties {

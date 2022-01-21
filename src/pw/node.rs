@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::{Node, Port, ValueIterator, pw};
+use crate::{Node, Port, util::ValueIterator, pw};
 use crate::registry::{Interest, InterestContainer, ObjectInterest};
 use std::fmt;
 

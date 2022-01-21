@@ -1,6 +1,6 @@
 use glib::{ObjectType, Cast};
 
-use crate::ValueIterator;
+use crate::util::ValueIterator;
 
 pub use crate::auto::{
 	ObjectManager,

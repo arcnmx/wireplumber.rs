@@ -1,4 +1,6 @@
-use crate::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch, Properties, PipewireObject, ValueIterator};
+use crate::registry::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch};
+use crate::pw::{PipewireObject, Properties};
+use crate::util::ValueIterator;
 use crate::prelude::*;
 use glib::{FromVariant, StaticVariantType, VariantTy, VariantClass};
 use glib::{translate::{IntoGlib, from_glib}, Object, Variant};

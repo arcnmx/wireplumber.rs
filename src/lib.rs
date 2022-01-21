@@ -37,6 +37,7 @@ pub mod local;
 pub mod session;
 pub mod registry;
 pub mod plugin;
+pub mod util;
 
 mod error;
 
@@ -45,12 +46,6 @@ pub use crate::core::*;
 
 mod object;
 pub use object::*;
-
-mod iterator;
-pub use iterator::*;
-
-mod transition;
-pub use transition::*;
 
 mod spa;
 pub use spa::*;

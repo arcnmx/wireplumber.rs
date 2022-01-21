@@ -46,9 +46,9 @@ impl Core {
 	#[cfg(any(feature = "v0_4_2", feature = "dox"))]
 	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 	#[doc(alias = "wp_new_files_iterator")]
-	pub fn find_files(dirs: crate::LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> crate::ValueIterator<String> {
+	pub fn find_files(dirs: crate::LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> crate::util::ValueIterator<String> {
 		unsafe {
-			crate::ValueIterator::with_inner(
+			crate::util::ValueIterator::with_inner(
 				from_glib_full(ffi::wp_new_files_iterator(dirs.into_glib(), subdir.to_glib_none().0, suffix.to_glib_none().0))
 			)
 		}

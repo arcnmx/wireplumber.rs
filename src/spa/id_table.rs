@@ -3,7 +3,8 @@ use glib::Type;
 use glib::prelude::*;
 use std::ptr::{self, NonNull};
 use std::fmt;
-use crate::{ValueIterator, SpaIdValue};
+use crate::SpaIdValue;
+use crate::util::ValueIterator;
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SpaIdTable {

@@ -6,7 +6,8 @@ use std::convert::TryInto;
 use std::iter::FromIterator;
 use std::{mem, ptr};
 use std::slice::from_raw_parts;
-use crate::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue, ValueIterator, LibraryErrorEnum, pw::SpaPropertyKey};
+use crate::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue, LibraryErrorEnum, pw::SpaPropertyKey};
+use crate::util::ValueIterator;
 use crate::prelude::*;
 
 impl SpaPod {
