@@ -1,9 +1,28 @@
 use glib::translate::ToGlibPtr;
-use crate::{SiLink, SiLinkable, SiAcquisition, SiAdapter, SpaPod};
+use crate::SpaPod;
 use std::pin::Pin;
 use std::ptr;
 use glib::IsA;
 use glib::translate::from_glib_full;
+
+pub use crate::auto::{
+	SessionItem, SessionItemFeatures,
+	SiAcquisition,
+	SiAdapter,
+	SiEndpoint,
+	SiFactory,
+	SiLink,
+	SiLinkable,
+	traits::{
+		SessionItemExt,
+		SiAcquisitionExt,
+		SiAdapterExt,
+		SiEndpointExt,
+		SiFactoryExt,
+		SiLinkExt,
+		SiLinkableExt,
+	},
+};
 
 pub trait SiAdapterExt2: 'static {
 	#[doc(alias = "wp_si_adapter_set_ports_format")]

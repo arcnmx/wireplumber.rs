@@ -30,6 +30,7 @@ pub mod pw;
 pub mod prelude;
 
 pub mod local;
+pub mod session;
 
 mod error;
 
@@ -72,9 +73,6 @@ pub use properties::*;
 
 mod spa;
 pub use spa::*;
-
-mod si;
-pub use si::*;
 
 mod interest;
 pub use interest::*;
