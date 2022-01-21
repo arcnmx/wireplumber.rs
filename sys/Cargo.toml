@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2018"
 build = "../generate/build.rs"
 
+documentation = "http://arcnmx.github.io/wireplumber.rs/wp_sys/"
+repository = "https://github.com/arcnmx/wireplumber.rs/tree/HEAD/sys"
+license = "MIT"
+
 [package.metadata.system-deps.wireplumber_0_4]
 name = "wireplumber-0.4"
 version = "0.4"

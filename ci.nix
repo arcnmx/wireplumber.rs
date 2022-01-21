@@ -49,9 +49,22 @@
     cd ${toString ./.}
     exec ${gir}/bin/gir -m not_bound
   '';
+  RUSTDOCFLAGS = concatLists (mapAttrsToList (crate: url: [ "--extern-html-root-url" "${crate}=${url}" ]) rec {
+    #glib = "https://gtk-rs.org/gtk-rs-core/stable/latest/docs/";
+    glib = "https://gtk-rs.org/gtk-rs-core/git/docs/";
+    glib_sys = glib;
+    gio = glib;
+    gio_sys = glib;
+    gobject_sys = glib;
+    pipewire = "https://pipewire.pages.freedesktop.org/pipewire-rs/";
+    pipewire_sys = pipewire;
+    libspa = pipewire;
+    libspa_sys = pipewire;
+  }) ++ [ "-Z" "unstable-options" ];
 in {
   config = {
     name = "wireplumber.rs";
+    ci.version = "nix2.4-broken"; # for checkout@v2
     ci.gh-actions = {
       enable = true;
       emit = true;
@@ -77,20 +90,69 @@ in {
       ];
     };
     jobs = {
-      docs = { config, ... }: {
+      docs = { config, pkgs, ... }: let
+        doc = ci.command {
+          name = "cargo-doc";
+          command = concatMapStringsSep "\n" (c: "nix-shell ${importShell config} --run ${escapeShellArg c}") [
+            "cargo clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${config.rustChannel.hostTarget.triple}/doc" # `cargo clean --doc` does nothing afaict?
+            "cargo doc --no-deps -p glib-signal" # can't pass --features because cargo is garbage :<
+            "cargo doc --no-deps --workspace --features dox"
+            "cargo doc --no-deps --workspace --examples --features dox"
+          ];
+          docsDep = config.tasks.docs-all.drv;
+          impure = true;
+        };
+      in {
+        ci.gh-actions = {
+          checkoutOptions = {
+            fetch-depth = 0;
+          };
+        };
         enableDocs = true;
         tasks = mkForce {
-          docs.inputs = [
-            (cargo config "doc" "doc --workspace --features dox")
-            (cargo config "doc-all" "doc --all-features")
+          docs-all.inputs = [
+            (cargo config "doc-all" "doc --all-features --workspace --no-deps")
           ];
+          docs.inputs = doc;
+          publish-docs.inputs = ci.command {
+            name = "publish";
+            impure = true;
+            skip = if env.platform != "gh-actions" || env.gh-event-name or null != "push" then env.gh-event-name or "github"
+              else if env.git-branch != "master" then "branch"
+              else false;
+            gitCommit = env.git-commit;
+            docsBranch = "gh-pages";
+            docsDep = config.tasks.docs.drv;
+            environment = [ "CARGO_TARGET_DIR" ];
+            command = ''
+              git fetch origin
+              if [[ -e $docsBranch ]]; then
+                git worktree remove -f $docsBranch || true
+                rm -rf ./$docsBranch || true
+              fi
+              git worktree add --detach $docsBranch && cd $docsBranch
+              git branch -D pages || true
+              git checkout --orphan pages && git rm -rf .
+              git reset --hard origin/$docsBranch -- || true
+              rm -rf ./*
+              cp -a ''${CARGO_TARGET_DIR:-../target}/${config.rustChannel.hostTarget.triple}/doc/* ./
+
+              git add -A
+              if [[ -n $(git status --porcelain) ]]; then
+                export GIT_{COMMITTER,AUTHOR}_EMAIL=ghost@konpaku.2hu
+                export GIT_{COMMITTER,AUTHOR}_NAME=ghost
+                git commit -m "$gitCommit"
+                git push origin HEAD:$docsBranch
+              fi
+            '';
+          };
         };
       };
       dev = { config, ... }: {
+        ci.gh-actions.emit = mkForce false;
         channels.nixpkgs = config.parentConfig.channels.nixpkgs;
         enableDocs = true;
         enableDev = true;
-        ci.gh-actions.emit = mkForce false;
       };
     };
   };
@@ -110,6 +172,7 @@ in {
         rustTools = optional config.enableDev "rust-analyzer";
         buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [ gir todo xmlstarlet pkg-config ];
+        RUSTDOCFLAGS = optionals config.enableDocs RUSTDOCFLAGS;
         GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         LIBCLANG_PATH = "${libclang.lib}/lib";
         BINDGEN_EXTRA_CLANG_ARGS = [

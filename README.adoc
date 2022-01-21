@@ -1,0 +1,8 @@
+= Wireplumber Rust Bindings
+
+TODO/WIP
+
+Check out the
+https://arcnmx.github.io/wireplumber.rs/wireplumber/[documentation]
+and
+link:examples/[examples].

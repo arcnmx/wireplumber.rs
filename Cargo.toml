@@ -6,10 +6,10 @@ build = "build.rs"
 edition = "2018"
 resolver = "2"
 
-description = "Wireplumber GObject bindings"
+description = "Wireplumber bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
 
-documentation = "http://docs.rs/wireplumber/"
+documentation = "http://arcnmx.github.io/wireplumber.rs/wireplumber/"
 repository = "https://github.com/arcnmx/wireplumber.rs"
 readme = "README.md"
 license = "MIT"
