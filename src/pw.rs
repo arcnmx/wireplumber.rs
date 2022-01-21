@@ -168,6 +168,13 @@ macro_rules! pipewire_primitives {
 					self
 				}
 			}
+			impl FromPipewirePropertyString for $ty {
+				type Error = Infallible;
+
+				fn from_pipewire_string(value: &str) -> Result<Self, Self::Error> {
+					Ok(value.into())
+				}
+			}
 		)*
 	};
 	(@&AsRef $($ty:ty,)*) => {
