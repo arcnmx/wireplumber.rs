@@ -24,6 +24,10 @@ pub mod lib {
 	pub use gio;
 }
 
+#[macro_use]
+mod log;
+pub use log::*;
+
 pub type Result<T> = std::result::Result<T, glib::Error>;
 
 pub mod pw;
@@ -37,10 +41,6 @@ mod error;
 
 mod core;
 pub use crate::core::*;
-
-#[macro_use]
-mod log;
-pub use log::*;
 
 mod object;
 pub use object::*;
