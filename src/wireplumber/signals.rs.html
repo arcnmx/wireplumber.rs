@@ -127,7 +127,79 @@
 <span id="124">124</span>
 <span id="125">125</span>
 <span id="126">126</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib_signal</span>::{<span class="ident">def_signal</span>, <span class="ident">SignalFlags</span>, <span class="ident">Pointer</span>};
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+</pre><pre class="rust"><code><span class="doccomment">//! [glib_signal] types</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! These should not need to be used directly. Instead, use an associated const:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! # #[cfg(feature = &quot;enable-futures&quot;)]</span>
+<span class="doccomment">//! use futures_util::StreamExt;</span>
+<span class="doccomment">//! use wireplumber::{</span>
+<span class="doccomment">//!   prelude::*,</span>
+<span class="doccomment">//!   Core, Node, ObjectManager, Interest, Object, ObjectFeatures,</span>
+<span class="doccomment">//! };</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! async fn watch_nodes(core: &amp;Core) {</span>
+<span class="doccomment">//!   let om = ObjectManager::new();</span>
+<span class="doccomment">//!   om.add_interest_full(&amp;Interest::&lt;Node&gt;::new());</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!   // register a callback for a signal...</span>
+<span class="doccomment">//!   om.handle(ObjectManager::SIGNAL_INSTALLED, |om, ()| {</span>
+<span class="doccomment">//!     println!(&quot;{:?} installed&quot;, om);</span>
+<span class="doccomment">//!   });</span>
+<span class="doccomment">//!   // ... or receive events as an async Stream:</span>
+<span class="doccomment">//!   # #[cfg(feature = &quot;enable-futures&quot;)]</span>
+<span class="doccomment">//!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!   om.request_object_features(Object::static_type(), ObjectFeatures::ALL);</span>
+<span class="doccomment">//!   core.install_object_manager(&amp;om);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!   # #[cfg(feature = &quot;enable-futures&quot;)]</span>
+<span class="doccomment">//!   while let Some((obj,)) = objects.next().await {</span>
+<span class="doccomment">//!     let node = obj.dynamic_cast_ref::&lt;Node&gt;()</span>
+<span class="doccomment">//!       .expect(&quot;we&#39;re only interested in nodes&quot;);</span>
+<span class="doccomment">//!     println!(&quot;new object: {:?}&quot;, node);</span>
+<span class="doccomment">//!   }</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+
+<span class="kw">use</span> <span class="ident">glib_signal</span>::{<span class="ident">def_signal</span>, <span class="ident">SignalFlags</span>, <span class="ident">Pointer</span>};
 
 <span class="macro">def_signal!</span> {
 	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;connected&quot;</span> <span class="kw">as</span> <span class="ident">Connected</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Core</span> {

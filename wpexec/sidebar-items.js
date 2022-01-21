@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["LOG_DOMAIN",""]],"enum":[["ModuleType",""]],"fn":[["main","Main entry point responsible for WirePlumber and PipeWire initialization."],["main_async","Load the script specified by [Args] and connect to the PipeWire daemon."]],"struct":[["Args",""]]});
