@@ -1,3 +1,39 @@
+//! [glib_signal] types
+//!
+//! These should not need to be used directly. Instead, use an associated const:
+//!
+//! ```
+//! # #[cfg(feature = "enable-futures")]
+//! use futures_util::StreamExt;
+//! use wireplumber::{
+//!   prelude::*,
+//!   Core, Node, ObjectManager, Interest, Object, ObjectFeatures,
+//! };
+//!
+//! async fn watch_nodes(core: &Core) {
+//!   let om = ObjectManager::new();
+//!   om.add_interest_full(&Interest::<Node>::new());
+//!
+//!   // register a callback for a signal...
+//!   om.handle(ObjectManager::SIGNAL_INSTALLED, |om, ()| {
+//!     println!("{:?} installed", om);
+//!   });
+//!   // ... or receive events as an async Stream:
+//!   # #[cfg(feature = "enable-futures")]
+//!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
+//!
+//!   om.request_object_features(Object::static_type(), ObjectFeatures::ALL);
+//!   core.install_object_manager(&om);
+//!
+//!   # #[cfg(feature = "enable-futures")]
+//!   while let Some((obj,)) = objects.next().await {
+//!     let node = obj.dynamic_cast_ref::<Node>()
+//!       .expect("we're only interested in nodes");
+//!     println!("new object: {:?}", node);
+//!   }
+//! }
+//! ```
+
 use glib_signal::{def_signal, SignalFlags, Pointer};
 
 def_signal! {
