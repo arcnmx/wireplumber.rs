@@ -327,6 +327,16 @@
 <span id="324">324</span>
 <span id="325">325</span>
 <span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ObjectInterest</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">InterestMatch</span>, <span class="ident">Properties</span>, <span class="ident">PipewireObject</span>, <span class="ident">ValueIterator</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">FromVariant</span>, <span class="ident">StaticVariantType</span>, <span class="ident">VariantTy</span>, <span class="ident">VariantClass</span>};
@@ -394,6 +404,16 @@
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">glib::Object</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">interest</span>.<span class="ident">matches_object</span>(<span class="ident">object</span>)
+	}
+
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">constrain</span><span class="op">&lt;</span><span class="lifetime">&#39;o</span>, <span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">glib::Object</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">O</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
+		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">matches_object</span>(<span class="ident">object</span>) {
+			<span class="prelude-val">Some</span>(<span class="kw">unsafe</span> {
+				<span class="ident">object</span>.<span class="ident">unsafe_cast_ref</span>()
+			})
+		} <span class="kw">else</span> {
+			<span class="prelude-val">None</span>
+		}
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">InterestContainer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">container</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>) -&gt; <span class="ident">ValueIterator</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
