@@ -48,26 +48,11 @@ pub use object::*;
 mod plugin;
 pub use plugin::*;
 
-mod proxy;
-pub use proxy::*;
-
 mod iterator;
 pub use iterator::*;
 
 mod transition;
 pub use transition::*;
-
-mod node;
-pub use node::*;
-
-mod link;
-pub use link::*;
-
-mod port;
-pub use port::*;
-
-mod properties;
-pub use properties::*;
 
 mod spa;
 pub use spa::*;

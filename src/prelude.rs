@@ -22,23 +22,22 @@ pub use crate::session::{
 	SiLinkableExt as _,
 };
 
-pub use crate::auto::traits::{
+pub use crate::pw::{
+	PipewirePropertyStringIterExt as _,
 	EndpointExt as _,
 	GlobalProxyExt as _,
 	MetadataExt as _,
+	PipewireObjectExt as _, PipewireObjectExt2 as _,
+	ProxyExt as _, ProxyExt2 as _,
+};
+
+pub use crate::auto::traits::{
 	ObjectExt as _,
-	PipewireObjectExt as _,
 	PluginExt as _,
-	ProxyExt as _,
 	TransitionExt as _,
 };
 
-pub use crate::{
-	ProxyExt2 as _,
-	PipewireObjectExt2 as _,
-	TransitionExt2 as _,
-	pw::PipewirePropertyStringIterExt as _,
-};
+pub use crate::TransitionExt2 as _;
 
 pub use glib_signal::ObjectSignalExt as _;
 pub use glib::{
