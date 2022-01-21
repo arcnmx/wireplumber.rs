@@ -1,7 +1,9 @@
 use glib::{translate::{from_glib_full, ToGlibPtr, IntoGlib}, MainContext, MainLoop};
 use pipewire_sys::{pw_core, pw_context};
 use std::ptr::NonNull;
-use crate::{Core, InitFlags, Properties, lua::ToLuaVariant};
+use crate::{Properties, lua::ToLuaVariant};
+
+pub use crate::auto::{Core, InitFlags};
 
 impl Core {
 	#[doc(alias = "wp_init")]
@@ -37,7 +39,7 @@ impl Core {
 	#[cfg(any(feature = "v0_4_2", feature = "dox"))]
 	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 	#[doc(alias = "wp_find_file")]
-	pub fn find_file(dirs: crate::LookupDirs, filename: &str, subdir: Option<&str>) -> Option<String> {
+	pub fn find_file(dirs: crate::plugin::LookupDirs, filename: &str, subdir: Option<&str>) -> Option<String> {
 		unsafe {
 			from_glib_full(ffi::wp_find_file(dirs.into_glib(), filename.to_glib_none().0, subdir.to_glib_none().0))
 		}
@@ -46,7 +48,7 @@ impl Core {
 	#[cfg(any(feature = "v0_4_2", feature = "dox"))]
 	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 	#[doc(alias = "wp_new_files_iterator")]
-	pub fn find_files(dirs: crate::LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> crate::util::ValueIterator<String> {
+	pub fn find_files(dirs: crate::plugin::LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> crate::util::ValueIterator<String> {
 		unsafe {
 			crate::util::ValueIterator::with_inner(
 				from_glib_full(ffi::wp_new_files_iterator(dirs.into_glib(), subdir.to_glib_none().0, suffix.to_glib_none().0))
@@ -131,7 +133,7 @@ impl Default for InitFlags {
 #[test]
 #[cfg(any(feature = "v0_4_2"))]
 fn wp_new_files_iterator() {
-	use crate::LookupDirs;
+	use crate::plugin::LookupDirs;
 
 	let file = Core::find_file(LookupDirs::PREFIX_SHARE, "create-item.lua", Some("scripts"));
 	assert!(file.is_some());

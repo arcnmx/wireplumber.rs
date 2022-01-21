@@ -44,7 +44,7 @@ pub mod util;
 mod error;
 
 mod core;
-pub use crate::core::*;
+pub use crate::core::{Core, InitFlags};
 
 pub mod lua;
 
