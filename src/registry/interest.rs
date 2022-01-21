@@ -1,33 +1,23 @@
 use crate::registry::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch};
 use crate::pw::{PipewireObject, Properties};
-use crate::util::ValueIterator;
 use crate::prelude::*;
-use glib::{FromVariant, StaticVariantType, VariantTy, VariantClass};
-use glib::{translate::{IntoGlib, from_glib}, Object, Variant};
-use glib::prelude::*;
-use std::iter::FromIterator;
-use std::marker::PhantomData;
-use std::str::FromStr;
-use std::convert::TryFrom;
-use std::borrow::{Cow, Borrow};
-use std::ops::Deref;
 
 impl ObjectInterest {
 	/*#[doc(alias = "wp_object_interest_matches")]
-	pub fn matches<O: IsA<Object>>(&self, object: O) -> bool {
+	pub fn matches<O: IsA<GObject>>(&self, object: O) -> bool {
 		unsafe {
 			from_glib(ffi::wp_object_interest_matches(self.to_glib_none().0, object.to_glib_none().0 as *mut _))
 		}
 	}*/
 	#[doc(alias = "wp_object_interest_matches")]
-	pub fn matches_object<O: IsA<Object>>(&self, object: &O) -> bool {
+	pub fn matches_object<O: IsA<GObject>>(&self, object: &O) -> bool {
 		let object = object.as_ref();
 		self.matches_full(InterestMatchFlags::CHECK_ALL, object.type_(), Some(object), None, None) == InterestMatch::all()
 	}
 
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_props(&self, props: &Properties) -> bool {
-		self.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), None::<&Object>, Some(props), None) == InterestMatch::all()
+		self.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), None::<&GObject>, Some(props), None) == InterestMatch::all()
 	}
 
 	#[doc(alias = "wp_object_interest_matches")]
@@ -65,11 +55,11 @@ impl<T: StaticType> Interest<T> {
 		self.interest
 	}
 
-	pub fn matches_object<O: IsA<glib::Object>>(&self, object: &O) -> bool where T: IsA<O> {
+	pub fn matches_object<O: IsA<GObject>>(&self, object: &O) -> bool where T: IsA<O> {
 		self.interest.matches_object(object)
 	}
 
-	pub fn constrain<'o, O: IsA<glib::Object>>(&self, object: &'o O) -> Option<&'o T> where T: IsA<O> {
+	pub fn constrain<'o, O: IsA<GObject>>(&self, object: &'o O) -> Option<&'o T> where T: IsA<O> {
 		if self.matches_object(object) {
 			Some(unsafe {
 				object.unsafe_cast_ref()
@@ -182,7 +172,7 @@ impl Constraint {
 }
 
 impl FromStr for ConstraintVerb {
-	type Err = std::io::Error; // TODO: actual error type
+	type Err = Error;
 
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		Ok(match s {
@@ -193,7 +183,7 @@ impl FromStr for ConstraintVerb {
 			"matches" | "#" => ConstraintVerb::Matches,
 			"is-present" | "+" => ConstraintVerb::IsPresent,
 			"is-absent" | "-" => ConstraintVerb::IsAbsent,
-			_ => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, format!("unknown constraint verb {}", s))),
+			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown constraint verb {}", s))),
 		})
 	}
 }
@@ -210,7 +200,7 @@ impl TryFrom<char> for ConstraintVerb {
 			'#' => ConstraintVerb::Matches,
 			'+' => ConstraintVerb::IsPresent,
 			'-' => ConstraintVerb::IsAbsent,
-			_ => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, format!("unknown constraint verb {}", value))),
+			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown constraint verb {}", value))),
 		})
 	}
 }
@@ -236,7 +226,7 @@ impl FromVariant for ConstraintVerb {
 
 impl ToVariant for ConstraintVerb {
 	fn to_variant(&self) -> Variant {
-		std::str::from_utf8(&[self.symbol() as u8])
+		str::from_utf8(&[self.symbol() as u8])
 			.unwrap()
 			.to_variant()
 	}
@@ -288,14 +278,14 @@ impl Default for ConstraintType {
 }
 
 impl FromStr for ConstraintType {
-	type Err = std::io::Error; // TODO: actual error type
+	type Err = Error;
 
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		Ok(match s {
 			"pw-global" => ConstraintType::PwGlobalProperty,
 			"pw" => ConstraintType::PwProperty,
 			"gobject" => ConstraintType::GProperty,
-			_ => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, format!("unknown constraint type {}", s))),
+			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown constraint type {}", s))),
 		})
 	}
 }

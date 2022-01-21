@@ -1,10 +1,5 @@
-use glib::translate::{ToGlibPtr, TryFromGlib, IntoGlib, OptionIntoGlib, GlibNoneError, UnsafeFrom, from_glib, from_glib_full};
-use glib::Type;
-use glib::prelude::*;
-use std::ptr::{self, NonNull};
-use std::fmt;
-use crate::SpaIdValue;
-use crate::util::ValueIterator;
+use crate::spa::SpaIdValue;
+use crate::prelude::*;
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SpaIdTable {

@@ -1,16 +1,9 @@
-use std::future::Future;
-use std::ffi::{CStr, CString};
-use std::fmt;
-use std::pin::Pin;
-
-use glib::{Error, translate::ToGlibPtr, ffi::gconstpointer};
-use glib::prelude::*;
 use pipewire_sys::pw_proxy;
-use crate::SpaPod;
-use crate::{Proxy, PipewireObject, pw::{self, FromPipewirePropertyString}, util::ValueIterator};
+use crate::spa::SpaPod;
+use crate::pw::{self, Proxy, ProxyFeatures, PipewireObject, FromPipewirePropertyString};
 use crate::prelude::*;
 
-impl crate::ProxyFeatures {
+impl ProxyFeatures {
 	pub const ALL: Self = unsafe { Self::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL as u32) };
 	pub const MINIMAL: Self = unsafe { Self::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL as u32) };
 }
@@ -128,7 +121,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 	}
 }
 
-impl fmt::Display for PipewireObject {
+impl Display for PipewireObject {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if let Some(res) = self.with_pw_property(pw::PW_KEY_OBJECT_PATH, |path| {
 			f.write_str(path)

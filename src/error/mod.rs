@@ -1,6 +1,5 @@
-use glib::translate::{IntoGlib, from_glib};
-use glib::Quark;
-use glib::error::ErrorDomain;
+use glib::{Quark, error::ErrorDomain};
+use crate::prelude::*;
 
 pub use crate::auto::LibraryErrorEnum;
 pub use glib::Error;

@@ -1,8 +1,7 @@
-use glib::{translate::{GlibNoneError, IntoGlib, from_glib}, Error};
 use glib::ffi::gboolean;
+use glib::GString;
 use crate::spa::{SpaPodBuilder, SpaPod};
 use crate::prelude::*;
-use std::convert::{TryFrom, TryInto};
 
 pub trait SpaPrimitive: SpaValue + Copy + Into<<Self as SpaValue>::Owned> {
 }
@@ -189,10 +188,10 @@ impl SpaValue for str {
 		builder.add_string(self)
 	}
 
-	type Owned = glib::GString;
+	type Owned = GString;
 }
 
-impl<'a> TryFrom<&'a SpaPod> for glib::GString {
+impl<'a> TryFrom<&'a SpaPod> for GString {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
@@ -205,7 +204,7 @@ impl<'a> TryFrom<&'a SpaPod> for String {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		<glib::GString as TryFrom<&'a SpaPod>>::try_from(pod)
+		<GString as TryFrom<&'a SpaPod>>::try_from(pod)
 			.map(Into::into)
 	}
 }

@@ -1,9 +1,4 @@
-use glib::translate::{ToGlibPtr, TryFromGlib, IntoGlib, OptionIntoGlib, UnsafeFrom, GlibNoneError, from_glib, from_glib_none};
-use glib::value::{FromValue, Value};
-use glib::Type;
-use glib::prelude::*;
-use std::ptr::{self, NonNull};
-use std::fmt;
+use ffi::WpSpaType;
 use crate::spa::{SpaType, SpaIdTable};
 use crate::prelude::*;
 
@@ -14,7 +9,7 @@ pub struct SpaIdValue {
 }
 
 impl SpaIdValue {
-	pub fn number(&self) -> ffi::WpSpaType {
+	pub fn number(&self) -> WpSpaType {
 		unsafe {
 			ffi::wp_spa_id_value_number(self.into_glib())
 		}
@@ -48,15 +43,15 @@ impl SpaIdValue {
 		}
 	}
 
-	pub fn parse_unknown_name(id_name: &str) -> Option<ffi::WpSpaType> {
+	pub fn parse_unknown_name(id_name: &str) -> Option<WpSpaType> {
 		if id_name.starts_with("id-") {
-			<ffi::WpSpaType>::from_str_radix(&id_name[2..], 16).ok()
+			<WpSpaType>::from_str_radix(&id_name[2..], 16).ok()
 		} else {
 			None
 		}
 	}
 
-	pub(crate) fn value_or_name<C: std::fmt::Debug>(context: &C, key_name: &str, v: Option<Self>) -> Result<Self, ffi::WpSpaType> {
+	pub(crate) fn value_or_name<C: Debug>(context: &C, key_name: &str, v: Option<Self>) -> Result<Self, WpSpaType> {
 		let raw = match v {
 			Some(v) => return Ok(v),
 			None => Self::parse_unknown_name(key_name),
@@ -67,7 +62,7 @@ impl SpaIdValue {
 		}))
 	}
 
-	pub fn result_number(res: Result<Self, ffi::WpSpaType>) -> ffi::WpSpaType {
+	pub fn result_number(res: Result<Self, WpSpaType>) -> WpSpaType {
 		res.map(|v| v.number()).unwrap_or_else(|e| e)
 	}
 }

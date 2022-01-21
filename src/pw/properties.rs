@@ -1,11 +1,10 @@
-use glib::translate::{from_glib_full, ToGlibPtr};
-use std::{ptr::NonNull, iter, fmt};
 use libspa_sys::spa_dict;
 use pipewire_sys::pw_properties;
+use crate::prelude::*;
 
-use crate::{Properties, pw::ToPipewirePropertyString};
+use crate::pw::{Properties, ToPipewirePropertyString};
 #[cfg(feature = "v0_4_2")]
-use crate::{PropertiesItem, util::ValueIterator};
+use crate::pw::PropertiesItem;
 
 impl Properties {
 	pub fn new_clone(props: &Self) -> Properties {
@@ -130,7 +129,7 @@ mod properties_item {
 	}
 }
 
-impl iter::FromIterator<(String, String)> for Properties {
+impl FromIterator<(String, String)> for Properties {
 	fn from_iter<T: IntoIterator<Item=(String, String)>>(iter: T) -> Self {
 		let mut props = Self::new_empty();
 		props.extend(iter);
@@ -167,10 +166,10 @@ impl IntoIterator for Properties {
 }
 
 #[cfg(feature = "v0_4_2")]
-impl fmt::Debug for Properties {
+impl Debug for Properties {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		struct DebugProps<'a>(&'a Properties);
-		impl fmt::Debug for DebugProps<'_> {
+		impl Debug for DebugProps<'_> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				f.debug_map()
 					.entries(self.0)
@@ -185,7 +184,7 @@ impl fmt::Debug for Properties {
 }
 
 #[cfg(not(feature = "v0_4_2"))]
-impl fmt::Debug for Properties {
+impl Debug for Properties {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		// TODO?
 		f.debug_tuple("wp::Properties")

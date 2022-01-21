@@ -14,8 +14,11 @@ use std::rc::Rc;
 use std::path::Path;
 use std::{env, fs};
 
-use wireplumber::prelude::*;
-use wireplumber::{Core, Properties, Plugin, PluginFeatures, Log, pw, info, warning};
+use wireplumber::{
+	Core, Log, info, warning,
+	pw::{self, Properties},
+	plugin::{Plugin, PluginFeatures},
+};
 
 const LOG_DOMAIN: &'static str = "wpexec.rs";
 

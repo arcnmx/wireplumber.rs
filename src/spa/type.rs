@@ -1,7 +1,5 @@
-use glib::translate::{TryFromGlib, IntoGlib, GlibNoneError, UnsafeFrom};
-use std::convert::TryFrom;
-use std::fmt;
-use crate::SpaType;
+use crate::spa::SpaType;
+use crate::prelude::*;
 
 impl SpaType {
 	pub fn from_id(id: ffi::WpSpaType) -> Option<Self> {

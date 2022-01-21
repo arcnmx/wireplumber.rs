@@ -1,9 +1,7 @@
-use glib::{value::FromValue, StaticType};
-use std::{iter::{self, FusedIterator, FromIterator}, marker::PhantomData, fmt};
+use crate::util::WpIterator;
+use crate::prelude::*;
 
-use glib::{translate::{from_glib_full, ToGlibPtr, IntoGlib}, ffi::gpointer, ObjectType, Value, Type};
-
-impl crate::Iterator {
+impl WpIterator {
 	#[doc(alias = "wp_iterator_new")]
 	pub unsafe fn with_impl_raw(methods: &'static ffi::WpIteratorMethods, userdata_size: usize) -> Self {
 		from_glib_full(ffi::wp_iterator_new(methods, userdata_size))
@@ -33,7 +31,7 @@ impl crate::Iterator {
 	}
 }
 
-impl<T: ObjectType> FromIterator<T> for crate::Iterator {
+impl<T: ObjectType> FromIterator<T> for WpIterator {
 	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
 		unsafe {
 			Self::with_pointers(iter.into_iter().map(|o| o.to_glib_full() as *mut _), T::static_type())
@@ -41,7 +39,7 @@ impl<T: ObjectType> FromIterator<T> for crate::Iterator {
 	}
 }
 
-impl Iterator for crate::Iterator {
+impl Iterator for WpIterator {
 	type Item = Value;
 
 	fn next(&mut self) -> Option<Self::Item> {
@@ -49,11 +47,11 @@ impl Iterator for crate::Iterator {
 	}
 }
 
-impl FusedIterator for crate::Iterator { }
+impl iter::FusedIterator for WpIterator { }
 
 #[repr(transparent)]
 pub struct ValueIterator<T> {
-	iter: crate::Iterator,
+	iter: WpIterator,
 	_data: PhantomData<fn() -> T>,
 }
 
@@ -62,7 +60,7 @@ impl<T> ValueIterator<T> {
 		FromIterator::from_iter(iter)
 	}
 
-	pub fn with_inner(iter: crate::Iterator) -> Self {
+	pub fn with_inner(iter: WpIterator) -> Self {
 		// XXX: work around wireplumber bug where iterators do not start in a usable state
 		// known affected methods: wp_new_files_iterator
 		iter.reset();
@@ -77,18 +75,18 @@ impl<T> ValueIterator<T> {
 		self.iter.reset()
 	}
 
-	pub fn into_inner(self) -> crate::Iterator {
+	pub fn into_inner(self) -> WpIterator {
 		self.iter
 	}
 
-	pub fn inner(&self) -> &crate::Iterator {
+	pub fn inner(&self) -> &WpIterator {
 		&self.iter
 	}
 }
 
 impl<T: StaticType> Default for ValueIterator<T> {
 	fn default() -> Self {
-		Self::with_inner(crate::Iterator::empty(T::static_type()))
+		Self::with_inner(WpIterator::empty(T::static_type()))
 	}
 }
 
@@ -126,7 +124,7 @@ impl<T: for<'v> FromValue<'v>> Iterator for ValueIterator<T> {
 	}
 }
 
-impl<T> FusedIterator for ValueIterator<T> where Self: Iterator { }
+impl<T> iter::FusedIterator for ValueIterator<T> where Self: Iterator { }
 
 #[test]
 fn object_iterator() {

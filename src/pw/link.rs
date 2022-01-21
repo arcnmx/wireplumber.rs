@@ -1,10 +1,10 @@
-use crate::{Link, Node, Port, Core, Object, Properties, Direction, pw, ProxyFeatures, LibraryErrorEnum};
+use crate::pw::{self, Link, Node, Port, Properties, Direction, ProxyFeatures};
+use crate::object::Object;
+use crate::Core;
 use crate::prelude::*;
-use glib::Error;
-use std::future::Future;
 
 impl Link {
-	pub fn new<O: LinkTarget + std::fmt::Debug, I: LinkTarget + std::fmt::Debug>(core: &Core, output: &O, input: &I, props: &Properties) -> crate::Result<Self> {
+	pub fn new<O: LinkTarget + Debug, I: LinkTarget + Debug>(core: &Core, output: &O, input: &I, props: &Properties) -> Result<Self, Error> {
 		let props = Properties::new_clone(props);
 		output.write_props(&props, Direction::Output)?;
 		input.write_props(&props, Direction::Input)?;
@@ -13,7 +13,7 @@ impl Link {
 			.ok_or_else(|| Error::new(LibraryErrorEnum::OperationFailed, "factory did not produce a link???"))
 	}
 
-	pub fn activate_future(&self) -> impl Future<Output=crate::Result<()>> {
+	pub fn activate_future(&self) -> impl Future<Output=Result<(), Error>> {
 		AsRef::<Object>::as_ref(self).activate_future(ProxyFeatures::MINIMAL.into())
 	}
 
@@ -23,11 +23,11 @@ impl Link {
 }
 
 pub trait LinkTarget {
-	fn write_props(&self, props: &Properties, dir: Direction) -> crate::Result<()>;
+	fn write_props(&self, props: &Properties, dir: Direction) -> Result<(), Error>;
 }
 
 impl LinkTarget for Node {
-	fn write_props(&self, props: &Properties, dir: Direction) -> crate::Result<()> {
+	fn write_props(&self, props: &Properties, dir: Direction) -> Result<(), Error> {
 		match dir {
 			Direction::Output => props.insert(pw::PW_KEY_LINK_OUTPUT_NODE, self.bound_id()),
 			Direction::Input => props.insert(pw::PW_KEY_LINK_INPUT_NODE, self.bound_id()),
@@ -38,7 +38,7 @@ impl LinkTarget for Node {
 }
 
 impl LinkTarget for Port {
-	fn write_props(&self, props: &Properties, dir: Direction) -> crate::Result<()> {
+	fn write_props(&self, props: &Properties, dir: Direction) -> Result<(), Error> {
 		let node_id = self.node_id()?;
 		match dir {
 			Direction::Output => {

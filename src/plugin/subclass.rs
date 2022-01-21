@@ -1,9 +1,10 @@
-use glib::{translate::{ToGlibPtr, from_glib_none, from_glib_borrow, Borrowed}, Variant, Error, FromVariant};
 use glib::subclass::prelude::*;
-use glib::prelude::*;
-use std::{panic::catch_unwind, marker::PhantomData, future::Future, ops::Deref};
-use crate::{Core, LibraryErrorEnum, Plugin, Transition, PluginFeatures};
+use glib::variant::VariantTypeMismatchError;
+use std::panic::catch_unwind;
+use crate::Core;
+use crate::plugin::{Plugin, PluginFeatures};
 use crate::object::{Object, ObjectImpl};
+use crate::util::Transition;
 use crate::prelude::*;
 
 pub trait PluginImpl: ObjectImpl + PluginImplExt {
@@ -116,9 +117,9 @@ pub trait SimplePlugin: ObjectSubclass {
 
 	fn init_args(&self, args: Self::Args) { let _ = args; unimplemented!() }
 	fn new_plugin(core: &Core, args: Self::Args) -> Self::Type where
-		Self::Type: IsA<glib::Object>,
+		Self::Type: IsA<GObject>,
 	{
-		let res: Self::Type = glib::Object::new(&[
+		let res: Self::Type = GObject::new(&[
 			("name", &Self::NAME),
 			("core", core),
 		]).unwrap();
@@ -187,7 +188,7 @@ impl<T: ModuleExport> ModuleExport for ModuleWrapper<T> {
 }
 
 impl<T: SimplePlugin> ModuleExport for T where
-	T::Type: IsA<glib::Object> + IsA<Plugin>,
+	T::Type: IsA<GObject> + IsA<Plugin>,
 	T::Args: FromAnyVariant<Error=Error>,
 {
 	fn init(core: Core, args: Option<Variant>) -> Result<(), Error> {
@@ -201,7 +202,7 @@ impl<T: SimplePlugin> ModuleExport for T where
 }
 
 pub trait FromAnyVariant: Sized {
-	type Error: std::fmt::Debug;
+	type Error: Debug;
 
 	fn from_a_variant(args: Option<&Variant>) -> Result<Self, Self::Error>;
 }
@@ -209,7 +210,7 @@ pub trait FromAnyVariant: Sized {
 pub struct FromAnyVariantWrapVariant<T>(pub T);
 
 impl<T: FromVariant> FromAnyVariant for FromAnyVariantWrapVariant<T> {
-	type Error = glib::variant::VariantTypeMismatchError;
+	type Error = VariantTypeMismatchError;
 
 	fn from_a_variant(args: Option<&Variant>) -> Result<Self, Self::Error> {
 		match args {

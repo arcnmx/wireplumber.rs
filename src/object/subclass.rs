@@ -1,6 +1,5 @@
-use glib::translate::{IntoGlib, ToGlibPtr, Borrowed, from_glib, from_glib_none, from_glib_borrow};
 use glib::subclass::prelude::{ObjectImpl as GObjectImpl, *};
-use glib::prelude::*;
+use crate::prelude::*;
 use crate::object::{Object, ObjectFeatures, FeatureActivationTransition};
 
 pub trait ObjectImpl: GObjectImpl + ObjectImplExt {

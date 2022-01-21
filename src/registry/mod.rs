@@ -1,6 +1,4 @@
-use glib::{ObjectType, Cast};
-
-use crate::util::ValueIterator;
+use crate::prelude::*;
 
 pub use crate::auto::{
 	ObjectManager,
@@ -33,8 +31,8 @@ impl ObjectManager {
 }
 
 impl<'a> IntoIterator for &'a ObjectManager {
-	type Item = glib::Object; // TODO: crate::Object instead? or do factories not impl it?
-	type IntoIter = ValueIterator<glib::Object>;
+	type Item = GObject; // TODO: crate::Object instead? or do factories not impl it?
+	type IntoIter = ValueIterator<GObject>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.objects()

@@ -1,19 +1,18 @@
-use crate::{Port, pw};
+use crate::pw::{self, Port, PipewireObject};
 use crate::prelude::*;
-use std::fmt;
 
 impl Port {
-	pub fn node_id(&self) -> crate::Result<u32> {
+	pub fn node_id(&self) -> Result<u32, Error> {
 		self.pw_property(pw::PW_KEY_NODE_ID)
 	}
 
 	#[doc(alias = "port_id")]
-	pub fn port_index(&self) -> crate::Result<u32> {
+	pub fn port_index(&self) -> Result<u32, Error> {
 		self.pw_property(pw::PW_KEY_PORT_ID)
 	}
 }
 
-impl fmt::Display for Port {
+impl Display for Port {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_ALIAS, |name| {
 			f.write_str(name)
@@ -34,6 +33,6 @@ impl fmt::Display for Port {
 			return res
 		}
 
-		write!(f, "pw.port({})", AsRef::<crate::PipewireObject>::as_ref(self))
+		write!(f, "pw.port({})", AsRef::<PipewireObject>::as_ref(self))
 	}
 }

@@ -1,7 +1,5 @@
-use glib::{translate::{ToGlibPtr, ToGlibPtrMut, from_glib_full}, Value, Object, Type};
-use glib::prelude::*;
+use crate::prelude::*;
 use pipewire_sys::pw_impl_node;
-use std::ptr::NonNull;
 
 use crate::{
 	Core,
@@ -20,7 +18,7 @@ impl ImplNode {
 	pub fn pw_impl_node(&self) -> Option<NonNull<pw_impl_node>> {
 		unsafe {
 			let mut value = Value::from_type(Type::POINTER);
-			glib::gobject_ffi::g_object_get_property(self.upcast_ref::<Object>().to_glib_none().0, b"pw-impl-node\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+			glib::gobject_ffi::g_object_get_property(self.upcast_ref::<GObject>().to_glib_none().0, b"pw-impl-node\0".as_ptr() as *const _, value.to_glib_none_mut().0);
 			NonNull::new(glib::gobject_ffi::g_value_get_pointer(value.to_glib_none().0) as *mut _)
 		}
 	}

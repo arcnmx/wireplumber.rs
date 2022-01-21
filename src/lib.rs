@@ -14,7 +14,6 @@
 #[allow(unused_imports)]
 mod auto;
 
-pub use auto::*;
 pub use ffi;
 
 /// Export dependencies for use from macros
@@ -50,6 +49,13 @@ pub mod signals;
 
 /// gir needs to know where to find these
 pub(crate) use crate::{
-	object::ObjectFeatures,
-	spa::{SpaIdTable, SpaIdValue},
+	pw::{PipewireObject, Proxy, GlobalProxy, Port, Metadata, Properties, Endpoint, Direction, NodeState},
+	object::{Object, ObjectFeatures},
+	plugin::Plugin,
+	spa::{SpaIdTable, SpaIdValue, SpaPod},
+	session::{SessionItem, SiLink, SiLinkable, SiEndpoint, SiAcquisition},
+	registry::{ObjectManager, ObjectInterest, InterestMatch, InterestMatchFlags, ConstraintType, ConstraintVerb},
+	util::{WpIterator as Iterator, Transition},
 };
+#[cfg(any(feature = "v0_4_2", feature = "dox"))]
+pub(crate) use crate::pw::PropertiesItem;

@@ -1,5 +1,5 @@
-use glib::{Variant, StaticVariantType, VariantTy, Error, VariantClass, variant::DictEntry};
-use std::{convert::{TryFrom, TryInto}, iter::FromIterator, ops::Deref};
+use glib::variant::DictEntry;
+use crate::prelude::*;
 
 /// Arguments for use from lua scripts.
 ///

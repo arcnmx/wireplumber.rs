@@ -1,6 +1,6 @@
 pub use crate::auto::{
 	State,
-	Iterator,
+	Iterator as WpIterator,
 	Transition, TransitionStep,
 	traits::TransitionExt,
 };

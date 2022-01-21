@@ -4,7 +4,7 @@
 //!
 //! ```
 //! use wireplumber::prelude::*;
-//! use wireplumber::{PipewireObject, pw};
+//! use wireplumber::pw::{self, PipewireObject};
 //!
 //! fn get_id(obj: &PipewireObject) -> u32 {
 //!   obj.pw_property(pw::PW_KEY_OBJECT_ID)
@@ -33,9 +33,7 @@ pub use crate::pw::{
 
 pub use crate::plugin::PluginExt as _;
 
-pub use crate::object::{
-	ObjectExt as _,
-};
+pub use crate::object::ObjectExt as _;
 
 pub use crate::util::{
 	TransitionExt as _, TransitionExt2 as _,
@@ -52,8 +50,32 @@ pub use glib::{
 #[allow(unused_imports)]
 pub(crate) use crate::{
 	error::{LibraryErrorEnum, Error},
-	util::ValueIterator,
+	util::{ValueIterator, WpIterator},
 	log::{
 		wp_trace, wp_debug, wp_info, wp_warning, wp_critical,
 	},
+};
+pub(crate) use glib::{
+	Cast, IsA, ObjectType, StaticType,
+	Object as GObject, ObjectExt as GObjectExt,
+	error::ErrorDomain,
+	translate::*,
+	ffi::{gpointer, gconstpointer},
+	Type,
+	Value, value::FromValue,
+	Variant, ToVariant, FromVariant, StaticVariantType, VariantClass, VariantTy,
+};
+pub(crate) use std::{
+	iter::{self, FromIterator},
+	marker::PhantomData,
+	future::Future,
+	convert::{TryFrom, TryInto, Infallible},
+	borrow::{Cow, Borrow},
+	fmt::{self, Debug, Display, Write as _},
+	str::{self, FromStr},
+	ops::Deref,
+	ffi::{CStr, CString},
+	ptr::{self, NonNull},
+	mem, slice,
+	pin::Pin,
 };

@@ -1,14 +1,9 @@
-use glib::translate::{IntoGlib, GlibNoneError};
-use glib::Error;
 use libspa::pod::{
 	deserialize::{DeserializeError, PodDeserialize, PodDeserializer},
 	serialize::{GenError, PodSerialize, PodSerializer},
 	Value, ValueArray, Object, Property, PropertyFlags, ChoiceValue, CanonicalFixedSizedPod,
 };
 use libspa::utils::{Id, Fd, Choice, ChoiceEnum, ChoiceFlags};
-use std::{convert::{TryInto, TryFrom}, borrow::Cow};
-use std::ptr::NonNull;
-use std::fmt;
 use crate::{
 	prelude::*,
 	spa::{
@@ -242,10 +237,10 @@ impl<'v, 'o> DebugValue<'v, 'o> {
 	}
 }
 
-impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
+impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		struct DebugType(SpaType);
-		impl fmt::Debug for DebugType {
+		impl Debug for DebugType {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				if let Some(name) = self.0.name() {
 					write!(f, "{} ({:?})", name, self.0.into_glib())
@@ -255,7 +250,7 @@ impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
 			}
 		}
 		struct DebugIdValue(SpaIdValue);
-		impl fmt::Debug for DebugIdValue {
+		impl Debug for DebugIdValue {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				if let Some(short_name) = self.0.short_name() {
 					write!(f, "{:?} ({:?})", short_name, self.0.number())
@@ -266,7 +261,7 @@ impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
 		}
 
 		struct DebugValueList<I>(I);
-		impl<'v, 'o, I: Clone + Iterator<Item=DebugValue<'v, 'o>>> fmt::Debug for DebugValueList<I> {
+		impl<'v, 'o, I: Clone + Iterator<Item=DebugValue<'v, 'o>>> Debug for DebugValueList<I> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				f.debug_list()
 					.entries(self.0.clone())
@@ -274,7 +269,7 @@ impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
 			}
 		}
 
-		impl<'a> fmt::Debug for DebugProperty<'a> {
+		impl<'a> Debug for DebugProperty<'a> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				let mut f = f.debug_struct("Property");
 
@@ -296,7 +291,7 @@ impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
 		struct DebugPropertyList<'a> {
 			object: &'a Object,
 		}
-		impl<'a> fmt::Debug for DebugPropertyList<'a> {
+		impl<'a> Debug for DebugPropertyList<'a> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				f.debug_list()
 					.entries(self.object.properties.iter().map(|property| DebugProperty {
@@ -309,7 +304,7 @@ impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
 			container: Option<DebugProperty<'a>>,
 			id: Id,
 		}
-		impl<'a> fmt::Debug for DebugId<'a> {
+		impl<'a> Debug for DebugId<'a> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				let table = self.container
 					.and_then(|prop| prop.key_table());
@@ -324,7 +319,7 @@ impl <'v, 'o> fmt::Debug for DebugValue<'v, 'o> {
 			container: Option<DebugProperty<'a>>,
 			ids: &'a [Id]
 		}
-		impl<'a> fmt::Debug for DebugIdList<'a> {
+		impl<'a> Debug for DebugIdList<'a> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				f.debug_list()
 					.entries(self.ids.iter().copied().map(|id| DebugId {

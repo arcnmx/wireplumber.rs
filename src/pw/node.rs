@@ -1,7 +1,6 @@
 use crate::prelude::*;
-use crate::{Node, Port, util::ValueIterator, pw};
+use crate::pw::{self, Node, Port, PipewireObject};
 use crate::registry::{Interest, InterestContainer, ObjectInterest};
-use std::fmt;
 
 impl Node {
 	#[doc(alias = "wp_node_new_ports_iterator")]
@@ -21,15 +20,15 @@ impl Node {
 		self.lookup_port_full(interest)
 	}
 
-	pub fn device_index(&self) -> crate::Result<Option<u32>> {
+	pub fn device_index(&self) -> Result<Option<u32>, Error> {
 		self.pw_property_optional("card.profile.device")
 	}
 
-	pub fn device_id(&self) -> crate::Result<Option<u32>> {
+	pub fn device_id(&self) -> Result<Option<u32>, Error> {
 		self.pw_property_optional(pw::PW_KEY_DEVICE_ID)
 	}
 
-	pub fn device_details(&self) -> crate::Result<Option<(u32, Option<u32>)>> {
+	pub fn device_details(&self) -> Result<Option<(u32, Option<u32>)>, Error> {
 		self.device_id().and_then(|id| self.device_index().map(|index|
 			id.map(|id| (id, index))
 		))
@@ -50,7 +49,7 @@ impl Node {
 	// TODO: props_future
 }
 
-impl fmt::Display for Node {
+impl Display for Node {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if let Some(res) = self.with_pw_property(pw::PW_KEY_NODE_NAME, |name| {
 			f.write_str(name)
@@ -58,7 +57,7 @@ impl fmt::Display for Node {
 			return res
 		}
 
-		write!(f, "pw.node({})", AsRef::<crate::PipewireObject>::as_ref(self))
+		write!(f, "pw.node({})", AsRef::<PipewireObject>::as_ref(self))
 	}
 }
 

@@ -1,11 +1,4 @@
 use libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
-use glib::translate::{ToGlibPtr, from_glib, from_glib_full};
-use glib::{Error, ffi::gconstpointer};
-use glib::prelude::*;
-use std::convert::TryInto;
-use std::iter::FromIterator;
-use std::{mem, ptr};
-use std::slice::from_raw_parts;
 use crate::pw::SpaPropertyKey;
 use crate::spa::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
 use crate::prelude::*;
@@ -73,7 +66,7 @@ impl SpaPod {
 	pub unsafe fn as_bytes(&self) -> &[u8] {
 		// TODO: this is unsafe because we cannot check if this is a FLAG_CONSTANT pod or not
 		let pod = self.spa_pod_raw();
-		from_raw_parts(pod as *const _ as *const u8, (*pod).size as usize)
+		slice::from_raw_parts(pod as *const _ as *const u8, (*pod).size as usize)
 	}
 
 	pub fn to_bytes(&self) -> Vec<u8> {
@@ -122,7 +115,7 @@ impl SpaPod {
 		let mut len = 0;
 		unsafe {
 			if from_glib(ffi::wp_spa_pod_get_bytes(self.to_glib_none().0, &mut value, &mut len)) {
-				Some(from_raw_parts(value as *const _, len as usize))
+				Some(slice::from_raw_parts(value as *const _, len as usize))
 			} else {
 				None
 			}
@@ -223,7 +216,7 @@ impl SpaPod {
 
 	pub fn spa_property<T, K: SpaPropertyKey>(&self, key: &K) -> Option<T> where
 		for<'a> &'a SpaPod: TryInto<T>,
-		for<'a> <&'a SpaPod as TryInto<T>>::Error: std::fmt::Debug,
+		for<'a> <&'a SpaPod as TryInto<T>>::Error: Debug,
 	{
 		self.find_spa_property(key)
 			.and_then(|pod| match TryInto::try_into(&pod) {

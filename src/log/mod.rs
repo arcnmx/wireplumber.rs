@@ -1,6 +1,7 @@
-use glib::{Object, Type, GString, GStringBuilder, LogLevelFlags, translate::{IntoGlib, ToGlibPtr, from_glib}, error::ErrorDomain, ObjectExt};
+use glib::{GString, GStringBuilder, LogLevelFlags};
 use libspa_sys::spa_log;
-use std::{env, ptr, fmt::{self, Write}};
+use std::env;
+use crate::prelude::*;
 
 mod macros;
 pub use macros::{
@@ -22,7 +23,7 @@ impl Log {
 	pub const OBJECT_FORMAT: CStr = ffi::WP_OBJECT_FORMAT;*/
 
 	pub fn domain() -> &'static str {
-		crate::LibraryErrorEnum::domain().as_str()
+		LibraryErrorEnum::domain().as_str()
 	}
 
 	#[doc(alias = "wp_log_level_is_enabled")]
@@ -77,21 +78,21 @@ impl Log {
 		}
 	}
 
-	pub fn log_args<O: AsRef<Object>>(log_level: LogLevelFlags, context: StructuredLogContext<O>, args: fmt::Arguments) {
+	pub fn log_args<O: AsRef<GObject>>(log_level: LogLevelFlags, context: StructuredLogContext<O>, args: fmt::Arguments) {
 		let mut message = GStringBuilder::default();
 		let _ = write!(message, "{}", args);
 		Self::log_string(log_level, context.to_object(), message.into_string())
 	}
 
 	#[doc(alias = "wp_log_writer_default")]
-	pub unsafe fn writer_default(log_level: LogLevelFlags, fields: &[glib::ffi::GLogField], user_data: glib::ffi::gpointer) -> glib::ffi::GLogWriterOutput {
+	pub unsafe fn writer_default(log_level: LogLevelFlags, fields: &[glib::ffi::GLogField], user_data: gpointer) -> glib::ffi::GLogWriterOutput {
 		ffi::wp_log_writer_default(log_level.into_glib(), fields.as_ptr(), fields.len(), user_data)
 	}
 	// TODO: wp_log_writer_default, wp_log_structured_standard
 }
 
 #[derive(Debug, Clone, Default)]
-pub struct StructuredLogContext<'a, O = Object> {
+pub struct StructuredLogContext<'a, O = GObject> {
 	pub domain: Option<&'a str>,
 	pub file: Option<&'static str>,
 	pub line: Option<u32>,
@@ -101,7 +102,7 @@ pub struct StructuredLogContext<'a, O = Object> {
 }
 
 impl<'a, O> StructuredLogContext<'a, O> {
-	fn to_object(&self) -> StructuredLogContext<'a, Object> where O: AsRef<Object> {
+	fn to_object(&self) -> StructuredLogContext<'a, GObject> where O: AsRef<GObject> {
 		StructuredLogContext {
 			domain: self.domain,
 			file: self.file,

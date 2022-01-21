@@ -1,5 +1,15 @@
-use glib::translate::{FromGlib, IntoGlib};
-use glib::prelude::*;
+use crate::prelude::*;
+use crate::{
+	session::{SessionItemFeatures, SessionItem},
+	local::{SpaDeviceFeatures, SpaDevice},
+	plugin::{PluginFeatures, Plugin},
+	object::ObjectExt,
+	pw::{
+		MetadataFeatures, Metadata,
+		NodeFeatures, Node,
+		ProxyFeatures, Proxy,
+	},
+};
 
 #[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
 pub struct ObjectFeatures(pub u32); // TODO: consider keeping this as u32, and just keep the inherent impls (requires no changes to `auto`)
@@ -46,59 +56,59 @@ impl ObjectFeatures {
 macro_rules! impl_object_features {
 	($($id:ident:$ty:ident,)*) => {
 		$(
-			impl From<crate::$id> for ObjectFeatures {
-				fn from(features: crate::$id) -> Self {
+			impl From<$id> for ObjectFeatures {
+				fn from(features: $id) -> Self {
 					Self::with_bits(features.bits())
 				}
 			}
 
-			impl From<ObjectFeatures> for crate::$id {
-				fn from(features: ObjectFeatures) -> crate::$id {
-					crate::$id::from_bits_truncate(features.bits())
+			impl From<ObjectFeatures> for $id {
+				fn from(features: ObjectFeatures) -> $id {
+					$id::from_bits_truncate(features.bits())
 				}
 			}
 
-			impl $crate::$ty {
+			impl $ty {
 				#[doc(alias = "wp_object_activate")]
-				pub fn activate<P, Q>(&self, features: $crate::$id, cancellable: Option<&P>, callback: Q) where
+				pub fn activate<P, Q>(&self, features: $id, cancellable: Option<&P>, callback: Q) where
 					P: IsA<::gio::Cancellable>,
-					Q: FnOnce(Result<(), glib::Error>) + Send + 'static,
+					Q: FnOnce(Result<(), Error>) + Send + 'static,
 				{
-					crate::traits::ObjectExt::activate(self, features.into(), cancellable, callback)
+					ObjectExt::activate(self, features.into(), cancellable, callback)
 				}
 
 				#[doc(alias = "wp_object_activate_closure")]
-				pub fn activate_closure<P>(&self, features: $crate::$id, cancellable: Option<&P>, closure: &glib::Closure) where
+				pub fn activate_closure<P>(&self, features: $id, cancellable: Option<&P>, closure: &glib::Closure) where
 					P: IsA<gio::Cancellable>,
 				{
-					crate::traits::ObjectExt::activate_closure(self, features.into(), cancellable, closure)
+					ObjectExt::activate_closure(self, features.into(), cancellable, closure)
 				}
 
 				#[doc(alias = "wp_object_activate")]
-				pub fn activate_future(&self, features: $crate::$id) -> impl std::future::Future<Output=Result<(), glib::Error>> + Unpin {
-					crate::traits::ObjectExt::activate_future(self, features.into())
+				pub fn activate_future(&self, features: $id) -> impl Future<Output=Result<(), Error>> + Unpin {
+					ObjectExt::activate_future(self, features.into())
 				}
 
 				#[doc(alias = "wp_object_deactivate")]
-				pub fn deactivate(&self, features: $crate::$id) {
-					crate::traits::ObjectExt::deactivate(self, features.into())
+				pub fn deactivate(&self, features: $id) {
+					ObjectExt::deactivate(self, features.into())
 				}
 
 				#[doc(alias = "wp_object_get_active_features")]
-				pub fn active_features(&self) -> $crate::$id {
-					crate::traits::ObjectExt::active_features(self)
+				pub fn active_features(&self) -> $id {
+					ObjectExt::active_features(self)
 						.into()
 				}
 
 				#[doc(alias = "wp_object_get_supported_features")]
-				pub fn supported_features(&self) -> $crate::$id {
-					crate::traits::ObjectExt::supported_features(self)
+				pub fn supported_features(&self) -> $id {
+					ObjectExt::supported_features(self)
 						.into()
 				}
 
 				#[doc(alias = "wp_object_update_features")]
-				pub fn update_features(&self, activated: $crate::$id, deactivated: $crate::$id) {
-					crate::traits::ObjectExt::update_features(self, activated.into(), deactivated.into())
+				pub fn update_features(&self, activated: $id, deactivated: $id) {
+					ObjectExt::update_features(self, activated.into(), deactivated.into())
 				}
 			}
 		)*

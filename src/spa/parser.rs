@@ -1,10 +1,5 @@
-use crate::{SpaPodParser, SpaPod};
+use crate::spa::{SpaPodParser, SpaPod};
 use crate::prelude::*;
-use glib::translate::{ToGlibPtr, from_glib, from_glib_full};
-use glib::ffi::gconstpointer;
-use std::slice::from_raw_parts;
-use std::ffi::CStr;
-use std::ptr;
 
 impl SpaPodParser {
 	#[doc(alias = "wp_spa_pod_parser_new_object")]
@@ -36,7 +31,7 @@ impl SpaPodParser {
 		let mut len = 0;
 		unsafe {
 			if from_glib(ffi::wp_spa_pod_parser_get_bytes(self.to_glib_none().0, &mut data, &mut len)) {
-				Some(from_raw_parts(data as *const u8, len as usize))
+				Some(slice::from_raw_parts(data as *const u8, len as usize))
 			} else {
 				None
 			}

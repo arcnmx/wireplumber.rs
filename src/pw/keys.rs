@@ -1,9 +1,8 @@
-use std::{ops::Deref, ffi::CStr, fmt::{self, Write}, str::{self, FromStr}, convert::Infallible};
+use ::ffi::WpSpaType;
+use crate::{SpaIdTable, SpaIdValue};
+use crate::prelude::*;
 
 pub use pipewire_sys as ffi;
-pub use libspa_sys as spa;
-
-use crate::{SpaIdTable, SpaIdValue};
 
 #[derive(Copy, Clone)]
 #[repr(transparent)]
@@ -65,7 +64,7 @@ impl<'a> Into<String> for &'a PipewireKey {
 }
 
 pub trait FromPipewirePropertyString: Sized {
-	type Error: fmt::Debug;
+	type Error: Debug;
 
 	fn from_pipewire_string(value: &str) -> Result<Self, Self::Error>;
 }
@@ -246,32 +245,32 @@ pipewire_keys! {
 	PW_KEY_VIDEO_RATE, PW_KEY_VIDEO_FORMAT, PW_KEY_VIDEO_SIZE,
 }
 
-pub trait SpaPropertyKey: fmt::Debug {
-	type Error: fmt::Debug;
+pub trait SpaPropertyKey: Debug {
+	type Error: Debug;
 
-	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<crate::ffi::WpSpaType, Self::Error>;
+	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<WpSpaType, Self::Error>;
 }
 
 pub trait SpaPropertyKeyId: SpaPropertyKey<Error=Infallible> {
-	fn spa_property_key(&self) -> crate::ffi::WpSpaType;
+	fn spa_property_key(&self) -> WpSpaType;
 }
 
 impl<T: SpaPropertyKeyId> SpaPropertyKey for T {
 	type Error = Infallible;
 
-	fn spa_property_key_with_table(&self, _table: Option<SpaIdTable>) -> Result<crate::ffi::WpSpaType, Self::Error> {
+	fn spa_property_key_with_table(&self, _table: Option<SpaIdTable>) -> Result<WpSpaType, Self::Error> {
 		Ok(self.spa_property_key())
 	}
 }
 
-impl SpaPropertyKeyId for crate::ffi::WpSpaType {
-	fn spa_property_key(&self) -> crate::ffi::WpSpaType {
+impl SpaPropertyKeyId for WpSpaType {
+	fn spa_property_key(&self) -> WpSpaType {
 		*self
 	}
 }
 
-impl SpaPropertyKeyId for crate::SpaIdValue {
-	fn spa_property_key(&self) -> crate::ffi::WpSpaType {
+impl SpaPropertyKeyId for SpaIdValue {
+	fn spa_property_key(&self) -> WpSpaType {
 		self.number()
 	}
 }
@@ -279,7 +278,7 @@ impl SpaPropertyKeyId for crate::SpaIdValue {
 impl SpaPropertyKey for str {
 	type Error = (); // TODO
 
-	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<crate::ffi::WpSpaType, Self::Error> {
+	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<WpSpaType, Self::Error> {
 		table.and_then(|table| table.find_value_from_short_name(self))
 			.map(|v| v.number())
 			.or_else(|| SpaIdValue::parse_unknown_name(self))
@@ -288,7 +287,7 @@ impl SpaPropertyKey for str {
 }
 
 impl<'a, T: SpaPropertyKeyId> SpaPropertyKeyId for &'a T {
-	fn spa_property_key(&self) -> crate::ffi::WpSpaType {
+	fn spa_property_key(&self) -> WpSpaType {
 		T::spa_property_key(*self)
 	}
 }
