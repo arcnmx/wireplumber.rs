@@ -52,7 +52,7 @@ pub(crate) use crate::{
 	error::{LibraryErrorEnum, Error},
 	util::{ValueIterator, WpIterator},
 	log::{
-		wp_trace, wp_debug, wp_info, wp_warning, wp_critical,
+		wp_trace, wp_debug, wp_message, wp_info, wp_warning, wp_critical,
 	},
 };
 pub(crate) use glib::{

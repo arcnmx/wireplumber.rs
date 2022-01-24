@@ -1,5 +1,5 @@
 macro_rules! define_log_variant {
-	({$dollar:tt} $($name:ident($int_name:ident) = $level:ident,)*) => {
+	({$dollar:tt} $($name:ident($int_name:ident) = ($($level:tt)*),)*) => {
 		$(
 			#[macro_export]
 			macro_rules! $name {
@@ -7,16 +7,16 @@ macro_rules! define_log_variant {
 					$crate::log::$name! { self:$dollar self, $dollar($dollar args)* }
 				};
 				(self: $dollar self:expr, domain: $dollar log_domain:expr, $dollar format:literal $dollar($dollar args:tt)*) => {
-					$crate::log::log! { self:$dollar self, domain: $dollar log_domain, $crate::lib::glib::LogLevelFlags::$level, $dollar format $dollar($dollar args)* }
+					$crate::log::log! { self:$dollar self, domain: $dollar log_domain, $($level)*, $dollar format $dollar($dollar args)* }
 				};
 				(self: $dollar self:expr, $dollar format:literal $dollar($dollar args:tt)*) => {
-					$crate::log::log! { self:$dollar self, $crate::lib::glib::LogLevelFlags::$level, $dollar format $dollar($dollar args)* }
+					$crate::log::log! { self:$dollar self, $($level)*, $dollar format $dollar($dollar args)* }
 				};
 				($dollar format:literal $dollar($dollar args:tt)*) => {
-					$crate::log::log! { $crate::lib::glib::LogLevelFlags::$level, $dollar format $dollar($dollar args)* }
+					$crate::log::log! { $($level)*, $dollar format $dollar($dollar args)* }
 				};
 				(domain: $dollar log_domain:expr, $dollar format:literal $dollar($dollar args:tt)*) => {
-					$crate::log::log! { domain: $dollar log_domain, $crate::lib::glib::LogLevelFlags::$level, $dollar format $dollar($dollar args)* }
+					$crate::log::log! { domain: $dollar log_domain, $($level)*, $dollar format $dollar($dollar args)* }
 				};
 			}
 			pub use $name;
@@ -40,12 +40,12 @@ macro_rules! define_log_variant {
 }
 
 define_log_variant! { {$}
-	critical(wp_critical) = LEVEL_CRITICAL,
-	warning(wp_warning) = LEVEL_WARNING,
-	message(wp_message) = LEVEL_MESSAGE,
-	info(wp_info) = LEVEL_INFO,
-	debug(wp_debug) = LEVEL_DEBUG,
-	trace(wp_trace) = LEVEL_TRACE,
+	critical(wp_critical) = ($crate::lib::glib::LogLevelFlags::LEVEL_CRITICAL),
+	warning(wp_warning) = ($crate::lib::glib::LogLevelFlags::LEVEL_WARNING),
+	message(wp_message) = ($crate::lib::glib::LogLevelFlags::LEVEL_MESSAGE),
+	info(wp_info) = ($crate::lib::glib::LogLevelFlags::LEVEL_INFO),
+	debug(wp_debug) = ($crate::lib::glib::LogLevelFlags::LEVEL_DEBUG),
+	trace(wp_trace) = ($crate::Log::LEVEL_TRACE),
 }
 
 #[macro_export]
@@ -87,3 +87,32 @@ macro_rules! _log_inner {
 	};
 }
 pub use _log_inner;
+
+#[cfg(test)]
+mod tests {
+	use crate::{Log, Core, InitFlags};
+
+	#[test]
+	fn log_internal() {
+		Core::init(InitFlags::SET_GLIB_LOG);
+		Log::set_level("8");
+		wp_critical!("crit");
+		wp_warning!("warn");
+		wp_message!("message");
+		wp_info!("info");
+		wp_debug!("debug");
+		wp_trace!("trace");
+	}
+
+	#[test]
+	fn log_external() {
+		Core::init(InitFlags::SET_GLIB_LOG);
+		Log::set_level("8");
+		critical!("crit");
+		warning!("warn");
+		message!("message");
+		info!("info");
+		debug!("debug");
+		trace!("trace");
+	}
+}

@@ -6,18 +6,18 @@ use crate::prelude::*;
 mod macros;
 pub use macros::{
 	log,
-	trace, debug, info, warning, critical,
+	trace, debug, message, info, warning, critical,
 };
 #[doc(hidden)]
 pub use macros::_log_inner;
 #[allow(unused_imports)]
-pub(crate) use macros::{wp_trace, wp_debug, wp_info, wp_warning, wp_critical};
+pub(crate) use macros::{wp_trace, wp_debug, wp_message, wp_info, wp_warning, wp_critical};
 
 pub struct Log(());
 
 impl Log {
 	#[doc(alias = "WP_LOG_LEVEL_TRACE")]
-	pub const LEVEL_TRACE: i32 = ffi::WP_LOG_LEVEL_TRACE;
+	pub const LEVEL_TRACE: LogLevelFlags = LogLevelFlags::from_bits_truncate(ffi::WP_LOG_LEVEL_TRACE as _);
 
 	/*#[doc(alias = "WP_OBJECT_FORMAT")]
 	pub const OBJECT_FORMAT: CStr = ffi::WP_OBJECT_FORMAT;*/
@@ -27,9 +27,9 @@ impl Log {
 	}
 
 	#[doc(alias = "wp_log_level_is_enabled")]
-	pub fn level_is_enabled(flags: LogLevelFlags) -> bool {
+	pub fn level_is_enabled<L: Into<LogLevelFlags>>(flags: L) -> bool {
 		unsafe {
-			from_glib(ffi::wp_log_level_is_enabled(flags.into_glib()))
+			from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib()))
 		}
 	}
 
@@ -55,7 +55,7 @@ impl Log {
 	}
 
 	#[doc(alias = "wp_log_structured_standard")]
-	pub fn log_string<M: Into<GString>>(log_level: LogLevelFlags, context: StructuredLogContext, message: M) {
+	pub fn log_string<M: Into<GString>, L: Into<LogLevelFlags>>(log_level: L, context: StructuredLogContext, message: M) {
 		unsafe {
 			// XXX: so much allocation, it burns...
 			let domain = context.domain.to_glib_none();
@@ -70,7 +70,7 @@ impl Log {
 			let obj = context.object.as_ref().map(|obj| (*obj).to_glib_none());
 			let message = message.into();
 			ffi::wp_log_structured_standard(
-				domain.0, log_level.into_glib(),
+				domain.0, log_level.into().into_glib(),
 				file.0, line.0, function.0,
 				obj_type.into_glib(), obj.as_ref().map(|o| o.0).unwrap_or(ptr::null()) as *mut _,
 				b"%s\0".as_ptr() as *const _, message.as_ptr()
@@ -78,15 +78,15 @@ impl Log {
 		}
 	}
 
-	pub fn log_args<O: AsRef<GObject>>(log_level: LogLevelFlags, context: StructuredLogContext<O>, args: fmt::Arguments) {
+	pub fn log_args<O: AsRef<GObject>, L: Into<LogLevelFlags>>(log_level: L, context: StructuredLogContext<O>, args: fmt::Arguments) {
 		let mut message = GStringBuilder::default();
 		let _ = write!(message, "{}", args);
-		Self::log_string(log_level, context.to_object(), message.into_string())
+		Self::log_string(log_level.into(), context.to_object(), message.into_string())
 	}
 
 	#[doc(alias = "wp_log_writer_default")]
-	pub unsafe fn writer_default(log_level: LogLevelFlags, fields: &[glib::ffi::GLogField], user_data: gpointer) -> glib::ffi::GLogWriterOutput {
-		ffi::wp_log_writer_default(log_level.into_glib(), fields.as_ptr(), fields.len(), user_data)
+	pub unsafe fn writer_default<L: Into<LogLevelFlags>>(log_levels: L, fields: &[glib::ffi::GLogField], user_data: gpointer) -> glib::ffi::GLogWriterOutput {
+		ffi::wp_log_writer_default(log_levels.into().into_glib(), fields.as_ptr(), fields.len(), user_data)
 	}
 	// TODO: wp_log_writer_default, wp_log_structured_standard
 }
