@@ -2,6 +2,7 @@ use glib::{Quark, error::ErrorDomain};
 use crate::prelude::*;
 
 pub use crate::auto::LibraryErrorEnum;
+#[doc(no_inline)]
 pub use glib::Error;
 
 pub type Result<T> = std::result::Result<T, Error>;

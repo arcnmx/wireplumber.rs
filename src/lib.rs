@@ -36,6 +36,7 @@ pub mod spa;
 pub mod util;
 
 pub mod error;
+#[doc(no_inline)]
 pub use error::{Result, Error};
 
 mod core;

@@ -12,6 +12,7 @@
 //! }
 //! ```
 
+#[doc(no_inline)]
 pub use crate::session::{
 	SessionItemExt as _,
 	SiAcquisitionExt as _, SiAcquisitionExt2 as _,
@@ -22,6 +23,7 @@ pub use crate::session::{
 	SiLinkableExt as _,
 };
 
+#[doc(no_inline)]
 pub use crate::pw::{
 	PipewirePropertyStringIterExt as _,
 	EndpointExt as _,
@@ -31,15 +33,20 @@ pub use crate::pw::{
 	ProxyExt as _, ProxyExt2 as _,
 };
 
+#[doc(no_inline)]
 pub use crate::plugin::PluginExt as _;
 
+#[doc(no_inline)]
 pub use crate::object::ObjectExt as _;
 
+#[doc(no_inline)]
 pub use crate::util::{
 	TransitionExt as _, TransitionExt2 as _,
 };
 
+#[doc(no_inline)]
 pub use glib_signal::ObjectSignalExt as _;
+#[doc(no_inline)]
 pub use glib::{
 	Cast as _,
 	IsA as _,
