@@ -141,6 +141,12 @@ pub trait ToLuaVariant {
 	fn to_lua_variant(self) -> Result<Option<LuaVariant>, Error>;
 }
 
+impl ToLuaVariant for () {
+	fn to_lua_variant(self) -> Result<Option<LuaVariant>, Error> {
+		Ok(None)
+	}
+}
+
 impl<T: TryInto<LuaVariant>> ToLuaVariant for T where
 	T::Error: Into<Error>,
 {
