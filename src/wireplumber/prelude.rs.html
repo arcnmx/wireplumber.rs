@@ -47,6 +47,8 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Extension traits</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Wildcard imports give you access to all the goodies:</span>
@@ -61,6 +63,16 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::session</span>::{
+	<span class="ident">SessionItemExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">SiAcquisitionExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">SiAcquisitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">SiAdapterExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">SiAdapterExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">SiEndpointExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">SiFactoryExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">SiLinkExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">SiLinkableExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+};
+
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto::traits</span>::{
 	<span class="ident">EndpointExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">GlobalProxyExt</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -69,20 +81,12 @@
 	<span class="ident">PipewireObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">PluginExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">ProxyExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SessionItemExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiAcquisitionExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiEndpointExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiFactoryExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiLinkExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiLinkableExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">TransitionExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">ProxyExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">PipewireObjectExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiAdapterExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">SiAcquisitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">TransitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">pw::PipewirePropertyStringIterExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
