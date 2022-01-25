@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["LibraryErrorEnum",""]],"struct":[["Error","A generic error capable of representing various error domains (types)."]],"type":[["Result",""]]});
+initSidebarItems({"enum":[["LibraryErrorEnum",""]],"type":[["Result",""]]});

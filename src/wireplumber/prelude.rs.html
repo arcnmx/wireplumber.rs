@@ -82,6 +82,13 @@
 <span id="79">79</span>
 <span id="80">80</span>
 <span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Extension traits</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Wildcard imports give you access to all the goodies:</span>
@@ -96,6 +103,7 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::session</span>::{
 	<span class="ident">SessionItemExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">SiAcquisitionExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">SiAcquisitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -106,6 +114,7 @@
 	<span class="ident">SiLinkableExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{
 	<span class="ident">PipewirePropertyStringIterExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">EndpointExt</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -115,15 +124,20 @@
 	<span class="ident">ProxyExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">ProxyExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin::PluginExt</span> <span class="kw">as</span> <span class="kw">_</span>;
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::object::ObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>;
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util</span>::{
 	<span class="ident">TransitionExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">TransitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glib_signal::ObjectSignalExt</span> <span class="kw">as</span> <span class="kw">_</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glib</span>::{
 	<span class="ident">Cast</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">IsA</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -136,7 +150,7 @@
 	<span class="ident">error</span>::{<span class="ident">LibraryErrorEnum</span>, <span class="ident">Error</span>},
 	<span class="ident">util</span>::{<span class="ident">ValueIterator</span>, <span class="ident">WpIterator</span>},
 	<span class="ident">log</span>::{
-		<span class="ident">wp_trace</span>, <span class="ident">wp_debug</span>, <span class="ident">wp_info</span>, <span class="ident">wp_warning</span>, <span class="ident">wp_critical</span>,
+		<span class="ident">wp_trace</span>, <span class="ident">wp_debug</span>, <span class="ident">wp_message</span>, <span class="ident">wp_info</span>, <span class="ident">wp_warning</span>, <span class="ident">wp_critical</span>,
 	},
 };
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">glib</span>::{
