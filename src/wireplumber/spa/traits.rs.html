@@ -339,8 +339,8 @@
 <span id="336">336</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">translate</span>::{<span class="ident">GlibNoneError</span>, <span class="ident">IntoGlib</span>, <span class="ident">from_glib</span>}, <span class="ident">Error</span>};
 <span class="kw">use</span> <span class="ident">glib::ffi::gboolean</span>;
-
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">SpaPodBuilder</span>, <span class="ident">SpaPod</span>, <span class="ident">LibraryErrorEnum</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaPodBuilder</span>, <span class="ident">SpaPod</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std::convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>};
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SpaPrimitive</span>: <span class="ident">SpaValue</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">SpaValue</span><span class="op">&gt;</span><span class="ident">::Owned</span><span class="op">&gt;</span> {

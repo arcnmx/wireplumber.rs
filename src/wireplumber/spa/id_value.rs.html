@@ -139,6 +139,7 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">ToGlibPtr</span>, <span class="ident">TryFromGlib</span>, <span class="ident">IntoGlib</span>, <span class="ident">OptionIntoGlib</span>, <span class="ident">UnsafeFrom</span>, <span class="ident">GlibNoneError</span>, <span class="ident">from_glib</span>, <span class="ident">from_glib_none</span>};
 <span class="kw">use</span> <span class="ident">glib::value</span>::{<span class="ident">FromValue</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">glib::Type</span>;
@@ -146,6 +147,7 @@
 <span class="kw">use</span> <span class="ident">std::ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaType</span>, <span class="ident">SpaIdTable</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="comment">// glib::wrapper creates an incorrect FromValue impl :&lt;</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
