@@ -85,7 +85,6 @@
 <span id="82">82</span>
 <span id="83">83</span>
 <span id="84">84</span>
-<span id="85">85</span>
 </pre><pre class="rust"><code><span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
 
@@ -117,6 +116,8 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pw</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span>;
 
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">local</span>;
+
 <span class="kw">mod</span> <span class="ident">error</span>;
 
 <span class="kw">mod</span> <span class="ident">core</span>;
@@ -140,9 +141,6 @@
 
 <span class="kw">mod</span> <span class="ident">iterator</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">iterator</span>::<span class="kw-2">*</span>;
-
-<span class="kw">mod</span> <span class="ident">impl_node</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">impl_node</span>::<span class="kw-2">*</span>;
 
 <span class="kw">mod</span> <span class="ident">transition</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">transition</span>::<span class="kw-2">*</span>;
