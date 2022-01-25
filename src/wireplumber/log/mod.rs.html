@@ -116,7 +116,19 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">GString</span>, <span class="ident">GStringBuilder</span>, <span class="ident">LogLevelFlags</span>};
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Logging macros and utilities</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # See also</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/log_api.html)</span>
+
+<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">GString</span>, <span class="ident">GStringBuilder</span>, <span class="ident">LogLevelFlags</span>};
 <span class="kw">use</span> <span class="ident">libspa_sys::spa_log</span>;
 <span class="kw">use</span> <span class="ident">std::env</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;

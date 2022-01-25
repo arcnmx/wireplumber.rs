@@ -32,7 +32,19 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Quark</span>, <span class="ident">error::ErrorDomain</span>};
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Error handling and the [Result] alias</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # See also</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)</span>
+
+<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Quark</span>, <span class="ident">error::ErrorDomain</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto::LibraryErrorEnum</span>;

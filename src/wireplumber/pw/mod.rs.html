@@ -34,7 +34,55 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
-</pre><pre class="rust"><code><span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+</pre><pre class="rust"><code><span class="doccomment">//! PipeWire proxy objects</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! All types derived from [Proxy] describe an [object](PipewireObject) on the remote service, with</span>
+<span class="doccomment">//! its own associated key-value [Properties].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! These types cannot be created directly, instances must instead be obtained using the</span>
+<span class="doccomment">//! [registry](crate::registry) subsystem to asynchronously listen for new objects as they become</span>
+<span class="doccomment">//! bound and visible on the [remote connection](crate::core).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # See also</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! C API docs for:</span>
+<span class="doccomment">//! - [Properties](https://pipewire.pages.freedesktop.org/wireplumber/c_api/properties_api.html)</span>
+<span class="doccomment">//! - [Proxy](https://pipewire.pages.freedesktop.org/wireplumber/c_api/proxy_api.html)</span>
+<span class="doccomment">//! - [PipewireObject](https://pipewire.pages.freedesktop.org/wireplumber/c_api/pipewire_object_api.html)</span>
+<span class="doccomment">//! - [GlobalProxy](https://pipewire.pages.freedesktop.org/wireplumber/c_api/global_proxy_api.html)</span>
+<span class="doccomment">//! - [Node](https://pipewire.pages.freedesktop.org/wireplumber/c_api/node_api.html)</span>
+<span class="doccomment">//! - [Port](https://pipewire.pages.freedesktop.org/wireplumber/c_api/port_api.html)</span>
+<span class="doccomment">//! - [Link](https://pipewire.pages.freedesktop.org/wireplumber/c_api/link_api.html)</span>
+<span class="doccomment">//! - [Device](https://pipewire.pages.freedesktop.org/wireplumber/c_api/device_api.html)</span>
+<span class="doccomment">//! - [Client](https://pipewire.pages.freedesktop.org/wireplumber/c_api/client_api.html)</span>
+<span class="doccomment">//! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/c_api/metadata_api.html)</span>
+<span class="doccomment">//! - [Endpoint](https://pipewire.pages.freedesktop.org/wireplumber/c_api/endpoint_api.html)</span>
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
 	<span class="ident">PipewireObject</span>,
 	<span class="ident">Proxy</span>, <span class="ident">ProxyFeatures</span>,
 	<span class="ident">GlobalProxy</span>,

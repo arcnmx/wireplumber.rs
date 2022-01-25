@@ -11,7 +11,27 @@
 <span id="8"> 8</span>
 <span id="9"> 9</span>
 <span id="10">10</span>
-</pre><pre class="rust"><code><span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Wrappers around [`pw_impl_node`](pipewire_sys::pw_impl_node) and other local objects</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # See also</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! C API docs for:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - [ImplNode](https://pipewire.pages.freedesktop.org/wireplumber/c_api/impl_node_api.html)</span>
+<span class="doccomment">//! - [ImplModule](https://pipewire.pages.freedesktop.org/wireplumber/c_api/impl_module_api.html)</span>
+<span class="doccomment">//! - [SpaDevice](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_device_api.html)</span>
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
 	<span class="ident">ImplModule</span>,
 	<span class="ident">ImplEndpoint</span>,
 	<span class="ident">ImplMetadata</span>,

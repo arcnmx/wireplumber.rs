@@ -30,7 +30,29 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
-</pre><pre class="rust"><code><span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+</pre><pre class="rust"><code><span class="doccomment">//! [Simple Plugin API](https://docs.pipewire.org/page_spa_plugins.html) [POD encoding](https://docs.pipewire.org/page_spa_pod.html)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [SpaPod] wraps a [libspa_sys::spa_pod], providing high-level accessors and enabling mutation</span>
+<span class="doccomment">//! of the Plain Old Data serialized inside. [SpaType] and the traits provided by this module</span>
+<span class="doccomment">//! describe the format and meaning of the data within.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # See also</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! C API docs for:</span>
+<span class="doccomment">//! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)</span>
+<span class="doccomment">//! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
 	<span class="ident">SpaType</span>,
 	<span class="ident">SpaPod</span>,
 	<span class="ident">SpaPodParser</span>,
