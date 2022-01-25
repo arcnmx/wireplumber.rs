@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Factory",""],["FeatureActivationTransition",""],["Object",""],["ObjectFeatures",""]],"trait":[["ObjectExt",""],["ObjectImpl",""],["ObjectImplExt",""]]});

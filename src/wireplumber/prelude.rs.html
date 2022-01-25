@@ -49,7 +49,6 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
-<span id="49">49</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Extension traits</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Wildcard imports give you access to all the goodies:</span>
@@ -74,23 +73,22 @@
 	<span class="ident">SiLinkableExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{
-	<span class="ident">PipewirePropertyStringIterExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto::traits</span>::{
 	<span class="ident">EndpointExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">GlobalProxyExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 	<span class="ident">MetadataExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">PipewireObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">PipewireObjectExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
-	<span class="ident">ProxyExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">ProxyExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
-};
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin::PluginExt</span> <span class="kw">as</span> <span class="kw">_</span>;
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::object</span>::{
 	<span class="ident">ObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">PipewireObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">PluginExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">ProxyExt</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">TransitionExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util</span>::{
-	<span class="ident">TransitionExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">TransitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::{
+	<span class="ident">ProxyExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">PipewireObjectExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">TransitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
+	<span class="ident">pw::PipewirePropertyStringIterExt</span> <span class="kw">as</span> <span class="kw">_</span>,
 };
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glib_signal::ObjectSignalExt</span> <span class="kw">as</span> <span class="kw">_</span>;

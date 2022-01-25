@@ -256,8 +256,6 @@
 <span id="253">253</span>
 <span id="254">254</span>
 <span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">libspa_sys</span>::{<span class="ident">spa_pod</span>, <span class="ident">spa_rectangle</span>, <span class="ident">spa_fraction</span>};
 <span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">ToGlibPtr</span>, <span class="ident">from_glib</span>, <span class="ident">from_glib_full</span>};
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Error</span>, <span class="ident">ffi::gconstpointer</span>};
@@ -266,9 +264,7 @@
 <span class="kw">use</span> <span class="ident">std::iter::FromIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">mem</span>, <span class="ident">ptr</span>};
 <span class="kw">use</span> <span class="ident">std::slice::from_raw_parts</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">LibraryErrorEnum</span>, <span class="ident">pw::SpaPropertyKey</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaPod</span>, <span class="ident">SpaType</span>, <span class="ident">SpaIdValue</span>, <span class="ident">SpaPodParser</span>, <span class="ident">SpaPodBuilder</span>, <span class="ident">SpaPrimitive</span>, <span class="ident">SpaValue</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::ValueIterator</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">SpaPod</span>, <span class="ident">SpaType</span>, <span class="ident">SpaIdValue</span>, <span class="ident">SpaPodParser</span>, <span class="ident">SpaPodBuilder</span>, <span class="ident">SpaPrimitive</span>, <span class="ident">SpaValue</span>, <span class="ident">ValueIterator</span>, <span class="ident">LibraryErrorEnum</span>, <span class="ident">pw::SpaPropertyKey</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">impl</span> <span class="ident">SpaPod</span> {
