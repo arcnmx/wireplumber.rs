@@ -1,3 +1,12 @@
+//! Session item factories
+//!
+//! # See also
+//!
+//! C API docs for:
+//!
+//! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_factory_api.html)
+//! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/c_api/session_item_api.html)
+//! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_interfaces_api.html)
 use crate::prelude::*;
 use crate::spa::SpaPod;
 

@@ -1,3 +1,9 @@
+//! Logging macros and utilities
+//!
+//! # See also
+//!
+//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/log_api.html)
+
 use glib::{GString, GStringBuilder, LogLevelFlags};
 use libspa_sys::spa_log;
 use std::env;

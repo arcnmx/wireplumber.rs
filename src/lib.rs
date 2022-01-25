@@ -4,7 +4,49 @@
 //! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
 //!
 //! This crate provides a high-level interface to [PipeWire](https://pipewire.org/)'s [API](https://docs.pipewire.org/page_api.html)
-//! via libwireplumber.
+//! via libwireplumber. Explore the documentation for the various [modules below](#modules) for
+//! information on how to start using WirePlumber with Rust.
+//!
+//! # Initialization
+//!
+//! ## Service Daemon
+//!
+//! For creating a new wireplumber instance, you'll need to start with a [`Core`]. Start with the
+//! [module documentation](crate::core) for examples.
+//!
+//! ## Dynamic Modules
+//!
+//! Exporting a dynamic plugin starts with implementing the [PluginImpl](plugin::PluginImpl) trait.
+//! The [plugin documentation](crate::plugin) will get you started on creating one!
+//!
+//! # PipeWire Connection
+//!
+//! Once you have a [core connection](crate::core), the [registry](crate::registry) will allow you
+//! to inspect and influence the state of the [remote PipeWire service and objects](crate::pw).
+//!
+//! # Examples
+//!
+//! Besides those found in this documentation, [additional examples](https://github.com/arcnmx/wireplumber.rs/tree/master/examples/src)
+//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
+//! built and run via Cargo:
+//!
+//! ```bash
+//! $ cargo run -p wp-examples --bin wpexec -- --help
+//! ... snip ...
+//!
+//! ## try out the default lua example:
+//! $ cargo run -p wp-examples --bin wpexec
+//!
+//! ## or load the example plugin module:
+//! $ cargo build --workspace --examples &&
+//!   cargo run -p wp-examples --bin wpexec -- --type wireplumber
+//! ```
+//!
+//! It's recommended to poke around their source code in a local checkout, but you can also view
+//! their generated documentation and source code online:
+//!
+//! - [wpexec](https://arcnmx.github.io/wireplumber.rs/wpexec/index.html)
+//! - [static-link module](https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html)
 //!
 //! # Upstream Documentation
 //!

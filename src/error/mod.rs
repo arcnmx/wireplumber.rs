@@ -1,3 +1,9 @@
+//! Error handling and the [Result] alias
+//!
+//! # See also
+//!
+//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
+
 use glib::{Quark, error::ErrorDomain};
 use crate::prelude::*;
 
