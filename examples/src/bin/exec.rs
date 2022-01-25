@@ -84,7 +84,8 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 
 	let plugin_names = args.plugins();
 	for plugin_name in &plugin_names {
-		let p = Plugin::find(&core, plugin_name).unwrap();
+		let p = Plugin::find(&core, plugin_name)
+			.ok_or_else(|| format_err!("plugin {} not found", plugin_name))?;
 		p.activate_future(PluginFeatures::ENABLED).await
 			.with_context(|| format!("failed to activate {:?} plugin", plugin_name))?;
 	}
