@@ -173,6 +173,12 @@
 <span id="170">170</span>
 <span id="171">171</span>
 <span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::variant::DictEntry</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
@@ -314,6 +320,12 @@
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToLuaVariant</span> {
 	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+}
+
+<span class="kw">impl</span> <span class="ident">ToLuaVariant</span> <span class="kw">for</span> () {
+	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+		<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+	}
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ToLuaVariant</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
