@@ -164,6 +164,7 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
+<span id="164">164</span>
 </pre><pre class="rust"><code><span class="doccomment">//! [glib_signal] types</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! These should not need to be used directly. Instead, use an associated const:</span>
@@ -174,7 +175,8 @@
 <span class="doccomment">//! use wireplumber::{</span>
 <span class="doccomment">//!   prelude::*,</span>
 <span class="doccomment">//!   registry::{ObjectManager, Interest},</span>
-<span class="doccomment">//!   Core, Node, Object, ObjectFeatures,</span>
+<span class="doccomment">//!   object::{Object, ObjectFeatures},</span>
+<span class="doccomment">//!   Core, Node,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn watch_nodes(core: &amp;Core) {</span>
