@@ -154,8 +154,8 @@
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Error</span>, <span class="ident">translate::ToGlibPtr</span>, <span class="ident">ffi::gconstpointer</span>};
 <span class="kw">use</span> <span class="ident">glib::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">pipewire_sys::pw_proxy</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ValueIterator</span>, <span class="ident">SpaPod</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Proxy</span>, <span class="ident">PipewireObject</span>, <span class="ident">pw</span>::{<span class="self">self</span>, <span class="ident">FromPipewirePropertyString</span>}, <span class="ident">LibraryErrorEnum</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::SpaPod</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Proxy</span>, <span class="ident">PipewireObject</span>, <span class="ident">pw</span>::{<span class="self">self</span>, <span class="ident">FromPipewirePropertyString</span>}, <span class="ident">util::ValueIterator</span>, <span class="ident">LibraryErrorEnum</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">impl</span> <span class="ident"><span class="kw">crate</span>::ProxyFeatures</span> {
