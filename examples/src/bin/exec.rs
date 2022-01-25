@@ -174,7 +174,7 @@ impl ModuleType {
 		}
 	}
 
-	/// The type name expected by a [wireplumber::ComponentLoader]
+	/// The type name expected by a [wireplumber::plugin::ComponentLoader]
 	///
 	/// This is passed on to [Core::load_component].
 	fn loader_type(&self) -> &'static str {

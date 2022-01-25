@@ -66,7 +66,6 @@ async fn main_loop(
 
 		let mut links = Vec::new();
 		for (input, output) in pairs {
-			// TODO: why does this not return a normal string?
 			info!(domain: LOG_DOMAIN, "linking {} to {}", input, output);
 			if arg.port_mappings.is_empty() {
 				match Link::new(&core, &output, &input, &link_props) {
