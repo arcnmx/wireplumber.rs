@@ -94,7 +94,7 @@ mod tests {
 
 	#[test]
 	fn log_internal() {
-		Core::init(InitFlags::SET_GLIB_LOG);
+		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
 		Log::set_level("8");
 		wp_critical!("crit");
 		wp_warning!("warn");
@@ -106,7 +106,7 @@ mod tests {
 
 	#[test]
 	fn log_external() {
-		Core::init(InitFlags::SET_GLIB_LOG);
+		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
 		Log::set_level("8");
 		critical!("crit");
 		warning!("warn");

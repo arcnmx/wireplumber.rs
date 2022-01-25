@@ -7,10 +7,15 @@ use crate::plugin::LookupDirs;
 
 impl Core {
 	#[doc(alias = "wp_init")]
-	pub fn init(flags: InitFlags) {
+	pub fn init_with_flags(flags: InitFlags) {
 		unsafe {
 			ffi::wp_init(flags.into_glib())
 		}
+	}
+
+	#[doc(alias = "wp_init")]
+	pub fn init() {
+		Self::init_with_flags(InitFlags::ALL)
 	}
 
 	#[doc(alias = "wp_get_module_dir")]

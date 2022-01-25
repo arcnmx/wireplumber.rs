@@ -116,7 +116,7 @@ fn main() -> Result<()> {
 	let _ = args.variant()?;
 
 	// initialize the wireplumber and pipewire libraries
-	Core::init(Default::default());
+	Core::init();
 
 	// set up a cell to store the result of our main operation in
 	let main_res = Rc::new(RefCell::new(None));

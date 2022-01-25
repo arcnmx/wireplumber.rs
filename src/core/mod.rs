@@ -9,7 +9,7 @@
 //! use wireplumber::Core;
 //!
 //! fn main() {
-//!   Core::init(Default::default());
+//!   Core::init();
 //!   Core::run(None, |context, mainloop, core| {
 //!     context.spawn_local(async move {
 //!       # #[cfg(feature = "enable-futures")]
@@ -51,9 +51,3 @@ pub use features::ObjectFeatures;
 
 mod subclass;
 pub use subclass::{ObjectImpl, ObjectImplExt};
-
-impl Default for InitFlags {
-	fn default() -> Self {
-		Self::ALL
-	}
-}
