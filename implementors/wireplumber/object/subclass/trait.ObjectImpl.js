@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["static_link_module"] = [{"text":"impl <a class=\"trait\" href=\"wireplumber/object/subclass/trait.ObjectImpl.html\" title=\"trait wireplumber::object::subclass::ObjectImpl\">ObjectImpl</a> for <a class=\"struct\" href=\"static_link_module/struct.StaticLink.html\" title=\"struct static_link_module::StaticLink\">StaticLink</a>","synthetic":false,"types":["static_link_module::StaticLink"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
