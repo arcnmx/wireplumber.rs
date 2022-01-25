@@ -56,6 +56,9 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
 </pre><pre class="rust"><code><span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
 
@@ -95,6 +98,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">session</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">registry</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">plugin</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">object</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">util</span>;
 
 <span class="kw">mod</span> <span class="ident">error</span>;
@@ -102,15 +106,17 @@
 <span class="kw">mod</span> <span class="ident">core</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::core</span>::<span class="kw-2">*</span>;
 
-<span class="kw">mod</span> <span class="ident">object</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">object</span>::<span class="kw-2">*</span>;
-
 <span class="kw">mod</span> <span class="ident">spa</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">spa</span>::<span class="kw-2">*</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">lua</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">signals</span>;
+
+<span class="doccomment">/// gir needs to know where to find these</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="kw">crate</span>::{
+	<span class="ident">object::ObjectFeatures</span>,
+};
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (1bd4fdc94 2022-01-12)" ></div>
 </body></html>
