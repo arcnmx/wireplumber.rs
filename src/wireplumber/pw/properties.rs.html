@@ -200,15 +200,13 @@
 <span id="197">197</span>
 <span id="198">198</span>
 <span id="199">199</span>
-<span id="200">200</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">from_glib_full</span>, <span class="ident">ToGlibPtr</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ptr::NonNull</span>, <span class="ident">iter</span>, <span class="ident">fmt</span>};
-<span class="kw">use</span> <span class="ident">libspa_sys::spa_dict</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">libspa_sys::spa_dict</span>;
 <span class="kw">use</span> <span class="ident">pipewire_sys::pw_properties</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Properties</span>, <span class="ident">pw::ToPipewirePropertyString</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="ident">Properties</span>, <span class="ident">ToPipewirePropertyString</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>)]</span>
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">PropertiesItem</span>, <span class="ident">util::ValueIterator</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw::PropertiesItem</span>;
 
 <span class="kw">impl</span> <span class="ident">Properties</span> {
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_clone</span>(<span class="ident">props</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">Properties</span> {
@@ -333,7 +331,7 @@
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">iter::FromIterator</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Properties</span> {
+<span class="kw">impl</span> <span class="ident">FromIterator</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Properties</span> {
 	<span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">props</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::new_empty</span>();
 		<span class="ident">props</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
@@ -370,10 +368,10 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Properties</span> {
+<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Properties</span> {
 	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 		<span class="kw">struct</span> <span class="ident">DebugProps</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Properties</span>);
-		<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugProps</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugProps</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="ident">f</span>.<span class="ident">debug_map</span>()
 					.<span class="ident">entries</span>(<span class="self">self</span>.<span class="number">0</span>)
@@ -388,7 +386,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>))]</span>
-<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Properties</span> {
+<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Properties</span> {
 	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 		<span class="comment">// TODO?</span>
 		<span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;wp::Properties&quot;</span>)

@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["TransitionStep",""]],"struct":[["Iterator",""],["State",""],["Transition",""],["ValueIterator",""]],"trait":[["TransitionExt",""],["TransitionExt2",""]]});
+initSidebarItems({"enum":[["TransitionStep",""]],"struct":[["State",""],["Transition",""],["ValueIterator",""],["WpIterator",""]],"trait":[["TransitionExt",""],["TransitionExt2",""]]});

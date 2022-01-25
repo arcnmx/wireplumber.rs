@@ -56,6 +56,12 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
 </pre><pre class="rust"><code><span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
 
@@ -72,7 +78,6 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
 <span class="kw">mod</span> <span class="ident">auto</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">auto</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ffi</span>;
 
 <span class="doccomment">/// Export dependencies for use from macros</span>
@@ -108,9 +113,16 @@
 
 <span class="doccomment">/// gir needs to know where to find these</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="kw">crate</span>::{
-	<span class="ident">object::ObjectFeatures</span>,
-	<span class="ident">spa</span>::{<span class="ident">SpaIdTable</span>, <span class="ident">SpaIdValue</span>},
+	<span class="ident">pw</span>::{<span class="ident">PipewireObject</span>, <span class="ident">Proxy</span>, <span class="ident">GlobalProxy</span>, <span class="ident">Port</span>, <span class="ident">Metadata</span>, <span class="ident">Properties</span>, <span class="ident">Endpoint</span>, <span class="ident">Direction</span>, <span class="ident">NodeState</span>},
+	<span class="ident">object</span>::{<span class="ident">Object</span>, <span class="ident">ObjectFeatures</span>},
+	<span class="ident">plugin::Plugin</span>,
+	<span class="ident">spa</span>::{<span class="ident">SpaIdTable</span>, <span class="ident">SpaIdValue</span>, <span class="ident">SpaPod</span>},
+	<span class="ident">session</span>::{<span class="ident">SessionItem</span>, <span class="ident">SiLink</span>, <span class="ident">SiLinkable</span>, <span class="ident">SiEndpoint</span>, <span class="ident">SiAcquisition</span>},
+	<span class="ident">registry</span>::{<span class="ident">ObjectManager</span>, <span class="ident">ObjectInterest</span>, <span class="ident">InterestMatch</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">ConstraintType</span>, <span class="ident">ConstraintVerb</span>},
+	<span class="ident">util</span>::{<span class="ident">WpIterator</span> <span class="kw">as</span> <span class="ident">Iterator</span>, <span class="ident">Transition</span>},
 };
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw::PropertiesItem</span>;
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (1bd4fdc94 2022-01-12)" ></div>
 </body></html>

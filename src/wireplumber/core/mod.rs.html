@@ -141,13 +141,12 @@
 <span id="138">138</span>
 <span id="139">139</span>
 <span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">translate</span>::{<span class="ident">from_glib_full</span>, <span class="ident">ToGlibPtr</span>, <span class="ident">IntoGlib</span>}, <span class="ident">MainContext</span>, <span class="ident">MainLoop</span>};
-<span class="kw">use</span> <span class="ident">pipewire_sys</span>::{<span class="ident">pw_core</span>, <span class="ident">pw_context</span>};
-<span class="kw">use</span> <span class="ident">std::ptr::NonNull</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">pipewire_sys</span>::{<span class="ident">pw_core</span>, <span class="ident">pw_context</span>};
+<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">MainContext</span>, <span class="ident">MainLoop</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Properties</span>, <span class="ident">lua::ToLuaVariant</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>))]</span>
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin::LookupDirs</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{<span class="ident">Core</span>, <span class="ident">InitFlags</span>};
 
@@ -185,7 +184,7 @@
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>)))]</span>
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_find_file&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_file</span>(<span class="ident">dirs</span>: <span class="ident"><span class="kw">crate</span>::plugin::LookupDirs</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">subdir</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_file</span>(<span class="ident">dirs</span>: <span class="ident">LookupDirs</span>, <span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">subdir</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
 		<span class="kw">unsafe</span> {
 			<span class="ident">from_glib_full</span>(<span class="ident">ffi::wp_find_file</span>(<span class="ident">dirs</span>.<span class="ident">into_glib</span>(), <span class="ident">filename</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">subdir</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
 		}
@@ -194,9 +193,9 @@
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>)))]</span>
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_new_files_iterator&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_files</span>(<span class="ident">dirs</span>: <span class="ident"><span class="kw">crate</span>::plugin::LookupDirs</span>, <span class="ident">subdir</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">suffix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) -&gt; <span class="ident"><span class="kw">crate</span>::util::ValueIterator</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_files</span>(<span class="ident">dirs</span>: <span class="ident">LookupDirs</span>, <span class="ident">subdir</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">suffix</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) -&gt; <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
 		<span class="kw">unsafe</span> {
-			<span class="ident"><span class="kw">crate</span>::util::ValueIterator::with_inner</span>(
+			<span class="ident">ValueIterator::with_inner</span>(
 				<span class="ident">from_glib_full</span>(<span class="ident">ffi::wp_new_files_iterator</span>(<span class="ident">dirs</span>.<span class="ident">into_glib</span>(), <span class="ident">subdir</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">suffix</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
 			)
 		}
@@ -227,17 +226,14 @@
 	}
 
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_load_component&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_lua_script</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">ToLuaVariant</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">script_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">args</span>: <span class="ident">A</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_lua_script</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">ToLuaVariant</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">script_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">args</span>: <span class="ident">A</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">load_component</span>(<span class="ident">script_path</span>, <span class="string">&quot;script/lua&quot;</span>, <span class="ident">args</span>.<span class="ident">to_lua_variant</span>()<span class="question-mark">?</span>.<span class="ident">as_deref</span>())
 	}
 
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;enable-futures&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;enable-futures&quot;</span>)))]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_future</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">std::future::Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_future</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
 		<span class="kw">use</span> <span class="ident">futures_util</span>::{<span class="ident">TryFutureExt</span>, <span class="ident">future</span>};
-		<span class="kw">use</span> <span class="ident">glib_signal::ObjectSignalExt</span>;
-		<span class="kw">use</span> <span class="ident">glib::Error</span>;
-		<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::LibraryErrorEnum</span>;
 
 		<span class="kw">let</span> <span class="ident">connect</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">signal_stream</span>(<span class="ident"><span class="self">Self</span>::SIGNAL_CONNECTED</span>);
 
@@ -279,8 +275,6 @@
 <span class="attribute">#[<span class="ident">test</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>))]</span>
 <span class="kw">fn</span> <span class="ident">wp_new_files_iterator</span>() {
-	<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin::LookupDirs</span>;
-
 	<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">Core::find_file</span>(<span class="ident">LookupDirs::PREFIX_SHARE</span>, <span class="string">&quot;create-item.lua&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;scripts&quot;</span>));
 	<span class="macro">assert!</span>(<span class="ident">file</span>.<span class="ident">is_some</span>());
 

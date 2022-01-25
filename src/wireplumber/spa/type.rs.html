@@ -52,12 +52,8 @@
 <span id="49">49</span>
 <span id="50">50</span>
 <span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">TryFromGlib</span>, <span class="ident">IntoGlib</span>, <span class="ident">GlibNoneError</span>, <span class="ident">UnsafeFrom</span>};
-<span class="kw">use</span> <span class="ident">std::convert::TryFrom</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::SpaType</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa::SpaType</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">impl</span> <span class="ident">SpaType</span> {
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_id</span>(<span class="ident">id</span>: <span class="ident">ffi::WpSpaType</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {

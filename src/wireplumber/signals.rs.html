@@ -165,6 +165,8 @@
 <span id="162">162</span>
 <span id="163">163</span>
 <span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
 </pre><pre class="rust"><code><span class="doccomment">//! [glib_signal] types</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! These should not need to be used directly. Instead, use an associated const:</span>
@@ -176,7 +178,8 @@
 <span class="doccomment">//!   prelude::*,</span>
 <span class="doccomment">//!   registry::{ObjectManager, Interest},</span>
 <span class="doccomment">//!   object::{Object, ObjectFeatures},</span>
-<span class="doccomment">//!   Core, Node,</span>
+<span class="doccomment">//!   pw::Node,</span>
+<span class="doccomment">//!   Core,</span>
 <span class="doccomment">//! };</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! async fn watch_nodes(core: &amp;Core) {</span>
@@ -204,6 +207,7 @@
 <span class="doccomment">//! ```</span>
 
 <span class="kw">use</span> <span class="ident">glib_signal</span>::{<span class="ident">def_signal</span>, <span class="ident">SignalFlags</span>, <span class="ident">Pointer</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="macro">def_signal!</span> {
 	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;connected&quot;</span> <span class="kw">as</span> <span class="ident">Connected</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Core</span> {
@@ -219,57 +223,57 @@
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;installed&quot;</span> <span class="kw">as</span> <span class="ident">Installed</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::ObjectManager</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;installed&quot;</span> <span class="kw">as</span> <span class="ident">Installed</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::registry::ObjectManager</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_INSTALLED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;objects-changed&quot;</span> <span class="kw">as</span> <span class="ident">ObjectsChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::ObjectManager</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;objects-changed&quot;</span> <span class="kw">as</span> <span class="ident">ObjectsChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::registry::ObjectManager</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_OBJECTS_CHANGED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;object-added&quot;</span> <span class="kw">as</span> <span class="ident">ObjectAdded</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::ObjectManager</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;object-added&quot;</span> <span class="kw">as</span> <span class="ident">ObjectAdded</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::registry::ObjectManager</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_OBJECT_ADDED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glib::Object</span>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">GObject</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;object-removed&quot;</span> <span class="kw">as</span> <span class="ident">ObjectRemoved</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::ObjectManager</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;object-removed&quot;</span> <span class="kw">as</span> <span class="ident">ObjectRemoved</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::registry::ObjectManager</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_OBJECT_REMOVED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glib::Object</span>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">GObject</span>)
 	}
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;bound&quot;</span> <span class="kw">as</span> <span class="ident">Bound</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Proxy</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;bound&quot;</span> <span class="kw">as</span> <span class="ident">Bound</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Proxy</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_BOUND</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">u32</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;pw-proxy-created&quot;</span> <span class="kw">as</span> <span class="ident">PwProxyCreated</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Proxy</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;pw-proxy-created&quot;</span> <span class="kw">as</span> <span class="ident">PwProxyCreated</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Proxy</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_PROXY_CREATED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">pipewire_sys::pw_proxy</span><span class="op">&gt;</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;pw-proxy-destroyed&quot;</span> <span class="kw">as</span> <span class="ident">PwProxyDestroyed</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Proxy</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;pw-proxy-destroyed&quot;</span> <span class="kw">as</span> <span class="ident">PwProxyDestroyed</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Proxy</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_PROXY_DESTROYED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">pipewire_sys::pw_proxy</span><span class="op">&gt;</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;error&quot;</span> <span class="kw">as</span> <span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Proxy</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;error&quot;</span> <span class="kw">as</span> <span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Proxy</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_ERROR</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i32</span>, <span class="ident">i32</span>, <span class="ident">String</span>)
@@ -277,7 +281,7 @@
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;params-changed&quot;</span> <span class="kw">as</span> <span class="ident">ParamsChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::PipewireObject</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;params-changed&quot;</span> <span class="kw">as</span> <span class="ident">ParamsChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::PipewireObject</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_PARAMS_CHANGED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">String</span>)
@@ -285,22 +289,22 @@
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;ports-changed&quot;</span> <span class="kw">as</span> <span class="ident">PortsChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Node</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;ports-changed&quot;</span> <span class="kw">as</span> <span class="ident">PortsChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Node</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_PORTS_CHANGED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_LAST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;state-changed&quot;</span> <span class="kw">as</span> <span class="ident">StateChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Node</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;state-changed&quot;</span> <span class="kw">as</span> <span class="ident">StateChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Node</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_STATE_CHANGED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_LAST</span>;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident"><span class="kw">crate</span>::NodeState</span>, <span class="ident"><span class="kw">crate</span>::NodeState</span>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident"><span class="kw">crate</span>::pw::NodeState</span>, <span class="ident"><span class="kw">crate</span>::pw::NodeState</span>)
 	}
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;changed&quot;</span> <span class="kw">as</span> <span class="ident">Changed</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::Metadata</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;changed&quot;</span> <span class="kw">as</span> <span class="ident">Changed</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::pw::Metadata</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_CHANGED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_LAST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">u32</span>, <span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">String</span>)
@@ -308,14 +312,14 @@
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;create-object&quot;</span> <span class="kw">as</span> <span class="ident">CreateObject</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::SpaDevice</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;create-object&quot;</span> <span class="kw">as</span> <span class="ident">CreateObject</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::local::SpaDevice</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_CREATE_OBJECT</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">u32</span>, <span class="ident">String</span>, <span class="ident">String</span>, <span class="ident"><span class="kw">crate</span>::Properties</span>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">u32</span>, <span class="ident">String</span>, <span class="ident">String</span>, <span class="ident"><span class="kw">crate</span>::pw::Properties</span>)
 	}
 }
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;object-removed&quot;</span> <span class="kw">as</span> <span class="ident">SpaObjectRemoved</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::SpaDevice</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;object-removed&quot;</span> <span class="kw">as</span> <span class="ident">SpaObjectRemoved</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::local::SpaDevice</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_OBJECT_REMOVED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_FIRST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">u32</span>)
@@ -323,7 +327,7 @@
 }
 
 <span class="macro">def_signal!</span> {
-	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;endpoint-properties-changed&quot;</span> <span class="kw">as</span> <span class="ident">EndpointPropertiesChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::SiEndpoint</span> {
+	<span class="kw">impl</span> <span class="ident">Notifies</span><span class="op">&lt;</span><span class="string">&quot;endpoint-properties-changed&quot;</span> <span class="kw">as</span> <span class="ident">EndpointPropertiesChanged</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">crate</span>::session::SiEndpoint</span> {
 		<span class="kw">impl</span> {<span class="kw">const</span> <span class="ident">SIGNAL_ENDPOINT_PROPERTIES_CHANGED</span>};
 		<span class="ident">FLAGS</span> <span class="op">=</span> <span class="ident">SignalFlags::RUN_LAST</span>;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)

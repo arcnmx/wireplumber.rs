@@ -91,11 +91,9 @@
 <span id="88">88</span>
 <span id="89">89</span>
 <span id="90">90</span>
-<span id="91">91</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Node</span>, <span class="ident">Port</span>, <span class="ident">util::ValueIterator</span>, <span class="ident">pw</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="self">self</span>, <span class="ident">Node</span>, <span class="ident">Port</span>, <span class="ident">PipewireObject</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::registry</span>::{<span class="ident">Interest</span>, <span class="ident">InterestContainer</span>, <span class="ident">ObjectInterest</span>};
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
 
 <span class="kw">impl</span> <span class="ident">Node</span> {
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_node_new_ports_iterator&quot;</span>)]</span>
@@ -115,15 +113,15 @@
 		<span class="self">self</span>.<span class="ident">lookup_port_full</span>(<span class="ident">interest</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">pw_property_optional</span>(<span class="string">&quot;card.profile.device&quot;</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">pw_property_optional</span>(<span class="ident">pw::PW_KEY_DEVICE_ID</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_details</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>)<span class="op">&gt;</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_details</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>)<span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">device_id</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">device_index</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">index</span><span class="op">|</span>
 			<span class="ident">id</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> (<span class="ident">id</span>, <span class="ident">index</span>))
 		))
@@ -144,7 +142,7 @@
 	<span class="comment">// TODO: props_future</span>
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Node</span> {
+<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Node</span> {
 	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_pw_property</span>(<span class="ident">pw::PW_KEY_NODE_NAME</span>, <span class="op">|</span><span class="ident">name</span><span class="op">|</span> {
 			<span class="ident">f</span>.<span class="ident">write_str</span>(<span class="ident">name</span>)
@@ -152,7 +150,7 @@
 			<span class="kw">return</span> <span class="ident">res</span>
 		}
 
-		<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;pw.node({})&quot;</span>, <span class="ident">AsRef</span>::<span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::PipewireObject</span><span class="op">&gt;</span><span class="ident">::as_ref</span>(<span class="self">self</span>))
+		<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;pw.node({})&quot;</span>, <span class="ident">AsRef</span>::<span class="op">&lt;</span><span class="ident">PipewireObject</span><span class="op">&gt;</span><span class="ident">::as_ref</span>(<span class="self">self</span>))
 	}
 }
 

@@ -237,6 +237,9 @@
 <span id="234">234</span>
 <span id="235">235</span>
 <span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
 </pre><pre class="rust"><code><span class="doccomment">//! wpexec example</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! An example showing how to write a simple WirePlumber service.</span>
@@ -253,8 +256,11 @@
 <span class="kw">use</span> <span class="ident">std::path::Path</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">env</span>, <span class="ident">fs</span>};
 
-<span class="kw">use</span> <span class="ident">wireplumber::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">wireplumber</span>::{<span class="ident">Core</span>, <span class="ident">Properties</span>, <span class="ident">Plugin</span>, <span class="ident">PluginFeatures</span>, <span class="ident">Log</span>, <span class="ident">pw</span>, <span class="ident">info</span>, <span class="ident">warning</span>};
+<span class="kw">use</span> <span class="ident">wireplumber</span>::{
+	<span class="ident">Core</span>, <span class="ident">Log</span>, <span class="ident">info</span>, <span class="ident">warning</span>,
+	<span class="ident">pw</span>::{<span class="self">self</span>, <span class="ident">Properties</span>},
+	<span class="ident">plugin</span>::{<span class="ident">Plugin</span>, <span class="ident">PluginFeatures</span>},
+};
 
 <span class="kw">const</span> <span class="ident">LOG_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;wpexec.rs&quot;</span>;
 

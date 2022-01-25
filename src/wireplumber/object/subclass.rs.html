@@ -134,10 +134,8 @@
 <span id="131">131</span>
 <span id="132">132</span>
 <span id="133">133</span>
-<span id="134">134</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">IntoGlib</span>, <span class="ident">ToGlibPtr</span>, <span class="ident">Borrowed</span>, <span class="ident">from_glib</span>, <span class="ident">from_glib_none</span>, <span class="ident">from_glib_borrow</span>};
-<span class="kw">use</span> <span class="ident">glib::subclass::prelude</span>::{<span class="ident">ObjectImpl</span> <span class="kw">as</span> <span class="ident">GObjectImpl</span>, <span class="kw-2">*</span>};
-<span class="kw">use</span> <span class="ident">glib::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::subclass::prelude</span>::{<span class="ident">ObjectImpl</span> <span class="kw">as</span> <span class="ident">GObjectImpl</span>, <span class="kw-2">*</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::object</span>::{<span class="ident">Object</span>, <span class="ident">ObjectFeatures</span>, <span class="ident">FeatureActivationTransition</span>};
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ObjectImpl</span>: <span class="ident">GObjectImpl</span> <span class="op">+</span> <span class="ident">ObjectImplExt</span> {

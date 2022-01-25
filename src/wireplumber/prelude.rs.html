@@ -60,13 +60,35 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Extension traits</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Wildcard imports give you access to all the goodies:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! use wireplumber::prelude::*;</span>
-<span class="doccomment">//! use wireplumber::{PipewireObject, pw};</span>
+<span class="doccomment">//! use wireplumber::pw::{self, PipewireObject};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn get_id(obj: &amp;PipewireObject) -&gt; u32 {</span>
 <span class="doccomment">//!   obj.pw_property(pw::PW_KEY_OBJECT_ID)</span>
@@ -95,9 +117,7 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin::PluginExt</span> <span class="kw">as</span> <span class="kw">_</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::object</span>::{
-	<span class="ident">ObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>,
-};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::object::ObjectExt</span> <span class="kw">as</span> <span class="kw">_</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util</span>::{
 	<span class="ident">TransitionExt</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">TransitionExt2</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -114,10 +134,34 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">error</span>::{<span class="ident">LibraryErrorEnum</span>, <span class="ident">Error</span>},
-	<span class="ident">util::ValueIterator</span>,
+	<span class="ident">util</span>::{<span class="ident">ValueIterator</span>, <span class="ident">WpIterator</span>},
 	<span class="ident">log</span>::{
 		<span class="ident">wp_trace</span>, <span class="ident">wp_debug</span>, <span class="ident">wp_info</span>, <span class="ident">wp_warning</span>, <span class="ident">wp_critical</span>,
 	},
+};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">glib</span>::{
+	<span class="ident">Cast</span>, <span class="ident">IsA</span>, <span class="ident">ObjectType</span>, <span class="ident">StaticType</span>,
+	<span class="ident">Object</span> <span class="kw">as</span> <span class="ident">GObject</span>, <span class="ident">ObjectExt</span> <span class="kw">as</span> <span class="ident">GObjectExt</span>,
+	<span class="ident">error::ErrorDomain</span>,
+	<span class="ident">translate</span>::<span class="kw-2">*</span>,
+	<span class="ident">ffi</span>::{<span class="ident">gpointer</span>, <span class="ident">gconstpointer</span>},
+	<span class="ident">Type</span>,
+	<span class="ident">Value</span>, <span class="ident">value::FromValue</span>,
+	<span class="ident">Variant</span>, <span class="ident">ToVariant</span>, <span class="ident">FromVariant</span>, <span class="ident">StaticVariantType</span>, <span class="ident">VariantClass</span>, <span class="ident">VariantTy</span>,
+};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">std</span>::{
+	<span class="ident">iter</span>::{<span class="self">self</span>, <span class="ident">FromIterator</span>},
+	<span class="ident">marker::PhantomData</span>,
+	<span class="ident">future::Future</span>,
+	<span class="ident">convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>, <span class="ident">Infallible</span>},
+	<span class="ident">borrow</span>::{<span class="ident">Cow</span>, <span class="ident">Borrow</span>},
+	<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Display</span>, <span class="ident">Write</span> <span class="kw">as</span> <span class="kw">_</span>},
+	<span class="ident">str</span>::{<span class="self">self</span>, <span class="ident">FromStr</span>},
+	<span class="ident">ops::Deref</span>,
+	<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>},
+	<span class="ident">ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>},
+	<span class="ident">mem</span>, <span class="ident">slice</span>,
+	<span class="ident">pin::Pin</span>,
 };
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (1bd4fdc94 2022-01-12)" ></div>

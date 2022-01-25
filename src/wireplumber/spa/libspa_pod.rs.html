@@ -442,22 +442,12 @@
 <span id="439">439</span>
 <span id="440">440</span>
 <span id="441">441</span>
-<span id="442">442</span>
-<span id="443">443</span>
-<span id="444">444</span>
-<span id="445">445</span>
-<span id="446">446</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">IntoGlib</span>, <span class="ident">GlibNoneError</span>};
-<span class="kw">use</span> <span class="ident">glib::Error</span>;
-<span class="kw">use</span> <span class="ident">libspa::pod</span>::{
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">libspa::pod</span>::{
 	<span class="ident">deserialize</span>::{<span class="ident">DeserializeError</span>, <span class="ident">PodDeserialize</span>, <span class="ident">PodDeserializer</span>},
 	<span class="ident">serialize</span>::{<span class="ident">GenError</span>, <span class="ident">PodSerialize</span>, <span class="ident">PodSerializer</span>},
 	<span class="ident">Value</span>, <span class="ident">ValueArray</span>, <span class="ident">Object</span>, <span class="ident">Property</span>, <span class="ident">PropertyFlags</span>, <span class="ident">ChoiceValue</span>, <span class="ident">CanonicalFixedSizedPod</span>,
 };
 <span class="kw">use</span> <span class="ident">libspa::utils</span>::{<span class="ident">Id</span>, <span class="ident">Fd</span>, <span class="ident">Choice</span>, <span class="ident">ChoiceEnum</span>, <span class="ident">ChoiceFlags</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">convert</span>::{<span class="ident">TryInto</span>, <span class="ident">TryFrom</span>}, <span class="ident">borrow::Cow</span>};
-<span class="kw">use</span> <span class="ident">std::ptr::NonNull</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">prelude</span>::<span class="kw-2">*</span>,
 	<span class="ident">spa</span>::{
@@ -691,10 +681,10 @@
 	}
 }
 
-<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugValue</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugValue</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span><span class="op">&gt;</span> {
 	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 		<span class="kw">struct</span> <span class="ident">DebugType</span>(<span class="ident">SpaType</span>);
-		<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugType</span> {
+		<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugType</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">name</span>() {
 					<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{} ({:?})&quot;</span>, <span class="ident">name</span>, <span class="self">self</span>.<span class="number">0</span>.<span class="ident">into_glib</span>())
@@ -704,7 +694,7 @@
 			}
 		}
 		<span class="kw">struct</span> <span class="ident">DebugIdValue</span>(<span class="ident">SpaIdValue</span>);
-		<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugIdValue</span> {
+		<span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugIdValue</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">short_name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">short_name</span>() {
 					<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{:?} ({:?})&quot;</span>, <span class="ident">short_name</span>, <span class="self">self</span>.<span class="number">0</span>.<span class="ident">number</span>())
@@ -715,7 +705,7 @@
 		}
 
 		<span class="kw">struct</span> <span class="ident">DebugValueList</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">I</span>);
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>, <span class="ident">I</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">DebugValue</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugValueList</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>, <span class="ident">I</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">DebugValue</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugValueList</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="ident">f</span>.<span class="ident">debug_list</span>()
 					.<span class="ident">entries</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>())
@@ -723,7 +713,7 @@
 			}
 		}
 
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugProperty</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugProperty</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Property&quot;</span>);
 
@@ -745,7 +735,7 @@
 		<span class="kw">struct</span> <span class="ident">DebugPropertyList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
 			<span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Object</span>,
 		}
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugPropertyList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugPropertyList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="ident">f</span>.<span class="ident">debug_list</span>()
 					.<span class="ident">entries</span>(<span class="self">self</span>.<span class="ident">object</span>.<span class="ident">properties</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">property</span><span class="op">|</span> <span class="ident">DebugProperty</span> {
@@ -758,7 +748,7 @@
 			<span class="ident">container</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DebugProperty</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 			<span class="ident">id</span>: <span class="ident">Id</span>,
 		}
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugId</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugId</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">container</span>
 					.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">prop</span><span class="op">|</span> <span class="ident">prop</span>.<span class="ident">key_table</span>());
@@ -773,7 +763,7 @@
 			<span class="ident">container</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DebugProperty</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 			<span class="ident">ids</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">Id</span>]
 		}
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">DebugIdList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">DebugIdList</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
 				<span class="ident">f</span>.<span class="ident">debug_list</span>()
 					.<span class="ident">entries</span>(<span class="self">self</span>.<span class="ident">ids</span>.<span class="ident">iter</span>().<span class="ident">copied</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> <span class="ident">DebugId</span> {

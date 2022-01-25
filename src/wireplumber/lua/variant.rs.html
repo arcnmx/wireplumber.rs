@@ -173,8 +173,8 @@
 <span id="170">170</span>
 <span id="171">171</span>
 <span id="172">172</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Variant</span>, <span class="ident">StaticVariantType</span>, <span class="ident">VariantTy</span>, <span class="ident">Error</span>, <span class="ident">VariantClass</span>, <span class="ident">variant::DictEntry</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>}, <span class="ident">iter::FromIterator</span>, <span class="ident">ops::Deref</span>};
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::variant::DictEntry</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Arguments for use from lua scripts.</span>
 <span class="doccomment">///</span>

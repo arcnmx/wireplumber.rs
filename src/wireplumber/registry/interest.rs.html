@@ -329,46 +329,26 @@
 <span id="326">326</span>
 <span id="327">327</span>
 <span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
-<span id="336">336</span>
-<span id="337">337</span>
-<span id="338">338</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::registry</span>::{<span class="ident">ObjectInterest</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">InterestMatch</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="ident">PipewireObject</span>, <span class="ident">Properties</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::ValueIterator</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">FromVariant</span>, <span class="ident">StaticVariantType</span>, <span class="ident">VariantTy</span>, <span class="ident">VariantClass</span>};
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">translate</span>::{<span class="ident">IntoGlib</span>, <span class="ident">from_glib</span>}, <span class="ident">Object</span>, <span class="ident">Variant</span>};
-<span class="kw">use</span> <span class="ident">glib::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::iter::FromIterator</span>;
-<span class="kw">use</span> <span class="ident">std::marker::PhantomData</span>;
-<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
-<span class="kw">use</span> <span class="ident">std::convert::TryFrom</span>;
-<span class="kw">use</span> <span class="ident">std::borrow</span>::{<span class="ident">Cow</span>, <span class="ident">Borrow</span>};
-<span class="kw">use</span> <span class="ident">std::ops::Deref</span>;
 
 <span class="kw">impl</span> <span class="ident">ObjectInterest</span> {
 	<span class="comment">/*#[doc(alias = &quot;wp_object_interest_matches&quot;)]
-	pub fn matches&lt;O: IsA&lt;Object&gt;&gt;(&amp;self, object: O) -&gt; bool {
+	pub fn matches&lt;O: IsA&lt;GObject&gt;&gt;(&amp;self, object: O) -&gt; bool {
 		unsafe {
 			from_glib(ffi::wp_object_interest_matches(self.to_glib_none().0, object.to_glib_none().0 as *mut _))
 		}
 	}*/</span>
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_object_interest_matches&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Object</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> {
 		<span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="ident">object</span>.<span class="ident">as_ref</span>();
 		<span class="self">self</span>.<span class="ident">matches_full</span>(<span class="ident">InterestMatchFlags::CHECK_ALL</span>, <span class="ident">object</span>.<span class="ident">type_</span>(), <span class="prelude-val">Some</span>(<span class="ident">object</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">==</span> <span class="ident">InterestMatch::all</span>()
 	}
 
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_object_interest_matches&quot;</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_props</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">props</span>: <span class="kw-2">&amp;</span><span class="ident">Properties</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">matches_full</span>(<span class="ident">InterestMatchFlags::CHECK_ALL</span>, <span class="ident">Properties::static_type</span>(), <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Object</span><span class="op">&gt;</span>, <span class="prelude-val">Some</span>(<span class="ident">props</span>), <span class="prelude-val">None</span>) <span class="op">==</span> <span class="ident">InterestMatch::all</span>()
+		<span class="self">self</span>.<span class="ident">matches_full</span>(<span class="ident">InterestMatchFlags::CHECK_ALL</span>, <span class="ident">Properties::static_type</span>(), <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">GObject</span><span class="op">&gt;</span>, <span class="prelude-val">Some</span>(<span class="ident">props</span>), <span class="prelude-val">None</span>) <span class="op">==</span> <span class="ident">InterestMatch::all</span>()
 	}
 
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_object_interest_matches&quot;</span>)]</span>
@@ -406,11 +386,11 @@
 		<span class="self">self</span>.<span class="ident">interest</span>
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">glib::Object</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">interest</span>.<span class="ident">matches_object</span>(<span class="ident">object</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">constrain</span><span class="op">&lt;</span><span class="lifetime">&#39;o</span>, <span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">glib::Object</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">O</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">constrain</span><span class="op">&lt;</span><span class="lifetime">&#39;o</span>, <span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">O</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
 		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">matches_object</span>(<span class="ident">object</span>) {
 			<span class="prelude-val">Some</span>(<span class="kw">unsafe</span> {
 				<span class="ident">object</span>.<span class="ident">unsafe_cast_ref</span>()
@@ -523,7 +503,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">std::io::Error</span>; <span class="comment">// TODO: actual error type</span>
+	<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
 	<span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">s</span> {
@@ -534,7 +514,7 @@
 			<span class="string">&quot;matches&quot;</span> <span class="op">|</span> <span class="string">&quot;#&quot;</span> =&gt; <span class="ident">ConstraintVerb::Matches</span>,
 			<span class="string">&quot;is-present&quot;</span> <span class="op">|</span> <span class="string">&quot;+&quot;</span> =&gt; <span class="ident">ConstraintVerb::IsPresent</span>,
 			<span class="string">&quot;is-absent&quot;</span> <span class="op">|</span> <span class="string">&quot;-&quot;</span> =&gt; <span class="ident">ConstraintVerb::IsAbsent</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">std::io::Error::new</span>(<span class="ident">std::io::ErrorKind::InvalidData</span>, <span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, <span class="ident">s</span>))),
+			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, <span class="ident">s</span>))),
 		})
 	}
 }
@@ -551,7 +531,7 @@
 			<span class="string">&#39;#&#39;</span> =&gt; <span class="ident">ConstraintVerb::Matches</span>,
 			<span class="string">&#39;+&#39;</span> =&gt; <span class="ident">ConstraintVerb::IsPresent</span>,
 			<span class="string">&#39;-&#39;</span> =&gt; <span class="ident">ConstraintVerb::IsAbsent</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">std::io::Error::new</span>(<span class="ident">std::io::ErrorKind::InvalidData</span>, <span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, <span class="ident">value</span>))),
+			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, <span class="ident">value</span>))),
 		})
 	}
 }
@@ -577,7 +557,7 @@
 
 <span class="kw">impl</span> <span class="ident">ToVariant</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
 	<span class="kw">fn</span> <span class="ident">to_variant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Variant</span> {
-		<span class="ident">std::str::from_utf8</span>(<span class="kw-2">&amp;</span>[<span class="self">self</span>.<span class="ident">symbol</span>() <span class="kw">as</span> <span class="ident">u8</span>])
+		<span class="ident">str::from_utf8</span>(<span class="kw-2">&amp;</span>[<span class="self">self</span>.<span class="ident">symbol</span>() <span class="kw">as</span> <span class="ident">u8</span>])
 			.<span class="ident">unwrap</span>()
 			.<span class="ident">to_variant</span>()
 	}
@@ -629,14 +609,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">std::io::Error</span>; <span class="comment">// TODO: actual error type</span>
+	<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
 	<span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">s</span> {
 			<span class="string">&quot;pw-global&quot;</span> =&gt; <span class="ident">ConstraintType::PwGlobalProperty</span>,
 			<span class="string">&quot;pw&quot;</span> =&gt; <span class="ident">ConstraintType::PwProperty</span>,
 			<span class="string">&quot;gobject&quot;</span> =&gt; <span class="ident">ConstraintType::GProperty</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">std::io::Error::new</span>(<span class="ident">std::io::ErrorKind::InvalidData</span>, <span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, <span class="ident">s</span>))),
+			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, <span class="ident">s</span>))),
 		})
 	}
 }
