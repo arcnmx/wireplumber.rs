@@ -110,12 +110,14 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
+<span id="110">110</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::translate</span>::{<span class="ident">ToGlibPtr</span>, <span class="ident">TryFromGlib</span>, <span class="ident">IntoGlib</span>, <span class="ident">OptionIntoGlib</span>, <span class="ident">GlibNoneError</span>, <span class="ident">UnsafeFrom</span>, <span class="ident">from_glib</span>, <span class="ident">from_glib_full</span>};
 <span class="kw">use</span> <span class="ident">glib::Type</span>;
 <span class="kw">use</span> <span class="ident">glib::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std::ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ValueIterator</span>, <span class="ident">SpaIdValue</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::SpaIdValue</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::ValueIterator</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpaIdTable</span> {

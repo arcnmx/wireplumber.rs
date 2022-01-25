@@ -337,7 +337,11 @@
 <span id="334">334</span>
 <span id="335">335</span>
 <span id="336">336</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ObjectInterest</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">InterestMatch</span>, <span class="ident">Properties</span>, <span class="ident">PipewireObject</span>, <span class="ident">ValueIterator</span>};
+<span id="337">337</span>
+<span id="338">338</span>
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::registry</span>::{<span class="ident">ObjectInterest</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">InterestMatch</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="ident">PipewireObject</span>, <span class="ident">Properties</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::ValueIterator</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">FromVariant</span>, <span class="ident">StaticVariantType</span>, <span class="ident">VariantTy</span>, <span class="ident">VariantClass</span>};
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">translate</span>::{<span class="ident">IntoGlib</span>, <span class="ident">from_glib</span>}, <span class="ident">Object</span>, <span class="ident">Variant</span>};

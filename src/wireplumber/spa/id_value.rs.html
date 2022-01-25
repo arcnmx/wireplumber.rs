@@ -145,7 +145,7 @@
 <span class="kw">use</span> <span class="ident">glib::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std::ptr</span>::{<span class="self">self</span>, <span class="ident">NonNull</span>};
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">SpaType</span>, <span class="ident">SpaIdTable</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaType</span>, <span class="ident">SpaIdTable</span>};
 
 <span class="comment">// glib::wrapper creates an incorrect FromValue impl :&lt;</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
