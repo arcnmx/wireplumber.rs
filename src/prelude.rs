@@ -37,7 +37,7 @@ pub use crate::pw::{
 pub use crate::plugin::PluginExt as _;
 
 #[doc(no_inline)]
-pub use crate::object::ObjectExt as _;
+pub use crate::core::ObjectExt as _;
 
 #[doc(no_inline)]
 pub use crate::util::{

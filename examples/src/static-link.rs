@@ -13,11 +13,11 @@ use wireplumber::prelude::*;
 const LOG_DOMAIN: &'static str = "static-link";
 
 use wireplumber::{
-	object::{Object, ObjectFeatures},
+	core::{Core, Object, ObjectFeatures},
 	plugin::{self, AsyncPluginImpl, SimplePlugin},
 	registry::{ConstraintType, Constraint, Interest, ObjectManager},
 	pw::{self, Node, Port, Link, Properties},
-	Core, info, warning,
+	info, warning,
 };
 
 #[derive(Debug, Clone, Variant)]

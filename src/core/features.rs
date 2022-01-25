@@ -3,7 +3,7 @@ use crate::{
 	session::{SessionItemFeatures, SessionItem},
 	local::{SpaDeviceFeatures, SpaDevice},
 	plugin::{PluginFeatures, Plugin},
-	object::ObjectExt,
+	core::ObjectExt,
 	pw::{
 		MetadataFeatures, Metadata,
 		NodeFeatures, Node,

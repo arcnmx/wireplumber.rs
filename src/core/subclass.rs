@@ -1,6 +1,6 @@
 use glib::subclass::prelude::{ObjectImpl as GObjectImpl, *};
 use crate::prelude::*;
-use crate::object::{Object, ObjectFeatures, FeatureActivationTransition};
+use crate::core::{Object, ObjectFeatures, FeatureActivationTransition};
 
 pub trait ObjectImpl: GObjectImpl + ObjectImplExt {
 	fn supported_features(&self, object: &Self::Type) -> ObjectFeatures {

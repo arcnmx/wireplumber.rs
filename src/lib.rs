@@ -31,7 +31,6 @@ pub mod local;
 pub mod session;
 pub mod registry;
 pub mod plugin;
-pub mod object;
 pub mod spa;
 pub mod util;
 
@@ -39,7 +38,8 @@ pub mod error;
 #[doc(no_inline)]
 pub use error::{Result, Error};
 
-mod core;
+pub mod core;
+#[doc(no_inline)]
 pub use crate::core::{Core, InitFlags};
 
 pub use log::Log;
@@ -51,7 +51,7 @@ pub mod signals;
 /// gir needs to know where to find these
 pub(crate) use crate::{
 	pw::{PipewireObject, Proxy, GlobalProxy, Port, Metadata, Properties, Endpoint, Direction, NodeState},
-	object::{Object, ObjectFeatures},
+	core::{Object, ObjectFeatures},
 	plugin::Plugin,
 	spa::{SpaIdTable, SpaIdValue, SpaPod},
 	session::{SessionItem, SiLink, SiLinkable, SiEndpoint, SiAcquisition},

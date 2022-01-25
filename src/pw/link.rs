@@ -1,6 +1,5 @@
 use crate::pw::{self, Link, Node, Port, Properties, Direction, ProxyFeatures};
-use crate::object::Object;
-use crate::Core;
+use crate::core::{Core, Object};
 use crate::prelude::*;
 
 impl Link {

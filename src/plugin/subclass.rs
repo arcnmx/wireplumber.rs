@@ -1,9 +1,8 @@
 use glib::subclass::prelude::*;
 use glib::variant::VariantTypeMismatchError;
 use std::panic::catch_unwind;
-use crate::Core;
 use crate::plugin::{Plugin, PluginFeatures};
-use crate::object::{Object, ObjectImpl};
+use crate::core::{Core, Object, ObjectImpl};
 use crate::util::Transition;
 use crate::prelude::*;
 
@@ -154,7 +153,7 @@ macro_rules! simple_plugin_subclass {
 		}
 
 		impl $crate::lib::glib::subclass::object::ObjectImpl for $ty { }
-		impl $crate::object::ObjectImpl for $ty { }
+		impl $crate::core::ObjectImpl for $ty { }
 	};
 }
 pub use simple_plugin_subclass;

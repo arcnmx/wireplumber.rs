@@ -8,9 +8,8 @@
 //! use wireplumber::{
 //!   prelude::*,
 //!   registry::{ObjectManager, Interest},
-//!   object::{Object, ObjectFeatures},
+//!   core::{Core, Object, ObjectFeatures},
 //!   pw::Node,
-//!   Core,
 //! };
 //!
 //! async fn watch_nodes(core: &Core) {
@@ -41,13 +40,13 @@ use glib_signal::{def_signal, SignalFlags, Pointer};
 use crate::prelude::*;
 
 def_signal! {
-	impl Notifies<"connected" as Connected> for crate::Core {
+	impl Notifies<"connected" as Connected> for crate::core::Core {
 		impl {const SIGNAL_CONNECTED};
 		fn(&self)
 	}
 }
 def_signal! {
-	impl Notifies<"disconnected" as Disconnected> for crate::Core {
+	impl Notifies<"disconnected" as Disconnected> for crate::core::Core {
 		impl {const SIGNAL_DISCONNECTED};
 		fn(&self)
 	}
