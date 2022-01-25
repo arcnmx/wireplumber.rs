@@ -215,7 +215,7 @@
 
 	<span class="attribute">#[<span class="ident">test</span>]</span>
 	<span class="kw">fn</span> <span class="ident">log_internal</span>() {
-		<span class="ident">Core::init</span>(<span class="ident">InitFlags::SET_GLIB_LOG</span>);
+		<span class="ident">Core::init_with_flags</span>(<span class="ident">InitFlags::SET_GLIB_LOG</span>);
 		<span class="ident">Log::set_level</span>(<span class="string">&quot;8&quot;</span>);
 		<span class="macro">wp_critical!</span>(<span class="string">&quot;crit&quot;</span>);
 		<span class="macro">wp_warning!</span>(<span class="string">&quot;warn&quot;</span>);
@@ -227,7 +227,7 @@
 
 	<span class="attribute">#[<span class="ident">test</span>]</span>
 	<span class="kw">fn</span> <span class="ident">log_external</span>() {
-		<span class="ident">Core::init</span>(<span class="ident">InitFlags::SET_GLIB_LOG</span>);
+		<span class="ident">Core::init_with_flags</span>(<span class="ident">InitFlags::SET_GLIB_LOG</span>);
 		<span class="ident">Log::set_level</span>(<span class="string">&quot;8&quot;</span>);
 		<span class="macro">critical!</span>(<span class="string">&quot;crit&quot;</span>);
 		<span class="macro">warning!</span>(<span class="string">&quot;warn&quot;</span>);
