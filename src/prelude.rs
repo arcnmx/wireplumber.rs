@@ -68,6 +68,7 @@ pub(crate) use glib::{
 	error::ErrorDomain,
 	translate::*,
 	ffi::{gpointer, gconstpointer},
+	types::{Pointer, Pointee},
 	Type,
 	Value, value::FromValue,
 	Variant, ToVariant, FromVariant, StaticVariantType, VariantClass, VariantTy,

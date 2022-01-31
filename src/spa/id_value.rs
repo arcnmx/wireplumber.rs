@@ -69,9 +69,10 @@ impl SpaIdValue {
 
 unsafe impl<'a> FromValue<'a> for SpaIdValue {
 	type Checker = glib::value::NopChecker; // TODO!
+
 	unsafe fn from_value(value: &'a Value) -> Self {
 		let optional: Option<Self> = from_glib(
-			glib::gobject_ffi::g_value_get_pointer(value.to_glib_none().0) as ffi::WpSpaIdValue
+			value.get::<Pointer>().unwrap() as ffi::WpSpaIdValue
 		);
 		optional.unwrap() // TODO
 	}

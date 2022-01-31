@@ -154,10 +154,8 @@ impl SpaPod {
 		ValueIterator::with_inner(self.new_iterator().unwrap())
 	}
 
-	pub fn array_pointers(&self) -> impl Iterator<Item=glib::ffi::gpointer> {
-		self.new_iterator().unwrap().map(|v| unsafe {
-			glib::gobject_ffi::g_value_get_pointer(v.to_glib_none().0)
-		})
+	pub fn array_pointers(&self) -> impl Iterator<Item=Pointer> {
+		self.new_iterator().unwrap().map(|v| v.get().unwrap())
 	}
 
 	pub fn array_iterator<T: SpaPrimitive>(&self) -> impl Iterator<Item=T> {

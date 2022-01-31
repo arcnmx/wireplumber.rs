@@ -19,7 +19,9 @@ impl ImplNode {
 		unsafe {
 			let mut value = Value::from_type(Type::POINTER);
 			glib::gobject_ffi::g_object_get_property(self.upcast_ref::<GObject>().to_glib_none().0, b"pw-impl-node\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-			NonNull::new(glib::gobject_ffi::g_value_get_pointer(value.to_glib_none().0) as *mut _)
+			value.get::<Option<NonNull<Pointee>>>()
+				.expect("pw-impl-node property")
+				.map(|p| p.cast())
 		}
 	}
 }
