@@ -25,6 +25,13 @@
 //! and exported to the wireplumber daemon. [SimplePlugin] is also provided as a utility to ease
 //! implementation of the module entry point loader and reduce boilerplate.
 //!
+//! The plugin module must be compiled as a `cdylib` in your `Cargo.toml`:
+//!
+//! ```toml
+//! [lib]
+//! crate-type = ["cdylib"]
+//! ```
+//!
 //! ```no_run
 //! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};
 //! use wireplumber::prelude::*;

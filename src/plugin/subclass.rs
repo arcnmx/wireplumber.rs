@@ -141,6 +141,13 @@ impl<T> Deref for SimplePluginObject<T> where
 	}
 }
 
+/// Implements [`glib::ObjectSubclass`](glib::subclass::types::ObjectSubclass),
+/// [`glib::ObjectImpl`](glib::subclass::object::ObjectImpl), and
+/// [`ObjectImpl`](crate::core::ObjectImpl) for your plugin.
+///
+/// The plugin type must also manually impl [SimplePlugin], and will be wrapped as
+/// [`SimplePluginObject<T>`](SimplePluginObject). See the
+/// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.
 #[macro_export]
 macro_rules! simple_plugin_subclass {
 	(impl ObjectSubclass for $name:tt as $ty:ty { $($subclass:tt)* }) => {
@@ -238,6 +245,10 @@ impl<T: FromVariant> FromAnyVariant for T {
 	}
 }
 
+/// Exports a [ModuleExport] as the wireplumber plugin entry point.
+///
+/// Using this properly requires that your crate be built as a `cdylib`. See the
+/// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.
 #[macro_export]
 macro_rules! plugin_export {
 	($desc:ty) => {
