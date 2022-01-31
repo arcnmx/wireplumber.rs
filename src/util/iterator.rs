@@ -1,6 +1,10 @@
 use crate::util::WpIterator;
 use crate::prelude::*;
 
+unsafe fn from_ptr_array_full(array: *mut glib::ffi::GPtrArray) -> PtrArray {
+	mem::transmute(array)
+}
+
 impl WpIterator {
 	#[doc(alias = "wp_iterator_new")]
 	pub unsafe fn with_impl_raw(methods: &'static ffi::WpIteratorMethods, userdata_size: usize) -> Self {
@@ -8,18 +12,33 @@ impl WpIterator {
 	}
 
 	#[doc(alias = "wp_iterator_new_ptr_array")]
-	pub unsafe fn with_pointers<I: IntoIterator<Item=gpointer>>(items: I, type_: Type) -> Self {
-		let array = glib::ffi::g_ptr_array_new();
-		for item in items {
-			glib::ffi::g_ptr_array_add(array, item);
+	pub fn with_pointers(array: PtrArray, type_: Type) -> Self {
+		unsafe {
+			// TODO: this is not remotely safe or stable
+			// https://github.com/gtk-rs/gtk-rs-core/issues/525
+			let array: NonNull<glib::ffi::GPtrArray> = mem::transmute(array);
+			from_glib_full(ffi::wp_iterator_new_ptr_array(array.as_ptr(), type_.into_glib()))
 		}
-		from_glib_full(ffi::wp_iterator_new_ptr_array(array, type_.into_glib()))
+	}
+
+	pub fn with_objects<T: StaticType, I: IntoIterator<Item=T>>(items: I) -> Self where
+		for<'a> T: GlibPtrDefault + ToGlibPtr<'a, T::GlibType>,
+	{
+		let array = items.into_iter().collect::<Vec<_>>();
+		let array = <T as ToGlibContainerFromSlice<_>>::to_glib_full_from_slice(&array);
+		let array = unsafe { from_ptr_array_full(array) };
+		Self::with_pointers(array, T::static_type())
 	}
 
 	pub fn empty(type_: Type) -> Self {
-		unsafe {
-			Self::with_pointers(iter::empty(), type_)
+		fn empty_ptr_array() -> PtrArray {
+			unsafe {
+				let array = glib::ffi::g_ptr_array_new();
+				from_ptr_array_full(array)
+			}
 		}
+
+		Self::with_pointers(empty_ptr_array(), type_)
 	}
 
 	#[doc(alias = "wp_iterator_get_user_data")]
@@ -31,11 +50,11 @@ impl WpIterator {
 	}
 }
 
-impl<T: ObjectType> FromIterator<T> for WpIterator {
+impl<T: ObjectType> FromIterator<T> for WpIterator where
+		for<'a> T: GlibPtrDefault + ToGlibPtr<'a, <T as GlibPtrDefault>::GlibType>,
+{
 	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
-		unsafe {
-			Self::with_pointers(iter.into_iter().map(|o| o.to_glib_full() as *mut _), T::static_type())
-		}
+		Self::with_objects(iter)
 	}
 }
 
@@ -99,7 +118,9 @@ impl<T: StaticType> fmt::Debug for ValueIterator<T> {
 	}
 }
 
-impl<T: ObjectType> FromIterator<T> for ValueIterator<T> {
+impl<T: ObjectType> FromIterator<T> for ValueIterator<T> where
+	for<'a> T: GlibPtrDefault + ToGlibPtr<'a, <T as GlibPtrDefault>::GlibType>,
+{
 	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
 		Self::with_inner(FromIterator::from_iter(iter))
 	}
