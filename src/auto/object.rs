@@ -34,7 +34,7 @@ pub trait ObjectExt: 'static {
     fn abort_activation(&self, msg: &str);
 
     #[doc(alias = "wp_object_activate")]
-    fn activate<P: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
+    fn activate<P: FnOnce(Result<(), glib::Error>) + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
 
     
     fn activate_future(&self, features: ObjectFeatures) -> Pin<Box_<dyn std::future::Future<Output = Result<(), glib::Error>> + 'static>>;
@@ -76,13 +76,25 @@ impl<O: IsA<Object>> ObjectExt for O {
         }
     }
 
-    fn activate<P: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
-        let user_data: Box_<P> = Box_::new(callback);
-        unsafe extern "C" fn activate_trampoline<P: FnOnce(Result<(), glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
+    fn activate<P: FnOnce(Result<(), glib::Error>) + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
+        
+                let main_context = glib::MainContext::ref_thread_default();
+                let is_main_context_owner = main_context.is_owner();
+                let has_acquired_main_context = (!is_main_context_owner)
+                    .then(|| main_context.acquire().ok())
+                    .flatten();
+                assert!(
+                    is_main_context_owner || has_acquired_main_context.is_some(),
+                    "Async operations only allowed if the thread is owning the MainContext"
+                );
+        
+        let user_data: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::new(glib::thread_guard::ThreadGuard::new(callback));
+        unsafe extern "C" fn activate_trampoline<P: FnOnce(Result<(), glib::Error>) + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
             let mut error = ptr::null_mut();
             let _ = ffi::wp_object_activate_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) };
-            let callback: Box_<P> = Box_::from_raw(user_data as *mut _);
+            let callback: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::from_raw(user_data as *mut _);
+            let callback: P = callback.into_inner();
             callback(result);
         }
         let callback = activate_trampoline::<P>;

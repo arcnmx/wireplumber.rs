@@ -61,6 +61,7 @@ impl SpaType {
     }
 
     #[doc(alias = "wp_spa_type_parent")]
+#[must_use]
     pub fn parent(&self) -> Option<SpaType> {
         unsafe {
             from_glib(ffi::wp_spa_type_parent(self.into_glib()))

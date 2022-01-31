@@ -39,7 +39,8 @@ impl Transition {
     pub fn finish(res: &impl IsA<gio::AsyncResult>) -> Result<(), glib::Error> {
         unsafe {
             let mut error = ptr::null_mut();
-            let _ = ffi::wp_transition_finish(res.as_ref().to_glib_none().0, &mut error);
+            let is_ok = ffi::wp_transition_finish(res.as_ref().to_glib_none().0, &mut error);
+            assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
         }
     }

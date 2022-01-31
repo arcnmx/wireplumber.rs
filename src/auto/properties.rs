@@ -95,6 +95,7 @@ impl Properties {
     //}
 
     #[doc(alias = "wp_properties_copy")]
+#[must_use]
     pub fn copy(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_properties_copy(self.to_glib_none().0))
@@ -102,6 +103,7 @@ impl Properties {
     }
 
     #[doc(alias = "wp_properties_ensure_unique_owner")]
+#[must_use]
     pub fn ensure_unique_owner(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_properties_ensure_unique_owner(self.to_glib_full()))

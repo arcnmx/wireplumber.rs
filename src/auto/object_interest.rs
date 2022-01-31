@@ -62,7 +62,8 @@ impl ObjectInterest {
     pub fn validate(&self) -> Result<(), glib::Error> {
         unsafe {
             let mut error = ptr::null_mut();
-            let _ = ffi::wp_object_interest_validate(self.to_glib_none().0, &mut error);
+            let is_ok = ffi::wp_object_interest_validate(self.to_glib_none().0, &mut error);
+            assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
         }
     }

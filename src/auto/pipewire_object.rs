@@ -32,7 +32,7 @@ impl PipewireObject {
 
 pub trait PipewireObjectExt: 'static {
     #[doc(alias = "wp_pipewire_object_enum_params")]
-    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
+    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
 
     
     fn enum_params_future(&self, id: Option<&str>, filter: Option<&SpaPod>) -> Pin<Box_<dyn std::future::Future<Output = Result<Option<Iterator>, glib::Error>> + 'static>>;
@@ -72,13 +72,25 @@ pub trait PipewireObjectExt: 'static {
 }
 
 impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
-    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
-        let user_data: Box_<P> = Box_::new(callback);
-        unsafe extern "C" fn enum_params_trampoline<P: FnOnce(Result<Option<Iterator>, glib::Error>) + Send + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
+    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
+        
+                let main_context = glib::MainContext::ref_thread_default();
+                let is_main_context_owner = main_context.is_owner();
+                let has_acquired_main_context = (!is_main_context_owner)
+                    .then(|| main_context.acquire().ok())
+                    .flatten();
+                assert!(
+                    is_main_context_owner || has_acquired_main_context.is_some(),
+                    "Async operations only allowed if the thread is owning the MainContext"
+                );
+        
+        let user_data: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::new(glib::thread_guard::ThreadGuard::new(callback));
+        unsafe extern "C" fn enum_params_trampoline<P: FnOnce(Result<Option<Iterator>, glib::Error>) + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
             let mut error = ptr::null_mut();
             let ret = ffi::wp_pipewire_object_enum_params_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(from_glib_full(ret)) } else { Err(from_glib_full(error)) };
-            let callback: Box_<P> = Box_::from_raw(user_data as *mut _);
+            let callback: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::from_raw(user_data as *mut _);
+            let callback: P = callback.into_inner();
             callback(result);
         }
         let callback = enum_params_trampoline::<P>;
