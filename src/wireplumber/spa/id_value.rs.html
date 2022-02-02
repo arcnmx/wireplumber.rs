@@ -135,12 +135,13 @@
 <span id="132">132</span>
 <span id="133">133</span>
 <span id="134">134</span>
+<span id="135">135</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">ffi::WpSpaType</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaType</span>, <span class="ident">SpaIdTable</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
-<span class="comment">// glib::wrapper creates an incorrect FromValue impl :&lt;</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpaIdValue</span> {
 	<span class="ident">inner</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">libc::c_void</span><span class="op">&gt;</span>,
 }
@@ -205,10 +206,11 @@
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaIdValue</span> {
-	<span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::NopChecker</span>; <span class="comment">// TODO!</span>
+	<span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeOrNoneChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+
 	<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Value</span>) -&gt; <span class="self">Self</span> {
 		<span class="kw">let</span> <span class="ident">optional</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_glib</span>(
-			<span class="ident">glib::gobject_ffi::g_value_get_pointer</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) <span class="kw">as</span> <span class="ident">ffi::WpSpaIdValue</span>
+			<span class="ident">value</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">Pointer</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>() <span class="kw">as</span> <span class="ident">ffi::WpSpaIdValue</span>
 		);
 		<span class="ident">optional</span>.<span class="ident">unwrap</span>() <span class="comment">// TODO</span>
 	}

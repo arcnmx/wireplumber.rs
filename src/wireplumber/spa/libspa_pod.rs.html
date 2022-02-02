@@ -442,6 +442,10 @@
 <span id="439">439</span>
 <span id="440">440</span>
 <span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">libspa::pod</span>::{
 	<span class="ident">deserialize</span>::{<span class="ident">DeserializeError</span>, <span class="ident">PodDeserialize</span>, <span class="ident">PodDeserializer</span>},
 	<span class="ident">serialize</span>::{<span class="ident">GenError</span>, <span class="ident">PodSerialize</span>, <span class="ident">PodSerializer</span>},
@@ -825,7 +829,9 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)))]</span>
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">Id</span> { }
+<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">Id</span> {
+	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::ID</span>;
+}
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">Id</span> {
 	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
@@ -846,7 +852,9 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)))]</span>
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">Fd</span> { }
+<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">Fd</span> {
+	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::FD</span>;
+}
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">Fd</span> {
 	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {

@@ -248,8 +248,6 @@
 <span id="245">245</span>
 <span id="246">246</span>
 <span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">libspa_sys</span>::{<span class="ident">spa_pod</span>, <span class="ident">spa_rectangle</span>, <span class="ident">spa_fraction</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw::SpaPropertyKey</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaPod</span>, <span class="ident">SpaType</span>, <span class="ident">SpaIdValue</span>, <span class="ident">SpaPodParser</span>, <span class="ident">SpaPodBuilder</span>, <span class="ident">SpaPrimitive</span>, <span class="ident">SpaValue</span>};
@@ -406,10 +404,8 @@
 		<span class="ident">ValueIterator::with_inner</span>(<span class="self">self</span>.<span class="ident">new_iterator</span>().<span class="ident">unwrap</span>())
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">array_pointers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">glib::ffi::gpointer</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">new_iterator</span>().<span class="ident">unwrap</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw">unsafe</span> {
-			<span class="ident">glib::gobject_ffi::g_value_get_pointer</span>(<span class="ident">v</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)
-		})
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">array_pointers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Pointer</span><span class="op">&gt;</span> {
+		<span class="self">self</span>.<span class="ident">new_iterator</span>().<span class="ident">unwrap</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">get</span>().<span class="ident">unwrap</span>())
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">array_iterator</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SpaPrimitive</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;</span> {
