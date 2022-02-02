@@ -2,6 +2,7 @@ use crate::spa::SpaIdValue;
 use crate::prelude::*;
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(transparent)]
 pub struct SpaIdTable {
 	inner: NonNull<libc::c_void>,
 }
@@ -102,4 +103,14 @@ impl UnsafeFrom<ffi::WpSpaIdTable> for SpaIdTable {
 			inner: NonNull::new_unchecked(inner as *mut _),
 		}
 	}
+}
+
+#[test]
+fn id_table_values() {
+	use crate::spa::SpaType;
+
+	let ty = SpaType::OBJECT_PROP_INFO;
+	let table = ty.values_table().unwrap();
+	let values = table.values();
+	assert!(values.count() > 0);
 }

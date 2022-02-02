@@ -381,7 +381,9 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 }
 
 #[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
-impl SpaPrimitive for Id { }
+impl SpaPrimitive for Id {
+	const TYPE: SpaType = SpaType::ID;
+}
 #[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
 impl SpaValue for Id {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
@@ -402,7 +404,9 @@ impl<'a> TryFrom<&'a SpaPod> for Id {
 }
 
 #[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
-impl SpaPrimitive for Fd { }
+impl SpaPrimitive for Fd {
+	const TYPE: SpaType = SpaType::FD;
+}
 #[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
 impl SpaValue for Fd {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {

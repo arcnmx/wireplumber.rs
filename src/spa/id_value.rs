@@ -2,8 +2,8 @@ use ffi::WpSpaType;
 use crate::spa::{SpaType, SpaIdTable};
 use crate::prelude::*;
 
-// glib::wrapper creates an incorrect FromValue impl :<
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(transparent)]
 pub struct SpaIdValue {
 	inner: NonNull<libc::c_void>,
 }
@@ -68,7 +68,7 @@ impl SpaIdValue {
 }
 
 unsafe impl<'a> FromValue<'a> for SpaIdValue {
-	type Checker = glib::value::NopChecker; // TODO!
+	type Checker = glib::value::GenericValueTypeOrNoneChecker<Self>;
 
 	unsafe fn from_value(value: &'a Value) -> Self {
 		let optional: Option<Self> = from_glib(

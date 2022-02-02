@@ -1,9 +1,10 @@
 use glib::ffi::gboolean;
 use glib::GString;
-use crate::spa::{SpaPodBuilder, SpaPod};
+use crate::spa::{SpaPodBuilder, SpaPod, SpaType};
 use crate::prelude::*;
 
 pub trait SpaPrimitive: SpaValue + Copy + Into<<Self as SpaValue>::Owned> {
+	const TYPE: SpaType;
 }
 
 pub trait SpaValue {
@@ -12,7 +13,9 @@ pub trait SpaValue {
 	type Owned: for<'a> TryFrom<&'a SpaPod>;
 }
 
-impl SpaPrimitive for () { }
+impl SpaPrimitive for () {
+	const TYPE: SpaType = SpaType::NONE;
+}
 impl SpaValue for () {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_none()
@@ -59,7 +62,9 @@ impl From<bool> for SpaBool {
 	}
 }
 
-impl SpaPrimitive for SpaBool { }
+impl SpaPrimitive for SpaBool {
+	const TYPE: SpaType = SpaType::BOOL;
+}
 impl SpaValue for SpaBool {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_boolean((*self).into())
@@ -87,7 +92,9 @@ impl<'a> TryFrom<&'a SpaPod> for bool {
 	}
 }
 
-impl SpaPrimitive for i32 { }
+impl SpaPrimitive for i32 {
+	const TYPE: SpaType = SpaType::INT;
+}
 impl SpaValue for i32 {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_int(*self)
@@ -117,7 +124,9 @@ impl<'a> TryFrom<&'a SpaPod> for u32 {
 	}
 }
 
-impl SpaPrimitive for i64 { }
+impl SpaPrimitive for i64 {
+	const TYPE: SpaType = SpaType::LONG;
+}
 impl SpaValue for i64 {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_long(*self)
@@ -147,7 +156,9 @@ impl<'a> TryFrom<&'a SpaPod> for u64 {
 	}
 }
 
-impl SpaPrimitive for f32 { }
+impl SpaPrimitive for f32 {
+	const TYPE: SpaType = SpaType::FLOAT;
+}
 impl SpaValue for f32 {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_float(*self)
@@ -165,7 +176,9 @@ impl<'a> TryFrom<&'a SpaPod> for f32 {
 	}
 }
 
-impl SpaPrimitive for f64 { }
+impl SpaPrimitive for f64 {
+	const TYPE: SpaType = SpaType::DOUBLE;
+}
 impl SpaValue for f64 {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_double(*self)
@@ -227,7 +240,9 @@ impl<'a> TryFrom<&'a SpaPod> for Vec<u8> {
 	}
 }
 
-impl SpaPrimitive for libspa_sys::spa_rectangle { }
+impl SpaPrimitive for libspa_sys::spa_rectangle {
+	const TYPE: SpaType = SpaType::RECTANGLE;
+}
 impl SpaValue for libspa_sys::spa_rectangle {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_rectangle(self.width, self.height)
@@ -245,7 +260,9 @@ impl<'a> TryFrom<&'a SpaPod> for libspa_sys::spa_rectangle {
 	}
 }
 
-impl SpaPrimitive for libspa_sys::spa_fraction { }
+impl SpaPrimitive for libspa_sys::spa_fraction {
+	const TYPE: SpaType = SpaType::FRACTION;
+}
 impl SpaValue for libspa_sys::spa_fraction {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_fraction(self.num, self.denom)
