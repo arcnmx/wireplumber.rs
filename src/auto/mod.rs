@@ -113,6 +113,27 @@ mod properties_item;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 pub use self::properties_item::PropertiesItem;
 
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+mod spa_json;
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+pub use self::spa_json::SpaJson;
+
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+mod spa_json_builder;
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+pub use self::spa_json_builder::SpaJsonBuilder;
+
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+mod spa_json_parser;
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+pub use self::spa_json_parser::SpaJsonParser;
+
 mod spa_pod;
 pub use self::spa_pod::SpaPod;
 

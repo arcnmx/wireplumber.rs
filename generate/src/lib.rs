@@ -8,6 +8,8 @@ use pipewire::{pw_core, pw_context, pw_proxy, pw_properties, pw_impl_node};
 use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 use crate::WpSpaType;
 
+type spa_json = c_void; // TODO: https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/36
+
 use glib_sys as glib;
 use gobject_sys as gobject;
 use gio_sys as gio;
@@ -712,6 +714,45 @@ impl ::std::fmt::Debug for WpSpaDeviceClass {
 }
 
 #[repr(C)]
+pub struct WpSpaJson {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSpaJson {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSpaJson @ {:p}", self))
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpSpaJsonBuilder {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSpaJsonBuilder {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSpaJsonBuilder @ {:p}", self))
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpSpaJsonParser {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSpaJsonParser {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSpaJsonParser @ {:p}", self))
+         .finish()
+    }
+}
+
+#[repr(C)]
 pub struct WpSpaPod {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -1364,6 +1405,219 @@ extern "C" {
     #[cfg(any(feature = "v0_4_2", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_unref(self_: *mut WpPropertiesItem);
+
+    //=========================================================================
+    // WpSpaJson
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_get_type() -> GType;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_array(format: *const c_char, ...) -> *mut WpSpaJson;
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_new_array_valist(format: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_boolean(value: gboolean) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_float(value: c_float) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_from_string(json_str: *const c_char) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_int(value: c_int) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_null() -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_object(key: *const c_char, format: *const c_char, ...) -> *mut WpSpaJson;
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_new_object_valist(key: *const c_char, format: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_string(value: *const c_char) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_wrap(json: *mut spa_json) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_copy(other: *mut WpSpaJson) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_ensure_unique_owner(self_: *mut WpSpaJson) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_get_data(self_: *const WpSpaJson) -> *const c_char;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_get_size(self_: *const WpSpaJson) -> size_t;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_get_spa_json(self_: *const WpSpaJson) -> *const spa_json;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_array(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_boolean(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_float(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_int(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_null(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_object(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_string(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_unique_owner(self_: *mut WpSpaJson) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_iterator(self_: *mut WpSpaJson) -> *mut WpIterator;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_object_get(self_: *mut WpSpaJson, ...) -> gboolean;
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_object_get_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parse_array(self_: *mut WpSpaJson, ...) -> gboolean;
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_parse_array_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parse_boolean(self_: *mut WpSpaJson, value: *mut gboolean) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parse_float(self_: *mut WpSpaJson, value: *mut c_float) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parse_int(self_: *mut WpSpaJson, value: *mut c_int) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parse_object(self_: *mut WpSpaJson, ...) -> gboolean;
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_parse_object_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parse_string(self_: *mut WpSpaJson) -> *mut c_char;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_ref(self_: *mut WpSpaJson) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_unref(self_: *mut WpSpaJson);
+
+    //=========================================================================
+    // WpSpaJsonBuilder
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_get_type() -> GType;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_new_array() -> *mut WpSpaJsonBuilder;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_new_object() -> *mut WpSpaJsonBuilder;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add(self_: *mut WpSpaJsonBuilder, ...);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_boolean(self_: *mut WpSpaJsonBuilder, value: gboolean);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_float(self_: *mut WpSpaJsonBuilder, value: c_float);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_int(self_: *mut WpSpaJsonBuilder, value: c_int);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_json(self_: *mut WpSpaJsonBuilder, json: *mut WpSpaJson);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_null(self_: *mut WpSpaJsonBuilder);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_property(self_: *mut WpSpaJsonBuilder, key: *const c_char);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_string(self_: *mut WpSpaJsonBuilder, value: *const c_char);
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_builder_add_valist(self_: *mut WpSpaJsonBuilder, args: /*Unimplemented*/va_list);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_end(self_: *mut WpSpaJsonBuilder) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_ref(self_: *mut WpSpaJsonBuilder) -> *mut WpSpaJsonBuilder;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_unref(self_: *mut WpSpaJsonBuilder);
+
+    //=========================================================================
+    // WpSpaJsonParser
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_type() -> GType;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_new_array(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_new_object(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_end(self_: *mut WpSpaJsonParser);
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get(self_: *mut WpSpaJsonParser, ...) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_boolean(self_: *mut WpSpaJsonParser, value: *mut gboolean) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_float(self_: *mut WpSpaJsonParser, value: *mut c_float) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_int(self_: *mut WpSpaJsonParser, value: *mut c_int) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_json(self_: *mut WpSpaJsonParser) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_null(self_: *mut WpSpaJsonParser) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_get_string(self_: *mut WpSpaJsonParser) -> *mut c_char;
+    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //pub fn wp_spa_json_parser_get_valist(self_: *mut WpSpaJsonParser, args: /*Unimplemented*/va_list) -> gboolean;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_ref(self_: *mut WpSpaJsonParser) -> *mut WpSpaJsonParser;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_unref(self_: *mut WpSpaJsonParser);
 
     //=========================================================================
     // WpSpaPod

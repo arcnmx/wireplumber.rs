@@ -102,3 +102,5 @@ pub(crate) use crate::{
 };
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]
 pub(crate) use crate::pw::PropertiesItem;
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+pub(crate) use crate::spa::SpaJson;

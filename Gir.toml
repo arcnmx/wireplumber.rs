@@ -18,6 +18,7 @@ generate = [
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
 	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
 	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder",
+	"Wp.SpaJson", "Wp.SpaJsonBuilder", "Wp.SpaJsonParser",
 	"Wp.State",
 	"Wp.ProxyFeatures",
 	"Wp.PluginFeatures",

@@ -44,6 +44,7 @@ enable-libspa = ["libspa"]
 v0_4_2 = ["ffi/v0_4_2"]
 v0_4_3 = ["ffi/v0_4_3", "v0_4_2"]
 v0_4_6 = ["ffi/v0_4_6", "v0_4_3"]
+v0_4_8 = ["ffi/v0_4_8", "v0_4_6"]
 dox = ["ffi/dox", "glib-signal/dox"]
 
 [workspace]

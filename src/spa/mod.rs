@@ -16,6 +16,13 @@ pub use crate::auto::{
 	SpaPodBuilder,
 };
 
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+pub use crate::auto::{
+	SpaJson,
+	SpaJsonParser,
+	SpaJsonBuilder,
+};
+
 pub use libspa_sys as ffi;
 #[cfg(feature = "libspa")]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
@@ -28,6 +35,8 @@ mod parser;
 mod builder;
 mod id_table;
 mod id_value;
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+mod json;
 mod traits;
 #[cfg(feature = "libspa")]
 mod libspa_pod;
