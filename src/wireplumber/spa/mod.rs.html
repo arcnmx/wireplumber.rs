@@ -41,6 +41,15 @@
 <span id="38">38</span>
 <span id="39">39</span>
 <span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
 </pre><pre class="rust"><code><span class="doccomment">//! [Simple Plugin API](https://docs.pipewire.org/page_spa_plugins.html) [POD encoding](https://docs.pipewire.org/page_spa_pod.html)</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [SpaPod] wraps a [libspa_sys::spa_pod], providing high-level accessors and enabling mutation</span>
@@ -59,6 +68,13 @@
 	<span class="ident">SpaPodBuilder</span>,
 };
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
+	<span class="ident">SpaJson</span>,
+	<span class="ident">SpaJsonParser</span>,
+	<span class="ident">SpaJsonBuilder</span>,
+};
+
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">libspa_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)))]</span>
@@ -71,6 +87,8 @@
 <span class="kw">mod</span> <span class="ident">builder</span>;
 <span class="kw">mod</span> <span class="ident">id_table</span>;
 <span class="kw">mod</span> <span class="ident">id_value</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
+<span class="kw">mod</span> <span class="ident">json</span>;
 <span class="kw">mod</span> <span class="ident">traits</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libspa&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">libspa_pod</span>;
