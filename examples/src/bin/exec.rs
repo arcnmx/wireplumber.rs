@@ -20,15 +20,21 @@ use wireplumber::{
 	plugin::{Plugin, PluginFeatures},
 };
 
+/// [GLib logging domain](glib::g_log)
 const LOG_DOMAIN: &'static str = "wpexec.rs";
 
+/// The type of module to be loaded
 #[derive(ArgEnum, Copy, Clone, Debug)]
 enum ModuleType {
+	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
 	Lua,
+	/// A native WirePlumber module
 	Wireplumber,
+	/// A [PipeWire module](https://docs.pipewire.org/page_pipewire_modules.html)
 	Pipewire,
 }
 
+#[cfg_attr(docs, doc = "Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)")]
 #[derive(Parser, Debug)]
 #[clap(version)]
 struct Args {

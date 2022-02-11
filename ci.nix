@@ -105,7 +105,7 @@ in {
             "cargo clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${config.rustChannel.hostTarget.triple}/doc" # `cargo clean --doc` does nothing afaict?
             "cargo doc --no-deps -p glib-signal" # can't pass --features because cargo is garbage :<
             "cargo doc --no-deps --workspace --all-features"
-            "cargo doc --no-deps --workspace --examples --all-features"
+            "cargo doc --no-deps --workspace --examples --document-private-items --all-features"
           ];
           docsDep = config.tasks.docs-all.drv;
           impure = true;
