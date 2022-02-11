@@ -241,6 +241,12 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
 </pre><pre class="rust"><code><span class="doccomment">//! wpexec example</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! An example showing how to write a simple WirePlumber service.</span>
@@ -263,15 +269,21 @@
 	<span class="ident">plugin</span>::{<span class="ident">Plugin</span>, <span class="ident">PluginFeatures</span>},
 };
 
+<span class="doccomment">/// [GLib logging domain](glib::g_log)</span>
 <span class="kw">const</span> <span class="ident">LOG_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;wpexec.rs&quot;</span>;
 
+<span class="doccomment">/// The type of module to be loaded</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">ArgEnum</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">enum</span> <span class="ident">ModuleType</span> {
+	<span class="doccomment">/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)</span>
 	<span class="ident">Lua</span>,
+	<span class="doccomment">/// A native WirePlumber module</span>
 	<span class="ident">Wireplumber</span>,
+	<span class="doccomment">/// A [PipeWire module](https://docs.pipewire.org/page_pipewire_modules.html)</span>
 	<span class="ident">Pipewire</span>,
 }
 
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docs</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Parser</span>, <span class="ident">Debug</span>)]</span>
 <span class="attribute">#[<span class="ident">clap</span>(<span class="ident">version</span>)]</span>
 <span class="kw">struct</span> <span class="ident">Args</span> {

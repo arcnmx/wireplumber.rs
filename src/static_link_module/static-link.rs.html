@@ -199,7 +199,69 @@
 <span id="196">196</span>
 <span id="197">197</span>
 <span id="198">198</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+</pre><pre class="rust"><code><span class="doccomment">//! WirePlumber module example</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! An example showing how to write a simple WirePlumber plugin module.</span>
+<span class="doccomment">//! Following along with the [source code](../src/static_link_module/static-link.rs.html) is recommended.</span>
+<span class="doccomment">//! Additional explanation and documentation is located in the [plugin module documentation](wireplumber::plugin).</span>
+
+<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
 <span class="kw">use</span> <span class="ident">std::iter</span>;
 <span class="kw">use</span> <span class="ident">std::future::Future</span>;
 <span class="kw">use</span> <span class="ident">std::cell::RefCell</span>;
@@ -211,6 +273,8 @@
 <span class="kw">use</span> <span class="ident">glib::once_cell::unsync::OnceCell</span>;
 <span class="kw">use</span> <span class="ident">wireplumber::prelude</span>::<span class="kw-2">*</span>;
 
+<span class="doccomment">/// [GLib logging domain](glib::g_log) that doubles as the</span>
+<span class="doccomment">/// [plugin&#39;s name](glib::subclass::types::ObjectSubclass::NAME)</span>
 <span class="kw">const</span> <span class="ident">LOG_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;static-link&quot;</span>;
 
 <span class="kw">use</span> <span class="ident">wireplumber</span>::{
@@ -221,20 +285,40 @@
 	<span class="ident">info</span>, <span class="ident">warning</span>,
 };
 
+<span class="doccomment">/// A list of user-specified [Constraints](Constraint)</span>
+<span class="doccomment">/// used to find each end of the port to be linked.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Variant</span>)]</span>
-<span class="kw">struct</span> <span class="ident">PortMapping</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PortMapping</span> {
+	<span class="doccomment">/// A description of the output ports to link.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// The constraint `port.direction=out` is implied.</span>
 	<span class="ident">output</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// A description of the input ports to link.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// The constraint `port.direction=in` is implied.</span>
 	<span class="ident">input</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">fn</span> <span class="ident">true_</span>() -&gt; <span class="ident">bool</span> { <span class="bool-val">true</span> }
 
+<span class="doccomment">/// User configuration for the [StaticLink] plugin</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Variant</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaticLinkArgs</span> {
+	<span class="doccomment">/// The source node to link to `input`</span>
 	<span class="ident">output</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// The sink node to link to `output`</span>
 	<span class="ident">input</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// Describes how to link the ports of the `input` node to the `output`</span>
 	<span class="ident">port_mappings</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PortMapping</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// Whether to mark any created links as `link.passive`</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Defaults to `true`</span>
 	<span class="ident">passive</span>: <span class="ident">bool</span>,
+	<span class="doccomment">/// Whether to mark any created links as `object.linger`</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// A lingering link will remain in place even after this module&#39;s parent process has exited.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Defaults to `true`</span>
 	<span class="ident">linger</span>: <span class="ident">bool</span>,
 }
 
@@ -250,7 +334,12 @@
 	}
 }
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main_loop</span>(
+<span class="doccomment">/// The main logic of the plugin</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// After all [interests](Interest) are [registered](main_async),</span>
+<span class="doccomment">/// this waits for events indicating that new nodes match the configured [`arg`](StaticLinkArgs)</span>
+<span class="doccomment">/// and decides how to link them together.</span>
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main_loop</span>(
 	<span class="ident">om</span>: <span class="ident">ObjectManager</span>,
 	<span class="ident">core</span>: <span class="ident">Core</span>,
 	<span class="ident">arg</span>: <span class="ident">StaticLinkArgs</span>,
@@ -307,7 +396,8 @@
 	}
 }
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main_async</span>(<span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">arg</span>: <span class="ident">StaticLinkArgs</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw">impl</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="doccomment">/// The main entry point of the plugin</span>
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main_async</span>(<span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">arg</span>: <span class="ident">StaticLinkArgs</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw">impl</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 	<span class="kw">let</span> <span class="ident">om</span> <span class="op">=</span> <span class="ident">ObjectManager::new</span>();
 	<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">core</span>.<span class="ident">g_main_context</span>().<span class="ident">unwrap</span>();
 
@@ -348,14 +438,29 @@
 	<span class="prelude-val">Ok</span>([<span class="ident">port_signals</span>.<span class="ident">boxed_local</span>(), <span class="ident">object_signals</span>.<span class="ident">boxed_local</span>(), <span class="ident">main_loop</span>.<span class="ident">boxed_local</span>()])
 }
 
+<span class="doccomment">/// The plugin instance</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The instance struct contains any relevant mutable data,</span>
+<span class="doccomment">/// and is initialized by [SimplePlugin::init_args].</span>
+<span class="doccomment">/// It is also a shared ref-counted [GObject](glib::Object) instance</span>
+<span class="doccomment">/// via [`SimplePluginObject&lt;Self&gt;`](plugin::SimplePluginObject),</span>
+<span class="doccomment">/// so it must be accessed and manipulated via `&amp;self`.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaticLink</span> {
+	<span class="doccomment">/// Arguments specified by the user at plugin initialization</span>
 	<span class="ident">args</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">StaticLinkArgs</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// Mutable data keeps track of any futures</span>
+	<span class="doccomment">/// that the plugin spawns on the [MainLoop](glib::MainLoop).</span>
 	<span class="ident">handles</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SourceId</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
+<span class="doccomment">/// This makes [StaticLink] an async plugin that can be used with [plugin::plugin_export] below.</span>
 <span class="kw">impl</span> <span class="ident">AsyncPluginImpl</span> <span class="kw">for</span> <span class="ident">StaticLink</span> {
 	<span class="kw">type</span> <span class="ident">EnableFuture</span> <span class="op">=</span> <span class="ident">Pin</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+
+	<span class="doccomment">/// The real entry point of the plugin</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Spawns as asynchronous [main_async] for each [StaticLinkArgs] supplied by the user.</span>
 	<span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">this</span>: <span class="ident"><span class="self">Self</span>::Type</span>) -&gt; <span class="ident"><span class="self">Self</span>::EnableFuture</span> {
 		<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">core</span>().<span class="ident">unwrap</span>();
 		<span class="kw">async</span> <span class="kw">move</span> {
@@ -370,6 +475,10 @@
 		}.<span class="ident">boxed_local</span>()
 	}
 
+	<span class="doccomment">/// Plugin deinitializer</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Cleans up after itself by cancelling any pending futures</span>
+	<span class="doccomment">/// that were previously spawned by `enable`</span>
 	<span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
 		<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">instance_ref</span>().<span class="ident">core</span>().<span class="ident">unwrap</span>().<span class="ident">g_main_context</span>().<span class="ident">unwrap</span>();
 		<span class="kw">for</span> <span class="ident">source</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">borrow_mut</span>().<span class="ident">drain</span>(..) {
@@ -384,6 +493,7 @@
 	}
 }
 
+<span class="doccomment">/// This makes [StaticLink] a plugin that can be used with [plugin::simple_plugin_subclass] below.</span>
 <span class="kw">impl</span> <span class="ident">SimplePlugin</span> <span class="kw">for</span> <span class="ident">StaticLink</span> {
 	<span class="kw">type</span> <span class="ident">Args</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">StaticLinkArgs</span><span class="op">&gt;</span>;
 
@@ -391,6 +501,8 @@
 		<span class="self">self</span>.<span class="ident">args</span>.<span class="ident">set</span>(<span class="ident">args</span>).<span class="ident">unwrap</span>();
 	}
 }
+
+<span class="comment">// macros take care of entry point boilerplate by impl&#39;ing a bunch of traits for us</span>
 
 <span class="macro">plugin::simple_plugin_subclass!</span> {
 	<span class="kw">impl</span> <span class="ident">ObjectSubclass</span> <span class="kw">for</span> <span class="ident">LOG_DOMAIN</span> <span class="kw">as</span> <span class="ident">StaticLink</span> { }
