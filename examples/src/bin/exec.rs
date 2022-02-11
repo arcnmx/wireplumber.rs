@@ -34,7 +34,7 @@ enum ModuleType {
 	Pipewire,
 }
 
-#[cfg_attr(docs, doc = "Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)")]
+#[cfg_attr(doc, doc = "Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)")]
 #[derive(Parser, Debug)]
 #[clap(version)]
 struct Args {
