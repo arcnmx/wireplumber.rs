@@ -42,8 +42,6 @@ pub struct PortMapping {
 	input: Vec<Constraint>,
 }
 
-fn true_() -> bool { true }
-
 /// User configuration for the [StaticLink] plugin
 #[derive(Debug, Clone, Variant)]
 pub struct StaticLinkArgs {
