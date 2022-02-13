@@ -14,12 +14,8 @@ use futures::channel::mpsc;
 use glib::{Variant, Error, SourceId};
 use glib::prelude::*;
 use glib::once_cell::unsync::OnceCell;
+
 use wireplumber::prelude::*;
-
-/// [GLib logging domain](glib::g_log) that doubles as the
-/// [plugin's name](glib::subclass::types::ObjectSubclass::NAME)
-const LOG_DOMAIN: &'static str = "static-link";
-
 use wireplumber::{
 	core::{Core, Object, ObjectFeatures},
 	plugin::{self, AsyncPluginImpl, SimplePlugin},
@@ -27,6 +23,10 @@ use wireplumber::{
 	pw::{self, Node, Port, Link, Properties},
 	info, warning,
 };
+
+/// [GLib logging domain](glib::g_log) that doubles as the
+/// [plugin's name](glib::subclass::types::ObjectSubclass::NAME)
+const LOG_DOMAIN: &'static str = "static-link";
 
 /// A list of user-specified [Constraints](Constraint)
 /// used to find each end of the port to be linked.
