@@ -269,12 +269,8 @@
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Variant</span>, <span class="ident">Error</span>, <span class="ident">SourceId</span>};
 <span class="kw">use</span> <span class="ident">glib::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">glib::once_cell::unsync::OnceCell</span>;
+
 <span class="kw">use</span> <span class="ident">wireplumber::prelude</span>::<span class="kw-2">*</span>;
-
-<span class="doccomment">/// [GLib logging domain](glib::g_log) that doubles as the</span>
-<span class="doccomment">/// [plugin&#39;s name](glib::subclass::types::ObjectSubclass::NAME)</span>
-<span class="kw">const</span> <span class="ident">LOG_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;static-link&quot;</span>;
-
 <span class="kw">use</span> <span class="ident">wireplumber</span>::{
 	<span class="ident">core</span>::{<span class="ident">Core</span>, <span class="ident">Object</span>, <span class="ident">ObjectFeatures</span>},
 	<span class="ident">plugin</span>::{<span class="self">self</span>, <span class="ident">AsyncPluginImpl</span>, <span class="ident">SimplePlugin</span>},
@@ -282,6 +278,10 @@
 	<span class="ident">pw</span>::{<span class="self">self</span>, <span class="ident">Node</span>, <span class="ident">Port</span>, <span class="ident">Link</span>, <span class="ident">Properties</span>},
 	<span class="ident">info</span>, <span class="ident">warning</span>,
 };
+
+<span class="doccomment">/// [GLib logging domain](glib::g_log) that doubles as the</span>
+<span class="doccomment">/// [plugin&#39;s name](glib::subclass::types::ObjectSubclass::NAME)</span>
+<span class="kw">const</span> <span class="ident">LOG_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;static-link&quot;</span>;
 
 <span class="doccomment">/// A list of user-specified [Constraints](Constraint)</span>
 <span class="doccomment">/// used to find each end of the port to be linked.</span>
