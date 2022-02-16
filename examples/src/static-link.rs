@@ -75,6 +75,25 @@ impl Default for StaticLinkArgs {
 	}
 }
 
+/// Link all ports between `output` and `input` matching [`mappings`][PortMapping]
+fn link_ports<'a>(mappings: &'a [PortMapping], core: &'a Core, output: &'a Node, input: &'a Node, link_props: &'a Properties) -> impl Iterator<Item=Result<Link, Error>> + 'a {
+	mappings.iter().flat_map(move |mapping| {
+		let port_input_interest: Interest<Port> = mapping.input.iter().chain(iter::once(
+			&Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, "in", true)
+		)).collect();
+		let port_inputs = port_input_interest.filter(input);
+
+		let port_output_interest: Interest<Port> = mapping.output.iter().chain(iter::once(
+			&Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, "out", true)
+		)).collect();
+		let port_outputs = move || port_output_interest.filter(output);
+
+		port_inputs.flat_map(move |i| port_outputs().map(move |o|
+			Link::new(&core, &o, &i, link_props)
+		))
+	})
+}
+
 /// The main logic of the plugin
 ///
 /// After all [interests](Interest) are [registered](main_async),
@@ -99,41 +118,23 @@ pub async fn main_loop(
 		for (input, output) in pairs {
 			info!(domain: LOG_DOMAIN, "linking {} to {}", input, output);
 			if arg.port_mappings.is_empty() {
-				match Link::new(&core, &output, &input, &link_props) {
-					Ok(link) => links.push(link),
-					Err(e) => warning!(domain: LOG_DOMAIN, "Failed to create link: {:?}", e),
-				}
+				links.push(Link::new(&core, &output, &input, &link_props));
 			} else {
-				for mapping in &arg.port_mappings {
-					let port_input_interest: Interest<Port> = mapping.input.iter().chain(iter::once(
-						&Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, "in", true)
-					)).collect();
-					let port_inputs = port_input_interest.filter(&input);
-
-					let port_output_interest: Interest<Port> = mapping.output.iter().chain(iter::once(
-						&Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, "out", true)
-					)).collect();
-					let port_outputs = || port_output_interest.filter(&output);
-
-					let core = &core;
-					let link_props = &link_props;
-					links.extend(port_inputs.flat_map(|i| port_outputs().map(move |o|
-						Link::new(&core, &o, &i, &link_props)
-					)).filter_map(|res| match res {
-						Ok(link) => Some(link),
-						Err(e) => {
-							warning!(domain: LOG_DOMAIN, "Failed to create link: {:?}", e);
-							None
-						},
-					}));
-				}
+				links.extend(link_ports(&arg.port_mappings, &core, &output, &input, &link_props));
 			}
 		}
-		future::join_all(links.into_iter().map(|l| l.activate_future().map(|res| match res {
-			Err(e) if Link::error_is_exists(&e) => info!(domain: LOG_DOMAIN, "{:?}", e),
-			Err(e) => warning!(domain: LOG_DOMAIN, "Failed to activate link: {:?}", e),
-			Ok(_) => (),
-		}))).await;
+		let links = links.into_iter().filter_map(|l| match l {
+			Ok(link) => Some(link.activate_future().map(|res| match res {
+				Err(e) if Link::error_is_exists(&e) => info!(domain: LOG_DOMAIN, "{:?}", e),
+				Err(e) => warning!(domain: LOG_DOMAIN, "Failed to activate link: {:?}", e),
+				Ok(_) => (),
+			})),
+			Err(e) => {
+				warning!(domain: LOG_DOMAIN, "Failed to create link: {:?}", e);
+				None
+			},
+		});
+		future::join_all(links).await;
 	}
 }
 
