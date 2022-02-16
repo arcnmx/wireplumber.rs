@@ -7,7 +7,6 @@
 use std::pin::Pin;
 use std::iter;
 use std::future::Future;
-use std::cell::RefCell;
 
 use futures::{FutureExt, StreamExt, future};
 use futures::channel::mpsc;
@@ -18,9 +17,10 @@ use glib::once_cell::unsync::OnceCell;
 use wireplumber::prelude::*;
 use wireplumber::{
 	core::{Core, Object, ObjectFeatures},
-	plugin::{self, AsyncPluginImpl, SimplePlugin},
+	plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
 	registry::{ConstraintType, Constraint, Interest, ObjectManager},
 	pw::{self, Node, Port, Link, Properties},
+	error::LibraryErrorEnum,
 	info, warning,
 };
 
@@ -138,9 +138,8 @@ pub async fn main_loop(
 }
 
 /// The main entry point of the plugin
-pub async fn main_async(core: Core, arg: StaticLinkArgs) -> Result<impl IntoIterator<Item=impl Future<Output=()>>, Error> {
+pub async fn main_async(plugin: &SimplePluginObject<StaticLink>, core: Core, arg: StaticLinkArgs) -> Result<impl IntoIterator<Item=impl Future<Output=()>>, Error> {
 	let om = ObjectManager::new();
-	let context = core.g_main_context().unwrap();
 
 	let output_interest: Interest<Node> = arg.output.iter().collect();
 	om.add_interest_full(&output_interest);
@@ -152,12 +151,16 @@ pub async fn main_async(core: Core, arg: StaticLinkArgs) -> Result<impl IntoIter
 
 	let port_signals = {
 		let mut object_added = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
-		let context = context.clone();
 		let link_nodes_signal = link_nodes_signal.clone();
+		let plugin = plugin.downgrade();
 		async move {
 			while let Some((obj,)) = object_added.next().await {
 				let node: Node = obj.dynamic_cast().unwrap();
-				context.spawn_local(node.signal_stream(Node::SIGNAL_PORTS_CHANGED)
+				let plugin = match plugin.upgrade() {
+					Some(plugin) => plugin,
+					None => break,
+				};
+				plugin.spawn_local(node.signal_stream(Node::SIGNAL_PORTS_CHANGED)
 					.map(|_| Ok(())).forward(link_nodes_signal.clone()).map(drop)
 				);
 			}
@@ -192,26 +195,32 @@ pub struct StaticLink {
 	args: OnceCell<Vec<StaticLinkArgs>>,
 	/// Mutable data keeps track of any futures
 	/// that the plugin spawns on the [MainLoop](glib::MainLoop).
-	handles: RefCell<Vec<SourceId>>,
+	handles: SourceHandlesCell,
 }
 
 /// This makes [StaticLink] an async plugin that can be used with [plugin::plugin_export] below.
 impl AsyncPluginImpl for StaticLink {
 	type EnableFuture = Pin<Box<dyn Future<Output=Result<(), Error>>>>;
 
+	fn register_source(&self, source: SourceId) {
+		self.handles.push(source);
+	}
+
 	/// The real entry point of the plugin
 	///
 	/// Spawns as asynchronous [main_async] for each [StaticLinkArgs] supplied by the user.
 	fn enable(&self, this: Self::Type) -> Self::EnableFuture {
-		let core = this.core().unwrap();
+		let core = this.plugin_core();
+		let context = this.plugin_context();
+		let res = self.handles.try_init(context.clone())
+			.map_err(|_| Error::new(LibraryErrorEnum::Invariant, &format!("{} plugin has already been enabled", LOG_DOMAIN)));
 		async move {
+			res?;
 			let loops = this.args.get().unwrap().iter()
-				.map(|arg| main_async(core.clone(), arg.clone()));
-			this.handles.borrow_mut().extend(
-				future::try_join_all(loops).await?.into_iter().flat_map(|l| l).map(|spawn|
-					core.g_main_context().unwrap().spawn_local(spawn)
-				)
-			);
+				.map(|arg| main_async(&this, core.clone(), arg.clone()));
+			for spawn in future::try_join_all(loops).await?.into_iter().flat_map(|l| l) {
+				this.spawn_local(spawn);
+			}
 			Ok(())
 		}.boxed_local()
 	}
@@ -221,16 +230,7 @@ impl AsyncPluginImpl for StaticLink {
 	/// Cleans up after itself by cancelling any pending futures
 	/// that were previously spawned by `enable`
 	fn disable(&self) {
-		let context = self.instance_ref().core().unwrap().g_main_context().unwrap();
-		for source in self.handles.borrow_mut().drain(..) {
-			// TODO: how does this differ from source.remove()?
-			if let Some(source) = context.find_source_by_id(&source) {
-				// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?
-				if !source.is_destroyed() {
-					source.destroy();
-				}
-			}
-		}
+		self.handles.clear();
 	}
 }
 

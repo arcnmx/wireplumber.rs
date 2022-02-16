@@ -1,6 +1,9 @@
 use glib::subclass::prelude::*;
 use glib::variant::VariantTypeMismatchError;
+use glib::object::ObjectSubclassIs;
+use glib::{SourceId, MainContext};
 use std::panic::catch_unwind;
+use std::cell::RefCell;
 use crate::plugin::{Plugin, PluginFeatures};
 use crate::core::{Core, Object, ObjectImpl};
 use crate::util::Transition;
@@ -80,29 +83,132 @@ pub trait AsyncPluginImpl: ObjectSubclass {
 	fn enable(&self, plugin: Self::Type) -> Self::EnableFuture;
 
 	fn disable(&self) { }
+
+	fn register_source(&self, source: SourceId) { let _ = source; }
+}
+
+pub trait AsyncPluginExt: IsA<Plugin> {
+	fn as_plugin(&self) -> &Plugin;
+
+	fn plugin_core(&self) -> Core;
+
+	fn plugin_context(&self) -> MainContext;
+
+	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F);
+}
+
+impl<T: IsA<Plugin> + ObjectSubclassIsExt> AsyncPluginExt for T where
+	<T as ObjectSubclassIs>::Subclass: AsyncPluginImpl,
+{
+	fn as_plugin(&self) -> &Plugin {
+		self.as_ref()
+	}
+
+	fn plugin_core(&self) -> Core {
+		self.as_plugin().core()
+			.expect("async plugin requires an active Core")
+	}
+
+	fn plugin_context(&self) -> MainContext {
+		self.plugin_core().g_main_context()
+			.expect("async plugin requires a MainContext")
+	}
+
+	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F) {
+		let source = self.plugin_context().spawn_local(f);
+		self.imp().register_source(source);
+	}
 }
 
 impl<T: AsyncPluginImpl + ObjectImpl> PluginImpl for T where
-	<T as ObjectSubclass>::Type: IsA<Plugin>,
+	<T as ObjectSubclass>::Type: AsyncPluginExt,
 {
-	fn enable(&self, plugin: &Self::Type, error_handler: Transition) {
-		let core = plugin.as_ref().core().expect("enable requires an active Core");
-		let context = core.g_main_context().expect("async enable requires a MainContext");
-
-		let plugin = plugin.clone();
+	fn enable(&self, this: &Self::Type, error_handler: Transition) {
+		let plugin = this.clone();
 		let enable = self.enable(plugin.clone());
 
-		let enable_handle = context.spawn_local(async move {
+		let enable_handle = this.plugin_context().spawn_local(async move {
 			match enable.await {
-				Ok(()) => plugin.as_ref().update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
+				Ok(()) => plugin.as_plugin().update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
 				Err(e) => error_handler.return_error(e),
 			}
 		});
-		// TODO: store enable_handle in self, and prevent multiple calls?
+		self.register_source(enable_handle);
+		// TODO: prevent multiple calls?
 	}
 
 	fn disable(&self, _plugin: &Self::Type) {
 		self.disable();
+	}
+}
+
+#[derive(Debug)]
+pub struct SourceHandles {
+	context: MainContext,
+	handles: Vec<SourceId>,
+}
+
+impl SourceHandles {
+	pub fn new(context: MainContext) -> Self {
+		Self {
+			context,
+			handles: Vec::new(),
+		}
+	}
+
+	pub fn push(&mut self, source: SourceId) {
+		self.handles.push(source);
+	}
+
+	pub fn clear(&mut self) {
+		for source in self.handles.drain(..) {
+			if let Some(source) = self.context.find_source_by_id(&source) {
+				// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?
+				// if !source.is_destroyed() { }
+				source.destroy();
+			}
+		}
+	}
+}
+
+#[derive(Default, Debug)]
+pub struct SourceHandlesCell(RefCell<Option<SourceHandles>>);
+
+impl SourceHandlesCell {
+	pub fn init(&self, context: MainContext) {
+		*self.cell().borrow_mut() = Some(SourceHandles::new(context));
+	}
+
+	pub fn try_init(&self, context: MainContext) -> Result<(), MainContext> {
+		match &mut *self.cell().borrow_mut() {
+			&mut Some(..) => Err(context),
+			opt @ None => {
+				*opt = Some(SourceHandles::new(context));
+				Ok(())
+			},
+		}
+	}
+
+	pub fn push(&self, source: SourceId) {
+		self.borrow_mut(|handles| handles.push(source))
+	}
+
+	pub fn clear(&self) {
+		let res = self.borrow_mut(|handles| handles.clear());
+		self.cell().replace(None);
+		res
+	}
+
+	#[inline]
+	pub fn cell(&self) -> &RefCell<Option<SourceHandles>> {
+		&self.0
+	}
+
+	pub fn borrow_mut<R, F: FnOnce(&mut SourceHandles) -> R>(&self, f: F) -> R {
+		match *self.cell().borrow_mut() {
+			Some(ref mut handles) => f(handles),
+			None => panic!("SourceHandles cell uninitialized"),
+		}
 	}
 }
 

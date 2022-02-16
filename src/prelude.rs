@@ -34,7 +34,10 @@ pub use crate::pw::{
 };
 
 #[doc(no_inline)]
-pub use crate::plugin::PluginExt as _;
+pub use crate::plugin::{
+	PluginExt as _,
+	AsyncPluginExt as _,
+};
 
 #[doc(no_inline)]
 pub use crate::core::ObjectExt as _;

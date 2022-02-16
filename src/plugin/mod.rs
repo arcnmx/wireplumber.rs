@@ -97,7 +97,8 @@ pub use crate::auto::{
 mod subclass;
 pub use subclass::{
 	PluginImpl, PluginImplExt,
-	AsyncPluginImpl,
+	AsyncPluginImpl, AsyncPluginExt,
+	SourceHandles, SourceHandlesCell,
 	SimplePlugin, simple_plugin_subclass,
 	SimplePluginObject,
 	ModuleExport, ModuleWrapper, plugin_export,
