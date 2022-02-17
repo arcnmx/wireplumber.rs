@@ -106,6 +106,7 @@
 <span id="103">103</span>
 <span id="104">104</span>
 <span id="105">105</span>
+<span id="106">106</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Externally loaded modules</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).</span>
@@ -205,7 +206,8 @@
 <span class="kw">mod</span> <span class="ident">subclass</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">subclass</span>::{
 	<span class="ident">PluginImpl</span>, <span class="ident">PluginImplExt</span>,
-	<span class="ident">AsyncPluginImpl</span>,
+	<span class="ident">AsyncPluginImpl</span>, <span class="ident">AsyncPluginExt</span>,
+	<span class="ident">SourceHandles</span>, <span class="ident">SourceHandlesCell</span>,
 	<span class="ident">SimplePlugin</span>, <span class="ident">simple_plugin_subclass</span>,
 	<span class="ident">SimplePluginObject</span>,
 	<span class="ident">ModuleExport</span>, <span class="ident">ModuleWrapper</span>, <span class="ident">plugin_export</span>,

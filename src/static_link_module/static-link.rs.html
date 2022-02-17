@@ -253,6 +253,7 @@
 <span id="250">250</span>
 <span id="251">251</span>
 <span id="252">252</span>
+<span id="253">253</span>
 </pre><pre class="rust"><code><span class="doccomment">//! WirePlumber module example</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! An example showing how to write a simple WirePlumber plugin module.</span>
@@ -262,7 +263,6 @@
 <span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
 <span class="kw">use</span> <span class="ident">std::iter</span>;
 <span class="kw">use</span> <span class="ident">std::future::Future</span>;
-<span class="kw">use</span> <span class="ident">std::cell::RefCell</span>;
 
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">FutureExt</span>, <span class="ident">StreamExt</span>, <span class="ident">future</span>};
 <span class="kw">use</span> <span class="ident">futures::channel::mpsc</span>;
@@ -273,9 +273,10 @@
 <span class="kw">use</span> <span class="ident">wireplumber::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">wireplumber</span>::{
 	<span class="ident">core</span>::{<span class="ident">Core</span>, <span class="ident">Object</span>, <span class="ident">ObjectFeatures</span>},
-	<span class="ident">plugin</span>::{<span class="self">self</span>, <span class="ident">AsyncPluginImpl</span>, <span class="ident">SimplePlugin</span>},
+	<span class="ident">plugin</span>::{<span class="self">self</span>, <span class="ident">AsyncPluginImpl</span>, <span class="ident">SimplePlugin</span>, <span class="ident">SimplePluginObject</span>, <span class="ident">SourceHandlesCell</span>},
 	<span class="ident">registry</span>::{<span class="ident">ConstraintType</span>, <span class="ident">Constraint</span>, <span class="ident">Interest</span>, <span class="ident">ObjectManager</span>},
 	<span class="ident">pw</span>::{<span class="self">self</span>, <span class="ident">Node</span>, <span class="ident">Port</span>, <span class="ident">Link</span>, <span class="ident">Properties</span>},
+	<span class="ident">error::LibraryErrorEnum</span>,
 	<span class="ident">info</span>, <span class="ident">warning</span>,
 };
 
@@ -330,6 +331,25 @@
 	}
 }
 
+<span class="doccomment">/// Link all ports between `output` and `input` matching [`mappings`][PortMapping]</span>
+<span class="kw">fn</span> <span class="ident">link_ports</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">mappings</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">PortMapping</span>], <span class="ident">core</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Core</span>, <span class="ident">output</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Node</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Node</span>, <span class="ident">link_props</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Properties</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Link</span>, <span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span> {
+	<span class="ident">mappings</span>.<span class="ident">iter</span>().<span class="ident">flat_map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">mapping</span><span class="op">|</span> {
+		<span class="kw">let</span> <span class="ident">port_input_interest</span>: <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">input</span>.<span class="ident">iter</span>().<span class="ident">chain</span>(<span class="ident">iter::once</span>(
+			<span class="kw-2">&amp;</span><span class="ident">Constraint::compare</span>(<span class="ident">ConstraintType::default</span>(), <span class="ident">pw::PW_KEY_PORT_DIRECTION</span>, <span class="string">&quot;in&quot;</span>, <span class="bool-val">true</span>)
+		)).<span class="ident">collect</span>();
+		<span class="kw">let</span> <span class="ident">port_inputs</span> <span class="op">=</span> <span class="ident">port_input_interest</span>.<span class="ident">filter</span>(<span class="ident">input</span>);
+
+		<span class="kw">let</span> <span class="ident">port_output_interest</span>: <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">output</span>.<span class="ident">iter</span>().<span class="ident">chain</span>(<span class="ident">iter::once</span>(
+			<span class="kw-2">&amp;</span><span class="ident">Constraint::compare</span>(<span class="ident">ConstraintType::default</span>(), <span class="ident">pw::PW_KEY_PORT_DIRECTION</span>, <span class="string">&quot;out&quot;</span>, <span class="bool-val">true</span>)
+		)).<span class="ident">collect</span>();
+		<span class="kw">let</span> <span class="ident">port_outputs</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">port_output_interest</span>.<span class="ident">filter</span>(<span class="ident">output</span>);
+
+		<span class="ident">port_inputs</span>.<span class="ident">flat_map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">port_outputs</span>().<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">o</span><span class="op">|</span>
+			<span class="ident">Link::new</span>(<span class="kw-2">&amp;</span><span class="ident">core</span>, <span class="kw-2">&amp;</span><span class="ident">o</span>, <span class="kw-2">&amp;</span><span class="ident">i</span>, <span class="ident">link_props</span>)
+		))
+	})
+}
+
 <span class="doccomment">/// The main logic of the plugin</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// After all [interests](Interest) are [registered](main_async),</span>
@@ -354,48 +374,29 @@
 		<span class="kw">for</span> (<span class="ident">input</span>, <span class="ident">output</span>) <span class="kw">in</span> <span class="ident">pairs</span> {
 			<span class="macro">info!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;linking {} to {}&quot;</span>, <span class="ident">input</span>, <span class="ident">output</span>);
 			<span class="kw">if</span> <span class="ident">arg</span>.<span class="ident">port_mappings</span>.<span class="ident">is_empty</span>() {
-				<span class="kw">match</span> <span class="ident">Link::new</span>(<span class="kw-2">&amp;</span><span class="ident">core</span>, <span class="kw-2">&amp;</span><span class="ident">output</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="ident">link_props</span>) {
-					<span class="prelude-val">Ok</span>(<span class="ident">link</span>) =&gt; <span class="ident">links</span>.<span class="ident">push</span>(<span class="ident">link</span>),
-					<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="macro">warning!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;Failed to create link: {:?}&quot;</span>, <span class="ident">e</span>),
-				}
+				<span class="ident">links</span>.<span class="ident">push</span>(<span class="ident">Link::new</span>(<span class="kw-2">&amp;</span><span class="ident">core</span>, <span class="kw-2">&amp;</span><span class="ident">output</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="ident">link_props</span>));
 			} <span class="kw">else</span> {
-				<span class="kw">for</span> <span class="ident">mapping</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">port_mappings</span> {
-					<span class="kw">let</span> <span class="ident">port_input_interest</span>: <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">input</span>.<span class="ident">iter</span>().<span class="ident">chain</span>(<span class="ident">iter::once</span>(
-						<span class="kw-2">&amp;</span><span class="ident">Constraint::compare</span>(<span class="ident">ConstraintType::default</span>(), <span class="ident">pw::PW_KEY_PORT_DIRECTION</span>, <span class="string">&quot;in&quot;</span>, <span class="bool-val">true</span>)
-					)).<span class="ident">collect</span>();
-					<span class="kw">let</span> <span class="ident">port_inputs</span> <span class="op">=</span> <span class="ident">port_input_interest</span>.<span class="ident">filter</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>);
-
-					<span class="kw">let</span> <span class="ident">port_output_interest</span>: <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mapping</span>.<span class="ident">output</span>.<span class="ident">iter</span>().<span class="ident">chain</span>(<span class="ident">iter::once</span>(
-						<span class="kw-2">&amp;</span><span class="ident">Constraint::compare</span>(<span class="ident">ConstraintType::default</span>(), <span class="ident">pw::PW_KEY_PORT_DIRECTION</span>, <span class="string">&quot;out&quot;</span>, <span class="bool-val">true</span>)
-					)).<span class="ident">collect</span>();
-					<span class="kw">let</span> <span class="ident">port_outputs</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> <span class="ident">port_output_interest</span>.<span class="ident">filter</span>(<span class="kw-2">&amp;</span><span class="ident">output</span>);
-
-					<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">core</span>;
-					<span class="kw">let</span> <span class="ident">link_props</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">link_props</span>;
-					<span class="ident">links</span>.<span class="ident">extend</span>(<span class="ident">port_inputs</span>.<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">port_outputs</span>().<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">o</span><span class="op">|</span>
-						<span class="ident">Link::new</span>(<span class="kw-2">&amp;</span><span class="ident">core</span>, <span class="kw-2">&amp;</span><span class="ident">o</span>, <span class="kw-2">&amp;</span><span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">link_props</span>)
-					)).<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">res</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">res</span> {
-						<span class="prelude-val">Ok</span>(<span class="ident">link</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">link</span>),
-						<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
-							<span class="macro">warning!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;Failed to create link: {:?}&quot;</span>, <span class="ident">e</span>);
-							<span class="prelude-val">None</span>
-						},
-					}));
-				}
+				<span class="ident">links</span>.<span class="ident">extend</span>(<span class="ident">link_ports</span>(<span class="kw-2">&amp;</span><span class="ident">arg</span>.<span class="ident">port_mappings</span>, <span class="kw-2">&amp;</span><span class="ident">core</span>, <span class="kw-2">&amp;</span><span class="ident">output</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="ident">link_props</span>));
 			}
 		}
-		<span class="ident">future::join_all</span>(<span class="ident">links</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">l</span><span class="op">|</span> <span class="ident">l</span>.<span class="ident">activate_future</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">res</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">res</span> {
-			<span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="kw">if</span> <span class="ident">Link::error_is_exists</span>(<span class="kw-2">&amp;</span><span class="ident">e</span>) =&gt; <span class="macro">info!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;{:?}&quot;</span>, <span class="ident">e</span>),
-			<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="macro">warning!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;Failed to activate link: {:?}&quot;</span>, <span class="ident">e</span>),
-			<span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
-		}))).<span class="kw">await</span>;
+		<span class="kw">let</span> <span class="ident">links</span> <span class="op">=</span> <span class="ident">links</span>.<span class="ident">into_iter</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">l</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">l</span> {
+			<span class="prelude-val">Ok</span>(<span class="ident">link</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">link</span>.<span class="ident">activate_future</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">res</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">res</span> {
+				<span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="kw">if</span> <span class="ident">Link::error_is_exists</span>(<span class="kw-2">&amp;</span><span class="ident">e</span>) =&gt; <span class="macro">info!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;{:?}&quot;</span>, <span class="ident">e</span>),
+				<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="macro">warning!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;Failed to activate link: {:?}&quot;</span>, <span class="ident">e</span>),
+				<span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+			})),
+			<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
+				<span class="macro">warning!</span>(<span class="ident">domain</span>: <span class="ident">LOG_DOMAIN</span>, <span class="string">&quot;Failed to create link: {:?}&quot;</span>, <span class="ident">e</span>);
+				<span class="prelude-val">None</span>
+			},
+		});
+		<span class="ident">future::join_all</span>(<span class="ident">links</span>).<span class="kw">await</span>;
 	}
 }
 
 <span class="doccomment">/// The main entry point of the plugin</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main_async</span>(<span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">arg</span>: <span class="ident">StaticLinkArgs</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw">impl</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main_async</span>(<span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident">SimplePluginObject</span><span class="op">&lt;</span><span class="ident">StaticLink</span><span class="op">&gt;</span>, <span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">arg</span>: <span class="ident">StaticLinkArgs</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="kw">impl</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 	<span class="kw">let</span> <span class="ident">om</span> <span class="op">=</span> <span class="ident">ObjectManager::new</span>();
-	<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">core</span>.<span class="ident">g_main_context</span>().<span class="ident">unwrap</span>();
 
 	<span class="kw">let</span> <span class="ident">output_interest</span>: <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Node</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">arg</span>.<span class="ident">output</span>.<span class="ident">iter</span>().<span class="ident">collect</span>();
 	<span class="ident">om</span>.<span class="ident">add_interest_full</span>(<span class="kw-2">&amp;</span><span class="ident">output_interest</span>);
@@ -407,12 +408,16 @@
 
 	<span class="kw">let</span> <span class="ident">port_signals</span> <span class="op">=</span> {
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">object_added</span> <span class="op">=</span> <span class="ident">om</span>.<span class="ident">signal_stream</span>(<span class="ident">ObjectManager::SIGNAL_OBJECT_ADDED</span>);
-		<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">clone</span>();
 		<span class="kw">let</span> <span class="ident">link_nodes_signal</span> <span class="op">=</span> <span class="ident">link_nodes_signal</span>.<span class="ident">clone</span>();
+		<span class="kw">let</span> <span class="ident">plugin</span> <span class="op">=</span> <span class="ident">plugin</span>.<span class="ident">downgrade</span>();
 		<span class="kw">async</span> <span class="kw">move</span> {
 			<span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">obj</span>,)) <span class="op">=</span> <span class="ident">object_added</span>.<span class="ident">next</span>().<span class="kw">await</span> {
 				<span class="kw">let</span> <span class="ident">node</span>: <span class="ident">Node</span> <span class="op">=</span> <span class="ident">obj</span>.<span class="ident">dynamic_cast</span>().<span class="ident">unwrap</span>();
-				<span class="ident">context</span>.<span class="ident">spawn_local</span>(<span class="ident">node</span>.<span class="ident">signal_stream</span>(<span class="ident">Node::SIGNAL_PORTS_CHANGED</span>)
+				<span class="kw">let</span> <span class="ident">plugin</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">plugin</span>.<span class="ident">upgrade</span>() {
+					<span class="prelude-val">Some</span>(<span class="ident">plugin</span>) =&gt; <span class="ident">plugin</span>,
+					<span class="prelude-val">None</span> =&gt; <span class="kw">break</span>,
+				};
+				<span class="ident">plugin</span>.<span class="ident">spawn_local</span>(<span class="ident">node</span>.<span class="ident">signal_stream</span>(<span class="ident">Node::SIGNAL_PORTS_CHANGED</span>)
 					.<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="prelude-val">Ok</span>(())).<span class="ident">forward</span>(<span class="ident">link_nodes_signal</span>.<span class="ident">clone</span>()).<span class="ident">map</span>(<span class="ident">drop</span>)
 				);
 			}
@@ -447,26 +452,32 @@
 	<span class="ident">args</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">StaticLinkArgs</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// Mutable data keeps track of any futures</span>
 	<span class="doccomment">/// that the plugin spawns on the [MainLoop](glib::MainLoop).</span>
-	<span class="ident">handles</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SourceId</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+	<span class="ident">handles</span>: <span class="ident">SourceHandlesCell</span>,
 }
 
 <span class="doccomment">/// This makes [StaticLink] an async plugin that can be used with [plugin::plugin_export] below.</span>
 <span class="kw">impl</span> <span class="ident">AsyncPluginImpl</span> <span class="kw">for</span> <span class="ident">StaticLink</span> {
 	<span class="kw">type</span> <span class="ident">EnableFuture</span> <span class="op">=</span> <span class="ident">Pin</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
+	<span class="kw">fn</span> <span class="ident">register_source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="ident">SourceId</span>) {
+		<span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">push</span>(<span class="ident">source</span>);
+	}
+
 	<span class="doccomment">/// The real entry point of the plugin</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Spawns as asynchronous [main_async] for each [StaticLinkArgs] supplied by the user.</span>
 	<span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">this</span>: <span class="ident"><span class="self">Self</span>::Type</span>) -&gt; <span class="ident"><span class="self">Self</span>::EnableFuture</span> {
-		<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">core</span>().<span class="ident">unwrap</span>();
+		<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">plugin_core</span>();
+		<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">plugin_context</span>();
+		<span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">try_init</span>(<span class="ident">context</span>.<span class="ident">clone</span>())
+			.<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::Invariant</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{} plugin has already been enabled&quot;</span>, <span class="ident">LOG_DOMAIN</span>)));
 		<span class="kw">async</span> <span class="kw">move</span> {
+			<span class="ident">res</span><span class="question-mark">?</span>;
 			<span class="kw">let</span> <span class="ident">loops</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">args</span>.<span class="ident">get</span>().<span class="ident">unwrap</span>().<span class="ident">iter</span>()
-				.<span class="ident">map</span>(<span class="op">|</span><span class="ident">arg</span><span class="op">|</span> <span class="ident">main_async</span>(<span class="ident">core</span>.<span class="ident">clone</span>(), <span class="ident">arg</span>.<span class="ident">clone</span>()));
-			<span class="ident">this</span>.<span class="ident">handles</span>.<span class="ident">borrow_mut</span>().<span class="ident">extend</span>(
-				<span class="ident">future::try_join_all</span>(<span class="ident">loops</span>).<span class="kw">await</span><span class="question-mark">?</span>.<span class="ident">into_iter</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">l</span><span class="op">|</span> <span class="ident">l</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">spawn</span><span class="op">|</span>
-					<span class="ident">core</span>.<span class="ident">g_main_context</span>().<span class="ident">unwrap</span>().<span class="ident">spawn_local</span>(<span class="ident">spawn</span>)
-				)
-			);
+				.<span class="ident">map</span>(<span class="op">|</span><span class="ident">arg</span><span class="op">|</span> <span class="ident">main_async</span>(<span class="kw-2">&amp;</span><span class="ident">this</span>, <span class="ident">core</span>.<span class="ident">clone</span>(), <span class="ident">arg</span>.<span class="ident">clone</span>()));
+			<span class="kw">for</span> <span class="ident">spawn</span> <span class="kw">in</span> <span class="ident">future::try_join_all</span>(<span class="ident">loops</span>).<span class="kw">await</span><span class="question-mark">?</span>.<span class="ident">into_iter</span>().<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">l</span><span class="op">|</span> <span class="ident">l</span>) {
+				<span class="ident">this</span>.<span class="ident">spawn_local</span>(<span class="ident">spawn</span>);
+			}
 			<span class="prelude-val">Ok</span>(())
 		}.<span class="ident">boxed_local</span>()
 	}
@@ -476,16 +487,7 @@
 	<span class="doccomment">/// Cleans up after itself by cancelling any pending futures</span>
 	<span class="doccomment">/// that were previously spawned by `enable`</span>
 	<span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-		<span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">instance_ref</span>().<span class="ident">core</span>().<span class="ident">unwrap</span>().<span class="ident">g_main_context</span>().<span class="ident">unwrap</span>();
-		<span class="kw">for</span> <span class="ident">source</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">borrow_mut</span>().<span class="ident">drain</span>(..) {
-			<span class="comment">// TODO: how does this differ from source.remove()?</span>
-			<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">source</span>) <span class="op">=</span> <span class="ident">context</span>.<span class="ident">find_source_by_id</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>) {
-				<span class="comment">// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?</span>
-				<span class="kw">if</span> <span class="op">!</span><span class="ident">source</span>.<span class="ident">is_destroyed</span>() {
-					<span class="ident">source</span>.<span class="ident">destroy</span>();
-				}
-			}
-		}
+		<span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">clear</span>();
 	}
 }
 
