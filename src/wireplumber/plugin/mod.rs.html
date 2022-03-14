@@ -109,6 +109,15 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Externally loaded modules</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).</span>
@@ -144,8 +153,9 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};</span>
 <span class="doccomment">//! use wireplumber::prelude::*;</span>
+<span class="doccomment">//! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};</span>
+<span class="doccomment">//! use wireplumber::error;</span>
 <span class="doccomment">//! use std::future::Future;</span>
 <span class="doccomment">//! use std::cell::RefCell;</span>
 <span class="doccomment">//! use std::pin::Pin;</span>
@@ -178,6 +188,15 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!   fn init_args(&amp;self, args: Self::Args) {</span>
 <span class="doccomment">//!     self.arg.replace(args);</span>
+<span class="doccomment">//!   }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!   fn decode_args(args: Option&lt;glib::Variant&gt;) -&gt; Result&lt;Self::Args, error::Error&gt; {</span>
+<span class="doccomment">//!     args.map(|args| match () {</span>
+<span class="doccomment">//!       #[cfg(feature = &quot;glib-serde&quot;)]</span>
+<span class="doccomment">//!       _ =&gt; glib_serde::from_variant(&amp;args),</span>
+<span class="doccomment">//!       #[cfg(not(feature = &quot;glib-serde&quot;))]</span>
+<span class="doccomment">//!       _ =&gt; args.try_get(),</span>
+<span class="doccomment">//!     }).transpose().map_err(error::invalid_argument)</span>
 <span class="doccomment">//!   }</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//!</span>
@@ -213,7 +232,6 @@
 	<span class="ident">SimplePlugin</span>, <span class="ident">simple_plugin_subclass</span>,
 	<span class="ident">SimplePluginObject</span>,
 	<span class="ident">ModuleExport</span>, <span class="ident">ModuleWrapper</span>, <span class="ident">plugin_export</span>,
-	<span class="ident">FromAnyVariant</span>, <span class="ident">FromAnyVariantWrapVariant</span>,
 };
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0-nightly (68369a041 2022-02-22)" ></div>

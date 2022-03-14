@@ -489,7 +489,7 @@
 		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">json_arg</span> {
 			<span class="prelude-val">None</span> =&gt; <span class="prelude-val">None</span>,
 			<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">json</span>) =&gt; {
-				<span class="kw">let</span> <span class="ident">variant</span>: <span class="ident">Variant</span> <span class="op">=</span> <span class="macro">todo!</span>();
+				<span class="kw">let</span> <span class="ident">variant</span>: <span class="ident">Variant</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>::<span class="op">&lt;</span><span class="ident">glib_serde::AnyVariant</span><span class="op">&gt;</span>(<span class="ident">json</span>)<span class="question-mark">?</span>.<span class="ident">into</span>();
 				<span class="prelude-val">Some</span>(<span class="ident">variant</span>)
 			},
 		})

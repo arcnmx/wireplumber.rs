@@ -256,6 +256,20 @@
 <span id="251">251</span>
 <span id="252">252</span>
 <span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
 </pre><pre class="rust"><code><span class="doccomment">//! WirePlumber module example</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! An example showing how to write a simple WirePlumber plugin module.</span>
@@ -266,6 +280,7 @@
 <span class="kw">use</span> <span class="ident">std::iter</span>;
 <span class="kw">use</span> <span class="ident">std::future::Future</span>;
 
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>};
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">FutureExt</span>, <span class="ident">StreamExt</span>, <span class="ident">future</span>};
 <span class="kw">use</span> <span class="ident">futures::channel::mpsc</span>;
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Variant</span>, <span class="ident">Error</span>, <span class="ident">SourceId</span>};
@@ -288,7 +303,7 @@
 
 <span class="doccomment">/// A list of user-specified [Constraints](Constraint)</span>
 <span class="doccomment">/// used to find each end of the port to be linked.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Variant</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Variant</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PortMapping</span> {
 	<span class="doccomment">/// A description of the output ports to link.</span>
 	<span class="doccomment">///</span>
@@ -300,24 +315,31 @@
 	<span class="ident">input</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
 }
 
+<span class="doccomment">/// serde boolean default</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">fn</span> <span class="ident">true_</span>() -&gt; <span class="ident">bool</span> { <span class="bool-val">true</span> }
+
 <span class="doccomment">/// User configuration for the [StaticLink] plugin</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Variant</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Variant</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaticLinkArgs</span> {
 	<span class="doccomment">/// The source node to link to `input`</span>
 	<span class="ident">output</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// The sink node to link to `output`</span>
 	<span class="ident">input</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// Describes how to link the ports of the `input` node to the `output`</span>
+	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">default</span>, <span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;mappings&quot;</span>)]</span>
 	<span class="ident">port_mappings</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PortMapping</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// Whether to mark any created links as `link.passive`</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Defaults to `true`</span>
+	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;true_&quot;</span>)]</span>
 	<span class="ident">passive</span>: <span class="ident">bool</span>,
 	<span class="doccomment">/// Whether to mark any created links as `object.linger`</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// A lingering link will remain in place even after this module&#39;s parent process has exited.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Defaults to `true`</span>
+	<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;true_&quot;</span>)]</span>
 	<span class="ident">linger</span>: <span class="ident">bool</span>,
 }
 
@@ -499,6 +521,12 @@
 
 	<span class="kw">fn</span> <span class="ident">init_args</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">args</span>: <span class="ident"><span class="self">Self</span>::Args</span>) {
 		<span class="self">self</span>.<span class="ident">args</span>.<span class="ident">set</span>(<span class="ident">args</span>).<span class="ident">unwrap</span>();
+	}
+
+	<span class="kw">fn</span> <span class="ident">decode_args</span>(<span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Args</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+		<span class="ident">args</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">args</span><span class="op">|</span> <span class="ident">glib_serde::from_variant</span>(<span class="kw-2">&amp;</span><span class="ident">args</span>))
+			.<span class="ident">unwrap_or</span>(<span class="prelude-val">Ok</span>(<span class="ident">Default::default</span>()))
+			.<span class="ident">map_err</span>(<span class="ident">error::invalid_argument</span>)
 	}
 }
 
