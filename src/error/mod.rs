@@ -5,6 +5,7 @@
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
 
 use glib::{Quark, error::ErrorDomain};
+use std::fmt::Display;
 use crate::prelude::*;
 
 pub use crate::auto::LibraryErrorEnum;
@@ -34,4 +35,27 @@ impl ErrorDomain for LibraryErrorEnum {
 			_ => None,
 		}
 	}
+}
+
+macro_rules! error_constructors {
+	($(
+		$(#[$meta:meta])*
+		$f:ident => $var:ident,
+	)*) => {
+		$(
+			$(#[$meta])*
+			pub fn $f<E: Display>(err: E) -> Error {
+				Error::new(LibraryErrorEnum::$var, &err.to_string())
+			}
+		)*
+	};
+}
+
+error_constructors! {
+	/// Wrap a new [Error] under the [LibraryErrorEnum::InvalidArgument] domain
+	invalid_argument => InvalidArgument,
+	/// Wrap a new [Error] under the [LibraryErrorEnum::OperationFailed] domain
+	operation_failed => OperationFailed,
+	/// Wrap a new [Error] under the [LibraryErrorEnum::Invariant] domain
+	invariant => Invariant,
 }

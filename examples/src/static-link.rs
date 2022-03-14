@@ -20,7 +20,7 @@ use wireplumber::{
 	plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
 	registry::{ConstraintType, Constraint, Interest, ObjectManager},
 	pw::{self, Node, Port, Link, Properties},
-	error::LibraryErrorEnum,
+	error,
 	info, warning,
 };
 
@@ -214,7 +214,7 @@ impl AsyncPluginImpl for StaticLink {
 		let core = this.plugin_core();
 		let context = this.plugin_context();
 		let res = self.handles.try_init(context.clone())
-			.map_err(|_| Error::new(LibraryErrorEnum::Invariant, &format!("{} plugin has already been enabled", LOG_DOMAIN)));
+			.map_err(|_| error::invariant(format_args!("{} plugin has already been enabled", LOG_DOMAIN)));
 		async move {
 			res?;
 			let loops = this.args.get().unwrap().iter()
