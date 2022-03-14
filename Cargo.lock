@@ -354,7 +354,7 @@ dependencies = [
 [[package]]
 name = "gio"
 version = "0.16.0"
-source = "git+https://github.com/gtk-rs/gtk-rs-core#d5833237b44ea84c8e5018f45b2fa80e5f1590b0"
+source = "git+https://github.com/gtk-rs/gtk-rs-core#bf334f3c7f69b47499e02d74bb33c7846c5d86e6"
 dependencies = [
  "bitflags",
  "futures-channel",
@@ -370,7 +370,7 @@ dependencies = [
 [[package]]
 name = "gio-sys"
 version = "0.16.0"
-source = "git+https://github.com/gtk-rs/gtk-rs-core#d5833237b44ea84c8e5018f45b2fa80e5f1590b0"
+source = "git+https://github.com/gtk-rs/gtk-rs-core#bf334f3c7f69b47499e02d74bb33c7846c5d86e6"
 dependencies = [
  "glib-sys",
  "gobject-sys",
@@ -382,7 +382,7 @@ dependencies = [
 [[package]]
 name = "glib"
 version = "0.16.0"
-source = "git+https://github.com/gtk-rs/gtk-rs-core#d5833237b44ea84c8e5018f45b2fa80e5f1590b0"
+source = "git+https://github.com/gtk-rs/gtk-rs-core#bf334f3c7f69b47499e02d74bb33c7846c5d86e6"
 dependencies = [
  "bitflags",
  "futures-channel",
@@ -403,7 +403,7 @@ dependencies = [
 [[package]]
 name = "glib-macros"
 version = "0.16.0"
-source = "git+https://github.com/gtk-rs/gtk-rs-core#d5833237b44ea84c8e5018f45b2fa80e5f1590b0"
+source = "git+https://github.com/gtk-rs/gtk-rs-core#bf334f3c7f69b47499e02d74bb33c7846c5d86e6"
 dependencies = [
  "anyhow",
  "heck 0.4.0",
@@ -427,7 +427,7 @@ dependencies = [
 [[package]]
 name = "glib-sys"
 version = "0.16.0"
-source = "git+https://github.com/gtk-rs/gtk-rs-core#d5833237b44ea84c8e5018f45b2fa80e5f1590b0"
+source = "git+https://github.com/gtk-rs/gtk-rs-core#bf334f3c7f69b47499e02d74bb33c7846c5d86e6"
 dependencies = [
  "libc",
  "system-deps 6.0.2",
@@ -442,7 +442,7 @@ checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 [[package]]
 name = "gobject-sys"
 version = "0.16.0"
-source = "git+https://github.com/gtk-rs/gtk-rs-core#d5833237b44ea84c8e5018f45b2fa80e5f1590b0"
+source = "git+https://github.com/gtk-rs/gtk-rs-core#bf334f3c7f69b47499e02d74bb33c7846c5d86e6"
 dependencies = [
  "glib-sys",
  "libc",
@@ -540,9 +540,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.119"
+version = "0.2.120"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1bf2e165bb3457c8e098ea76f3e3bc9db55f87aa90d52d0e6be741470916aaa4"
+checksum = "ad5c14e80759d0939d013e6ca49930e59fc53dd8e5009132f76240c179380c09"
 
 [[package]]
 name = "libloading"
@@ -931,9 +931,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "1.0.86"
+version = "1.0.87"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a65b3f4ffa0092e9887669db0eae07941f023991ab58ea44da8fe8e2d511c6b"
+checksum = "1e59d925cf59d8151f25a3bedf97c9c157597c9df7324d32d68991cc399ed08b"
 dependencies = [
  "proc-macro2",
  "quote",
