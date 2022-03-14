@@ -52,7 +52,6 @@ impl SpaType {
 	pub const unsafe fn from_id_unchecked(inner: ffi::WpSpaType) -> Self {
 		Self {
 			inner,
-			phantom: std::marker::PhantomData,
 		}
 	}
 
