@@ -93,6 +93,7 @@ in {
         (cargo config "build-sys" "build -p wireplumber-sys")
         (cargo config "test-sys" "test -p wireplumber-sys ${versionFeature}")
         (cargo config "build" "build")
+        (cargo config "test-wp" "test ${versionFeature}")
         (cargo config "test" "test --workspace ${versionFeature}")
         (cargo config "workspace" "build --workspace --examples --bins")
       ];
