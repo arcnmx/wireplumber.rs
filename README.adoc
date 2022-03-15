@@ -1,8 +1,30 @@
 = WirePlumber Rust Bindings
+:source-highlighter: highlight.js
 
-TODO/WIP
+This crate provides a high-level interface to https://pipewire.org/[PipeWire]'s https://docs.pipewire.org/page_api.html[API] via https://pipewire.pages.freedesktop.org/wireplumber/index.html[libwireplumber].
+Explore the https://arcnmx.github.io/wireplumber.rs/wireplumber/[crate documentation] and the various https://arcnmx.github.io/wireplumber.rs/wireplumber/#modules[modules] for information on how to start using WirePlumber with Rust.
 
-Check out the
-https://arcnmx.github.io/wireplumber.rs/wireplumber/[documentation]
-and
-link:examples/[examples].
+== Examples
+
+Some link:examples/[examples] are provided that can be built and run via Cargo:
+
+[source,bash]
+----
+$ cargo run -p wp-examples --bin wpexec -- --help
+... snip ...
+
+# try out the default lua example:
+$ cargo run -p wp-examples --bin wpexec
+
+# or load the example plugin module:
+$ cargo build --workspace --examples &&
+  cargo run -p wp-examples --bin wpexec -- --type wireplumber
+----
+
+== Use Cases
+
+This project aims to facilitate the following applications:
+
+* Enabling Rust to be a viable language for writing session management logic as an alternative to the officially supported Lua scripting engine or GObject C APIs
+* WirePlumber plugins that can augment or expose APIs for Lua configuration scripts to use
+* Stand-alone pipewire clients as an alternative to https://gitlab.freedesktop.org/pipewire/pipewire-rs[pipewire-rs]
