@@ -1,1 +1,1 @@
-../../generate/tests/layout.c
+../generate/tests/layout.c

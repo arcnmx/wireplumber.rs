@@ -1,1 +1,1 @@
-../../generate/tests/constant.c
+../generate/tests/constant.c

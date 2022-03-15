@@ -1,1 +1,1 @@
-../../generate/tests/manual.h
+../generate/tests/manual.h
