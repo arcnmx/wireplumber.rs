@@ -111,7 +111,7 @@ impl<T: IsA<Plugin> + ObjectSubclassIsExt> AsyncPluginExt for T where
 
 	fn plugin_context(&self) -> MainContext {
 		self.plugin_core().g_main_context()
-			.expect("async plugin requires a MainContext")
+			.unwrap_or_else(|| MainContext::ref_thread_default())
 	}
 
 	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F) {
