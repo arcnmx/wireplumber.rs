@@ -462,7 +462,7 @@
 
 	<span class="kw">fn</span> <span class="ident">plugin_context</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">MainContext</span> {
 		<span class="self">self</span>.<span class="ident">plugin_core</span>().<span class="ident">g_main_context</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;async plugin requires a MainContext&quot;</span>)
+			.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">MainContext::ref_thread_default</span>())
 	}
 
 	<span class="kw">fn</span> <span class="ident">spawn_local</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) {
