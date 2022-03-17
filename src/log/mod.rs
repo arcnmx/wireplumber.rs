@@ -64,11 +64,11 @@ impl Log {
 	pub fn log_string<M: Into<GString>, L: Into<LogLevelFlags>>(log_level: L, context: StructuredLogContext, message: M) {
 		unsafe {
 			// XXX: so much allocation, it burns...
-			let domain = context.domain.to_glib_none();
-			let file = context.file.to_glib_none();
+			let domain = context.domain.unwrap_or_default().to_glib_none();
+			let file = context.file.unwrap_or_default().to_glib_none();
 			let line = context.line.as_ref().map(ToString::to_string);
-			let line = line.to_glib_none();
-			let function = context.function.to_glib_none();
+			let line = line.as_ref().map(|l| &l[..]).unwrap_or_default().to_glib_none();
+			let function = context.function.unwrap_or_default().to_glib_none();
 			let obj_type = context.object_type.unwrap_or(match context.object {
 				Some(obj) => obj.type_(),
 				None => Type::INVALID,
