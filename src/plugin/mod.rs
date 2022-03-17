@@ -104,6 +104,8 @@ pub use crate::auto::{
 	traits::PluginExt,
 };
 
+mod loader;
+
 mod subclass;
 pub use subclass::{
 	PluginImpl, PluginImplExt,

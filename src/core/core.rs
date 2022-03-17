@@ -2,6 +2,7 @@ use pipewire_sys::{pw_core, pw_context};
 use glib::{MainContext, MainLoop};
 use crate::prelude::*;
 use crate::{Properties, Core, InitFlags, lua::ToLuaVariant};
+use crate::plugin::ComponentLoader;
 #[cfg(any(feature = "v0_4_2"))]
 use crate::plugin::LookupDirs;
 
@@ -87,7 +88,7 @@ impl Core {
 
 	#[doc(alias = "wp_core_load_component")]
 	pub fn load_lua_script<A: ToLuaVariant>(&self, script_path: &str, args: A) -> Result<(), Error> {
-		self.load_component(script_path, "script/lua", args.to_lua_variant()?.as_deref())
+		self.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.to_lua_variant()?.as_deref())
 	}
 
 	#[cfg(any(feature = "enable-futures", feature = "dox"))]

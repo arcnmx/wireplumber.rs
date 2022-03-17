@@ -17,7 +17,7 @@ use std::{env, fs};
 use wireplumber::{
 	Core, Log, info, warning,
 	pw::{self, Properties},
-	plugin::{Plugin, PluginFeatures},
+	plugin::{Plugin, PluginFeatures, ComponentLoader},
 };
 
 /// [GLib logging domain](glib::g_log)
@@ -28,6 +28,8 @@ const LOG_DOMAIN: &'static str = "wpexec.rs";
 enum ModuleType {
 	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
 	Lua,
+	/// A [WirePlumber Lua configuration file](https://pipewire.pages.freedesktop.org/wireplumber/configuration/config_lua.html)
+	LuaConfig,
 	/// A native WirePlumber module
 	Wireplumber,
 	/// A [PipeWire module](https://docs.pipewire.org/page_pipewire_modules.html)
@@ -60,22 +62,23 @@ struct Args {
 /// Once this function returns, the script will continue to run in the background until
 /// the service is interrupted.
 async fn main_async(core: &Core, args: &Args) -> Result<()> {
-	let path = args.module().unwrap(); // NOTE: already checked this in main()
+	let path = args.module().expect("already checked this in main()");
 	let path = {
 		let path = Path::new(path);
-		if !args.module_type.is_script() && path.is_absolute() {
-			let path = fs::canonicalize(path)?;
-			let (dir, file) = (path.parent().unwrap(), path.file_name().unwrap());
-			env::set_var("WIREPLUMBER_MODULE_DIR", dir);
-			Some(file.to_string_lossy().into_owned())
-		} else {
-			None
+		match args.module_type.module_dir() {
+			Some(module_dir) if path.is_absolute() => {
+				let path = fs::canonicalize(path)?;
+				let (dir, file) = (path.parent().unwrap(), path.file_name().unwrap());
+				env::set_var(module_dir, dir);
+				Some(file.to_string_lossy().into_owned())
+			},
+			_ => None,
 		}
 	}.unwrap_or(path.into());
 
 	let variant_args = args.variant()?;
 	if let Some(module) = args.module_type.loader_module() {
-		core.load_component(module, "module", None)
+		core.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, None)
 			.with_context(|| format!("failed to load the {:?} scripting module", args.module_type))?;
 	}
 	if args.module_type.is_lua() {
@@ -165,8 +168,16 @@ impl ModuleType {
 		matches!(self, ModuleType::Lua)
 	}
 
-	fn is_script(&self) -> bool {
-		self.is_lua()
+	/// Environment variable that affects path resolution for this module type
+	///
+	/// The wireplumber [ComponentLoader] generally doesn't accept absolute paths for modules.
+	/// This environment variable can be modified in order to help it find the module to load.
+	fn module_dir(&self) -> Option<&'static str> {
+		match self {
+			ModuleType::Lua | ModuleType::LuaConfig => None,
+			ModuleType::Wireplumber => Some(ComponentLoader::DIR_WIREPLUMBER_MODULE),
+			ModuleType::Pipewire => Some(ComponentLoader::DIR_PIPEWIRE_MODULE),
+		}
 	}
 
 	/// A module that provides the necessary loader
@@ -176,19 +187,20 @@ impl ModuleType {
 	/// as modules (well, components) themselves.
 	fn loader_module(&self) -> Option<&'static str> {
 		match self {
-			ModuleType::Lua => Some("libwireplumber-module-lua-scripting"),
+			ModuleType::Lua | ModuleType::LuaConfig => Some(ComponentLoader::MODULE_LOADER_LUA),
 			_ => None,
 		}
 	}
 
-	/// The type name expected by a [wireplumber::plugin::ComponentLoader]
+	/// The type name expected by a [ComponentLoader]
 	///
 	/// This is passed on to [Core::load_component].
 	fn loader_type(&self) -> &'static str {
 		match self {
-			ModuleType::Lua => "script/lua",
-			ModuleType::Wireplumber => "module",
-			ModuleType::Pipewire => "pw_module",
+			ModuleType::Lua => ComponentLoader::TYPE_LUA_SCRIPT,
+			ModuleType::LuaConfig => ComponentLoader::TYPE_LUA_CONFIG,
+			ModuleType::Wireplumber => ComponentLoader::TYPE_WIREPLUMBER_MODULE,
+			ModuleType::Pipewire => ComponentLoader::TYPE_PIPEWIRE_MODULE,
 		}
 	}
 }
@@ -200,9 +212,9 @@ impl Args {
 	/// for loading and running lua scripts.
 	fn plugins(&self) -> Vec<&str> {
 		match self.module_type {
-			ModuleType::Lua => vec!["lua-scripting"],
+			ModuleType::Lua => vec![ComponentLoader::PLUGIN_LOADER_LUA],
 			ModuleType::Wireplumber if self.plugins.is_empty() && self.module.is_none() => vec!["static-link"],
-			ModuleType::Wireplumber => self.plugins.iter().map(|s| s.as_str()).collect(),
+			ModuleType::Wireplumber | ModuleType::LuaConfig => self.plugins.iter().map(|s| s.as_str()).collect(),
 			ModuleType::Pipewire => todo!(),
 		}
 	}
