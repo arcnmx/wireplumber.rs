@@ -17,7 +17,7 @@ path = "src/static-link.rs"
 [dependencies]
 futures = "0.3"
 wireplumber = { version = "0.1", features = ["enable-futures", "enable-libspa", "enable-serde", "v0_4_3"], path = "../" }
-pipewire-sys = "0.4"
+pipewire-sys = "0.5"
 glib = { version = "0.16", git = "https://github.com/gtk-rs/gtk-rs-core" }
 glib-serde = { version = "0.1", git = "https://github.com/arcnmx/glib-serde.git", branch = "revamp" }
 ctrlc = { version = "3.0", features = ["termination"] }
