@@ -6,9 +6,9 @@ use crate::prelude::*;
 /// libwireplumber-module-lua-scripting only supports a limited subset of `Variant` arguments:
 /// - it must be of type `VariantDict`, so values must always be boxed
 /// - arrays must be converted to dictionary form, with string keys beginning with "1"
-pub struct LuaVariant(Variant); // TODO: Consider Cow<Variant> instead
+pub struct LuaTable(Variant); // TODO: Consider Cow<Variant> instead
 
-impl LuaVariant {
+impl LuaTable {
 	pub fn new(variant: Variant) -> Result<Self, Error> {
 		if variant.is::<Self>() {
 			Ok(Self(variant))
@@ -99,7 +99,7 @@ impl LuaVariant {
 	}
 }
 
-impl Deref for LuaVariant {
+impl Deref for LuaTable {
 	type Target = Variant;
 
 	fn deref(&self) -> &Self::Target {
@@ -107,7 +107,7 @@ impl Deref for LuaVariant {
 	}
 }
 
-impl StaticVariantType for LuaVariant {
+impl StaticVariantType for LuaTable {
 	fn static_variant_type() -> std::borrow::Cow<'static, VariantTy> {
 		unsafe {
 			VariantTy::from_str_unchecked("a{sv}").into()
@@ -115,13 +115,13 @@ impl StaticVariantType for LuaVariant {
 	}
 }
 
-impl From<LuaVariant> for Variant {
-	fn from(variant: LuaVariant) -> Self {
+impl From<LuaTable> for Variant {
+	fn from(variant: LuaTable) -> Self {
 		variant.0
 	}
 }
 
-impl TryFrom<Variant> for LuaVariant {
+impl TryFrom<Variant> for LuaTable {
 	type Error = Error;
 
 	fn try_from(value: Variant) -> Result<Self, Self::Error> {
@@ -129,7 +129,7 @@ impl TryFrom<Variant> for LuaVariant {
 	}
 }
 
-impl<'a> TryFrom<&'a Variant> for LuaVariant {
+impl<'a> TryFrom<&'a Variant> for LuaTable {
 	type Error = Error;
 
 	fn try_from(value: &'a Variant) -> Result<Self, Self::Error> {
@@ -137,29 +137,29 @@ impl<'a> TryFrom<&'a Variant> for LuaVariant {
 	}
 }
 
-pub trait ToLuaVariant {
-	fn to_lua_variant(self) -> Result<Option<LuaVariant>, Error>;
+pub trait ToLuaTable {
+	fn to_lua_variant(self) -> Result<Option<LuaTable>, Error>;
 }
 
-impl ToLuaVariant for () {
-	fn to_lua_variant(self) -> Result<Option<LuaVariant>, Error> {
+impl ToLuaTable for () {
+	fn to_lua_variant(self) -> Result<Option<LuaTable>, Error> {
 		Ok(None)
 	}
 }
 
-impl<T: TryInto<LuaVariant>> ToLuaVariant for T where
+impl<T: TryInto<LuaTable>> ToLuaTable for T where
 	T::Error: Into<Error>,
 {
-	fn to_lua_variant(self) -> Result<Option<LuaVariant>, Error> {
+	fn to_lua_variant(self) -> Result<Option<LuaTable>, Error> {
 		self.try_into().map(Some)
 			.map_err(Into::into)
 	}
 }
 
-impl<T: TryInto<LuaVariant>> ToLuaVariant for Option<T> where
+impl<T: TryInto<LuaTable>> ToLuaTable for Option<T> where
 	T::Error: Into<Error>,
 {
-	fn to_lua_variant(self) -> Result<Option<LuaVariant>, Error> {
+	fn to_lua_variant(self) -> Result<Option<LuaTable>, Error> {
 		self.map(TryInto::try_into).transpose()
 			.map_err(Into::into)
 	}
@@ -167,10 +167,10 @@ impl<T: TryInto<LuaVariant>> ToLuaVariant for Option<T> where
 
 #[test]
 fn to_lua_variant() {
-	fn assert_impl<T: ToLuaVariant>() { }
+	fn assert_impl<T: ToLuaTable>() { }
 
-	assert_impl::<LuaVariant>();
-	assert_impl::<Option<LuaVariant>>();
+	assert_impl::<LuaTable>();
+	assert_impl::<Option<LuaTable>>();
 	assert_impl::<Option<Variant>>();
 	assert_impl::<Variant>();
 	assert_impl::<&'static Variant>();

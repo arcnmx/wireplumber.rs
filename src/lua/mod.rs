@@ -5,4 +5,4 @@
 //! [Core::load_lua_script](crate::Core::load_lua_script).
 
 mod variant;
-pub use variant::{LuaVariant, ToLuaVariant};
+pub use variant::{LuaTable, ToLuaTable};
