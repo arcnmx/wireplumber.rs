@@ -123,11 +123,11 @@ impl serde::ser::Error for LuaError {
 
 #[cfg(feature = "serde")]
 impl LuaError {
-	pub fn serde_error<E: serde::de::Error>(self) -> E {
+	pub(crate) fn serde_error<E: serde::de::Error>(self) -> E {
 		E::custom(self)
 	}
 
-	pub fn serde_error_ser<E: serde::ser::Error>(self) -> E {
+	pub(crate) fn serde_error_ser<E: serde::ser::Error>(self) -> E {
 		E::custom(self)
 	}
 }

@@ -6,6 +6,10 @@ use crate::lua::{LuaString, LuaError};
 use crate::prelude::*;
 
 newtype_wrapper! {
+	/// A [Variant] that can be passed to a Lua script.
+	///
+	/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules
+	/// and their configuration data.
 	#[derive(Debug, Eq, Clone, Hash)]
 	pub struct LuaVariant(Variant ;? LuaError);
 }
@@ -301,7 +305,7 @@ impl<'a> ToVariant for LuaVariant<'a> {
 }
 
 newtype_wrapper! {
-	/// Arguments for use from lua scripts.
+	/// A specialized [LuaVariant] that is both an array and dictionary.
 	#[derive(Debug, Eq, Clone, Hash)]
 	pub struct LuaTable(Variant ;? LuaError);
 }

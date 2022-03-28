@@ -3,10 +3,12 @@ use glib::{Variant, ToVariant, VariantTy, VariantType, variant::VariantTypeMisma
 use crate::lua::{LuaVariant, LuaError};
 use crate::prelude::*;
 
+#[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
 pub fn to_variant<S: ser::Serialize>(v: S) -> Result<LuaVariant<'static>, LuaError> {
 	v.serialize(Serializer::new())
 }
 
+#[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
 #[derive(Debug, Copy, Clone)]
 pub struct Serializer {
 	humanize: bool,
