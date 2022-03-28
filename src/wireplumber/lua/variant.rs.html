@@ -189,9 +189,9 @@
 <span class="doccomment">/// libwireplumber-module-lua-scripting only supports a limited subset of `Variant` arguments:</span>
 <span class="doccomment">/// - it must be of type `VariantDict`, so values must always be boxed</span>
 <span class="doccomment">/// - arrays must be converted to dictionary form, with string keys beginning with &quot;1&quot;</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LuaVariant</span>(<span class="ident">Variant</span>); <span class="comment">// TODO: Consider Cow&lt;Variant&gt; instead</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LuaTable</span>(<span class="ident">Variant</span>); <span class="comment">// TODO: Consider Cow&lt;Variant&gt; instead</span>
 
-<span class="kw">impl</span> <span class="ident">LuaVariant</span> {
+<span class="kw">impl</span> <span class="ident">LuaTable</span> {
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">variant</span>: <span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="kw">if</span> <span class="ident">variant</span>.<span class="ident">is</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>() {
 			<span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="ident">variant</span>))
@@ -282,7 +282,7 @@
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">LuaVariant</span> {
+<span class="kw">impl</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">LuaTable</span> {
 	<span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Variant</span>;
 
 	<span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Target</span> {
@@ -290,7 +290,7 @@
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">StaticVariantType</span> <span class="kw">for</span> <span class="ident">LuaVariant</span> {
+<span class="kw">impl</span> <span class="ident">StaticVariantType</span> <span class="kw">for</span> <span class="ident">LuaTable</span> {
 	<span class="kw">fn</span> <span class="ident">static_variant_type</span>() -&gt; <span class="ident">std::borrow::Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">VariantTy</span><span class="op">&gt;</span> {
 		<span class="kw">unsafe</span> {
 			<span class="ident">VariantTy::from_str_unchecked</span>(<span class="string">&quot;a{sv}&quot;</span>).<span class="ident">into</span>()
@@ -298,13 +298,13 @@
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Variant</span> {
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">variant</span>: <span class="ident">LuaVariant</span>) -&gt; <span class="self">Self</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Variant</span> {
+	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">variant</span>: <span class="ident">LuaTable</span>) -&gt; <span class="self">Self</span> {
 		<span class="ident">variant</span>.<span class="number">0</span>
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span> {
+<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaTable</span> {
 	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
 	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
@@ -312,7 +312,7 @@
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Variant</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Variant</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaTable</span> {
 	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
 	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
@@ -320,29 +320,29 @@
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToLuaVariant</span> {
-	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToLuaTable</span> {
+	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 }
 
-<span class="kw">impl</span> <span class="ident">ToLuaVariant</span> <span class="kw">for</span> () {
-	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">ToLuaTable</span> <span class="kw">for</span> () {
+	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ToLuaVariant</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ToLuaTable</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
 	<span class="ident">T::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span>,
 {
-	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">try_into</span>().<span class="ident">map</span>(<span class="prelude-val">Some</span>)
 			.<span class="ident">map_err</span>(<span class="ident">Into::into</span>)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ToLuaVariant</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ToLuaTable</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
 	<span class="ident">T::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span>,
 {
-	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+	<span class="kw">fn</span> <span class="ident">to_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">map</span>(<span class="ident">TryInto::try_into</span>).<span class="ident">transpose</span>()
 			.<span class="ident">map_err</span>(<span class="ident">Into::into</span>)
 	}
@@ -350,10 +350,10 @@
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
 <span class="kw">fn</span> <span class="ident">to_lua_variant</span>() {
-	<span class="kw">fn</span> <span class="ident">assert_impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToLuaVariant</span><span class="op">&gt;</span>() { }
+	<span class="kw">fn</span> <span class="ident">assert_impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToLuaTable</span><span class="op">&gt;</span>() { }
 
-	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>();
-	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span>();
+	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&gt;</span><span class="op">&gt;</span>();
 	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span><span class="op">&gt;</span>();
 	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>();
 	<span class="ident">assert_impl</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Variant</span><span class="op">&gt;</span>();
