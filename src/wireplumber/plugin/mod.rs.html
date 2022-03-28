@@ -194,9 +194,9 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!   fn decode_args(args: Option&lt;glib::Variant&gt;) -&gt; Result&lt;Self::Args, error::Error&gt; {</span>
 <span class="doccomment">//!     args.map(|args| match () {</span>
-<span class="doccomment">//!       #[cfg(feature = &quot;glib-serde&quot;)]</span>
-<span class="doccomment">//!       _ =&gt; glib_serde::from_variant(&amp;args),</span>
-<span class="doccomment">//!       #[cfg(not(feature = &quot;glib-serde&quot;))]</span>
+<span class="doccomment">//!       #[cfg(feature = &quot;serde&quot;)]</span>
+<span class="doccomment">//!       _ =&gt; wireplumber::lua::from_variant(&amp;args),</span>
+<span class="doccomment">//!       #[cfg(not(feature = &quot;serde&quot;))]</span>
 <span class="doccomment">//!       _ =&gt; args.try_get(),</span>
 <span class="doccomment">//!     }).transpose().map_err(error::invalid_argument)</span>
 <span class="doccomment">//!   }</span>

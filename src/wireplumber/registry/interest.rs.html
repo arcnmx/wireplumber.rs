@@ -522,6 +522,9 @@
 <span id="517">517</span>
 <span id="518">518</span>
 <span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::registry</span>::{<span class="ident">ObjectInterest</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">InterestMatch</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="ident">PipewireObject</span>, <span class="ident">Properties</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
@@ -854,7 +857,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">impl_serde</span> {
 	<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Constraint</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>};
-	<span class="kw">use</span> <span class="ident">glib_serde</span>::{<span class="ident">prelude</span>::<span class="kw-2">*</span>, <span class="ident">AnyVariant</span>};
+	<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::lua</span>::{<span class="ident">LuaVariant</span>, <span class="ident">LuaError</span>};
 	<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Variant</span>, <span class="ident">ToVariant</span>};
 	<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>, <span class="ident">de</span>::{<span class="self">self</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">Visitor</span>, <span class="ident">SeqAccess</span>, <span class="ident">MapAccess</span>, <span class="ident">Unexpected</span>}, <span class="ident">ser::SerializeStruct</span>};
 	<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
@@ -894,7 +897,10 @@
 			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">type_</span>)<span class="question-mark">?</span>;
 			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;subject&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">subject</span>)<span class="question-mark">?</span>;
 			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;verb&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">verb</span>)<span class="question-mark">?</span>;
-			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;value&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">as_serializable</span>()))<span class="question-mark">?</span>;
+			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;value&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>()
+				.<span class="ident">map</span>(<span class="ident">LuaVariant::convert_from</span>)
+				.<span class="ident">transpose</span>().<span class="ident">map_err</span>(<span class="ident">LuaError::serde_error_ser</span>)<span class="question-mark">?</span>
+			)<span class="question-mark">?</span>;
 			<span class="ident">state</span>.<span class="ident">end</span>()
 		}
 	}
@@ -960,7 +966,7 @@
 						<span class="ident">ConstraintVerb::__Unknown</span>(<span class="ident">v</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">V::Error::invalid_value</span>(<span class="ident">Unexpected::Signed</span>(<span class="ident">v</span>.<span class="ident">into</span>()), <span class="kw-2">&amp;</span><span class="string">&quot;constraint verb&quot;</span>)),
 						<span class="ident">ConstraintVerb::IsPresent</span> <span class="op">|</span> <span class="ident">ConstraintVerb::IsAbsent</span> =&gt; <span class="prelude-val">None</span>,
 						<span class="ident">ConstraintVerb::Equals</span> <span class="op">|</span> <span class="ident">ConstraintVerb::NotEquals</span> =&gt; <span class="prelude-val">Some</span>(
-							<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">AnyVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
+							<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
 								.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint value&quot;</span>))<span class="question-mark">?</span>
 								.<span class="ident">into</span>()
 						),
@@ -970,16 +976,16 @@
 								.<span class="ident">to_variant</span>()
 						),
 						<span class="ident">ConstraintVerb::InRange</span> =&gt; <span class="prelude-val">Some</span>(<span class="ident">Variant::tuple_from_iter</span>([
-								<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">AnyVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
+								<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
 									.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range min&quot;</span>))<span class="question-mark">?</span>
 									.<span class="ident">into_variant</span>(),
-								<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">AnyVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
+								<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
 									.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span> <span class="op">+</span> <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range max&quot;</span>))<span class="question-mark">?</span>
 									.<span class="ident">into_variant</span>(),
 						])),
 						<span class="ident">ConstraintVerb::InList</span> =&gt; {
 							<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::Variant</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">seq</span>.<span class="ident">size_hint</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>));
-							<span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">AnyVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span> {
+							<span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span> {
 								<span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">value</span>.<span class="ident">into</span>());
 							}
 							<span class="prelude-val">Some</span>(<span class="ident">glib::Variant::tuple_from_iter</span>(<span class="ident">values</span>))
@@ -998,7 +1004,7 @@
 					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">type_</span> <span class="op">=</span> <span class="prelude-val">None</span>;
 					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subject</span> <span class="op">=</span> <span class="prelude-val">None</span>;
 					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">verb</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AnyVariant</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 					<span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">next_key</span>()<span class="question-mark">?</span> {
 						<span class="kw">match</span> <span class="ident">key</span> {
 							<span class="ident">Field::Type</span> =&gt; {
