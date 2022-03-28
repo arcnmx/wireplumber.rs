@@ -565,6 +565,10 @@
 <span id="560">560</span>
 <span id="561">561</span>
 <span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
 <span class="kw">use</span> <span class="ident">glib::VariantType</span>;
 <span class="kw">use</span> <span class="ident">glib::variant::VariantTypeMismatchError</span>;
@@ -573,6 +577,10 @@
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="macro">newtype_wrapper!</span> {
+	<span class="doccomment">/// A [Variant] that can be passed to a Lua script.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules</span>
+	<span class="doccomment">/// and their configuration data.</span>
 	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LuaVariant</span>(<span class="ident">Variant</span> ;<span class="question-mark">?</span> <span class="ident">LuaError</span>);
 }
@@ -868,7 +876,7 @@
 }
 
 <span class="macro">newtype_wrapper!</span> {
-	<span class="doccomment">/// Arguments for use from lua scripts.</span>
+	<span class="doccomment">/// A specialized [LuaVariant] that is both an array and dictionary.</span>
 	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LuaTable</span>(<span class="ident">Variant</span> ;<span class="question-mark">?</span> <span class="ident">LuaError</span>);
 }

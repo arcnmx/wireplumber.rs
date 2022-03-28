@@ -261,11 +261,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">LuaError</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">serde_error</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">serde::de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>) -&gt; <span class="ident">E</span> {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">serde_error</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">serde::de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>) -&gt; <span class="ident">E</span> {
 		<span class="ident">E::custom</span>(<span class="self">self</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">serde_error_ser</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">serde::ser::Error</span><span class="op">&gt;</span>(<span class="self">self</span>) -&gt; <span class="ident">E</span> {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">serde_error_ser</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">serde::ser::Error</span><span class="op">&gt;</span>(<span class="self">self</span>) -&gt; <span class="ident">E</span> {
 		<span class="ident">E::custom</span>(<span class="self">self</span>)
 	}
 }

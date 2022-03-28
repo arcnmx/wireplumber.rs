@@ -481,15 +481,19 @@
 <span id="476">476</span>
 <span id="477">477</span>
 <span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">ser</span>, <span class="ident">Serialize</span>};
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Variant</span>, <span class="ident">ToVariant</span>, <span class="ident">VariantTy</span>, <span class="ident">VariantType</span>, <span class="ident">variant::VariantTypeMismatchError</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::lua</span>::{<span class="ident">LuaVariant</span>, <span class="ident">LuaError</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
 
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_variant</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">ser::Serialize</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>, <span class="ident">LuaError</span><span class="op">&gt;</span> {
 	<span class="ident">v</span>.<span class="ident">serialize</span>(<span class="ident">Serializer::new</span>())
 }
 
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)))]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Serializer</span> {
 	<span class="ident">humanize</span>: <span class="ident">bool</span>,
