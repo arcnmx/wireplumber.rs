@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["LuaTable","Arguments for use from lua scripts."]],"trait":[["ToLuaTable",""]]});
+initSidebarItems({"enum":[["LuaError",""],["LuaType",""],["LuaValue",""]],"fn":[["from_variant",""],["to_variant",""]],"struct":[["Deserializer",""],["LuaString",""],["LuaTable","Arguments for use from lua scripts."],["LuaVariant",""],["Serializer",""]],"trait":[["ToLuaTable",""]]});
