@@ -88,7 +88,8 @@ impl Core {
 
 	#[doc(alias = "wp_core_load_component")]
 	pub fn load_lua_script<A: ToLuaTable>(&self, script_path: &str, args: A) -> Result<(), Error> {
-		self.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.to_lua_variant()?.as_deref())
+		let args = args.to_lua_variant().and_then(|v| v.map(|v| v.into_vardict()).transpose())?;
+		self.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.as_ref().map(|v| v.as_variant()))
 	}
 
 	#[cfg(any(feature = "enable-futures", feature = "dox"))]

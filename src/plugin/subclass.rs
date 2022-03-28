@@ -1,5 +1,4 @@
 use glib::subclass::prelude::*;
-use glib::variant::VariantTypeMismatchError;
 use glib::object::ObjectSubclassIs;
 use glib::{SourceId, MainContext};
 use std::panic::catch_unwind;
