@@ -120,6 +120,7 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Externally loaded modules</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).</span>
@@ -227,6 +228,7 @@
 };
 
 <span class="kw">mod</span> <span class="ident">loader</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">loader</span>::{<span class="ident">ComponentLoaderImpl</span>, <span class="ident">ComponentLoaderImplExt</span>};
 
 <span class="kw">mod</span> <span class="ident">subclass</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">subclass</span>::{

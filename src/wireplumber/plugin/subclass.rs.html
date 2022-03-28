@@ -348,6 +348,11 @@
 <span id="343">343</span>
 <span id="344">344</span>
 <span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::subclass::prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">glib::object::ObjectSubclassIs</span>;
 <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">SourceId</span>, <span class="ident">MainContext</span>};
@@ -608,10 +613,15 @@
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">simple_plugin_subclass</span> {
 	(<span class="kw">impl</span> <span class="ident">ObjectSubclass</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">tt</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>:<span class="ident">tt</span>)<span class="op">*</span> }) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::simple_plugin_subclass!</span> {
+			<span class="kw">impl</span> <span class="macro-nonterminal">ObjectSubclass</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::Plugin</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>)<span class="op">*</span> }
+		}
+	};
+	(<span class="kw">impl</span> <span class="ident">ObjectSubclass</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">parent</span>:<span class="ident">ty</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">tt</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>:<span class="ident">tt</span>)<span class="op">*</span> }) =&gt; {
 		<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::object_subclass</span>]</span>
 		<span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::subclass::types::ObjectSubclass</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
 			<span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::SimplePluginObject</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
-			<span class="kw">type</span> <span class="ident">ParentType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::Plugin</span>;
+			<span class="kw">type</span> <span class="ident">ParentType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">parent</span>;
 			<span class="kw">const</span> <span class="ident">NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>;
 			$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>)<span class="op">*</span>
 		}
