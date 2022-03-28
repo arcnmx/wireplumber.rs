@@ -1,7 +1,7 @@
 = WirePlumber.rs Examples
 :source-highlighter: highlight.js
 
-Aside from those found in the https://arcnmx.github.io/wireplumber.rs/wireplumber/[crate documentation], the stand-alone examples can be built and run via Cargo:
+Aside from those found in the https://arcnmx.github.io/wireplumber.rs/wireplumber/[crate documentation], these stand-alone examples can be built and run via Cargo:
 
 [source,bash]
 ----
