@@ -33,7 +33,6 @@ serde = { version = "1.0", default-features = false, optional = true }
 ffi = { version = "0.1.0", path = "sys", package = "wireplumber-sys" }
 bitflags = "1.3"
 glib-signal = { version = "0.1.0", git = "https://github.com/arcnmx/glib-signal.rs.git" }
-glib-serde = { version = "0.1.0", git = "https://github.com/arcnmx/glib-serde.git", branch = "revamp", optional = true }
 
 [build-dependencies]
 pkg-config = "0.3"
@@ -44,7 +43,7 @@ default = []
 experimental = []
 enable-futures = ["futures-util", "glib-signal/enable-futures"]
 enable-libspa = ["libspa"]
-enable-serde = ["serde", "glib-serde"]
+enable-serde = ["serde"]
 v0_4_2 = ["ffi/v0_4_2"]
 v0_4_3 = ["ffi/v0_4_3", "v0_4_2"]
 v0_4_6 = ["ffi/v0_4_6", "v0_4_3"]

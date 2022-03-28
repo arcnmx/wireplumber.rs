@@ -72,9 +72,9 @@
 //!
 //!   fn decode_args(args: Option<glib::Variant>) -> Result<Self::Args, error::Error> {
 //!     args.map(|args| match () {
-//!       #[cfg(feature = "glib-serde")]
-//!       _ => glib_serde::from_variant(&args),
-//!       #[cfg(not(feature = "glib-serde"))]
+//!       #[cfg(feature = "serde")]
+//!       _ => wireplumber::lua::from_variant(&args),
+//!       #[cfg(not(feature = "serde"))]
 //!       _ => args.try_get(),
 //!     }).transpose().map_err(error::invalid_argument)
 //!   }

@@ -330,7 +330,7 @@ impl ConstraintType {
 #[cfg(feature = "serde")]
 mod impl_serde {
 	use super::{Constraint, ConstraintVerb, ConstraintType};
-	use glib_serde::{prelude::*, AnyVariant};
+	use crate::lua::{LuaVariant, LuaError};
 	use glib::{Variant, ToVariant};
 	use serde::{Deserialize, Deserializer, Serialize, Serializer, de::{self, Error as _, Visitor, SeqAccess, MapAccess, Unexpected}, ser::SerializeStruct};
 	use std::str::FromStr;
@@ -370,7 +370,10 @@ mod impl_serde {
 			state.serialize_field("type", &self.type_)?;
 			state.serialize_field("subject", &self.subject)?;
 			state.serialize_field("verb", &self.verb)?;
-			state.serialize_field("value", &self.value.as_ref().map(|v| v.as_serializable()))?;
+			state.serialize_field("value", &self.value.as_ref()
+				.map(LuaVariant::convert_from)
+				.transpose().map_err(LuaError::serde_error_ser)?
+			)?;
 			state.end()
 		}
 	}
@@ -436,7 +439,7 @@ mod impl_serde {
 						ConstraintVerb::__Unknown(v) => return Err(V::Error::invalid_value(Unexpected::Signed(v.into()), &"constraint verb")),
 						ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent => None,
 						ConstraintVerb::Equals | ConstraintVerb::NotEquals => Some(
-							seq.next_element::<AnyVariant>()?
+							seq.next_element::<LuaVariant>()?
 								.ok_or_else(|| V::Error::invalid_length(len, &"constraint value"))?
 								.into()
 						),
@@ -446,16 +449,16 @@ mod impl_serde {
 								.to_variant()
 						),
 						ConstraintVerb::InRange => Some(Variant::tuple_from_iter([
-								seq.next_element::<AnyVariant>()?
+								seq.next_element::<LuaVariant>()?
 									.ok_or_else(|| V::Error::invalid_length(len, &"constraint range min"))?
 									.into_variant(),
-								seq.next_element::<AnyVariant>()?
+								seq.next_element::<LuaVariant>()?
 									.ok_or_else(|| V::Error::invalid_length(len + 1, &"constraint range max"))?
 									.into_variant(),
 						])),
 						ConstraintVerb::InList => {
 							let mut values: Vec<glib::Variant> = Vec::with_capacity(seq.size_hint().unwrap_or(0));
-							while let Some(value) = seq.next_element::<AnyVariant>()? {
+							while let Some(value) = seq.next_element::<LuaVariant>()? {
 								values.push(value.into());
 							}
 							Some(glib::Variant::tuple_from_iter(values))
@@ -474,7 +477,7 @@ mod impl_serde {
 					let mut type_ = None;
 					let mut subject = None;
 					let mut verb = None;
-					let mut value = None::<Option<AnyVariant>>;
+					let mut value = None::<Option<LuaVariant>>;
 					while let Some(key) = map.next_key()? {
 						match key {
 							Field::Type => {

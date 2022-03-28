@@ -6,7 +6,6 @@
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
 use anyhow::Context;
-use glib::Variant;
 use clap::{Parser, ArgEnum};
 use anyhow::{Result, format_err};
 use std::cell::RefCell;
@@ -17,6 +16,7 @@ use std::{env, fs};
 use wireplumber::{
 	Core, Log, info, warning,
 	pw::{self, Properties},
+	lua::LuaVariant,
 	plugin::{Plugin, PluginFeatures, ComponentLoader},
 };
 
@@ -85,7 +85,7 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 		core.load_lua_script(&path, variant_args)
 			.context("failed to load the lua script")?;
 	} else {
-		core.load_component(&path, args.module_type.loader_type(), variant_args.as_ref())
+		core.load_component(&path, args.module_type.loader_type(), variant_args.as_ref().map(|v| v.as_variant()))
 			.with_context(|| format!("failed to load {} as a {}", path, args.module_type.loader_type()))?;
 	}
 
@@ -246,13 +246,12 @@ impl Args {
 	/// In practice this must be a dictionary or array because lua scripts can't work with other
 	/// types of data as the top-level container, but more specific types may be usable by other
 	/// modules. See [wireplumber::lua] for a more detailed explanation.
-	fn variant(&self) -> Result<Option<Variant>> {
-		Ok(match self.json_arg {
-			None => None,
-			Some(ref json) => {
-				let variant: Variant = serde_json::from_str::<glib_serde::AnyVariant>(json)?.into();
-				Some(variant)
-			},
-		})
+	fn variant(&self) -> Result<Option<LuaVariant>> {
+		match self.json_arg {
+			None => Ok(None),
+			Some(ref json) => serde_json::from_str(json)
+				.map_err(Into::into)
+				.map(Some),
+		}
 	}
 }

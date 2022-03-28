@@ -21,6 +21,7 @@ use wireplumber::{
 	plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
 	registry::{ConstraintType, Constraint, Interest, ObjectManager},
 	pw::{self, Node, Port, Link, Properties},
+	lua::from_variant,
 	error,
 	info, warning,
 };
@@ -252,7 +253,7 @@ impl SimplePlugin for StaticLink {
 	}
 
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
-		args.map(|args| glib_serde::from_variant(&args))
+		args.map(|args| from_variant(&args))
 			.unwrap_or(Ok(Default::default()))
 			.map_err(error::invalid_argument)
 	}

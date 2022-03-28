@@ -382,15 +382,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "glib-serde"
-version = "0.1.0"
-source = "git+https://github.com/arcnmx/glib-serde.git?branch=revamp#4eb95ce479a8ddd2e1d03e6d19641e10d2c0088d"
-dependencies = [
- "glib",
- "serde",
-]
-
-[[package]]
 name = "glib-signal"
 version = "0.1.0"
 source = "git+https://github.com/arcnmx/glib-signal.rs.git#e5555864e03f74e95c79f941273d5ac0e407a84f"
@@ -1024,7 +1015,6 @@ dependencies = [
  "futures-util",
  "gio",
  "glib",
- "glib-serde",
  "glib-signal",
  "libc",
  "libspa",
@@ -1061,7 +1051,6 @@ dependencies = [
  "ctrlc",
  "futures",
  "glib",
- "glib-serde",
  "pipewire-sys",
  "serde",
  "serde_json",
