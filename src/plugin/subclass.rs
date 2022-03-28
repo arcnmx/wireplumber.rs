@@ -96,21 +96,26 @@ pub trait AsyncPluginExt: IsA<Plugin> {
 	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F);
 }
 
+impl Plugin {
+	pub fn core(&self) -> Core {
+		self.upcast_ref::<Object>().core()
+			.expect("plugin requires an active Core")
+	}
+}
+
 impl<T: IsA<Plugin> + ObjectSubclassIsExt> AsyncPluginExt for T where
 	<T as ObjectSubclassIs>::Subclass: AsyncPluginImpl,
 {
 	fn as_plugin(&self) -> &Plugin {
-		self.as_ref()
+		self.upcast_ref()
 	}
 
 	fn plugin_core(&self) -> Core {
 		self.as_plugin().core()
-			.expect("async plugin requires an active Core")
 	}
 
 	fn plugin_context(&self) -> MainContext {
-		self.plugin_core().g_main_context()
-			.unwrap_or_else(|| MainContext::ref_thread_default())
+		self.plugin_core().default_context()
 	}
 
 	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F) {
