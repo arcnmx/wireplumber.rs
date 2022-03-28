@@ -105,6 +105,7 @@ pub use crate::auto::{
 };
 
 mod loader;
+pub use loader::{ComponentLoaderImpl, ComponentLoaderImplExt};
 
 mod subclass;
 pub use subclass::{

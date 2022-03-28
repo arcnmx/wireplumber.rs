@@ -75,8 +75,8 @@ impl<'de> de::Visitor<'de> for Visitor {
 
 	fn visit_map<A: de::MapAccess<'de>>(self, mut map: A) -> Result<Self::Value, A::Error> {
 		let dict = VariantDict::default();
-		while let Some((key, value)) = map.next_entry()? {
-			dict.insert_value(key, LuaVariant::as_variant(&value));
+		while let Some((key, value)) = map.next_entry::<Cow<str>, _>()? {
+			dict.insert_value(&key, LuaVariant::as_variant(&value));
 		}
 
 		dict.end().try_into()

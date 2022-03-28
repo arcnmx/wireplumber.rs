@@ -258,10 +258,15 @@ impl<T> Deref for SimplePluginObject<T> where
 #[macro_export]
 macro_rules! simple_plugin_subclass {
 	(impl ObjectSubclass for $name:tt as $ty:ty { $($subclass:tt)* }) => {
+		$crate::plugin::simple_plugin_subclass! {
+			impl ObjectSubclass<$crate::plugin::Plugin> for $name as $ty { $($subclass)* }
+		}
+	};
+	(impl ObjectSubclass<$parent:ty> for $name:tt as $ty:ty { $($subclass:tt)* }) => {
 		#[$crate::lib::glib::object_subclass]
 		impl $crate::lib::glib::subclass::types::ObjectSubclass for $ty {
 			type Type = $crate::plugin::SimplePluginObject<Self>;
-			type ParentType = $crate::plugin::Plugin;
+			type ParentType = $parent;
 			const NAME: &'static str = $name;
 			$($subclass)*
 		}
