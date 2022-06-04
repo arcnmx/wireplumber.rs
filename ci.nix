@@ -1,5 +1,4 @@
 { config, channels, pkgs, env, lib, ... }: with pkgs; with lib; let
-  wireplumber = pkgs.wireplumber or channels.arc.packages.wireplumber-0_4_4;
   importShell = config: writeText "shell.nix" ''
     import ${builtins.unsafeDiscardStringContext config.shell.drvPath}
   '';
@@ -15,6 +14,22 @@
     '';
     impure = true;
   };
+  gir-rs = pkgs.rustPlatform.buildRustPackage rec {
+    inherit (pkgs.gir-rs) postPatch meta pname;
+    version = "unstable-2022-01-24";
+
+    src = fetchFromGitHub {
+      owner = "gtk-rs";
+      repo = "gir";
+      rev = "e0d8d8d645b10561f307eabd3160b292bc423e0f";
+      sha256 = "1sg6pcmj1z0gmarh0mfwi9wiqdzk3bx7k5w8wb4q2mgrd0nipbdh";
+    };
+
+    cargoSha256 = "0bis550xcibrd3464j2hw7l0z6cfks93h910dsh0vfixpflafx79";
+    buildType = "debug";
+    doCheck = false;
+  };
+
   wireplumber-gir = runCommand "wireplumber.gir" {
     girName = "share/gir-1.0/Wp-${versions.majorMinor wireplumber.version}.gir";
     wireplumber = wireplumber.dev;
@@ -79,7 +94,7 @@ in {
     };
     cache.cachix.arc.enable = true;
     channels = {
-      nixpkgs = mkIf (env.platform != "impure") "21.11";
+      nixpkgs = mkIf (env.platform != "impure") "22.05";
       rust = "master";
       arc = "master";
     };
