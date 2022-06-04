@@ -1,4 +1,4 @@
-var N = null;var sourcesIndex = {};
+var sourcesIndex = {};
 sourcesIndex["build"] = {"name":"","files":["build.rs"]};
 sourcesIndex["glib_signal"] = {"name":"","files":["borrowed_object.rs","from_values.rs","lib.rs","macros.rs","pointer.rs","signal_stream.rs","value_option.rs"]};
 sourcesIndex["static_link_module"] = {"name":"","files":["static-link.rs"]};
