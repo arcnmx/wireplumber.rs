@@ -26,6 +26,15 @@ pub trait SiAdapterExt: 'static {
     #[doc(alias = "wp_si_adapter_get_ports_format")]
     #[doc(alias = "get_ports_format")]
     fn ports_format(&self) -> (SpaPod, Option<glib::GString>);
+
+    //#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    //#[doc(alias = "wp_si_adapter_get_ports_state")]
+    //#[doc(alias = "get_ports_state")]
+    //fn ports_state(&self) -> /*Ignored*/SiAdapterPortsState;
+
+    //#[doc(alias = "adapter-ports-state-changed")]
+    //fn connect_adapter_ports_state_changed<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SiAdapter>> SiAdapterExt for O {
@@ -36,4 +45,15 @@ impl<O: IsA<SiAdapter>> SiAdapterExt for O {
             (ret, from_glib_full(mode))
         }
     }
+
+    //#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    //fn ports_state(&self) -> /*Ignored*/SiAdapterPortsState {
+    //    unsafe { TODO: call ffi:wp_si_adapter_get_ports_state() }
+    //}
+
+    //fn connect_adapter_ports_state_changed<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
+    //    Ignored object: Wp.SiAdapterPortsState
+    //    Ignored p0: Wp.SiAdapterPortsState
+    //}
 }

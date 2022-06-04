@@ -3,7 +3,8 @@
     import ${builtins.unsafeDiscardStringContext config.shell.drvPath}
   '';
   versionFeature =
-    if versionAtLeast wireplumber.version "0.4.8" then "--features v0_4_8"
+    if versionAtLeast wireplumber.version "0.4.10" then "--features v0_4_10"
+    else if versionAtLeast wireplumber.version "0.4.8" then "--features v0_4_8"
     else if versionAtLeast wireplumber.version "0.4.6" then "--features v0_4_6"
     else if versionAtLeast wireplumber.version "0.4.3" then "--features v0_4_3"
     else "";

@@ -8,6 +8,7 @@ use pipewire::{pw_core, pw_context, pw_proxy, pw_properties, pw_impl_node};
 use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 use crate::WpSpaType;
 
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
 type spa_json = c_void; // TODO: https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/36
 
 use glib_sys as glib;
@@ -58,6 +59,11 @@ pub const WP_NODE_STATE_CREATING: WpNodeState = 0;
 pub const WP_NODE_STATE_SUSPENDED: WpNodeState = 1;
 pub const WP_NODE_STATE_IDLE: WpNodeState = 2;
 pub const WP_NODE_STATE_RUNNING: WpNodeState = 3;
+
+pub type WpSiAdapterPortsState = c_int;
+pub const WP_SI_ADAPTER_PORTS_STATE_NONE: WpSiAdapterPortsState = 0;
+pub const WP_SI_ADAPTER_PORTS_STATE_CONFIGURING: WpSiAdapterPortsState = 1;
+pub const WP_SI_ADAPTER_PORTS_STATE_CONFIGURED: WpSiAdapterPortsState = 2;
 
 pub type WpTransitionStep = c_int;
 pub const WP_TRANSITION_STEP_NONE: WpTransitionStep = 0;
@@ -607,7 +613,8 @@ pub struct WpSiAdapterInterface {
     pub get_ports_format: Option<unsafe extern "C" fn(*mut WpSiAdapter, *mut *const c_char) -> *mut WpSpaPod>,
     pub set_ports_format: Option<unsafe extern "C" fn(*mut WpSiAdapter, *mut WpSpaPod, *const c_char, gio::GAsyncReadyCallback, gpointer)>,
     pub set_ports_format_finish: Option<unsafe extern "C" fn(*mut WpSiAdapter, *mut gio::GAsyncResult, *mut *mut glib::GError) -> gboolean>,
-    pub _wp_padding: [gpointer; 5],
+    pub get_ports_state: Option<unsafe extern "C" fn(*mut WpSiAdapter) -> WpSiAdapterPortsState>,
+    pub _wp_padding: [gpointer; 4],
 }
 
 impl ::std::fmt::Debug for WpSiAdapterInterface {
@@ -617,6 +624,7 @@ impl ::std::fmt::Debug for WpSiAdapterInterface {
          .field("get_ports_format", &self.get_ports_format)
          .field("set_ports_format", &self.set_ports_format)
          .field("set_ports_format_finish", &self.set_ports_format_finish)
+         .field("get_ports_state", &self.get_ports_state)
          .finish()
     }
 }
@@ -1263,6 +1271,11 @@ extern "C" {
     pub fn wp_node_state_get_type() -> GType;
 
     //=========================================================================
+    // WpSiAdapterPortsState
+    //=========================================================================
+    pub fn wp_si_adapter_ports_state_get_type() -> GType;
+
+    //=========================================================================
     // WpTransitionStep
     //=========================================================================
     pub fn wp_transition_step_get_type() -> GType;
@@ -1370,6 +1383,9 @@ extern "C" {
     pub fn wp_properties_copy(other: *mut WpProperties) -> *mut WpProperties;
     pub fn wp_properties_ensure_unique_owner(self_: *mut WpProperties) -> *mut WpProperties;
     pub fn wp_properties_get(self_: *mut WpProperties, key: *const c_char) -> *const c_char;
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    pub fn wp_properties_get_count(self_: *mut WpProperties) -> c_uint;
     pub fn wp_properties_matches(self_: *mut WpProperties, other: *mut WpProperties) -> gboolean;
     pub fn wp_properties_new_iterator(self_: *mut WpProperties) -> *mut WpIterator;
     pub fn wp_properties_peek_dict(self_: *mut WpProperties) -> *const spa_dict;
@@ -1427,6 +1443,9 @@ extern "C" {
     #[cfg(any(feature = "v0_4_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_from_string(json_str: *const c_char) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_from_stringn(json_str: *const c_char, len: size_t) -> *mut WpSpaJson;
     #[cfg(any(feature = "v0_4_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_int(value: c_int) -> *mut WpSpaJson;
@@ -2069,6 +2088,9 @@ extern "C" {
     //=========================================================================
     pub fn wp_si_adapter_get_type() -> GType;
     pub fn wp_si_adapter_get_ports_format(self_: *mut WpSiAdapter, mode: *mut *const c_char) -> *mut WpSpaPod;
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    pub fn wp_si_adapter_get_ports_state(self_: *mut WpSiAdapter) -> WpSiAdapterPortsState;
     pub fn wp_si_adapter_set_ports_format(self_: *mut WpSiAdapter, format: *mut WpSpaPod, mode: *const c_char, callback: gio::GAsyncReadyCallback, data: gpointer);
     pub fn wp_si_adapter_set_ports_format_finish(self_: *mut WpSiAdapter, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
 

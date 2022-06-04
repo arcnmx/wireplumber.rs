@@ -54,6 +54,7 @@ int main() {
     printf("%s;%zu;%zu\n", "WpSessionItemFeatures", sizeof(WpSessionItemFeatures), alignof(WpSessionItemFeatures));
     printf("%s;%zu;%zu\n", "WpSiAcquisitionInterface", sizeof(WpSiAcquisitionInterface), alignof(WpSiAcquisitionInterface));
     printf("%s;%zu;%zu\n", "WpSiAdapterInterface", sizeof(WpSiAdapterInterface), alignof(WpSiAdapterInterface));
+    printf("%s;%zu;%zu\n", "WpSiAdapterPortsState", sizeof(WpSiAdapterPortsState), alignof(WpSiAdapterPortsState));
     printf("%s;%zu;%zu\n", "WpSiEndpointInterface", sizeof(WpSiEndpointInterface), alignof(WpSiEndpointInterface));
     printf("%s;%zu;%zu\n", "WpSiFactory", sizeof(WpSiFactory), alignof(WpSiFactory));
     printf("%s;%zu;%zu\n", "WpSiFactoryClass", sizeof(WpSiFactoryClass), alignof(WpSiFactoryClass));

@@ -1,5 +1,7 @@
 use libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
-use crate::pw::{SpaPropertyKey, PipewireObject};
+use crate::pw::SpaPropertyKey;
+#[cfg(any(feature = "experimental", feature = "dox"))]
+use crate::pw::PipewireObject;
 use crate::spa::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
 use crate::prelude::*;
 

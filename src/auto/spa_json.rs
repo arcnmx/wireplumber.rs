@@ -49,6 +49,15 @@ impl SpaJson {
         }
     }
 
+    #[doc(alias = "wp_spa_json_new_from_stringn")]
+    #[doc(alias = "new_from_stringn")]
+    pub fn from_stringn(json_str: &str) -> SpaJson {
+        let len = json_str.len() as usize;
+        unsafe {
+            from_glib_full(ffi::wp_spa_json_new_from_stringn(json_str.to_glib_none().0, len))
+        }
+    }
+
     #[doc(alias = "wp_spa_json_new_int")]
     pub fn new_int(value: i32) -> SpaJson {
         unsafe {

@@ -24,6 +24,9 @@ version = "0.4.6"
 [package.metadata.system-deps.wireplumber_0_4.v0_4_8]
 version = "0.4.8"
 
+[package.metadata.system-deps.wireplumber_0_4.v0_4_10]
+version = "0.4.10"
+
 [package.metadata.docs.rs]
 features = ["dox"]
 
@@ -47,4 +50,5 @@ v0_4_2 = []
 v0_4_3 = ["v0_4_2"]
 v0_4_6 = ["v0_4_3"]
 v0_4_8 = ["v0_4_6"]
+v0_4_10 = ["v0_4_8"]
 dox = []
