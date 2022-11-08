@@ -93,26 +93,21 @@ mod tests {
 	use crate::{Log, Core, InitFlags};
 
 	#[test]
-	fn log_internal() {
+	fn log() {
 		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
 		Log::set_level("8");
-		wp_critical!("crit");
-		wp_warning!("warn");
-		wp_message!("message");
-		wp_info!("info");
-		wp_debug!("debug");
-		wp_trace!("trace");
-	}
+		wp_critical!("internal crit");
+		wp_warning!("internal warn");
+		wp_message!("internal message");
+		wp_info!("internal info");
+		wp_debug!("internal debug");
+		wp_trace!("internal trace");
 
-	#[test]
-	fn log_external() {
-		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
-		Log::set_level("8");
-		critical!("crit");
-		warning!("warn");
-		message!("message");
-		info!("info");
-		debug!("debug");
-		trace!("trace");
+		critical!("external crit");
+		warning!("external warn");
+		message!("external message");
+		info!("external info");
+		debug!("external debug");
+		trace!("external trace");
 	}
 }
