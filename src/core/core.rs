@@ -19,6 +19,24 @@ impl Core {
 		Self::init_with_flags(InitFlags::ALL)
 	}
 
+	#[cfg(any(feature = "v0_4_12", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+	#[doc(alias = "wp_get_library_version")]
+	pub fn library_version() -> String {
+		unsafe {
+			from_glib_full(ffi::wp_get_library_version())
+		}
+	}
+
+	#[cfg(any(feature = "v0_4_12", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+	#[doc(alias = "wp_get_library_api_version")]
+	pub fn library_api_version() -> String {
+		unsafe {
+			from_glib_full(ffi::wp_get_library_api_version())
+		}
+	}
+
 	#[doc(alias = "wp_get_module_dir")]
 	pub fn module_dir() -> String {
 		unsafe {

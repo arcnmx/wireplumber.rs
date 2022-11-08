@@ -2236,6 +2236,12 @@ extern "C" {
     pub fn wp_find_file(dirs: WpLookupDirs, filename: *const c_char, subdir: *const c_char) -> *mut c_char;
     pub fn wp_get_config_dir() -> *const c_char;
     pub fn wp_get_data_dir() -> *const c_char;
+    #[cfg(any(feature = "v0_4_12", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+    pub fn wp_get_library_api_version() -> *const c_char;
+    #[cfg(any(feature = "v0_4_12", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+    pub fn wp_get_library_version() -> *const c_char;
     pub fn wp_get_module_dir() -> *const c_char;
     pub fn wp_init(flags: WpInitFlags);
     pub fn wp_log_level_is_enabled(log_level: glib::GLogLevelFlags) -> gboolean;

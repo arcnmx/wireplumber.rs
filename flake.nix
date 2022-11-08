@@ -134,6 +134,8 @@
           -i '///_:class[@c:type="WpCore"]/_:method[@name="get_vm_type"]' -t attr -n version -v 0.4.11 \
           -i '///_:class[@c:type="WpLink"]/_:property[@name="state"]' -t attr -n version -v 0.4.11 \
           -i '///_:class[@c:type="WpLink"]/glib:signal[@name="state-changed"]' -t attr -n version -v 0.4.11 \
+          -i '///_:function[@name="get_library_version"]' -t attr -n version -v 0.4.12 \
+          -i '///_:function[@name="get_library_api_version"]' -t attr -n version -v 0.4.12 \
           -u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
           -i '/_:repository/_:namespace' -t elem -n package \
           "$wireplumber/$girName" > $out/$girName
@@ -165,7 +167,8 @@
     } { };
     lib = with nixlib; {
       featureForVersion = version:
-        if versionAtLeast version "0.4.11" then "v0_4_11"
+        if versionAtLeast version "0.4.12" then "v0_4_12"
+        else if versionAtLeast version "0.4.11" then "v0_4_11"
         else if versionAtLeast version "0.4.10" then "v0_4_10"
         else if versionAtLeast version "0.4.8" then "v0_4_8"
         else if versionAtLeast version "0.4.6" then "v0_4_6"
