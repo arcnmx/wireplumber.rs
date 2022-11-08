@@ -102,7 +102,7 @@
         buildType = "debug";
         doCheck = false;
       };
-      wireplumber-gir = { runCommand, xmlstarlet, wireplumber }: runCommand "wireplumber.gir" {
+      wireplumber-gir = { runCommand, xmlstarlet, wireplumber }: runCommand "wireplumber-${wireplumber.version}.gir" {
         girName = "share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber.version}.gir";
         wireplumber = wireplumber.dev;
         nativeBuildInputs = [ xmlstarlet ];
