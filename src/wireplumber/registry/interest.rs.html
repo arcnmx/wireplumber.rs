@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/registry/interest.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>interest.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/registry/interest.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>interest.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -527,528 +520,527 @@
 <span id="520">520</span>
 <span id="521">521</span>
 <span id="522">522</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::registry</span>::{<span class="ident">ObjectInterest</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">InterestMatch</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="ident">PipewireObject</span>, <span class="ident">Properties</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::registry::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch};
+<span class="kw">use </span><span class="kw">crate</span>::pw::{PipewireObject, Properties};
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">impl</span> <span class="ident">ObjectInterest</span> {
+<span class="kw">impl </span>ObjectInterest {
 	<span class="comment">/*#[doc(alias = &quot;wp_object_interest_matches&quot;)]
 	pub fn matches&lt;O: IsA&lt;GObject&gt;&gt;(&amp;self, object: O) -&gt; bool {
 		unsafe {
 			from_glib(ffi::wp_object_interest_matches(self.to_glib_none().0, object.to_glib_none().0 as *mut _))
 		}
-	}*/</span>
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_object_interest_matches&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> {
-		<span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="ident">object</span>.<span class="ident">as_ref</span>();
-		<span class="self">self</span>.<span class="ident">matches_full</span>(<span class="ident">InterestMatchFlags::CHECK_ALL</span>, <span class="ident">object</span>.<span class="ident">type_</span>(), <span class="prelude-val">Some</span>(<span class="ident">object</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">==</span> <span class="ident">InterestMatch::all</span>()
+	}*/
+	</span><span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
+	</span><span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; bool {
+		<span class="kw">let </span>object = object.as_ref();
+		<span class="self">self</span>.matches_full(InterestMatchFlags::CHECK_ALL, object.type_(), <span class="prelude-val">Some</span>(object), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>) == InterestMatch::all()
 	}
 
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_object_interest_matches&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_props</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">props</span>: <span class="kw-2">&amp;</span><span class="ident">Properties</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">matches_full</span>(<span class="ident">InterestMatchFlags::CHECK_ALL</span>, <span class="ident">Properties::static_type</span>(), <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">GObject</span><span class="op">&gt;</span>, <span class="prelude-val">Some</span>(<span class="ident">props</span>), <span class="prelude-val">None</span>) <span class="op">==</span> <span class="ident">InterestMatch::all</span>()
+	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
+	</span><span class="kw">pub fn </span>matches_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span>Properties) -&gt; bool {
+		<span class="self">self</span>.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), <span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span>GObject&gt;, <span class="prelude-val">Some</span>(props), <span class="prelude-val">None</span>) == InterestMatch::all()
 	}
 
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_object_interest_matches&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_pw_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">PipewireObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">matches_props</span>(<span class="kw-2">&amp;</span><span class="ident">object</span>.<span class="ident">as_ref</span>().<span class="ident">properties</span>().<span class="ident">unwrap</span>())
+	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
+	</span><span class="kw">pub fn </span>matches_pw_object&lt;O: IsA&lt;PipewireObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; bool {
+		<span class="self">self</span>.matches_props(<span class="kw-2">&amp;</span>object.as_ref().properties().unwrap())
 	}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">StaticType</span><span class="op">&gt;</span> {
-	<span class="ident">interest</span>: <span class="ident">ObjectInterest</span>,
-	<span class="ident">_type</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+<span class="attr">#[derive(Clone, Debug)]
+#[repr(transparent)]
+</span><span class="kw">pub struct </span>Interest&lt;T: StaticType&gt; {
+	interest: ObjectInterest,
+	_type: PhantomData&lt;T&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">StaticType</span><span class="op">&gt;</span> <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident"><span class="self">Self</span>::wrap_unchecked</span>(<span class="ident">ObjectInterest::new_type</span>(<span class="ident">T::static_type</span>()))
+<span class="kw">impl</span>&lt;T: StaticType&gt; Interest&lt;T&gt; {
+	<span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			<span class="self">Self</span>::wrap_unchecked(ObjectInterest::new_type(T::static_type()))
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">wrap_unchecked</span>(<span class="ident">interest</span>: <span class="ident">ObjectInterest</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">interest</span>,
-			<span class="ident">_type</span>: <span class="ident">PhantomData</span>,
+	<span class="kw">pub unsafe fn </span>wrap_unchecked(interest: ObjectInterest) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			interest,
+			_type: PhantomData,
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">ObjectInterest</span> {
-		<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interest</span>
+	<span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ObjectInterest {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.interest
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) -&gt; <span class="ident">ObjectInterest</span> {
-		<span class="self">self</span>.<span class="ident">interest</span>
+	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; ObjectInterest {
+		<span class="self">self</span>.interest
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches_object</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) -&gt; <span class="ident">bool</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">interest</span>.<span class="ident">matches_object</span>(<span class="ident">object</span>)
+	<span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; bool <span class="kw">where </span>T: IsA&lt;O&gt; {
+		<span class="self">self</span>.interest.matches_object(object)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">constrain</span><span class="op">&lt;</span><span class="lifetime">&#39;o</span>, <span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">object</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">O</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;o</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">matches_object</span>(<span class="ident">object</span>) {
-			<span class="prelude-val">Some</span>(<span class="kw">unsafe</span> {
-				<span class="ident">object</span>.<span class="ident">unsafe_cast_ref</span>()
+	<span class="kw">pub fn </span>constrain&lt;<span class="lifetime">&#39;o</span>, O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>O) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>T&gt; <span class="kw">where </span>T: IsA&lt;O&gt; {
+		<span class="kw">if </span><span class="self">self</span>.matches_object(object) {
+			<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{
+				object.unsafe_cast_ref()
 			})
-		} <span class="kw">else</span> {
-			<span class="prelude-val">None</span>
-		}
+		} <span class="kw">else </span>{
+			<span class="prelude-val">None
+		</span>}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">InterestContainer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">container</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>) -&gt; <span class="ident">ValueIterator</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-		<span class="ident">container</span>.<span class="ident">filter</span>(<span class="self">self</span>)
+	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; ValueIterator::&lt;T&gt; {
+		container.filter(<span class="self">self</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lookup</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">InterestContainer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">container</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-		<span class="ident">container</span>.<span class="ident">lookup</span>(<span class="self">self</span>)
+	<span class="kw">pub fn </span>lookup&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
+		container.lookup(<span class="self">self</span>)
 	}
 
-	<span class="comment">// TODO: helpers for adding constraints that skip the `Type` arg</span>
-	<span class="comment">// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?</span>
+	<span class="comment">// TODO: helpers for adding constraints that skip the `Type` arg
+	// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?
+</span>}
+
+<span class="kw">pub trait </span>InterestContainer&lt;T: StaticType&gt; {
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt;;
+	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InterestContainer</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">StaticType</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
-	<span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
-}
+<span class="kw">impl</span>&lt;T: StaticType&gt; Deref <span class="kw">for </span>Interest&lt;T&gt; {
+	<span class="kw">type </span>Target = ObjectInterest;
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">StaticType</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">ObjectInterest</span>;
-
-	<span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Target</span> {
-		<span class="self">self</span>.<span class="ident">inner</span>()
-	}
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>, <span class="ident">T</span>: <span class="ident">StaticType</span><span class="op">&gt;</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) {
-		<span class="kw">for</span> <span class="ident">constraint</span> <span class="kw">in</span> <span class="ident">iter</span> {
-			<span class="ident">constraint</span>.<span class="ident">borrow</span>().<span class="ident">add_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
-		}
+	<span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
+		<span class="self">self</span>.inner()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Constraint</span><span class="op">&gt;</span>, <span class="ident">T</span>: <span class="ident">StaticType</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interest</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::new</span>();
-		<span class="ident">interest</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
-		<span class="ident">interest</span>
+<span class="kw">impl</span>&lt;C: Borrow&lt;Constraint&gt;, T: StaticType&gt; Extend&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
+	<span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item=C&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
+		<span class="kw">for </span>constraint <span class="kw">in </span>iter {
+			constraint.borrow().add_to(<span class="kw-2">&amp;</span><span class="self">self</span>)
+		}
 	}
 }
 
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Variant</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Constraint</span> {
-	<span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">ConstraintType</span>,
-	<span class="kw">pub</span> <span class="ident">subject</span>: <span class="ident">String</span>,
-	<span class="kw">pub</span> <span class="ident">verb</span>: <span class="ident">ConstraintVerb</span>,
-	<span class="kw">pub</span> <span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">Constraint</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">type_</span>: <span class="ident">ConstraintType</span>, <span class="ident">subject</span>: <span class="ident">S</span>, <span class="ident">present</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">type_</span>,
-			<span class="ident">subject</span>: <span class="ident">subject</span>.<span class="ident">into</span>(),
-			<span class="ident">verb</span>: <span class="kw">if</span> <span class="ident">present</span> { <span class="ident">ConstraintVerb::IsPresent</span> } <span class="kw">else</span> { <span class="ident">ConstraintVerb::IsAbsent</span> },
-			<span class="ident">value</span>: <span class="prelude-val">None</span>,
-		}
-	}
-
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">ToVariant</span><span class="op">&gt;</span>(<span class="ident">type_</span>: <span class="ident">ConstraintType</span>, <span class="ident">subject</span>: <span class="ident">S</span>, <span class="ident">value</span>: <span class="ident">V</span>, <span class="ident">equal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">type_</span>,
-			<span class="ident">subject</span>: <span class="ident">subject</span>.<span class="ident">into</span>(),
-			<span class="ident">verb</span>: <span class="kw">if</span> <span class="ident">equal</span> { <span class="ident">ConstraintVerb::Equals</span> } <span class="kw">else</span> { <span class="ident">ConstraintVerb::NotEquals</span> },
-			<span class="ident">value</span>: <span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">to_variant</span>()),
-		}
-	}
-
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">type_</span>: <span class="ident">ConstraintType</span>, <span class="ident">subject</span>: <span class="ident">S</span>, <span class="ident">pattern</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">type_</span>,
-			<span class="ident">subject</span>: <span class="ident">subject</span>.<span class="ident">into</span>(),
-			<span class="ident">verb</span>: <span class="ident">ConstraintVerb::Matches</span>,
-			<span class="ident">value</span>: <span class="prelude-val">Some</span>(<span class="ident">pattern</span>.<span class="ident">to_variant</span>()),
-		}
-	}
-
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_range</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">ToVariant</span><span class="op">&gt;</span>(<span class="ident">type_</span>: <span class="ident">ConstraintType</span>, <span class="ident">subject</span>: <span class="ident">S</span>, <span class="ident">low</span>: <span class="ident">V</span>, <span class="ident">high</span>: <span class="ident">V</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">type_</span>,
-			<span class="ident">subject</span>: <span class="ident">subject</span>.<span class="ident">into</span>(),
-			<span class="ident">verb</span>: <span class="ident">ConstraintVerb::InRange</span>,
-			<span class="ident">value</span>: <span class="prelude-val">Some</span>((<span class="ident">low</span>, <span class="ident">high</span>).<span class="ident">to_variant</span>()),
-		}
-	}
-
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_list</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">ToVariant</span>, <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">V</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">type_</span>: <span class="ident">ConstraintType</span>, <span class="ident">subject</span>: <span class="ident">S</span>, <span class="ident">one_of</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">one_of</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">to_variant</span>());
-		<span class="self">Self</span> {
-			<span class="ident">type_</span>,
-			<span class="ident">subject</span>: <span class="ident">subject</span>.<span class="ident">into</span>(),
-			<span class="ident">verb</span>: <span class="ident">ConstraintVerb::InRange</span>,
-			<span class="ident">value</span>: <span class="prelude-val">Some</span>(<span class="ident">Variant::tuple_from_iter</span>(<span class="ident">values</span>)),
-		}
-	}
-
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">ObjectInterest</span>) {
-		<span class="ident">interest</span>.<span class="ident">add_constraint</span>(<span class="self">self</span>.<span class="ident">type_</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">subject</span>, <span class="self">self</span>.<span class="ident">verb</span>, <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>())
+<span class="kw">impl</span>&lt;C: Borrow&lt;Constraint&gt;, T: StaticType&gt; FromIterator&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=C&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span><span class="kw-2">mut </span>interest = <span class="self">Self</span>::new();
+		interest.extend(iter);
+		interest
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="attr">#[must_use]
+#[derive(Clone, Debug, Variant)]
+</span><span class="kw">pub struct </span>Constraint {
+	<span class="kw">pub </span>type_: ConstraintType,
+	<span class="kw">pub </span>subject: String,
+	<span class="kw">pub </span>verb: ConstraintVerb,
+	<span class="kw">pub </span>value: <span class="prelude-ty">Option</span>&lt;Variant&gt;,
+}
 
-	<span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">s</span> {
-			<span class="string">&quot;equals&quot;</span> <span class="op">|</span> <span class="string">&quot;=&quot;</span> =&gt; <span class="ident">ConstraintVerb::Equals</span>,
-			<span class="string">&quot;not-equals&quot;</span> <span class="op">|</span> <span class="string">&quot;!&quot;</span> =&gt; <span class="ident">ConstraintVerb::NotEquals</span>,
-			<span class="string">&quot;in-list&quot;</span> <span class="op">|</span> <span class="string">&quot;c&quot;</span> =&gt; <span class="ident">ConstraintVerb::InList</span>,
-			<span class="string">&quot;in-range&quot;</span> <span class="op">|</span> <span class="string">&quot;~&quot;</span> =&gt; <span class="ident">ConstraintVerb::InRange</span>,
-			<span class="string">&quot;matches&quot;</span> <span class="op">|</span> <span class="string">&quot;#&quot;</span> =&gt; <span class="ident">ConstraintVerb::Matches</span>,
-			<span class="string">&quot;is-present&quot;</span> <span class="op">|</span> <span class="string">&quot;+&quot;</span> =&gt; <span class="ident">ConstraintVerb::IsPresent</span>,
-			<span class="string">&quot;is-absent&quot;</span> <span class="op">|</span> <span class="string">&quot;-&quot;</span> =&gt; <span class="ident">ConstraintVerb::IsAbsent</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, <span class="ident">s</span>))),
+<span class="kw">impl </span>Constraint {
+	<span class="kw">pub fn </span>has&lt;S: Into&lt;String&gt;&gt;(type_: ConstraintType, subject: S, present: bool) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			type_,
+			subject: subject.into(),
+			verb: <span class="kw">if </span>present { ConstraintVerb::IsPresent } <span class="kw">else </span>{ ConstraintVerb::IsAbsent },
+			value: <span class="prelude-val">None</span>,
+		}
+	}
+
+	<span class="kw">pub fn </span>compare&lt;S: Into&lt;String&gt;, V: ToVariant&gt;(type_: ConstraintType, subject: S, value: V, equal: bool) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			type_,
+			subject: subject.into(),
+			verb: <span class="kw">if </span>equal { ConstraintVerb::Equals } <span class="kw">else </span>{ ConstraintVerb::NotEquals },
+			value: <span class="prelude-val">Some</span>(value.to_variant()),
+		}
+	}
+
+	<span class="kw">pub fn </span>matches&lt;S: Into&lt;String&gt;&gt;(type_: ConstraintType, subject: S, pattern: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			type_,
+			subject: subject.into(),
+			verb: ConstraintVerb::Matches,
+			value: <span class="prelude-val">Some</span>(pattern.to_variant()),
+		}
+	}
+
+	<span class="kw">pub fn </span>in_range&lt;S: Into&lt;String&gt;, V: ToVariant&gt;(type_: ConstraintType, subject: S, low: V, high: V) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			type_,
+			subject: subject.into(),
+			verb: ConstraintVerb::InRange,
+			value: <span class="prelude-val">Some</span>((low, high).to_variant()),
+		}
+	}
+
+	<span class="kw">pub fn </span>in_list&lt;S: Into&lt;String&gt;, V: ToVariant, I: Iterator&lt;Item=V&gt;&gt;(type_: ConstraintType, subject: S, one_of: I) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span>values = one_of.map(|v| v.to_variant());
+		<span class="self">Self </span>{
+			type_,
+			subject: subject.into(),
+			verb: ConstraintVerb::InRange,
+			value: <span class="prelude-val">Some</span>(Variant::tuple_from_iter(values)),
+		}
+	}
+
+	<span class="kw">pub fn </span>add_to(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>ObjectInterest) {
+		interest.add_constraint(<span class="self">self</span>.type_, <span class="kw-2">&amp;</span><span class="self">self</span>.subject, <span class="self">self</span>.verb, <span class="self">self</span>.value.as_ref())
+	}
+}
+
+<span class="kw">impl </span>FromStr <span class="kw">for </span>ConstraintVerb {
+	<span class="kw">type </span><span class="prelude-val">Err </span>= Error;
+
+	<span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span>s {
+			<span class="string">&quot;equals&quot; </span>| <span class="string">&quot;=&quot; </span>=&gt; ConstraintVerb::Equals,
+			<span class="string">&quot;not-equals&quot; </span>| <span class="string">&quot;!&quot; </span>=&gt; ConstraintVerb::NotEquals,
+			<span class="string">&quot;in-list&quot; </span>| <span class="string">&quot;c&quot; </span>=&gt; ConstraintVerb::InList,
+			<span class="string">&quot;in-range&quot; </span>| <span class="string">&quot;~&quot; </span>=&gt; ConstraintVerb::InRange,
+			<span class="string">&quot;matches&quot; </span>| <span class="string">&quot;#&quot; </span>=&gt; ConstraintVerb::Matches,
+			<span class="string">&quot;is-present&quot; </span>| <span class="string">&quot;+&quot; </span>=&gt; ConstraintVerb::IsPresent,
+			<span class="string">&quot;is-absent&quot; </span>| <span class="string">&quot;-&quot; </span>=&gt; ConstraintVerb::IsAbsent,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, s))),
 		})
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">FromStr</span><span class="op">&gt;</span><span class="ident">::Err</span>;
+<span class="kw">impl </span>TryFrom&lt;char&gt; <span class="kw">for </span>ConstraintVerb {
+	<span class="kw">type </span>Error = &lt;<span class="self">Self </span><span class="kw">as </span>FromStr&gt;::Err;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">char</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">value</span> {
-			<span class="string">&#39;=&#39;</span> =&gt; <span class="ident">ConstraintVerb::Equals</span>,
-			<span class="string">&#39;!&#39;</span> =&gt; <span class="ident">ConstraintVerb::NotEquals</span>,
-			<span class="string">&#39;c&#39;</span> =&gt; <span class="ident">ConstraintVerb::InList</span>,
-			<span class="string">&#39;~&#39;</span> =&gt; <span class="ident">ConstraintVerb::InRange</span>,
-			<span class="string">&#39;#&#39;</span> =&gt; <span class="ident">ConstraintVerb::Matches</span>,
-			<span class="string">&#39;+&#39;</span> =&gt; <span class="ident">ConstraintVerb::IsPresent</span>,
-			<span class="string">&#39;-&#39;</span> =&gt; <span class="ident">ConstraintVerb::IsAbsent</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, <span class="ident">value</span>))),
+	<span class="kw">fn </span>try_from(value: char) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span>value {
+			<span class="string">&#39;=&#39; </span>=&gt; ConstraintVerb::Equals,
+			<span class="string">&#39;!&#39; </span>=&gt; ConstraintVerb::NotEquals,
+			<span class="string">&#39;c&#39; </span>=&gt; ConstraintVerb::InList,
+			<span class="string">&#39;~&#39; </span>=&gt; ConstraintVerb::InRange,
+			<span class="string">&#39;#&#39; </span>=&gt; ConstraintVerb::Matches,
+			<span class="string">&#39;+&#39; </span>=&gt; ConstraintVerb::IsPresent,
+			<span class="string">&#39;-&#39; </span>=&gt; ConstraintVerb::IsAbsent,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, value))),
 		})
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">StaticVariantType</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">fn</span> <span class="ident">static_variant_type</span>() -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">VariantTy</span><span class="op">&gt;</span> {
-		<span class="op">&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">IntoGlib</span><span class="op">&gt;</span><span class="ident">::GlibType</span> <span class="kw">as</span> <span class="ident">StaticVariantType</span><span class="op">&gt;</span><span class="ident">::static_variant_type</span>()
+<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>ConstraintVerb {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
+		&lt;&lt;<span class="self">Self </span><span class="kw">as </span>IntoGlib&gt;::GlibType <span class="kw">as </span>StaticVariantType&gt;::static_variant_type()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">FromVariant</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">fn</span> <span class="ident">from_variant</span>(<span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="ident">variant</span>.<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::String</span> =&gt;
-				<span class="ident">variant</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>()
-				.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">ok</span>()),
-			<span class="kw">_</span> =&gt; <span class="kw">unsafe</span> {
-				<span class="prelude-val">Some</span>(<span class="ident">from_glib</span>(<span class="ident">variant</span>.<span class="ident">get</span>()<span class="question-mark">?</span>))
+<span class="kw">impl </span>FromVariant <span class="kw">for </span>ConstraintVerb {
+	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="kw">match </span>variant.classify() {
+			VariantClass::String =&gt;
+				variant.get::&lt;String&gt;()
+				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).ok()),
+			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{
+				<span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>))
 			},
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">ToVariant</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">fn</span> <span class="ident">to_variant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Variant</span> {
-		<span class="ident">str::from_utf8</span>(<span class="kw-2">&amp;</span>[<span class="self">self</span>.<span class="ident">symbol</span>() <span class="kw">as</span> <span class="ident">u8</span>])
-			.<span class="ident">unwrap</span>()
-			.<span class="ident">to_variant</span>()
+<span class="kw">impl </span>ToVariant <span class="kw">for </span>ConstraintVerb {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
+		str::from_utf8(<span class="kw-2">&amp;</span>[<span class="self">self</span>.symbol() <span class="kw">as </span>u8])
+			.unwrap()
+			.to_variant()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">ConstraintVerb::__Unknown</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
-			<span class="ident">ConstraintVerb::IsPresent</span> <span class="op">|</span> <span class="ident">ConstraintVerb::IsAbsent</span> =&gt; <span class="prelude-val">None</span>,
-			<span class="ident">ConstraintVerb::Equals</span> <span class="op">|</span> <span class="ident">ConstraintVerb::NotEquals</span> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*one of [Type::STRING, Type::U32, Type::I32, Type::U64, Type::I64, Type::F64, Type::BOOL]*/</span>()),
-			<span class="ident">ConstraintVerb::Matches</span> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*Type::STRING*/</span>()),
-			<span class="ident">ConstraintVerb::InRange</span> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*(T, T) where T is one of [I/U32, I/U64, DOUBLE]*/</span>()),
-			<span class="ident">ConstraintVerb::InList</span> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*[T] where T is one of [I/U32, I/U64, DOUBLE] - also should be provided as a tuple and not an array/list???*/</span>()),
+<span class="kw">impl </span>ConstraintVerb {
+	<span class="kw">pub fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
+		<span class="kw">match </span><span class="self">self </span>{
+			ConstraintVerb::__Unknown(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
+			ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent =&gt; <span class="prelude-val">None</span>,
+			ConstraintVerb::Equals | ConstraintVerb::NotEquals =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*one of [Type::STRING, Type::U32, Type::I32, Type::U64, Type::I64, Type::F64, Type::BOOL]*/</span>()),
+			ConstraintVerb::Matches =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*Type::STRING*/</span>()),
+			ConstraintVerb::InRange =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*(T, T) where T is one of [I/U32, I/U64, DOUBLE]*/</span>()),
+			ConstraintVerb::InList =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*[T] where T is one of [I/U32, I/U64, DOUBLE] - also should be provided as a tuple and not an array/list???*/</span>()),
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nickname</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-		<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">ConstraintVerb::Equals</span> =&gt; <span class="string">&quot;equals&quot;</span>,
-			<span class="ident">ConstraintVerb::NotEquals</span> =&gt; <span class="string">&quot;not-equals&quot;</span>,
-			<span class="ident">ConstraintVerb::InList</span> =&gt; <span class="string">&quot;in-list&quot;</span>,
-			<span class="ident">ConstraintVerb::InRange</span> =&gt; <span class="string">&quot;in-range&quot;</span>,
-			<span class="ident">ConstraintVerb::Matches</span> =&gt; <span class="string">&quot;matches&quot;</span>,
-			<span class="ident">ConstraintVerb::IsPresent</span> =&gt; <span class="string">&quot;is-present&quot;</span>,
-			<span class="ident">ConstraintVerb::IsAbsent</span> =&gt; <span class="string">&quot;is-absent&quot;</span>,
-			<span class="ident">ConstraintVerb::__Unknown</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
+	<span class="kw">pub fn </span>nickname(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+		<span class="kw">match </span><span class="self">self </span>{
+			ConstraintVerb::Equals =&gt; <span class="string">&quot;equals&quot;</span>,
+			ConstraintVerb::NotEquals =&gt; <span class="string">&quot;not-equals&quot;</span>,
+			ConstraintVerb::InList =&gt; <span class="string">&quot;in-list&quot;</span>,
+			ConstraintVerb::InRange =&gt; <span class="string">&quot;in-range&quot;</span>,
+			ConstraintVerb::Matches =&gt; <span class="string">&quot;matches&quot;</span>,
+			ConstraintVerb::IsPresent =&gt; <span class="string">&quot;is-present&quot;</span>,
+			ConstraintVerb::IsAbsent =&gt; <span class="string">&quot;is-absent&quot;</span>,
+			ConstraintVerb::__Unknown(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">char</span> {
-		<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">ConstraintVerb::__Unknown</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
-			<span class="kw">_</span> =&gt; <span class="self">self</span>.<span class="ident">into_glib</span>() <span class="kw">as</span> <span class="ident">u8</span> <span class="kw">as</span> <span class="ident">char</span>,
+	<span class="kw">pub fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; char {
+		<span class="kw">match </span><span class="self">self </span>{
+			ConstraintVerb::__Unknown(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
+			<span class="kw">_ </span>=&gt; <span class="self">self</span>.into_glib() <span class="kw">as </span>u8 <span class="kw">as </span>char,
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) -&gt; <span class="ident">char</span> {
-		<span class="self">self</span>.<span class="ident">symbol</span>()
+<span class="kw">impl </span>Into&lt;char&gt; <span class="kw">for </span>ConstraintVerb {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; char {
+		<span class="self">self</span>.symbol()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-		<span class="ident">ConstraintType::PwProperty</span>
+<span class="kw">impl </span>Default <span class="kw">for </span>ConstraintType {
+	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+		ConstraintType::PwProperty
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>FromStr <span class="kw">for </span>ConstraintType {
+	<span class="kw">type </span><span class="prelude-val">Err </span>= Error;
 
-	<span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">s</span> {
-			<span class="string">&quot;pw-global&quot;</span> =&gt; <span class="ident">ConstraintType::PwGlobalProperty</span>,
-			<span class="string">&quot;pw&quot;</span> =&gt; <span class="ident">ConstraintType::PwProperty</span>,
-			<span class="string">&quot;gobject&quot;</span> =&gt; <span class="ident">ConstraintType::GProperty</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, <span class="ident">s</span>))),
+	<span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span>s {
+			<span class="string">&quot;pw-global&quot; </span>=&gt; ConstraintType::PwGlobalProperty,
+			<span class="string">&quot;pw&quot; </span>=&gt; ConstraintType::PwProperty,
+			<span class="string">&quot;gobject&quot; </span>=&gt; ConstraintType::GProperty,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, s))),
 		})
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">StaticVariantType</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">fn</span> <span class="ident">static_variant_type</span>() -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">VariantTy</span><span class="op">&gt;</span> {
-		<span class="op">&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">IntoGlib</span><span class="op">&gt;</span><span class="ident">::GlibType</span> <span class="kw">as</span> <span class="ident">StaticVariantType</span><span class="op">&gt;</span><span class="ident">::static_variant_type</span>()
+<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>ConstraintType {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
+		&lt;&lt;<span class="self">Self </span><span class="kw">as </span>IntoGlib&gt;::GlibType <span class="kw">as </span>StaticVariantType&gt;::static_variant_type()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">FromVariant</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">fn</span> <span class="ident">from_variant</span>(<span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="ident">variant</span>.<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::String</span> =&gt;
-				<span class="ident">variant</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>()
-				.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">ok</span>()),
-			<span class="kw">_</span> =&gt; <span class="kw">unsafe</span> {
-				<span class="prelude-val">Some</span>(<span class="ident">from_glib</span>(<span class="ident">variant</span>.<span class="ident">get</span>()<span class="question-mark">?</span>))
+<span class="kw">impl </span>FromVariant <span class="kw">for </span>ConstraintType {
+	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="kw">match </span>variant.classify() {
+			VariantClass::String =&gt;
+				variant.get::&lt;String&gt;()
+				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).ok()),
+			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{
+				<span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>))
 			},
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">ToVariant</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">fn</span> <span class="ident">to_variant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Variant</span> {
-		<span class="self">self</span>.<span class="ident">name</span>().<span class="ident">to_variant</span>()
+<span class="kw">impl </span>ToVariant <span class="kw">for </span>ConstraintType {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
+		<span class="self">self</span>.name().to_variant()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">ConstraintType</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-		<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">ConstraintType::PwProperty</span> =&gt; <span class="string">&quot;pw&quot;</span>,
-			<span class="ident">ConstraintType::PwGlobalProperty</span> =&gt; <span class="string">&quot;pw-global&quot;</span>,
-			<span class="ident">ConstraintType::GProperty</span> =&gt; <span class="string">&quot;gobject&quot;</span>,
-			<span class="ident">ConstraintType::None</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;no constraint type&quot;</span>),
-			<span class="ident">ConstraintType::__Unknown</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint type&quot;</span>),
+<span class="kw">impl </span>ConstraintType {
+	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+		<span class="kw">match </span><span class="self">self </span>{
+			ConstraintType::PwProperty =&gt; <span class="string">&quot;pw&quot;</span>,
+			ConstraintType::PwGlobalProperty =&gt; <span class="string">&quot;pw-global&quot;</span>,
+			ConstraintType::GProperty =&gt; <span class="string">&quot;gobject&quot;</span>,
+			ConstraintType::None =&gt; <span class="macro">panic!</span>(<span class="string">&quot;no constraint type&quot;</span>),
+			ConstraintType::__Unknown(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint type&quot;</span>),
 		}
 	}
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">impl_serde</span> {
-	<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Constraint</span>, <span class="ident">ConstraintVerb</span>, <span class="ident">ConstraintType</span>};
-	<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::lua</span>::{<span class="ident">LuaVariant</span>, <span class="ident">LuaError</span>};
-	<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Variant</span>, <span class="ident">ToVariant</span>};
-	<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>, <span class="ident">de</span>::{<span class="self">self</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">Visitor</span>, <span class="ident">SeqAccess</span>, <span class="ident">MapAccess</span>, <span class="ident">Unexpected</span>}, <span class="ident">ser::SerializeStruct</span>};
-	<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
-	<span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
-	<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+</span><span class="kw">mod </span>impl_serde {
+	<span class="kw">use super</span>::{Constraint, ConstraintVerb, ConstraintType};
+	<span class="kw">use </span><span class="kw">crate</span>::lua::{LuaVariant, LuaError};
+	<span class="kw">use </span>glib::{Variant, ToVariant};
+	<span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize, Serializer, de::{<span class="self">self</span>, Error <span class="kw">as _</span>, Visitor, SeqAccess, MapAccess, Unexpected}, ser::SerializeStruct};
+	<span class="kw">use </span>std::str::FromStr;
+	<span class="kw">use </span>std::borrow::Cow;
+	<span class="kw">use </span>std::fmt;
 
-	<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-		<span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span> {
-			<span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::deserialize</span>(<span class="ident">deserializer</span>)
-				.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">map_err</span>(<span class="ident">D::Error::custom</span>))
+	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ConstraintVerb {
+		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
+			&lt;Cow&lt;String&gt;&gt;::deserialize(deserializer)
+				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).map_err(D::Error::custom))
 		}
 	}
 
-	<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-		<span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Serializer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span> {
-			<span class="self">self</span>.<span class="ident">symbol</span>().<span class="ident">serialize</span>(<span class="ident">serializer</span>)
+	<span class="kw">impl </span>Serialize <span class="kw">for </span>ConstraintVerb {
+		<span class="kw">fn </span>serialize&lt;S: Serializer&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<span class="self">self</span>.symbol().serialize(serializer)
 		}
 	}
 
-	<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-		<span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span> {
-			<span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::deserialize</span>(<span class="ident">deserializer</span>)
-				.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">map_err</span>(<span class="ident">D::Error::custom</span>))
+	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ConstraintType {
+		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
+			&lt;Cow&lt;String&gt;&gt;::deserialize(deserializer)
+				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).map_err(D::Error::custom))
 		}
 	}
 
-	<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-		<span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Serializer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span> {
-			<span class="self">self</span>.<span class="ident">name</span>().<span class="ident">serialize</span>(<span class="ident">serializer</span>)
+	<span class="kw">impl </span>Serialize <span class="kw">for </span>ConstraintType {
+		<span class="kw">fn </span>serialize&lt;S: Serializer&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<span class="self">self</span>.name().serialize(serializer)
 		}
 	}
 
-	<span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Constraint</span> {
-		<span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Serializer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span> {
-			<span class="kw">let</span> <span class="ident">compact</span> <span class="op">=</span> <span class="op">!</span><span class="ident">serializer</span>.<span class="ident">is_human_readable</span>();
-			<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">serializer</span>.<span class="ident">serialize_struct</span>(<span class="string">&quot;Constraint&quot;</span>, <span class="number">4</span>)<span class="question-mark">?</span>;
-			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">type_</span>)<span class="question-mark">?</span>;
-			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;subject&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">subject</span>)<span class="question-mark">?</span>;
-			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;verb&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">verb</span>)<span class="question-mark">?</span>;
-			<span class="ident">state</span>.<span class="ident">serialize_field</span>(<span class="string">&quot;value&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>()
-				.<span class="ident">map</span>(<span class="ident">LuaVariant::convert_from</span>)
-				.<span class="ident">transpose</span>().<span class="ident">map_err</span>(<span class="ident">LuaError::serde_error_ser</span>)<span class="question-mark">?</span>
-			)<span class="question-mark">?</span>;
-			<span class="ident">state</span>.<span class="ident">end</span>()
+	<span class="kw">impl </span>Serialize <span class="kw">for </span>Constraint {
+		<span class="kw">fn </span>serialize&lt;S: Serializer&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<span class="kw">let </span>compact = !serializer.is_human_readable();
+			<span class="kw">let </span><span class="kw-2">mut </span>state = serializer.serialize_struct(<span class="string">&quot;Constraint&quot;</span>, <span class="number">4</span>)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.type_)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">&quot;subject&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.subject)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">&quot;verb&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.verb)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">&quot;value&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.value.as_ref()
+				.map(LuaVariant::convert_from)
+				.transpose().map_err(LuaError::serde_error_ser)<span class="question-mark">?
+			</span>)<span class="question-mark">?</span>;
+			state.end()
 		}
 	}
 
-	<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Constraint</span> {
-		<span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span> {
-			<span class="kw">enum</span> <span class="ident">Field</span> { <span class="ident">Type</span>, <span class="ident">Subject</span>, <span class="ident">Verb</span>, <span class="ident">Value</span> }
+	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Constraint {
+		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
+			<span class="kw">enum </span>Field { Type, Subject, Verb, Value }
 
-			<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Field</span> {
-				<span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Field</span>, <span class="ident">D::Error</span><span class="op">&gt;</span> {
-					<span class="kw">struct</span> <span class="ident">FieldVisitor</span>;
+			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Field {
+				<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;Field, D::Error&gt; {
+					<span class="kw">struct </span>FieldVisitor;
 
-					<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FieldVisitor</span> {
-						<span class="kw">type</span> <span class="ident">Value</span> <span class="op">=</span> <span class="ident">Field</span>;
+					<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>FieldVisitor {
+						<span class="kw">type </span>Value = Field;
 
-						<span class="kw">fn</span> <span class="ident">expecting</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-							<span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;`type` or `subject` or `verb` or `value`&quot;</span>)
+						<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+							formatter.write_str(<span class="string">&quot;`type` or `subject` or `verb` or `value`&quot;</span>)
 						}
 
-						<span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Field</span>, <span class="ident">E</span><span class="op">&gt;</span> {
-							<span class="kw">match</span> <span class="ident">value</span> {
-								<span class="string">&quot;type&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Field::Type</span>),
-								<span class="string">&quot;subject&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Field::Subject</span>),
-								<span class="string">&quot;verb&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Field::Verb</span>),
-								<span class="string">&quot;value&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Field::Value</span>),
-								<span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">E::unknown_field</span>(<span class="ident">value</span>, <span class="ident">FIELDS</span>)),
+						<span class="kw">fn </span>visit_str&lt;E: de::Error&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Field, E&gt; {
+							<span class="kw">match </span>value {
+								<span class="string">&quot;type&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Field::Type),
+								<span class="string">&quot;subject&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Field::Subject),
+								<span class="string">&quot;verb&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Field::Verb),
+								<span class="string">&quot;value&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Field::Value),
+								<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(E::unknown_field(value, FIELDS)),
 							}
 						}
 					}
 
-					<span class="ident">deserializer</span>.<span class="ident">deserialize_identifier</span>(<span class="ident">FieldVisitor</span>)
+					deserializer.deserialize_identifier(FieldVisitor)
 				}
 			}
 
-			<span class="kw">struct</span> <span class="ident">ConstraintVisitor</span>;
+			<span class="kw">struct </span>ConstraintVisitor;
 
-			<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintVisitor</span> {
-				<span class="kw">type</span> <span class="ident">Value</span> <span class="op">=</span> <span class="ident">Constraint</span>;
+			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ConstraintVisitor {
+				<span class="kw">type </span>Value = Constraint;
 
-				<span class="kw">fn</span> <span class="ident">expecting</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-					<span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;struct Constraint&quot;</span>)
+				<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+					formatter.write_str(<span class="string">&quot;struct Constraint&quot;</span>)
 				}
 
-				<span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">V</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">V::Error</span><span class="op">&gt;</span> {
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">len</span> <span class="op">=</span> <span class="number">0</span>;
+				<span class="kw">fn </span>visit_seq&lt;V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
+					<span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
 
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subject</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>()<span class="question-mark">?</span>
-						.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <span class="ident">len</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+					<span class="kw">let </span><span class="kw-2">mut </span>subject: String = seq.next_element()<span class="question-mark">?
+						</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; len += <span class="number">1</span>;
 
-					<span class="kw">let</span> <span class="ident">type_</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ConstraintType::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">subject</span>) {
-						<span class="prelude-val">Ok</span>(<span class="ident">type_</span>) =&gt; {
-							<span class="ident">subject</span> <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>()<span class="question-mark">?</span>
-								.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <span class="ident">len</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-							<span class="ident">type_</span>
+					<span class="kw">let </span>type_ = <span class="kw">match </span>ConstraintType::from_str(<span class="kw-2">&amp;</span>subject) {
+						<span class="prelude-val">Ok</span>(type_) =&gt; {
+							subject = seq.next_element()<span class="question-mark">?
+								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; len += <span class="number">1</span>;
+							type_
 						},
-						<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="ident">ConstraintType::default</span>(),
+						<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; ConstraintType::default(),
 					};
 
-					<span class="kw">let</span> <span class="ident">verb</span> <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>()<span class="question-mark">?</span>
-						.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <span class="ident">len</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+					<span class="kw">let </span>verb = seq.next_element()<span class="question-mark">?
+						</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; len += <span class="number">1</span>;
 
-					<span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">verb</span> {
-						<span class="ident">ConstraintVerb::__Unknown</span>(<span class="ident">v</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">V::Error::invalid_value</span>(<span class="ident">Unexpected::Signed</span>(<span class="ident">v</span>.<span class="ident">into</span>()), <span class="kw-2">&amp;</span><span class="string">&quot;constraint verb&quot;</span>)),
-						<span class="ident">ConstraintVerb::IsPresent</span> <span class="op">|</span> <span class="ident">ConstraintVerb::IsAbsent</span> =&gt; <span class="prelude-val">None</span>,
-						<span class="ident">ConstraintVerb::Equals</span> <span class="op">|</span> <span class="ident">ConstraintVerb::NotEquals</span> =&gt; <span class="prelude-val">Some</span>(
-							<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
-								.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint value&quot;</span>))<span class="question-mark">?</span>
-								.<span class="ident">into</span>()
+					<span class="kw">let </span>value = <span class="kw">match </span>verb {
+						ConstraintVerb::__Unknown(v) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::invalid_value(Unexpected::Signed(v.into()), <span class="kw-2">&amp;</span><span class="string">&quot;constraint verb&quot;</span>)),
+						ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent =&gt; <span class="prelude-val">None</span>,
+						ConstraintVerb::Equals | ConstraintVerb::NotEquals =&gt; <span class="prelude-val">Some</span>(
+							seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">?
+								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">&quot;constraint value&quot;</span>))<span class="question-mark">?
+								</span>.into()
 						),
-						<span class="ident">ConstraintVerb::Matches</span> =&gt; <span class="prelude-val">Some</span>(
-							<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
-								.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint match pattern&quot;</span>))<span class="question-mark">?</span>
-								.<span class="ident">to_variant</span>()
+						ConstraintVerb::Matches =&gt; <span class="prelude-val">Some</span>(
+							seq.next_element::&lt;<span class="kw-2">&amp;</span>str&gt;()<span class="question-mark">?
+								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">&quot;constraint match pattern&quot;</span>))<span class="question-mark">?
+								</span>.to_variant()
 						),
-						<span class="ident">ConstraintVerb::InRange</span> =&gt; <span class="prelude-val">Some</span>(<span class="ident">Variant::tuple_from_iter</span>([
-								<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
-									.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range min&quot;</span>))<span class="question-mark">?</span>
-									.<span class="ident">into_variant</span>(),
-								<span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span>
-									.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::invalid_length</span>(<span class="ident">len</span> <span class="op">+</span> <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range max&quot;</span>))<span class="question-mark">?</span>
-									.<span class="ident">into_variant</span>(),
+						ConstraintVerb::InRange =&gt; <span class="prelude-val">Some</span>(Variant::tuple_from_iter([
+								seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">?
+									</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range min&quot;</span>))<span class="question-mark">?
+									</span>.into_variant(),
+								seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">?
+									</span>.ok_or_else(|| V::Error::invalid_length(len + <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range max&quot;</span>))<span class="question-mark">?
+									</span>.into_variant(),
 						])),
-						<span class="ident">ConstraintVerb::InList</span> =&gt; {
-							<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::Variant</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">seq</span>.<span class="ident">size_hint</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>));
-							<span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">seq</span>.<span class="ident">next_element</span>::<span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span>()<span class="question-mark">?</span> {
-								<span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">value</span>.<span class="ident">into</span>());
+						ConstraintVerb::InList =&gt; {
+							<span class="kw">let </span><span class="kw-2">mut </span>values: Vec&lt;glib::Variant&gt; = Vec::with_capacity(seq.size_hint().unwrap_or(<span class="number">0</span>));
+							<span class="kw">while let </span><span class="prelude-val">Some</span>(value) = seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">? </span>{
+								values.push(value.into());
 							}
-							<span class="prelude-val">Some</span>(<span class="ident">glib::Variant::tuple_from_iter</span>(<span class="ident">values</span>))
+							<span class="prelude-val">Some</span>(glib::Variant::tuple_from_iter(values))
 						},
 					};
 
-					<span class="prelude-val">Ok</span>(<span class="ident">Constraint</span> {
-						<span class="ident">type_</span>,
-						<span class="ident">subject</span>,
-						<span class="ident">verb</span>,
-						<span class="ident">value</span>,
+					<span class="prelude-val">Ok</span>(Constraint {
+						type_,
+						subject,
+						verb,
+						value,
 					})
 				}
 
-				<span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">V</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">V::Error</span><span class="op">&gt;</span> {
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">type_</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subject</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">verb</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&gt;</span><span class="op">&gt;</span>;
-					<span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">next_key</span>()<span class="question-mark">?</span> {
-						<span class="kw">match</span> <span class="ident">key</span> {
-							<span class="ident">Field::Type</span> =&gt; {
-								<span class="kw">if</span> <span class="ident">type_</span>.<span class="ident">is_some</span>() {
-									<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">V::Error::duplicate_field</span>(<span class="string">&quot;type&quot;</span>));
+				<span class="kw">fn </span>visit_map&lt;V: MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>map: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
+					<span class="kw">let </span><span class="kw-2">mut </span>type_ = <span class="prelude-val">None</span>;
+					<span class="kw">let </span><span class="kw-2">mut </span>subject = <span class="prelude-val">None</span>;
+					<span class="kw">let </span><span class="kw-2">mut </span>verb = <span class="prelude-val">None</span>;
+					<span class="kw">let </span><span class="kw-2">mut </span>value = <span class="prelude-val">None</span>::&lt;<span class="prelude-ty">Option</span>&lt;LuaVariant&gt;&gt;;
+					<span class="kw">while let </span><span class="prelude-val">Some</span>(key) = map.next_key()<span class="question-mark">? </span>{
+						<span class="kw">match </span>key {
+							Field::Type =&gt; {
+								<span class="kw">if </span>type_.is_some() {
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;type&quot;</span>));
 								}
-								<span class="ident">type_</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>.<span class="ident">next_value</span>()<span class="question-mark">?</span>);
+								type_ = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
-							<span class="ident">Field::Subject</span> =&gt; {
-								<span class="kw">if</span> <span class="ident">subject</span>.<span class="ident">is_some</span>() {
-									<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">V::Error::duplicate_field</span>(<span class="string">&quot;subject&quot;</span>));
+							Field::Subject =&gt; {
+								<span class="kw">if </span>subject.is_some() {
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;subject&quot;</span>));
 								}
-								<span class="ident">subject</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>.<span class="ident">next_value</span>()<span class="question-mark">?</span>);
+								subject = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
-							<span class="ident">Field::Verb</span> =&gt; {
-								<span class="kw">if</span> <span class="ident">verb</span>.<span class="ident">is_some</span>() {
-									<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">V::Error::duplicate_field</span>(<span class="string">&quot;verb&quot;</span>));
+							Field::Verb =&gt; {
+								<span class="kw">if </span>verb.is_some() {
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;verb&quot;</span>));
 								}
-								<span class="ident">verb</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>.<span class="ident">next_value</span>()<span class="question-mark">?</span>);
+								verb = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
-							<span class="ident">Field::Value</span> =&gt; {
-								<span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_some</span>() {
-									<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">V::Error::duplicate_field</span>(<span class="string">&quot;value&quot;</span>));
+							Field::Value =&gt; {
+								<span class="kw">if </span>value.is_some() {
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;value&quot;</span>));
 								}
-								<span class="ident">value</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">map</span>.<span class="ident">next_value</span>()<span class="question-mark">?</span>);
+								value = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 						}
 					}
-					<span class="prelude-val">Ok</span>(<span class="ident">Constraint</span> {
-						<span class="ident">type_</span>: <span class="ident">type_</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::missing_field</span>(<span class="string">&quot;type&quot;</span>))<span class="question-mark">?</span>,
-						<span class="ident">subject</span>: <span class="ident">subject</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::missing_field</span>(<span class="string">&quot;subject&quot;</span>))<span class="question-mark">?</span>,
-						<span class="ident">verb</span>: <span class="ident">verb</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">V::Error::missing_field</span>(<span class="string">&quot;verb&quot;</span>))<span class="question-mark">?</span>,
-						<span class="ident">value</span>: <span class="ident">value</span>.<span class="ident">unwrap_or_default</span>().<span class="ident">map</span>(<span class="ident">Into::into</span>),
+					<span class="prelude-val">Ok</span>(Constraint {
+						type_: type_.ok_or_else(|| V::Error::missing_field(<span class="string">&quot;type&quot;</span>))<span class="question-mark">?</span>,
+						subject: subject.ok_or_else(|| V::Error::missing_field(<span class="string">&quot;subject&quot;</span>))<span class="question-mark">?</span>,
+						verb: verb.ok_or_else(|| V::Error::missing_field(<span class="string">&quot;verb&quot;</span>))<span class="question-mark">?</span>,
+						value: value.unwrap_or_default().map(Into::into),
 					})
 				}
 			}
 
-			<span class="kw">const</span> <span class="ident">FIELDS</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[<span class="string">&quot;type&quot;</span>, <span class="string">&quot;subject&quot;</span>, <span class="string">&quot;verb&quot;</span>, <span class="string">&quot;value&quot;</span>];
-			<span class="ident">deserializer</span>.<span class="ident">deserialize_struct</span>(<span class="string">&quot;Constraint&quot;</span>, <span class="ident">FIELDS</span>, <span class="ident">ConstraintVisitor</span>)
+			<span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[<span class="string">&quot;type&quot;</span>, <span class="string">&quot;subject&quot;</span>, <span class="string">&quot;verb&quot;</span>, <span class="string">&quot;value&quot;</span>];
+			deserializer.deserialize_struct(<span class="string">&quot;Constraint&quot;</span>, FIELDS, ConstraintVisitor)
 		}
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

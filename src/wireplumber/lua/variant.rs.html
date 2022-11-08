@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -571,555 +564,555 @@
 <span id="564">564</span>
 <span id="565">565</span>
 <span id="566">566</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
-<span class="kw">use</span> <span class="ident">glib::VariantType</span>;
-<span class="kw">use</span> <span class="ident">glib::variant::VariantTypeMismatchError</span>;
-<span class="kw">use</span> <span class="ident">glib::variant::DictEntry</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::lua</span>::{<span class="ident">LuaString</span>, <span class="ident">LuaError</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
+<span class="kw">use </span>glib::VariantType;
+<span class="kw">use </span>glib::variant::VariantTypeMismatchError;
+<span class="kw">use </span>glib::variant::DictEntry;
+<span class="kw">use </span><span class="kw">crate</span>::lua::{LuaString, LuaError};
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="macro">newtype_wrapper!</span> {
-	<span class="doccomment">/// A [Variant] that can be passed to a Lua script.</span>
-	<span class="doccomment">///</span>
-	<span class="doccomment">/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules</span>
-	<span class="doccomment">/// and their configuration data.</span>
-	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LuaVariant</span>(<span class="ident">Variant</span> ;<span class="question-mark">?</span> <span class="ident">LuaError</span>);
+<span class="macro">newtype_wrapper! </span>{
+	<span class="doccomment">/// A [Variant] that can be passed to a Lua script.
+	///
+	/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules
+	/// and their configuration data.
+	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
+	</span><span class="kw">pub struct </span>LuaVariant(Variant ;<span class="question-mark">? </span>LuaError);
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LuaType</span> {
-	<span class="ident">Nil</span>,
-	<span class="ident">Boolean</span>,
-	<span class="ident">Integer</span>,
-	<span class="ident">Float</span>,
-	<span class="ident">String</span>,
-	<span class="ident">Table</span>,
+<span class="attr">#[derive(Copy, Clone, Debug, PartialOrd, Ord, PartialEq, Eq, Hash)]
+</span><span class="kw">pub enum </span>LuaType {
+	Nil,
+	Boolean,
+	Integer,
+	Float,
+	String,
+	Table,
 }
 
-<span class="kw">impl</span> <span class="ident">LuaType</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_variant_type</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">VariantTy</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="ident">ty</span> {
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::UNIT</span> =&gt; <span class="ident">LuaType::Nil</span>,
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::BOOLEAN</span> =&gt; <span class="ident">LuaType::Boolean</span>,
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::INT64</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::INT32</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::INT16</span>
-				<span class="op">|</span><span class="op">|</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::UINT32</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::UINT16</span>
-				=&gt; <span class="ident">LuaType::Integer</span>,
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::DOUBLE</span> =&gt; <span class="ident">LuaType::Float</span>,
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span> <span class="op">==</span> <span class="ident">VariantTy::STRING</span> <span class="comment">/*|| ty == VariantTy::BYTE_STRING*/</span> =&gt; <span class="ident">LuaType::String</span>,
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span>.<span class="ident">is_subtype_of</span>(<span class="ident">VariantTy::DICTIONARY</span>) =&gt; <span class="kw">match</span> <span class="ident">ty</span>.<span class="ident">element</span>() {
-				<span class="ident">ty</span> <span class="kw">if</span> <span class="ident"><span class="self">Self</span>::with_variant_type</span>(<span class="ident">ty</span>.<span class="ident">key</span>()).<span class="ident">is_some</span>() <span class="op">&amp;&amp;</span> <span class="ident"><span class="self">Self</span>::with_variant_type</span>(<span class="ident">ty</span>.<span class="ident">value</span>()).<span class="ident">is_some</span>() =&gt; <span class="ident">LuaType::Table</span>,
-				<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
+<span class="kw">impl </span>LuaType {
+	<span class="kw">pub fn </span>with_variant_type(ty: <span class="kw-2">&amp;</span>VariantTy) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="prelude-val">Some</span>(<span class="kw">match </span>ty {
+			ty <span class="kw">if </span>ty == VariantTy::UNIT =&gt; LuaType::Nil,
+			ty <span class="kw">if </span>ty == VariantTy::BOOLEAN =&gt; LuaType::Boolean,
+			ty <span class="kw">if </span>ty == VariantTy::INT64 || ty == VariantTy::INT32 || ty == VariantTy::INT16
+				|| ty == VariantTy::UINT32 || ty == VariantTy::UINT16
+				=&gt; LuaType::Integer,
+			ty <span class="kw">if </span>ty == VariantTy::DOUBLE =&gt; LuaType::Float,
+			ty <span class="kw">if </span>ty == VariantTy::STRING <span class="comment">/*|| ty == VariantTy::BYTE_STRING*/ </span>=&gt; LuaType::String,
+			ty <span class="kw">if </span>ty.is_subtype_of(VariantTy::DICTIONARY) =&gt; <span class="kw">match </span>ty.element() {
+				ty <span class="kw">if </span><span class="self">Self</span>::with_variant_type(ty.key()).is_some() &amp;&amp; <span class="self">Self</span>::with_variant_type(ty.value()).is_some() =&gt; LuaType::Table,
+				<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 			},
-			<span class="ident">ty</span> <span class="kw">if</span> <span class="ident">ty</span>.<span class="ident">is_array</span>() <span class="op">&amp;&amp;</span> <span class="ident"><span class="self">Self</span>::with_variant_type</span>(<span class="ident">ty</span>.<span class="ident">element</span>()).<span class="ident">is_some</span>() =&gt; <span class="ident">LuaType::Table</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
+			ty <span class="kw">if </span>ty.is_array() &amp;&amp; <span class="self">Self</span>::with_variant_type(ty.element()).is_some() =&gt; LuaType::Table,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_lua_variant</span>(<span class="ident">var</span>: <span class="kw-2">&amp;</span><span class="ident">LuaVariant</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">const</span> <span class="ident">MAX_SAFE_INTEGER</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">i64::MAX</span> <span class="kw">as</span> <span class="ident">u64</span>;
-		<span class="kw">match</span> <span class="ident"><span class="self">Self</span>::with_variant_type</span>(<span class="ident">var</span>.<span class="ident">as_variant</span>().<span class="ident">type_</span>()) {
-			<span class="prelude-val">Some</span>(<span class="ident">ty</span>) =&gt; <span class="ident">ty</span>,
-			<span class="prelude-val">None</span> =&gt; <span class="kw">match</span> <span class="ident">var</span>.<span class="ident">as_variant</span>().<span class="ident">classify</span>() {
-				<span class="ident">VariantClass::Uint64</span> =&gt; <span class="kw">match</span> <span class="ident">var</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>() {
-					<span class="prelude-val">Some</span>(<span class="number">0</span>..<span class="op">=</span><span class="ident">MAX_SAFE_INTEGER</span>) =&gt; <span class="ident">LuaType::Integer</span>,
-					<span class="kw">_</span> =&gt; <span class="ident">LuaType::Float</span>,
+	<span class="kw">pub fn </span>with_lua_variant(var: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="self">Self </span>{
+		<span class="kw">const </span>MAX_SAFE_INTEGER: u64 = i64::MAX <span class="kw">as </span>u64;
+		<span class="kw">match </span><span class="self">Self</span>::with_variant_type(var.as_variant().type_()) {
+			<span class="prelude-val">Some</span>(ty) =&gt; ty,
+			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span>var.as_variant().classify() {
+				VariantClass::Uint64 =&gt; <span class="kw">match </span>var.as_variant().get::&lt;u64&gt;() {
+					<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
+					<span class="kw">_ </span>=&gt; LuaType::Float,
 				},
-				<span class="ident">VariantClass::Variant</span> =&gt; <span class="ident"><span class="self">Self</span>::with_lua_variant</span>(<span class="kw-2">&amp;</span><span class="ident">var</span>.<span class="ident">flattened</span>()),
-				<span class="kw">_</span> =&gt; <span class="ident">LuaType::Table</span>,
+				VariantClass::Variant =&gt; <span class="self">Self</span>::with_lua_variant(<span class="kw-2">&amp;</span>var.flattened()),
+				<span class="kw">_ </span>=&gt; LuaType::Table,
 			},
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_variant</span>(<span class="ident">var</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="kw">const</span> <span class="ident">MAX_SAFE_INTEGER</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">i64::MAX</span> <span class="kw">as</span> <span class="ident">u64</span>;
+	<span class="kw">pub fn </span>with_variant(var: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+		<span class="kw">const </span>MAX_SAFE_INTEGER: u64 = i64::MAX <span class="kw">as </span>u64;
 
-		<span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">var</span>.<span class="ident">type_</span>();
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ty</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::with_variant_type</span>(<span class="ident">ty</span>) {
-			<span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">ty</span>)
+		<span class="kw">let </span>ty = var.type_();
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = <span class="self">Self</span>::with_variant_type(ty) {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(ty)
 		}
 
-		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">var</span>.<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Uint64</span> =&gt; <span class="kw">match</span> <span class="ident">var</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>() {
-				<span class="prelude-val">Some</span>(<span class="number">0</span>..<span class="op">=</span><span class="ident">MAX_SAFE_INTEGER</span>) =&gt; <span class="ident">LuaType::Integer</span>,
-				<span class="kw">_</span> =&gt; <span class="ident">LuaType::Float</span>,
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span>var.classify() {
+			VariantClass::Uint64 =&gt; <span class="kw">match </span>var.get::&lt;u64&gt;() {
+				<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
+				<span class="kw">_ </span>=&gt; LuaType::Float,
 			},
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="ident"><span class="self">Self</span>::with_variant</span>(<span class="kw-2">&amp;</span><span class="ident">var</span>.<span class="ident">as_variant</span>().<span class="ident">expect</span>(<span class="string">&quot;VariantTy&quot;</span>))<span class="question-mark">?</span>,
-			<span class="ident">VariantClass::Array</span> <span class="kw">if</span> <span class="ident">ty</span>.<span class="ident">element</span>().<span class="ident">is_dict_entry</span>() =&gt; <span class="kw">match</span> <span class="ident">var</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span>
-				<span class="ident"><span class="self">Self</span>::with_variant</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">0</span>)).<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::with_variant</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">1</span>)).<span class="ident">map</span>(<span class="ident">drop</span>))
-			).<span class="ident">collect</span>() {
-				<span class="prelude-val">Ok</span>(()) =&gt; <span class="ident">LuaType::Table</span>,
-				<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+			VariantClass::Variant =&gt; <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>var.as_variant().expect(<span class="string">&quot;VariantTy&quot;</span>))<span class="question-mark">?</span>,
+			VariantClass::Array <span class="kw">if </span>ty.element().is_dict_entry() =&gt; <span class="kw">match </span>var.iter().map(|v|
+				<span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>)).and_then(|<span class="kw">_</span>| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(drop))
+			).collect() {
+				<span class="prelude-val">Ok</span>(()) =&gt; LuaType::Table,
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
 			},
-			<span class="ident">VariantClass::Array</span> <span class="kw">if</span> <span class="ident">var</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::with_variant</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>).<span class="ident">is_ok</span>()) =&gt; <span class="ident">LuaType::Table</span>,
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">LuaError::UnsupportedType</span>(<span class="ident">Cow::Owned</span>(<span class="ident">ty</span>.<span class="ident">to_owned</span>()))),
+			VariantClass::Array <span class="kw">if </span>var.iter().all(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v).is_ok()) =&gt; LuaType::Table,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(LuaError::UnsupportedType(Cow::Owned(ty.to_owned()))),
 		})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_numeric</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-		<span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident">LuaType::Integer</span> <span class="op">|</span> <span class="ident">LuaType::Float</span>)
+	<span class="kw">pub fn </span>is_numeric(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Integer | LuaType::Float)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_table</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-		<span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident">LuaType::Table</span>)
+	<span class="kw">pub fn </span>is_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Table)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_nil</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-		<span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident">LuaType::Nil</span>)
+	<span class="kw">pub fn </span>is_nil(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Nil)
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LuaValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="ident">Nil</span>,
-	<span class="ident">Boolean</span>(<span class="ident">bool</span>),
-	<span class="ident">Integer</span>(<span class="ident">i64</span>),
-	<span class="ident">Float</span>(<span class="ident">f64</span>),
-	<span class="ident">String</span>(<span class="ident">LuaString</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
-	<span class="ident">Table</span>(<span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>),
+<span class="kw">pub enum </span>LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
+	Nil,
+	Boolean(bool),
+	Integer(i64),
+	Float(f64),
+	String(LuaString&lt;<span class="lifetime">&#39;a</span>&gt;),
+	Table(LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LuaValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lua_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LuaType</span> {
-		<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">LuaValue::Nil</span> =&gt; <span class="ident">LuaType::Nil</span>,
-			<span class="ident">LuaValue::Boolean</span>(..) =&gt; <span class="ident">LuaType::Boolean</span>,
-			<span class="ident">LuaValue::Integer</span>(..) =&gt; <span class="ident">LuaType::Integer</span>,
-			<span class="ident">LuaValue::Float</span>(..) =&gt; <span class="ident">LuaType::Float</span>,
-			<span class="ident">LuaValue::String</span>(..) =&gt; <span class="ident">LuaType::String</span>,
-			<span class="ident">LuaValue::Table</span>(..) =&gt; <span class="ident">LuaType::Table</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
+		<span class="kw">match </span><span class="self">self </span>{
+			LuaValue::Nil =&gt; LuaType::Nil,
+			LuaValue::Boolean(..) =&gt; LuaType::Boolean,
+			LuaValue::Integer(..) =&gt; LuaType::Integer,
+			LuaValue::Float(..) =&gt; LuaType::Float,
+			LuaValue::String(..) =&gt; LuaType::String,
+			LuaValue::Table(..) =&gt; LuaType::Table,
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_lua_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">LuaString</span>, <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">LuaValue::Nil</span> =&gt; <span class="string">b&quot;nil&quot;</span>[..].<span class="ident">into</span>(),
-			<span class="ident">LuaValue::Boolean</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">to_string</span>().<span class="ident">into</span>(),
-			<span class="ident">LuaValue::Integer</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">to_string</span>().<span class="ident">into</span>(),
-			<span class="ident">LuaValue::Float</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">to_string</span>().<span class="ident">into</span>(),
-			<span class="ident">LuaValue::String</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">borrowed</span>(),
-			<span class="ident">LuaValue::Table</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">LuaError::TypeMismatch</span>(
-				<span class="ident">VariantTypeMismatchError::new</span>(<span class="ident">VariantTy::VARDICT</span>.<span class="ident">to_owned</span>(), <span class="ident">VariantTy::STRING</span>.<span class="ident">to_owned</span>())
+	<span class="kw">pub fn </span>to_lua_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaString, LuaError&gt; {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self">self </span>{
+			LuaValue::Nil =&gt; <span class="string">b&quot;nil&quot;</span>[..].into(),
+			LuaValue::Boolean(v) =&gt; v.to_string().into(),
+			LuaValue::Integer(v) =&gt; v.to_string().into(),
+			LuaValue::Float(v) =&gt; v.to_string().into(),
+			LuaValue::String(v) =&gt; v.borrowed(),
+			LuaValue::Table(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(LuaError::TypeMismatch(
+				VariantTypeMismatchError::new(VariantTy::VARDICT.to_owned(), VariantTy::STRING.to_owned())
 			)),
 		})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_integer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-			<span class="ident">LuaValue::Integer</span>(<span class="ident">v</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">v</span>),
-			<span class="ident">LuaValue::Float</span>(<span class="ident">v</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span>),
-			<span class="ident">LuaValue::String</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) =&gt; <span class="ident">s</span>.<span class="ident">parse</span>(),
-			<span class="kw-2">ref</span> <span class="ident">v</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">LuaError::TypeMismatch</span>(<span class="ident">VariantTypeMismatchError::new</span>(<span class="kw">match</span> <span class="ident">v</span> {
-				<span class="ident">LuaValue::Nil</span> =&gt; <span class="ident">VariantTy::UNIT</span>,
-				<span class="ident">LuaValue::Boolean</span>(..) =&gt; <span class="ident">VariantTy::BOOLEAN</span>,
-				<span class="ident">LuaValue::Table</span>(<span class="ident">t</span>) <span class="kw">if</span> <span class="ident">t</span>.<span class="ident">is_array</span>().<span class="ident">unwrap_or</span>(<span class="bool-val">false</span>) =&gt; <span class="ident">VariantTy::ARRAY</span>,
-				<span class="kw">_</span> =&gt; <span class="ident">VariantTy::VARDICT</span>,
-			}.<span class="ident">to_owned</span>(), <span class="ident">VariantTy::INT64</span>.<span class="ident">to_owned</span>()))),
+	<span class="kw">pub fn </span>to_integer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;i64, LuaError&gt; {
+		<span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+			LuaValue::Integer(v) =&gt; <span class="prelude-val">Ok</span>(v),
+			LuaValue::Float(v) =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>i64),
+			LuaValue::String(<span class="kw-2">ref </span>s) =&gt; s.parse(),
+			<span class="kw-2">ref </span>v =&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(VariantTypeMismatchError::new(<span class="kw">match </span>v {
+				LuaValue::Nil =&gt; VariantTy::UNIT,
+				LuaValue::Boolean(..) =&gt; VariantTy::BOOLEAN,
+				LuaValue::Table(t) <span class="kw">if </span>t.is_array().unwrap_or(<span class="bool-val">false</span>) =&gt; VariantTy::ARRAY,
+				<span class="kw">_ </span>=&gt; VariantTy::VARDICT,
+			}.to_owned(), VariantTy::INT64.to_owned()))),
 		}
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">nil</span>() -&gt; <span class="self">Self</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident"><span class="self">Self</span>::unsafe_from</span>(().<span class="ident">to_variant</span>())
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">pub fn </span>nil() -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			<span class="self">Self</span>::unsafe_from(().to_variant())
 		}
 	}
 
-	<span class="kw">fn</span> <span class="ident">check</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="comment">// used by Self::wrap and Self::borrow</span>
-		<span class="ident">LuaType::with_variant</span>(<span class="ident">v</span>)
-			.<span class="ident">map</span>(<span class="ident">drop</span>)
+	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
+		<span class="comment">// used by Self::wrap and Self::borrow
+		</span>LuaType::with_variant(v)
+			.map(drop)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_from</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="ident"><span class="self">Self</span>::check</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>).<span class="ident">is_ok</span>() {
-			<span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="kw">unsafe</span> {
-				<span class="ident"><span class="self">Self</span>::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">clone</span>())
+	<span class="kw">pub fn </span>convert_from(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+		<span class="kw">if </span><span class="self">Self</span>::check(<span class="kw-2">&amp;</span>v).is_ok() {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{
+				<span class="self">Self</span>::unsafe_from(v.clone())
 			})
 		}
 
-		<span class="kw">match</span> <span class="ident">v</span>.<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="ident">LuaVariant::convert_from</span>(
-				<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">as_variant</span>().<span class="ident">expect</span>(<span class="string">&quot;VariantClass&quot;</span>)
+		<span class="kw">match </span>v.classify() {
+			VariantClass::Variant =&gt; LuaVariant::convert_from(
+				<span class="kw-2">&amp;</span>v.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)
 			),
-			<span class="ident">VariantClass::Byte</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::from</span>(<span class="ident">v</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;VariantClass&quot;</span>) <span class="kw">as</span> <span class="ident">u16</span>)),
-			<span class="ident">VariantClass::Maybe</span> =&gt; <span class="kw">match</span> <span class="ident">v</span>.<span class="ident">as_maybe</span>() {
-				<span class="prelude-val">Some</span>(<span class="ident">v</span>) =&gt; <span class="ident">LuaVariant::convert_from</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>),
-				<span class="prelude-val">None</span> =&gt; <span class="prelude-val">Ok</span>(().<span class="ident">into</span>()),
+			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(v.get::&lt;u8&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>) <span class="kw">as </span>u16)),
+			VariantClass::Maybe =&gt; <span class="kw">match </span>v.as_maybe() {
+				<span class="prelude-val">Some</span>(v) =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v),
+				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().into()),
 			},
-			<span class="ident">VariantClass::Array</span> <span class="kw">if</span> <span class="ident">v</span>.<span class="ident">type_</span>().<span class="ident">element</span>().<span class="ident">is_dict_entry</span>() =&gt; <span class="ident">v</span>.<span class="ident">iter</span>()
-				.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">LuaVariant::convert_from</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">0</span>)).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">k</span><span class="op">|</span> <span class="ident">LuaVariant::convert_from</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">1</span>)).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> (<span class="ident">k</span>, <span class="ident">v</span>))))
-				.<span class="ident">collect</span>(),
-			<span class="ident">VariantClass::Array</span> <span class="op">|</span> <span class="ident">VariantClass::Tuple</span> =&gt; <span class="ident">v</span>.<span class="ident">iter</span>()
-				.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">LuaVariant::convert_from</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>))
-				.<span class="ident">collect</span>(),
-			<span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">LuaError::UnsupportedType</span>(<span class="ident">Cow::Owned</span>(<span class="ident">v</span>.<span class="ident">type_</span>().<span class="ident">to_owned</span>()))),
+			VariantClass::Array <span class="kw">if </span>v.type_().element().is_dict_entry() =&gt; v.iter()
+				.map(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>)).and_then(|k| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(|v| (k, v))))
+				.collect(),
+			VariantClass::Array | VariantClass::Tuple =&gt; v.iter()
+				.map(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v))
+				.collect(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::UnsupportedType(Cow::Owned(v.type_().to_owned()))),
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_bytes</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">bytes</span>: <span class="ident">B</span>) -&gt; <span class="self">Self</span> {
-		<span class="comment">// TODO: LuaString::from(bytes.as_ref()).into() if BYTE_STRINGs are ever supported upstream</span>
-		<span class="ident">bytes</span>.<span class="ident">as_ref</span>().<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">v</span><span class="op">|</span> <span class="ident">LuaVariant::from</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">u16</span>)).<span class="ident">collect</span>()
+	<span class="kw">pub fn </span>with_bytes&lt;B: AsRef&lt;[u8]&gt;&gt;(bytes: B) -&gt; <span class="self">Self </span>{
+		<span class="comment">// TODO: LuaString::from(bytes.as_ref()).into() if BYTE_STRINGs are ever supported upstream
+		</span>bytes.as_ref().iter().map(|<span class="kw-2">&amp;</span>v| LuaVariant::from(v <span class="kw">as </span>u16)).collect()
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lua_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LuaType</span> {
-		<span class="ident">LuaType::with_lua_variant</span>(<span class="self">self</span>)
+	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
+		LuaType::with_lua_variant(<span class="self">self</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lua_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LuaValue</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">lua_type</span>() {
-			<span class="ident">LuaType::Nil</span> =&gt; <span class="prelude-val">Some</span>(<span class="ident">LuaValue::Nil</span>),
-			<span class="ident">LuaType::Boolean</span> =&gt; <span class="self">self</span>.<span class="ident">get_bool</span>().<span class="ident">map</span>(<span class="ident">LuaValue::Boolean</span>),
-			<span class="ident">LuaType::Integer</span> =&gt; <span class="self">self</span>.<span class="ident">get_integer</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span>.<span class="ident">ok</span>()).<span class="ident">map</span>(<span class="ident">LuaValue::Integer</span>),
-			<span class="ident">LuaType::Float</span> =&gt; <span class="self">self</span>.<span class="ident">get_float</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span>.<span class="ident">ok</span>()).<span class="ident">map</span>(<span class="ident">LuaValue::Float</span>),
-			<span class="ident">LuaType::String</span> =&gt; <span class="self">self</span>.<span class="ident">get_string</span>().<span class="ident">map</span>(<span class="ident">LuaValue::String</span>),
-			<span class="ident">LuaType::Table</span> =&gt; <span class="ident">LuaTable::borrow</span>(<span class="self">self</span>.<span class="ident">as_variant</span>()).<span class="ident">ok</span>().<span class="ident">map</span>(<span class="ident">LuaValue::Table</span>),
-		}.<span class="ident">expect</span>(<span class="string">&quot;LuaType&quot;</span>)
+	<span class="kw">pub fn </span>lua_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaValue {
+		<span class="kw">match </span><span class="self">self</span>.lua_type() {
+			LuaType::Nil =&gt; <span class="prelude-val">Some</span>(LuaValue::Nil),
+			LuaType::Boolean =&gt; <span class="self">self</span>.get_bool().map(LuaValue::Boolean),
+			LuaType::Integer =&gt; <span class="self">self</span>.get_integer().and_then(|i| i.ok()).map(LuaValue::Integer),
+			LuaType::Float =&gt; <span class="self">self</span>.get_float().and_then(|f| f.ok()).map(LuaValue::Float),
+			LuaType::String =&gt; <span class="self">self</span>.get_string().map(LuaValue::String),
+			LuaType::Table =&gt; LuaTable::borrow(<span class="self">self</span>.as_variant()).ok().map(LuaValue::Table),
+		}.expect(<span class="string">&quot;LuaType&quot;</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flattened</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="kw">unsafe</span> {
-				<span class="ident">LuaVariant::unsafe_from</span>(<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">as_variant</span>().<span class="ident">expect</span>(<span class="string">&quot;VariantClass&quot;</span>))
-			}.<span class="ident">flattened</span>(),
-			<span class="kw">_</span> =&gt; <span class="self">self</span>.<span class="ident">clone</span>(),
+	<span class="kw">pub fn </span>flattened(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Variant =&gt; <span class="kw">unsafe </span>{
+				LuaVariant::unsafe_from(<span class="self">self</span>.as_variant().as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>))
+			}.flattened(),
+			<span class="kw">_ </span>=&gt; <span class="self">self</span>.clone(),
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_nil</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Tuple</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>(),
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="self">self</span>.<span class="ident">flattened</span>().<span class="ident">get_nil</span>(),
-			<span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+	<span class="kw">pub fn </span>get_nil&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
+		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Tuple =&gt; <span class="self">self</span>.as_variant().get(),
+			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_nil(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_bool</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Boolean</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>(),
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="self">self</span>.<span class="ident">flattened</span>().<span class="ident">get_bool</span>(),
-			<span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get(),
+			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_bool(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_table</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">lua_type</span>() {
-			<span class="ident">LuaType::Table</span> =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe</span> {
-				<span class="ident">LuaTable::unsafe_from</span>(<span class="self">self</span>.<span class="ident">flattened</span>().<span class="ident">into_inner</span>())
+	<span class="kw">pub fn </span>get_table&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="kw">match </span><span class="self">self</span>.lua_type() {
+			LuaType::Table =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{
+				LuaTable::unsafe_from(<span class="self">self</span>.flattened().into_inner())
 			}),
-			<span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaString</span><span class="op">&gt;</span> {
-		<span class="ident">LuaString::try_from</span>(<span class="self">self</span>.<span class="ident">as_variant</span>()).<span class="ident">ok</span>()
+	<span class="kw">pub fn </span>get_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaString&gt; {
+		LuaString::try_from(<span class="self">self</span>.as_variant()).ok()
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_float</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="ident">LuaError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="kw">const</span> <span class="ident">MAX_SAFE_INTEGER</span>: <span class="ident">i64</span> <span class="op">=</span> <span class="number">2</span><span class="op">^</span><span class="number">53</span> <span class="op">-</span> <span class="number">1</span>;
-		<span class="kw">const</span> <span class="ident">MAX_SAFE_INTEGER_UNSIGNED</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">2</span><span class="op">^</span><span class="number">53</span> <span class="op">-</span> <span class="number">1</span>;
-		<span class="kw">const</span> <span class="ident">MIN_SAFE_INTEGER</span>: <span class="ident">i64</span> <span class="op">=</span> <span class="op">-</span>(<span class="number">2</span><span class="op">^</span><span class="number">53</span> <span class="op">-</span> <span class="number">1</span>);
-		<span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Double</span> =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;VariantClass&quot;</span>)),
-			<span class="ident">VariantClass::Boolean</span> =&gt; <span class="ident">u8::from</span>(<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>()).<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Byte</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Uint16</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Uint32</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Uint64</span> =&gt; <span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>() {
-				<span class="ident">v</span> @ <span class="number">0</span>..<span class="op">=</span><span class="ident">MAX_SAFE_INTEGER_UNSIGNED</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">f64</span>),
-				<span class="ident">v</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">i32::try_from</span>(<span class="ident">v</span>).<span class="ident">unwrap_err</span>().<span class="ident">into</span>()),
+	<span class="kw">pub fn </span>get_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;f64, LuaError&gt;&gt; {
+		<span class="kw">const </span>MAX_SAFE_INTEGER: i64 = <span class="number">2</span>^<span class="number">53 </span>- <span class="number">1</span>;
+		<span class="kw">const </span>MAX_SAFE_INTEGER_UNSIGNED: u64 = <span class="number">2</span>^<span class="number">53 </span>- <span class="number">1</span>;
+		<span class="kw">const </span>MIN_SAFE_INTEGER: i64 = -(<span class="number">2</span>^<span class="number">53 </span>- <span class="number">1</span>);
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>.as_variant().get::&lt;f64&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>)),
+			VariantClass::Boolean =&gt; u8::from(<span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap()).try_into().map_err(Into::into),
+			VariantClass::Byte =&gt; <span class="self">self</span>.as_variant().get::&lt;u8&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint16 =&gt; <span class="self">self</span>.as_variant().get::&lt;u16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint32 =&gt; <span class="self">self</span>.as_variant().get::&lt;u32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint64 =&gt; <span class="kw">match </span><span class="self">self</span>.as_variant().get::&lt;u64&gt;().unwrap() {
+				v @ <span class="number">0</span>..=MAX_SAFE_INTEGER_UNSIGNED =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>f64),
+				v =&gt; <span class="prelude-val">Err</span>(i32::try_from(v).unwrap_err().into()),
 			},
-			<span class="ident">VariantClass::Int16</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Int32</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Int64</span> =&gt; <span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>() {
-				<span class="ident">v</span> @ <span class="ident">MIN_SAFE_INTEGER</span>..<span class="op">=</span><span class="ident">MAX_SAFE_INTEGER</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">f64</span>),
-				<span class="ident">v</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">u32::try_from</span>(<span class="ident">v</span>).<span class="ident">unwrap_err</span>().<span class="ident">into</span>()),
+			VariantClass::Int16 =&gt; <span class="self">self</span>.as_variant().get::&lt;i16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int32 =&gt; <span class="self">self</span>.as_variant().get::&lt;i32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int64 =&gt; <span class="kw">match </span><span class="self">self</span>.as_variant().get::&lt;i64&gt;().unwrap() {
+				v @ MIN_SAFE_INTEGER..=MAX_SAFE_INTEGER =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>f64),
+				v =&gt; <span class="prelude-val">Err</span>(u32::try_from(v).unwrap_err().into()),
 			},
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="kw">return</span> <span class="self">self</span>.<span class="ident">flattened</span>().<span class="ident">get_float</span>(),
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
+			VariantClass::Variant =&gt; <span class="kw">return </span><span class="self">self</span>.flattened().get_float(),
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_integer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">LuaError</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">where</span>
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
-		<span class="ident">T</span>: <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaError</span><span class="op">&gt;</span>,
+	<span class="kw">pub fn </span>get_integer&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;T, LuaError&gt;&gt; <span class="kw">where
+		</span>T: TryFrom&lt;bool&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;bool&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u8&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u8&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u16&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u16&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u32&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u32&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u64&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u64&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;i16&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i16&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;i32&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i32&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;i64&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i64&gt;&gt;::Error: Into&lt;LuaError&gt;,
 	{
-		<span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">classify</span>() {
-			<span class="ident">VariantClass::Boolean</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Byte</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Uint16</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Uint32</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Uint64</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Int16</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Int32</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Int64</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">try_into</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>),
-			<span class="ident">VariantClass::Variant</span> =&gt; <span class="kw">return</span> <span class="self">self</span>.<span class="ident">flattened</span>().<span class="ident">get_integer</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(),
-			<span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Byte =&gt; <span class="self">self</span>.as_variant().get::&lt;u8&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint16 =&gt; <span class="self">self</span>.as_variant().get::&lt;u16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint32 =&gt; <span class="self">self</span>.as_variant().get::&lt;u32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint64 =&gt; <span class="self">self</span>.as_variant().get::&lt;u64&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int16 =&gt; <span class="self">self</span>.as_variant().get::&lt;i16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int32 =&gt; <span class="self">self</span>.as_variant().get::&lt;i32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int64 =&gt; <span class="self">self</span>.as_variant().get::&lt;i64&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Variant =&gt; <span class="kw">return </span><span class="self">self</span>.flattened().get_integer::&lt;T&gt;(),
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaticVariantType</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">static_variant_type</span>() -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">VariantTy</span><span class="op">&gt;</span> {
-		<span class="ident">VariantTy::VARIANT</span>.<span class="ident">into</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; StaticVariantType <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
+		VariantTy::VARIANT.into()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToVariant</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">to_variant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Variant</span> {
-		<span class="ident">Variant::from_variant</span>(<span class="self">self</span>.<span class="ident">as_variant</span>())
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
+		Variant::from_variant(<span class="self">self</span>.as_variant())
 	}
 }
 
-<span class="macro">newtype_wrapper!</span> {
-	<span class="doccomment">/// A specialized [LuaVariant] that is both an array and dictionary.</span>
-	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LuaTable</span>(<span class="ident">Variant</span> ;<span class="question-mark">?</span> <span class="ident">LuaError</span>);
+<span class="macro">newtype_wrapper! </span>{
+	<span class="doccomment">/// A specialized [LuaVariant] that is both an array and dictionary.
+	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
+	</span><span class="kw">pub struct </span>LuaTable(Variant ;<span class="question-mark">? </span>LuaError);
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">check</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="comment">// used by Self::wrap and Self::borrow</span>
-		<span class="ident">LuaType::with_variant</span>(<span class="ident">v</span>)
-			.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">ty</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">ty</span> {
-				<span class="ident">LuaType::Table</span> =&gt; <span class="prelude-val">Ok</span>(()),
-				<span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">LuaError::TypeMismatch</span>(
-					<span class="ident">VariantTypeMismatchError::new</span>(<span class="ident">v</span>.<span class="ident">type_</span>().<span class="ident">to_owned</span>(), <span class="ident">VariantTy::ARRAY</span>.<span class="ident">to_owned</span>())
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
+		<span class="comment">// used by Self::wrap and Self::borrow
+		</span>LuaType::with_variant(v)
+			.and_then(|ty| <span class="kw">match </span>ty {
+				LuaType::Table =&gt; <span class="prelude-val">Ok</span>(()),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(
+					VariantTypeMismatchError::new(v.type_().to_owned(), VariantTy::ARRAY.to_owned())
 				)),
 			})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_lua_variant</span>(<span class="self">self</span>) -&gt; <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">LuaVariant::unsafe_from</span>(<span class="self">self</span>.<span class="ident">into_inner</span>())
+	<span class="kw">pub fn </span>into_lua_variant(<span class="self">self</span>) -&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+		<span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(<span class="self">self</span>.into_inner())
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lua_variant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LuaVariant</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">LuaVariant::unsafe_from</span>(<span class="self">self</span>.<span class="ident">as_variant</span>())
+	<span class="kw">pub fn </span>lua_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaVariant {
+		<span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(<span class="self">self</span>.as_variant())
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entry_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
-		<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">n_children</span>()
+	<span class="kw">pub fn </span>entry_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+		<span class="self">self</span>.as_variant().n_children()
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">entry_len</span>() <span class="op">==</span> <span class="number">0</span>
+	<span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.entry_len() == <span class="number">0
+	</span>}
+
+	<span class="doccomment">/// Lua&#39;s `n` field, if it exists
+	</span><span class="kw">pub fn </span>table_getn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u64&gt; {
+		<span class="self">self</span>.by_key(<span class="kw-2">&amp;</span><span class="string">&quot;n&quot;</span>.into())
+			.and_then(|v| v.get_integer())
+			.and_then(|v| v.ok())
 	}
 
-	<span class="doccomment">/// Lua&#39;s `n` field, if it exists</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">table_getn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">by_key</span>(<span class="kw-2">&amp;</span><span class="string">&quot;n&quot;</span>.<span class="ident">into</span>())
-			.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">get_integer</span>())
-			.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">ok</span>())
+	<span class="kw">pub fn </span>variant_is_dict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.as_variant().type_().is_subtype_of(VariantTy::DICTIONARY)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">variant_is_dict</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">type_</span>().<span class="ident">is_subtype_of</span>(<span class="ident">VariantTy::DICTIONARY</span>)
-	}
-
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_dict_entries</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">DictEntry</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>, <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span> {
-		<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">iter</span>().<span class="ident">enumerate</span>()
-			.<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span>(<span class="ident">i</span>, <span class="ident">v</span>)<span class="op">|</span> <span class="kw">unsafe</span> { <span class="kw">match</span> <span class="self">self</span>.<span class="ident">variant_is_dict</span>() {
-				<span class="bool-val">true</span> =&gt; <span class="ident">DictEntry::new</span>(<span class="ident">LuaVariant::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">0</span>)), <span class="ident">LuaVariant::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">1</span>))),
-				<span class="bool-val">false</span> =&gt; <span class="ident">DictEntry::new</span>((<span class="ident">i</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">into</span>(), <span class="ident">LuaVariant::unsafe_from</span>(<span class="ident">v</span>)),
+	<span class="kw">pub fn </span>iter_dict_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=DictEntry&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self">self</span>.as_variant().iter().enumerate()
+			.map(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{ <span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+				<span class="bool-val">true </span>=&gt; DictEntry::new(LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)), LuaVariant::unsafe_from(v.child_value(<span class="number">1</span>))),
+				<span class="bool-val">false </span>=&gt; DictEntry::new((i <span class="kw">as </span>u64 + <span class="number">1</span>).into(), LuaVariant::unsafe_from(v)),
 			} })
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_array_indices</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span> {
-		<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">iter</span>().<span class="ident">enumerate</span>()
-			.<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span>(<span class="ident">i</span>, <span class="ident">v</span>)<span class="op">|</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">variant_is_dict</span>() {
-				<span class="bool-val">true</span> =&gt; <span class="kw">unsafe</span> { <span class="ident">LuaVariant::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">0</span>)) }.<span class="ident">lua_value</span>().<span class="ident">to_integer</span>().<span class="ident">ok</span>()
-					.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span>.<span class="ident">try_into</span>().<span class="ident">ok</span>())
-					.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">idx</span>: <span class="ident">u64</span><span class="op">|</span> <span class="ident">idx</span>.<span class="ident">checked_sub</span>(<span class="number">1</span>)),
-				<span class="bool-val">false</span> =&gt; <span class="prelude-val">Some</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">u64</span>),
+	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=<span class="prelude-ty">Option</span>&lt;u64&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self">self</span>.as_variant().iter().enumerate()
+			.map(<span class="kw">move </span>|(i, v)| <span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+				<span class="bool-val">true </span>=&gt; <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)) }.lua_value().to_integer().ok()
+					.and_then(|i| i.try_into().ok())
+					.and_then(|idx: u64| idx.checked_sub(<span class="number">1</span>)),
+				<span class="bool-val">false </span>=&gt; <span class="prelude-val">Some</span>(i <span class="kw">as </span>u64),
 			})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">array_indices</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">u64</span>)<span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">indices</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter_array_indices</span>().<span class="ident">enumerate</span>()
-			.<span class="ident">filter_map</span>(<span class="op">|</span>(<span class="ident">i</span>, <span class="ident">idx</span>)<span class="op">|</span> <span class="ident">idx</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">idx</span><span class="op">|</span> (<span class="ident">i</span>, <span class="ident">idx</span>)))
-			.<span class="ident">collect</span>();
-		<span class="ident">indices</span>.<span class="ident">sort_by_key</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw">_</span>, <span class="ident">idx</span>)<span class="op">|</span> <span class="ident">idx</span>);
-		<span class="ident">indices</span>
+	<span class="kw">pub fn </span>array_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(usize, u64)&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>indices: Vec&lt;<span class="kw">_</span>&gt; = <span class="self">self</span>.iter_array_indices().enumerate()
+			.filter_map(|(i, idx)| idx.map(|idx| (i, idx)))
+			.collect();
+		indices.sort_by_key(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx);
+		indices
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_array_entries</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(<span class="ident">u64</span>, <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>)<span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span> {
-		<span class="self">self</span>.<span class="ident">array_indices</span>().<span class="ident">into_iter</span>()
-			.<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span>(<span class="ident">i</span>, <span class="ident">idx</span>)<span class="op">|</span> (<span class="ident">idx</span>, <span class="self">self</span>.<span class="ident">value_at</span>(<span class="ident">i</span>).<span class="ident">expect</span>(<span class="string">&quot;array_indices&quot;</span>)))
+	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=(u64, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;)&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self">self</span>.array_indices().into_iter()
+			.map(<span class="kw">move </span>|(i, idx)| (idx, <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>)))
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_array</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span> {
-		<span class="kw">let</span> <span class="ident">indices</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">array_indices</span>();
-		<span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">table_getn</span>()
-			.<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">indices</span>.<span class="ident">last</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw">_</span>, <span class="ident">idx</span>)<span class="op">|</span> <span class="ident">idx</span>));
+	<span class="kw">pub fn </span>iter_array&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=<span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="kw">let </span>indices = <span class="self">self</span>.array_indices();
+		<span class="kw">let </span>last = <span class="self">self</span>.table_getn()
+			.or_else(|| indices.last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx));
 
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">indices</span> <span class="op">=</span> <span class="ident">indices</span>.<span class="ident">into_iter</span>().<span class="ident">peekable</span>();
-		(<span class="number">0</span>..<span class="op">=</span><span class="ident">last</span>.<span class="ident">unwrap_or</span>(<span class="number">0</span>))
-			.<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">idx</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">indices</span>.<span class="ident">peek</span>() {
-				<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, <span class="ident">next</span>)) <span class="kw">if</span> <span class="ident">idx</span> <span class="op">==</span> <span class="ident">next</span> =&gt; {
-					<span class="ident">indices</span>.<span class="ident">next</span>()
-						.<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">i</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="self">self</span>.<span class="ident">value_at</span>(<span class="ident">i</span>).<span class="ident">expect</span>(<span class="string">&quot;array_indices&quot;</span>))
+		<span class="kw">let </span><span class="kw-2">mut </span>indices = indices.into_iter().peekable();
+		(<span class="number">0</span>..=last.unwrap_or(<span class="number">0</span>))
+			.map(<span class="kw">move </span>|idx| <span class="kw">match </span>indices.peek() {
+				<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span>idx == next =&gt; {
+					indices.next()
+						.map(|(i, <span class="kw">_</span>)| <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>))
 				},
 				<span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-				<span class="prelude-val">None</span> =&gt; <span class="ident">indices</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">unreachable!</span>(<span class="string">&quot;array_indices&quot;</span>)),
+				<span class="prelude-val">None </span>=&gt; indices.next().map(|<span class="kw">_</span>| <span class="macro">unreachable!</span>(<span class="string">&quot;array_indices&quot;</span>)),
 			})
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">array_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u64</span> {
-		<span class="self">self</span>.<span class="ident">table_getn</span>()
-			.<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">array_indices</span>().<span class="ident">last</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw">_</span>, <span class="ident">idx</span>)<span class="op">|</span> <span class="ident">idx</span>))
-			.<span class="ident">unwrap_or</span>(<span class="number">0</span>)
+	<span class="kw">pub fn </span>array_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+		<span class="self">self</span>.table_getn()
+			.or_else(|| <span class="self">self</span>.array_indices().last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx))
+			.unwrap_or(<span class="number">0</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">variant_is_dict</span>() {
-			<span class="bool-val">true</span> =&gt; <span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">try_child_value</span>(<span class="ident">index</span>)
-				.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="ident">LuaVariant::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">0</span>)) }),
-			<span class="bool-val">false</span> =&gt; <span class="prelude-val">None</span>,
+	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+			<span class="bool-val">true </span>=&gt; <span class="self">self</span>.as_variant().try_child_value(index)
+				.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)) }),
+			<span class="bool-val">false </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">try_child_value</span>(<span class="ident">index</span>)
-			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="ident">LuaVariant::unsafe_from</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">variant_is_dict</span>() {
-				<span class="bool-val">true</span> =&gt; <span class="ident">v</span>.<span class="ident">child_value</span>(<span class="number">1</span>),
-				<span class="bool-val">false</span> =&gt; <span class="ident">v</span>,
+	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="self">self</span>.as_variant().try_child_value(index)
+			.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+				<span class="bool-val">true </span>=&gt; v.child_value(<span class="number">1</span>),
+				<span class="bool-val">false </span>=&gt; v,
 			}) })
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">by_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">LuaVariant</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">iter_dict_entries</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">key</span>() <span class="op">==</span> <span class="ident">key</span>)
-			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">value</span>().<span class="ident">owned</span>())
+	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="self">self</span>.iter_dict_entries().find(|e| e.key() == key)
+			.map(|e| e.value().owned())
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_array</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">table_getn</span>().<span class="ident">is_some</span>() {
-			<span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
+	<span class="kw">pub fn </span>is_array(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+		<span class="kw">if </span><span class="self">self</span>.table_getn().is_some() {
+			<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
 		}
 
-		<span class="kw">match</span> <span class="self">self</span>.<span class="ident">iter_array_indices</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span>.<span class="ident">is_some</span>()) {
-			<span class="bool-val">true</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_empty</span>() =&gt; <span class="prelude-val">None</span>,
-			<span class="ident">v</span> =&gt; <span class="prelude-val">Some</span>(<span class="ident">v</span>),
+		<span class="kw">match </span><span class="self">self</span>.iter_array_indices().all(|i| i.is_some()) {
+			<span class="bool-val">true </span><span class="kw">if </span><span class="self">self</span>.is_empty() =&gt; <span class="prelude-val">None</span>,
+			v =&gt; <span class="prelude-val">Some</span>(v),
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_vardict</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">as_variant</span>().<span class="ident">type_</span>() <span class="op">==</span> <span class="ident">VariantTy::VARDICT</span>
+	<span class="kw">pub fn </span>is_vardict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.as_variant().type_() == VariantTy::VARDICT
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_vardict</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">LuaError</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_vardict</span>() {
-			<span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>)
+	<span class="kw">pub fn </span>into_vardict(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+		<span class="kw">if </span><span class="self">self</span>.is_vardict() {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self</span>)
 		}
 
-		<span class="self">self</span>.<span class="ident">iter_dict_entries</span>()
-			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span>
-				<span class="ident">e</span>.<span class="ident">key</span>().<span class="ident">lua_value</span>().<span class="ident">to_lua_string</span>()
-					.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">into_string</span>().<span class="ident">map_err</span>(<span class="ident">Into::into</span>))
-					.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> (<span class="ident">s</span>, <span class="ident">e</span>.<span class="ident">value</span>().<span class="ident">owned</span>()))
-			).<span class="ident">collect</span>()
+		<span class="self">self</span>.iter_dict_entries()
+			.map(|e|
+				e.key().lua_value().to_lua_string()
+					.and_then(|s| s.into_string().map_err(Into::into))
+					.map(|s| (s, e.value().owned()))
+			).collect()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">StaticVariantType</span> <span class="kw">for</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">static_variant_type</span>() -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">VariantTy</span><span class="op">&gt;</span> {
-		<span class="ident">VariantTy::VARDICT</span>.<span class="ident">into</span>()
+<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
+		VariantTy::VARDICT.into()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, <span class="ident">V</span>: <span class="ident">StaticVariantType</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">V</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">UnsafeFrom::unsafe_from</span>(
-				<span class="ident">Variant::array_from_iter_with_type</span>(<span class="kw-2">&amp;</span><span class="ident">V::static_variant_type</span>(), <span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">into</span>().<span class="ident">to_variant</span>()))
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item=V&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			UnsafeFrom::unsafe_from(
+				Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span>V::static_variant_type(), iter.into_iter().map(|v| v.into().to_variant()))
 			)
 		}
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, <span class="ident">K</span>: <span class="ident">StaticVariantType</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">StaticVariantType</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span>(<span class="ident">K</span>, <span class="ident">V</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(<span class="ident">K</span>, <span class="ident">V</span>)<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">let</span> <span class="ident">entry_type</span> <span class="op">=</span> <span class="ident">VariantType::new_dict_entry</span>(<span class="kw-2">&amp;</span><span class="ident">K::static_variant_type</span>(), <span class="kw-2">&amp;</span><span class="ident">V::static_variant_type</span>());
-		<span class="kw">let</span> <span class="ident">entries</span> <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">into_iter</span>()
-			.<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">k</span>, <span class="ident">v</span>)<span class="op">|</span> <span class="ident">Variant::from_dict_entry</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>.<span class="ident">into</span>().<span class="ident">into_variant</span>(), <span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">into</span>().<span class="ident">into_variant</span>()));
-		<span class="kw">unsafe</span> {
-			<span class="ident">UnsafeFrom::unsafe_from</span>(
-				<span class="ident">Variant::array_from_iter_with_type</span>(<span class="kw-2">&amp;</span><span class="ident">entry_type</span>, <span class="ident">entries</span>)
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=(K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span>entry_type = VariantType::new_dict_entry(<span class="kw-2">&amp;</span>K::static_variant_type(), <span class="kw-2">&amp;</span>V::static_variant_type());
+		<span class="kw">let </span>entries = iter.into_iter()
+			.map(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span>k.into().into_variant(), <span class="kw-2">&amp;</span>v.into().into_variant()));
+		<span class="kw">unsafe </span>{
+			UnsafeFrom::unsafe_from(
+				Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span>entry_type, entries)
 			)
 		}
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
-		<span class="ident">LuaTable::from_iter</span>(<span class="ident">iter</span>)
-			.<span class="ident">into_lua_variant</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>&gt; FromIterator&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item=LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
+		LuaTable::from_iter(iter)
+			.into_lua_variant()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, <span class="ident">K</span>: <span class="ident">StaticVariantType</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">StaticVariantType</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span>(<span class="ident">K</span>, <span class="ident">V</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(<span class="ident">K</span>, <span class="ident">V</span>)<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
-		<span class="ident">LuaTable::from_iter</span>(<span class="ident">iter</span>)
-			.<span class="ident">into_lua_variant</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=(K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+		LuaTable::from_iter(iter)
+			.into_lua_variant()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToVariant</span> <span class="kw">for</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">to_variant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Variant</span> {
-		<span class="self">self</span>.<span class="ident">clone</span>().<span class="ident">into_vardict</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;VarDict requires UTF8 keys&quot;</span>)
-			.<span class="ident">into_variant</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
+		<span class="self">self</span>.clone().into_vardict()
+			.expect(<span class="string">&quot;VarDict requires UTF8 keys&quot;</span>)
+			.into_variant()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">LuaVariant::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">into_inner</span>())
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(v.into_inner())
 		}
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">UnsafeFrom</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unsafe_from</span>(<span class="ident">v</span>: <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-		<span class="ident"><span class="self">Self</span>::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">into_inner</span>())
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UnsafeFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">unsafe fn </span>unsafe_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::unsafe_from(v.into_inner())
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaTable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">LuaError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">v</span>: <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">v</span>.<span class="ident">into_inner</span>())
+	<span class="kw">fn </span>try_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="self">Self</span>::try_from(v.into_inner())
 	}
 }
 
-<span class="macro">macro_rules!</span> <span class="ident">lua_primitives</span> {
-	($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span>,)<span class="kw-2">*</span>) =&gt; {
+<span class="macro">macro_rules! </span>lua_primitives {
+	($(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
 		$(
-			<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-				<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) -&gt; <span class="self">Self</span> {
-					<span class="kw">unsafe</span> {
-						<span class="ident"><span class="self">Self</span>::unsafe_from</span>(<span class="ident">v</span>.<span class="ident">to_variant</span>())
+			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;<span class="macro-nonterminal">$ty</span>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+				<span class="kw">fn </span>from(v: <span class="macro-nonterminal">$ty</span>) -&gt; <span class="self">Self </span>{
+					<span class="kw">unsafe </span>{
+						<span class="self">Self</span>::unsafe_from(v.to_variant())
 					}
 				}
 			}
-		)<span class="op">*</span>
+		)*
 	};
 }
 
-<span class="macro">lua_primitives!</span> {
-	<span class="ident">i16</span>, <span class="ident">u16</span>, <span class="ident">i32</span>, <span class="ident">u32</span>, <span class="ident">i64</span>, <span class="ident">u64</span>,
-	<span class="ident">bool</span>, <span class="ident">f64</span>, (),
+<span class="macro">lua_primitives! </span>{
+	i16, u16, i32, u32, i64, u64,
+	bool, f64, (),
 }
 
 <span class="comment">/*impl&lt;&#39;a, &#39;v&gt; From&lt;&amp;&#39;a str&gt; for LuaVariant&lt;&#39;v&gt; {
@@ -1128,15 +1121,14 @@
 			Self::unsafe_from(s.to_variant())
 		}
 	}
-}*/</span>
+}*/
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;s</span>, <span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LuaString</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LuaVariant</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">S</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident"><span class="self">Self</span>::unsafe_from</span>(<span class="ident">s</span>.<span class="ident">into</span>().<span class="ident">to_variant</span>())
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;s</span>, S: Into&lt;LuaString&lt;<span class="lifetime">&#39;s</span>&gt;&gt;&gt; From&lt;S&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>from(s: S) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			<span class="self">Self</span>::unsafe_from(s.into().to_variant())
 		}
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -357,358 +350,357 @@
 <span id="350">350</span>
 <span id="351">351</span>
 <span id="352">352</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::ffi::gboolean</span>;
-<span class="kw">use</span> <span class="ident">glib::GString</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa</span>::{<span class="ident">SpaPodBuilder</span>, <span class="ident">SpaPod</span>, <span class="ident">SpaType</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>glib::ffi::gboolean;
+<span class="kw">use </span>glib::GString;
+<span class="kw">use </span><span class="kw">crate</span>::spa::{SpaPodBuilder, SpaPod, SpaType};
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SpaPrimitive</span>: <span class="ident">SpaValue</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">SpaValue</span><span class="op">&gt;</span><span class="ident">::Owned</span><span class="op">&gt;</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span>;
+<span class="kw">pub trait </span>SpaPrimitive: SpaValue + Copy + Into&lt;&lt;<span class="self">Self </span><span class="kw">as </span>SpaValue&gt;::Owned&gt; {
+	<span class="kw">const </span>TYPE: SpaType;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SpaValue</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>);
+<span class="kw">pub trait </span>SpaValue {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder);
 
-	<span class="kw">type</span> <span class="ident">Owned</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span>;
+	<span class="kw">type </span>Owned: <span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt;;
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> () {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::NONE</span>;
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>() {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::NONE;
 }
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> () {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_none</span>()
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>() {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_none()
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> () {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>() {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="ident">pod</span>.<span class="ident">is_none</span>() {
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">if </span>pod.is_none() {
 			<span class="prelude-val">Ok</span>(())
-		} <span class="kw">else</span> {
-			<span class="prelude-val">Err</span>(<span class="ident">GlibNoneError</span>)
+		} <span class="kw">else </span>{
+			<span class="prelude-val">Err</span>(GlibNoneError)
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">bool</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_boolean</span>(<span class="kw-2">*</span><span class="self">self</span>)
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>bool {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_boolean(<span class="kw-2">*</span><span class="self">self</span>)
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpaBool</span>(<span class="ident">gboolean</span>);
+<span class="attr">#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[repr(transparent)]
+</span><span class="kw">pub struct </span>SpaBool(gboolean);
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">SpaBool</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">bool</span> {
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">SpaBool</span>) -&gt; <span class="self">Self</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">v</span>.<span class="number">0</span>)
+<span class="kw">impl </span>From&lt;SpaBool&gt; <span class="kw">for </span>bool {
+	<span class="kw">fn </span>from(v: SpaBool) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			from_glib(v.<span class="number">0</span>)
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaBool</span> {
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span>(<span class="ident">v</span>.<span class="ident">into_glib</span>())
+<span class="kw">impl </span>From&lt;bool&gt; <span class="kw">for </span>SpaBool {
+	<span class="kw">fn </span>from(v: bool) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>(v.into_glib())
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">SpaBool</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::BOOL</span>;
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>SpaBool {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::BOOL;
 }
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">SpaBool</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_boolean</span>((<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">into</span>())
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>SpaBool {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_boolean((<span class="kw-2">*</span><span class="self">self</span>).into())
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="ident">bool</span>;
+	<span class="kw">type </span>Owned = bool;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaBool</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>SpaBool {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">boolean</span>()
-			.<span class="ident">map</span>(<span class="ident">Into::into</span>)
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
-	}
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">bool</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
-
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">boolean</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.boolean()
+			.map(Into::into)
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">i32</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::INT</span>;
-}
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">i32</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_int</span>(<span class="kw-2">*</span><span class="self">self</span>)
-	}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>bool {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i32</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
-
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">int</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.boolean()
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u32</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>i32 {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::INT;
+}
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>i32 {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_int(<span class="kw-2">*</span><span class="self">self</span>)
+	}
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">i32::try_from</span>(<span class="ident">pod</span>)
-			.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">e</span>)))
-			.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">try_into</span>()
-				.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">e</span>)))
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>i32 {
+	<span class="kw">type </span>Error = GlibNoneError;
+
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.int()
+			.ok_or(GlibNoneError)
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>u32 {
+	<span class="kw">type </span>Error = Error;
+
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		i32::try_from(pod)
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+			.and_then(|v| v.try_into()
+				.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
 			)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">i64</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::LONG</span>;
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>i64 {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::LONG;
 }
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">i64</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_long</span>(<span class="kw-2">*</span><span class="self">self</span>)
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>i64 {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_long(<span class="kw-2">*</span><span class="self">self</span>)
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i64</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>i64 {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">long</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.long()
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>u64 {
+	<span class="kw">type </span>Error = Error;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">i64::try_from</span>(<span class="ident">pod</span>)
-			.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">e</span>)))
-			.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">try_into</span>()
-				.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum::InvalidArgument</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">e</span>)))
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		i64::try_from(pod)
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+			.and_then(|v| v.try_into()
+				.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
 			)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">f32</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::FLOAT</span>;
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>f32 {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::FLOAT;
 }
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">f32</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_float</span>(<span class="kw-2">*</span><span class="self">self</span>)
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>f32 {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_float(<span class="kw-2">*</span><span class="self">self</span>)
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f32</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>f32 {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">float</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
-	}
-}
-
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">f64</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::DOUBLE</span>;
-}
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">f64</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_double</span>(<span class="kw-2">*</span><span class="self">self</span>)
-	}
-
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="ident">f64</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f64</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
-
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">double</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.float()
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">str</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_string</span>(<span class="self">self</span>)
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>f64 {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::DOUBLE;
+}
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>f64 {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_double(<span class="kw-2">*</span><span class="self">self</span>)
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="ident">GString</span>;
+	<span class="kw">type </span>Owned = f64;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GString</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>f64 {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">string</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
-	}
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
-
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="op">&lt;</span><span class="ident">GString</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::try_from</span>(<span class="ident">pod</span>)
-			.<span class="ident">map</span>(<span class="ident">Into::into</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.double()
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> [<span class="ident">u8</span>] {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_bytes</span>(<span class="self">self</span>)
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>str {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_string(<span class="self">self</span>)
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>;
+	<span class="kw">type </span>Owned = GString;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>GString {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">bytes</span>()
-			.<span class="ident">map</span>(<span class="ident">Into::into</span>)
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
-	}
-}
-
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">libspa_sys::spa_rectangle</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::RECTANGLE</span>;
-}
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">libspa_sys::spa_rectangle</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_rectangle</span>(<span class="self">self</span>.<span class="ident">width</span>, <span class="self">self</span>.<span class="ident">height</span>)
-	}
-
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">libspa_sys::spa_rectangle</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
-
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">spa_rectangle</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.string()
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPrimitive</span> <span class="kw">for</span> <span class="ident">libspa_sys::spa_fraction</span> {
-	<span class="kw">const</span> <span class="ident">TYPE</span>: <span class="ident">SpaType</span> <span class="op">=</span> <span class="ident">SpaType::FRACTION</span>;
-}
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">libspa_sys::spa_fraction</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_fraction</span>(<span class="self">self</span>.<span class="ident">num</span>, <span class="self">self</span>.<span class="ident">denom</span>)
-	}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>String {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">libspa_sys::spa_fraction</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
-
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">pod</span>.<span class="ident">spa_fraction</span>()
-			.<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		&lt;GString <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt;&gt;::try_from(pod)
+			.map(Into::into)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaValue</span> <span class="kw">for</span> <span class="ident">SpaPod</span> {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="ident">builder</span>.<span class="ident">add_pod</span>(<span class="self">self</span>)
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>[u8] {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_bytes(<span class="self">self</span>)
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="self">Self</span>;
+	<span class="kw">type </span>Owned = Vec&lt;u8&gt;;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaPod</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Vec&lt;u8&gt; {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="ident">pod</span>.<span class="ident">copy</span>().<span class="ident">unwrap</span>())
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.bytes()
+			.map(Into::into)
+			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SpaPrimitive</span><span class="op">&gt;</span> <span class="ident">SpaValue</span> <span class="kw">for</span> [<span class="ident">T</span>] <span class="kw">where</span>
-	<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T::Owned</span><span class="op">&gt;</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span>,
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>libspa_sys::spa_rectangle {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::RECTANGLE;
+}
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>libspa_sys::spa_rectangle {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_rectangle(<span class="self">self</span>.width, <span class="self">self</span>.height)
+	}
+
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>libspa_sys::spa_rectangle {
+	<span class="kw">type </span>Error = GlibNoneError;
+
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.spa_rectangle()
+			.ok_or(GlibNoneError)
+	}
+}
+
+<span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>libspa_sys::spa_fraction {
+	<span class="kw">const </span>TYPE: SpaType = SpaType::FRACTION;
+}
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>libspa_sys::spa_fraction {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_fraction(<span class="self">self</span>.num, <span class="self">self</span>.denom)
+	}
+
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>libspa_sys::spa_fraction {
+	<span class="kw">type </span>Error = GlibNoneError;
+
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		pod.spa_fraction()
+			.ok_or(GlibNoneError)
+	}
+}
+
+<span class="kw">impl </span>SpaValue <span class="kw">for </span>SpaPod {
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		builder.add_pod(<span class="self">self</span>)
+	}
+
+	<span class="kw">type </span>Owned = <span class="self">Self</span>;
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>SpaPod {
+	<span class="kw">type </span>Error = GlibNoneError;
+
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(pod.copy().unwrap())
+	}
+}
+
+<span class="kw">impl</span>&lt;T: SpaPrimitive&gt; SpaValue <span class="kw">for </span>[T] <span class="kw">where
+	</span>Vec&lt;T::Owned&gt;: <span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt;,
 {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="kw">let</span> <span class="ident">struct_</span> <span class="op">=</span> <span class="ident">SpaPodBuilder::new_array</span>();
-		<span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="self">self</span> {
-			<span class="ident">item</span>.<span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="ident">struct_</span>);
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		<span class="kw">let </span>struct_ = SpaPodBuilder::new_array();
+		<span class="kw">for </span>item <span class="kw">in </span><span class="self">self </span>{
+			item.add_to_builder(<span class="kw-2">&amp;</span>struct_);
 		}
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pod</span>) <span class="op">=</span> <span class="ident">struct_</span>.<span class="ident">end</span>() {
-			<span class="ident">builder</span>.<span class="ident">add_pod</span>(<span class="kw-2">&amp;</span><span class="ident">pod</span>)
-		} <span class="kw">else</span> {
-			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {:?}&quot;</span>, <span class="ident">struct_</span>)
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(pod) = struct_.end() {
+			builder.add_pod(<span class="kw-2">&amp;</span>pod)
+		} <span class="kw">else </span>{
+			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {:?}&quot;</span>, struct_)
 		}
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T::Owned</span><span class="op">&gt;</span>;
+	<span class="kw">type </span>Owned = Vec&lt;T::Owned&gt;;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="ident">SpaPod</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
-	<span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="ident">SpaPod</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">GlibNoneError</span><span class="op">&gt;</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Vec&lt;T&gt; <span class="kw">where
+	for</span>&lt;<span class="lifetime">&#39;f</span>&gt; &lt;T <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;&gt;::Error: Into&lt;GlibNoneError&gt;,
 {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">pod</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaPod</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="op">!</span><span class="ident">pod</span>.<span class="ident">is_struct</span>() {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">if </span>!pod.is_struct() {
+			<span class="kw">return </span><span class="prelude-val">Err</span>(GlibNoneError)
 		}
 
-		<span class="ident">pod</span>.<span class="ident">iterator</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">pod</span><span class="op">|</span>
-			<span class="ident">T::try_from</span>(<span class="kw-2">&amp;</span><span class="ident">pod</span>)
-				.<span class="ident">map_err</span>(<span class="ident">Into::into</span>)
-		).<span class="ident">collect</span>()
+		pod.iterator().map(|pod|
+			T::try_from(<span class="kw-2">&amp;</span>pod)
+				.map_err(Into::into)
+		).collect()
 	}
 }
 
-<span class="doccomment">/// Struct</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">SpaValue</span> <span class="kw">for</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw">dyn</span> <span class="ident">SpaValue</span><span class="op">&lt;</span><span class="ident">Owned</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;</span>] <span class="kw">where</span>
-	<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="ident">SpaPod</span><span class="op">&gt;</span>,
-	<span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="ident">SpaPod</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: Sized&gt; SpaValue <span class="kw">for </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>SpaValue&lt;Owned=T&gt;] <span class="kw">where
+	</span>Vec&lt;T&gt;: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;,
+	T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;,
 {
-	<span class="kw">fn</span> <span class="ident">add_to_builder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">SpaPodBuilder</span>) {
-		<span class="kw">let</span> <span class="ident">struct_</span> <span class="op">=</span> <span class="ident">SpaPodBuilder::new_struct</span>();
-		<span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">item</span> <span class="kw">in</span> <span class="self">self</span> {
-			<span class="ident">SpaValue::add_to_builder</span>(<span class="ident">item</span>, <span class="kw-2">&amp;</span><span class="ident">struct_</span>);
+	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
+		<span class="kw">let </span>struct_ = SpaPodBuilder::new_struct();
+		<span class="kw">for </span><span class="kw-2">&amp;</span>item <span class="kw">in </span><span class="self">self </span>{
+			SpaValue::add_to_builder(item, <span class="kw-2">&amp;</span>struct_);
 		}
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pod</span>) <span class="op">=</span> <span class="ident">struct_</span>.<span class="ident">end</span>() {
-			<span class="ident">builder</span>.<span class="ident">add_pod</span>(<span class="kw-2">&amp;</span><span class="ident">pod</span>)
-		} <span class="kw">else</span> {
-			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {:?}&quot;</span>, <span class="ident">struct_</span>)
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(pod) = struct_.end() {
+			builder.add_pod(<span class="kw-2">&amp;</span>pod)
+		} <span class="kw">else </span>{
+			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {:?}&quot;</span>, struct_)
 		}
 	}
 
-	<span class="kw">type</span> <span class="ident">Owned</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
+	<span class="kw">type </span>Owned = Vec&lt;T&gt;;
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

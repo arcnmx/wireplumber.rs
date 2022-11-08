@@ -1,3 +1,3 @@
-(function() {var implementors = {};
-implementors["glib_signal"] = [{"text":"impl&lt;O:&nbsp;<a class=\"trait\" href=\"https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html\" title=\"trait glib::object::ObjectType\">ObjectType</a>, T&gt; FusedFuture for <a class=\"struct\" href=\"glib_signal/struct.OnceFuture.html\" title=\"struct glib_signal::OnceFuture\">OnceFuture</a>&lt;O, T&gt;","synthetic":false,"types":["glib_signal::signal_stream::OnceFuture"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
+(function() {var implementors = {
+"glib_signal":[["impl&lt;O:&nbsp;<a class=\"trait\" href=\"https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html\" title=\"trait glib::object::ObjectType\">ObjectType</a>, T&gt; FusedFuture for <a class=\"struct\" href=\"glib_signal/struct.OnceFuture.html\" title=\"struct glib_signal::OnceFuture\">OnceFuture</a>&lt;O, T&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

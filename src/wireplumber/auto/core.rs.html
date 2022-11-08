@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/core.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>core.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/core.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>core.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -307,308 +300,307 @@
 <span id="300">300</span>
 <span id="301">301</span>
 <span id="302">302</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ObjectManager</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Properties</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::object::ObjectType</span> <span class="kw">as</span> <span class="ident">ObjectType_</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
-<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
-<span class="kw">use</span> <span class="ident">std::ptr</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::ObjectManager;
+<span class="kw">use </span><span class="kw">crate</span>::Properties;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::object::ObjectType <span class="kw">as </span>ObjectType_;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::mem::transmute;
+<span class="kw">use </span>std::pin::Pin;
+<span class="kw">use </span>std::ptr;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpCore&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Core</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::WpCore</span>, <span class="ident">ffi::WpCoreClass</span><span class="op">&gt;</span>);
+<span class="macro">glib::wrapper! </span>{
+    <span class="attr">#[doc(alias = <span class="string">&quot;WpCore&quot;</span>)]
+    </span><span class="kw">pub struct </span>Core(Object&lt;ffi::WpCore, ffi::WpCoreClass&gt;);
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::wp_core_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::wp_core_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Core</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_new&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">context</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">glib::MainContext</span><span class="op">&gt;</span>, <span class="ident">properties</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Properties</span><span class="op">&gt;</span>) -&gt; <span class="ident">Core</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::wp_core_new</span>(<span class="ident">context</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">properties</span>.<span class="ident">to_glib_full</span>()))
+<span class="kw">impl </span>Core {
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_new&quot;</span>)]
+    </span><span class="kw">pub fn </span>new(context: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>glib::MainContext&gt;, properties: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Properties&gt;) -&gt; Core {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::wp_core_new(context.to_glib_none().<span class="number">0</span>, properties.to_glib_full()))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_connect&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::wp_core_connect</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_connect&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::wp_core_connect(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_disconnect&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disconnect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::wp_core_disconnect</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_disconnect&quot;</span>)]
+    </span><span class="kw">pub fn </span>disconnect(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::wp_core_disconnect(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_g_main_context&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_g_main_context&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">g_main_context</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::MainContext</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::wp_core_get_g_main_context</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_g_main_context&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_g_main_context&quot;</span>)]
+    </span><span class="kw">pub fn </span>g_main_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::MainContext&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::wp_core_get_g_main_context(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_properties&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_properties&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">properties</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Properties</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::wp_core_get_properties</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_properties&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_properties&quot;</span>)]
+    </span><span class="kw">pub fn </span>properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Properties&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::wp_core_get_properties(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="comment">//#[doc(alias = &quot;wp_core_get_pw_context&quot;)]</span>
-    <span class="comment">//#[doc(alias = &quot;get_pw_context&quot;)]</span>
-    <span class="comment">//pub fn pw_context(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt; {</span>
-    <span class="comment">//    unsafe { TODO: call ffi:wp_core_get_pw_context() }</span>
-    <span class="comment">//}</span>
+    <span class="comment">//#[doc(alias = &quot;wp_core_get_pw_context&quot;)]
+    //#[doc(alias = &quot;get_pw_context&quot;)]
+    //pub fn pw_context(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt; {
+    //    unsafe { TODO: call ffi:wp_core_get_pw_context() }
+    //}
 
-    <span class="comment">//#[doc(alias = &quot;wp_core_get_pw_core&quot;)]</span>
-    <span class="comment">//#[doc(alias = &quot;get_pw_core&quot;)]</span>
-    <span class="comment">//pub fn pw_core(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt; {</span>
-    <span class="comment">//    unsafe { TODO: call ffi:wp_core_get_pw_core() }</span>
-    <span class="comment">//}</span>
+    //#[doc(alias = &quot;wp_core_get_pw_core&quot;)]
+    //#[doc(alias = &quot;get_pw_core&quot;)]
+    //pub fn pw_core(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt; {
+    //    unsafe { TODO: call ffi:wp_core_get_pw_core() }
+    //}
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_remote_cookie&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_remote_cookie&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_cookie</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::wp_core_get_remote_cookie</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_remote_cookie&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_remote_cookie&quot;</span>)]
+    </span><span class="kw">pub fn </span>remote_cookie(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+        <span class="kw">unsafe </span>{
+            ffi::wp_core_get_remote_cookie(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_remote_host_name&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_remote_host_name&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_host_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::wp_core_get_remote_host_name</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_remote_host_name&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_remote_host_name&quot;</span>)]
+    </span><span class="kw">pub fn </span>remote_host_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::wp_core_get_remote_host_name(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_remote_name&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_remote_name&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::wp_core_get_remote_name</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_remote_name&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_remote_name&quot;</span>)]
+    </span><span class="kw">pub fn </span>remote_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::wp_core_get_remote_name(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_remote_properties&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_remote_properties&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_properties</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Properties</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::wp_core_get_remote_properties</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_remote_properties&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_remote_properties&quot;</span>)]
+    </span><span class="kw">pub fn </span>remote_properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Properties&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::wp_core_get_remote_properties(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_remote_user_name&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_remote_user_name&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_user_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::wp_core_get_remote_user_name</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_remote_user_name&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_remote_user_name&quot;</span>)]
+    </span><span class="kw">pub fn </span>remote_user_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::wp_core_get_remote_user_name(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_get_remote_version&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_remote_version&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::wp_core_get_remote_version</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_remote_version&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_remote_version&quot;</span>)]
+    </span><span class="kw">pub fn </span>remote_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::wp_core_get_remote_version(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_idle_add&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">idle_add</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>() -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">function</span>: <span class="ident">P</span>) -&gt; <span class="ident">glib::Source</span> {
-        <span class="kw">let</span> <span class="ident">function_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">function</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">function_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>() -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">user_data</span>: <span class="ident">glib::ffi::gpointer</span>) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-            <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">user_data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">callback</span>)();
-            <span class="ident">res</span>.<span class="ident">into_glib</span>()
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_idle_add&quot;</span>)]
+    </span><span class="kw">pub fn </span>idle_add&lt;P: Fn() -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, function: P) -&gt; glib::Source {
+        <span class="kw">let </span>function_data: Box_&lt;P&gt; = Box_::new(function);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>function_func&lt;P: Fn() -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(user_data: glib::ffi::gpointer) -&gt; glib::ffi::gboolean {
+            <span class="kw">let </span>callback: <span class="kw-2">&amp;</span>P = <span class="kw-2">&amp;*</span>(user_data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+            <span class="kw">let </span>res = (<span class="kw-2">*</span>callback)();
+            res.into_glib()
         }
-        <span class="kw">let</span> <span class="ident">function</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">function_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>() -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>) {
-            <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
+        <span class="kw">let </span>function = <span class="prelude-val">Some</span>(function_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>destroy_func&lt;P: Fn() -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(data: glib::ffi::gpointer) {
+            <span class="kw">let </span>_callback: Box_&lt;P&gt; = Box_::from_raw(data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
         }
-        <span class="kw">let</span> <span class="ident">destroy_call4</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">destroy_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">function_data</span>;
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="ident">ffi::wp_core_idle_add</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">source</span>, <span class="ident">function</span>, <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>, <span class="ident">destroy_call4</span>);
-            <span class="ident">from_glib_full</span>(<span class="ident">source</span>)
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_idle_add_closure&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">idle_add_closure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">closure</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Closure</span>) -&gt; <span class="ident">glib::Source</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="ident">ffi::wp_core_idle_add_closure</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">source</span>, <span class="ident">closure</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
-            <span class="ident">from_glib_full</span>(<span class="ident">source</span>)
+        <span class="kw">let </span>destroy_call4 = <span class="prelude-val">Some</span>(destroy_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">let </span>super_callback0: Box_&lt;P&gt; = function_data;
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>source = ptr::null_mut();
+            ffi::wp_core_idle_add(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>source, function, Box_::into_raw(super_callback0) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, destroy_call4);
+            from_glib_full(source)
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_install_object_manager&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">install_object_manager</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">om</span>: <span class="kw-2">&amp;</span><span class="ident">ObjectManager</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::wp_core_install_object_manager</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">om</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_idle_add_closure&quot;</span>)]
+    </span><span class="kw">pub fn </span>idle_add_closure(<span class="kw-2">&amp;</span><span class="self">self</span>, closure: <span class="kw-2">&amp;</span>glib::Closure) -&gt; glib::Source {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>source = ptr::null_mut();
+            ffi::wp_core_idle_add_closure(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>source, closure.to_glib_none().<span class="number">0</span>);
+            from_glib_full(source)
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_is_connected&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_connected</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::wp_core_is_connected</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_install_object_manager&quot;</span>)]
+    </span><span class="kw">pub fn </span>install_object_manager(<span class="kw-2">&amp;</span><span class="self">self</span>, om: <span class="kw-2">&amp;</span>ObjectManager) {
+        <span class="kw">unsafe </span>{
+            ffi::wp_core_install_object_manager(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, om.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_load_component&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_component</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">component</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">type_</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">glib::Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="ident">is_ok</span> <span class="op">=</span> <span class="ident">ffi::wp_core_load_component</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">component</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">type_</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">args</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">is_ok</span> <span class="op">==</span> <span class="ident">glib::ffi::GFALSE</span>, <span class="op">!</span><span class="ident">error</span>.<span class="ident">is_null</span>());
-            <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() { <span class="prelude-val">Ok</span>(()) } <span class="kw">else</span> { <span class="prelude-val">Err</span>(<span class="ident">from_glib_full</span>(<span class="ident">error</span>)) }
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_is_connected&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_connected(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::wp_core_is_connected(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_sync&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sync</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">FnOnce</span>(<span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cancellable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::Cancellable</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">callback</span>: <span class="ident">P</span>) -&gt; <span class="ident">bool</span> {
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_load_component&quot;</span>)]
+    </span><span class="kw">pub fn </span>load_component(<span class="kw-2">&amp;</span><span class="self">self</span>, component: <span class="kw-2">&amp;</span>str, type_: <span class="kw-2">&amp;</span>str, args: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>glib::Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::Error&gt; {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
+            <span class="kw">let </span>is_ok = ffi::wp_core_load_component(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, component.to_glib_none().<span class="number">0</span>, type_.to_glib_none().<span class="number">0</span>, args.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error);
+            <span class="macro">assert_eq!</span>(is_ok == glib::ffi::GFALSE, !error.is_null());
+            <span class="kw">if </span>error.is_null() { <span class="prelude-val">Ok</span>(()) } <span class="kw">else </span>{ <span class="prelude-val">Err</span>(from_glib_full(error)) }
+        }
+    }
+
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_sync&quot;</span>)]
+    </span><span class="kw">pub fn </span>sync&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::Cancellable&gt;&gt;, callback: P) -&gt; bool {
         
-                <span class="kw">let</span> <span class="ident">main_context</span> <span class="op">=</span> <span class="ident">glib::MainContext::ref_thread_default</span>();
-                <span class="kw">let</span> <span class="ident">is_main_context_owner</span> <span class="op">=</span> <span class="ident">main_context</span>.<span class="ident">is_owner</span>();
-                <span class="kw">let</span> <span class="ident">has_acquired_main_context</span> <span class="op">=</span> (<span class="op">!</span><span class="ident">is_main_context_owner</span>)
-                    .<span class="ident">then</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">main_context</span>.<span class="ident">acquire</span>().<span class="ident">ok</span>())
-                    .<span class="ident">flatten</span>();
+                <span class="kw">let </span>main_context = glib::MainContext::ref_thread_default();
+                <span class="kw">let </span>is_main_context_owner = main_context.is_owner();
+                <span class="kw">let </span>has_acquired_main_context = (!is_main_context_owner)
+                    .then(|| main_context.acquire().ok())
+                    .flatten();
                 <span class="macro">assert!</span>(
-                    <span class="ident">is_main_context_owner</span> <span class="op">|</span><span class="op">|</span> <span class="ident">has_acquired_main_context</span>.<span class="ident">is_some</span>(),
-                    <span class="string">&quot;Async operations only allowed if the thread is owning the MainContext&quot;</span>
-                );
+                    is_main_context_owner || has_acquired_main_context.is_some(),
+                    <span class="string">&quot;Async operations only allowed if the thread is owning the MainContext&quot;
+                </span>);
         
-        <span class="kw">let</span> <span class="ident">user_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">glib::thread_guard::ThreadGuard</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">glib::thread_guard::ThreadGuard::new</span>(<span class="ident">callback</span>));
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">sync_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">FnOnce</span>(<span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">_source_object</span>: <span class="kw-2">*mut</span> <span class="ident">glib::gobject_ffi::GObject</span>, <span class="ident">res</span>: <span class="kw-2">*mut</span> <span class="ident">gio::ffi::GAsyncResult</span>, <span class="ident">user_data</span>: <span class="ident">glib::ffi::gpointer</span>) {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ffi::wp_core_sync_finish</span>(<span class="ident">_source_object</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>, <span class="ident">res</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>);
-            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() { <span class="prelude-val">Ok</span>(()) } <span class="kw">else</span> { <span class="prelude-val">Err</span>(<span class="ident">from_glib_full</span>(<span class="ident">error</span>)) };
-            <span class="kw">let</span> <span class="ident">callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">glib::thread_guard::ThreadGuard</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">user_data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
-            <span class="kw">let</span> <span class="ident">callback</span>: <span class="ident">P</span> <span class="op">=</span> <span class="ident">callback</span>.<span class="ident">into_inner</span>();
-            <span class="ident">callback</span>(<span class="ident">result</span>);
+        <span class="kw">let </span>user_data: Box_&lt;glib::thread_guard::ThreadGuard&lt;P&gt;&gt; = Box_::new(glib::thread_guard::ThreadGuard::new(callback));
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>sync_trampoline&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;) + <span class="lifetime">&#39;static</span>&gt;(_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject, res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
+            <span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
+            <span class="kw">let _ </span>= ffi::wp_core_sync_finish(_source_object <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, res, <span class="kw-2">&amp;mut </span>error);
+            <span class="kw">let </span>result = <span class="kw">if </span>error.is_null() { <span class="prelude-val">Ok</span>(()) } <span class="kw">else </span>{ <span class="prelude-val">Err</span>(from_glib_full(error)) };
+            <span class="kw">let </span>callback: Box_&lt;glib::thread_guard::ThreadGuard&lt;P&gt;&gt; = Box_::from_raw(user_data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+            <span class="kw">let </span>callback: P = callback.into_inner();
+            callback(result);
         }
-        <span class="kw">let</span> <span class="ident">callback</span> <span class="op">=</span> <span class="ident">sync_trampoline</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>;
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::wp_core_sync</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">cancellable</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="ident">callback</span>), <span class="ident">Box_::into_raw</span>(<span class="ident">user_data</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>))
+        <span class="kw">let </span>callback = sync_trampoline::&lt;P&gt;;
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::wp_core_sync(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, cancellable.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>, <span class="prelude-val">Some</span>(callback), Box_::into_raw(user_data) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>))
         }
     }
 
     
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sync_future</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Pin</span><span class="op">&lt;</span><span class="ident">Box_</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">std::future::Future</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub fn </span>sync_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Pin&lt;Box_&lt;<span class="kw">dyn </span>std::future::Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
 
-        <span class="ident">Box_::pin</span>(<span class="ident">gio::GioFuture::new</span>(<span class="self">self</span>, <span class="kw">move</span> <span class="op">|</span><span class="ident">obj</span>, <span class="ident">cancellable</span>, <span class="ident">send</span><span class="op">|</span> {
-            <span class="ident">obj</span>.<span class="ident">sync</span>(
-                <span class="prelude-val">Some</span>(<span class="ident">cancellable</span>),
-                <span class="kw">move</span> <span class="op">|</span><span class="ident">res</span><span class="op">|</span> {
-                    <span class="ident">send</span>.<span class="ident">resolve</span>(<span class="ident">res</span>);
+        Box_::pin(gio::GioFuture::new(<span class="self">self</span>, <span class="kw">move </span>|obj, cancellable, send| {
+            obj.sync(
+                <span class="prelude-val">Some</span>(cancellable),
+                <span class="kw">move </span>|res| {
+                    send.resolve(res);
                 },
             );
         }))
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_6&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_sync_closure&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sync_closure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cancellable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::Cancellable</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">closure</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Closure</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::wp_core_sync_closure</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">cancellable</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">closure</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_6&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;wp_core_sync_closure&quot;</span>)]
+    </span><span class="kw">pub fn </span>sync_closure(<span class="kw-2">&amp;</span><span class="self">self</span>, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::Cancellable&gt;&gt;, closure: <span class="kw-2">&amp;</span>glib::Closure) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::wp_core_sync_closure(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, cancellable.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>, closure.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_timeout_add&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timeout_add</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>() -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timeout_ms</span>: <span class="ident">u32</span>, <span class="ident">function</span>: <span class="ident">P</span>) -&gt; <span class="ident">glib::Source</span> {
-        <span class="kw">let</span> <span class="ident">function_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">function</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">function_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>() -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">user_data</span>: <span class="ident">glib::ffi::gpointer</span>) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-            <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">user_data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">callback</span>)();
-            <span class="ident">res</span>.<span class="ident">into_glib</span>()
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_timeout_add&quot;</span>)]
+    </span><span class="kw">pub fn </span>timeout_add&lt;P: Fn() -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, timeout_ms: u32, function: P) -&gt; glib::Source {
+        <span class="kw">let </span>function_data: Box_&lt;P&gt; = Box_::new(function);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>function_func&lt;P: Fn() -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(user_data: glib::ffi::gpointer) -&gt; glib::ffi::gboolean {
+            <span class="kw">let </span>callback: <span class="kw-2">&amp;</span>P = <span class="kw-2">&amp;*</span>(user_data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+            <span class="kw">let </span>res = (<span class="kw-2">*</span>callback)();
+            res.into_glib()
         }
-        <span class="kw">let</span> <span class="ident">function</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">function_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>() -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>) {
-            <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
+        <span class="kw">let </span>function = <span class="prelude-val">Some</span>(function_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>destroy_func&lt;P: Fn() -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(data: glib::ffi::gpointer) {
+            <span class="kw">let </span>_callback: Box_&lt;P&gt; = Box_::from_raw(data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
         }
-        <span class="kw">let</span> <span class="ident">destroy_call5</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">destroy_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">function_data</span>;
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="ident">ffi::wp_core_timeout_add</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">source</span>, <span class="ident">timeout_ms</span>, <span class="ident">function</span>, <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>, <span class="ident">destroy_call5</span>);
-            <span class="ident">from_glib_full</span>(<span class="ident">source</span>)
-        }
-    }
-
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_timeout_add_closure&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timeout_add_closure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timeout_ms</span>: <span class="ident">u32</span>, <span class="ident">closure</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Closure</span>) -&gt; <span class="ident">glib::Source</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="ident">ffi::wp_core_timeout_add_closure</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">source</span>, <span class="ident">timeout_ms</span>, <span class="ident">closure</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
-            <span class="ident">from_glib_full</span>(<span class="ident">source</span>)
+        <span class="kw">let </span>destroy_call5 = <span class="prelude-val">Some</span>(destroy_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">let </span>super_callback0: Box_&lt;P&gt; = function_data;
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>source = ptr::null_mut();
+            ffi::wp_core_timeout_add(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>source, timeout_ms, function, Box_::into_raw(super_callback0) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, destroy_call5);
+            from_glib_full(source)
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_core_update_properties&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_properties</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">updates</span>: <span class="kw-2">&amp;</span><span class="ident">Properties</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::wp_core_update_properties</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">updates</span>.<span class="ident">to_glib_full</span>());
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_timeout_add_closure&quot;</span>)]
+    </span><span class="kw">pub fn </span>timeout_add_closure(<span class="kw-2">&amp;</span><span class="self">self</span>, timeout_ms: u32, closure: <span class="kw-2">&amp;</span>glib::Closure) -&gt; glib::Source {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>source = ptr::null_mut();
+            ffi::wp_core_timeout_add_closure(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>source, timeout_ms, closure.to_glib_none().<span class="number">0</span>);
+            from_glib_full(source)
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;connected&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_connected</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">connected_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Core</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpCore</span>, <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
-        }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>, <span class="string">b&quot;connected\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(<span class="ident">connected_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> ())), <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;wp_core_update_properties&quot;</span>)]
+    </span><span class="kw">pub fn </span>update_properties(<span class="kw-2">&amp;</span><span class="self">self</span>, updates: <span class="kw-2">&amp;</span>Properties) {
+        <span class="kw">unsafe </span>{
+            ffi::wp_core_update_properties(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, updates.to_glib_full());
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;disconnected&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_disconnected</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">disconnected_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Core</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpCore</span>, <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;connected&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_connected&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>connected_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Core) + <span class="lifetime">&#39;static</span>&gt;(this: <span class="kw-2">*mut </span>ffi::WpCore, f: glib::ffi::gpointer) {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>, <span class="string">b&quot;disconnected\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(<span class="ident">disconnected_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> ())), <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>))
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(<span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <span class="string">b&quot;connected\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(connected_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>())), Box_::into_raw(f))
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;pw-core&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_pw_core_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_pw_core_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Core</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpCore</span>, <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>, <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+    <span class="attr">#[doc(alias = <span class="string">&quot;disconnected&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_disconnected&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>disconnected_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Core) + <span class="lifetime">&#39;static</span>&gt;(this: <span class="kw-2">*mut </span>ffi::WpCore, f: glib::ffi::gpointer) {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>, <span class="string">b&quot;notify::pw-core\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(<span class="ident">notify_pw_core_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> ())), <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>))
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(<span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <span class="string">b&quot;disconnected\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(disconnected_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>())), Box_::into_raw(f))
+        }
+    }
+
+    <span class="attr">#[doc(alias = <span class="string">&quot;pw-core&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_pw_core_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_pw_core_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Core) + <span class="lifetime">&#39;static</span>&gt;(this: <span class="kw-2">*mut </span>ffi::WpCore, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+        }
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(<span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <span class="string">b&quot;notify::pw-core\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(notify_pw_core_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>())), Box_::into_raw(f))
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

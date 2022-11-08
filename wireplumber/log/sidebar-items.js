@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Log",""],["StructuredLogContext",""]]});
+window.SIDEBAR_ITEMS = {"macro":[["critical",""],["debug",""],["info",""],["log",""],["message",""],["trace",""],["warning",""]],"struct":[["Log",""],["StructuredLogContext",""]]};

@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/error/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/error/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -66,67 +59,66 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Error handling and the [Result] alias</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # See also</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Error handling and the [Result] alias
+//!
+//! # See also
+//!
+//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
 
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Quark</span>, <span class="ident">error::ErrorDomain</span>};
-<span class="kw">use</span> <span class="ident">std::fmt::Display</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</span><span class="kw">use </span>glib::{Quark, error::ErrorDomain};
+<span class="kw">use </span>std::fmt::Display;
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto::LibraryErrorEnum</span>;
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glib::Error</span>;
+<span class="kw">pub use </span><span class="kw">crate</span>::auto::LibraryErrorEnum;
+<span class="attr">#[doc(no_inline)]
+</span><span class="kw">pub use </span>glib::Error;
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
 
-<span class="kw">impl</span> <span class="ident">ErrorDomain</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_DOMAIN_LIBRARY&quot;</span>)]</span>
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_domain_library_quark&quot;</span>)]</span>
-	<span class="kw">fn</span> <span class="ident">domain</span>() -&gt; <span class="ident">Quark</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">ffi::wp_domain_library_quark</span>())
+<span class="kw">impl </span>ErrorDomain <span class="kw">for </span>LibraryErrorEnum {
+	<span class="attr">#[doc(alias = <span class="string">&quot;WP_DOMAIN_LIBRARY&quot;</span>)]
+	#[doc(alias = <span class="string">&quot;wp_domain_library_quark&quot;</span>)]
+	</span><span class="kw">fn </span>domain() -&gt; Quark {
+		<span class="kw">unsafe </span>{
+			from_glib(ffi::wp_domain_library_quark())
 		}
 	}
 
-	<span class="kw">fn</span> <span class="ident">code</span>(<span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-		<span class="self">self</span>.<span class="ident">into_glib</span>()
+	<span class="kw">fn </span>code(<span class="self">self</span>) -&gt; i32 {
+		<span class="self">self</span>.into_glib()
 	}
 
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">code</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="ident">code</span> {
-			<span class="ident">ffi::WP_LIBRARY_ERROR_INVARIANT</span> <span class="op">|</span> <span class="ident">ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT</span> <span class="op">|</span> <span class="ident">ffi::WP_LIBRARY_ERROR_OPERATION_FAILED</span> =&gt; <span class="kw">unsafe</span> {
-				<span class="prelude-val">Some</span>(<span class="ident">from_glib</span>(<span class="ident">code</span>))
+	<span class="kw">fn </span>from(code: i32) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="kw">match </span>code {
+			ffi::WP_LIBRARY_ERROR_INVARIANT | ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT | ffi::WP_LIBRARY_ERROR_OPERATION_FAILED =&gt; <span class="kw">unsafe </span>{
+				<span class="prelude-val">Some</span>(from_glib(code))
 			},
-			<span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 }
 
-<span class="macro">macro_rules!</span> <span class="ident">error_constructors</span> {
+<span class="macro">macro_rules! </span>error_constructors {
 	($(
-		$(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">meta</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
-		<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">ident</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">var</span>:<span class="ident">ident</span>,
+		$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>:meta]</span>)*
+		<span class="macro-nonterminal">$f</span>:ident =&gt; <span class="macro-nonterminal">$var</span>:ident,
 	)<span class="kw-2">*</span>) =&gt; {
 		$(
-			$(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">meta</span>]</span>)<span class="op">*</span>
-			<span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Display</span><span class="op">&gt;</span>(<span class="ident">err</span>: <span class="ident">E</span>) -&gt; <span class="ident">Error</span> {
-				<span class="ident">Error::new</span>(<span class="ident">LibraryErrorEnum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">var</span>, <span class="kw-2">&amp;</span><span class="ident">err</span>.<span class="ident">to_string</span>())
+			$(<span class="attr">#[<span class="macro-nonterminal">$meta</span>]</span>)*
+			<span class="kw">pub fn </span><span class="macro-nonterminal">$f</span>&lt;E: Display&gt;(err: E) -&gt; Error {
+				Error::new(LibraryErrorEnum::<span class="macro-nonterminal">$var</span>, <span class="kw-2">&amp;</span>err.to_string())
 			}
-		)<span class="op">*</span>
+		)*
 	};
 }
 
-<span class="macro">error_constructors!</span> {
-	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::InvalidArgument] domain</span>
-	<span class="ident">invalid_argument</span> =&gt; <span class="ident">InvalidArgument</span>,
-	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::OperationFailed] domain</span>
-	<span class="ident">operation_failed</span> =&gt; <span class="ident">OperationFailed</span>,
-	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::Invariant] domain</span>
-	<span class="ident">invariant</span> =&gt; <span class="ident">Invariant</span>,
+<span class="macro">error_constructors! </span>{
+	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::InvalidArgument] domain
+	</span>invalid_argument =&gt; InvalidArgument,
+	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::OperationFailed] domain
+	</span>operation_failed =&gt; OperationFailed,
+	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::Invariant] domain
+	</span>invariant =&gt; Invariant,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

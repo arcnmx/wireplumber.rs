@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/keys.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>keys.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/keys.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>keys.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -298,299 +291,298 @@
 <span id="291">291</span>
 <span id="292">292</span>
 <span id="293">293</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">::ffi::WpSpaType</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">SpaIdTable</span>, <span class="ident">SpaIdValue</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>::ffi::WpSpaType;
+<span class="kw">use crate</span>::{SpaIdTable, SpaIdValue};
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pipewire_sys</span> <span class="kw">as</span> <span class="ident">ffi</span>;
+<span class="kw">pub use </span>pipewire_sys <span class="kw">as </span>ffi;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PipewireKey</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>]);
+<span class="attr">#[derive(Copy, Clone)]
+#[repr(transparent)]
+</span><span class="kw">pub struct </span>PipewireKey(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[u8]);
 
-<span class="kw">impl</span> <span class="ident">PipewireKey</span> {
-	<span class="attribute">#[<span class="ident">inline</span>]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_cstr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">CStr::from_bytes_with_nul_unchecked</span>(<span class="self">self</span>.<span class="number">0</span>)
+<span class="kw">impl </span>PipewireKey {
+	<span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>as_cstr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>CStr {
+		<span class="kw">unsafe </span>{
+			CStr::from_bytes_with_nul_unchecked(<span class="self">self</span>.<span class="number">0</span>)
 		}
 	}
 
-	<span class="attribute">#[<span class="ident">inline</span>]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_str</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">str::from_utf8_unchecked</span>(<span class="self">self</span>.<span class="ident">as_cstr</span>().<span class="ident">to_bytes</span>())
+	<span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>as_str&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
+		<span class="kw">unsafe </span>{
+			str::from_utf8_unchecked(<span class="self">self</span>.as_cstr().to_bytes())
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">PipewireKey</span> {
-	<span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">str</span>;
+<span class="kw">impl </span>Deref <span class="kw">for </span>PipewireKey {
+	<span class="kw">type </span>Target = str;
 
-	<span class="attribute">#[<span class="ident">inline</span>]</span>
-	<span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Target</span> {
-		<span class="self">self</span>.<span class="ident">as_str</span>()
+	<span class="attr">#[inline]
+	</span><span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
+		<span class="self">self</span>.as_str()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PipewireKey</span> {
-	<span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-		<span class="self">self</span>.<span class="ident">as_str</span>()
+<span class="kw">impl </span>AsRef&lt;str&gt; <span class="kw">for </span>PipewireKey {
+	<span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+		<span class="self">self</span>.as_str()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PipewireKey</span> {
-	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-		<span class="self">self</span>.<span class="ident">as_str</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Into&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span>PipewireKey {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
+		<span class="self">self</span>.as_str()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">PipewireKey</span> {
-	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-		<span class="self">self</span>.<span class="ident">as_str</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Into&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span>PipewireKey {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
+		<span class="self">self</span>.as_str()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PipewireKey</span> {
-	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) -&gt; <span class="ident">String</span> {
-		<span class="self">self</span>.<span class="ident">as_str</span>().<span class="ident">into</span>()
+<span class="kw">impl </span>Into&lt;String&gt; <span class="kw">for </span>PipewireKey {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.as_str().into()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PipewireKey</span> {
-	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) -&gt; <span class="ident">String</span> {
-		<span class="self">self</span>.<span class="ident">as_str</span>().<span class="ident">into</span>()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Into&lt;String&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PipewireKey {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.as_str().into()
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FromPipewirePropertyString</span>: <span class="ident">Sized</span> {
-	<span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">Debug</span>;
+<span class="kw">pub trait </span>FromPipewirePropertyString: Sized {
+	<span class="kw">type </span>Error: Debug;
 
-	<span class="kw">fn</span> <span class="ident">from_pipewire_string</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span>;
+	<span class="kw">fn </span>from_pipewire_string(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt;;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToPipewirePropertyString</span> {
-	<span class="kw">type</span> <span class="ident">Output</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>;
+<span class="kw">pub trait </span>ToPipewirePropertyString {
+	<span class="kw">type </span>Output: AsRef&lt;str&gt;;
 
-	<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span>;
+	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output;
 }
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PipewirePropertyStringIter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw">pub</span> <span class="ident">T</span>);
+<span class="kw">pub struct </span>PipewirePropertyStringIter&lt;T&gt;(<span class="kw">pub </span>T);
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PipewirePropertyStringIterExt</span>: <span class="ident">Sized</span> {
-	<span class="kw">fn</span> <span class="ident">pipewire_string_iter</span>(<span class="self">self</span>) -&gt; <span class="ident">PipewirePropertyStringIter</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-		<span class="ident">PipewirePropertyStringIter</span>(<span class="self">self</span>)
+<span class="kw">pub trait </span>PipewirePropertyStringIterExt: Sized {
+	<span class="kw">fn </span>pipewire_string_iter(<span class="self">self</span>) -&gt; PipewirePropertyStringIter&lt;<span class="self">Self</span>&gt; {
+		PipewirePropertyStringIter(<span class="self">self</span>)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">I</span><span class="op">&gt;</span>, <span class="ident">I</span>: <span class="ident">ToPipewirePropertyString</span><span class="op">&gt;</span> <span class="ident">PipewirePropertyStringIterExt</span> <span class="kw">for</span> <span class="ident">PipewirePropertyStringIter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> { }
+<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item=I&gt;, I: ToPipewirePropertyString&gt; PipewirePropertyStringIterExt <span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt; { }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">I</span><span class="op">&gt;</span>, <span class="ident">I</span>: <span class="ident">ToPipewirePropertyString</span><span class="op">&gt;</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="ident">PipewirePropertyStringIter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">String</span>;
+<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item=I&gt;, I: ToPipewirePropertyString&gt; ToPipewirePropertyString <span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt; {
+	<span class="kw">type </span>Output = String;
 
-	<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">String::new</span>();
-		<span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">into_iter</span>().<span class="ident">enumerate</span>() {
-			<span class="kw">let</span> <span class="ident">prefix</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> { <span class="string">&quot;&quot;</span> } <span class="kw">else</span> { <span class="string">&quot;,&quot;</span> };
-			<span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">pipewire_string</span>();
-			<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="macro">write!</span>(<span class="kw-2">&amp;mut</span> <span class="ident">out</span>, <span class="string">&quot;{}{}&quot;</span>, <span class="ident">prefix</span>, <span class="ident">item</span>.<span class="ident">as_ref</span>());
+	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+		<span class="kw">let </span><span class="kw-2">mut </span>out = String::new();
+		<span class="kw">for </span>(i, v) <span class="kw">in </span><span class="self">self</span>.<span class="number">0</span>.into_iter().enumerate() {
+			<span class="kw">let </span>prefix = <span class="kw">if </span>i == <span class="number">0 </span>{ <span class="string">&quot;&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;,&quot; </span>};
+			<span class="kw">let </span>item = v.pipewire_string();
+			<span class="kw">let _ </span>= <span class="macro">write!</span>(<span class="kw-2">&amp;mut </span>out, <span class="string">&quot;{}{}&quot;</span>, prefix, item.as_ref());
 		}
-		<span class="ident">out</span>
+		out
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToPipewirePropertyString</span><span class="op">&gt;</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">String</span>;
+<span class="kw">impl</span>&lt;T: ToPipewirePropertyString&gt; ToPipewirePropertyString <span class="kw">for </span>Vec&lt;T&gt; {
+	<span class="kw">type </span>Output = String;
 
-	<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-		<span class="ident">PipewirePropertyStringIter</span>(<span class="self">self</span>).<span class="ident">pipewire_string</span>()
+	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+		PipewirePropertyStringIter(<span class="self">self</span>).pipewire_string()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
-	<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>: <span class="ident">ToPipewirePropertyString</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Vec&lt;T&gt; <span class="kw">where
+	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: ToPipewirePropertyString,
 {
-	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">String</span>;
+	<span class="kw">type </span>Output = String;
 
-	<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-		<span class="ident">PipewirePropertyStringIter</span>(<span class="self">self</span>.<span class="ident">iter</span>()).<span class="ident">pipewire_string</span>()
+	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+		PipewirePropertyStringIter(<span class="self">self</span>.iter()).pipewire_string()
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>] <span class="kw">where</span>
-	<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>: <span class="ident">ToPipewirePropertyString</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T] <span class="kw">where
+	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: ToPipewirePropertyString,
 {
-	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">String</span>;
+	<span class="kw">type </span>Output = String;
 
-	<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-		<span class="ident">PipewirePropertyStringIter</span>(<span class="self">self</span>).<span class="ident">pipewire_string</span>()
+	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+		PipewirePropertyStringIter(<span class="self">self</span>).pipewire_string()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="ident">bool</span> {
-	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>;
+<span class="kw">impl </span>ToPipewirePropertyString <span class="kw">for </span>bool {
+	<span class="kw">type </span>Output = <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
 
-	<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-		<span class="kw">if</span> <span class="self">self</span> {
-			<span class="string">&quot;true&quot;</span>
-		} <span class="kw">else</span> {
-			<span class="string">&quot;false&quot;</span>
-		}
+	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+		<span class="kw">if </span><span class="self">self </span>{
+			<span class="string">&quot;true&quot;
+		</span>} <span class="kw">else </span>{
+			<span class="string">&quot;false&quot;
+		</span>}
 	}
 }
 
-<span class="macro">macro_rules!</span> <span class="ident">pipewire_primitives</span> {
-	($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span>,)<span class="kw-2">*</span>) =&gt; {
+<span class="macro">macro_rules! </span>pipewire_primitives {
+	($(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
 		$(
-			<span class="kw">impl</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-				<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">String</span>;
+			<span class="kw">impl </span>ToPipewirePropertyString <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
+				<span class="kw">type </span>Output = String;
 
-				<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-					<span class="self">self</span>.<span class="ident">to_string</span>()
+				<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+					<span class="self">self</span>.to_string()
 				}
 			}
-			<span class="kw">impl</span> <span class="ident">FromPipewirePropertyString</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-				<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> <span class="kw">as</span> <span class="ident">FromStr</span><span class="op">&gt;</span><span class="ident">::Err</span>;
+			<span class="kw">impl </span>FromPipewirePropertyString <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
+				<span class="kw">type </span>Error = &lt;<span class="macro-nonterminal">$ty </span><span class="kw">as </span>FromStr&gt;::Err;
 
-				<span class="kw">fn</span> <span class="ident">from_pipewire_string</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-					<span class="ident">FromStr::from_str</span>(<span class="ident">value</span>)
+				<span class="kw">fn </span>from_pipewire_string(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+					FromStr::from_str(value)
 				}
 			}
-		)<span class="op">*</span>
+		)*
 	};
-	(@<span class="ident">AsRef</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span>,)<span class="kw-2">*</span>) =&gt; {
+	(@AsRef $(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
 		$(
-			<span class="kw">impl</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-				<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
+			<span class="kw">impl </span>ToPipewirePropertyString <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
+				<span class="kw">type </span>Output = <span class="self">Self</span>;
 
-				<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-					<span class="self">self</span>
+				<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+					<span class="self">self
+				</span>}
+			}
+			<span class="kw">impl </span>FromPipewirePropertyString <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
+				<span class="kw">type </span>Error = Infallible;
+
+				<span class="kw">fn </span>from_pipewire_string(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+					<span class="prelude-val">Ok</span>(value.into())
 				}
 			}
-			<span class="kw">impl</span> <span class="ident">FromPipewirePropertyString</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-				<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Infallible</span>;
-
-				<span class="kw">fn</span> <span class="ident">from_pipewire_string</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-					<span class="prelude-val">Ok</span>(<span class="ident">value</span>.<span class="ident">into</span>())
-				}
-			}
-		)<span class="op">*</span>
+		)*
 	};
-	(@<span class="kw-2">&amp;</span><span class="ident">AsRef</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span>,)<span class="kw-2">*</span>) =&gt; {
+	(@<span class="kw-2">&amp;</span>AsRef $(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
 		$(
-			<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToPipewirePropertyString</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-				<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
+			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="macro-nonterminal">$ty </span>{
+				<span class="kw">type </span>Output = <span class="self">Self</span>;
 
-				<span class="kw">fn</span> <span class="ident">pipewire_string</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> {
-					<span class="self">self</span>
-				}
+				<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
+					<span class="self">self
+				</span>}
 			}
-		)<span class="op">*</span>
+		)*
 	};
 }
 
-<span class="macro">pipewire_primitives!</span> {
-	<span class="ident">u8</span>, <span class="ident">i8</span>,
-	<span class="ident">u16</span>, <span class="ident">i16</span>,
-	<span class="ident">u32</span>, <span class="ident">i32</span>,
-	<span class="ident">u64</span>, <span class="ident">i64</span>,
-	<span class="ident">f32</span>, <span class="ident">f64</span>,
-	<span class="ident">usize</span>, <span class="ident">isize</span>,
+<span class="macro">pipewire_primitives! </span>{
+	u8, i8,
+	u16, i16,
+	u32, i32,
+	u64, i64,
+	f32, f64,
+	usize, isize,
 }
-<span class="macro">pipewire_primitives!</span> { @<span class="ident">AsRef</span>
-	<span class="ident">String</span>, <span class="ident">glib::GString</span>,
+<span class="macro">pipewire_primitives! </span>{ @AsRef
+	String, glib::GString,
 }
-<span class="macro">pipewire_primitives!</span> { @<span class="kw-2">&amp;</span><span class="ident">AsRef</span>
-	<span class="ident">str</span>,
+<span class="macro">pipewire_primitives! </span>{ @<span class="kw-2">&amp;</span>AsRef
+	str,
 }
 
-<span class="macro">macro_rules!</span> <span class="ident">pipewire_keys</span> {
-	($($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">attr</span>:<span class="ident">meta</span>]</span>)<span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">key</span>:<span class="ident">ident</span>,)<span class="op">+</span>) =&gt; {
+<span class="macro">macro_rules! </span>pipewire_keys {
+	($($(<span class="attr">#[<span class="macro-nonterminal">$attr</span>:meta]</span>)<span class="kw-2">*</span><span class="macro-nonterminal">$key</span>:ident,)+) =&gt; {
 		$(
 			$(
-				<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">attr</span>]</span>
-			)<span class="op">*</span>
-			<span class="kw">pub</span> <span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">PipewireKey</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PipewireKey</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">pipewire_sys</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">key</span>);
-		)<span class="op">+</span>
+				<span class="attr">#[<span class="macro-nonterminal">$attr</span>]
+			</span>)*
+			<span class="kw">pub const </span><span class="macro-nonterminal">$key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>PipewireKey = <span class="kw-2">&amp;</span>PipewireKey(<span class="kw-2">&amp;*</span>pipewire_sys::<span class="macro-nonterminal">$key</span>);
+		)+
 	};
 }
 
-<span class="macro">pipewire_keys!</span> {
-	<span class="ident">PW_KEY_PROTOCOL</span>,
-	<span class="ident">PW_KEY_ACCESS</span>,
-	<span class="ident">PW_KEY_CLIENT_ACCESS</span>,
-	<span class="ident">PW_KEY_SEC_PID</span>, <span class="ident">PW_KEY_SEC_UID</span>, <span class="ident">PW_KEY_SEC_GID</span>, <span class="ident">PW_KEY_SEC_LABEL</span>,
-	<span class="ident">PW_KEY_LIBRARY_NAME_SYSTEM</span>, <span class="ident">PW_KEY_LIBRARY_NAME_LOOP</span>, <span class="ident">PW_KEY_LIBRARY_NAME_DBUS</span>,
-	<span class="ident">PW_KEY_OBJECT_PATH</span>, <span class="ident">PW_KEY_OBJECT_ID</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.41&quot;</span>)]</span> <span class="ident">PW_KEY_OBJECT_SERIAL</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.32&quot;</span>)]</span> <span class="ident">PW_KEY_OBJECT_LINGER</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.32&quot;</span>)]</span> <span class="ident">PW_KEY_OBJECT_REGISTER</span>,
-	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.22&quot;</span>)]</span> <span class="ident">PW_KEY_CONFIG_PREFIX</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.22&quot;</span>)]</span> <span class="ident">PW_KEY_CONFIG_NAME</span>,
-	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.22&quot;</span>)]</span><span class="ident">PW_KEY_CONTEXT_PROFILE_MODULES</span>,
-	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.7&quot;</span>)]</span> <span class="ident">PW_KEY_USER_NAME</span>,
-	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.7&quot;</span>)]</span> <span class="ident">PW_KEY_HOST_NAME</span>,
-	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.7&quot;</span>)]</span> <span class="ident">PW_KEY_CORE_NAME</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.7&quot;</span>)]</span> <span class="ident">PW_KEY_CORE_VERSION</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.7&quot;</span>)]</span> <span class="ident">PW_KEY_CORE_DAEMON</span>, <span class="ident">PW_KEY_CORE_ID</span>, <span class="ident">PW_KEY_CORE_MONITORS</span>,
-	<span class="ident">PW_KEY_CPU_MAX_ALIGN</span>, <span class="ident">PW_KEY_CPU_CORES</span>,
-	<span class="ident">PW_KEY_PRIORITY_SESSION</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.10&quot;</span>)]</span> <span class="ident">PW_KEY_PRIORITY_DRIVER</span>, <span class="ident">PW_KEY_REMOTE_NAME</span>, <span class="ident">PW_KEY_REMOTE_INTENTION</span>,
-	<span class="ident">PW_KEY_APP_NAME</span>, <span class="ident">PW_KEY_APP_ID</span>, <span class="ident">PW_KEY_APP_VERSION</span>, <span class="ident">PW_KEY_APP_ICON</span>, <span class="ident">PW_KEY_APP_ICON_NAME</span>, <span class="ident">PW_KEY_APP_LANGUAGE</span>, <span class="ident">PW_KEY_APP_PROCESS_ID</span>, <span class="ident">PW_KEY_APP_PROCESS_BINARY</span>, <span class="ident">PW_KEY_APP_PROCESS_USER</span>, <span class="ident">PW_KEY_APP_PROCESS_HOST</span>, <span class="ident">PW_KEY_APP_PROCESS_MACHINE_ID</span>, <span class="ident">PW_KEY_APP_PROCESS_SESSION_ID</span>,
-	<span class="ident">PW_KEY_WINDOW_X11_DISPLAY</span>,
-	<span class="ident">PW_KEY_CLIENT_ID</span>, <span class="ident">PW_KEY_CLIENT_NAME</span>, <span class="ident">PW_KEY_CLIENT_API</span>,
-	<span class="ident">PW_KEY_NODE_ID</span>, <span class="ident">PW_KEY_NODE_NAME</span>, <span class="ident">PW_KEY_NODE_NICK</span>, <span class="ident">PW_KEY_NODE_DESCRIPTION</span>, <span class="ident">PW_KEY_NODE_PLUGGED</span>, <span class="ident">PW_KEY_NODE_SESSION</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.10&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_GROUP</span>, <span class="ident">PW_KEY_NODE_EXCLUSIVE</span>, <span class="ident">PW_KEY_NODE_AUTOCONNECT</span>, <span class="ident">PW_KEY_NODE_TARGET</span>, <span class="ident">PW_KEY_NODE_LATENCY</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.23&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_MAX_LATENCY</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.33&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_LOCK_QUANTUM</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.33&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_RATE</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.33&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_LOCK_RATE</span>, <span class="ident">PW_KEY_NODE_DONT_RECONNECT</span>, <span class="ident">PW_KEY_NODE_ALWAYS_PROCESS</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.33&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_WANT_DRIVER</span>, <span class="ident">PW_KEY_NODE_PAUSE_ON_IDLE</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.18&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_CACHE_PARAMS</span>, <span class="ident">PW_KEY_NODE_DRIVER</span>, <span class="ident">PW_KEY_NODE_STREAM</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.26&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_VIRTUAL</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.27&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_PASSIVE</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.32&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_LINK_GROUP</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.39&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_NETWORK</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.41&quot;</span>)]</span> <span class="ident">PW_KEY_NODE_TRIGGER</span>,
-	<span class="ident">PW_KEY_PORT_ID</span>, <span class="ident">PW_KEY_PORT_NAME</span>, <span class="ident">PW_KEY_PORT_DIRECTION</span>, <span class="ident">PW_KEY_PORT_ALIAS</span>, <span class="ident">PW_KEY_PORT_PHYSICAL</span>, <span class="ident">PW_KEY_PORT_TERMINAL</span>, <span class="ident">PW_KEY_PORT_CONTROL</span>, <span class="ident">PW_KEY_PORT_MONITOR</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.18&quot;</span>)]</span> <span class="ident">PW_KEY_PORT_CACHE_PARAMS</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.22&quot;</span>)]</span> <span class="ident">PW_KEY_PORT_EXTRA</span>,
-	<span class="ident">PW_KEY_LINK_ID</span>, <span class="ident">PW_KEY_LINK_INPUT_NODE</span>, <span class="ident">PW_KEY_LINK_INPUT_PORT</span>, <span class="ident">PW_KEY_LINK_OUTPUT_NODE</span>, <span class="ident">PW_KEY_LINK_OUTPUT_PORT</span>, <span class="ident">PW_KEY_LINK_PASSIVE</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.19&quot;</span>)]</span> <span class="ident">PW_KEY_LINK_FEEDBACK</span>,
-	<span class="ident">PW_KEY_DEVICE_ID</span>, <span class="ident">PW_KEY_DEVICE_NAME</span>, <span class="ident">PW_KEY_DEVICE_PLUGGED</span>, <span class="ident">PW_KEY_DEVICE_NICK</span>, <span class="ident">PW_KEY_DEVICE_STRING</span>, <span class="ident">PW_KEY_DEVICE_API</span>, <span class="ident">PW_KEY_DEVICE_DESCRIPTION</span>, <span class="ident">PW_KEY_DEVICE_BUS_PATH</span>, <span class="ident">PW_KEY_DEVICE_SERIAL</span>, <span class="ident">PW_KEY_DEVICE_VENDOR_ID</span>, <span class="ident">PW_KEY_DEVICE_VENDOR_NAME</span>, <span class="ident">PW_KEY_DEVICE_PRODUCT_ID</span>, <span class="ident">PW_KEY_DEVICE_PRODUCT_NAME</span>, <span class="ident">PW_KEY_DEVICE_CLASS</span>, <span class="ident">PW_KEY_DEVICE_FORM_FACTOR</span>, <span class="ident">PW_KEY_DEVICE_BUS</span>, <span class="ident">PW_KEY_DEVICE_SUBSYSTEM</span>, <span class="ident">PW_KEY_DEVICE_ICON</span>, <span class="ident">PW_KEY_DEVICE_ICON_NAME</span>, <span class="ident">PW_KEY_DEVICE_INTENDED_ROLES</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.18&quot;</span>)]</span> <span class="ident">PW_KEY_DEVICE_CACHE_PARAMS</span>,
-	<span class="ident">PW_KEY_MODULE_ID</span>, <span class="ident">PW_KEY_MODULE_NAME</span>, <span class="ident">PW_KEY_MODULE_AUTHOR</span>, <span class="ident">PW_KEY_MODULE_DESCRIPTION</span>, <span class="ident">PW_KEY_MODULE_USAGE</span>, <span class="ident">PW_KEY_MODULE_VERSION</span>,
-	<span class="ident">PW_KEY_FACTORY_ID</span>, <span class="ident">PW_KEY_FACTORY_NAME</span>, <span class="ident">PW_KEY_FACTORY_USAGE</span>, <span class="ident">PW_KEY_FACTORY_TYPE_NAME</span>, <span class="ident">PW_KEY_FACTORY_TYPE_VERSION</span>,
-	<span class="ident">PW_KEY_STREAM_IS_LIVE</span>, <span class="ident">PW_KEY_STREAM_LATENCY_MIN</span>, <span class="ident">PW_KEY_STREAM_LATENCY_MAX</span>, <span class="ident">PW_KEY_STREAM_MONITOR</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.8&quot;</span>)]</span> <span class="ident">PW_KEY_STREAM_DONT_REMIX</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.14&quot;</span>)]</span> <span class="ident">PW_KEY_STREAM_CAPTURE_SINK</span>,
-	<span class="ident">PW_KEY_MEDIA_TYPE</span>, <span class="ident">PW_KEY_MEDIA_CATEGORY</span>, <span class="ident">PW_KEY_MEDIA_ROLE</span>, <span class="ident">PW_KEY_MEDIA_CLASS</span>, <span class="ident">PW_KEY_MEDIA_NAME</span>, <span class="ident">PW_KEY_MEDIA_TITLE</span>, <span class="ident">PW_KEY_MEDIA_ARTIST</span>, <span class="ident">PW_KEY_MEDIA_COPYRIGHT</span>, <span class="ident">PW_KEY_MEDIA_SOFTWARE</span>, <span class="ident">PW_KEY_MEDIA_LANGUAGE</span>, <span class="ident">PW_KEY_MEDIA_FILENAME</span>, <span class="ident">PW_KEY_MEDIA_ICON</span>, <span class="ident">PW_KEY_MEDIA_ICON_NAME</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.14&quot;</span>)]</span> <span class="ident">PW_KEY_MEDIA_COMMENT</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.14&quot;</span>)]</span> <span class="ident">PW_KEY_MEDIA_DATE</span>, <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">pw</span> <span class="op">=</span> <span class="string">&quot;0.3.14&quot;</span>)]</span> <span class="ident">PW_KEY_MEDIA_FORMAT</span>,
-	<span class="ident">PW_KEY_FORMAT_DSP</span>,
-	<span class="ident">PW_KEY_AUDIO_CHANNEL</span>, <span class="ident">PW_KEY_AUDIO_RATE</span>, <span class="ident">PW_KEY_AUDIO_CHANNELS</span>, <span class="ident">PW_KEY_AUDIO_FORMAT</span>,
-	<span class="ident">PW_KEY_VIDEO_RATE</span>, <span class="ident">PW_KEY_VIDEO_FORMAT</span>, <span class="ident">PW_KEY_VIDEO_SIZE</span>,
+<span class="macro">pipewire_keys! </span>{
+	PW_KEY_PROTOCOL,
+	PW_KEY_ACCESS,
+	PW_KEY_CLIENT_ACCESS,
+	PW_KEY_SEC_PID, PW_KEY_SEC_UID, PW_KEY_SEC_GID, PW_KEY_SEC_LABEL,
+	PW_KEY_LIBRARY_NAME_SYSTEM, PW_KEY_LIBRARY_NAME_LOOP, PW_KEY_LIBRARY_NAME_DBUS,
+	PW_KEY_OBJECT_PATH, PW_KEY_OBJECT_ID, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.41&quot;</span>)] </span>PW_KEY_OBJECT_SERIAL, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span>PW_KEY_OBJECT_LINGER, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span>PW_KEY_OBJECT_REGISTER,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span>PW_KEY_CONFIG_PREFIX, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span>PW_KEY_CONFIG_NAME,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)]</span>PW_KEY_CONTEXT_PROFILE_MODULES,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_USER_NAME,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_HOST_NAME,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_CORE_NAME, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_CORE_VERSION, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_CORE_DAEMON, PW_KEY_CORE_ID, PW_KEY_CORE_MONITORS,
+	PW_KEY_CPU_MAX_ALIGN, PW_KEY_CPU_CORES,
+	PW_KEY_PRIORITY_SESSION, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.10&quot;</span>)] </span>PW_KEY_PRIORITY_DRIVER, PW_KEY_REMOTE_NAME, PW_KEY_REMOTE_INTENTION,
+	PW_KEY_APP_NAME, PW_KEY_APP_ID, PW_KEY_APP_VERSION, PW_KEY_APP_ICON, PW_KEY_APP_ICON_NAME, PW_KEY_APP_LANGUAGE, PW_KEY_APP_PROCESS_ID, PW_KEY_APP_PROCESS_BINARY, PW_KEY_APP_PROCESS_USER, PW_KEY_APP_PROCESS_HOST, PW_KEY_APP_PROCESS_MACHINE_ID, PW_KEY_APP_PROCESS_SESSION_ID,
+	PW_KEY_WINDOW_X11_DISPLAY,
+	PW_KEY_CLIENT_ID, PW_KEY_CLIENT_NAME, PW_KEY_CLIENT_API,
+	PW_KEY_NODE_ID, PW_KEY_NODE_NAME, PW_KEY_NODE_NICK, PW_KEY_NODE_DESCRIPTION, PW_KEY_NODE_PLUGGED, PW_KEY_NODE_SESSION, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.10&quot;</span>)] </span>PW_KEY_NODE_GROUP, PW_KEY_NODE_EXCLUSIVE, PW_KEY_NODE_AUTOCONNECT, PW_KEY_NODE_TARGET, PW_KEY_NODE_LATENCY, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.23&quot;</span>)] </span>PW_KEY_NODE_MAX_LATENCY, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_LOCK_QUANTUM, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_RATE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_LOCK_RATE, PW_KEY_NODE_DONT_RECONNECT, PW_KEY_NODE_ALWAYS_PROCESS, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_WANT_DRIVER, PW_KEY_NODE_PAUSE_ON_IDLE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span>PW_KEY_NODE_CACHE_PARAMS, PW_KEY_NODE_DRIVER, PW_KEY_NODE_STREAM, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.26&quot;</span>)] </span>PW_KEY_NODE_VIRTUAL, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.27&quot;</span>)] </span>PW_KEY_NODE_PASSIVE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span>PW_KEY_NODE_LINK_GROUP, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.39&quot;</span>)] </span>PW_KEY_NODE_NETWORK, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.41&quot;</span>)] </span>PW_KEY_NODE_TRIGGER,
+	PW_KEY_PORT_ID, PW_KEY_PORT_NAME, PW_KEY_PORT_DIRECTION, PW_KEY_PORT_ALIAS, PW_KEY_PORT_PHYSICAL, PW_KEY_PORT_TERMINAL, PW_KEY_PORT_CONTROL, PW_KEY_PORT_MONITOR, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span>PW_KEY_PORT_CACHE_PARAMS, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span>PW_KEY_PORT_EXTRA,
+	PW_KEY_LINK_ID, PW_KEY_LINK_INPUT_NODE, PW_KEY_LINK_INPUT_PORT, PW_KEY_LINK_OUTPUT_NODE, PW_KEY_LINK_OUTPUT_PORT, PW_KEY_LINK_PASSIVE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.19&quot;</span>)] </span>PW_KEY_LINK_FEEDBACK,
+	PW_KEY_DEVICE_ID, PW_KEY_DEVICE_NAME, PW_KEY_DEVICE_PLUGGED, PW_KEY_DEVICE_NICK, PW_KEY_DEVICE_STRING, PW_KEY_DEVICE_API, PW_KEY_DEVICE_DESCRIPTION, PW_KEY_DEVICE_BUS_PATH, PW_KEY_DEVICE_SERIAL, PW_KEY_DEVICE_VENDOR_ID, PW_KEY_DEVICE_VENDOR_NAME, PW_KEY_DEVICE_PRODUCT_ID, PW_KEY_DEVICE_PRODUCT_NAME, PW_KEY_DEVICE_CLASS, PW_KEY_DEVICE_FORM_FACTOR, PW_KEY_DEVICE_BUS, PW_KEY_DEVICE_SUBSYSTEM, PW_KEY_DEVICE_ICON, PW_KEY_DEVICE_ICON_NAME, PW_KEY_DEVICE_INTENDED_ROLES, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span>PW_KEY_DEVICE_CACHE_PARAMS,
+	PW_KEY_MODULE_ID, PW_KEY_MODULE_NAME, PW_KEY_MODULE_AUTHOR, PW_KEY_MODULE_DESCRIPTION, PW_KEY_MODULE_USAGE, PW_KEY_MODULE_VERSION,
+	PW_KEY_FACTORY_ID, PW_KEY_FACTORY_NAME, PW_KEY_FACTORY_USAGE, PW_KEY_FACTORY_TYPE_NAME, PW_KEY_FACTORY_TYPE_VERSION,
+	PW_KEY_STREAM_IS_LIVE, PW_KEY_STREAM_LATENCY_MIN, PW_KEY_STREAM_LATENCY_MAX, PW_KEY_STREAM_MONITOR, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.8&quot;</span>)] </span>PW_KEY_STREAM_DONT_REMIX, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_STREAM_CAPTURE_SINK,
+	PW_KEY_MEDIA_TYPE, PW_KEY_MEDIA_CATEGORY, PW_KEY_MEDIA_ROLE, PW_KEY_MEDIA_CLASS, PW_KEY_MEDIA_NAME, PW_KEY_MEDIA_TITLE, PW_KEY_MEDIA_ARTIST, PW_KEY_MEDIA_COPYRIGHT, PW_KEY_MEDIA_SOFTWARE, PW_KEY_MEDIA_LANGUAGE, PW_KEY_MEDIA_FILENAME, PW_KEY_MEDIA_ICON, PW_KEY_MEDIA_ICON_NAME, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_MEDIA_COMMENT, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_MEDIA_DATE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_MEDIA_FORMAT,
+	PW_KEY_FORMAT_DSP,
+	PW_KEY_AUDIO_CHANNEL, PW_KEY_AUDIO_RATE, PW_KEY_AUDIO_CHANNELS, PW_KEY_AUDIO_FORMAT,
+	PW_KEY_VIDEO_RATE, PW_KEY_VIDEO_FORMAT, PW_KEY_VIDEO_SIZE,
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SpaPropertyKey</span>: <span class="ident">Debug</span> {
-	<span class="kw">type</span> <span class="ident">Error</span>: <span class="ident">Debug</span>;
+<span class="kw">pub trait </span>SpaPropertyKey: Debug {
+	<span class="kw">type </span>Error: Debug;
 
-	<span class="kw">fn</span> <span class="ident">spa_property_key_with_table</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">table</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SpaIdTable</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">WpSpaType</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span>;
+	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt;;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SpaPropertyKeyId</span>: <span class="ident">SpaPropertyKey</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">=</span><span class="ident">Infallible</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">spa_property_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">WpSpaType</span>;
+<span class="kw">pub trait </span>SpaPropertyKeyId: SpaPropertyKey&lt;Error=Infallible&gt; {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SpaPropertyKeyId</span><span class="op">&gt;</span> <span class="ident">SpaPropertyKey</span> <span class="kw">for</span> <span class="ident">T</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Infallible</span>;
+<span class="kw">impl</span>&lt;T: SpaPropertyKeyId&gt; SpaPropertyKey <span class="kw">for </span>T {
+	<span class="kw">type </span>Error = Infallible;
 
-	<span class="kw">fn</span> <span class="ident">spa_property_key_with_table</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_table</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SpaIdTable</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">WpSpaType</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">spa_property_key</span>())
+	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, _table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(<span class="self">self</span>.spa_property_key())
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPropertyKeyId</span> <span class="kw">for</span> <span class="ident">WpSpaType</span> {
-	<span class="kw">fn</span> <span class="ident">spa_property_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">WpSpaType</span> {
-		<span class="kw-2">*</span><span class="self">self</span>
+<span class="kw">impl </span>SpaPropertyKeyId <span class="kw">for </span>WpSpaType {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
+		<span class="kw-2">*</span><span class="self">self
+	</span>}
+}
+
+<span class="kw">impl </span>SpaPropertyKeyId <span class="kw">for </span>SpaIdValue {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
+		<span class="self">self</span>.number()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPropertyKeyId</span> <span class="kw">for</span> <span class="ident">SpaIdValue</span> {
-	<span class="kw">fn</span> <span class="ident">spa_property_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">WpSpaType</span> {
-		<span class="self">self</span>.<span class="ident">number</span>()
+<span class="kw">impl </span>SpaPropertyKey <span class="kw">for </span>str {
+	<span class="kw">type </span>Error = (); <span class="comment">// TODO
+
+	</span><span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt; {
+		table.and_then(|table| table.find_value_from_short_name(<span class="self">self</span>))
+			.map(|v| v.number())
+			.or_else(|| SpaIdValue::parse_unknown_name(<span class="self">self</span>))
+			.ok_or(())
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">SpaPropertyKey</span> <span class="kw">for</span> <span class="ident">str</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> (); <span class="comment">// TODO</span>
-
-	<span class="kw">fn</span> <span class="ident">spa_property_key_with_table</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">table</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SpaIdTable</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">WpSpaType</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">table</span>.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">table</span><span class="op">|</span> <span class="ident">table</span>.<span class="ident">find_value_from_short_name</span>(<span class="self">self</span>))
-			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">number</span>())
-			.<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">SpaIdValue::parse_unknown_name</span>(<span class="self">self</span>))
-			.<span class="ident">ok_or</span>(())
-	}
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">SpaPropertyKeyId</span><span class="op">&gt;</span> <span class="ident">SpaPropertyKeyId</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span> {
-	<span class="kw">fn</span> <span class="ident">spa_property_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">WpSpaType</span> {
-		<span class="ident">T::spa_property_key</span>(<span class="kw-2">*</span><span class="self">self</span>)
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: SpaPropertyKeyId&gt; SpaPropertyKeyId <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
+		T::spa_property_key(<span class="kw-2">*</span><span class="self">self</span>)
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/node.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>node.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/node.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>node.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -95,96 +88,95 @@
 <span id="88">88</span>
 <span id="89">89</span>
 <span id="90">90</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw</span>::{<span class="self">self</span>, <span class="ident">Node</span>, <span class="ident">Port</span>, <span class="ident">PipewireObject</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::registry</span>::{<span class="ident">Interest</span>, <span class="ident">InterestContainer</span>, <span class="ident">ObjectInterest</span>};
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Node, Port, PipewireObject};
+<span class="kw">use </span><span class="kw">crate</span>::registry::{Interest, InterestContainer, ObjectInterest};
 
-<span class="kw">impl</span> <span class="ident">Node</span> {
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_node_new_ports_iterator&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ports</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> {
-		<span class="ident">ValueIterator::with_inner</span>(<span class="self">self</span>.<span class="ident">new_ports_iterator</span>().<span class="ident">unwrap</span>())
+<span class="kw">impl </span>Node {
+	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_new_ports_iterator&quot;</span>)]
+	</span><span class="kw">pub fn </span>ports(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;Port&gt; {
+		ValueIterator::with_inner(<span class="self">self</span>.new_ports_iterator().unwrap())
 	}
 
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_node_new_ports_filtered_iterator&quot;</span>)]</span>
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_node_new_ports_filtered_iterator_full&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ports_filtered</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">ObjectInterest</span>) -&gt; <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> {
-		<span class="ident">ValueIterator::with_inner</span>(<span class="self">self</span>.<span class="ident">new_ports_filtered_iterator_full</span>(<span class="ident">interest</span>).<span class="ident">unwrap</span>())
+	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator&quot;</span>)]
+	#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator_full&quot;</span>)]
+	</span><span class="kw">pub fn </span>ports_filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>ObjectInterest) -&gt; ValueIterator&lt;Port&gt; {
+		ValueIterator::with_inner(<span class="self">self</span>.new_ports_filtered_iterator_full(interest).unwrap())
 	}
 
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_node_lookup_port&quot;</span>)]</span>
-	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;wp_node_lookup_port_full&quot;</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">port</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">ObjectInterest</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">lookup_port_full</span>(<span class="ident">interest</span>)
+	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_lookup_port&quot;</span>)]
+	#[doc(alias = <span class="string">&quot;wp_node_lookup_port_full&quot;</span>)]
+	</span><span class="kw">pub fn </span>port(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>ObjectInterest) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
+		<span class="self">self</span>.lookup_port_full(interest)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">pw_property_optional</span>(<span class="string">&quot;card.profile.device&quot;</span>)
+	<span class="kw">pub fn </span>device_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;u32&gt;, Error&gt; {
+		<span class="self">self</span>.pw_property_optional(<span class="string">&quot;card.profile.device&quot;</span>)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">pw_property_optional</span>(<span class="ident">pw::PW_KEY_DEVICE_ID</span>)
+	<span class="kw">pub fn </span>device_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;u32&gt;, Error&gt; {
+		<span class="self">self</span>.pw_property_optional(pw::PW_KEY_DEVICE_ID)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_details</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>)<span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">device_id</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">device_index</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">index</span><span class="op">|</span>
-			<span class="ident">id</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> (<span class="ident">id</span>, <span class="ident">index</span>))
+	<span class="kw">pub fn </span>device_details(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;(u32, <span class="prelude-ty">Option</span>&lt;u32&gt;)&gt;, Error&gt; {
+		<span class="self">self</span>.device_id().and_then(|id| <span class="self">self</span>.device_index().map(|index|
+			id.map(|id| (id, index))
 		))
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">get_pw_property</span>(<span class="ident">pw::PW_KEY_NODE_NAME</span>)
+	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
+		<span class="self">self</span>.get_pw_property(pw::PW_KEY_NODE_NAME)
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">props</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="op">!</span> {
-		<span class="kw">for</span> <span class="ident">param</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">enum_params_sync</span>(<span class="string">&quot;Props&quot;</span>, <span class="prelude-val">None</span>) {
-			<span class="comment">// if param.pod_type == &quot;Object&quot; &amp;&amp; pod.properties.volume != null</span>
-			<span class="macro">println!</span>(<span class="string">&quot;out_params.init_from_pod({:?})&quot;</span>, <span class="ident">param</span>);
+	<span class="kw">pub fn </span>props(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ! {
+		<span class="kw">for </span>param <span class="kw">in </span><span class="self">self</span>.enum_params_sync(<span class="string">&quot;Props&quot;</span>, <span class="prelude-val">None</span>) {
+			<span class="comment">// if param.pod_type == &quot;Object&quot; &amp;&amp; pod.properties.volume != null
+			</span><span class="macro">println!</span>(<span class="string">&quot;out_params.init_from_pod({:?})&quot;</span>, param);
 		}
 		<span class="macro">todo!</span>()
 	}
 
-	<span class="comment">// TODO: props_future</span>
-}
+	<span class="comment">// TODO: props_future
+</span>}
 
-<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Node</span> {
-	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">with_pw_property</span>(<span class="ident">pw::PW_KEY_NODE_NAME</span>, <span class="op">|</span><span class="ident">name</span><span class="op">|</span> {
-			<span class="ident">f</span>.<span class="ident">write_str</span>(<span class="ident">name</span>)
+<span class="kw">impl </span>Display <span class="kw">for </span>Node {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_NODE_NAME, |name| {
+			f.write_str(name)
 		}) {
-			<span class="kw">return</span> <span class="ident">res</span>
+			<span class="kw">return </span>res
 		}
 
-		<span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;pw.node({})&quot;</span>, <span class="ident">AsRef</span>::<span class="op">&lt;</span><span class="ident">PipewireObject</span><span class="op">&gt;</span><span class="ident">::as_ref</span>(<span class="self">self</span>))
+		<span class="macro">write!</span>(f, <span class="string">&quot;pw.node({})&quot;</span>, AsRef::&lt;PipewireObject&gt;::as_ref(<span class="self">self</span>))
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">InterestContainer</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Node</span> {
-	<span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span>) -&gt; <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">ports_filtered</span>(<span class="ident">interest</span>)
+<span class="kw">impl </span>InterestContainer&lt;Port&gt; <span class="kw">for </span>Node {
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;Port&gt;) -&gt; ValueIterator&lt;Port&gt; {
+		<span class="self">self</span>.ports_filtered(interest)
 	}
 
-	<span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="kw-2">&amp;</span><span class="ident">Interest</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Port</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">port</span>(<span class="ident">interest</span>)
-	}
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Node</span> {
-	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Port</span>;
-	<span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span>;
-
-	<span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::IntoIter</span> {
-		<span class="self">self</span>.<span class="ident">ports</span>()
+	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;Port&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
+		<span class="self">self</span>.port(interest)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="ident">Node</span> {
-	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Port</span>;
-	<span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; IntoIterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Node {
+	<span class="kw">type </span>Item = Port;
+	<span class="kw">type </span>IntoIter = ValueIterator&lt;<span class="self">Self</span>::Item&gt;;
 
-	<span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::IntoIter</span> {
-		<span class="self">self</span>.<span class="ident">ports</span>()
+	<span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
+		<span class="self">self</span>.ports()
+	}
+}
+
+<span class="kw">impl </span>IntoIterator <span class="kw">for </span>Node {
+	<span class="kw">type </span>Item = Port;
+	<span class="kw">type </span>IntoIter = ValueIterator&lt;<span class="self">Self</span>::Item&gt;;
+
+	<span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
+		<span class="self">self</span>.ports()
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

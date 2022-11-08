@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/id_table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>id_table.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/id_table.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>id_table.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -121,122 +114,121 @@
 <span id="114">114</span>
 <span id="115">115</span>
 <span id="116">116</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa::SpaIdValue</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::spa::SpaIdValue;
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SpaIdTable</span> {
-	<span class="ident">inner</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">libc::c_void</span><span class="op">&gt;</span>,
+<span class="attr">#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(transparent)]
+</span><span class="kw">pub struct </span>SpaIdTable {
+	inner: NonNull&lt;libc::c_void&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_name</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">ffi::wp_spa_id_table_from_name</span>(<span class="ident">name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+<span class="kw">impl </span>SpaIdTable {
+	<span class="kw">pub fn </span>from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="kw">unsafe </span>{
+			from_glib(ffi::wp_spa_id_table_from_name(name.to_glib_none().<span class="number">0</span>))
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_iterator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="kw">crate</span>::Iterator</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib_full</span>(<span class="ident">ffi::wp_spa_id_table_new_iterator</span>(<span class="self">self</span>.<span class="ident">into_glib</span>()))
+	<span class="kw">pub fn </span>new_iterator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Iterator {
+		<span class="kw">unsafe </span>{
+			from_glib_full(ffi::wp_spa_id_table_new_iterator(<span class="self">self</span>.into_glib()))
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">values</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ValueIterator</span><span class="op">&lt;</span><span class="ident">SpaIdValue</span><span class="op">&gt;</span> {
-		<span class="ident">ValueIterator::with_inner</span>(<span class="self">self</span>.<span class="ident">new_iterator</span>())
+	<span class="kw">pub fn </span>values(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;SpaIdValue&gt; {
+		ValueIterator::with_inner(<span class="self">self</span>.new_iterator())
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SpaIdValue</span><span class="op">&gt;</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">ffi::wp_spa_id_table_find_value</span>(<span class="self">self</span>.<span class="ident">into_glib</span>(), <span class="ident">value</span>))
+	<span class="kw">pub fn </span>find_value(<span class="kw-2">&amp;</span><span class="self">self</span>, value: u32) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdValue&gt; {
+		<span class="kw">unsafe </span>{
+			from_glib(ffi::wp_spa_id_table_find_value(<span class="self">self</span>.into_glib(), value))
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_value_from_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SpaIdValue</span><span class="op">&gt;</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">ffi::wp_spa_id_table_find_value_from_name</span>(<span class="self">self</span>.<span class="ident">into_glib</span>(), <span class="ident">name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+	<span class="kw">pub fn </span>find_value_from_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdValue&gt; {
+		<span class="kw">unsafe </span>{
+			from_glib(ffi::wp_spa_id_table_find_value_from_name(<span class="self">self</span>.into_glib(), name.to_glib_none().<span class="number">0</span>))
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_value_from_short_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SpaIdValue</span><span class="op">&gt;</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">ffi::wp_spa_id_table_find_value_from_short_name</span>(<span class="self">self</span>.<span class="ident">into_glib</span>(), <span class="ident">name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+	<span class="kw">pub fn </span>find_value_from_short_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdValue&gt; {
+		<span class="kw">unsafe </span>{
+			from_glib(ffi::wp_spa_id_table_find_value_from_short_name(<span class="self">self</span>.into_glib(), name.to_glib_none().<span class="number">0</span>))
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-		<span class="kw">struct</span> <span class="ident">IdValues</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SpaIdTable</span>);
-		<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">IdValues</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-				<span class="ident">f</span>.<span class="ident">debug_list</span>()
-					.<span class="ident">entries</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">values</span>())
-					.<span class="ident">finish</span>()
+<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>SpaIdTable {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">struct </span>IdValues&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaIdTable);
+		<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>IdValues&lt;<span class="lifetime">&#39;_</span>&gt; {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+				f.debug_list()
+					.entries(<span class="self">self</span>.<span class="number">0</span>.values())
+					.finish()
 			}
 		}
 
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;SpaIdTable&quot;</span>);
-		<span class="ident">f</span>.<span class="ident">field</span>(<span class="string">&quot;raw&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">into_glib</span>());
-		<span class="ident">f</span>.<span class="ident">field</span>(<span class="string">&quot;values&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">IdValues</span>(<span class="self">self</span>));
-		<span class="ident">f</span>.<span class="ident">finish</span>()
+		<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">&quot;SpaIdTable&quot;</span>);
+		f.field(<span class="string">&quot;raw&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.into_glib());
+		f.field(<span class="string">&quot;values&quot;</span>, <span class="kw-2">&amp;</span>IdValues(<span class="self">self</span>));
+		f.finish()
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">TryFromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpSpaIdTable</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">GlibNoneError</span>;
+<span class="kw">impl </span>TryFromGlib&lt;ffi::WpSpaIdTable&gt; <span class="kw">for </span>SpaIdTable {
+	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">try_from_glib</span>(<span class="ident">val</span>: <span class="ident">ffi::WpSpaIdTable</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-		<span class="ident">NonNull::new</span>(<span class="ident">val</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">ptr</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::unsafe_from</span>(<span class="ident">ptr</span>)).<span class="ident">ok_or</span>(<span class="ident">GlibNoneError</span>)
+	<span class="kw">unsafe fn </span>try_from_glib(val: ffi::WpSpaIdTable) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		NonNull::new(val <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>).map(|ptr| <span class="self">Self</span>::unsafe_from(ptr)).ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpSpaIdTable</span>;
+<span class="kw">impl </span>IntoGlib <span class="kw">for </span>SpaIdTable {
+	<span class="kw">type </span>GlibType = ffi::WpSpaIdTable;
 
-	<span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::GlibType</span> {
-		<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>
-	}
+	<span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; <span class="self">Self</span>::GlibType {
+		<span class="self">self</span>.inner.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_
+	</span>}
 }
 
-<span class="kw">impl</span> <span class="ident">OptionIntoGlib</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">const</span> <span class="ident">GLIB_NONE</span>: <span class="ident">ffi::WpSpaIdTable</span> <span class="op">=</span> <span class="ident">ptr::null</span>();
+<span class="kw">impl </span>OptionIntoGlib <span class="kw">for </span>SpaIdTable {
+	<span class="kw">const </span>GLIB_NONE: ffi::WpSpaIdTable = ptr::null();
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(<span class="ident">ffi::wp_spa_id_table_get_type</span>())
+<span class="kw">impl </span>StaticType <span class="kw">for </span>SpaIdTable {
+	<span class="kw">fn </span>static_type() -&gt; Type {
+		<span class="kw">unsafe </span>{
+			from_glib(ffi::wp_spa_id_table_get_type())
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">UnsafeFrom</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">libc::c_void</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unsafe_from</span>(<span class="ident">inner</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">libc::c_void</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">inner</span>,
+<span class="kw">impl </span>UnsafeFrom&lt;NonNull&lt;libc::c_void&gt;&gt; <span class="kw">for </span>SpaIdTable {
+	<span class="kw">unsafe fn </span>unsafe_from(inner: NonNull&lt;libc::c_void&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			inner,
 		}
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">UnsafeFrom</span><span class="op">&lt;</span><span class="ident">ffi::WpSpaIdTable</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpaIdTable</span> {
-	<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unsafe_from</span>(<span class="ident">inner</span>: <span class="ident">ffi::WpSpaIdTable</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">inner</span>: <span class="ident">NonNull::new_unchecked</span>(<span class="ident">inner</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>),
+<span class="kw">impl </span>UnsafeFrom&lt;ffi::WpSpaIdTable&gt; <span class="kw">for </span>SpaIdTable {
+	<span class="kw">unsafe fn </span>unsafe_from(inner: ffi::WpSpaIdTable) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			inner: NonNull::new_unchecked(inner <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>),
 		}
 	}
 }
 
-<span class="attribute">#[<span class="ident">test</span>]</span>
-<span class="kw">fn</span> <span class="ident">id_table_values</span>() {
-	<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa::SpaType</span>;
+<span class="attr">#[test]
+</span><span class="kw">fn </span>id_table_values() {
+	<span class="kw">use </span><span class="kw">crate</span>::spa::SpaType;
 
-	<span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">SpaType::OBJECT_PROP_INFO</span>;
-	<span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">ty</span>.<span class="ident">values_table</span>().<span class="ident">unwrap</span>();
-	<span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">table</span>.<span class="ident">values</span>();
-	<span class="macro">assert!</span>(<span class="ident">values</span>.<span class="ident">count</span>() <span class="op">&gt;</span> <span class="number">0</span>);
+	<span class="kw">let </span>ty = SpaType::OBJECT_PROP_INFO;
+	<span class="kw">let </span>table = ty.values_table().unwrap();
+	<span class="kw">let </span>values = table.values();
+	<span class="macro">assert!</span>(values.count() &gt; <span class="number">0</span>);
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

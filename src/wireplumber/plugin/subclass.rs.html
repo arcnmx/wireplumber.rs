@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/subclass.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>subclass.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/subclass.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>subclass.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -360,361 +353,360 @@
 <span id="353">353</span>
 <span id="354">354</span>
 <span id="355">355</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">glib::subclass::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::object::ObjectSubclassIs</span>;
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">SourceId</span>, <span class="ident">MainContext</span>};
-<span class="kw">use</span> <span class="ident">std::panic::catch_unwind</span>;
-<span class="kw">use</span> <span class="ident">std::cell::RefCell</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin</span>::{<span class="ident">Plugin</span>, <span class="ident">PluginFeatures</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::core</span>::{<span class="ident">Core</span>, <span class="ident">Object</span>, <span class="ident">ObjectImpl</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::Transition</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>glib::subclass::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::object::ObjectSubclassIs;
+<span class="kw">use </span>glib::{SourceId, MainContext};
+<span class="kw">use </span>std::panic::catch_unwind;
+<span class="kw">use </span>std::cell::RefCell;
+<span class="kw">use </span><span class="kw">crate</span>::plugin::{Plugin, PluginFeatures};
+<span class="kw">use </span><span class="kw">crate</span>::core::{Core, Object, ObjectImpl};
+<span class="kw">use </span><span class="kw">crate</span>::util::Transition;
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PluginImpl</span>: <span class="ident">ObjectImpl</span> <span class="op">+</span> <span class="ident">PluginImplExt</span> {
-	<span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">error_handler</span>: <span class="ident">Transition</span>) {
-		<span class="self">self</span>.<span class="ident">parent_enable</span>(<span class="ident">plugin</span>, <span class="ident">error_handler</span>)
+<span class="kw">pub trait </span>PluginImpl: ObjectImpl + PluginImplExt {
+	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
+		<span class="self">self</span>.parent_enable(plugin, error_handler)
 	}
 
-	<span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>) {
-		<span class="self">self</span>.<span class="ident">parent_disable</span>(<span class="ident">plugin</span>)
+	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
+		<span class="self">self</span>.parent_disable(plugin)
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PluginImplExt</span>: <span class="ident">ObjectSubclass</span> {
-	<span class="kw">fn</span> <span class="ident">parent_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">ffi::WpPluginClass</span>;
-	<span class="kw">fn</span> <span class="ident">parent_enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">error_handler</span>: <span class="ident">Transition</span>);
-	<span class="kw">fn</span> <span class="ident">parent_disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>);
+<span class="kw">pub trait </span>PluginImplExt: ObjectSubclass {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpPluginClass;
+	<span class="kw">fn </span>parent_enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition);
+	<span class="kw">fn </span>parent_disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type);
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PluginImpl</span><span class="op">&gt;</span> <span class="ident">PluginImplExt</span> <span class="kw">for</span> <span class="ident">T</span> {
-	<span class="kw">fn</span> <span class="ident">parent_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">ffi::WpPluginClass</span> {
-		<span class="kw">unsafe</span> {
-			<span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">T::type_data</span>();
-			<span class="kw">let</span> <span class="ident">parent_class</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">as_ref</span>().<span class="ident">parent_class</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
-			<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">parent_class</span>
+<span class="kw">impl</span>&lt;T: PluginImpl&gt; PluginImplExt <span class="kw">for </span>T {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpPluginClass {
+		<span class="kw">unsafe </span>{
+			<span class="kw">let </span>data = T::type_data();
+			<span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+			<span class="kw-2">&amp;*</span>parent_class
 		}
 	}
 
-	<span class="kw">fn</span> <span class="ident">parent_enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">error_handler</span>: <span class="ident">Transition</span>) {
-		<span class="kw">let</span> <span class="ident">parent</span> <span class="op">=</span> <span class="ident">PluginImplExt::parent_class</span>(<span class="self">self</span>);
-		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">parent</span>.<span class="ident">enable</span>.<span class="ident">expect</span>(<span class="string">&quot;No parent class implementation for \&quot;enable\&quot;&quot;</span>);
-		<span class="kw">unsafe</span> {
-			<span class="ident">f</span>(<span class="ident">plugin</span>.<span class="ident">unsafe_cast_ref</span>::<span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">error_handler</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)
+	<span class="kw">fn </span>parent_enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
+		<span class="kw">let </span>parent = PluginImplExt::parent_class(<span class="self">self</span>);
+		<span class="kw">let </span>f = parent.enable.expect(<span class="string">&quot;No parent class implementation for \&quot;enable\&quot;&quot;</span>);
+		<span class="kw">unsafe </span>{
+			f(plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>, error_handler.to_glib_none().<span class="number">0</span>)
 		}
 	}
 
-	<span class="kw">fn</span> <span class="ident">parent_disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>) {
-		<span class="kw">let</span> <span class="ident">parent</span> <span class="op">=</span> <span class="ident">PluginImplExt::parent_class</span>(<span class="self">self</span>);
-		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">parent</span>.<span class="ident">disable</span>.<span class="ident">expect</span>(<span class="string">&quot;No parent class implementation for \&quot;disable\&quot;&quot;</span>);
-		<span class="kw">unsafe</span> {
-			<span class="ident">f</span>(<span class="ident">plugin</span>.<span class="ident">unsafe_cast_ref</span>::<span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>)
+	<span class="kw">fn </span>parent_disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
+		<span class="kw">let </span>parent = PluginImplExt::parent_class(<span class="self">self</span>);
+		<span class="kw">let </span>f = parent.disable.expect(<span class="string">&quot;No parent class implementation for \&quot;disable\&quot;&quot;</span>);
+		<span class="kw">unsafe </span>{
+			f(plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>)
 		}
 	}
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PluginImpl</span><span class="op">&gt;</span> <span class="ident">IsSubclassable</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Plugin</span> {
-	<span class="kw">fn</span> <span class="ident">class_init</span>(<span class="ident">class</span>: <span class="kw-2">&amp;mut</span> <span class="ident">glib::Class</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>) {
-		<span class="ident"><span class="self">Self</span>::parent_class_init</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">class</span>);
+<span class="kw">unsafe impl</span>&lt;T: PluginImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>Plugin {
+	<span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
+		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
 
-		<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">enable</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PluginImpl</span><span class="op">&gt;</span>(<span class="ident">plugin</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpPlugin</span>, <span class="ident">error_handler</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpTransition</span>) {
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">plugin</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">T::Instance</span>);
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">imp</span>();
-			<span class="kw">let</span> <span class="ident">plugin</span>: <span class="ident">Borrowed</span><span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">plugin</span>);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>enable&lt;T: PluginImpl&gt;(plugin: <span class="kw-2">*mut </span>ffi::WpPlugin, error_handler: <span class="kw-2">*mut </span>ffi::WpTransition) {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(plugin <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = this.imp();
+			<span class="kw">let </span>plugin: Borrowed&lt;Plugin&gt; = from_glib_borrow(plugin);
 
-			<span class="comment">// TODO: transition ownership</span>
-			<span class="ident">this</span>.<span class="ident">enable</span>(<span class="ident">plugin</span>.<span class="ident">unsafe_cast_ref</span>(), <span class="ident">from_glib_none</span>(<span class="ident">error_handler</span>))
+			<span class="comment">// TODO: transition ownership
+			</span>this.enable(plugin.unsafe_cast_ref(), from_glib_none(error_handler))
 		}
 
-		<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">disable</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PluginImpl</span><span class="op">&gt;</span>(<span class="ident">plugin</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpPlugin</span>) {
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">plugin</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">T::Instance</span>);
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">imp</span>();
-			<span class="kw">let</span> <span class="ident">plugin</span>: <span class="ident">Borrowed</span><span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">plugin</span>);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>disable&lt;T: PluginImpl&gt;(plugin: <span class="kw-2">*mut </span>ffi::WpPlugin) {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(plugin <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = this.imp();
+			<span class="kw">let </span>plugin: Borrowed&lt;Plugin&gt; = from_glib_borrow(plugin);
 
-			<span class="ident">this</span>.<span class="ident">disable</span>(<span class="ident">plugin</span>.<span class="ident">unsafe_cast_ref</span>())
+			this.disable(plugin.unsafe_cast_ref())
 		}
 
-		<span class="kw">let</span> <span class="ident">klass</span> <span class="op">=</span> <span class="ident">class</span>.<span class="ident">as_mut</span>();
-		<span class="ident">klass</span>.<span class="ident">enable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">enable</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
-		<span class="ident">klass</span>.<span class="ident">disable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">disable</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+		<span class="kw">let </span>klass = class.as_mut();
+		klass.enable = <span class="prelude-val">Some</span>(enable::&lt;T&gt;);
+		klass.disable = <span class="prelude-val">Some</span>(disable::&lt;T&gt;);
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AsyncPluginImpl</span>: <span class="ident">ObjectSubclass</span> {
-	<span class="kw">type</span> <span class="ident">EnableFuture</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span><span class="op">&gt;</span>;
-	<span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plugin</span>: <span class="ident"><span class="self">Self</span>::Type</span>) -&gt; <span class="ident"><span class="self">Self</span>::EnableFuture</span>;
+<span class="kw">pub trait </span>AsyncPluginImpl: ObjectSubclass {
+	<span class="kw">type </span>EnableFuture: Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt;;
+	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="self">Self</span>::Type) -&gt; <span class="self">Self</span>::EnableFuture;
 
-	<span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) { }
+	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>) { }
 
-	<span class="kw">fn</span> <span class="ident">register_source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="ident">SourceId</span>) { <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">source</span>; }
+	<span class="kw">fn </span>register_source(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) { <span class="kw">let _ </span>= source; }
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AsyncPluginExt</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">as_plugin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Plugin</span>;
+<span class="kw">pub trait </span>AsyncPluginExt: IsA&lt;Plugin&gt; {
+	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Plugin;
 
-	<span class="kw">fn</span> <span class="ident">plugin_core</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Core</span>;
+	<span class="kw">fn </span>plugin_core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core;
 
-	<span class="kw">fn</span> <span class="ident">plugin_context</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">MainContext</span>;
+	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext;
 
-	<span class="kw">fn</span> <span class="ident">spawn_local</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>);
+	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output=()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F);
 }
 
-<span class="kw">impl</span> <span class="ident">Plugin</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">core</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Core</span> {
-		<span class="self">self</span>.<span class="ident">upcast_ref</span>::<span class="op">&lt;</span><span class="ident">Object</span><span class="op">&gt;</span>().<span class="ident">core</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;plugin requires an active Core&quot;</span>)
+<span class="kw">impl </span>Plugin {
+	<span class="kw">pub fn </span>core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core {
+		<span class="self">self</span>.upcast_ref::&lt;Object&gt;().core()
+			.expect(<span class="string">&quot;plugin requires an active Core&quot;</span>)
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ObjectSubclassIsExt</span><span class="op">&gt;</span> <span class="ident">AsyncPluginExt</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
-	<span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">ObjectSubclassIs</span><span class="op">&gt;</span><span class="ident">::Subclass</span>: <span class="ident">AsyncPluginImpl</span>,
+<span class="kw">impl</span>&lt;T: IsA&lt;Plugin&gt; + ObjectSubclassIsExt&gt; AsyncPluginExt <span class="kw">for </span>T <span class="kw">where
+	</span>&lt;T <span class="kw">as </span>ObjectSubclassIs&gt;::Subclass: AsyncPluginImpl,
 {
-	<span class="kw">fn</span> <span class="ident">as_plugin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Plugin</span> {
-		<span class="self">self</span>.<span class="ident">upcast_ref</span>()
+	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Plugin {
+		<span class="self">self</span>.upcast_ref()
 	}
 
-	<span class="kw">fn</span> <span class="ident">plugin_core</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Core</span> {
-		<span class="self">self</span>.<span class="ident">as_plugin</span>().<span class="ident">core</span>()
+	<span class="kw">fn </span>plugin_core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core {
+		<span class="self">self</span>.as_plugin().core()
 	}
 
-	<span class="kw">fn</span> <span class="ident">plugin_context</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">MainContext</span> {
-		<span class="self">self</span>.<span class="ident">plugin_core</span>().<span class="ident">default_context</span>()
+	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext {
+		<span class="self">self</span>.plugin_core().default_context()
 	}
 
-	<span class="kw">fn</span> <span class="ident">spawn_local</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Output</span><span class="op">=</span>()<span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) {
-		<span class="kw">let</span> <span class="ident">source</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">plugin_context</span>().<span class="ident">spawn_local</span>(<span class="ident">f</span>);
-		<span class="self">self</span>.<span class="ident">imp</span>().<span class="ident">register_source</span>(<span class="ident">source</span>);
+	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output=()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) {
+		<span class="kw">let </span>source = <span class="self">self</span>.plugin_context().spawn_local(f);
+		<span class="self">self</span>.imp().register_source(source);
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsyncPluginImpl</span> <span class="op">+</span> <span class="ident">ObjectImpl</span><span class="op">&gt;</span> <span class="ident">PluginImpl</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
-	<span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">ObjectSubclass</span><span class="op">&gt;</span><span class="ident">::Type</span>: <span class="ident">AsyncPluginExt</span>,
+<span class="kw">impl</span>&lt;T: AsyncPluginImpl + ObjectImpl&gt; PluginImpl <span class="kw">for </span>T <span class="kw">where
+	</span>&lt;T <span class="kw">as </span>ObjectSubclass&gt;::Type: AsyncPluginExt,
 {
-	<span class="kw">fn</span> <span class="ident">enable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">error_handler</span>: <span class="ident">Transition</span>) {
-		<span class="kw">let</span> <span class="ident">plugin</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">clone</span>();
-		<span class="kw">let</span> <span class="ident">enable</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">enable</span>(<span class="ident">plugin</span>.<span class="ident">clone</span>());
+	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, this: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
+		<span class="kw">let </span>plugin = this.clone();
+		<span class="kw">let </span>enable = <span class="self">self</span>.enable(plugin.clone());
 
-		<span class="kw">let</span> <span class="ident">enable_handle</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">plugin_context</span>().<span class="ident">spawn_local</span>(<span class="kw">async</span> <span class="kw">move</span> {
-			<span class="kw">match</span> <span class="ident">enable</span>.<span class="kw">await</span> {
-				<span class="prelude-val">Ok</span>(()) =&gt; <span class="ident">plugin</span>.<span class="ident">as_plugin</span>().<span class="ident">update_features</span>(<span class="ident">PluginFeatures::ENABLED</span>, <span class="ident">PluginFeatures::empty</span>()),
-				<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="ident">error_handler</span>.<span class="ident">return_error</span>(<span class="ident">e</span>),
+		<span class="kw">let </span>enable_handle = this.plugin_context().spawn_local(<span class="kw">async move </span>{
+			<span class="kw">match </span>enable.<span class="kw">await </span>{
+				<span class="prelude-val">Ok</span>(()) =&gt; plugin.as_plugin().update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
+				<span class="prelude-val">Err</span>(e) =&gt; error_handler.return_error(e),
 			}
 		});
-		<span class="self">self</span>.<span class="ident">register_source</span>(<span class="ident">enable_handle</span>);
-		<span class="comment">// TODO: prevent multiple calls?</span>
-	}
+		<span class="self">self</span>.register_source(enable_handle);
+		<span class="comment">// TODO: prevent multiple calls?
+	</span>}
 
-	<span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_plugin</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>) {
-		<span class="self">self</span>.<span class="ident">disable</span>();
+	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>, _plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
+		<span class="self">self</span>.disable();
 	}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SourceHandles</span> {
-	<span class="ident">context</span>: <span class="ident">MainContext</span>,
-	<span class="ident">handles</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SourceId</span><span class="op">&gt;</span>,
+<span class="attr">#[derive(Debug)]
+</span><span class="kw">pub struct </span>SourceHandles {
+	context: MainContext,
+	handles: Vec&lt;SourceId&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">SourceHandles</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">context</span>: <span class="ident">MainContext</span>) -&gt; <span class="self">Self</span> {
-		<span class="self">Self</span> {
-			<span class="ident">context</span>,
-			<span class="ident">handles</span>: <span class="ident">Vec::new</span>(),
+<span class="kw">impl </span>SourceHandles {
+	<span class="kw">pub fn </span>new(context: MainContext) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			context,
+			handles: Vec::new(),
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="ident">SourceId</span>) {
-		<span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">push</span>(<span class="ident">source</span>);
+	<span class="kw">pub fn </span>push(<span class="kw-2">&amp;mut </span><span class="self">self</span>, source: SourceId) {
+		<span class="self">self</span>.handles.push(source);
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
-		<span class="kw">for</span> <span class="ident">source</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">handles</span>.<span class="ident">drain</span>(..) {
-			<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">source</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">find_source_by_id</span>(<span class="kw-2">&amp;</span><span class="ident">source</span>) {
-				<span class="comment">// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?</span>
-				<span class="comment">// if !source.is_destroyed() { }</span>
-				<span class="ident">source</span>.<span class="ident">destroy</span>();
+	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+		<span class="kw">for </span>source <span class="kw">in </span><span class="self">self</span>.handles.drain(..) {
+			<span class="kw">if let </span><span class="prelude-val">Some</span>(source) = <span class="self">self</span>.context.find_source_by_id(<span class="kw-2">&amp;</span>source) {
+				<span class="comment">// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?
+				// if !source.is_destroyed() { }
+				</span>source.destroy();
 			}
 		}
 	}
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SourceHandlesCell</span>(<span class="ident">RefCell</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SourceHandles</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+<span class="attr">#[derive(Default, Debug)]
+</span><span class="kw">pub struct </span>SourceHandlesCell(RefCell&lt;<span class="prelude-ty">Option</span>&lt;SourceHandles&gt;&gt;);
 
-<span class="kw">impl</span> <span class="ident">SourceHandlesCell</span> {
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">MainContext</span>) {
-		<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">cell</span>().<span class="ident">borrow_mut</span>() <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">SourceHandles::new</span>(<span class="ident">context</span>));
+<span class="kw">impl </span>SourceHandlesCell {
+	<span class="kw">pub fn </span>init(<span class="kw-2">&amp;</span><span class="self">self</span>, context: MainContext) {
+		<span class="kw-2">*</span><span class="self">self</span>.cell().borrow_mut() = <span class="prelude-val">Some</span>(SourceHandles::new(context));
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_init</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">MainContext</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">MainContext</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="kw-2">&amp;mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">cell</span>().<span class="ident">borrow_mut</span>() {
-			<span class="kw-2">&amp;mut</span> <span class="prelude-val">Some</span>(..) =&gt; <span class="prelude-val">Err</span>(<span class="ident">context</span>),
-			<span class="ident">opt</span> @ <span class="prelude-val">None</span> =&gt; {
-				<span class="kw-2">*</span><span class="ident">opt</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">SourceHandles::new</span>(<span class="ident">context</span>));
+	<span class="kw">pub fn </span>try_init(<span class="kw-2">&amp;</span><span class="self">self</span>, context: MainContext) -&gt; <span class="prelude-ty">Result</span>&lt;(), MainContext&gt; {
+		<span class="kw">match </span><span class="kw-2">&amp;mut *</span><span class="self">self</span>.cell().borrow_mut() {
+			<span class="kw-2">&amp;mut </span><span class="prelude-val">Some</span>(..) =&gt; <span class="prelude-val">Err</span>(context),
+			opt @ <span class="prelude-val">None </span>=&gt; {
+				<span class="kw-2">*</span>opt = <span class="prelude-val">Some</span>(SourceHandles::new(context));
 				<span class="prelude-val">Ok</span>(())
 			},
 		}
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="ident">SourceId</span>) {
-		<span class="self">self</span>.<span class="ident">borrow_mut</span>(<span class="op">|</span><span class="ident">handles</span><span class="op">|</span> <span class="ident">handles</span>.<span class="ident">push</span>(<span class="ident">source</span>))
+	<span class="kw">pub fn </span>push(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) {
+		<span class="self">self</span>.borrow_mut(|handles| handles.push(source))
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-		<span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">borrow_mut</span>(<span class="op">|</span><span class="ident">handles</span><span class="op">|</span> <span class="ident">handles</span>.<span class="ident">clear</span>());
-		<span class="self">self</span>.<span class="ident">cell</span>().<span class="ident">replace</span>(<span class="prelude-val">None</span>);
-		<span class="ident">res</span>
+	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+		<span class="kw">let </span>res = <span class="self">self</span>.borrow_mut(|handles| handles.clear());
+		<span class="self">self</span>.cell().replace(<span class="prelude-val">None</span>);
+		res
 	}
 
-	<span class="attribute">#[<span class="ident">inline</span>]</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cell</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SourceHandles</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
-	}
+	<span class="attr">#[inline]
+	</span><span class="kw">pub fn </span>cell(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>RefCell&lt;<span class="prelude-ty">Option</span>&lt;SourceHandles&gt;&gt; {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+	</span>}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow_mut</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;mut</span> <span class="ident">SourceHandles</span>) -&gt; <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">R</span> {
-		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">cell</span>().<span class="ident">borrow_mut</span>() {
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">handles</span>) =&gt; <span class="ident">f</span>(<span class="ident">handles</span>),
-			<span class="prelude-val">None</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;SourceHandles cell uninitialized&quot;</span>),
+	<span class="kw">pub fn </span>borrow_mut&lt;R, F: FnOnce(<span class="kw-2">&amp;mut </span>SourceHandles) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
+		<span class="kw">match </span><span class="kw-2">*</span><span class="self">self</span>.cell().borrow_mut() {
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>handles) =&gt; f(handles),
+			<span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;SourceHandles cell uninitialized&quot;</span>),
 		}
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SimplePlugin</span>: <span class="ident">ObjectSubclass</span> {
-	<span class="kw">type</span> <span class="ident">Args</span>;
+<span class="kw">pub trait </span>SimplePlugin: ObjectSubclass {
+	<span class="kw">type </span>Args;
 
-	<span class="kw">fn</span> <span class="ident">instance_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Type</span> {
-		<span class="comment">// TODO: use glib_signal::BorrowedObject?</span>
-		<span class="self">self</span>.<span class="ident">instance</span>()
+	<span class="kw">fn </span>instance_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Type {
+		<span class="comment">// TODO: use glib_signal::BorrowedObject?
+		</span><span class="self">self</span>.instance()
 	}
 
-	<span class="kw">fn</span> <span class="ident">decode_args</span>(<span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Args</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+	<span class="kw">fn </span>decode_args(args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Args, Error&gt;;
 
-	<span class="kw">fn</span> <span class="ident">init_args</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">args</span>: <span class="ident"><span class="self">Self</span>::Args</span>) { <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">args</span>; <span class="macro">unimplemented!</span>() }
-	<span class="kw">fn</span> <span class="ident">new_plugin</span>(<span class="ident">core</span>: <span class="kw-2">&amp;</span><span class="ident">Core</span>, <span class="ident">args</span>: <span class="ident"><span class="self">Self</span>::Args</span>) -&gt; <span class="ident"><span class="self">Self</span>::Type</span> <span class="kw">where</span>
-		<span class="ident"><span class="self">Self</span>::Type</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span>,
+	<span class="kw">fn </span>init_args(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="self">Self</span>::Args) { <span class="kw">let _ </span>= args; <span class="macro">unimplemented!</span>() }
+	<span class="kw">fn </span>new_plugin(core: <span class="kw-2">&amp;</span>Core, args: <span class="self">Self</span>::Args) -&gt; <span class="self">Self</span>::Type <span class="kw">where
+		</span><span class="self">Self</span>::Type: IsA&lt;GObject&gt;,
 	{
-		<span class="kw">let</span> <span class="ident">res</span>: <span class="ident"><span class="self">Self</span>::Type</span> <span class="op">=</span> <span class="ident">GObject::new</span>(<span class="kw-2">&amp;</span>[
-			(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::NAME</span>),
-			(<span class="string">&quot;core&quot;</span>, <span class="ident">core</span>),
-		]).<span class="ident">unwrap</span>();
-		<span class="ident">res</span>.<span class="ident">imp</span>().<span class="ident">init_args</span>(<span class="ident">args</span>);
-		<span class="ident">res</span>
+		<span class="kw">let </span>res: <span class="self">Self</span>::Type = GObject::new(<span class="kw-2">&amp;</span>[
+			(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><span class="self">Self</span>::NAME),
+			(<span class="string">&quot;core&quot;</span>, core),
+		]).unwrap();
+		res.imp().init_args(args);
+		res
 	}
 }
 
-<span class="macro">glib::wrapper!</span> {
-	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SimplePluginObject</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimplePlugin</span><span class="op">&gt;</span>(<span class="ident">ObjectSubclass</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">Plugin</span>, <span class="ident">Object</span>;
+<span class="macro">glib::wrapper! </span>{
+	<span class="kw">pub struct </span>SimplePluginObject&lt;T: SimplePlugin&gt;(ObjectSubclass&lt;T&gt;) @extends Plugin, Object;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">SimplePluginObject</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
-	<span class="ident">T</span>: <span class="ident">SimplePlugin</span> <span class="op">+</span> <span class="ident">ObjectSubclass</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">=</span><span class="self">Self</span><span class="op">&gt;</span>,
+<span class="kw">impl</span>&lt;T&gt; Deref <span class="kw">for </span>SimplePluginObject&lt;T&gt; <span class="kw">where
+	</span>T: SimplePlugin + ObjectSubclass&lt;Type=<span class="self">Self</span>&gt;,
 {
-	<span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">T</span>;
+	<span class="kw">type </span>Target = T;
 
-	<span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Target</span> {
-		<span class="self">self</span>.<span class="ident">imp</span>()
+	<span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
+		<span class="self">self</span>.imp()
 	}
 }
 
-<span class="doccomment">/// Implements [`glib::ObjectSubclass`](glib::subclass::types::ObjectSubclass),</span>
-<span class="doccomment">/// [`glib::ObjectImpl`](glib::subclass::object::ObjectImpl), and</span>
-<span class="doccomment">/// [`ObjectImpl`](crate::core::ObjectImpl) for your plugin.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The plugin type must also manually impl [SimplePlugin], and will be wrapped as</span>
-<span class="doccomment">/// [`SimplePluginObject&lt;T&gt;`](SimplePluginObject). See the</span>
-<span class="doccomment">/// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">simple_plugin_subclass</span> {
-	(<span class="kw">impl</span> <span class="ident">ObjectSubclass</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">tt</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>:<span class="ident">tt</span>)<span class="op">*</span> }) =&gt; {
-		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::simple_plugin_subclass!</span> {
-			<span class="kw">impl</span> <span class="macro-nonterminal">ObjectSubclass</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::Plugin</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>)<span class="op">*</span> }
+<span class="doccomment">/// Implements [`glib::ObjectSubclass`](glib::subclass::types::ObjectSubclass),
+/// [`glib::ObjectImpl`](glib::subclass::object::ObjectImpl), and
+/// [`ObjectImpl`](crate::core::ObjectImpl) for your plugin.
+///
+/// The plugin type must also manually impl [SimplePlugin], and will be wrapped as
+/// [`SimplePluginObject&lt;T&gt;`](SimplePluginObject). See the
+/// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.
+</span><span class="attr">#[macro_export]
+</span><span class="macro">macro_rules! </span>simple_plugin_subclass {
+	(<span class="kw">impl </span>ObjectSubclass <span class="kw">for </span><span class="macro-nonterminal">$name</span>:tt <span class="kw">as </span><span class="macro-nonterminal">$ty</span>:ty { $(<span class="macro-nonterminal">$subclass</span>:tt)* }) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::simple_plugin_subclass! </span>{
+			<span class="kw">impl </span><span class="macro-nonterminal">ObjectSubclass</span>&lt;<span class="macro-nonterminal">$crate::plugin::Plugin</span>&gt; <span class="kw">for </span><span class="macro-nonterminal">$name </span><span class="kw">as </span><span class="macro-nonterminal">$ty </span>{ $(<span class="macro-nonterminal">$subclass</span>)* }
 		}
 	};
-	(<span class="kw">impl</span> <span class="ident">ObjectSubclass</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">parent</span>:<span class="ident">ty</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">tt</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>:<span class="ident">tt</span>)<span class="op">*</span> }) =&gt; {
-		<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::object_subclass</span>]</span>
-		<span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::subclass::types::ObjectSubclass</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-			<span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::SimplePluginObject</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
-			<span class="kw">type</span> <span class="ident">ParentType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">parent</span>;
-			<span class="kw">const</span> <span class="ident">NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>;
-			$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">subclass</span>)<span class="op">*</span>
+	(<span class="kw">impl </span>ObjectSubclass&lt;<span class="macro-nonterminal">$parent</span>:ty&gt; <span class="kw">for </span><span class="macro-nonterminal">$name</span>:tt <span class="kw">as </span><span class="macro-nonterminal">$ty</span>:ty { $(<span class="macro-nonterminal">$subclass</span>:tt)* }) =&gt; {
+		<span class="attr">#[<span class="macro-nonterminal">$crate::lib::glib::object_subclass</span>]
+		</span><span class="kw">impl </span><span class="macro-nonterminal">$crate::lib::glib::subclass::types::ObjectSubclass </span><span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
+			<span class="kw">type </span>Type = <span class="macro-nonterminal">$crate::plugin::SimplePluginObject</span>&lt;<span class="self">Self</span>&gt;;
+			<span class="kw">type </span>ParentType = <span class="macro-nonterminal">$parent</span>;
+			<span class="kw">const </span>NAME: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="macro-nonterminal">$name</span>;
+			$(<span class="macro-nonterminal">$subclass</span>)*
 		}
 
-		<span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::subclass::object::ObjectImpl</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> { }
-		<span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::core::ObjectImpl</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> { }
+		<span class="kw">impl </span><span class="macro-nonterminal">$crate::lib::glib::subclass::object::ObjectImpl </span><span class="kw">for </span><span class="macro-nonterminal">$ty </span>{ }
+		<span class="kw">impl </span><span class="macro-nonterminal">$crate::core::ObjectImpl </span><span class="kw">for </span><span class="macro-nonterminal">$ty </span>{ }
 	};
 }
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">simple_plugin_subclass</span>;
+<span class="kw">pub use </span>simple_plugin_subclass;
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ModuleExport</span> {
-	<span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub trait </span>ModuleExport {
+	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
 }
 
-<span class="doccomment">/// Catches panics from a [ModuleExport] initializer</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ModuleWrapper</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Catches panics from a [ModuleExport] initializer
+</span><span class="kw">pub struct </span>ModuleWrapper&lt;T&gt;(PhantomData&lt;T&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ModuleExport</span><span class="op">&gt;</span> <span class="ident">ModuleExport</span> <span class="kw">for</span> <span class="ident">ModuleWrapper</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">catch_unwind</span>(<span class="op">|</span><span class="op">|</span> {
-			<span class="ident">T::init</span>(<span class="ident">core</span>, <span class="ident">args</span>)
+<span class="kw">impl</span>&lt;T: ModuleExport&gt; ModuleExport <span class="kw">for </span>ModuleWrapper&lt;T&gt; {
+	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+		<span class="kw">let </span>res = catch_unwind(|| {
+			T::init(core, args)
 		});
-		<span class="kw">match</span> <span class="ident">res</span> {
-			<span class="prelude-val">Ok</span>(<span class="ident">res</span>) =&gt; <span class="ident">res</span>,
-			<span class="prelude-val">Err</span>(<span class="ident">panic</span>) =&gt; <span class="prelude-val">Err</span>({
-				<span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">LibraryErrorEnum::OperationFailed</span>;
-				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">panic</span>) <span class="op">=</span> <span class="ident">panic</span>.<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>() {
-					<span class="ident">Error::new</span>(<span class="ident">op</span>, <span class="ident">panic</span>)
-				} <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">panic</span>) <span class="op">=</span> <span class="ident">panic</span>.<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span>() {
-					<span class="ident">Error::new</span>(<span class="ident">op</span>, <span class="kw-2">*</span><span class="ident">panic</span>)
-				} <span class="kw">else</span> {
-					<span class="ident">Error::new</span>(<span class="ident">op</span>, <span class="string">&quot;ModuleExport::init panicked&quot;</span>)
+		<span class="kw">match </span>res {
+			<span class="prelude-val">Ok</span>(res) =&gt; res,
+			<span class="prelude-val">Err</span>(panic) =&gt; <span class="prelude-val">Err</span>({
+				<span class="kw">let </span>op = LibraryErrorEnum::OperationFailed;
+				<span class="kw">if let </span><span class="prelude-val">Some</span>(panic) = panic.downcast_ref::&lt;String&gt;() {
+					Error::new(op, panic)
+				} <span class="kw">else if let </span><span class="prelude-val">Some</span>(panic) = panic.downcast_ref::&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;() {
+					Error::new(op, <span class="kw-2">*</span>panic)
+				} <span class="kw">else </span>{
+					Error::new(op, <span class="string">&quot;ModuleExport::init panicked&quot;</span>)
 				}
 			}),
 		}
 	}
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimplePlugin</span><span class="op">&gt;</span> <span class="ident">ModuleExport</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
-	<span class="ident">T::Type</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">GObject</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Plugin</span><span class="op">&gt;</span>,
+<span class="kw">impl</span>&lt;T: SimplePlugin&gt; ModuleExport <span class="kw">for </span>T <span class="kw">where
+	</span>T::Type: IsA&lt;GObject&gt; + IsA&lt;Plugin&gt;,
 {
-	<span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">core</span>: <span class="ident">Core</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="comment">// TODO: support optional args? annoying to do this properly though...</span>
-		<span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">T::decode_args</span>(<span class="ident">args</span>)<span class="question-mark">?</span>;
-		<span class="kw">let</span> <span class="ident">plugin</span> <span class="op">=</span> <span class="ident">T::new_plugin</span>(<span class="kw-2">&amp;</span><span class="ident">core</span>, <span class="ident">args</span>);
-		<span class="ident">plugin</span>.<span class="ident">register</span>();
+	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+		<span class="comment">// TODO: support optional args? annoying to do this properly though...
+		</span><span class="kw">let </span>args = T::decode_args(args)<span class="question-mark">?</span>;
+		<span class="kw">let </span>plugin = T::new_plugin(<span class="kw-2">&amp;</span>core, args);
+		plugin.register();
 		<span class="prelude-val">Ok</span>(())
 	}
 }
 
-<span class="doccomment">/// Exports a [ModuleExport] as the wireplumber plugin entry point.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Using this properly requires that your crate be built as a `cdylib`. See the</span>
-<span class="doccomment">/// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">plugin_export</span> {
-	(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">ty</span>) =&gt; {
-		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::plugin_export!</span> { @<span class="macro-nonterminal">nowrap</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::ModuleWrapper</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span><span class="op">&gt;</span> }
+<span class="doccomment">/// Exports a [ModuleExport] as the wireplumber plugin entry point.
+///
+/// Using this properly requires that your crate be built as a `cdylib`. See the
+/// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.
+</span><span class="attr">#[macro_export]
+</span><span class="macro">macro_rules! </span>plugin_export {
+	(<span class="macro-nonterminal">$desc</span>:ty) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::plugin_export! </span>{ @<span class="macro-nonterminal">nowrap $crate::plugin::ModuleWrapper</span>::&lt;<span class="macro-nonterminal">$desc</span>&gt; }
 	};
-	(@<span class="ident">nowrap</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span>:<span class="ident">ty</span>) =&gt; {
-		<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-		<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">wireplumber__module_init</span>(
-			<span class="ident">core</span>: <span class="ident">std::ptr::NonNull</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::ffi::WpCore</span><span class="op">&gt;</span>,
-			<span class="ident">args</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::ffi::GVariant</span>,
-			<span class="ident">error</span>: <span class="ident">std::ptr::NonNull</span><span class="op">&lt;</span><span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::ffi::GError</span><span class="op">&gt;</span>
-		) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-			<span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::translate</span>::{<span class="ident">IntoGlib</span>, <span class="ident">ToGlibPtr</span>};
+	(@nowrap <span class="macro-nonterminal">$desc</span>:ty) =&gt; {
+		<span class="attr">#[no_mangle]
+		</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>wireplumber__module_init(
+			core: std::ptr::NonNull&lt;<span class="macro-nonterminal">$crate::ffi::WpCore</span>&gt;,
+			args: <span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GVariant</span>,
+			error: std::ptr::NonNull&lt;<span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GError</span>&gt;
+		) -&gt; glib::ffi::gboolean {
+			<span class="kw">use </span><span class="macro-nonterminal">$crate::lib::glib::translate</span>::{IntoGlib, ToGlibPtr};
 
-			<span class="kw">let</span> <span class="ident">core</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">glib::translate::from_glib_none</span>(<span class="ident">core</span>.<span class="ident">as_ptr</span>()) };
-			<span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">glib::translate::from_glib_none</span>(<span class="ident">args</span>) };
-			<span class="kw">match</span> <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">desc</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::plugin::ModuleExport</span><span class="op">&gt;</span><span class="ident">::init</span>(<span class="ident">core</span>, <span class="ident">args</span>) {
-				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>.<span class="ident">into_glib</span>(),
-				<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
-					<span class="kw-2">*</span><span class="ident">error</span>.<span class="ident">as_ptr</span>() <span class="op">=</span> <span class="ident">e</span>.<span class="ident">to_glib_full</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
-					<span class="bool-val">false</span>.<span class="ident">into_glib</span>()
+			<span class="kw">let </span>core = <span class="kw">unsafe </span>{ glib::translate::from_glib_none(core.as_ptr()) };
+			<span class="kw">let </span>args = <span class="kw">unsafe </span>{ glib::translate::from_glib_none(args) };
+			<span class="kw">match </span>&lt;<span class="macro-nonterminal">$desc </span><span class="kw">as </span><span class="macro-nonterminal">$crate::plugin::ModuleExport</span>&gt;::init(core, args) {
+				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>.into_glib(),
+				<span class="prelude-val">Err</span>(e) =&gt; {
+					<span class="kw-2">*</span>error.as_ptr() = e.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+					<span class="bool-val">false</span>.into_glib()
 				},
 			}
 		}
 	};
 }
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">plugin_export</span>;
+<span class="kw">pub use </span>plugin_export;
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

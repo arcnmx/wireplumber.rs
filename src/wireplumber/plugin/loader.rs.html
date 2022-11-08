@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/loader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/loader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -109,110 +102,109 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::ptr</span>;
-<span class="kw">use</span> <span class="ident">glib::subclass::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::plugin</span>::{<span class="ident">ComponentLoader</span>, <span class="ident">PluginImpl</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::ptr;
+<span class="kw">use </span>glib::subclass::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span><span class="kw">crate</span>::plugin::{ComponentLoader, PluginImpl};
+<span class="kw">use </span><span class="kw">crate</span>::error;
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">impl</span> <span class="ident">ComponentLoader</span> {
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TYPE_LUA_SCRIPT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;script/lua&quot;</span>;
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TYPE_LUA_CONFIG</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;config/lua&quot;</span>;
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TYPE_WIREPLUMBER_MODULE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;module&quot;</span>;
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TYPE_PIPEWIRE_MODULE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;pw_module&quot;</span>;
+<span class="kw">impl </span>ComponentLoader {
+	<span class="kw">pub const </span>TYPE_LUA_SCRIPT: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;script/lua&quot;</span>;
+	<span class="kw">pub const </span>TYPE_LUA_CONFIG: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;config/lua&quot;</span>;
+	<span class="kw">pub const </span>TYPE_WIREPLUMBER_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;module&quot;</span>;
+	<span class="kw">pub const </span>TYPE_PIPEWIRE_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;pw_module&quot;</span>;
 
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DIR_WIREPLUMBER_MODULE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;WIREPLUMBER_MODULE_DIR&quot;</span>;
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DIR_PIPEWIRE_MODULE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;PIPEWIRE_MODULE_DIR&quot;</span>;
+	<span class="kw">pub const </span>DIR_WIREPLUMBER_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;WIREPLUMBER_MODULE_DIR&quot;</span>;
+	<span class="kw">pub const </span>DIR_PIPEWIRE_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;PIPEWIRE_MODULE_DIR&quot;</span>;
 
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MODULE_LOADER_LUA</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;libwireplumber-module-lua-scripting&quot;</span>;
+	<span class="kw">pub const </span>MODULE_LOADER_LUA: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;libwireplumber-module-lua-scripting&quot;</span>;
 
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PLUGIN_LOADER_LUA</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;lua-scripting&quot;</span>;
+	<span class="kw">pub const </span>PLUGIN_LOADER_LUA: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;lua-scripting&quot;</span>;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ComponentLoaderImpl</span>: <span class="ident">ObjectImpl</span> <span class="op">+</span> <span class="ident">ComponentLoaderImplExt</span> {
-	<span class="kw">fn</span> <span class="ident">supports_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">loader</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">type_</span>: <span class="ident">String</span>) -&gt; <span class="ident">bool</span> {
-		<span class="self">self</span>.<span class="ident">parent_supports_type</span>(<span class="ident">loader</span>, <span class="ident">type_</span>)
+<span class="kw">pub trait </span>ComponentLoaderImpl: ObjectImpl + ComponentLoaderImplExt {
+	<span class="kw">fn </span>supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool {
+		<span class="self">self</span>.parent_supports_type(loader, type_)
 	}
 
-	<span class="kw">fn</span> <span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">loader</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">component</span>: <span class="ident">String</span>, <span class="ident">type_</span>: <span class="ident">String</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">parent_load</span>(<span class="ident">loader</span>, <span class="ident">component</span>, <span class="ident">type_</span>, <span class="ident">args</span>)
+	<span class="kw">fn </span>load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: String, type_: String, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+		<span class="self">self</span>.parent_load(loader, component, type_, args)
 	}
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ComponentLoaderImplExt</span>: <span class="ident">ObjectSubclass</span> {
-	<span class="kw">fn</span> <span class="ident">parent_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">ffi::WpComponentLoaderClass</span>;
-	<span class="kw">fn</span> <span class="ident">parent_supports_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">loader</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">type_</span>: <span class="ident">String</span>) -&gt; <span class="ident">bool</span>;
-	<span class="kw">fn</span> <span class="ident">parent_load</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">loader</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">component</span>: <span class="ident">String</span>, <span class="ident">type_</span>: <span class="ident">String</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub trait </span>ComponentLoaderImplExt: ObjectSubclass {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpComponentLoaderClass;
+	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool;
+	<span class="kw">fn </span>parent_load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: String, type_: String, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ComponentLoaderImpl</span><span class="op">&gt;</span> <span class="ident">ComponentLoaderImplExt</span> <span class="kw">for</span> <span class="ident">T</span> {
-	<span class="kw">fn</span> <span class="ident">parent_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">ffi::WpComponentLoaderClass</span> {
-		<span class="kw">unsafe</span> {
-			<span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">T::type_data</span>();
-			<span class="kw">let</span> <span class="ident">parent_class</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">as_ref</span>().<span class="ident">parent_class</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
-			<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">parent_class</span>
+<span class="kw">impl</span>&lt;T: ComponentLoaderImpl&gt; ComponentLoaderImplExt <span class="kw">for </span>T {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpComponentLoaderClass {
+		<span class="kw">unsafe </span>{
+			<span class="kw">let </span>data = T::type_data();
+			<span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+			<span class="kw-2">&amp;*</span>parent_class
 		}
 	}
 
-	<span class="kw">fn</span> <span class="ident">parent_supports_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">loader</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">type_</span>: <span class="ident">String</span>) -&gt; <span class="ident">bool</span> {
-		<span class="kw">let</span> <span class="ident">parent</span> <span class="op">=</span> <span class="ident">ComponentLoaderImplExt::parent_class</span>(<span class="self">self</span>);
-		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">parent</span>.<span class="ident">supports_type</span>.<span class="ident">expect</span>(<span class="string">&quot;No parent class implementation for \&quot;supports_type\&quot;&quot;</span>);
-		<span class="kw">unsafe</span> {
-			<span class="ident">from_glib</span>(
-				<span class="ident">f</span>(<span class="ident">loader</span>.<span class="ident">unsafe_cast_ref</span>::<span class="op">&lt;</span><span class="ident">ComponentLoader</span><span class="op">&gt;</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">type_</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)
+	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool {
+		<span class="kw">let </span>parent = ComponentLoaderImplExt::parent_class(<span class="self">self</span>);
+		<span class="kw">let </span>f = parent.supports_type.expect(<span class="string">&quot;No parent class implementation for \&quot;supports_type\&quot;&quot;</span>);
+		<span class="kw">unsafe </span>{
+			from_glib(
+				f(loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>, type_.to_glib_none().<span class="number">0</span>)
 			)
 		}
 	}
 
-	<span class="kw">fn</span> <span class="ident">parent_load</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">loader</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>, <span class="ident">component</span>: <span class="ident">String</span>, <span class="ident">type_</span>: <span class="ident">String</span>, <span class="ident">args</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variant</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="ident">parent</span> <span class="op">=</span> <span class="ident">ComponentLoaderImplExt::parent_class</span>(<span class="self">self</span>);
-		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">parent</span>.<span class="ident">load</span>.<span class="ident">expect</span>(<span class="string">&quot;No parent class implementation for \&quot;load\&quot;&quot;</span>);
-		<span class="kw">unsafe</span> {
-			<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-			<span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">from_glib</span>(
-				<span class="ident">f</span>(<span class="ident">loader</span>.<span class="ident">unsafe_cast_ref</span>::<span class="op">&lt;</span><span class="ident">ComponentLoader</span><span class="op">&gt;</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">component</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">type_</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">args</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>)
+	<span class="kw">fn </span>parent_load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: String, type_: String, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+		<span class="kw">let </span>parent = ComponentLoaderImplExt::parent_class(<span class="self">self</span>);
+		<span class="kw">let </span>f = parent.load.expect(<span class="string">&quot;No parent class implementation for \&quot;load\&quot;&quot;</span>);
+		<span class="kw">unsafe </span>{
+			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
+			<span class="kw">let </span>res = from_glib(
+				f(loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>, component.to_glib_none().<span class="number">0</span>, type_.to_glib_none().<span class="number">0</span>, args.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error)
 			);
-			<span class="kw">match</span> (<span class="ident">res</span>, <span class="ident">error</span>.<span class="ident">is_null</span>()) {
+			<span class="kw">match </span>(res, error.is_null()) {
 				(<span class="bool-val">true</span>, <span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
-				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">from_glib_full</span>(<span class="ident">error</span>)),
-				(<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">error::invariant</span>(<span class="string">&quot;GError NULL&quot;</span>)),
+				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(from_glib_full(error)),
+				(<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Err</span>(error::invariant(<span class="string">&quot;GError NULL&quot;</span>)),
 			}
 		}
 	}
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ComponentLoaderImpl</span> <span class="op">+</span> <span class="ident">PluginImpl</span><span class="op">&gt;</span> <span class="ident">IsSubclassable</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ComponentLoader</span> {
-	<span class="kw">fn</span> <span class="ident">class_init</span>(<span class="ident">class</span>: <span class="kw-2">&amp;mut</span> <span class="ident">glib::Class</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>) {
-		<span class="ident"><span class="self">Self</span>::parent_class_init</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">class</span>);
+<span class="kw">unsafe impl</span>&lt;T: ComponentLoaderImpl + PluginImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>ComponentLoader {
+	<span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
+		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
 
-		<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">supports_type</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ComponentLoaderImpl</span><span class="op">&gt;</span>(<span class="ident">loader</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpComponentLoader</span>, <span class="ident">type_</span>: <span class="kw-2">*const</span> <span class="ident">libc::c_char</span>) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">loader</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">T::Instance</span>);
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">imp</span>();
-			<span class="kw">let</span> <span class="ident">loader</span>: <span class="ident">Borrowed</span><span class="op">&lt;</span><span class="ident">ComponentLoader</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">loader</span>);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>supports_type&lt;T: ComponentLoaderImpl&gt;(loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader, type_: <span class="kw-2">*const </span>libc::c_char) -&gt; glib::ffi::gboolean {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(loader <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = this.imp();
+			<span class="kw">let </span>loader: Borrowed&lt;ComponentLoader&gt; = from_glib_borrow(loader);
 
-			<span class="ident">this</span>.<span class="ident">supports_type</span>(<span class="ident">loader</span>.<span class="ident">unsafe_cast_ref</span>(), <span class="ident">from_glib_none</span>(<span class="ident">type_</span>))
-				.<span class="ident">into_glib</span>()
+			this.supports_type(loader.unsafe_cast_ref(), from_glib_none(type_))
+				.into_glib()
 		}
 
-		<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ComponentLoaderImpl</span><span class="op">&gt;</span>(<span class="ident">loader</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::WpComponentLoader</span>, <span class="ident">component</span>: <span class="kw-2">*const</span> <span class="ident">libc::c_char</span>, <span class="ident">type_</span>: <span class="kw-2">*const</span> <span class="ident">libc::c_char</span>, <span class="ident">args</span>: <span class="kw-2">*mut</span> <span class="ident">glib::ffi::GVariant</span>, <span class="ident">error</span>: <span class="kw-2">*mut</span> <span class="kw-2">*mut</span> <span class="ident">glib::ffi::GError</span>) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">loader</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">T::Instance</span>);
-			<span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="ident">this</span>.<span class="ident">imp</span>();
-			<span class="kw">let</span> <span class="ident">loader</span>: <span class="ident">Borrowed</span><span class="op">&lt;</span><span class="ident">ComponentLoader</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">loader</span>);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>load&lt;T: ComponentLoaderImpl&gt;(loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader, component: <span class="kw-2">*const </span>libc::c_char, type_: <span class="kw-2">*const </span>libc::c_char, args: <span class="kw-2">*mut </span>glib::ffi::GVariant, error: <span class="kw-2">*mut *mut </span>glib::ffi::GError) -&gt; glib::ffi::gboolean {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(loader <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = this.imp();
+			<span class="kw">let </span>loader: Borrowed&lt;ComponentLoader&gt; = from_glib_borrow(loader);
 
-			<span class="kw">match</span> <span class="ident">this</span>.<span class="ident">load</span>(<span class="ident">loader</span>.<span class="ident">unsafe_cast_ref</span>(), <span class="ident">from_glib_none</span>(<span class="ident">component</span>), <span class="ident">from_glib_none</span>(<span class="ident">type_</span>), <span class="ident">from_glib_none</span>(<span class="ident">args</span>)) {
+			<span class="kw">match </span>this.load(loader.unsafe_cast_ref(), from_glib_none(component), from_glib_none(type_), from_glib_none(args)) {
 				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>,
-				<span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
-					<span class="kw-2">*</span><span class="ident">error</span> <span class="op">=</span> <span class="ident">e</span>.<span class="ident">to_glib_full</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>;
-					<span class="bool-val">false</span>
-				},
-			}.<span class="ident">into_glib</span>()
+				<span class="prelude-val">Err</span>(e) =&gt; {
+					<span class="kw-2">*</span>error = e.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+					<span class="bool-val">false
+				</span>},
+			}.into_glib()
 		}
 
-		<span class="kw">let</span> <span class="ident">klass</span> <span class="op">=</span> <span class="ident">class</span>.<span class="ident">as_mut</span>();
-		<span class="ident">klass</span>.<span class="ident">supports_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">supports_type</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
-		<span class="ident">klass</span>.<span class="ident">load</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">load</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+		<span class="kw">let </span>klass = class.as_mut();
+		klass.supports_type = <span class="prelude-val">Some</span>(supports_type::&lt;T&gt;);
+		klass.load = <span class="prelude-val">Some</span>(load::&lt;T&gt;);
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

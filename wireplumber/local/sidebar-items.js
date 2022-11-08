@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["ImplEndpoint",""],["ImplMetadata",""],["ImplModule",""],["ImplNode",""],["SpaDevice",""],["SpaDeviceFeatures",""]]});
+window.SIDEBAR_ITEMS = {"struct":[["ImplEndpoint",""],["ImplMetadata",""],["ImplModule",""],["ImplNode",""],["SpaDevice",""],["SpaDeviceFeatures",""]]};

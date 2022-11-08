@@ -1,3 +1,3 @@
-(function() {var implementors = {};
-implementors["wireplumber"] = [{"text":"impl&lt;'a, 'de&gt; <a class=\"trait\" href=\"https://docs.rs/serde/1.0.137/serde/de/trait.Deserializer.html\" title=\"trait serde::de::Deserializer\">Deserializer</a>&lt;'de&gt; for <a class=\"struct\" href=\"wireplumber/lua/struct.Deserializer.html\" title=\"struct wireplumber::lua::Deserializer\">Deserializer</a>&lt;'a&gt;","synthetic":false,"types":["wireplumber::lua::deserializer::Deserializer"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
+(function() {var implementors = {
+"wireplumber":[["impl&lt;'a, 'de&gt; <a class=\"trait\" href=\"https://docs.rs/serde/1.0.137/serde/de/trait.Deserializer.html\" title=\"trait serde::de::Deserializer\">Deserializer</a>&lt;'de&gt; for <a class=\"struct\" href=\"wireplumber/lua/struct.Deserializer.html\" title=\"struct wireplumber::lua::Deserializer\">Deserializer</a>&lt;'a&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

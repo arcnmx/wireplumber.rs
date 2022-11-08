@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../wireplumber/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../wireplumber/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -111,112 +104,111 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/&quot;</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
+</pre><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/&quot;</span>)]
+#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
 
-<span class="doccomment">//! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This crate provides a high-level interface to [PipeWire](https://pipewire.org/)&#39;s [API](https://docs.pipewire.org/page_api.html)</span>
-<span class="doccomment">//! via libwireplumber. Explore the documentation for the various [modules below](#modules) for</span>
-<span class="doccomment">//! information on how to start using WirePlumber with Rust.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Initialization</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Service Daemon</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! For creating a new wireplumber instance, you&#39;ll need to start with a [`Core`]. Start with the</span>
-<span class="doccomment">//! [module documentation](crate::core) for examples.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Dynamic Modules</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Exporting a dynamic plugin starts with implementing the [PluginImpl](plugin::PluginImpl) trait.</span>
-<span class="doccomment">//! The [plugin documentation](crate::plugin) will get you started on creating one!</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # PipeWire Connection</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Once you have a [core connection](crate::core), the [registry](crate::registry) will allow you</span>
-<span class="doccomment">//! to inspect and influence the state of the [remote PipeWire service and objects](crate::pw).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Examples</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Besides those found in this documentation, [additional examples](https://github.com/arcnmx/wireplumber.rs/tree/master/examples/src)</span>
-<span class="doccomment">//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be</span>
-<span class="doccomment">//! built and run via Cargo:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```bash</span>
-<span class="doccomment">//! $ cargo run -p wp-examples --bin wpexec -- --help</span>
-<span class="doccomment">//! ... snip ...</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## try out the default lua example:</span>
-<span class="doccomment">//! $ cargo run -p wp-examples --bin wpexec</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## or load the example plugin module:</span>
-<span class="doccomment">//! $ cargo build --workspace --examples &amp;&amp;</span>
-<span class="doccomment">//!   cargo run -p wp-examples --bin wpexec -- --type wireplumber</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! It&#39;s recommended to poke around their source code in a local checkout, but you can also view</span>
-<span class="doccomment">//! their generated documentation and source code online:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! - [wpexec](https://arcnmx.github.io/wireplumber.rs/wpexec/index.html)</span>
-<span class="doccomment">//! - [static-link module](https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html)</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Upstream Documentation</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)</span>
-<span class="doccomment">//! may also be helpful.</span>
+</span><span class="doccomment">//! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
+//!
+//! This crate provides a high-level interface to [PipeWire](https://pipewire.org/)&#39;s [API](https://docs.pipewire.org/page_api.html)
+//! via libwireplumber. Explore the documentation for the various [modules below](#modules) for
+//! information on how to start using WirePlumber with Rust.
+//!
+//! # Initialization
+//!
+//! ## Service Daemon
+//!
+//! For creating a new wireplumber instance, you&#39;ll need to start with a [`Core`]. Start with the
+//! [module documentation](crate::core) for examples.
+//!
+//! ## Dynamic Modules
+//!
+//! Exporting a dynamic plugin starts with implementing the [PluginImpl](plugin::PluginImpl) trait.
+//! The [plugin documentation](crate::plugin) will get you started on creating one!
+//!
+//! # PipeWire Connection
+//!
+//! Once you have a [core connection](crate::core), the [registry](crate::registry) will allow you
+//! to inspect and influence the state of the [remote PipeWire service and objects](crate::pw).
+//!
+//! # Examples
+//!
+//! Besides those found in this documentation, [additional examples](https://github.com/arcnmx/wireplumber.rs/tree/master/examples/src)
+//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
+//! built and run via Cargo:
+//!
+//! ```bash
+//! $ cargo run -p wp-examples --bin wpexec -- --help
+//! ... snip ...
+//!
+//! ## try out the default lua example:
+//! $ cargo run -p wp-examples --bin wpexec
+//!
+//! ## or load the example plugin module:
+//! $ cargo build --workspace --examples &amp;&amp;
+//!   cargo run -p wp-examples --bin wpexec -- --type wireplumber
+//! ```
+//!
+//! It&#39;s recommended to poke around their source code in a local checkout, but you can also view
+//! their generated documentation and source code online:
+//!
+//! - [wpexec](https://arcnmx.github.io/wireplumber.rs/wpexec/index.html)
+//! - [static-link module](https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html)
+//!
+//! # Upstream Documentation
+//!
+//! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)
+//! may also be helpful.
 
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-<span class="kw">mod</span> <span class="ident">auto</span>;
+</span><span class="attr">#[allow(unused_imports)]
+</span><span class="kw">mod </span>auto;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ffi</span>;
+<span class="kw">pub use </span>ffi;
 
-<span class="doccomment">/// Export dependencies for use from macros</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">lib</span> {
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">glib</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">gio</span>;
+<span class="doccomment">/// Export dependencies for use from macros
+</span><span class="attr">#[doc(hidden)]
+</span><span class="kw">pub mod </span>lib {
+	<span class="kw">pub use </span>glib;
+	<span class="kw">pub use </span>gio;
 }
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pw</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prelude</span>;
+<span class="kw">pub mod </span>pw;
+<span class="kw">pub mod </span>prelude;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">log</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">local</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">session</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">registry</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">plugin</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">spa</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">util</span>;
+<span class="kw">pub mod </span>log;
+<span class="kw">pub mod </span>local;
+<span class="kw">pub mod </span>session;
+<span class="kw">pub mod </span>registry;
+<span class="kw">pub mod </span>plugin;
+<span class="kw">pub mod </span>spa;
+<span class="kw">pub mod </span>util;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">error</span>;
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::{<span class="prelude-ty">Result</span>, <span class="ident">Error</span>};
+<span class="kw">pub mod </span>error;
+<span class="attr">#[doc(no_inline)]
+</span><span class="kw">pub use </span>error::{<span class="prelude-ty">Result</span>, Error};
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">core</span>;
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">no_inline</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::core</span>::{<span class="ident">Core</span>, <span class="ident">InitFlags</span>};
+<span class="kw">pub mod </span>core;
+<span class="attr">#[doc(no_inline)]
+</span><span class="kw">pub use </span><span class="kw">crate</span>::core::{Core, InitFlags};
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">log::Log</span>;
+<span class="kw">pub use </span>log::Log;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">lua</span>;
+<span class="kw">pub mod </span>lua;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">signals</span>;
+<span class="kw">pub mod </span>signals;
 
-<span class="doccomment">/// gir needs to know where to find these</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="kw">crate</span>::{
-	<span class="ident">pw</span>::{<span class="ident">PipewireObject</span>, <span class="ident">Proxy</span>, <span class="ident">GlobalProxy</span>, <span class="ident">Port</span>, <span class="ident">Metadata</span>, <span class="ident">Properties</span>, <span class="ident">Endpoint</span>, <span class="ident">Direction</span>, <span class="ident">NodeState</span>},
-	<span class="ident">core</span>::{<span class="ident">Object</span>, <span class="ident">ObjectFeatures</span>},
-	<span class="ident">plugin::Plugin</span>,
-	<span class="ident">spa</span>::{<span class="ident">SpaIdTable</span>, <span class="ident">SpaIdValue</span>, <span class="ident">SpaPod</span>},
-	<span class="ident">session</span>::{<span class="ident">SessionItem</span>, <span class="ident">SiLink</span>, <span class="ident">SiLinkable</span>, <span class="ident">SiEndpoint</span>, <span class="ident">SiAcquisition</span>},
-	<span class="ident">registry</span>::{<span class="ident">ObjectManager</span>, <span class="ident">ObjectInterest</span>, <span class="ident">InterestMatch</span>, <span class="ident">InterestMatchFlags</span>, <span class="ident">ConstraintType</span>, <span class="ident">ConstraintVerb</span>},
-	<span class="ident">util</span>::{<span class="ident">WpIterator</span> <span class="kw">as</span> <span class="ident">Iterator</span>, <span class="ident">Transition</span>},
+<span class="doccomment">/// gir needs to know where to find these
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use crate</span>::{
+	pw::{PipewireObject, Proxy, GlobalProxy, Port, Metadata, Properties, Endpoint, Direction, NodeState},
+	core::{Object, ObjectFeatures},
+	plugin::Plugin,
+	spa::{SpaIdTable, SpaIdValue, SpaPod},
+	session::{SessionItem, SiLink, SiLinkable, SiEndpoint, SiAcquisition},
+	registry::{ObjectManager, ObjectInterest, InterestMatch, InterestMatchFlags, ConstraintType, ConstraintVerb},
+	util::{WpIterator <span class="kw">as </span>Iterator, Transition},
 };
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::pw::PropertiesItem</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::spa::SpaJson</span>;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::pw::PropertiesItem;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::spa::SpaJson;
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

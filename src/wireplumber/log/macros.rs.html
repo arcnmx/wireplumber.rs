@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/log/macros.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>macros.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/log/macros.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>macros.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -123,104 +116,104 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
-</pre><pre class="rust"><code><span class="macro">macro_rules!</span> <span class="ident">define_log_variant</span> {
-	({<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>:<span class="ident">tt</span>} $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">int_name</span>:<span class="ident">ident</span>) <span class="op">=</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">level</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>),)<span class="kw-2">*</span>) =&gt; {
+</pre><pre class="rust"><code><span class="macro">macro_rules! </span>define_log_variant {
+	({<span class="macro-nonterminal">$dollar</span>:tt} $(<span class="macro-nonterminal">$name</span>:ident(<span class="macro-nonterminal">$int_name</span>:ident) = ($(<span class="macro-nonterminal">$level</span>:tt)<span class="kw-2">*</span>),)<span class="kw-2">*</span>) =&gt; {
 		$(
-			<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-			<span class="macro">macro_rules!</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-				(@<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">name!</span> { <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
+			<span class="attr">#[macro_export]
+			</span><span class="macro">macro_rules! </span><span class="macro-nonterminal">$name </span>{
+				(@<span class="macro-nonterminal">$dollar </span><span class="self">self</span>:expr, <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">name! </span>{ <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$dollar </span><span class="self">self</span>, <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
 				};
-				(<span class="self">self</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>:<span class="ident">expr</span>, <span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">log_domain</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span>:<span class="ident">literal</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log!</span> { <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>, <span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">log_domain</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
+				(<span class="self">self</span>: <span class="macro-nonterminal">$dollar </span><span class="self">self</span>:expr, domain: <span class="macro-nonterminal">$dollar </span>log_domain:expr, <span class="macro-nonterminal">$dollar </span>format:literal <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log! </span>{ <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$dollar </span><span class="self">self</span>, domain: <span class="macro-nonterminal">$dollar </span>log_domain, $(<span class="macro-nonterminal">$level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$dollar </span>format <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
 				};
-				(<span class="self">self</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span>:<span class="ident">literal</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log!</span> { <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
+				(<span class="self">self</span>: <span class="macro-nonterminal">$dollar </span><span class="self">self</span>:expr, <span class="macro-nonterminal">$dollar </span>format:literal <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log! </span>{ <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$dollar </span><span class="self">self</span>, $(<span class="macro-nonterminal">$level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$dollar </span>format <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
 				};
-				(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span>:<span class="ident">literal</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log!</span> { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
+				(<span class="macro-nonterminal">$dollar </span>format:literal <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log! </span>{ $(<span class="macro-nonterminal">$level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$dollar </span>format <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
 				};
-				(<span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">log_domain</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span>:<span class="ident">literal</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log!</span> { <span class="macro-nonterminal">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">log_domain</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">format</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
-				};
-			}
-			<span class="kw">pub</span> <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>;
-
-			<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
-			<span class="macro">macro_rules!</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">int_name</span> {
-				(@<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">int_name!</span> { <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
-				};
-				(<span class="self">self</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">name!</span> { <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="self">self</span>, <span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident"><span class="kw">crate</span>::Log::domain</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
-				};
-				(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-					<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">name!</span> { <span class="macro-nonterminal">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident"><span class="kw">crate</span>::Log::domain</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">dollar</span> <span class="ident">args</span>)<span class="op">*</span> }
+				(domain: <span class="macro-nonterminal">$dollar </span>log_domain:expr, <span class="macro-nonterminal">$dollar </span>format:literal <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$</span><span class="macro">crate::log::log! </span>{ <span class="macro-nonterminal">domain</span>: <span class="macro-nonterminal">$dollar </span>log_domain, $(<span class="macro-nonterminal">$level</span>)<span class="kw-2">*</span>, <span class="macro-nonterminal">$dollar </span>format <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
 				};
 			}
-			<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-			<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">int_name</span>;
-		)<span class="op">*</span>
+			<span class="kw">pub use </span><span class="macro-nonterminal">$name</span>;
+
+			<span class="attr">#[allow(unused_macros)]
+			</span><span class="macro">macro_rules! </span><span class="macro-nonterminal">$int_name </span>{
+				(@<span class="macro-nonterminal">$dollar </span><span class="self">self</span>:expr, <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">int_name! </span>{ <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$dollar </span><span class="self">self</span>, <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
+				};
+				(<span class="self">self</span>: <span class="macro-nonterminal">$dollar </span><span class="self">self</span>:expr, <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">name! </span>{ <span class="macro-nonterminal">self</span>:<span class="macro-nonterminal">$dollar </span><span class="self">self</span>, domain: <span class="macro-nonterminal">$dollar </span><span class="kw">crate</span>::Log::domain(), <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
+				};
+				(<span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args:tt)<span class="kw-2">*</span>) =&gt; {
+					<span class="macro-nonterminal">$crate::log</span>::<span class="macro-nonterminal">$</span><span class="macro">name! </span>{ <span class="macro-nonterminal">domain</span>: <span class="macro-nonterminal">$dollar </span><span class="kw">crate</span>::Log::domain(), <span class="macro-nonterminal">$dollar</span>(<span class="macro-nonterminal">$dollar </span>args)* }
+				};
+			}
+			<span class="attr">#[allow(unused_imports)]
+			</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="macro-nonterminal">$int_name</span>;
+		)*
 	};
 }
 
-<span class="macro">define_log_variant!</span> { {$}
-	<span class="ident">critical</span>(<span class="ident">wp_critical</span>) <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::LogLevelFlags::LEVEL_CRITICAL</span>),
-	<span class="ident">warning</span>(<span class="ident">wp_warning</span>) <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::LogLevelFlags::LEVEL_WARNING</span>),
-	<span class="ident">message</span>(<span class="ident">wp_message</span>) <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::LogLevelFlags::LEVEL_MESSAGE</span>),
-	<span class="ident">info</span>(<span class="ident">wp_info</span>) <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::LogLevelFlags::LEVEL_INFO</span>),
-	<span class="ident">debug</span>(<span class="ident">wp_debug</span>) <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::LogLevelFlags::LEVEL_DEBUG</span>),
-	<span class="ident">trace</span>(<span class="ident">wp_trace</span>) <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::Log::LEVEL_TRACE</span>),
+<span class="macro">define_log_variant! </span>{ {$}
+	critical(wp_critical) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_CRITICAL</span>),
+	warning(wp_warning) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_WARNING</span>),
+	message(wp_message) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_MESSAGE</span>),
+	info(wp_info) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_INFO</span>),
+	debug(wp_debug) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_DEBUG</span>),
+	trace(wp_trace) = (<span class="macro-nonterminal">$crate::Log::LEVEL_TRACE</span>),
 }
 
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">log</span> {
-	(<span class="self">self</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self</span>:<span class="ident">expr</span>, <span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_domain</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>:<span class="ident">literal</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner!</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_domain</span>.<span class="ident">into</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">self</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="op">*</span> }
+<span class="attr">#[macro_export]
+</span><span class="macro">macro_rules! </span>log {
+	(<span class="self">self</span>: <span class="macro-nonterminal">$self</span>:expr, domain: <span class="macro-nonterminal">$log_domain</span>:expr, <span class="macro-nonterminal">$log_level</span>:expr, <span class="macro-nonterminal">$format</span>:literal $(<span class="macro-nonterminal">$args</span>:tt)<span class="kw-2">*</span>) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner! </span>{ <span class="macro-nonterminal">$log_domain</span>.into(), <span class="macro-nonterminal">$log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$self</span>), <span class="macro-nonterminal">$format</span>; $(<span class="macro-nonterminal">$args</span>)* }
 	};
-	(<span class="self">self</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>:<span class="ident">literal</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner!</span> { <span class="prelude-val">None</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">self</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="op">*</span> }
+	(<span class="self">self</span>: <span class="macro-nonterminal">$self</span>:expr, <span class="macro-nonterminal">$log_level</span>:expr, <span class="macro-nonterminal">$format</span>:literal $(<span class="macro-nonterminal">$args</span>:tt)<span class="kw-2">*</span>) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner! </span>{ <span class="prelude-val">None</span>, <span class="macro-nonterminal">$log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$self</span>), <span class="macro-nonterminal">$format</span>; $(<span class="macro-nonterminal">$args</span>)* }
 	};
-	(<span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_domain</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>:<span class="ident">literal</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner!</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_domain</span>.<span class="ident">into</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::Object</span><span class="op">&gt;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="op">*</span> }
+	(domain: <span class="macro-nonterminal">$log_domain</span>:expr, <span class="macro-nonterminal">$log_level</span>:expr, <span class="macro-nonterminal">$format</span>:literal $(<span class="macro-nonterminal">$args</span>:tt)<span class="kw-2">*</span>) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner! </span>{ <span class="macro-nonterminal">$log_domain</span>.into(), <span class="macro-nonterminal">$log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span><span class="macro-nonterminal">$crate::lib::glib::Object</span>&gt;, <span class="macro-nonterminal">$format</span>; $(<span class="macro-nonterminal">$args</span>)* }
 	};
-	(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>:<span class="ident">literal</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
-		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner!</span> { <span class="prelude-val">None</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::lib::glib::Object</span><span class="op">&gt;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">format</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="op">*</span> }
+	(<span class="macro-nonterminal">$log_level</span>:expr, <span class="macro-nonterminal">$format</span>:literal $(<span class="macro-nonterminal">$args</span>:tt)<span class="kw-2">*</span>) =&gt; {
+		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner! </span>{ <span class="prelude-val">None</span>, <span class="macro-nonterminal">$log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span><span class="macro-nonterminal">$crate::lib::glib::Object</span>&gt;, <span class="macro-nonterminal">$format</span>; $(<span class="macro-nonterminal">$args</span>)* }
 	};
 }
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">log</span>;
+<span class="kw">pub use </span>log;
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">_log_inner</span> {
-	(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_domain</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">obj_type</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">obj</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>:<span class="ident">expr</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {
+<span class="attr">#[doc(hidden)]
+#[macro_export]
+</span><span class="macro">macro_rules! </span>_log_inner {
+	(<span class="macro-nonterminal">$log_domain</span>:expr, <span class="macro-nonterminal">$log_level</span>:expr, <span class="macro-nonterminal">$obj_type</span>:expr, <span class="macro-nonterminal">$obj</span>:expr, <span class="macro-nonterminal">$fmt</span>:expr; $(<span class="macro-nonterminal">$args</span>:tt)<span class="kw-2">*</span>) =&gt; {
 		{
-			<span class="kw">let</span> <span class="ident">log_level</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_level</span>;
-			<span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log::Log::level_is_enabled</span>(<span class="ident">log_level</span>) {
-				<span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">obj</span>;
-				<span class="kw">let</span> <span class="ident">log_context</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log::StructuredLogContext</span> {
-					<span class="ident">domain</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">log_domain</span>,
-					<span class="ident">file</span>: <span class="prelude-val">Some</span>(<span class="macro">file!</span>()),
-					<span class="ident">line</span>: <span class="prelude-val">Some</span>(<span class="macro">line!</span>()),
-					<span class="ident">function</span>: <span class="prelude-val">None</span>, <span class="comment">// TODO: this is possible: https://stackoverflow.com/questions/38088067/equivalent-of-func-or-function-in-rust</span>
-					<span class="ident">object_type</span>: <span class="prelude-val">None</span>, <span class="comment">// TODO: consider getting the static type from object</span>
-					<span class="ident">object</span>: <span class="ident">object</span>,
+			<span class="kw">let </span>log_level = <span class="macro-nonterminal">$log_level</span>;
+			<span class="kw">if </span><span class="macro-nonterminal">$crate::log::Log::level_is_enabled</span>(log_level) {
+				<span class="kw">let </span>object = <span class="macro-nonterminal">$obj</span>;
+				<span class="kw">let </span>log_context = <span class="macro-nonterminal">$crate::log::StructuredLogContext </span>{
+					domain: <span class="macro-nonterminal">$log_domain</span>,
+					file: <span class="prelude-val">Some</span>(<span class="macro">file!</span>()),
+					line: <span class="prelude-val">Some</span>(<span class="macro">line!</span>()),
+					function: <span class="prelude-val">None</span>, <span class="comment">// TODO: this is possible: https://stackoverflow.com/questions/38088067/equivalent-of-func-or-function-in-rust
+					</span>object_type: <span class="prelude-val">None</span>, <span class="comment">// TODO: consider getting the static type from object
+					</span>object: object,
 				};
-				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::log::Log::log_args</span>(<span class="ident">log_level</span>, <span class="ident">log_context</span>, <span class="macro">format_args!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="kw-2">*</span>))
+				<span class="macro-nonterminal">$crate::log::Log::log_args</span>(log_level, log_context, <span class="macro">format_args!</span>(<span class="macro-nonterminal">$fmt </span>$(<span class="macro-nonterminal">$args</span>)<span class="kw-2">*</span>))
 			}
 		}
 	};
 }
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">_log_inner</span>;
+<span class="kw">pub use </span>_log_inner;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-	<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Log</span>, <span class="ident">Core</span>, <span class="ident">InitFlags</span>};
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+	<span class="kw">use crate</span>::{Log, Core, InitFlags};
 
-	<span class="attribute">#[<span class="ident">test</span>]</span>
-	<span class="kw">fn</span> <span class="ident">log_internal</span>() {
-		<span class="ident">Core::init_with_flags</span>(<span class="ident">InitFlags::SET_GLIB_LOG</span>);
-		<span class="ident">Log::set_level</span>(<span class="string">&quot;8&quot;</span>);
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>log_internal() {
+		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
+		Log::set_level(<span class="string">&quot;8&quot;</span>);
 		<span class="macro">wp_critical!</span>(<span class="string">&quot;crit&quot;</span>);
 		<span class="macro">wp_warning!</span>(<span class="string">&quot;warn&quot;</span>);
 		<span class="macro">wp_message!</span>(<span class="string">&quot;message&quot;</span>);
@@ -229,10 +222,10 @@
 		<span class="macro">wp_trace!</span>(<span class="string">&quot;trace&quot;</span>);
 	}
 
-	<span class="attribute">#[<span class="ident">test</span>]</span>
-	<span class="kw">fn</span> <span class="ident">log_external</span>() {
-		<span class="ident">Core::init_with_flags</span>(<span class="ident">InitFlags::SET_GLIB_LOG</span>);
-		<span class="ident">Log::set_level</span>(<span class="string">&quot;8&quot;</span>);
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>log_external() {
+		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
+		Log::set_level(<span class="string">&quot;8&quot;</span>);
 		<span class="macro">critical!</span>(<span class="string">&quot;crit&quot;</span>);
 		<span class="macro">warning!</span>(<span class="string">&quot;warn&quot;</span>);
 		<span class="macro">message!</span>(<span class="string">&quot;message&quot;</span>);
@@ -242,5 +235,4 @@
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

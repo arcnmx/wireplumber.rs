@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/enums.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/enums.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -549,550 +542,549 @@
 <span id="542">542</span>
 <span id="543">543</span>
 <span id="544">544</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::value::FromValue</span>;
-<span class="kw">use</span> <span class="ident">glib::value::ToValue</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::Type</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
+</span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::value::FromValue;
+<span class="kw">use </span>glib::value::ToValue;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::Type;
+<span class="kw">use </span>std::fmt;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpConstraintType&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ConstraintType</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_TYPE_NONE&quot;</span>)]</span>
-    <span class="prelude-val">None</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY&quot;</span>)]</span>
-    <span class="ident">PwGlobalProperty</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_TYPE_PW_PROPERTY&quot;</span>)]</span>
-    <span class="ident">PwProperty</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_TYPE_G_PROPERTY&quot;</span>)]</span>
-    <span class="ident">GProperty</span>,
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
+<span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = <span class="string">&quot;WpConstraintType&quot;</span>)]
+</span><span class="kw">pub enum </span>ConstraintType {
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_NONE&quot;</span>)]
+    </span><span class="prelude-val">None</span>,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY&quot;</span>)]
+    </span>PwGlobalProperty,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_PW_PROPERTY&quot;</span>)]
+    </span>PwProperty,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_G_PROPERTY&quot;</span>)]
+    </span>GProperty,
+<span class="attr">#[doc(hidden)]
+    </span>__Unknown(i32),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;ConstraintType::{}&quot;</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::None</span> =&gt; <span class="string">&quot;None&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::PwGlobalProperty</span> =&gt; <span class="string">&quot;PwGlobalProperty&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::PwProperty</span> =&gt; <span class="string">&quot;PwProperty&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::GProperty</span> =&gt; <span class="string">&quot;GProperty&quot;</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;Unknown&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>ConstraintType {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;ConstraintType::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; <span class="string">&quot;None&quot;</span>,
+            <span class="self">Self</span>::PwGlobalProperty =&gt; <span class="string">&quot;PwGlobalProperty&quot;</span>,
+            <span class="self">Self</span>::PwProperty =&gt; <span class="string">&quot;PwProperty&quot;</span>,
+            <span class="self">Self</span>::GProperty =&gt; <span class="string">&quot;GProperty&quot;</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
         })
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpConstraintType</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>ConstraintType {
+    <span class="kw">type </span>GlibType = ffi::WpConstraintType;
 
-    <span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident">ffi::WpConstraintType</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::None</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_TYPE_NONE</span>,
-            <span class="ident"><span class="self">Self</span>::PwGlobalProperty</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY</span>,
-            <span class="ident"><span class="self">Self</span>::PwProperty</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_TYPE_PW_PROPERTY</span>,
-            <span class="ident"><span class="self">Self</span>::GProperty</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_TYPE_G_PROPERTY</span>,
-            <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>,
+    <span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; ffi::WpConstraintType {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; ffi::WP_CONSTRAINT_TYPE_NONE,
+            <span class="self">Self</span>::PwGlobalProperty =&gt; ffi::WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY,
+            <span class="self">Self</span>::PwProperty =&gt; ffi::WP_CONSTRAINT_TYPE_PW_PROPERTY,
+            <span class="self">Self</span>::GProperty =&gt; ffi::WP_CONSTRAINT_TYPE_G_PROPERTY,
+            <span class="self">Self</span>::__Unknown(value) =&gt; value,
 }
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpConstraintType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi::WpConstraintType</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">ffi::WP_CONSTRAINT_TYPE_NONE</span> =&gt; <span class="ident"><span class="self">Self</span>::None</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY</span> =&gt; <span class="ident"><span class="self">Self</span>::PwGlobalProperty</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_TYPE_PW_PROPERTY</span> =&gt; <span class="ident"><span class="self">Self</span>::PwProperty</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_TYPE_G_PROPERTY</span> =&gt; <span class="ident"><span class="self">Self</span>::GProperty</span>,
-            <span class="ident">value</span> =&gt; <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>),
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>FromGlib&lt;ffi::WpConstraintType&gt; <span class="kw">for </span>ConstraintType {
+    <span class="kw">unsafe fn </span>from_glib(value: ffi::WpConstraintType) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>value {
+            ffi::WP_CONSTRAINT_TYPE_NONE =&gt; <span class="self">Self</span>::None,
+            ffi::WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY =&gt; <span class="self">Self</span>::PwGlobalProperty,
+            ffi::WP_CONSTRAINT_TYPE_PW_PROPERTY =&gt; <span class="self">Self</span>::PwProperty,
+            ffi::WP_CONSTRAINT_TYPE_G_PROPERTY =&gt; <span class="self">Self</span>::GProperty,
+            value =&gt; <span class="self">Self</span>::__Unknown(value),
 }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::wp_constraint_type_get_type</span>()) }
+<span class="kw">impl </span>StaticType <span class="kw">for </span>ConstraintType {
+    <span class="kw">fn </span>static_type() -&gt; Type {
+        <span class="kw">unsafe </span>{ from_glib(ffi::wp_constraint_type_get_type()) }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">glib::value::ValueType</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="self">Self</span>;
+<span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>ConstraintType {
+    <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>ConstraintType {
+    <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">glib::Value</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">from_glib</span>(<span class="ident">glib::gobject_ffi::g_value_get_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToValue</span> <span class="kw">for</span> <span class="ident">ConstraintType</span> {
-    <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Value</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">glib::Value::for_value_type</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">glib::gobject_ffi::g_value_set_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>, <span class="self">self</span>.<span class="ident">into_glib</span>());
+<span class="kw">impl </span>ToValue <span class="kw">for </span>ConstraintType {
+    <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
+        <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
+        <span class="kw">unsafe </span>{
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().<span class="number">0</span>, <span class="self">self</span>.into_glib());
         }
-        <span class="ident">value</span>
+        value
     }
 
-    <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Type</span> {
-        <span class="ident"><span class="self">Self</span>::static_type</span>()
+    <span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+        <span class="self">Self</span>::static_type()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpConstraintVerb&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ConstraintVerb</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_EQUALS&quot;</span>)]</span>
-    <span class="ident">Equals</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_NOT_EQUALS&quot;</span>)]</span>
-    <span class="ident">NotEquals</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_IN_LIST&quot;</span>)]</span>
-    <span class="ident">InList</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_IN_RANGE&quot;</span>)]</span>
-    <span class="ident">InRange</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_MATCHES&quot;</span>)]</span>
-    <span class="ident">Matches</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_IS_PRESENT&quot;</span>)]</span>
-    <span class="ident">IsPresent</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_CONSTRAINT_VERB_IS_ABSENT&quot;</span>)]</span>
-    <span class="ident">IsAbsent</span>,
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
+<span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = <span class="string">&quot;WpConstraintVerb&quot;</span>)]
+</span><span class="kw">pub enum </span>ConstraintVerb {
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_EQUALS&quot;</span>)]
+    </span>Equals,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_NOT_EQUALS&quot;</span>)]
+    </span>NotEquals,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IN_LIST&quot;</span>)]
+    </span>InList,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IN_RANGE&quot;</span>)]
+    </span>InRange,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_MATCHES&quot;</span>)]
+    </span>Matches,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IS_PRESENT&quot;</span>)]
+    </span>IsPresent,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IS_ABSENT&quot;</span>)]
+    </span>IsAbsent,
+<span class="attr">#[doc(hidden)]
+    </span>__Unknown(i32),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;ConstraintVerb::{}&quot;</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Equals</span> =&gt; <span class="string">&quot;Equals&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::NotEquals</span> =&gt; <span class="string">&quot;NotEquals&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::InList</span> =&gt; <span class="string">&quot;InList&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::InRange</span> =&gt; <span class="string">&quot;InRange&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Matches</span> =&gt; <span class="string">&quot;Matches&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::IsPresent</span> =&gt; <span class="string">&quot;IsPresent&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::IsAbsent</span> =&gt; <span class="string">&quot;IsAbsent&quot;</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;Unknown&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;ConstraintVerb::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Equals =&gt; <span class="string">&quot;Equals&quot;</span>,
+            <span class="self">Self</span>::NotEquals =&gt; <span class="string">&quot;NotEquals&quot;</span>,
+            <span class="self">Self</span>::InList =&gt; <span class="string">&quot;InList&quot;</span>,
+            <span class="self">Self</span>::InRange =&gt; <span class="string">&quot;InRange&quot;</span>,
+            <span class="self">Self</span>::Matches =&gt; <span class="string">&quot;Matches&quot;</span>,
+            <span class="self">Self</span>::IsPresent =&gt; <span class="string">&quot;IsPresent&quot;</span>,
+            <span class="self">Self</span>::IsAbsent =&gt; <span class="string">&quot;IsAbsent&quot;</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
         })
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpConstraintVerb</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">type </span>GlibType = ffi::WpConstraintVerb;
 
-    <span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident">ffi::WpConstraintVerb</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Equals</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_EQUALS</span>,
-            <span class="ident"><span class="self">Self</span>::NotEquals</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_NOT_EQUALS</span>,
-            <span class="ident"><span class="self">Self</span>::InList</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_IN_LIST</span>,
-            <span class="ident"><span class="self">Self</span>::InRange</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_IN_RANGE</span>,
-            <span class="ident"><span class="self">Self</span>::Matches</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_MATCHES</span>,
-            <span class="ident"><span class="self">Self</span>::IsPresent</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_IS_PRESENT</span>,
-            <span class="ident"><span class="self">Self</span>::IsAbsent</span> =&gt; <span class="ident">ffi::WP_CONSTRAINT_VERB_IS_ABSENT</span>,
-            <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>,
+    <span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; ffi::WpConstraintVerb {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Equals =&gt; ffi::WP_CONSTRAINT_VERB_EQUALS,
+            <span class="self">Self</span>::NotEquals =&gt; ffi::WP_CONSTRAINT_VERB_NOT_EQUALS,
+            <span class="self">Self</span>::InList =&gt; ffi::WP_CONSTRAINT_VERB_IN_LIST,
+            <span class="self">Self</span>::InRange =&gt; ffi::WP_CONSTRAINT_VERB_IN_RANGE,
+            <span class="self">Self</span>::Matches =&gt; ffi::WP_CONSTRAINT_VERB_MATCHES,
+            <span class="self">Self</span>::IsPresent =&gt; ffi::WP_CONSTRAINT_VERB_IS_PRESENT,
+            <span class="self">Self</span>::IsAbsent =&gt; ffi::WP_CONSTRAINT_VERB_IS_ABSENT,
+            <span class="self">Self</span>::__Unknown(value) =&gt; value,
 }
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpConstraintVerb</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi::WpConstraintVerb</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_EQUALS</span> =&gt; <span class="ident"><span class="self">Self</span>::Equals</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_NOT_EQUALS</span> =&gt; <span class="ident"><span class="self">Self</span>::NotEquals</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_IN_LIST</span> =&gt; <span class="ident"><span class="self">Self</span>::InList</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_IN_RANGE</span> =&gt; <span class="ident"><span class="self">Self</span>::InRange</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_MATCHES</span> =&gt; <span class="ident"><span class="self">Self</span>::Matches</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_IS_PRESENT</span> =&gt; <span class="ident"><span class="self">Self</span>::IsPresent</span>,
-            <span class="ident">ffi::WP_CONSTRAINT_VERB_IS_ABSENT</span> =&gt; <span class="ident"><span class="self">Self</span>::IsAbsent</span>,
-            <span class="ident">value</span> =&gt; <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>),
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>FromGlib&lt;ffi::WpConstraintVerb&gt; <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">unsafe fn </span>from_glib(value: ffi::WpConstraintVerb) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>value {
+            ffi::WP_CONSTRAINT_VERB_EQUALS =&gt; <span class="self">Self</span>::Equals,
+            ffi::WP_CONSTRAINT_VERB_NOT_EQUALS =&gt; <span class="self">Self</span>::NotEquals,
+            ffi::WP_CONSTRAINT_VERB_IN_LIST =&gt; <span class="self">Self</span>::InList,
+            ffi::WP_CONSTRAINT_VERB_IN_RANGE =&gt; <span class="self">Self</span>::InRange,
+            ffi::WP_CONSTRAINT_VERB_MATCHES =&gt; <span class="self">Self</span>::Matches,
+            ffi::WP_CONSTRAINT_VERB_IS_PRESENT =&gt; <span class="self">Self</span>::IsPresent,
+            ffi::WP_CONSTRAINT_VERB_IS_ABSENT =&gt; <span class="self">Self</span>::IsAbsent,
+            value =&gt; <span class="self">Self</span>::__Unknown(value),
 }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::wp_constraint_verb_get_type</span>()) }
+<span class="kw">impl </span>StaticType <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">fn </span>static_type() -&gt; Type {
+        <span class="kw">unsafe </span>{ from_glib(ffi::wp_constraint_verb_get_type()) }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">glib::value::ValueType</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="self">Self</span>;
+<span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">glib::Value</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">from_glib</span>(<span class="ident">glib::gobject_ffi::g_value_get_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToValue</span> <span class="kw">for</span> <span class="ident">ConstraintVerb</span> {
-    <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Value</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">glib::Value::for_value_type</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">glib::gobject_ffi::g_value_set_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>, <span class="self">self</span>.<span class="ident">into_glib</span>());
+<span class="kw">impl </span>ToValue <span class="kw">for </span>ConstraintVerb {
+    <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
+        <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
+        <span class="kw">unsafe </span>{
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().<span class="number">0</span>, <span class="self">self</span>.into_glib());
         }
-        <span class="ident">value</span>
+        value
     }
 
-    <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Type</span> {
-        <span class="ident"><span class="self">Self</span>::static_type</span>()
+    <span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+        <span class="self">Self</span>::static_type()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpDirection&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Direction</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_DIRECTION_INPUT&quot;</span>)]</span>
-    <span class="ident">Input</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_DIRECTION_OUTPUT&quot;</span>)]</span>
-    <span class="ident">Output</span>,
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
+<span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = <span class="string">&quot;WpDirection&quot;</span>)]
+</span><span class="kw">pub enum </span>Direction {
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DIRECTION_INPUT&quot;</span>)]
+    </span>Input,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DIRECTION_OUTPUT&quot;</span>)]
+    </span>Output,
+<span class="attr">#[doc(hidden)]
+    </span>__Unknown(i32),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Direction::{}&quot;</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Input</span> =&gt; <span class="string">&quot;Input&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Output</span> =&gt; <span class="string">&quot;Output&quot;</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;Unknown&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Direction {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;Direction::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Input =&gt; <span class="string">&quot;Input&quot;</span>,
+            <span class="self">Self</span>::Output =&gt; <span class="string">&quot;Output&quot;</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
         })
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpDirection</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>Direction {
+    <span class="kw">type </span>GlibType = ffi::WpDirection;
 
-    <span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident">ffi::WpDirection</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Input</span> =&gt; <span class="ident">ffi::WP_DIRECTION_INPUT</span>,
-            <span class="ident"><span class="self">Self</span>::Output</span> =&gt; <span class="ident">ffi::WP_DIRECTION_OUTPUT</span>,
-            <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>,
+    <span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; ffi::WpDirection {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Input =&gt; ffi::WP_DIRECTION_INPUT,
+            <span class="self">Self</span>::Output =&gt; ffi::WP_DIRECTION_OUTPUT,
+            <span class="self">Self</span>::__Unknown(value) =&gt; value,
 }
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpDirection</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi::WpDirection</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">ffi::WP_DIRECTION_INPUT</span> =&gt; <span class="ident"><span class="self">Self</span>::Input</span>,
-            <span class="ident">ffi::WP_DIRECTION_OUTPUT</span> =&gt; <span class="ident"><span class="self">Self</span>::Output</span>,
-            <span class="ident">value</span> =&gt; <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>),
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>FromGlib&lt;ffi::WpDirection&gt; <span class="kw">for </span>Direction {
+    <span class="kw">unsafe fn </span>from_glib(value: ffi::WpDirection) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>value {
+            ffi::WP_DIRECTION_INPUT =&gt; <span class="self">Self</span>::Input,
+            ffi::WP_DIRECTION_OUTPUT =&gt; <span class="self">Self</span>::Output,
+            value =&gt; <span class="self">Self</span>::__Unknown(value),
 }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::wp_direction_get_type</span>()) }
+<span class="kw">impl </span>StaticType <span class="kw">for </span>Direction {
+    <span class="kw">fn </span>static_type() -&gt; Type {
+        <span class="kw">unsafe </span>{ from_glib(ffi::wp_direction_get_type()) }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">glib::value::ValueType</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="self">Self</span>;
+<span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>Direction {
+    <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>Direction {
+    <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">glib::Value</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">from_glib</span>(<span class="ident">glib::gobject_ffi::g_value_get_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToValue</span> <span class="kw">for</span> <span class="ident">Direction</span> {
-    <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Value</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">glib::Value::for_value_type</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">glib::gobject_ffi::g_value_set_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>, <span class="self">self</span>.<span class="ident">into_glib</span>());
+<span class="kw">impl </span>ToValue <span class="kw">for </span>Direction {
+    <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
+        <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
+        <span class="kw">unsafe </span>{
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().<span class="number">0</span>, <span class="self">self</span>.into_glib());
         }
-        <span class="ident">value</span>
+        value
     }
 
-    <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Type</span> {
-        <span class="ident"><span class="self">Self</span>::static_type</span>()
+    <span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+        <span class="self">Self</span>::static_type()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpLibraryErrorEnum&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_LIBRARY_ERROR_INVARIANT&quot;</span>)]</span>
-    <span class="ident">Invariant</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_LIBRARY_ERROR_INVALID_ARGUMENT&quot;</span>)]</span>
-    <span class="ident">InvalidArgument</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_LIBRARY_ERROR_OPERATION_FAILED&quot;</span>)]</span>
-    <span class="ident">OperationFailed</span>,
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
+<span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = <span class="string">&quot;WpLibraryErrorEnum&quot;</span>)]
+</span><span class="kw">pub enum </span>LibraryErrorEnum {
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LIBRARY_ERROR_INVARIANT&quot;</span>)]
+    </span>Invariant,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LIBRARY_ERROR_INVALID_ARGUMENT&quot;</span>)]
+    </span>InvalidArgument,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LIBRARY_ERROR_OPERATION_FAILED&quot;</span>)]
+    </span>OperationFailed,
+<span class="attr">#[doc(hidden)]
+    </span>__Unknown(i32),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;LibraryErrorEnum::{}&quot;</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Invariant</span> =&gt; <span class="string">&quot;Invariant&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::InvalidArgument</span> =&gt; <span class="string">&quot;InvalidArgument&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::OperationFailed</span> =&gt; <span class="string">&quot;OperationFailed&quot;</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;Unknown&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;LibraryErrorEnum::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Invariant =&gt; <span class="string">&quot;Invariant&quot;</span>,
+            <span class="self">Self</span>::InvalidArgument =&gt; <span class="string">&quot;InvalidArgument&quot;</span>,
+            <span class="self">Self</span>::OperationFailed =&gt; <span class="string">&quot;OperationFailed&quot;</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
         })
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpLibraryErrorEnum</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">type </span>GlibType = ffi::WpLibraryErrorEnum;
 
-    <span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident">ffi::WpLibraryErrorEnum</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Invariant</span> =&gt; <span class="ident">ffi::WP_LIBRARY_ERROR_INVARIANT</span>,
-            <span class="ident"><span class="self">Self</span>::InvalidArgument</span> =&gt; <span class="ident">ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT</span>,
-            <span class="ident"><span class="self">Self</span>::OperationFailed</span> =&gt; <span class="ident">ffi::WP_LIBRARY_ERROR_OPERATION_FAILED</span>,
-            <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>,
+    <span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; ffi::WpLibraryErrorEnum {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Invariant =&gt; ffi::WP_LIBRARY_ERROR_INVARIANT,
+            <span class="self">Self</span>::InvalidArgument =&gt; ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT,
+            <span class="self">Self</span>::OperationFailed =&gt; ffi::WP_LIBRARY_ERROR_OPERATION_FAILED,
+            <span class="self">Self</span>::__Unknown(value) =&gt; value,
 }
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpLibraryErrorEnum</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi::WpLibraryErrorEnum</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">ffi::WP_LIBRARY_ERROR_INVARIANT</span> =&gt; <span class="ident"><span class="self">Self</span>::Invariant</span>,
-            <span class="ident">ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT</span> =&gt; <span class="ident"><span class="self">Self</span>::InvalidArgument</span>,
-            <span class="ident">ffi::WP_LIBRARY_ERROR_OPERATION_FAILED</span> =&gt; <span class="ident"><span class="self">Self</span>::OperationFailed</span>,
-            <span class="ident">value</span> =&gt; <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>),
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>FromGlib&lt;ffi::WpLibraryErrorEnum&gt; <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">unsafe fn </span>from_glib(value: ffi::WpLibraryErrorEnum) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>value {
+            ffi::WP_LIBRARY_ERROR_INVARIANT =&gt; <span class="self">Self</span>::Invariant,
+            ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT =&gt; <span class="self">Self</span>::InvalidArgument,
+            ffi::WP_LIBRARY_ERROR_OPERATION_FAILED =&gt; <span class="self">Self</span>::OperationFailed,
+            value =&gt; <span class="self">Self</span>::__Unknown(value),
 }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::wp_library_error_enum_get_type</span>()) }
+<span class="kw">impl </span>StaticType <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">fn </span>static_type() -&gt; Type {
+        <span class="kw">unsafe </span>{ from_glib(ffi::wp_library_error_enum_get_type()) }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">glib::value::ValueType</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="self">Self</span>;
+<span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">glib::Value</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">from_glib</span>(<span class="ident">glib::gobject_ffi::g_value_get_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToValue</span> <span class="kw">for</span> <span class="ident">LibraryErrorEnum</span> {
-    <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Value</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">glib::Value::for_value_type</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">glib::gobject_ffi::g_value_set_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>, <span class="self">self</span>.<span class="ident">into_glib</span>());
+<span class="kw">impl </span>ToValue <span class="kw">for </span>LibraryErrorEnum {
+    <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
+        <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
+        <span class="kw">unsafe </span>{
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().<span class="number">0</span>, <span class="self">self</span>.into_glib());
         }
-        <span class="ident">value</span>
+        value
     }
 
-    <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Type</span> {
-        <span class="ident"><span class="self">Self</span>::static_type</span>()
+    <span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+        <span class="self">Self</span>::static_type()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpNodeState&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">NodeState</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_NODE_STATE_ERROR&quot;</span>)]</span>
-    <span class="ident">Error</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_NODE_STATE_CREATING&quot;</span>)]</span>
-    <span class="ident">Creating</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_NODE_STATE_SUSPENDED&quot;</span>)]</span>
-    <span class="ident">Suspended</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_NODE_STATE_IDLE&quot;</span>)]</span>
-    <span class="ident">Idle</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_NODE_STATE_RUNNING&quot;</span>)]</span>
-    <span class="ident">Running</span>,
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
+<span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = <span class="string">&quot;WpNodeState&quot;</span>)]
+</span><span class="kw">pub enum </span>NodeState {
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_ERROR&quot;</span>)]
+    </span>Error,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_CREATING&quot;</span>)]
+    </span>Creating,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_SUSPENDED&quot;</span>)]
+    </span>Suspended,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_IDLE&quot;</span>)]
+    </span>Idle,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_RUNNING&quot;</span>)]
+    </span>Running,
+<span class="attr">#[doc(hidden)]
+    </span>__Unknown(i32),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;NodeState::{}&quot;</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Error</span> =&gt; <span class="string">&quot;Error&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Creating</span> =&gt; <span class="string">&quot;Creating&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Suspended</span> =&gt; <span class="string">&quot;Suspended&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Idle</span> =&gt; <span class="string">&quot;Idle&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Running</span> =&gt; <span class="string">&quot;Running&quot;</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;Unknown&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>NodeState {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;NodeState::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Error =&gt; <span class="string">&quot;Error&quot;</span>,
+            <span class="self">Self</span>::Creating =&gt; <span class="string">&quot;Creating&quot;</span>,
+            <span class="self">Self</span>::Suspended =&gt; <span class="string">&quot;Suspended&quot;</span>,
+            <span class="self">Self</span>::Idle =&gt; <span class="string">&quot;Idle&quot;</span>,
+            <span class="self">Self</span>::Running =&gt; <span class="string">&quot;Running&quot;</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
         })
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpNodeState</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>NodeState {
+    <span class="kw">type </span>GlibType = ffi::WpNodeState;
 
-    <span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident">ffi::WpNodeState</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Error</span> =&gt; <span class="ident">ffi::WP_NODE_STATE_ERROR</span>,
-            <span class="ident"><span class="self">Self</span>::Creating</span> =&gt; <span class="ident">ffi::WP_NODE_STATE_CREATING</span>,
-            <span class="ident"><span class="self">Self</span>::Suspended</span> =&gt; <span class="ident">ffi::WP_NODE_STATE_SUSPENDED</span>,
-            <span class="ident"><span class="self">Self</span>::Idle</span> =&gt; <span class="ident">ffi::WP_NODE_STATE_IDLE</span>,
-            <span class="ident"><span class="self">Self</span>::Running</span> =&gt; <span class="ident">ffi::WP_NODE_STATE_RUNNING</span>,
-            <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>,
+    <span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; ffi::WpNodeState {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Error =&gt; ffi::WP_NODE_STATE_ERROR,
+            <span class="self">Self</span>::Creating =&gt; ffi::WP_NODE_STATE_CREATING,
+            <span class="self">Self</span>::Suspended =&gt; ffi::WP_NODE_STATE_SUSPENDED,
+            <span class="self">Self</span>::Idle =&gt; ffi::WP_NODE_STATE_IDLE,
+            <span class="self">Self</span>::Running =&gt; ffi::WP_NODE_STATE_RUNNING,
+            <span class="self">Self</span>::__Unknown(value) =&gt; value,
 }
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpNodeState</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi::WpNodeState</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">ffi::WP_NODE_STATE_ERROR</span> =&gt; <span class="ident"><span class="self">Self</span>::Error</span>,
-            <span class="ident">ffi::WP_NODE_STATE_CREATING</span> =&gt; <span class="ident"><span class="self">Self</span>::Creating</span>,
-            <span class="ident">ffi::WP_NODE_STATE_SUSPENDED</span> =&gt; <span class="ident"><span class="self">Self</span>::Suspended</span>,
-            <span class="ident">ffi::WP_NODE_STATE_IDLE</span> =&gt; <span class="ident"><span class="self">Self</span>::Idle</span>,
-            <span class="ident">ffi::WP_NODE_STATE_RUNNING</span> =&gt; <span class="ident"><span class="self">Self</span>::Running</span>,
-            <span class="ident">value</span> =&gt; <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>),
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>FromGlib&lt;ffi::WpNodeState&gt; <span class="kw">for </span>NodeState {
+    <span class="kw">unsafe fn </span>from_glib(value: ffi::WpNodeState) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>value {
+            ffi::WP_NODE_STATE_ERROR =&gt; <span class="self">Self</span>::Error,
+            ffi::WP_NODE_STATE_CREATING =&gt; <span class="self">Self</span>::Creating,
+            ffi::WP_NODE_STATE_SUSPENDED =&gt; <span class="self">Self</span>::Suspended,
+            ffi::WP_NODE_STATE_IDLE =&gt; <span class="self">Self</span>::Idle,
+            ffi::WP_NODE_STATE_RUNNING =&gt; <span class="self">Self</span>::Running,
+            value =&gt; <span class="self">Self</span>::__Unknown(value),
 }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::wp_node_state_get_type</span>()) }
+<span class="kw">impl </span>StaticType <span class="kw">for </span>NodeState {
+    <span class="kw">fn </span>static_type() -&gt; Type {
+        <span class="kw">unsafe </span>{ from_glib(ffi::wp_node_state_get_type()) }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">glib::value::ValueType</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="self">Self</span>;
+<span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>NodeState {
+    <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>NodeState {
+    <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">glib::Value</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">from_glib</span>(<span class="ident">glib::gobject_ffi::g_value_get_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToValue</span> <span class="kw">for</span> <span class="ident">NodeState</span> {
-    <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Value</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">glib::Value::for_value_type</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">glib::gobject_ffi::g_value_set_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>, <span class="self">self</span>.<span class="ident">into_glib</span>());
+<span class="kw">impl </span>ToValue <span class="kw">for </span>NodeState {
+    <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
+        <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
+        <span class="kw">unsafe </span>{
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().<span class="number">0</span>, <span class="self">self</span>.into_glib());
         }
-        <span class="ident">value</span>
+        value
     }
 
-    <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Type</span> {
-        <span class="ident"><span class="self">Self</span>::static_type</span>()
+    <span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+        <span class="self">Self</span>::static_type()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WpTransitionStep&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TransitionStep</span> {
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_TRANSITION_STEP_NONE&quot;</span>)]</span>
-    <span class="prelude-val">None</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_TRANSITION_STEP_ERROR&quot;</span>)]</span>
-    <span class="ident">Error</span>,
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;WP_TRANSITION_STEP_CUSTOM_START&quot;</span>)]</span>
-    <span class="ident">CustomStart</span>,
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
+<span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = <span class="string">&quot;WpTransitionStep&quot;</span>)]
+</span><span class="kw">pub enum </span>TransitionStep {
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_TRANSITION_STEP_NONE&quot;</span>)]
+    </span><span class="prelude-val">None</span>,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_TRANSITION_STEP_ERROR&quot;</span>)]
+    </span>Error,
+    <span class="attr">#[doc(alias = <span class="string">&quot;WP_TRANSITION_STEP_CUSTOM_START&quot;</span>)]
+    </span>CustomStart,
+<span class="attr">#[doc(hidden)]
+    </span>__Unknown(i32),
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;TransitionStep::{}&quot;</span>, <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::None</span> =&gt; <span class="string">&quot;None&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::Error</span> =&gt; <span class="string">&quot;Error&quot;</span>,
-            <span class="ident"><span class="self">Self</span>::CustomStart</span> =&gt; <span class="string">&quot;CustomStart&quot;</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;Unknown&quot;</span>,
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>TransitionStep {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;TransitionStep::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; <span class="string">&quot;None&quot;</span>,
+            <span class="self">Self</span>::Error =&gt; <span class="string">&quot;Error&quot;</span>,
+            <span class="self">Self</span>::CustomStart =&gt; <span class="string">&quot;CustomStart&quot;</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
         })
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">IntoGlib</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">type</span> <span class="ident">GlibType</span> <span class="op">=</span> <span class="ident">ffi::WpTransitionStep</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>TransitionStep {
+    <span class="kw">type </span>GlibType = ffi::WpTransitionStep;
 
-    <span class="kw">fn</span> <span class="ident">into_glib</span>(<span class="self">self</span>) -&gt; <span class="ident">ffi::WpTransitionStep</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::None</span> =&gt; <span class="ident">ffi::WP_TRANSITION_STEP_NONE</span>,
-            <span class="ident"><span class="self">Self</span>::Error</span> =&gt; <span class="ident">ffi::WP_TRANSITION_STEP_ERROR</span>,
-            <span class="ident"><span class="self">Self</span>::CustomStart</span> =&gt; <span class="ident">ffi::WP_TRANSITION_STEP_CUSTOM_START</span>,
-            <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>,
+    <span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; ffi::WpTransitionStep {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; ffi::WP_TRANSITION_STEP_NONE,
+            <span class="self">Self</span>::Error =&gt; ffi::WP_TRANSITION_STEP_ERROR,
+            <span class="self">Self</span>::CustomStart =&gt; ffi::WP_TRANSITION_STEP_CUSTOM_START,
+            <span class="self">Self</span>::__Unknown(value) =&gt; value,
 }
     }
 }
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi::WpTransitionStep</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi::WpTransitionStep</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">ffi::WP_TRANSITION_STEP_NONE</span> =&gt; <span class="ident"><span class="self">Self</span>::None</span>,
-            <span class="ident">ffi::WP_TRANSITION_STEP_ERROR</span> =&gt; <span class="ident"><span class="self">Self</span>::Error</span>,
-            <span class="ident">ffi::WP_TRANSITION_STEP_CUSTOM_START</span> =&gt; <span class="ident"><span class="self">Self</span>::CustomStart</span>,
-            <span class="ident">value</span> =&gt; <span class="ident"><span class="self">Self</span>::__Unknown</span>(<span class="ident">value</span>),
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">impl </span>FromGlib&lt;ffi::WpTransitionStep&gt; <span class="kw">for </span>TransitionStep {
+    <span class="kw">unsafe fn </span>from_glib(value: ffi::WpTransitionStep) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>value {
+            ffi::WP_TRANSITION_STEP_NONE =&gt; <span class="self">Self</span>::None,
+            ffi::WP_TRANSITION_STEP_ERROR =&gt; <span class="self">Self</span>::Error,
+            ffi::WP_TRANSITION_STEP_CUSTOM_START =&gt; <span class="self">Self</span>::CustomStart,
+            value =&gt; <span class="self">Self</span>::__Unknown(value),
 }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StaticType</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">fn</span> <span class="ident">static_type</span>() -&gt; <span class="ident">Type</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::wp_transition_step_get_type</span>()) }
+<span class="kw">impl </span>StaticType <span class="kw">for </span>TransitionStep {
+    <span class="kw">fn </span>static_type() -&gt; Type {
+        <span class="kw">unsafe </span>{ from_glib(ffi::wp_transition_step_get_type()) }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">glib::value::ValueType</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="self">Self</span>;
+<span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>TransitionStep {
+    <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FromValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">type</span> <span class="ident">Checker</span> <span class="op">=</span> <span class="ident">glib::value::GenericValueTypeChecker</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>TransitionStep {
+    <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">glib::Value</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">from_glib</span>(<span class="ident">glib::gobject_ffi::g_value_get_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToValue</span> <span class="kw">for</span> <span class="ident">TransitionStep</span> {
-    <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Value</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">glib::Value::for_value_type</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">glib::gobject_ffi::g_value_set_enum</span>(<span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>, <span class="self">self</span>.<span class="ident">into_glib</span>());
+<span class="kw">impl </span>ToValue <span class="kw">for </span>TransitionStep {
+    <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
+        <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
+        <span class="kw">unsafe </span>{
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().<span class="number">0</span>, <span class="self">self</span>.into_glib());
         }
-        <span class="ident">value</span>
+        value
     }
 
-    <span class="kw">fn</span> <span class="ident">value_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Type</span> {
-        <span class="ident"><span class="self">Self</span>::static_type</span>()
+    <span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+        <span class="self">Self</span>::static_type()
     }
 }
 
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

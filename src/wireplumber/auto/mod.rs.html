@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -188,189 +181,188 @@
 <span id="181">181</span>
 <span id="182">182</span>
 <span id="183">183</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// DO NOT EDIT
 
-<span class="kw">mod</span> <span class="ident">client</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::client::Client</span>;
+</span><span class="kw">mod </span>client;
+<span class="kw">pub use </span><span class="self">self</span>::client::Client;
 
-<span class="kw">mod</span> <span class="ident">component_loader</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::component_loader::ComponentLoader</span>;
+<span class="kw">mod </span>component_loader;
+<span class="kw">pub use </span><span class="self">self</span>::component_loader::ComponentLoader;
 
-<span class="kw">mod</span> <span class="ident">core</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::core::Core</span>;
+<span class="kw">mod </span>core;
+<span class="kw">pub use </span><span class="self">self</span>::core::Core;
 
-<span class="kw">mod</span> <span class="ident">device</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::device::Device</span>;
+<span class="kw">mod </span>device;
+<span class="kw">pub use </span><span class="self">self</span>::device::Device;
 
-<span class="kw">mod</span> <span class="ident">endpoint</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::endpoint::Endpoint</span>;
+<span class="kw">mod </span>endpoint;
+<span class="kw">pub use </span><span class="self">self</span>::endpoint::Endpoint;
 
-<span class="kw">mod</span> <span class="ident">factory</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::factory::Factory</span>;
+<span class="kw">mod </span>factory;
+<span class="kw">pub use </span><span class="self">self</span>::factory::Factory;
 
-<span class="kw">mod</span> <span class="ident">feature_activation_transition</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::feature_activation_transition::FeatureActivationTransition</span>;
+<span class="kw">mod </span>feature_activation_transition;
+<span class="kw">pub use </span><span class="self">self</span>::feature_activation_transition::FeatureActivationTransition;
 
-<span class="kw">mod</span> <span class="ident">global_proxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::global_proxy::GlobalProxy</span>;
+<span class="kw">mod </span>global_proxy;
+<span class="kw">pub use </span><span class="self">self</span>::global_proxy::GlobalProxy;
 
-<span class="kw">mod</span> <span class="ident">impl_endpoint</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::impl_endpoint::ImplEndpoint</span>;
+<span class="kw">mod </span>impl_endpoint;
+<span class="kw">pub use </span><span class="self">self</span>::impl_endpoint::ImplEndpoint;
 
-<span class="kw">mod</span> <span class="ident">impl_metadata</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::impl_metadata::ImplMetadata</span>;
+<span class="kw">mod </span>impl_metadata;
+<span class="kw">pub use </span><span class="self">self</span>::impl_metadata::ImplMetadata;
 
-<span class="kw">mod</span> <span class="ident">impl_module</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::impl_module::ImplModule</span>;
+<span class="kw">mod </span>impl_module;
+<span class="kw">pub use </span><span class="self">self</span>::impl_module::ImplModule;
 
-<span class="kw">mod</span> <span class="ident">impl_node</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::impl_node::ImplNode</span>;
+<span class="kw">mod </span>impl_node;
+<span class="kw">pub use </span><span class="self">self</span>::impl_node::ImplNode;
 
-<span class="kw">mod</span> <span class="ident">link</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::link::Link</span>;
+<span class="kw">mod </span>link;
+<span class="kw">pub use </span><span class="self">self</span>::link::Link;
 
-<span class="kw">mod</span> <span class="ident">metadata</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::metadata::Metadata</span>;
+<span class="kw">mod </span>metadata;
+<span class="kw">pub use </span><span class="self">self</span>::metadata::Metadata;
 
-<span class="kw">mod</span> <span class="ident">node</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::node::Node</span>;
+<span class="kw">mod </span>node;
+<span class="kw">pub use </span><span class="self">self</span>::node::Node;
 
-<span class="kw">mod</span> <span class="ident">object</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::object::Object</span>;
+<span class="kw">mod </span>object;
+<span class="kw">pub use </span><span class="self">self</span>::object::Object;
 
-<span class="kw">mod</span> <span class="ident">object_manager</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::object_manager::ObjectManager</span>;
+<span class="kw">mod </span>object_manager;
+<span class="kw">pub use </span><span class="self">self</span>::object_manager::ObjectManager;
 
-<span class="kw">mod</span> <span class="ident">pipewire_object</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::pipewire_object::PipewireObject</span>;
+<span class="kw">mod </span>pipewire_object;
+<span class="kw">pub use </span><span class="self">self</span>::pipewire_object::PipewireObject;
 
-<span class="kw">mod</span> <span class="ident">plugin</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::plugin::Plugin</span>;
+<span class="kw">mod </span>plugin;
+<span class="kw">pub use </span><span class="self">self</span>::plugin::Plugin;
 
-<span class="kw">mod</span> <span class="ident">port</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::port::Port</span>;
+<span class="kw">mod </span>port;
+<span class="kw">pub use </span><span class="self">self</span>::port::Port;
 
-<span class="kw">mod</span> <span class="ident">proxy</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::proxy::Proxy</span>;
+<span class="kw">mod </span>proxy;
+<span class="kw">pub use </span><span class="self">self</span>::proxy::Proxy;
 
-<span class="kw">mod</span> <span class="ident">session_item</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::session_item::SessionItem</span>;
+<span class="kw">mod </span>session_item;
+<span class="kw">pub use </span><span class="self">self</span>::session_item::SessionItem;
 
-<span class="kw">mod</span> <span class="ident">si_acquisition</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::si_acquisition::SiAcquisition</span>;
+<span class="kw">mod </span>si_acquisition;
+<span class="kw">pub use </span><span class="self">self</span>::si_acquisition::SiAcquisition;
 
-<span class="kw">mod</span> <span class="ident">si_adapter</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::si_adapter::SiAdapter</span>;
+<span class="kw">mod </span>si_adapter;
+<span class="kw">pub use </span><span class="self">self</span>::si_adapter::SiAdapter;
 
-<span class="kw">mod</span> <span class="ident">si_endpoint</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::si_endpoint::SiEndpoint</span>;
+<span class="kw">mod </span>si_endpoint;
+<span class="kw">pub use </span><span class="self">self</span>::si_endpoint::SiEndpoint;
 
-<span class="kw">mod</span> <span class="ident">si_factory</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::si_factory::SiFactory</span>;
+<span class="kw">mod </span>si_factory;
+<span class="kw">pub use </span><span class="self">self</span>::si_factory::SiFactory;
 
-<span class="kw">mod</span> <span class="ident">si_link</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::si_link::SiLink</span>;
+<span class="kw">mod </span>si_link;
+<span class="kw">pub use </span><span class="self">self</span>::si_link::SiLink;
 
-<span class="kw">mod</span> <span class="ident">si_linkable</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::si_linkable::SiLinkable</span>;
+<span class="kw">mod </span>si_linkable;
+<span class="kw">pub use </span><span class="self">self</span>::si_linkable::SiLinkable;
 
-<span class="kw">mod</span> <span class="ident">spa_device</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_device::SpaDevice</span>;
+<span class="kw">mod </span>spa_device;
+<span class="kw">pub use </span><span class="self">self</span>::spa_device::SpaDevice;
 
-<span class="kw">mod</span> <span class="ident">spa_type</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_type::SpaType</span>;
+<span class="kw">mod </span>spa_type;
+<span class="kw">pub use </span><span class="self">self</span>::spa_type::SpaType;
 
-<span class="kw">mod</span> <span class="ident">state</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::state::State</span>;
+<span class="kw">mod </span>state;
+<span class="kw">pub use </span><span class="self">self</span>::state::State;
 
-<span class="kw">mod</span> <span class="ident">transition</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::transition::Transition</span>;
+<span class="kw">mod </span>transition;
+<span class="kw">pub use </span><span class="self">self</span>::transition::Transition;
 
-<span class="kw">mod</span> <span class="ident">iterator</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::iterator::Iterator</span>;
+<span class="kw">mod </span>iterator;
+<span class="kw">pub use </span><span class="self">self</span>::iterator::Iterator;
 
-<span class="kw">mod</span> <span class="ident">object_interest</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::object_interest::ObjectInterest</span>;
+<span class="kw">mod </span>object_interest;
+<span class="kw">pub use </span><span class="self">self</span>::object_interest::ObjectInterest;
 
-<span class="kw">mod</span> <span class="ident">properties</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::properties::Properties</span>;
+<span class="kw">mod </span>properties;
+<span class="kw">pub use </span><span class="self">self</span>::properties::Properties;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>)))]</span>
-<span class="kw">mod</span> <span class="ident">properties_item</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_2&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::properties_item::PropertiesItem</span>;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
+</span><span class="kw">mod </span>properties_item;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
+</span><span class="kw">pub use </span><span class="self">self</span>::properties_item::PropertiesItem;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>)))]</span>
-<span class="kw">mod</span> <span class="ident">spa_json</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_json::SpaJson</span>;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
+</span><span class="kw">mod </span>spa_json;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
+</span><span class="kw">pub use </span><span class="self">self</span>::spa_json::SpaJson;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>)))]</span>
-<span class="kw">mod</span> <span class="ident">spa_json_builder</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_json_builder::SpaJsonBuilder</span>;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
+</span><span class="kw">mod </span>spa_json_builder;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
+</span><span class="kw">pub use </span><span class="self">self</span>::spa_json_builder::SpaJsonBuilder;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>)))]</span>
-<span class="kw">mod</span> <span class="ident">spa_json_parser</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v0_4_8&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_json_parser::SpaJsonParser</span>;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
+</span><span class="kw">mod </span>spa_json_parser;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
+</span><span class="kw">pub use </span><span class="self">self</span>::spa_json_parser::SpaJsonParser;
 
-<span class="kw">mod</span> <span class="ident">spa_pod</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_pod::SpaPod</span>;
+<span class="kw">mod </span>spa_pod;
+<span class="kw">pub use </span><span class="self">self</span>::spa_pod::SpaPod;
 
-<span class="kw">mod</span> <span class="ident">spa_pod_builder</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_pod_builder::SpaPodBuilder</span>;
+<span class="kw">mod </span>spa_pod_builder;
+<span class="kw">pub use </span><span class="self">self</span>::spa_pod_builder::SpaPodBuilder;
 
-<span class="kw">mod</span> <span class="ident">spa_pod_parser</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::spa_pod_parser::SpaPodParser</span>;
+<span class="kw">mod </span>spa_pod_parser;
+<span class="kw">pub use </span><span class="self">self</span>::spa_pod_parser::SpaPodParser;
 
-<span class="kw">mod</span> <span class="ident">enums</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::enums::ConstraintType</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::enums::ConstraintVerb</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::enums::Direction</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::enums::LibraryErrorEnum</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::enums::NodeState</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::enums::TransitionStep</span>;
+<span class="kw">mod </span>enums;
+<span class="kw">pub use </span><span class="self">self</span>::enums::ConstraintType;
+<span class="kw">pub use </span><span class="self">self</span>::enums::ConstraintVerb;
+<span class="kw">pub use </span><span class="self">self</span>::enums::Direction;
+<span class="kw">pub use </span><span class="self">self</span>::enums::LibraryErrorEnum;
+<span class="kw">pub use </span><span class="self">self</span>::enums::NodeState;
+<span class="kw">pub use </span><span class="self">self</span>::enums::TransitionStep;
 
-<span class="kw">mod</span> <span class="ident">flags</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::InitFlags</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::InterestMatch</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::InterestMatchFlags</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::LookupDirs</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::MetadataFeatures</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::NodeFeatures</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::PluginFeatures</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::ProxyFeatures</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::SessionItemFeatures</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="self">self</span>::flags::SpaDeviceFeatures</span>;
+<span class="kw">mod </span>flags;
+<span class="kw">pub use </span><span class="self">self</span>::flags::InitFlags;
+<span class="kw">pub use </span><span class="self">self</span>::flags::InterestMatch;
+<span class="kw">pub use </span><span class="self">self</span>::flags::InterestMatchFlags;
+<span class="kw">pub use </span><span class="self">self</span>::flags::LookupDirs;
+<span class="kw">pub use </span><span class="self">self</span>::flags::MetadataFeatures;
+<span class="kw">pub use </span><span class="self">self</span>::flags::NodeFeatures;
+<span class="kw">pub use </span><span class="self">self</span>::flags::PluginFeatures;
+<span class="kw">pub use </span><span class="self">self</span>::flags::ProxyFeatures;
+<span class="kw">pub use </span><span class="self">self</span>::flags::SessionItemFeatures;
+<span class="kw">pub use </span><span class="self">self</span>::flags::SpaDeviceFeatures;
 
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">traits</span> {
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::endpoint::EndpointExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::global_proxy::GlobalProxyExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::metadata::MetadataExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::object::ObjectExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::pipewire_object::PipewireObjectExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::plugin::PluginExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::proxy::ProxyExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::session_item::SessionItemExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::si_acquisition::SiAcquisitionExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::si_adapter::SiAdapterExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::si_endpoint::SiEndpointExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::si_factory::SiFactoryExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::si_link::SiLinkExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::si_linkable::SiLinkableExt</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::transition::TransitionExt</span>;
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">pub mod </span>traits {
+    <span class="kw">pub use </span><span class="kw">super</span>::endpoint::EndpointExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::global_proxy::GlobalProxyExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::metadata::MetadataExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::object::ObjectExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::pipewire_object::PipewireObjectExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::plugin::PluginExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::proxy::ProxyExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::session_item::SessionItemExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::si_acquisition::SiAcquisitionExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::si_adapter::SiAdapterExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::si_endpoint::SiEndpointExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::si_factory::SiFactoryExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::si_link::SiLinkExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::si_linkable::SiLinkableExt;
+    <span class="kw">pub use </span><span class="kw">super</span>::transition::TransitionExt;
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>

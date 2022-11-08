@@ -1,11 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../wireplumber/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
-                                <a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -123,124 +116,123 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Externally loaded modules</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Loading a Plugin</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Once a component is [loaded](crate::Core::load_component), it can be found by its plugin name:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//! use wireplumber::plugin::{Plugin, PluginFeatures};</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # async fn load_lua(core: wireplumber::core::Core) -&gt; wireplumber::Result&lt;()&gt; {</span>
-<span class="doccomment">//! core.load_component(&quot;libwireplumber-module-lua-scripting&quot;, &quot;module&quot;, None)?;</span>
-<span class="doccomment">//! core.load_lua_script(&quot;create-item.lua&quot;, ())?;</span>
-<span class="doccomment">//! if let Some(p) = Plugin::find(&amp;core, &quot;lua-scripting&quot;) {</span>
-<span class="doccomment">//!   p.activate_future(PluginFeatures::ENABLED).await?;</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//! # Ok(())</span>
-<span class="doccomment">//! # }</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Implementing and Exporting a Plugin</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Implementing the [PluginImpl] trait enables a type to be loaded externally as a dynamic library</span>
-<span class="doccomment">//! and exported to the wireplumber daemon. [SimplePlugin] is also provided as a utility to ease</span>
-<span class="doccomment">//! implementation of the module entry point loader and reduce boilerplate.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The plugin module must be compiled as a `cdylib` in your `Cargo.toml`:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```toml</span>
-<span class="doccomment">//! [lib]</span>
-<span class="doccomment">//! crate-type = [&quot;cdylib&quot;]</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```no_run</span>
-<span class="doccomment">//! use wireplumber::prelude::*;</span>
-<span class="doccomment">//! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};</span>
-<span class="doccomment">//! use wireplumber::error;</span>
-<span class="doccomment">//! use std::future::Future;</span>
-<span class="doccomment">//! use std::cell::RefCell;</span>
-<span class="doccomment">//! use std::pin::Pin;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! const DOMAIN: &amp;&#39;static str = &quot;my-plugin&quot;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! #[derive(Debug, Default)]</span>
-<span class="doccomment">//! struct MyPlugin {</span>
-<span class="doccomment">//!   arg: RefCell&lt;Option&lt;i32&gt;&gt;,</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! impl AsyncPluginImpl for MyPlugin {</span>
-<span class="doccomment">//!   type EnableFuture = Pin&lt;Box&lt;dyn Future&lt;Output=wireplumber::Result&lt;()&gt;&gt;&gt;&gt;;</span>
-<span class="doccomment">//!   fn enable(&amp;self, this: Self::Type) -&gt; Self::EnableFuture {</span>
-<span class="doccomment">//!     let core = this.core().unwrap();</span>
-<span class="doccomment">//!     Box::pin(async move {</span>
-<span class="doccomment">//!       let arg = this.arg.borrow().unwrap_or_default();</span>
-<span class="doccomment">//!       wireplumber::info!(domain: DOMAIN, &quot;enabling on {:?} with {}...&quot;, core, arg);</span>
-<span class="doccomment">//!       Ok(())</span>
-<span class="doccomment">//!     })</span>
-<span class="doccomment">//!   }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!   fn disable(&amp;self) {</span>
-<span class="doccomment">//!     wireplumber::info!(domain: DOMAIN, &quot;disabling...&quot;);</span>
-<span class="doccomment">//!   }</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! impl SimplePlugin for MyPlugin {</span>
-<span class="doccomment">//!   type Args = Option&lt;i32&gt;;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!   fn init_args(&amp;self, args: Self::Args) {</span>
-<span class="doccomment">//!     self.arg.replace(args);</span>
-<span class="doccomment">//!   }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!   fn decode_args(args: Option&lt;glib::Variant&gt;) -&gt; Result&lt;Self::Args, error::Error&gt; {</span>
-<span class="doccomment">//!     args.map(|args| match () {</span>
-<span class="doccomment">//!       #[cfg(feature = &quot;serde&quot;)]</span>
-<span class="doccomment">//!       _ =&gt; wireplumber::lua::from_variant(&amp;args),</span>
-<span class="doccomment">//!       #[cfg(not(feature = &quot;serde&quot;))]</span>
-<span class="doccomment">//!       _ =&gt; args.try_get(),</span>
-<span class="doccomment">//!     }).transpose().map_err(error::invalid_argument)</span>
-<span class="doccomment">//!   }</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! plugin::simple_plugin_subclass! {</span>
-<span class="doccomment">//!   impl ObjectSubclass for DOMAIN as MyPlugin { }</span>
-<span class="doccomment">//! }</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! plugin::plugin_export!(MyPlugin);</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The source code of the automatic [PluginImpl](PluginImpl#impl-PluginImpl) for</span>
-<span class="doccomment">//! [`T: AsyncPluginImpl`](AsyncPluginImpl) can also serve as an example implementation of a plugin</span>
-<span class="doccomment">//! without using async futures.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # See also</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! C API docs for:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! - [Plugin](https://pipewire.pages.freedesktop.org/wireplumber/c_api/plugin_api.html)</span>
-<span class="doccomment">//! - [Component Loader](https://pipewire.pages.freedesktop.org/wireplumber/c_api/component_loader_api.html)</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Externally loaded modules
+//!
+//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).
+//!
+//! # Loading a Plugin
+//!
+//! Once a component is [loaded](crate::Core::load_component), it can be found by its plugin name:
+//!
+//! ```
+//! use wireplumber::plugin::{Plugin, PluginFeatures};
+//!
+//! # async fn load_lua(core: wireplumber::core::Core) -&gt; wireplumber::Result&lt;()&gt; {
+//! core.load_component(&quot;libwireplumber-module-lua-scripting&quot;, &quot;module&quot;, None)?;
+//! core.load_lua_script(&quot;create-item.lua&quot;, ())?;
+//! if let Some(p) = Plugin::find(&amp;core, &quot;lua-scripting&quot;) {
+//!   p.activate_future(PluginFeatures::ENABLED).await?;
+//! }
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! # Implementing and Exporting a Plugin
+//!
+//! Implementing the [PluginImpl] trait enables a type to be loaded externally as a dynamic library
+//! and exported to the wireplumber daemon. [SimplePlugin] is also provided as a utility to ease
+//! implementation of the module entry point loader and reduce boilerplate.
+//!
+//! The plugin module must be compiled as a `cdylib` in your `Cargo.toml`:
+//!
+//! ```toml
+//! [lib]
+//! crate-type = [&quot;cdylib&quot;]
+//! ```
+//!
+//! ```no_run
+//! use wireplumber::prelude::*;
+//! use wireplumber::plugin::{self, SimplePlugin, AsyncPluginImpl};
+//! use wireplumber::error;
+//! use std::future::Future;
+//! use std::cell::RefCell;
+//! use std::pin::Pin;
+//!
+//! const DOMAIN: &amp;&#39;static str = &quot;my-plugin&quot;;
+//!
+//! #[derive(Debug, Default)]
+//! struct MyPlugin {
+//!   arg: RefCell&lt;Option&lt;i32&gt;&gt;,
+//! }
+//!
+//! impl AsyncPluginImpl for MyPlugin {
+//!   type EnableFuture = Pin&lt;Box&lt;dyn Future&lt;Output=wireplumber::Result&lt;()&gt;&gt;&gt;&gt;;
+//!   fn enable(&amp;self, this: Self::Type) -&gt; Self::EnableFuture {
+//!     let core = this.core().unwrap();
+//!     Box::pin(async move {
+//!       let arg = this.arg.borrow().unwrap_or_default();
+//!       wireplumber::info!(domain: DOMAIN, &quot;enabling on {:?} with {}...&quot;, core, arg);
+//!       Ok(())
+//!     })
+//!   }
+//!
+//!   fn disable(&amp;self) {
+//!     wireplumber::info!(domain: DOMAIN, &quot;disabling...&quot;);
+//!   }
+//! }
+//!
+//! impl SimplePlugin for MyPlugin {
+//!   type Args = Option&lt;i32&gt;;
+//!
+//!   fn init_args(&amp;self, args: Self::Args) {
+//!     self.arg.replace(args);
+//!   }
+//!
+//!   fn decode_args(args: Option&lt;glib::Variant&gt;) -&gt; Result&lt;Self::Args, error::Error&gt; {
+//!     args.map(|args| match () {
+//!       #[cfg(feature = &quot;serde&quot;)]
+//!       _ =&gt; wireplumber::lua::from_variant(&amp;args),
+//!       #[cfg(not(feature = &quot;serde&quot;))]
+//!       _ =&gt; args.try_get(),
+//!     }).transpose().map_err(error::invalid_argument)
+//!   }
+//! }
+//!
+//! plugin::simple_plugin_subclass! {
+//!   impl ObjectSubclass for DOMAIN as MyPlugin { }
+//! }
+//!
+//! plugin::plugin_export!(MyPlugin);
+//! ```
+//!
+//! The source code of the automatic [PluginImpl](PluginImpl#impl-PluginImpl) for
+//! [`T: AsyncPluginImpl`](AsyncPluginImpl) can also serve as an example implementation of a plugin
+//! without using async futures.
+//!
+//! # See also
+//!
+//! C API docs for:
+//!
+//! - [Plugin](https://pipewire.pages.freedesktop.org/wireplumber/c_api/plugin_api.html)
+//! - [Component Loader](https://pipewire.pages.freedesktop.org/wireplumber/c_api/component_loader_api.html)
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::auto</span>::{
-	<span class="ident">Plugin</span>, <span class="ident">PluginFeatures</span>,
-	<span class="ident">ComponentLoader</span>, <span class="ident">LookupDirs</span>,
-	<span class="ident">traits::PluginExt</span>,
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
+	Plugin, PluginFeatures,
+	ComponentLoader, LookupDirs,
+	traits::PluginExt,
 };
 
-<span class="kw">mod</span> <span class="ident">loader</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">loader</span>::{<span class="ident">ComponentLoaderImpl</span>, <span class="ident">ComponentLoaderImplExt</span>};
+<span class="kw">mod </span>loader;
+<span class="kw">pub use </span>loader::{ComponentLoaderImpl, ComponentLoaderImplExt};
 
-<span class="kw">mod</span> <span class="ident">subclass</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">subclass</span>::{
-	<span class="ident">PluginImpl</span>, <span class="ident">PluginImplExt</span>,
-	<span class="ident">AsyncPluginImpl</span>, <span class="ident">AsyncPluginExt</span>,
-	<span class="ident">SourceHandles</span>, <span class="ident">SourceHandlesCell</span>,
-	<span class="ident">SimplePlugin</span>, <span class="ident">simple_plugin_subclass</span>,
-	<span class="ident">SimplePluginObject</span>,
-	<span class="ident">ModuleExport</span>, <span class="ident">ModuleWrapper</span>, <span class="ident">plugin_export</span>,
+<span class="kw">mod </span>subclass;
+<span class="kw">pub use </span>subclass::{
+	PluginImpl, PluginImplExt,
+	AsyncPluginImpl, AsyncPluginExt,
+	SourceHandles, SourceHandlesCell,
+	SimplePlugin, simple_plugin_subclass,
+	SimplePluginObject,
+	ModuleExport, ModuleWrapper, plugin_export,
 };
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (ee160f2f5 2022-05-23)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wireplumber" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (edf018221 2022-11-02)" ></div></body></html>
