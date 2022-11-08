@@ -53,7 +53,7 @@ def_signal! {
 }
 
 def_signal! {
-	impl Notifies<"installed" as Installed> for crate::registry::ObjectManager {
+	impl Notifies<"installed" as ManagerInstalled> for crate::registry::ObjectManager {
 		impl {const SIGNAL_INSTALLED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		fn(&self)
@@ -82,7 +82,7 @@ def_signal! {
 }
 
 def_signal! {
-	impl Notifies<"bound" as Bound> for crate::pw::Proxy {
+	impl Notifies<"bound" as PwProxyBound> for crate::pw::Proxy {
 		impl {const SIGNAL_BOUND};
 		FLAGS = SignalFlags::RUN_FIRST;
 		fn(&self, u32)
@@ -90,20 +90,20 @@ def_signal! {
 }
 def_signal! {
 	impl Notifies<"pw-proxy-created" as PwProxyCreated> for crate::pw::Proxy {
-		impl {const SIGNAL_PROXY_CREATED};
+		impl {const SIGNAL_PW_PROXY_CREATED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		fn(&self, Pointer<pipewire_sys::pw_proxy>)
 	}
 }
 def_signal! {
 	impl Notifies<"pw-proxy-destroyed" as PwProxyDestroyed> for crate::pw::Proxy {
-		impl {const SIGNAL_PROXY_DESTROYED};
+		impl {const SIGNAL_PW_PROXY_DESTROYED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		fn(&self, Pointer<pipewire_sys::pw_proxy>)
 	}
 }
 def_signal! {
-	impl Notifies<"error" as Error> for crate::pw::Proxy {
+	impl Notifies<"error" as PwProxyError> for crate::pw::Proxy {
 		impl {const SIGNAL_ERROR};
 		FLAGS = SignalFlags::RUN_FIRST;
 		fn(&self, i32, i32, String)
@@ -111,7 +111,7 @@ def_signal! {
 }
 
 def_signal! {
-	impl Notifies<"params-changed" as ParamsChanged> for crate::pw::PipewireObject {
+	impl Notifies<"params-changed" as PwObjectParamsChanged> for crate::pw::PipewireObject {
 		impl {const SIGNAL_PARAMS_CHANGED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		fn(&self, String)
@@ -119,7 +119,7 @@ def_signal! {
 }
 
 def_signal! {
-	impl Notifies<"ports-changed" as PortsChanged> for crate::pw::Node {
+	impl Notifies<"ports-changed" as NodePortsChanged> for crate::pw::Node {
 		impl {const SIGNAL_PORTS_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		fn(&self)
@@ -144,7 +144,7 @@ def_signal! {
 }
 
 def_signal! {
-	impl Notifies<"changed" as Changed> for crate::pw::Metadata {
+	impl Notifies<"changed" as MetadataChanged> for crate::pw::Metadata {
 		impl {const SIGNAL_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		fn(&self, u32, String, String, String)
