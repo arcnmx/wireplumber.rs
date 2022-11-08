@@ -352,9 +352,8 @@
 <span id="352">352</span>
 <span id="353">353</span>
 <span id="354">354</span>
-<span id="355">355</span>
 </pre><pre class="rust"><code><span class="kw">use </span>glib::subclass::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>glib::object::ObjectSubclassIs;
+<span class="kw">use </span>glib::object::{BorrowedObject, ObjectSubclassIs};
 <span class="kw">use </span>glib::{SourceId, MainContext};
 <span class="kw">use </span>std::panic::catch_unwind;
 <span class="kw">use </span>std::cell::RefCell;
@@ -574,9 +573,8 @@
 <span class="kw">pub trait </span>SimplePlugin: ObjectSubclass {
 	<span class="kw">type </span>Args;
 
-	<span class="kw">fn </span>instance_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Type {
-		<span class="comment">// TODO: use glib_signal::BorrowedObject?
-		</span><span class="self">self</span>.instance()
+	<span class="kw">fn </span>instance_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedObject&lt;<span class="self">Self</span>::Type&gt; {
+		<span class="self">self</span>.instance()
 	}
 
 	<span class="kw">fn </span>decode_args(args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Args, Error&gt;;
@@ -588,7 +586,7 @@
 		<span class="kw">let </span>res: <span class="self">Self</span>::Type = GObject::new(<span class="kw-2">&amp;</span>[
 			(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><span class="self">Self</span>::NAME),
 			(<span class="string">&quot;core&quot;</span>, core),
-		]).unwrap();
+		]);
 		res.imp().init_args(args);
 		res
 	}
