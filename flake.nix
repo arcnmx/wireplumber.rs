@@ -67,12 +67,8 @@
         src = inputs.self;
         cargoLock = {
           lockFile = ./Cargo.lock;
-          outputHashes = let
-            gtkrs = "sha256-uRdXZxV5Rfg5NXcBRj+MkSrUwnzxccyria3RuYs4YC0=";
-          in {
-            "gio-0.16.0" = gtkrs;
-            "glib-0.16.0" = gtkrs;
-            "glib-signal-0.1.0" = "sha256-rrpMbi2PzgeK+0lEMQ39v0weuqKAiSOvAyXKnhNkCGE=";
+          outputHashes = {
+            "glib-signal-0.1.0" = "sha256-6awaofRnQcU5j3IWVH8Vo08FvS/fjVAHClnTFYMC9vY=";
           };
         };
 

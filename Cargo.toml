@@ -22,8 +22,8 @@ maintenance = { status = "passively-maintained" }
 
 [dependencies]
 libc = "0.2"
-glib = { version = "0.16", git = "https://github.com/gtk-rs/gtk-rs-core" }
-gio = { version = "0.16", git = "https://github.com/gtk-rs/gtk-rs-core" }
+glib = { version = "0.16" }
+gio = { version = "0.16" }
 pipewire-sys = { version = "0.5" }
 libspa-sys = { version = "0.5" }
 pipewire = { version = "0.5", optional = true }

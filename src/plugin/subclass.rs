@@ -1,5 +1,5 @@
 use glib::subclass::prelude::*;
-use glib::object::ObjectSubclassIs;
+use glib::object::{BorrowedObject, ObjectSubclassIs};
 use glib::{SourceId, MainContext};
 use std::panic::catch_unwind;
 use std::cell::RefCell;
@@ -219,8 +219,7 @@ impl SourceHandlesCell {
 pub trait SimplePlugin: ObjectSubclass {
 	type Args;
 
-	fn instance_ref(&self) -> Self::Type {
-		// TODO: use glib_signal::BorrowedObject?
+	fn instance_ref(&self) -> BorrowedObject<Self::Type> {
 		self.instance()
 	}
 
@@ -233,7 +232,7 @@ pub trait SimplePlugin: ObjectSubclass {
 		let res: Self::Type = GObject::new(&[
 			("name", &Self::NAME),
 			("core", core),
-		]).unwrap();
+		]);
 		res.imp().init_args(args);
 		res
 	}
