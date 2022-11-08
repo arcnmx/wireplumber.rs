@@ -30,7 +30,7 @@ pub use crate::auto::{
 	Device,
 	Node, NodeState, NodeFeatures,
 	Port, Direction,
-	Link,
+	Link, LinkFeatures,
 	Metadata, MetadataFeatures,
 	Properties,
 	traits::{
@@ -44,6 +44,8 @@ pub use crate::auto::{
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 pub use crate::auto::PropertiesItem;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+pub use crate::auto::LinkState;
 
 mod keys;
 pub use keys::*;

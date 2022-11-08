@@ -15,7 +15,7 @@ readme = "README.md"
 license = "MIT"
 
 [package.metadata.docs.rs]
-features = ["dox", "v0_4_10", "experimental", "enable-libspa", "enable-futures", "enable-serde"]
+features = ["dox", "v0_4_11", "experimental", "enable-libspa", "enable-futures", "enable-serde"]
 
 [badges]
 maintenance = { status = "passively-maintained" }
@@ -50,6 +50,7 @@ v0_4_5 = ["ffi/v0_4_5", "v0_4_3"]
 v0_4_6 = ["ffi/v0_4_6", "v0_4_5"]
 v0_4_8 = ["ffi/v0_4_8", "v0_4_6"]
 v0_4_10 = ["ffi/v0_4_10", "v0_4_8"]
+v0_4_11 = ["ffi/v0_4_11", "v0_4_10"]
 dox = ["ffi/dox", "glib-signal/dox"]
 
 [workspace]

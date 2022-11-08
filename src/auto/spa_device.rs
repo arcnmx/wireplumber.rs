@@ -2,6 +2,9 @@
 // DO NOT EDIT
 
 use crate::Core;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use crate::Iterator;
 use crate::Object;
 use crate::Properties;
 use crate::Proxy;
@@ -49,6 +52,15 @@ impl SpaDevice {
     pub fn properties(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_spa_device_get_properties(self.to_glib_none().0))
+        }
+    }
+
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "wp_spa_device_new_managed_object_iterator")]
+    pub fn new_managed_object_iterator(&self) -> Option<Iterator> {
+        unsafe {
+            from_glib_full(ffi::wp_spa_device_new_managed_object_iterator(self.to_glib_none().0))
         }
     }
 

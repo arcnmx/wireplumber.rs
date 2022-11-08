@@ -7,9 +7,12 @@ use crate::{
 	pw::{
 		MetadataFeatures, Metadata,
 		NodeFeatures, Node,
+		LinkFeatures, Link,
 		ProxyFeatures, Proxy,
 	},
 };
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+use crate::dbus::{DbusFeatures, Dbus};
 
 #[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
 pub struct ObjectFeatures(pub u32); // TODO: consider keeping this as u32, and just keep the inherent impls (requires no changes to `auto`)
@@ -116,5 +119,10 @@ macro_rules! impl_object_features {
 }
 
 impl_object_features! {
-	MetadataFeatures:Metadata, NodeFeatures:Node, PluginFeatures:Plugin, ProxyFeatures:Proxy, SessionItemFeatures:SessionItem, SpaDeviceFeatures:SpaDevice,
+	MetadataFeatures:Metadata, NodeFeatures:Node, LinkFeatures:Link, PluginFeatures:Plugin, ProxyFeatures:Proxy, SessionItemFeatures:SessionItem, SpaDeviceFeatures:SpaDevice,
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+impl_object_features! {
+	DbusFeatures:Dbus,
 }

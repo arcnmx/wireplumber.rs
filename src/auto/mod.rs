@@ -10,6 +10,13 @@ pub use self::component_loader::ComponentLoader;
 mod core;
 pub use self::core::Core;
 
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+mod dbus;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+pub use self::dbus::Dbus;
+
 mod device;
 pub use self::device::Device;
 
@@ -150,8 +157,14 @@ pub use self::spa_pod_parser::SpaPodParser;
 mod enums;
 pub use self::enums::ConstraintType;
 pub use self::enums::ConstraintVerb;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+pub use self::enums::DBusState;
 pub use self::enums::Direction;
 pub use self::enums::LibraryErrorEnum;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+pub use self::enums::LinkState;
 pub use self::enums::NodeState;
 #[cfg(any(feature = "v0_4_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
@@ -159,9 +172,13 @@ pub use self::enums::SiAdapterPortsState;
 pub use self::enums::TransitionStep;
 
 mod flags;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+pub use self::flags::DbusFeatures;
 pub use self::flags::InitFlags;
 pub use self::flags::InterestMatch;
 pub use self::flags::InterestMatchFlags;
+pub use self::flags::LinkFeatures;
 pub use self::flags::LookupDirs;
 pub use self::flags::MetadataFeatures;
 pub use self::flags::NodeFeatures;

@@ -126,10 +126,20 @@ def_signal! {
 	}
 }
 def_signal! {
-	impl Notifies<"state-changed" as StateChanged> for crate::pw::Node {
+	impl Notifies<"state-changed" as NodeStateChanged> for crate::pw::Node {
 		impl {const SIGNAL_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		fn(&self, crate::pw::NodeState, crate::pw::NodeState)
+	}
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+def_signal! {
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+	impl Notifies<"state-changed" as LinkStateChanged> for crate::pw::Link {
+		impl {const SIGNAL_STATE_CHANGED};
+		FLAGS = SignalFlags::RUN_LAST;
+		fn(&self, crate::pw::LinkState, crate::pw::LinkState)
 	}
 }
 

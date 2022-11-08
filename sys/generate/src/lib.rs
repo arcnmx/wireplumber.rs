@@ -44,6 +44,11 @@ pub const WP_CONSTRAINT_VERB_MATCHES: WpConstraintVerb = 35;
 pub const WP_CONSTRAINT_VERB_IS_PRESENT: WpConstraintVerb = 43;
 pub const WP_CONSTRAINT_VERB_IS_ABSENT: WpConstraintVerb = 45;
 
+pub type WpDBusState = c_int;
+pub const WP_DBUS_STATE_CLOSED: WpDBusState = 0;
+pub const WP_DBUS_STATE_CONNECTING: WpDBusState = 1;
+pub const WP_DBUS_STATE_CONNECTED: WpDBusState = 2;
+
 pub type WpDirection = c_int;
 pub const WP_DIRECTION_INPUT: WpDirection = 0;
 pub const WP_DIRECTION_OUTPUT: WpDirection = 1;
@@ -52,6 +57,15 @@ pub type WpLibraryErrorEnum = c_int;
 pub const WP_LIBRARY_ERROR_INVARIANT: WpLibraryErrorEnum = 0;
 pub const WP_LIBRARY_ERROR_INVALID_ARGUMENT: WpLibraryErrorEnum = 1;
 pub const WP_LIBRARY_ERROR_OPERATION_FAILED: WpLibraryErrorEnum = 2;
+
+pub type WpLinkState = c_int;
+pub const WP_LINK_STATE_ERROR: WpLinkState = -2;
+pub const WP_LINK_STATE_UNLINKED: WpLinkState = -1;
+pub const WP_LINK_STATE_INIT: WpLinkState = 0;
+pub const WP_LINK_STATE_NEGOTIATING: WpLinkState = 1;
+pub const WP_LINK_STATE_ALLOCATING: WpLinkState = 2;
+pub const WP_LINK_STATE_PAUSED: WpLinkState = 3;
+pub const WP_LINK_STATE_ACTIVE: WpLinkState = 4;
 
 pub type WpNodeState = c_int;
 pub const WP_NODE_STATE_ERROR: WpNodeState = -1;
@@ -81,6 +95,9 @@ pub const WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL: c_int = 17;
 pub const WP_SPA_TYPE_INVALID: WpSpaType = 4294967295;
 
 // Flags
+pub type WpDbusFeatures = c_uint;
+pub const WP_DBUS_FEATURE_ENABLED: WpDbusFeatures = 1;
+
 pub type WpInitFlags = c_uint;
 pub const WP_INIT_PIPEWIRE: WpInitFlags = 1;
 pub const WP_INIT_SPA_TYPES: WpInitFlags = 2;
@@ -98,6 +115,9 @@ pub const WP_INTEREST_MATCH_G_PROPERTIES: WpInterestMatch = 8;
 pub type WpInterestMatchFlags = c_uint;
 pub const WP_INTEREST_MATCH_FLAGS_NONE: WpInterestMatchFlags = 0;
 pub const WP_INTEREST_MATCH_FLAGS_CHECK_ALL: WpInterestMatchFlags = 1;
+
+pub type WpLinkFeatures = c_uint;
+pub const WP_LINK_FEATURE_ESTABLISHED: WpLinkFeatures = 65536;
 
 pub type WpLookupDirs = c_uint;
 pub const WP_LOOKUP_DIR_ENV_CONFIG: WpLookupDirs = 1;
@@ -178,6 +198,20 @@ pub struct WpCoreClass {
 impl ::std::fmt::Debug for WpCoreClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpCoreClass @ {:p}", self))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpDbusClass {
+    pub parent_class: WpObjectClass,
+}
+
+impl ::std::fmt::Debug for WpDbusClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpDbusClass @ {:p}", self))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -874,6 +908,19 @@ impl ::std::fmt::Debug for WpCore {
 }
 
 #[repr(C)]
+pub struct WpDbus {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpDbus {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpDbus @ {:p}", self))
+         .finish()
+    }
+}
+
+#[repr(C)]
 pub struct WpDevice {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -1256,6 +1303,13 @@ extern "C" {
     pub fn wp_constraint_verb_get_type() -> GType;
 
     //=========================================================================
+    // WpDBusState
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_state_get_type() -> GType;
+
+    //=========================================================================
     // WpDirection
     //=========================================================================
     pub fn wp_direction_get_type() -> GType;
@@ -1264,6 +1318,13 @@ extern "C" {
     // WpLibraryErrorEnum
     //=========================================================================
     pub fn wp_library_error_enum_get_type() -> GType;
+
+    //=========================================================================
+    // WpLinkState
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_link_state_get_type() -> GType;
 
     //=========================================================================
     // WpNodeState
@@ -1283,6 +1344,13 @@ extern "C" {
     pub fn wp_transition_step_get_type() -> GType;
 
     //=========================================================================
+    // WpDbusFeatures
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_features_get_type() -> GType;
+
+    //=========================================================================
     // WpInitFlags
     //=========================================================================
     pub fn wp_init_flags_get_type() -> GType;
@@ -1296,6 +1364,13 @@ extern "C" {
     // WpInterestMatchFlags
     //=========================================================================
     pub fn wp_interest_match_flags_get_type() -> GType;
+
+    //=========================================================================
+    // WpLinkFeatures
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_link_features_get_type() -> GType;
 
     //=========================================================================
     // WpLookupDirs
@@ -1541,6 +1616,9 @@ extern "C" {
     #[cfg(any(feature = "v0_4_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_ref(self_: *mut WpSpaJson) -> *mut WpSpaJson;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_spa_json_to_string(self_: *const WpSpaJson) -> *mut c_char;
     #[cfg(any(feature = "v0_4_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_unref(self_: *mut WpSpaJson);
@@ -1817,6 +1895,9 @@ extern "C" {
     pub fn wp_core_get_remote_properties(self_: *mut WpCore) -> *mut WpProperties;
     pub fn wp_core_get_remote_user_name(self_: *mut WpCore) -> *const c_char;
     pub fn wp_core_get_remote_version(self_: *mut WpCore) -> *const c_char;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_core_get_vm_type(self_: *mut WpCore) -> *mut c_char;
     pub fn wp_core_idle_add(self_: *mut WpCore, source: *mut *mut glib::GSource, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     pub fn wp_core_idle_add_closure(self_: *mut WpCore, source: *mut *mut glib::GSource, closure: *mut gobject::GClosure);
     pub fn wp_core_install_object_manager(self_: *mut WpCore, om: *mut WpObjectManager);
@@ -1830,6 +1911,25 @@ extern "C" {
     pub fn wp_core_timeout_add(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     pub fn wp_core_timeout_add_closure(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, closure: *mut gobject::GClosure);
     pub fn wp_core_update_properties(self_: *mut WpCore, updates: *mut WpProperties);
+
+    //=========================================================================
+    // WpDbus
+    //=========================================================================
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_get_type() -> GType;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_get_instance(core: *mut WpCore, bus_type: gio::GBusType) -> *mut WpDbus;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_get_bus_type(self_: *mut WpDbus) -> gio::GBusType;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_get_connection(self_: *mut WpDbus) -> *mut gio::GDBusConnection;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_dbus_get_state(self_: *mut WpDbus) -> WpDBusState;
 
     //=========================================================================
     // WpDevice
@@ -1903,6 +2003,9 @@ extern "C" {
     pub fn wp_link_get_type() -> GType;
     pub fn wp_link_new_from_factory(core: *mut WpCore, factory_name: *const c_char, properties: *mut WpProperties) -> *mut WpLink;
     pub fn wp_link_get_linked_object_ids(self_: *mut WpLink, output_node: *mut u32, output_port: *mut u32, input_node: *mut u32, input_port: *mut u32);
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_link_get_state(self_: *mut WpLink, error: *mut *const c_char) -> WpLinkState;
 
     //=========================================================================
     // WpMetadata
@@ -2021,6 +2124,9 @@ extern "C" {
     pub fn wp_spa_device_new_wrap(core: *mut WpCore, spa_device_handle: gpointer, properties: *mut WpProperties) -> *mut WpSpaDevice;
     pub fn wp_spa_device_get_managed_object(self_: *mut WpSpaDevice, id: c_uint) -> *mut gobject::GObject;
     pub fn wp_spa_device_get_properties(self_: *mut WpSpaDevice) -> *mut WpProperties;
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    pub fn wp_spa_device_new_managed_object_iterator(self_: *mut WpSpaDevice) -> *mut WpIterator;
     pub fn wp_spa_device_store_managed_object(self_: *mut WpSpaDevice, id: c_uint, object: *mut gobject::GObject);
 
     //=========================================================================

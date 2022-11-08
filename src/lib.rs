@@ -73,6 +73,9 @@ pub mod local;
 pub mod session;
 pub mod registry;
 pub mod plugin;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+pub mod dbus;
 pub mod spa;
 pub mod util;
 
@@ -106,3 +109,8 @@ pub(crate) use crate::pw::PropertiesItem;
 pub(crate) use crate::spa::SpaJson;
 #[cfg(any(feature = "v0_4_10", feature = "dox"))]
 pub(crate) use crate::session::SiAdapterPortsState;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+pub(crate) use crate::{
+	pw::LinkState,
+	dbus::DBusState,
+};

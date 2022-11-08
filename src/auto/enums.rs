@@ -201,6 +201,106 @@ impl ToValue for ConstraintVerb {
     }
 }
 
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WpDBusState")]
+pub enum DBusState {
+    #[doc(alias = "WP_DBUS_STATE_CLOSED")]
+    Closed,
+    #[doc(alias = "WP_DBUS_STATE_CONNECTING")]
+    Connecting,
+    #[doc(alias = "WP_DBUS_STATE_CONNECTED")]
+    Connected,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl fmt::Display for DBusState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "DBusState::{}", match *self {
+            Self::Closed => "Closed",
+            Self::Connecting => "Connecting",
+            Self::Connected => "Connected",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[doc(hidden)]
+impl IntoGlib for DBusState {
+    type GlibType = ffi::WpDBusState;
+
+    fn into_glib(self) -> ffi::WpDBusState {
+        match self {
+            Self::Closed => ffi::WP_DBUS_STATE_CLOSED,
+            Self::Connecting => ffi::WP_DBUS_STATE_CONNECTING,
+            Self::Connected => ffi::WP_DBUS_STATE_CONNECTED,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WpDBusState> for DBusState {
+    unsafe fn from_glib(value: ffi::WpDBusState) -> Self {
+        match value {
+            ffi::WP_DBUS_STATE_CLOSED => Self::Closed,
+            ffi::WP_DBUS_STATE_CONNECTING => Self::Connecting,
+            ffi::WP_DBUS_STATE_CONNECTED => Self::Connected,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl StaticType for DBusState {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::wp_dbus_state_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl glib::value::ValueType for DBusState {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+unsafe impl<'a> FromValue<'a> for DBusState {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl ToValue for DBusState {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
@@ -351,6 +451,126 @@ unsafe impl<'a> FromValue<'a> for LibraryErrorEnum {
 }
 
 impl ToValue for LibraryErrorEnum {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WpLinkState")]
+pub enum LinkState {
+    #[doc(alias = "WP_LINK_STATE_ERROR")]
+    Error,
+    #[doc(alias = "WP_LINK_STATE_UNLINKED")]
+    Unlinked,
+    #[doc(alias = "WP_LINK_STATE_INIT")]
+    Init,
+    #[doc(alias = "WP_LINK_STATE_NEGOTIATING")]
+    Negotiating,
+    #[doc(alias = "WP_LINK_STATE_ALLOCATING")]
+    Allocating,
+    #[doc(alias = "WP_LINK_STATE_PAUSED")]
+    Paused,
+    #[doc(alias = "WP_LINK_STATE_ACTIVE")]
+    Active,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl fmt::Display for LinkState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "LinkState::{}", match *self {
+            Self::Error => "Error",
+            Self::Unlinked => "Unlinked",
+            Self::Init => "Init",
+            Self::Negotiating => "Negotiating",
+            Self::Allocating => "Allocating",
+            Self::Paused => "Paused",
+            Self::Active => "Active",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[doc(hidden)]
+impl IntoGlib for LinkState {
+    type GlibType = ffi::WpLinkState;
+
+    fn into_glib(self) -> ffi::WpLinkState {
+        match self {
+            Self::Error => ffi::WP_LINK_STATE_ERROR,
+            Self::Unlinked => ffi::WP_LINK_STATE_UNLINKED,
+            Self::Init => ffi::WP_LINK_STATE_INIT,
+            Self::Negotiating => ffi::WP_LINK_STATE_NEGOTIATING,
+            Self::Allocating => ffi::WP_LINK_STATE_ALLOCATING,
+            Self::Paused => ffi::WP_LINK_STATE_PAUSED,
+            Self::Active => ffi::WP_LINK_STATE_ACTIVE,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WpLinkState> for LinkState {
+    unsafe fn from_glib(value: ffi::WpLinkState) -> Self {
+        match value {
+            ffi::WP_LINK_STATE_ERROR => Self::Error,
+            ffi::WP_LINK_STATE_UNLINKED => Self::Unlinked,
+            ffi::WP_LINK_STATE_INIT => Self::Init,
+            ffi::WP_LINK_STATE_NEGOTIATING => Self::Negotiating,
+            ffi::WP_LINK_STATE_ALLOCATING => Self::Allocating,
+            ffi::WP_LINK_STATE_PAUSED => Self::Paused,
+            ffi::WP_LINK_STATE_ACTIVE => Self::Active,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl StaticType for LinkState {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::wp_link_state_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl glib::value::ValueType for LinkState {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+unsafe impl<'a> FromValue<'a> for LinkState {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl ToValue for LinkState {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {

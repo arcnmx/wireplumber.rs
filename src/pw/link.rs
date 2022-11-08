@@ -1,5 +1,5 @@
-use crate::pw::{self, Link, Node, Port, Properties, Direction, ProxyFeatures};
-use crate::core::{Core, Object};
+use crate::pw::{self, Link, Node, Port, Properties, Direction};
+use crate::core::Core;
 use crate::prelude::*;
 
 impl Link {
@@ -10,10 +10,6 @@ impl Link {
 
 		Self::from_factory(core, "link-factory", Some(&props))
 			.ok_or_else(|| Error::new(LibraryErrorEnum::OperationFailed, "factory did not produce a link???"))
-	}
-
-	pub fn activate_future(&self) -> impl Future<Output=Result<(), Error>> {
-		AsRef::<Object>::as_ref(self).activate_future(ProxyFeatures::MINIMAL.into())
 	}
 
 	pub fn error_is_exists(e: &Error) -> bool {

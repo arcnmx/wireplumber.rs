@@ -12,6 +12,9 @@ int main() {
     printf("%s;%zu;%zu\n", "WpConstraintType", sizeof(WpConstraintType), alignof(WpConstraintType));
     printf("%s;%zu;%zu\n", "WpConstraintVerb", sizeof(WpConstraintVerb), alignof(WpConstraintVerb));
     printf("%s;%zu;%zu\n", "WpCoreClass", sizeof(WpCoreClass), alignof(WpCoreClass));
+    printf("%s;%zu;%zu\n", "WpDBusState", sizeof(WpDBusState), alignof(WpDBusState));
+    printf("%s;%zu;%zu\n", "WpDbusClass", sizeof(WpDbusClass), alignof(WpDbusClass));
+    printf("%s;%zu;%zu\n", "WpDbusFeatures", sizeof(WpDbusFeatures), alignof(WpDbusFeatures));
     printf("%s;%zu;%zu\n", "WpDeviceClass", sizeof(WpDeviceClass), alignof(WpDeviceClass));
     printf("%s;%zu;%zu\n", "WpDirection", sizeof(WpDirection), alignof(WpDirection));
     printf("%s;%zu;%zu\n", "WpEndpoint", sizeof(WpEndpoint), alignof(WpEndpoint));
@@ -30,6 +33,8 @@ int main() {
     printf("%s;%zu;%zu\n", "WpIteratorMethods", sizeof(WpIteratorMethods), alignof(WpIteratorMethods));
     printf("%s;%zu;%zu\n", "WpLibraryErrorEnum", sizeof(WpLibraryErrorEnum), alignof(WpLibraryErrorEnum));
     printf("%s;%zu;%zu\n", "WpLinkClass", sizeof(WpLinkClass), alignof(WpLinkClass));
+    printf("%s;%zu;%zu\n", "WpLinkFeatures", sizeof(WpLinkFeatures), alignof(WpLinkFeatures));
+    printf("%s;%zu;%zu\n", "WpLinkState", sizeof(WpLinkState), alignof(WpLinkState));
     printf("%s;%zu;%zu\n", "WpLookupDirs", sizeof(WpLookupDirs), alignof(WpLookupDirs));
     printf("%s;%zu;%zu\n", "WpMetadata", sizeof(WpMetadata), alignof(WpMetadata));
     printf("%s;%zu;%zu\n", "WpMetadataClass", sizeof(WpMetadataClass), alignof(WpMetadataClass));

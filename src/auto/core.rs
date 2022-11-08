@@ -120,6 +120,16 @@ impl Core {
         }
     }
 
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "wp_core_get_vm_type")]
+    #[doc(alias = "get_vm_type")]
+    pub fn vm_type(&self) -> Option<glib::GString> {
+        unsafe {
+            from_glib_full(ffi::wp_core_get_vm_type(self.to_glib_none().0))
+        }
+    }
+
     #[doc(alias = "wp_core_idle_add")]
     pub fn idle_add<P: Fn() -> bool + 'static>(&self, function: P) -> glib::Source {
         let function_data: Box_<P> = Box_::new(function);

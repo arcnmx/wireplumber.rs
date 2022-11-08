@@ -3,12 +3,33 @@
 
 use crate::Core;
 use crate::GlobalProxy;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use crate::LinkState;
 use crate::Object;
 use crate::PipewireObject;
 use crate::Properties;
 use crate::Proxy;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use glib::object::ObjectType as ObjectType_;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use std::boxed::Box as Box_;
 use std::mem;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use std::mem::transmute;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use std::ptr;
 
 glib::wrapper! {
     #[doc(alias = "WpLink")]
@@ -42,6 +63,48 @@ impl Link {
             let input_node = input_node.assume_init();
             let input_port = input_port.assume_init();
             (output_node, output_port, input_node, input_port)
+        }
+    }
+
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "wp_link_get_state")]
+    #[doc(alias = "get_state")]
+    pub fn state(&self) -> (LinkState, glib::GString) {
+        unsafe {
+            let mut error = ptr::null();
+            let ret = from_glib(ffi::wp_link_get_state(self.to_glib_none().0, &mut error));
+            (ret, from_glib_none(error))
+        }
+    }
+
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "state-changed")]
+    pub fn connect_state_changed<F: Fn(&Self, LinkState, LinkState) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn state_changed_trampoline<F: Fn(&Link, LinkState, LinkState) + 'static>(this: *mut ffi::WpLink, object: ffi::WpLinkState, p0: ffi::WpLinkState, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this), from_glib(object), from_glib(p0))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"state-changed\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(state_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
+        }
+    }
+
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "state")]
+    pub fn connect_state_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_state_trampoline<F: Fn(&Link) + 'static>(this: *mut ffi::WpLink, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::state\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 }

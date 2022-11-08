@@ -3,6 +3,9 @@
 
 use crate::Iterator;
 use glib::translate::*;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+use std::fmt;
 use std::mem;
 
 glib::wrapper! {
@@ -262,5 +265,24 @@ impl SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_parse_string(self.to_glib_none().0))
         }
+    }
+
+    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "wp_spa_json_to_string")]
+    #[doc(alias = "to_string")]
+    pub fn to_str(&self) -> glib::GString {
+        unsafe {
+            from_glib_full(ffi::wp_spa_json_to_string(self.to_glib_none().0))
+        }
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl fmt::Display for SpaJson {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(&self.to_str())
     }
 }

@@ -126,6 +126,14 @@
           -i '///_:record[@c:type="WpSpaJson"]/_:constructor[@name="new_from_stringn"]' -t attr -n version -v 0.4.10 \
           -i '///_:enumeration[@c:type="WpSiAdapterPortsState"]' -t attr -n version -v 0.4.10 \
           -i '///_:interface[@c:type="WpSiAdapter"]/glib:signal[@name="adapter-ports-state-changed"]' -t attr -n version -v 0.4.10 \
+          -i '///_:class[@c:type="WpDbus"]' -t attr -n version -v 0.4.11 \
+          -i '///_:enumeration[@c:type="WpLinkState"]' -t attr -n version -v 0.4.11 \
+          -i '///_:enumeration[@c:type="WpDBusState"]' -t attr -n version -v 0.4.11 \
+          -i '///_:bitfield[@c:type="WpDbusFeatures"]' -t attr -n version -v 0.4.11 \
+          -i '///_:bitfield[@c:type="WpLinkFeatures"]' -t attr -n version -v 0.4.11 \
+          -i '///_:class[@c:type="WpCore"]/_:method[@name="get_vm_type"]' -t attr -n version -v 0.4.11 \
+          -i '///_:class[@c:type="WpLink"]/_:property[@name="state"]' -t attr -n version -v 0.4.11 \
+          -i '///_:class[@c:type="WpLink"]/glib:signal[@name="state-changed"]' -t attr -n version -v 0.4.11 \
           -u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
           -i '/_:repository/_:namespace' -t elem -n package \
           "$wireplumber/$girName" > $out/$girName
@@ -157,7 +165,8 @@
     } { };
     lib = with nixlib; {
       featureForVersion = version:
-        if versionAtLeast version "0.4.10" then "v0_4_10"
+        if versionAtLeast version "0.4.11" then "v0_4_11"
+        else if versionAtLeast version "0.4.10" then "v0_4_10"
         else if versionAtLeast version "0.4.8" then "v0_4_8"
         else if versionAtLeast version "0.4.6" then "v0_4_6"
         else if versionAtLeast version "0.4.5" then "v0_4_5"

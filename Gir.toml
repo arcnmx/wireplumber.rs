@@ -20,9 +20,11 @@ generate = [
 	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder",
 	"Wp.SpaJson", "Wp.SpaJsonBuilder", "Wp.SpaJsonParser",
 	"Wp.State",
+	"Wp.Dbus", "Wp.DbusFeatures",
 	"Wp.ProxyFeatures",
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
+	"Wp.LinkFeatures",
 	"Wp.Object",
 	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Node", "Wp.Link", "Wp.Port",
 	"Wp.ObjectManager",
@@ -41,6 +43,7 @@ manual = [
 	"GLib.Error", "GLib.Variant", "GLib.MainContext", "GLib.Source", "GLib.SourceFunc", "GLib.DestroyNotify", "GLib.Quark", "GLib.LogLevelFlags", "GLib.LogField", "GLib.LogWriterOutput",
 	"GObject.Closure", "GObject.Value", "GObject.Object",
 	"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
+	"Gio.DBusConnection", "Gio.BusType"
 ]
 
 [[object]]
@@ -149,6 +152,16 @@ generate_display_trait = true
 
 [[object]]
 name = "Wp.NodeState"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.DBusState"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
+name = "Wp.LinkState"
 status = "generate"
 generate_display_trait = true
 

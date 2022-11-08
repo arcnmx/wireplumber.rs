@@ -113,7 +113,7 @@ impl Results {
 
 #[test]
 #[cfg(target_os = "linux")]
-#[cfg(feature = "v0_4_6")]
+#[cfg(feature = "v0_4_11")]
 fn cross_validate_constants_with_c() {
     let mut c_constants: Vec<(String, String)> = Vec::new();
 
@@ -155,7 +155,7 @@ fn cross_validate_constants_with_c() {
 
 #[test]
 #[cfg(target_os = "linux")]
-#[cfg(feature = "v0_4_6")]
+#[cfg(feature = "v0_4_11")]
 fn cross_validate_layout_with_c() {
     let mut c_layouts = Vec::new();
 
@@ -223,6 +223,9 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
     ("WpConstraintType", Layout {size: size_of::<WpConstraintType>(), alignment: align_of::<WpConstraintType>()}),
     ("WpConstraintVerb", Layout {size: size_of::<WpConstraintVerb>(), alignment: align_of::<WpConstraintVerb>()}),
     ("WpCoreClass", Layout {size: size_of::<WpCoreClass>(), alignment: align_of::<WpCoreClass>()}),
+    ("WpDBusState", Layout {size: size_of::<WpDBusState>(), alignment: align_of::<WpDBusState>()}),
+    ("WpDbusClass", Layout {size: size_of::<WpDbusClass>(), alignment: align_of::<WpDbusClass>()}),
+    ("WpDbusFeatures", Layout {size: size_of::<WpDbusFeatures>(), alignment: align_of::<WpDbusFeatures>()}),
     ("WpDeviceClass", Layout {size: size_of::<WpDeviceClass>(), alignment: align_of::<WpDeviceClass>()}),
     ("WpDirection", Layout {size: size_of::<WpDirection>(), alignment: align_of::<WpDirection>()}),
     ("WpEndpoint", Layout {size: size_of::<WpEndpoint>(), alignment: align_of::<WpEndpoint>()}),
@@ -241,6 +244,8 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
     ("WpIteratorMethods", Layout {size: size_of::<WpIteratorMethods>(), alignment: align_of::<WpIteratorMethods>()}),
     ("WpLibraryErrorEnum", Layout {size: size_of::<WpLibraryErrorEnum>(), alignment: align_of::<WpLibraryErrorEnum>()}),
     ("WpLinkClass", Layout {size: size_of::<WpLinkClass>(), alignment: align_of::<WpLinkClass>()}),
+    ("WpLinkFeatures", Layout {size: size_of::<WpLinkFeatures>(), alignment: align_of::<WpLinkFeatures>()}),
+    ("WpLinkState", Layout {size: size_of::<WpLinkState>(), alignment: align_of::<WpLinkState>()}),
     ("WpLookupDirs", Layout {size: size_of::<WpLookupDirs>(), alignment: align_of::<WpLookupDirs>()}),
     ("WpMetadata", Layout {size: size_of::<WpMetadata>(), alignment: align_of::<WpMetadata>()}),
     ("WpMetadataClass", Layout {size: size_of::<WpMetadataClass>(), alignment: align_of::<WpMetadataClass>()}),
@@ -293,6 +298,10 @@ const RUST_CONSTANTS: &[(&str, &str)] = &[
     ("(gint) WP_CONSTRAINT_VERB_IS_PRESENT", "43"),
     ("(gint) WP_CONSTRAINT_VERB_MATCHES", "35"),
     ("(gint) WP_CONSTRAINT_VERB_NOT_EQUALS", "33"),
+    ("(guint) WP_DBUS_FEATURE_ENABLED", "1"),
+    ("(gint) WP_DBUS_STATE_CLOSED", "0"),
+    ("(gint) WP_DBUS_STATE_CONNECTED", "2"),
+    ("(gint) WP_DBUS_STATE_CONNECTING", "1"),
     ("(gint) WP_DIRECTION_INPUT", "0"),
     ("(gint) WP_DIRECTION_OUTPUT", "1"),
     ("(guint) WP_INIT_ALL", "15"),
@@ -312,6 +321,14 @@ const RUST_CONSTANTS: &[(&str, &str)] = &[
     ("(gint) WP_LIBRARY_ERROR_INVALID_ARGUMENT", "1"),
     ("(gint) WP_LIBRARY_ERROR_INVARIANT", "0"),
     ("(gint) WP_LIBRARY_ERROR_OPERATION_FAILED", "2"),
+    ("(guint) WP_LINK_FEATURE_ESTABLISHED", "65536"),
+    ("(gint) WP_LINK_STATE_ACTIVE", "4"),
+    ("(gint) WP_LINK_STATE_ALLOCATING", "2"),
+    ("(gint) WP_LINK_STATE_ERROR", "-2"),
+    ("(gint) WP_LINK_STATE_INIT", "0"),
+    ("(gint) WP_LINK_STATE_NEGOTIATING", "1"),
+    ("(gint) WP_LINK_STATE_PAUSED", "3"),
+    ("(gint) WP_LINK_STATE_UNLINKED", "-1"),
     ("WP_LOG_LEVEL_TRACE", "256"),
     ("(guint) WP_LOOKUP_DIR_ENV_CONFIG", "1"),
     ("(guint) WP_LOOKUP_DIR_ENV_DATA", "2"),

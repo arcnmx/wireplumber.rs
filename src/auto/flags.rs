@@ -8,6 +8,76 @@ use glib::value::ToValue;
 use glib::StaticType;
 use glib::Type;
 
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+bitflags! {
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[doc(alias = "WpDbusFeatures")]
+    pub struct DbusFeatures: u32 {
+        #[doc(alias = "WP_DBUS_FEATURE_ENABLED")]
+        const ENABLED = ffi::WP_DBUS_FEATURE_ENABLED as u32;
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[doc(hidden)]
+impl IntoGlib for DbusFeatures {
+    type GlibType = ffi::WpDbusFeatures;
+
+    fn into_glib(self) -> ffi::WpDbusFeatures {
+        self.bits()
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WpDbusFeatures> for DbusFeatures {
+    unsafe fn from_glib(value: ffi::WpDbusFeatures) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl StaticType for DbusFeatures {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::wp_dbus_features_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl glib::value::ValueType for DbusFeatures {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+unsafe impl<'a> FromValue<'a> for DbusFeatures {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl ToValue for DbusFeatures {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 bitflags! {
     #[doc(alias = "WpInitFlags")]
     pub struct InitFlags: u32 {
@@ -181,6 +251,72 @@ unsafe impl<'a> FromValue<'a> for InterestMatchFlags {
 }
 
 impl ToValue for InterestMatchFlags {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+bitflags! {
+    #[doc(alias = "WpLinkFeatures")]
+    pub struct LinkFeatures: u32 {
+        #[cfg(any(feature = "v0_4_11", feature = "dox"))]
+        #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+        #[doc(alias = "WP_LINK_FEATURE_ESTABLISHED")]
+        const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as u32;
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for LinkFeatures {
+    type GlibType = ffi::WpLinkFeatures;
+
+    fn into_glib(self) -> ffi::WpLinkFeatures {
+        self.bits()
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
+    unsafe fn from_glib(value: ffi::WpLinkFeatures) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl StaticType for LinkFeatures {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::wp_link_features_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl glib::value::ValueType for LinkFeatures {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+unsafe impl<'a> FromValue<'a> for LinkFeatures {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+impl ToValue for LinkFeatures {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
