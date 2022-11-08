@@ -39,7 +39,7 @@ impl Node {
 	}
 
 	pub fn props(&self) -> ! {
-		for param in self.enum_params_sync("Props", None) {
+		for param in self.enum_params_sync("Props", None).into_iter().flat_map(|p| p) {
 			// if param.pod_type == "Object" && pod.properties.volume != null
 			println!("out_params.init_from_pod({:?})", param);
 		}
