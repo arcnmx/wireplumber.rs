@@ -111,11 +111,6 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><pre class="rust"><code><span class="macro">macro_rules! </span>define_log_variant {
 	({<span class="macro-nonterminal">$dollar</span>:tt} $(<span class="macro-nonterminal">$name</span>:ident(<span class="macro-nonterminal">$int_name</span>:ident) = ($(<span class="macro-nonterminal">$level</span>:tt)<span class="kw-2">*</span>),)<span class="kw-2">*</span>) =&gt; {
 		$(
@@ -211,27 +206,22 @@
 	<span class="kw">use crate</span>::{Log, Core, InitFlags};
 
 	<span class="attr">#[test]
-	</span><span class="kw">fn </span>log_internal() {
+	</span><span class="kw">fn </span>log() {
 		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
 		Log::set_level(<span class="string">&quot;8&quot;</span>);
-		<span class="macro">wp_critical!</span>(<span class="string">&quot;crit&quot;</span>);
-		<span class="macro">wp_warning!</span>(<span class="string">&quot;warn&quot;</span>);
-		<span class="macro">wp_message!</span>(<span class="string">&quot;message&quot;</span>);
-		<span class="macro">wp_info!</span>(<span class="string">&quot;info&quot;</span>);
-		<span class="macro">wp_debug!</span>(<span class="string">&quot;debug&quot;</span>);
-		<span class="macro">wp_trace!</span>(<span class="string">&quot;trace&quot;</span>);
-	}
+		<span class="macro">wp_critical!</span>(<span class="string">&quot;internal crit&quot;</span>);
+		<span class="macro">wp_warning!</span>(<span class="string">&quot;internal warn&quot;</span>);
+		<span class="macro">wp_message!</span>(<span class="string">&quot;internal message&quot;</span>);
+		<span class="macro">wp_info!</span>(<span class="string">&quot;internal info&quot;</span>);
+		<span class="macro">wp_debug!</span>(<span class="string">&quot;internal debug&quot;</span>);
+		<span class="macro">wp_trace!</span>(<span class="string">&quot;internal trace&quot;</span>);
 
-	<span class="attr">#[test]
-	</span><span class="kw">fn </span>log_external() {
-		Core::init_with_flags(InitFlags::SET_GLIB_LOG);
-		Log::set_level(<span class="string">&quot;8&quot;</span>);
-		<span class="macro">critical!</span>(<span class="string">&quot;crit&quot;</span>);
-		<span class="macro">warning!</span>(<span class="string">&quot;warn&quot;</span>);
-		<span class="macro">message!</span>(<span class="string">&quot;message&quot;</span>);
-		<span class="macro">info!</span>(<span class="string">&quot;info&quot;</span>);
-		<span class="macro">debug!</span>(<span class="string">&quot;debug&quot;</span>);
-		<span class="macro">trace!</span>(<span class="string">&quot;trace&quot;</span>);
+		<span class="macro">critical!</span>(<span class="string">&quot;external crit&quot;</span>);
+		<span class="macro">warning!</span>(<span class="string">&quot;external warn&quot;</span>);
+		<span class="macro">message!</span>(<span class="string">&quot;external message&quot;</span>);
+		<span class="macro">info!</span>(<span class="string">&quot;external info&quot;</span>);
+		<span class="macro">debug!</span>(<span class="string">&quot;external debug&quot;</span>);
+		<span class="macro">trace!</span>(<span class="string">&quot;external trace&quot;</span>);
 	}
 }
 </code></pre></div>
