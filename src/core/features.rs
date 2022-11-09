@@ -57,7 +57,7 @@ impl ObjectFeatures {
 }
 
 macro_rules! impl_object_features {
-	($($id:ident:$ty:ident,)*) => {
+	($($id:ident:$ty:ident($($sub:ident),*),)*) => {
 		$(
 			impl From<$id> for ObjectFeatures {
 				fn from(features: $id) -> Self {
@@ -71,30 +71,44 @@ macro_rules! impl_object_features {
 				}
 			}
 
+			$(
+				impl From<$id> for $sub {
+					fn from(features: $id) -> Self {
+						Self::from_bits_truncate(features.bits())
+					}
+				}
+
+				impl From<$sub> for $id {
+					fn from(features: $sub) -> $id {
+						$id::from_bits_truncate(features.bits())
+					}
+				}
+			)*
+
 			impl $ty {
 				#[doc(alias = "wp_object_activate")]
-				pub fn activate<P, Q>(&self, features: $id, cancellable: Option<&P>, callback: Q) where
+				pub fn activate<P, Q, F: Into<$id>>(&self, features: F, cancellable: Option<&P>, callback: Q) where
 					P: IsA<::gio::Cancellable>,
 					Q: FnOnce(Result<(), Error>) + Send + 'static,
 				{
-					ObjectExt::activate(self, features.into(), cancellable, callback)
+					ObjectExt::activate(self, features.into().into(), cancellable, callback)
 				}
 
 				#[doc(alias = "wp_object_activate_closure")]
-				pub fn activate_closure<P>(&self, features: $id, cancellable: Option<&P>, closure: &glib::Closure) where
+				pub fn activate_closure<P, F: Into<$id>>(&self, features: F, cancellable: Option<&P>, closure: &glib::Closure) where
 					P: IsA<gio::Cancellable>,
 				{
-					ObjectExt::activate_closure(self, features.into(), cancellable, closure)
+					ObjectExt::activate_closure(self, features.into().into(), cancellable, closure)
 				}
 
 				#[doc(alias = "wp_object_activate")]
-				pub fn activate_future(&self, features: $id) -> impl Future<Output=Result<(), Error>> + Unpin {
-					ObjectExt::activate_future(self, features.into())
+				pub fn activate_future<F: Into<$id>>(&self, features: F) -> impl Future<Output=Result<(), Error>> + Unpin {
+					ObjectExt::activate_future(self, features.into().into())
 				}
 
 				#[doc(alias = "wp_object_deactivate")]
-				pub fn deactivate(&self, features: $id) {
-					ObjectExt::deactivate(self, features.into())
+				pub fn deactivate<F: Into<$id>>(&self, features: F) {
+					ObjectExt::deactivate(self, features.into().into())
 				}
 
 				#[doc(alias = "wp_object_get_active_features")]
@@ -110,8 +124,8 @@ macro_rules! impl_object_features {
 				}
 
 				#[doc(alias = "wp_object_update_features")]
-				pub fn update_features(&self, activated: $id, deactivated: $id) {
-					ObjectExt::update_features(self, activated.into(), deactivated.into())
+				pub fn update_features<A: Into<$id>, D: Into<$id>>(&self, activated: A, deactivated: D) {
+					ObjectExt::update_features(self, activated.into().into(), deactivated.into().into())
 				}
 			}
 		)*
@@ -119,10 +133,16 @@ macro_rules! impl_object_features {
 }
 
 impl_object_features! {
-	MetadataFeatures:Metadata, NodeFeatures:Node, LinkFeatures:Link, PluginFeatures:Plugin, ProxyFeatures:Proxy, SessionItemFeatures:SessionItem, SpaDeviceFeatures:SpaDevice,
+	MetadataFeatures:Metadata(ProxyFeatures),
+	NodeFeatures:Node(ProxyFeatures),
+	LinkFeatures:Link(ProxyFeatures),
+	PluginFeatures:Plugin(),
+	ProxyFeatures:Proxy(),
+	SessionItemFeatures:SessionItem(),
+	SpaDeviceFeatures:SpaDevice(ProxyFeatures),
 }
 
 #[cfg(any(feature = "v0_4_11", feature = "dox"))]
 impl_object_features! {
-	DbusFeatures:Dbus,
+	DbusFeatures:Dbus(),
 }

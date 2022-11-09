@@ -271,6 +271,8 @@ bitflags! {
         #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
         #[doc(alias = "WP_LINK_FEATURE_ESTABLISHED")]
         const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as u32;
+
+        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
 }
 
@@ -399,6 +401,8 @@ bitflags! {
     pub struct MetadataFeatures: u32 {
         #[doc(alias = "WP_METADATA_FEATURE_DATA")]
         const DATA = ffi::WP_METADATA_FEATURE_DATA as u32;
+
+        const PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
     }
 }
 
@@ -455,6 +459,8 @@ bitflags! {
     pub struct NodeFeatures: u32 {
         #[doc(alias = "WP_NODE_FEATURE_PORTS")]
         const PORTS = ffi::WP_NODE_FEATURE_PORTS as u32;
+
+        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
 }
 
@@ -579,6 +585,10 @@ bitflags! {
         const PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG as u32;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE")]
         const PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE as u32;
+
+        #[doc(alias = "WP_PROXY_FEATURE_CUSTOM_START")]
+        const PROXY_FEATURE_CUSTOM_START = 1u32 << 16;
+        const PROXY_FEATURE_CUSTOM = 0xff00;
     }
 }
 
@@ -693,6 +703,8 @@ bitflags! {
     pub struct SpaDeviceFeatures: u32 {
         #[doc(alias = "WP_SPA_DEVICE_FEATURE_ENABLED")]
         const ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED as u32;
+
+        const PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
     }
 }
 

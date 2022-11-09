@@ -4,7 +4,11 @@ use crate::pw::{self, Proxy, ProxyFeatures, PipewireObject, FromPipewireProperty
 use crate::prelude::*;
 
 impl ProxyFeatures {
+	#[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_ALL")]
 	pub const ALL: Self = unsafe { Self::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL as u32) };
+
+	/// ProxyFeatures::PROXY_FEATURE_BOUND | ProxyFeatures::PIPEWIRE_OBJECT_FEATURE_INFO
+	#[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL")]
 	pub const MINIMAL: Self = unsafe { Self::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL as u32) };
 }
 

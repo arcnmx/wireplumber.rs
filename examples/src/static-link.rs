@@ -133,7 +133,7 @@ pub async fn main_loop(
 			}
 		}
 		let links = links.into_iter().filter_map(|l| match l {
-			Ok(link) => Some(link.activate_future(ObjectFeatures::from(ProxyFeatures::MINIMAL).into()).map(|res| match res {
+			Ok(link) => Some(link.activate_future(ProxyFeatures::MINIMAL).map(|res| match res {
 				Err(e) if Link::error_is_exists(&e) => info!(domain: LOG_DOMAIN, "{:?}", e),
 				Err(e) => warning!(domain: LOG_DOMAIN, "Failed to activate link: {:?}", e),
 				Ok(_) => (),
