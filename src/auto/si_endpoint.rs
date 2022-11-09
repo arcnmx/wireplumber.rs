@@ -2,6 +2,7 @@
 // DO NOT EDIT
 
 use crate::Object;
+use crate::Properties;
 use crate::SessionItem;
 use glib::object::Cast;
 use glib::object::IsA;
@@ -26,6 +27,10 @@ impl SiEndpoint {
 }
 
 pub trait SiEndpointExt: 'static {
+    #[doc(alias = "wp_si_endpoint_get_properties")]
+    #[doc(alias = "get_properties")]
+    fn properties(&self) -> Option<Properties>;
+
     #[doc(alias = "wp_si_endpoint_get_registration_info")]
     #[doc(alias = "get_registration_info")]
     fn registration_info(&self) -> Option<glib::Variant>;
@@ -35,6 +40,12 @@ pub trait SiEndpointExt: 'static {
 }
 
 impl<O: IsA<SiEndpoint>> SiEndpointExt for O {
+    fn properties(&self) -> Option<Properties> {
+        unsafe {
+            from_glib_full(ffi::wp_si_endpoint_get_properties(self.as_ref().to_glib_none().0))
+        }
+    }
+
     fn registration_info(&self) -> Option<glib::Variant> {
         unsafe {
             from_glib_full(ffi::wp_si_endpoint_get_registration_info(self.as_ref().to_glib_none().0))

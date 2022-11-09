@@ -89,16 +89,16 @@
       };
       gir-rs-0_16 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage rec {
         inherit (gir-rs) postPatch meta pname;
-        version = "unstable-2022-01-24";
+        version = "0.16-2022-10-27";
 
         src = fetchFromGitHub {
           owner = "gtk-rs";
           repo = "gir";
-          rev = "e0d8d8d645b10561f307eabd3160b292bc423e0f";
-          sha256 = "1sg6pcmj1z0gmarh0mfwi9wiqdzk3bx7k5w8wb4q2mgrd0nipbdh";
+          rev = "f92952f3f7ea3c880558d57668129747ee1bec90";
+          sha256 = "sha256-G1h72zVpxOE6JXbZSgAp68wjI75hzU+uhDDku7437D8=";
         };
 
-        cargoSha256 = "0bis550xcibrd3464j2hw7l0z6cfks93h910dsh0vfixpflafx79";
+        cargoSha256 = "sha256-JQNtvLywnxzC4h9ATzNCxpM5erOeLVu0veRIkhLV470=";
         buildType = "debug";
         doCheck = false;
       };

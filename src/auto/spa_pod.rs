@@ -26,12 +26,12 @@ impl SpaPod {
     }
 
     //#[doc(alias = "wp_spa_pod_new_bytes")]
-    //pub fn new_bytes(value: /*Unimplemented*/Option<Fundamental: Pointer>, len: u32) -> SpaPod {
+    //pub fn new_bytes(value: /*Unimplemented*/Option<Basic: Pointer>, len: u32) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_bytes() }
     //}
 
     //#[doc(alias = "wp_spa_pod_new_choice")]
-    //pub fn new_choice(choice_type: &str, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> SpaPod {
+    //pub fn new_choice(choice_type: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_choice() }
     //}
 
@@ -97,7 +97,7 @@ impl SpaPod {
     }
 
     //#[doc(alias = "wp_spa_pod_new_object")]
-    //pub fn new_object(type_name: &str, id_name: &str, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> SpaPod {
+    //pub fn new_object(type_name: &str, id_name: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_object() }
     //}
 
@@ -107,7 +107,7 @@ impl SpaPod {
     //}
 
     //#[doc(alias = "wp_spa_pod_new_pointer")]
-    //pub fn new_pointer(type_name: &str, value: /*Unimplemented*/Option<Fundamental: Pointer>) -> SpaPod {
+    //pub fn new_pointer(type_name: &str, value: /*Unimplemented*/Option<Basic: Pointer>) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_pointer() }
     //}
 
@@ -119,7 +119,7 @@ impl SpaPod {
     }
 
     //#[doc(alias = "wp_spa_pod_new_sequence")]
-    //pub fn new_sequence(unit: u32, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> SpaPod {
+    //pub fn new_sequence(unit: u32, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_sequence() }
     //}
 
@@ -136,12 +136,12 @@ impl SpaPod {
     }
 
     //#[doc(alias = "wp_spa_pod_new_wrap")]
-    //pub fn new_wrap(pod: /*Unimplemented*/Option<Fundamental: Pointer>) -> SpaPod {
+    //pub fn new_wrap(pod: /*Unimplemented*/Option<Basic: Pointer>) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_wrap() }
     //}
 
     //#[doc(alias = "wp_spa_pod_new_wrap_const")]
-    //pub fn new_wrap_const(pod: /*Unimplemented*/Option<Fundamental: Pointer>) -> SpaPod {
+    //pub fn new_wrap_const(pod: /*Unimplemented*/Option<Basic: Pointer>) -> SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_new_wrap_const() }
     //}
 
@@ -198,14 +198,13 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_boolean(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(from_glib(value)) } else { None }
+            if ret { Some(from_glib(value.assume_init())) } else { None }
         }
     }
 
     //#[doc(alias = "wp_spa_pod_get_bytes")]
     //#[doc(alias = "get_bytes")]
-    //pub fn bytes(&self, value: /*Unimplemented*/&mut Option<Fundamental: Pointer>) -> Option<u32> {
+    //pub fn bytes(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> Option<u32> {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_bytes() }
     //}
 
@@ -232,8 +231,7 @@ impl SpaPod {
             let mut ctl_type = ptr::null();
             let mut value = ptr::null_mut();
             let ret = from_glib(ffi::wp_spa_pod_get_control(self.to_glib_none().0, offset.as_mut_ptr(), &mut ctl_type, &mut value));
-            let offset = offset.assume_init();
-            if ret { Some((offset, from_glib_none(ctl_type), from_glib_full(value))) } else { None }
+            if ret { Some((offset.assume_init(), from_glib_none(ctl_type), from_glib_full(value))) } else { None }
         }
     }
 
@@ -243,8 +241,7 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_double(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -254,8 +251,7 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_fd(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -265,8 +261,7 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_float(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -277,9 +272,7 @@ impl SpaPod {
             let mut num = mem::MaybeUninit::uninit();
             let mut denom = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_fraction(self.to_glib_none().0, num.as_mut_ptr(), denom.as_mut_ptr()));
-            let num = num.assume_init();
-            let denom = denom.assume_init();
-            if ret { Some((num, denom)) } else { None }
+            if ret { Some((num.assume_init(), denom.assume_init())) } else { None }
         }
     }
 
@@ -289,8 +282,7 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_id(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -300,8 +292,7 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_int(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -311,14 +302,13 @@ impl SpaPod {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_long(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
     //#[doc(alias = "wp_spa_pod_get_object")]
     //#[doc(alias = "get_object")]
-    //pub fn object(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> Option<glib::GString> {
+    //pub fn object(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<glib::GString> {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_object() }
     //}
 
@@ -330,7 +320,7 @@ impl SpaPod {
 
     //#[doc(alias = "wp_spa_pod_get_pointer")]
     //#[doc(alias = "get_pointer")]
-    //pub fn pointer(&self, value: /*Unimplemented*/&mut Option<Fundamental: Pointer>) -> bool {
+    //pub fn pointer(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_pointer() }
     //}
 
@@ -352,15 +342,13 @@ impl SpaPod {
             let mut width = mem::MaybeUninit::uninit();
             let mut height = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_rectangle(self.to_glib_none().0, width.as_mut_ptr(), height.as_mut_ptr()));
-            let width = width.assume_init();
-            let height = height.assume_init();
-            if ret { Some((width, height)) } else { None }
+            if ret { Some((width.assume_init(), height.assume_init())) } else { None }
         }
     }
 
     //#[doc(alias = "wp_spa_pod_get_spa_pod")]
     //#[doc(alias = "get_spa_pod")]
-    //pub fn spa_pod(&self) -> /*Unimplemented*/Option<Fundamental: Pointer> {
+    //pub fn spa_pod(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_spa_pod() }
     //}
 
@@ -376,7 +364,7 @@ impl SpaPod {
 
     //#[doc(alias = "wp_spa_pod_get_struct")]
     //#[doc(alias = "get_struct")]
-    //pub fn is_struct(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> bool {
+    //pub fn is_struct(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_struct() }
     //}
 
@@ -604,7 +592,7 @@ impl SpaPod {
     }
 
     //#[doc(alias = "wp_spa_pod_set_pointer")]
-    //pub fn set_pointer(&self, type_name: &str, value: /*Unimplemented*/Option<Fundamental: Pointer>) -> bool {
+    //pub fn set_pointer(&self, type_name: &str, value: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_pod_set_pointer() }
     //}
 

@@ -28,7 +28,7 @@ impl ImplModule {
         glib::ObjectExt::property(self, "arguments")
     }
 
-    //pub fn core(&self) -> /*Unimplemented*/Fundamental: Pointer {
+    //pub fn core(&self) -> /*Unimplemented*/Basic: Pointer {
     //    glib::ObjectExt::property(self, "core")
     //}
 
@@ -45,7 +45,7 @@ impl ImplModule {
     }
 
     //#[doc(alias = "pw-impl-module")]
-    //pub fn pw_impl_module(&self) -> /*Unimplemented*/Fundamental: Pointer {
+    //pub fn pw_impl_module(&self) -> /*Unimplemented*/Basic: Pointer {
     //    glib::ObjectExt::property(self, "pw-impl-module")
     //}
 

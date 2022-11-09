@@ -56,7 +56,7 @@ pub trait TransitionExt: 'static {
 
     //#[doc(alias = "wp_transition_get_data")]
     //#[doc(alias = "get_data")]
-    //fn data(&self) -> /*Unimplemented*/Option<Fundamental: Pointer>;
+    //fn data(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
 
     #[doc(alias = "wp_transition_get_source_object")]
     #[doc(alias = "get_source_object")]
@@ -64,19 +64,19 @@ pub trait TransitionExt: 'static {
 
     //#[doc(alias = "wp_transition_get_source_tag")]
     //#[doc(alias = "get_source_tag")]
-    //fn source_tag(&self) -> /*Unimplemented*/Option<Fundamental: Pointer>;
+    //fn source_tag(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
 
     #[doc(alias = "wp_transition_had_error")]
     fn had_error(&self) -> bool;
 
     //#[doc(alias = "wp_transition_is_tagged")]
-    //fn is_tagged(&self, tag: /*Unimplemented*/Option<Fundamental: Pointer>) -> bool;
+    //fn is_tagged(&self, tag: /*Unimplemented*/Option<Basic: Pointer>) -> bool;
 
     //#[doc(alias = "wp_transition_set_data")]
-    //fn set_data(&self, data: /*Unimplemented*/Option<Fundamental: Pointer>);
+    //fn set_data(&self, data: /*Unimplemented*/Option<Basic: Pointer>);
 
     //#[doc(alias = "wp_transition_set_source_tag")]
-    //fn set_source_tag(&self, tag: /*Unimplemented*/Option<Fundamental: Pointer>);
+    //fn set_source_tag(&self, tag: /*Unimplemented*/Option<Basic: Pointer>);
 
     #[doc(alias = "completed")]
     fn connect_completed_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -95,7 +95,7 @@ impl<O: IsA<Transition>> TransitionExt for O {
         }
     }
 
-    //fn data(&self) -> /*Unimplemented*/Option<Fundamental: Pointer> {
+    //fn data(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_transition_get_data() }
     //}
 
@@ -105,7 +105,7 @@ impl<O: IsA<Transition>> TransitionExt for O {
         }
     }
 
-    //fn source_tag(&self) -> /*Unimplemented*/Option<Fundamental: Pointer> {
+    //fn source_tag(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_transition_get_source_tag() }
     //}
 
@@ -115,15 +115,15 @@ impl<O: IsA<Transition>> TransitionExt for O {
         }
     }
 
-    //fn is_tagged(&self, tag: /*Unimplemented*/Option<Fundamental: Pointer>) -> bool {
+    //fn is_tagged(&self, tag: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
     //    unsafe { TODO: call ffi:wp_transition_is_tagged() }
     //}
 
-    //fn set_data(&self, data: /*Unimplemented*/Option<Fundamental: Pointer>) {
+    //fn set_data(&self, data: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_transition_set_data() }
     //}
 
-    //fn set_source_tag(&self, tag: /*Unimplemented*/Option<Fundamental: Pointer>) {
+    //fn set_source_tag(&self, tag: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_transition_set_source_tag() }
     //}
 

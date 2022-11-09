@@ -58,11 +58,7 @@ impl Link {
             let mut input_node = mem::MaybeUninit::uninit();
             let mut input_port = mem::MaybeUninit::uninit();
             ffi::wp_link_get_linked_object_ids(self.to_glib_none().0, output_node.as_mut_ptr(), output_port.as_mut_ptr(), input_node.as_mut_ptr(), input_port.as_mut_ptr());
-            let output_node = output_node.assume_init();
-            let output_port = output_port.assume_init();
-            let input_node = input_node.assume_init();
-            let input_port = input_port.assume_init();
-            (output_node, output_port, input_node, input_port)
+            (output_node.assume_init(), output_port.assume_init(), input_node.assume_init(), input_port.assume_init())
         }
     }
 

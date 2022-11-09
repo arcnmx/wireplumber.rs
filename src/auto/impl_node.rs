@@ -28,12 +28,12 @@ impl ImplNode {
     }
 
     //#[doc(alias = "wp_impl_node_new_wrap")]
-    //pub fn new_wrap(core: &Core, node: /*Unimplemented*/Option<Fundamental: Pointer>) -> ImplNode {
+    //pub fn new_wrap(core: &Core, node: /*Unimplemented*/Option<Basic: Pointer>) -> ImplNode {
     //    unsafe { TODO: call ffi:wp_impl_node_new_wrap() }
     //}
 
     //#[doc(alias = "pw-impl-node")]
-    //pub fn pw_impl_node(&self) -> /*Unimplemented*/Fundamental: Pointer {
+    //pub fn pw_impl_node(&self) -> /*Unimplemented*/Basic: Pointer {
     //    glib::ObjectExt::property(self, "pw-impl-node")
     //}
 }

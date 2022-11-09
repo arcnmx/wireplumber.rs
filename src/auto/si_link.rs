@@ -2,6 +2,7 @@
 // DO NOT EDIT
 
 use crate::Object;
+use crate::Properties;
 use crate::SessionItem;
 use crate::SiLinkable;
 use glib::object::Cast;
@@ -35,6 +36,10 @@ pub trait SiLinkExt: 'static {
     #[doc(alias = "get_out_item")]
     fn out_item(&self) -> Option<SiLinkable>;
 
+    #[doc(alias = "wp_si_link_get_properties")]
+    #[doc(alias = "get_properties")]
+    fn properties(&self) -> Option<Properties>;
+
     #[doc(alias = "wp_si_link_get_registration_info")]
     #[doc(alias = "get_registration_info")]
     fn registration_info(&self) -> Option<glib::Variant>;
@@ -53,6 +58,12 @@ impl<O: IsA<SiLink>> SiLinkExt for O {
     fn out_item(&self) -> Option<SiLinkable> {
         unsafe {
             from_glib_none(ffi::wp_si_link_get_out_item(self.as_ref().to_glib_none().0))
+        }
+    }
+
+    fn properties(&self) -> Option<Properties> {
+        unsafe {
+            from_glib_full(ffi::wp_si_link_get_properties(self.as_ref().to_glib_none().0))
         }
     }
 

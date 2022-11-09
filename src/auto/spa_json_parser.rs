@@ -39,7 +39,7 @@ impl SpaJsonParser {
     }
 
     //#[doc(alias = "wp_spa_json_parser_get")]
-    //pub fn get(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> bool {
+    //pub fn get(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_json_parser_get() }
     //}
 
@@ -49,8 +49,7 @@ impl SpaJsonParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parser_get_boolean(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(from_glib(value)) } else { None }
+            if ret { Some(from_glib(value.assume_init())) } else { None }
         }
     }
 
@@ -60,8 +59,7 @@ impl SpaJsonParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parser_get_float(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -71,8 +69,7 @@ impl SpaJsonParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parser_get_int(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 

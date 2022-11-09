@@ -52,7 +52,7 @@ impl SpaPodBuilder {
     }
 
     //#[doc(alias = "wp_spa_pod_builder_add")]
-    //pub fn add(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) {
+    //pub fn add(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
     //    unsafe { TODO: call ffi:wp_spa_pod_builder_add() }
     //}
 
@@ -64,7 +64,7 @@ impl SpaPodBuilder {
     }
 
     //#[doc(alias = "wp_spa_pod_builder_add_bytes")]
-    //pub fn add_bytes(&self, value: /*Unimplemented*/Option<Fundamental: Pointer>, len: u32) {
+    //pub fn add_bytes(&self, value: /*Unimplemented*/Option<Basic: Pointer>, len: u32) {
     //    unsafe { TODO: call ffi:wp_spa_pod_builder_add_bytes() }
     //}
 
@@ -139,7 +139,7 @@ impl SpaPodBuilder {
     }
 
     //#[doc(alias = "wp_spa_pod_builder_add_pointer")]
-    //pub fn add_pointer(&self, type_name: &str, value: /*Unimplemented*/Option<Fundamental: Pointer>) {
+    //pub fn add_pointer(&self, type_name: &str, value: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_spa_pod_builder_add_pointer() }
     //}
 

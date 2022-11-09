@@ -14,7 +14,7 @@ bitflags! {
     #[doc(alias = "WpDbusFeatures")]
     pub struct DbusFeatures: u32 {
         #[doc(alias = "WP_DBUS_FEATURE_ENABLED")]
-        const ENABLED = ffi::WP_DBUS_FEATURE_ENABLED as u32;
+        const ENABLED = ffi::WP_DBUS_FEATURE_ENABLED as _;
     }
 }
 
@@ -82,15 +82,15 @@ bitflags! {
     #[doc(alias = "WpInitFlags")]
     pub struct InitFlags: u32 {
         #[doc(alias = "WP_INIT_PIPEWIRE")]
-        const PIPEWIRE = ffi::WP_INIT_PIPEWIRE as u32;
+        const PIPEWIRE = ffi::WP_INIT_PIPEWIRE as _;
         #[doc(alias = "WP_INIT_SPA_TYPES")]
-        const SPA_TYPES = ffi::WP_INIT_SPA_TYPES as u32;
+        const SPA_TYPES = ffi::WP_INIT_SPA_TYPES as _;
         #[doc(alias = "WP_INIT_SET_PW_LOG")]
-        const SET_PW_LOG = ffi::WP_INIT_SET_PW_LOG as u32;
+        const SET_PW_LOG = ffi::WP_INIT_SET_PW_LOG as _;
         #[doc(alias = "WP_INIT_SET_GLIB_LOG")]
-        const SET_GLIB_LOG = ffi::WP_INIT_SET_GLIB_LOG as u32;
+        const SET_GLIB_LOG = ffi::WP_INIT_SET_GLIB_LOG as _;
         #[doc(alias = "WP_INIT_ALL")]
-        const ALL = ffi::WP_INIT_ALL as u32;
+        const ALL = ffi::WP_INIT_ALL as _;
     }
 }
 
@@ -146,15 +146,15 @@ bitflags! {
     #[doc(alias = "WpInterestMatch")]
     pub struct InterestMatch: u32 {
         #[doc(alias = "WP_INTEREST_MATCH_NONE")]
-        const NONE = ffi::WP_INTEREST_MATCH_NONE as u32;
+        const NONE = ffi::WP_INTEREST_MATCH_NONE as _;
         #[doc(alias = "WP_INTEREST_MATCH_GTYPE")]
-        const GTYPE = ffi::WP_INTEREST_MATCH_GTYPE as u32;
+        const GTYPE = ffi::WP_INTEREST_MATCH_GTYPE as _;
         #[doc(alias = "WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES")]
-        const PW_GLOBAL_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES as u32;
+        const PW_GLOBAL_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES as _;
         #[doc(alias = "WP_INTEREST_MATCH_PW_PROPERTIES")]
-        const PW_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_PROPERTIES as u32;
+        const PW_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_PROPERTIES as _;
         #[doc(alias = "WP_INTEREST_MATCH_G_PROPERTIES")]
-        const G_PROPERTIES = ffi::WP_INTEREST_MATCH_G_PROPERTIES as u32;
+        const G_PROPERTIES = ffi::WP_INTEREST_MATCH_G_PROPERTIES as _;
     }
 }
 
@@ -210,9 +210,9 @@ bitflags! {
     #[doc(alias = "WpInterestMatchFlags")]
     pub struct InterestMatchFlags: u32 {
         #[doc(alias = "WP_INTEREST_MATCH_FLAGS_NONE")]
-        const NONE = ffi::WP_INTEREST_MATCH_FLAGS_NONE as u32;
+        const NONE = ffi::WP_INTEREST_MATCH_FLAGS_NONE as _;
         #[doc(alias = "WP_INTEREST_MATCH_FLAGS_CHECK_ALL")]
-        const CHECK_ALL = ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL as u32;
+        const CHECK_ALL = ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL as _;
     }
 }
 
@@ -270,7 +270,7 @@ bitflags! {
         #[cfg(any(feature = "v0_4_11", feature = "dox"))]
         #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
         #[doc(alias = "WP_LINK_FEATURE_ESTABLISHED")]
-        const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as u32;
+        const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as _;
 
         const PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
@@ -336,15 +336,15 @@ bitflags! {
     #[doc(alias = "WpLookupDirs")]
     pub struct LookupDirs: u32 {
         #[doc(alias = "WP_LOOKUP_DIR_ENV_CONFIG")]
-        const ENV_CONFIG = ffi::WP_LOOKUP_DIR_ENV_CONFIG as u32;
+        const ENV_CONFIG = ffi::WP_LOOKUP_DIR_ENV_CONFIG as _;
         #[doc(alias = "WP_LOOKUP_DIR_ENV_DATA")]
-        const ENV_DATA = ffi::WP_LOOKUP_DIR_ENV_DATA as u32;
+        const ENV_DATA = ffi::WP_LOOKUP_DIR_ENV_DATA as _;
         #[doc(alias = "WP_LOOKUP_DIR_XDG_CONFIG_HOME")]
-        const XDG_CONFIG_HOME = ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME as u32;
+        const XDG_CONFIG_HOME = ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME as _;
         #[doc(alias = "WP_LOOKUP_DIR_ETC")]
-        const ETC = ffi::WP_LOOKUP_DIR_ETC as u32;
+        const ETC = ffi::WP_LOOKUP_DIR_ETC as _;
         #[doc(alias = "WP_LOOKUP_DIR_PREFIX_SHARE")]
-        const PREFIX_SHARE = ffi::WP_LOOKUP_DIR_PREFIX_SHARE as u32;
+        const PREFIX_SHARE = ffi::WP_LOOKUP_DIR_PREFIX_SHARE as _;
     }
 }
 
@@ -400,7 +400,7 @@ bitflags! {
     #[doc(alias = "WpMetadataFeatures")]
     pub struct MetadataFeatures: u32 {
         #[doc(alias = "WP_METADATA_FEATURE_DATA")]
-        const DATA = ffi::WP_METADATA_FEATURE_DATA as u32;
+        const DATA = ffi::WP_METADATA_FEATURE_DATA as _;
 
         const PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
     }
@@ -458,7 +458,7 @@ bitflags! {
     #[doc(alias = "WpNodeFeatures")]
     pub struct NodeFeatures: u32 {
         #[doc(alias = "WP_NODE_FEATURE_PORTS")]
-        const PORTS = ffi::WP_NODE_FEATURE_PORTS as u32;
+        const PORTS = ffi::WP_NODE_FEATURE_PORTS as _;
 
         const PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
@@ -516,7 +516,7 @@ bitflags! {
     #[doc(alias = "WpPluginFeatures")]
     pub struct PluginFeatures: u32 {
         #[doc(alias = "WP_PLUGIN_FEATURE_ENABLED")]
-        const ENABLED = ffi::WP_PLUGIN_FEATURE_ENABLED as u32;
+        const ENABLED = ffi::WP_PLUGIN_FEATURE_ENABLED as _;
     }
 }
 
@@ -572,22 +572,22 @@ bitflags! {
     #[doc(alias = "WpProxyFeatures")]
     pub struct ProxyFeatures: u32 {
         #[doc(alias = "WP_PROXY_FEATURE_BOUND")]
-        const PROXY_FEATURE_BOUND = ffi::WP_PROXY_FEATURE_BOUND as u32;
+        const PROXY_FEATURE_BOUND = ffi::WP_PROXY_FEATURE_BOUND as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_INFO")]
-        const PIPEWIRE_OBJECT_FEATURE_INFO = ffi::WP_PIPEWIRE_OBJECT_FEATURE_INFO as u32;
+        const PIPEWIRE_OBJECT_FEATURE_INFO = ffi::WP_PIPEWIRE_OBJECT_FEATURE_INFO as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS")]
-        const PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS as u32;
+        const PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT")]
-        const PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT as u32;
+        const PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE")]
-        const PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE as u32;
+        const PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG")]
-        const PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG as u32;
+        const PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE")]
-        const PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE as u32;
+        const PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE as _;
 
         #[doc(alias = "WP_PROXY_FEATURE_CUSTOM_START")]
-        const PROXY_FEATURE_CUSTOM_START = 1u32 << 16;
+        const PROXY_FEATURE_CUSTOM_START = 1 << 16;
         const PROXY_FEATURE_CUSTOM = 0xff00;
     }
 }
@@ -644,9 +644,9 @@ bitflags! {
     #[doc(alias = "WpSessionItemFeatures")]
     pub struct SessionItemFeatures: u32 {
         #[doc(alias = "WP_SESSION_ITEM_FEATURE_ACTIVE")]
-        const ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE as u32;
+        const ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE as _;
         #[doc(alias = "WP_SESSION_ITEM_FEATURE_EXPORTED")]
-        const EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED as u32;
+        const EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED as _;
     }
 }
 
@@ -702,7 +702,7 @@ bitflags! {
     #[doc(alias = "WpSpaDeviceFeatures")]
     pub struct SpaDeviceFeatures: u32 {
         #[doc(alias = "WP_SPA_DEVICE_FEATURE_ENABLED")]
-        const ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED as u32;
+        const ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED as _;
 
         const PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
     }

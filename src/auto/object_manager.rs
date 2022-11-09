@@ -31,7 +31,7 @@ impl ObjectManager {
     }
 
     //#[doc(alias = "wp_object_manager_add_interest")]
-    //pub fn add_interest(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) {
+    //pub fn add_interest(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
     //    unsafe { TODO: call ffi:wp_object_manager_add_interest() }
     //}
 
@@ -58,7 +58,7 @@ impl ObjectManager {
     }
 
     //#[doc(alias = "wp_object_manager_lookup")]
-    //pub fn lookup(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> Option<glib::Object> {
+    //pub fn lookup(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<glib::Object> {
     //    unsafe { TODO: call ffi:wp_object_manager_lookup() }
     //}
 
@@ -70,7 +70,7 @@ impl ObjectManager {
     }
 
     //#[doc(alias = "wp_object_manager_new_filtered_iterator")]
-    //pub fn new_filtered_iterator(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> Option<Iterator> {
+    //pub fn new_filtered_iterator(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<Iterator> {
     //    unsafe { TODO: call ffi:wp_object_manager_new_filtered_iterator() }
     //}
 

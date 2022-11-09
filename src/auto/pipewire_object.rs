@@ -42,7 +42,7 @@ pub trait PipewireObjectExt: 'static {
 
     //#[doc(alias = "wp_pipewire_object_get_native_info")]
     //#[doc(alias = "get_native_info")]
-    //fn native_info(&self) -> /*Unimplemented*/Option<Fundamental: Pointer>;
+    //fn native_info(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
 
     #[doc(alias = "wp_pipewire_object_get_param_info")]
     #[doc(alias = "get_param_info")]
@@ -122,7 +122,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }
     }
 
-    //fn native_info(&self) -> /*Unimplemented*/Option<Fundamental: Pointer> {
+    //fn native_info(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_pipewire_object_get_native_info() }
     //}
 

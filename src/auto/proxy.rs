@@ -36,10 +36,10 @@ pub trait ProxyExt: 'static {
 
     //#[doc(alias = "wp_proxy_get_pw_proxy")]
     //#[doc(alias = "get_pw_proxy")]
-    //fn pw_proxy(&self) -> /*Unimplemented*/Option<Fundamental: Pointer>;
+    //fn pw_proxy(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
 
     //#[doc(alias = "wp_proxy_set_pw_proxy")]
-    //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Fundamental: Pointer>);
+    //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Basic: Pointer>);
 
     #[doc(alias = "bound")]
     fn connect_bound<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -71,16 +71,15 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         unsafe {
             let mut version = mem::MaybeUninit::uninit();
             let ret = from_glib_none(ffi::wp_proxy_get_interface_type(self.as_ref().to_glib_none().0, version.as_mut_ptr()));
-            let version = version.assume_init();
-            (ret, version)
+            (ret, version.assume_init())
         }
     }
 
-    //fn pw_proxy(&self) -> /*Unimplemented*/Option<Fundamental: Pointer> {
+    //fn pw_proxy(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_proxy_get_pw_proxy() }
     //}
 
-    //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Fundamental: Pointer>) {
+    //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_proxy_set_pw_proxy() }
     //}
 

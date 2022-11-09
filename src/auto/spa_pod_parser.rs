@@ -33,7 +33,7 @@ impl SpaPodParser {
     }
 
     //#[doc(alias = "wp_spa_pod_parser_get")]
-    //pub fn get(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> bool {
+    //pub fn get(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_pod_parser_get() }
     //}
 
@@ -43,14 +43,13 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_boolean(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(from_glib(value)) } else { None }
+            if ret { Some(from_glib(value.assume_init())) } else { None }
         }
     }
 
     //#[doc(alias = "wp_spa_pod_parser_get_bytes")]
     //#[doc(alias = "get_bytes")]
-    //pub fn bytes(&self, value: /*Unimplemented*/&mut Option<Fundamental: Pointer>) -> Option<u32> {
+    //pub fn bytes(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> Option<u32> {
     //    unsafe { TODO: call ffi:wp_spa_pod_parser_get_bytes() }
     //}
 
@@ -60,8 +59,7 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_double(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -71,8 +69,7 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_fd(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -82,8 +79,7 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_float(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -94,9 +90,7 @@ impl SpaPodParser {
             let mut num = mem::MaybeUninit::uninit();
             let mut denom = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_fraction(self.to_glib_none().0, num.as_mut_ptr(), denom.as_mut_ptr()));
-            let num = num.assume_init();
-            let denom = denom.assume_init();
-            if ret { Some((num, denom)) } else { None }
+            if ret { Some((num.assume_init(), denom.assume_init())) } else { None }
         }
     }
 
@@ -106,8 +100,7 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_id(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -117,8 +110,7 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_int(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -128,8 +120,7 @@ impl SpaPodParser {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_long(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -143,7 +134,7 @@ impl SpaPodParser {
 
     //#[doc(alias = "wp_spa_pod_parser_get_pointer")]
     //#[doc(alias = "get_pointer")]
-    //pub fn pointer(&self, value: /*Unimplemented*/&mut Option<Fundamental: Pointer>) -> bool {
+    //pub fn pointer(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_pod_parser_get_pointer() }
     //}
 
@@ -154,9 +145,7 @@ impl SpaPodParser {
             let mut width = mem::MaybeUninit::uninit();
             let mut height = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_parser_get_rectangle(self.to_glib_none().0, width.as_mut_ptr(), height.as_mut_ptr()));
-            let width = width.assume_init();
-            let height = height.assume_init();
-            if ret { Some((width, height)) } else { None }
+            if ret { Some((width.assume_init(), height.assume_init())) } else { None }
         }
     }
 

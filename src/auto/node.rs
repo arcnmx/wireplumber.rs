@@ -45,8 +45,7 @@ impl Node {
         unsafe {
             let mut max = mem::MaybeUninit::uninit();
             let ret = ffi::wp_node_get_n_input_ports(self.to_glib_none().0, max.as_mut_ptr());
-            let max = max.assume_init();
-            (ret, max)
+            (ret, max.assume_init())
         }
     }
 
@@ -56,8 +55,7 @@ impl Node {
         unsafe {
             let mut max = mem::MaybeUninit::uninit();
             let ret = ffi::wp_node_get_n_output_ports(self.to_glib_none().0, max.as_mut_ptr());
-            let max = max.assume_init();
-            (ret, max)
+            (ret, max.assume_init())
         }
     }
 
@@ -80,7 +78,7 @@ impl Node {
     }
 
     //#[doc(alias = "wp_node_lookup_port")]
-    //pub fn lookup_port(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> Option<Port> {
+    //pub fn lookup_port(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<Port> {
     //    unsafe { TODO: call ffi:wp_node_lookup_port() }
     //}
 
@@ -92,7 +90,7 @@ impl Node {
     }
 
     //#[doc(alias = "wp_node_new_ports_filtered_iterator")]
-    //pub fn new_ports_filtered_iterator(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> Option<Iterator> {
+    //pub fn new_ports_filtered_iterator(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<Iterator> {
     //    unsafe { TODO: call ffi:wp_node_new_ports_filtered_iterator() }
     //}
 

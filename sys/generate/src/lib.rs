@@ -164,7 +164,7 @@ pub struct WpClientClass {
 
 impl ::std::fmt::Debug for WpClientClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpClientClass @ {:p}", self))
+        f.debug_struct(&format!("WpClientClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -181,7 +181,7 @@ pub struct WpComponentLoaderClass {
 
 impl ::std::fmt::Debug for WpComponentLoaderClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpComponentLoaderClass @ {:p}", self))
+        f.debug_struct(&format!("WpComponentLoaderClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("supports_type", &self.supports_type)
          .field("load", &self.load)
@@ -197,7 +197,7 @@ pub struct WpCoreClass {
 
 impl ::std::fmt::Debug for WpCoreClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpCoreClass @ {:p}", self))
+        f.debug_struct(&format!("WpCoreClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -211,7 +211,7 @@ pub struct WpDbusClass {
 
 impl ::std::fmt::Debug for WpDbusClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpDbusClass @ {:p}", self))
+        f.debug_struct(&format!("WpDbusClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -225,7 +225,7 @@ pub struct WpDeviceClass {
 
 impl ::std::fmt::Debug for WpDeviceClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpDeviceClass @ {:p}", self))
+        f.debug_struct(&format!("WpDeviceClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -240,7 +240,7 @@ pub struct WpEndpointClass {
 
 impl ::std::fmt::Debug for WpEndpointClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpEndpointClass @ {:p}", self))
+        f.debug_struct(&format!("WpEndpointClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -254,7 +254,7 @@ pub struct WpFactoryClass {
 
 impl ::std::fmt::Debug for WpFactoryClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpFactoryClass @ {:p}", self))
+        f.debug_struct(&format!("WpFactoryClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -268,7 +268,7 @@ pub struct WpFeatureActivationTransitionClass {
 
 impl ::std::fmt::Debug for WpFeatureActivationTransitionClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpFeatureActivationTransitionClass @ {:p}", self))
+        f.debug_struct(&format!("WpFeatureActivationTransitionClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -283,7 +283,7 @@ pub struct WpGlobalProxyClass {
 
 impl ::std::fmt::Debug for WpGlobalProxyClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpGlobalProxyClass @ {:p}", self))
+        f.debug_struct(&format!("WpGlobalProxyClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -297,7 +297,7 @@ pub struct WpImplEndpointClass {
 
 impl ::std::fmt::Debug for WpImplEndpointClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplEndpointClass @ {:p}", self))
+        f.debug_struct(&format!("WpImplEndpointClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -311,7 +311,7 @@ pub struct WpImplMetadataClass {
 
 impl ::std::fmt::Debug for WpImplMetadataClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplMetadataClass @ {:p}", self))
+        f.debug_struct(&format!("WpImplMetadataClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -325,7 +325,7 @@ pub struct WpImplModuleClass {
 
 impl ::std::fmt::Debug for WpImplModuleClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplModuleClass @ {:p}", self))
+        f.debug_struct(&format!("WpImplModuleClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -339,7 +339,7 @@ pub struct WpImplNodeClass {
 
 impl ::std::fmt::Debug for WpImplNodeClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplNodeClass @ {:p}", self))
+        f.debug_struct(&format!("WpImplNodeClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -353,7 +353,7 @@ pub struct WpIterator {
 
 impl ::std::fmt::Debug for WpIterator {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpIterator @ {:p}", self))
+        f.debug_struct(&format!("WpIterator @ {self:p}"))
          .finish()
     }
 }
@@ -371,7 +371,7 @@ pub struct WpIteratorMethods {
 
 impl ::std::fmt::Debug for WpIteratorMethods {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpIteratorMethods @ {:p}", self))
+        f.debug_struct(&format!("WpIteratorMethods @ {self:p}"))
          .field("version", &self.version)
          .field("reset", &self.reset)
          .field("next", &self.next)
@@ -390,7 +390,7 @@ pub struct WpLinkClass {
 
 impl ::std::fmt::Debug for WpLinkClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpLinkClass @ {:p}", self))
+        f.debug_struct(&format!("WpLinkClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -405,7 +405,7 @@ pub struct WpMetadataClass {
 
 impl ::std::fmt::Debug for WpMetadataClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpMetadataClass @ {:p}", self))
+        f.debug_struct(&format!("WpMetadataClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -419,7 +419,7 @@ pub struct WpNodeClass {
 
 impl ::std::fmt::Debug for WpNodeClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpNodeClass @ {:p}", self))
+        f.debug_struct(&format!("WpNodeClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -438,7 +438,7 @@ pub struct WpObjectClass {
 
 impl ::std::fmt::Debug for WpObjectClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpObjectClass @ {:p}", self))
+        f.debug_struct(&format!("WpObjectClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("get_supported_features", &self.get_supported_features)
          .field("activate_get_next_step", &self.activate_get_next_step)
@@ -456,7 +456,7 @@ pub struct WpObjectInterest {
 
 impl ::std::fmt::Debug for WpObjectInterest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpObjectInterest @ {:p}", self))
+        f.debug_struct(&format!("WpObjectInterest @ {self:p}"))
          .finish()
     }
 }
@@ -469,7 +469,7 @@ pub struct WpObjectManagerClass {
 
 impl ::std::fmt::Debug for WpObjectManagerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpObjectManagerClass @ {:p}", self))
+        f.debug_struct(&format!("WpObjectManagerClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -491,7 +491,7 @@ pub struct WpPipewireObjectInterface {
 
 impl ::std::fmt::Debug for WpPipewireObjectInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpPipewireObjectInterface @ {:p}", self))
+        f.debug_struct(&format!("WpPipewireObjectInterface @ {self:p}"))
          .field("parent_iface", &self.parent_iface)
          .field("get_native_info", &self.get_native_info)
          .field("get_properties", &self.get_properties)
@@ -515,7 +515,7 @@ pub struct WpPluginClass {
 
 impl ::std::fmt::Debug for WpPluginClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpPluginClass @ {:p}", self))
+        f.debug_struct(&format!("WpPluginClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("enable", &self.enable)
          .field("disable", &self.disable)
@@ -531,7 +531,7 @@ pub struct WpPortClass {
 
 impl ::std::fmt::Debug for WpPortClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpPortClass @ {:p}", self))
+        f.debug_struct(&format!("WpPortClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -545,7 +545,7 @@ pub struct WpProperties {
 
 impl ::std::fmt::Debug for WpProperties {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpProperties @ {:p}", self))
+        f.debug_struct(&format!("WpProperties @ {self:p}"))
          .finish()
     }
 }
@@ -558,7 +558,7 @@ pub struct WpPropertiesItem {
 
 impl ::std::fmt::Debug for WpPropertiesItem {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpPropertiesItem @ {:p}", self))
+        f.debug_struct(&format!("WpPropertiesItem @ {self:p}"))
          .finish()
     }
 }
@@ -578,7 +578,7 @@ pub struct WpProxyClass {
 
 impl ::std::fmt::Debug for WpProxyClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpProxyClass @ {:p}", self))
+        f.debug_struct(&format!("WpProxyClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("pw_iface_type", &self.pw_iface_type)
          .field("pw_iface_version", &self.pw_iface_version)
@@ -606,7 +606,7 @@ pub struct WpSessionItemClass {
 
 impl ::std::fmt::Debug for WpSessionItemClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSessionItemClass @ {:p}", self))
+        f.debug_struct(&format!("WpSessionItemClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("reset", &self.reset)
          .field("configure", &self.configure)
@@ -631,7 +631,7 @@ pub struct WpSiAcquisitionInterface {
 
 impl ::std::fmt::Debug for WpSiAcquisitionInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiAcquisitionInterface @ {:p}", self))
+        f.debug_struct(&format!("WpSiAcquisitionInterface @ {self:p}"))
          .field("interface", &self.interface)
          .field("acquire", &self.acquire)
          .field("acquire_finish", &self.acquire_finish)
@@ -653,7 +653,7 @@ pub struct WpSiAdapterInterface {
 
 impl ::std::fmt::Debug for WpSiAdapterInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiAdapterInterface @ {:p}", self))
+        f.debug_struct(&format!("WpSiAdapterInterface @ {self:p}"))
          .field("interface", &self.interface)
          .field("get_ports_format", &self.get_ports_format)
          .field("set_ports_format", &self.set_ports_format)
@@ -674,7 +674,7 @@ pub struct WpSiEndpointInterface {
 
 impl ::std::fmt::Debug for WpSiEndpointInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiEndpointInterface @ {:p}", self))
+        f.debug_struct(&format!("WpSiEndpointInterface @ {self:p}"))
          .field("interface", &self.interface)
          .field("get_registration_info", &self.get_registration_info)
          .field("get_properties", &self.get_properties)
@@ -692,7 +692,7 @@ pub struct WpSiFactoryClass {
 
 impl ::std::fmt::Debug for WpSiFactoryClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiFactoryClass @ {:p}", self))
+        f.debug_struct(&format!("WpSiFactoryClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("construct", &self.construct)
          .finish()
@@ -712,7 +712,7 @@ pub struct WpSiLinkInterface {
 
 impl ::std::fmt::Debug for WpSiLinkInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiLinkInterface @ {:p}", self))
+        f.debug_struct(&format!("WpSiLinkInterface @ {self:p}"))
          .field("interface", &self.interface)
          .field("get_registration_info", &self.get_registration_info)
          .field("get_properties", &self.get_properties)
@@ -733,7 +733,7 @@ pub struct WpSiLinkableInterface {
 
 impl ::std::fmt::Debug for WpSiLinkableInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiLinkableInterface @ {:p}", self))
+        f.debug_struct(&format!("WpSiLinkableInterface @ {self:p}"))
          .field("interface", &self.interface)
          .field("get_ports", &self.get_ports)
          .field("get_acquisition", &self.get_acquisition)
@@ -749,7 +749,7 @@ pub struct WpSpaDeviceClass {
 
 impl ::std::fmt::Debug for WpSpaDeviceClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaDeviceClass @ {:p}", self))
+        f.debug_struct(&format!("WpSpaDeviceClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -763,7 +763,7 @@ pub struct WpSpaJson {
 
 impl ::std::fmt::Debug for WpSpaJson {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaJson @ {:p}", self))
+        f.debug_struct(&format!("WpSpaJson @ {self:p}"))
          .finish()
     }
 }
@@ -776,7 +776,7 @@ pub struct WpSpaJsonBuilder {
 
 impl ::std::fmt::Debug for WpSpaJsonBuilder {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaJsonBuilder @ {:p}", self))
+        f.debug_struct(&format!("WpSpaJsonBuilder @ {self:p}"))
          .finish()
     }
 }
@@ -789,7 +789,7 @@ pub struct WpSpaJsonParser {
 
 impl ::std::fmt::Debug for WpSpaJsonParser {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaJsonParser @ {:p}", self))
+        f.debug_struct(&format!("WpSpaJsonParser @ {self:p}"))
          .finish()
     }
 }
@@ -802,7 +802,7 @@ pub struct WpSpaPod {
 
 impl ::std::fmt::Debug for WpSpaPod {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaPod @ {:p}", self))
+        f.debug_struct(&format!("WpSpaPod @ {self:p}"))
          .finish()
     }
 }
@@ -815,7 +815,7 @@ pub struct WpSpaPodBuilder {
 
 impl ::std::fmt::Debug for WpSpaPodBuilder {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaPodBuilder @ {:p}", self))
+        f.debug_struct(&format!("WpSpaPodBuilder @ {self:p}"))
          .finish()
     }
 }
@@ -828,7 +828,7 @@ pub struct WpSpaPodParser {
 
 impl ::std::fmt::Debug for WpSpaPodParser {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaPodParser @ {:p}", self))
+        f.debug_struct(&format!("WpSpaPodParser @ {self:p}"))
          .finish()
     }
 }
@@ -841,7 +841,7 @@ pub struct WpStateClass {
 
 impl ::std::fmt::Debug for WpStateClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpStateClass @ {:p}", self))
+        f.debug_struct(&format!("WpStateClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -858,7 +858,7 @@ pub struct WpTransitionClass {
 
 impl ::std::fmt::Debug for WpTransitionClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpTransitionClass @ {:p}", self))
+        f.debug_struct(&format!("WpTransitionClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .field("get_next_step", &self.get_next_step)
          .field("execute_step", &self.execute_step)
@@ -875,7 +875,7 @@ pub struct WpClient {
 
 impl ::std::fmt::Debug for WpClient {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpClient @ {:p}", self))
+        f.debug_struct(&format!("WpClient @ {self:p}"))
          .finish()
     }
 }
@@ -888,7 +888,7 @@ pub struct WpComponentLoader {
 
 impl ::std::fmt::Debug for WpComponentLoader {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpComponentLoader @ {:p}", self))
+        f.debug_struct(&format!("WpComponentLoader @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -902,7 +902,7 @@ pub struct WpCore {
 
 impl ::std::fmt::Debug for WpCore {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpCore @ {:p}", self))
+        f.debug_struct(&format!("WpCore @ {self:p}"))
          .finish()
     }
 }
@@ -915,7 +915,7 @@ pub struct WpDbus {
 
 impl ::std::fmt::Debug for WpDbus {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpDbus @ {:p}", self))
+        f.debug_struct(&format!("WpDbus @ {self:p}"))
          .finish()
     }
 }
@@ -928,7 +928,7 @@ pub struct WpDevice {
 
 impl ::std::fmt::Debug for WpDevice {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpDevice @ {:p}", self))
+        f.debug_struct(&format!("WpDevice @ {self:p}"))
          .finish()
     }
 }
@@ -941,7 +941,7 @@ pub struct WpEndpoint {
 
 impl ::std::fmt::Debug for WpEndpoint {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpEndpoint @ {:p}", self))
+        f.debug_struct(&format!("WpEndpoint @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -955,7 +955,7 @@ pub struct WpFactory {
 
 impl ::std::fmt::Debug for WpFactory {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpFactory @ {:p}", self))
+        f.debug_struct(&format!("WpFactory @ {self:p}"))
          .finish()
     }
 }
@@ -968,7 +968,7 @@ pub struct WpFeatureActivationTransition {
 
 impl ::std::fmt::Debug for WpFeatureActivationTransition {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpFeatureActivationTransition @ {:p}", self))
+        f.debug_struct(&format!("WpFeatureActivationTransition @ {self:p}"))
          .finish()
     }
 }
@@ -981,7 +981,7 @@ pub struct WpGlobalProxy {
 
 impl ::std::fmt::Debug for WpGlobalProxy {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpGlobalProxy @ {:p}", self))
+        f.debug_struct(&format!("WpGlobalProxy @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -995,7 +995,7 @@ pub struct WpImplEndpoint {
 
 impl ::std::fmt::Debug for WpImplEndpoint {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplEndpoint @ {:p}", self))
+        f.debug_struct(&format!("WpImplEndpoint @ {self:p}"))
          .finish()
     }
 }
@@ -1008,7 +1008,7 @@ pub struct WpImplMetadata {
 
 impl ::std::fmt::Debug for WpImplMetadata {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplMetadata @ {:p}", self))
+        f.debug_struct(&format!("WpImplMetadata @ {self:p}"))
          .finish()
     }
 }
@@ -1021,7 +1021,7 @@ pub struct WpImplModule {
 
 impl ::std::fmt::Debug for WpImplModule {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplModule @ {:p}", self))
+        f.debug_struct(&format!("WpImplModule @ {self:p}"))
          .finish()
     }
 }
@@ -1034,7 +1034,7 @@ pub struct WpImplNode {
 
 impl ::std::fmt::Debug for WpImplNode {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplNode @ {:p}", self))
+        f.debug_struct(&format!("WpImplNode @ {self:p}"))
          .finish()
     }
 }
@@ -1047,7 +1047,7 @@ pub struct WpLink {
 
 impl ::std::fmt::Debug for WpLink {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpLink @ {:p}", self))
+        f.debug_struct(&format!("WpLink @ {self:p}"))
          .finish()
     }
 }
@@ -1060,7 +1060,7 @@ pub struct WpMetadata {
 
 impl ::std::fmt::Debug for WpMetadata {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpMetadata @ {:p}", self))
+        f.debug_struct(&format!("WpMetadata @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1074,7 +1074,7 @@ pub struct WpNode {
 
 impl ::std::fmt::Debug for WpNode {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpNode @ {:p}", self))
+        f.debug_struct(&format!("WpNode @ {self:p}"))
          .finish()
     }
 }
@@ -1087,7 +1087,7 @@ pub struct WpObject {
 
 impl ::std::fmt::Debug for WpObject {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpObject @ {:p}", self))
+        f.debug_struct(&format!("WpObject @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1101,7 +1101,7 @@ pub struct WpObjectManager {
 
 impl ::std::fmt::Debug for WpObjectManager {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpObjectManager @ {:p}", self))
+        f.debug_struct(&format!("WpObjectManager @ {self:p}"))
          .finish()
     }
 }
@@ -1114,7 +1114,7 @@ pub struct WpPlugin {
 
 impl ::std::fmt::Debug for WpPlugin {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpPlugin @ {:p}", self))
+        f.debug_struct(&format!("WpPlugin @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1128,7 +1128,7 @@ pub struct WpPort {
 
 impl ::std::fmt::Debug for WpPort {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpPort @ {:p}", self))
+        f.debug_struct(&format!("WpPort @ {self:p}"))
          .finish()
     }
 }
@@ -1141,7 +1141,7 @@ pub struct WpProxy {
 
 impl ::std::fmt::Debug for WpProxy {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpProxy @ {:p}", self))
+        f.debug_struct(&format!("WpProxy @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1155,7 +1155,7 @@ pub struct WpSessionItem {
 
 impl ::std::fmt::Debug for WpSessionItem {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSessionItem @ {:p}", self))
+        f.debug_struct(&format!("WpSessionItem @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1169,7 +1169,7 @@ pub struct WpSiFactory {
 
 impl ::std::fmt::Debug for WpSiFactory {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiFactory @ {:p}", self))
+        f.debug_struct(&format!("WpSiFactory @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1183,7 +1183,7 @@ pub struct WpSpaDevice {
 
 impl ::std::fmt::Debug for WpSpaDevice {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSpaDevice @ {:p}", self))
+        f.debug_struct(&format!("WpSpaDevice @ {self:p}"))
          .finish()
     }
 }
@@ -1196,7 +1196,7 @@ pub struct WpState {
 
 impl ::std::fmt::Debug for WpState {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpState @ {:p}", self))
+        f.debug_struct(&format!("WpState @ {self:p}"))
          .finish()
     }
 }
@@ -1209,7 +1209,7 @@ pub struct WpTransition {
 
 impl ::std::fmt::Debug for WpTransition {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpTransition @ {:p}", self))
+        f.debug_struct(&format!("WpTransition @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -1224,7 +1224,7 @@ pub struct WpPipewireObject {
 
 impl ::std::fmt::Debug for WpPipewireObject {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpPipewireObject @ {:p}", self)
+        write!(f, "WpPipewireObject @ {self:p}")
     }
 }
 
@@ -1236,7 +1236,7 @@ pub struct WpSiAcquisition {
 
 impl ::std::fmt::Debug for WpSiAcquisition {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpSiAcquisition @ {:p}", self)
+        write!(f, "WpSiAcquisition @ {self:p}")
     }
 }
 
@@ -1248,7 +1248,7 @@ pub struct WpSiAdapter {
 
 impl ::std::fmt::Debug for WpSiAdapter {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpSiAdapter @ {:p}", self)
+        write!(f, "WpSiAdapter @ {self:p}")
     }
 }
 
@@ -1260,7 +1260,7 @@ pub struct WpSiEndpoint {
 
 impl ::std::fmt::Debug for WpSiEndpoint {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpSiEndpoint @ {:p}", self)
+        write!(f, "WpSiEndpoint @ {self:p}")
     }
 }
 
@@ -1272,7 +1272,7 @@ pub struct WpSiLink {
 
 impl ::std::fmt::Debug for WpSiLink {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpSiLink @ {:p}", self)
+        write!(f, "WpSiLink @ {self:p}")
     }
 }
 
@@ -1284,7 +1284,7 @@ pub struct WpSiLinkable {
 
 impl ::std::fmt::Debug for WpSiLinkable {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpSiLinkable @ {:p}", self)
+        write!(f, "WpSiLinkable @ {self:p}")
     }
 }
 

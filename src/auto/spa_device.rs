@@ -35,7 +35,7 @@ impl SpaDevice {
     }
 
     //#[doc(alias = "wp_spa_device_new_wrap")]
-    //pub fn new_wrap(core: &Core, spa_device_handle: /*Unimplemented*/Option<Fundamental: Pointer>, properties: Option<&Properties>) -> SpaDevice {
+    //pub fn new_wrap(core: &Core, spa_device_handle: /*Unimplemented*/Option<Basic: Pointer>, properties: Option<&Properties>) -> SpaDevice {
     //    unsafe { TODO: call ffi:wp_spa_device_new_wrap() }
     //}
 
@@ -72,7 +72,7 @@ impl SpaDevice {
     }
 
     //#[doc(alias = "spa-device-handle")]
-    //pub fn spa_device_handle(&self) -> /*Unimplemented*/Fundamental: Pointer {
+    //pub fn spa_device_handle(&self) -> /*Unimplemented*/Basic: Pointer {
     //    glib::ObjectExt::property(self, "spa-device-handle")
     //}
 

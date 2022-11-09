@@ -21,7 +21,7 @@ glib::wrapper! {
 
 impl SpaJson {
     //#[doc(alias = "wp_spa_json_new_array")]
-    //pub fn new_array(format: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> SpaJson {
+    //pub fn new_array(format: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaJson {
     //    unsafe { TODO: call ffi:wp_spa_json_new_array() }
     //}
 
@@ -57,7 +57,7 @@ impl SpaJson {
     #[doc(alias = "wp_spa_json_new_from_stringn")]
     #[doc(alias = "new_from_stringn")]
     pub fn from_stringn(json_str: &str) -> SpaJson {
-        let len = json_str.len() as usize;
+        let len = json_str.len() as _;
         unsafe {
             from_glib_full(ffi::wp_spa_json_new_from_stringn(json_str.to_glib_none().0, len))
         }
@@ -78,7 +78,7 @@ impl SpaJson {
     }
 
     //#[doc(alias = "wp_spa_json_new_object")]
-    //pub fn new_object(key: Option<&str>, format: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> SpaJson {
+    //pub fn new_object(key: Option<&str>, format: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaJson {
     //    unsafe { TODO: call ffi:wp_spa_json_new_object() }
     //}
 
@@ -95,7 +95,7 @@ impl SpaJson {
     }
 
     //#[doc(alias = "wp_spa_json_new_wrap")]
-    //pub fn new_wrap(json: /*Unimplemented*/Option<Fundamental: Pointer>) -> SpaJson {
+    //pub fn new_wrap(json: /*Unimplemented*/Option<Basic: Pointer>) -> SpaJson {
     //    unsafe { TODO: call ffi:wp_spa_json_new_wrap() }
     //}
 
@@ -133,7 +133,7 @@ impl SpaJson {
 
     //#[doc(alias = "wp_spa_json_get_spa_json")]
     //#[doc(alias = "get_spa_json")]
-    //pub fn spa_json(&self) -> /*Unimplemented*/Option<Fundamental: Pointer> {
+    //pub fn spa_json(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_spa_json_get_spa_json() }
     //}
 
@@ -201,7 +201,7 @@ impl SpaJson {
     }
 
     //#[doc(alias = "wp_spa_json_object_get")]
-    //pub fn object_get(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> bool {
+    //pub fn object_get(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_json_object_get() }
     //}
 
@@ -211,7 +211,7 @@ impl SpaJson {
     //}
 
     //#[doc(alias = "wp_spa_json_parse_array")]
-    //pub fn parse_array(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> bool {
+    //pub fn parse_array(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_json_parse_array() }
     //}
 
@@ -225,8 +225,7 @@ impl SpaJson {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parse_boolean(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(from_glib(value)) } else { None }
+            if ret { Some(from_glib(value.assume_init())) } else { None }
         }
     }
 
@@ -235,8 +234,7 @@ impl SpaJson {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parse_float(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
@@ -245,13 +243,12 @@ impl SpaJson {
         unsafe {
             let mut value = mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parse_int(self.to_glib_none().0, value.as_mut_ptr()));
-            let value = value.assume_init();
-            if ret { Some(value) } else { None }
+            if ret { Some(value.assume_init()) } else { None }
         }
     }
 
     //#[doc(alias = "wp_spa_json_parse_object")]
-    //pub fn parse_object(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> bool {
+    //pub fn parse_object(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_json_parse_object() }
     //}
 

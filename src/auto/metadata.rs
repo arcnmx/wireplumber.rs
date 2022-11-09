@@ -36,8 +36,7 @@ impl Metadata {
             let mut type_ = ptr::null();
             let mut value = ptr::null();
             ffi::wp_metadata_iterator_item_extract(item.to_glib_none().0, subject.as_mut_ptr(), &mut key, &mut type_, &mut value);
-            let subject = subject.assume_init();
-            (subject, from_glib_none(key), from_glib_none(type_), from_glib_none(value))
+            (subject.assume_init(), from_glib_none(key), from_glib_none(type_), from_glib_none(value))
         }
     }
 }

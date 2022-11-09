@@ -23,7 +23,7 @@ glib::wrapper! {
 
 impl ObjectInterest {
     //#[doc(alias = "wp_object_interest_new")]
-    //pub fn new(gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> ObjectInterest {
+    //pub fn new(gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> ObjectInterest {
     //    unsafe { TODO: call ffi:wp_object_interest_new() }
     //}
 
@@ -47,7 +47,7 @@ impl ObjectInterest {
     }
 
     //#[doc(alias = "wp_object_interest_matches")]
-    //pub fn matches(&self, object: /*Unimplemented*/Option<Fundamental: Pointer>) -> bool {
+    //pub fn matches(&self, object: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
     //    unsafe { TODO: call ffi:wp_object_interest_matches() }
     //}
 

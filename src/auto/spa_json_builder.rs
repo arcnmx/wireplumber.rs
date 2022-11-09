@@ -31,7 +31,7 @@ impl SpaJsonBuilder {
     }
 
     //#[doc(alias = "wp_spa_json_builder_add")]
-    //pub fn add(&self, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) {
+    //pub fn add(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
     //    unsafe { TODO: call ffi:wp_spa_json_builder_add() }
     //}
 
