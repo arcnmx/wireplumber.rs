@@ -238,7 +238,7 @@
 }
 
 <span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;installed&quot; </span><span class="kw">as </span>Installed&gt; <span class="kw">for </span><span class="kw">crate</span>::registry::ObjectManager {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;installed&quot; </span><span class="kw">as </span>ManagerInstalled&gt; <span class="kw">for </span><span class="kw">crate</span>::registry::ObjectManager {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_INSTALLED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
@@ -267,7 +267,7 @@
 }
 
 <span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;bound&quot; </span><span class="kw">as </span>Bound&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;bound&quot; </span><span class="kw">as </span>PwProxyBound&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_BOUND};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, u32)
@@ -275,20 +275,20 @@
 }
 <span class="macro">def_signal! </span>{
 	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-created&quot; </span><span class="kw">as </span>PwProxyCreated&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
-		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PROXY_CREATED};
+		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PW_PROXY_CREATED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;pipewire_sys::pw_proxy&gt;)
 	}
 }
 <span class="macro">def_signal! </span>{
 	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-destroyed&quot; </span><span class="kw">as </span>PwProxyDestroyed&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
-		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PROXY_DESTROYED};
+		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PW_PROXY_DESTROYED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;pipewire_sys::pw_proxy&gt;)
 	}
 }
 <span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;error&quot; </span><span class="kw">as </span>Error&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;error&quot; </span><span class="kw">as </span>PwProxyError&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ERROR};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, i32, i32, String)
@@ -296,7 +296,7 @@
 }
 
 <span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;params-changed&quot; </span><span class="kw">as </span>ParamsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::PipewireObject {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;params-changed&quot; </span><span class="kw">as </span>PwObjectParamsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::PipewireObject {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PARAMS_CHANGED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, String)
@@ -304,7 +304,7 @@
 }
 
 <span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;ports-changed&quot; </span><span class="kw">as </span>PortsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Node {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;ports-changed&quot; </span><span class="kw">as </span>NodePortsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Node {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PORTS_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
@@ -329,7 +329,7 @@
 }
 
 <span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;changed&quot; </span><span class="kw">as </span>Changed&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Metadata {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;changed&quot; </span><span class="kw">as </span>MetadataChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Metadata {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, u32, String, String, String)
