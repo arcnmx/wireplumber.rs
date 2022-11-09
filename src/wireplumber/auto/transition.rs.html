@@ -197,7 +197,7 @@
 
     <span class="comment">//#[doc(alias = &quot;wp_transition_get_data&quot;)]
     //#[doc(alias = &quot;get_data&quot;)]
-    //fn data(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;;
+    //fn data(&amp;self) -&gt; /*Unimplemented*/Option&lt;Basic: Pointer&gt;;
 
     </span><span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_get_source_object&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_source_object&quot;</span>)]
@@ -205,19 +205,19 @@
 
     <span class="comment">//#[doc(alias = &quot;wp_transition_get_source_tag&quot;)]
     //#[doc(alias = &quot;get_source_tag&quot;)]
-    //fn source_tag(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;;
+    //fn source_tag(&amp;self) -&gt; /*Unimplemented*/Option&lt;Basic: Pointer&gt;;
 
     </span><span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_had_error&quot;</span>)]
     </span><span class="kw">fn </span>had_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="comment">//#[doc(alias = &quot;wp_transition_is_tagged&quot;)]
-    //fn is_tagged(&amp;self, tag: /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;) -&gt; bool;
+    //fn is_tagged(&amp;self, tag: /*Unimplemented*/Option&lt;Basic: Pointer&gt;) -&gt; bool;
 
     //#[doc(alias = &quot;wp_transition_set_data&quot;)]
-    //fn set_data(&amp;self, data: /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;);
+    //fn set_data(&amp;self, data: /*Unimplemented*/Option&lt;Basic: Pointer&gt;);
 
     //#[doc(alias = &quot;wp_transition_set_source_tag&quot;)]
-    //fn set_source_tag(&amp;self, tag: /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;);
+    //fn set_source_tag(&amp;self, tag: /*Unimplemented*/Option&lt;Basic: Pointer&gt;);
 
     </span><span class="attr">#[doc(alias = <span class="string">&quot;completed&quot;</span>)]
     </span><span class="kw">fn </span>connect_completed_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
@@ -236,7 +236,7 @@
         }
     }
 
-    <span class="comment">//fn data(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt; {
+    <span class="comment">//fn data(&amp;self) -&gt; /*Unimplemented*/Option&lt;Basic: Pointer&gt; {
     //    unsafe { TODO: call ffi:wp_transition_get_data() }
     //}
 
@@ -246,7 +246,7 @@
         }
     }
 
-    <span class="comment">//fn source_tag(&amp;self) -&gt; /*Unimplemented*/Option&lt;Fundamental: Pointer&gt; {
+    <span class="comment">//fn source_tag(&amp;self) -&gt; /*Unimplemented*/Option&lt;Basic: Pointer&gt; {
     //    unsafe { TODO: call ffi:wp_transition_get_source_tag() }
     //}
 
@@ -256,15 +256,15 @@
         }
     }
 
-    <span class="comment">//fn is_tagged(&amp;self, tag: /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;) -&gt; bool {
+    <span class="comment">//fn is_tagged(&amp;self, tag: /*Unimplemented*/Option&lt;Basic: Pointer&gt;) -&gt; bool {
     //    unsafe { TODO: call ffi:wp_transition_is_tagged() }
     //}
 
-    //fn set_data(&amp;self, data: /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;) {
+    //fn set_data(&amp;self, data: /*Unimplemented*/Option&lt;Basic: Pointer&gt;) {
     //    unsafe { TODO: call ffi:wp_transition_set_data() }
     //}
 
-    //fn set_source_tag(&amp;self, tag: /*Unimplemented*/Option&lt;Fundamental: Pointer&gt;) {
+    //fn set_source_tag(&amp;self, tag: /*Unimplemented*/Option&lt;Basic: Pointer&gt;) {
     //    unsafe { TODO: call ffi:wp_transition_set_source_tag() }
     //}
 

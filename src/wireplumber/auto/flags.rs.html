@@ -772,7 +772,7 @@
     #[doc(alias = <span class="string">&quot;WpDbusFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>DbusFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_DBUS_FEATURE_ENABLED&quot;</span>)]
-        </span><span class="kw">const </span>ENABLED = ffi::WP_DBUS_FEATURE_ENABLED <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ENABLED = ffi::WP_DBUS_FEATURE_ENABLED <span class="kw">as _</span>;
     }
 }
 
@@ -840,15 +840,15 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpInitFlags&quot;</span>)]
     </span><span class="kw">pub struct </span>InitFlags: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INIT_PIPEWIRE&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE = ffi::WP_INIT_PIPEWIRE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE = ffi::WP_INIT_PIPEWIRE <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INIT_SPA_TYPES&quot;</span>)]
-        </span><span class="kw">const </span>SPA_TYPES = ffi::WP_INIT_SPA_TYPES <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>SPA_TYPES = ffi::WP_INIT_SPA_TYPES <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INIT_SET_PW_LOG&quot;</span>)]
-        </span><span class="kw">const </span>SET_PW_LOG = ffi::WP_INIT_SET_PW_LOG <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>SET_PW_LOG = ffi::WP_INIT_SET_PW_LOG <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INIT_SET_GLIB_LOG&quot;</span>)]
-        </span><span class="kw">const </span>SET_GLIB_LOG = ffi::WP_INIT_SET_GLIB_LOG <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>SET_GLIB_LOG = ffi::WP_INIT_SET_GLIB_LOG <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INIT_ALL&quot;</span>)]
-        </span><span class="kw">const </span>ALL = ffi::WP_INIT_ALL <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ALL = ffi::WP_INIT_ALL <span class="kw">as _</span>;
     }
 }
 
@@ -904,15 +904,15 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpInterestMatch&quot;</span>)]
     </span><span class="kw">pub struct </span>InterestMatch: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_NONE&quot;</span>)]
-        </span><span class="kw">const </span>NONE = ffi::WP_INTEREST_MATCH_NONE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>NONE = ffi::WP_INTEREST_MATCH_NONE <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_GTYPE&quot;</span>)]
-        </span><span class="kw">const </span>GTYPE = ffi::WP_INTEREST_MATCH_GTYPE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>GTYPE = ffi::WP_INTEREST_MATCH_GTYPE <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES&quot;</span>)]
-        </span><span class="kw">const </span>PW_GLOBAL_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PW_GLOBAL_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_PW_PROPERTIES&quot;</span>)]
-        </span><span class="kw">const </span>PW_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_PROPERTIES <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PW_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_PROPERTIES <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_G_PROPERTIES&quot;</span>)]
-        </span><span class="kw">const </span>G_PROPERTIES = ffi::WP_INTEREST_MATCH_G_PROPERTIES <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>G_PROPERTIES = ffi::WP_INTEREST_MATCH_G_PROPERTIES <span class="kw">as _</span>;
     }
 }
 
@@ -968,9 +968,9 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpInterestMatchFlags&quot;</span>)]
     </span><span class="kw">pub struct </span>InterestMatchFlags: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_FLAGS_NONE&quot;</span>)]
-        </span><span class="kw">const </span>NONE = ffi::WP_INTEREST_MATCH_FLAGS_NONE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>NONE = ffi::WP_INTEREST_MATCH_FLAGS_NONE <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_INTEREST_MATCH_FLAGS_CHECK_ALL&quot;</span>)]
-        </span><span class="kw">const </span>CHECK_ALL = ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>CHECK_ALL = ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL <span class="kw">as _</span>;
     }
 }
 
@@ -1028,7 +1028,7 @@
         <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
         #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
         #[doc(alias = <span class="string">&quot;WP_LINK_FEATURE_ESTABLISHED&quot;</span>)]
-        </span><span class="kw">const </span>ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED <span class="kw">as _</span>;
 
         <span class="kw">const </span>PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
@@ -1094,15 +1094,15 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpLookupDirs&quot;</span>)]
     </span><span class="kw">pub struct </span>LookupDirs: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_LOOKUP_DIR_ENV_CONFIG&quot;</span>)]
-        </span><span class="kw">const </span>ENV_CONFIG = ffi::WP_LOOKUP_DIR_ENV_CONFIG <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ENV_CONFIG = ffi::WP_LOOKUP_DIR_ENV_CONFIG <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_LOOKUP_DIR_ENV_DATA&quot;</span>)]
-        </span><span class="kw">const </span>ENV_DATA = ffi::WP_LOOKUP_DIR_ENV_DATA <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ENV_DATA = ffi::WP_LOOKUP_DIR_ENV_DATA <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_LOOKUP_DIR_XDG_CONFIG_HOME&quot;</span>)]
-        </span><span class="kw">const </span>XDG_CONFIG_HOME = ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>XDG_CONFIG_HOME = ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_LOOKUP_DIR_ETC&quot;</span>)]
-        </span><span class="kw">const </span>ETC = ffi::WP_LOOKUP_DIR_ETC <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ETC = ffi::WP_LOOKUP_DIR_ETC <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_LOOKUP_DIR_PREFIX_SHARE&quot;</span>)]
-        </span><span class="kw">const </span>PREFIX_SHARE = ffi::WP_LOOKUP_DIR_PREFIX_SHARE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PREFIX_SHARE = ffi::WP_LOOKUP_DIR_PREFIX_SHARE <span class="kw">as _</span>;
     }
 }
 
@@ -1158,7 +1158,7 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpMetadataFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>MetadataFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_METADATA_FEATURE_DATA&quot;</span>)]
-        </span><span class="kw">const </span>DATA = ffi::WP_METADATA_FEATURE_DATA <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>DATA = ffi::WP_METADATA_FEATURE_DATA <span class="kw">as _</span>;
 
         <span class="kw">const </span>PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
     }
@@ -1216,7 +1216,7 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpNodeFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>NodeFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_FEATURE_PORTS&quot;</span>)]
-        </span><span class="kw">const </span>PORTS = ffi::WP_NODE_FEATURE_PORTS <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PORTS = ffi::WP_NODE_FEATURE_PORTS <span class="kw">as _</span>;
 
         <span class="kw">const </span>PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
@@ -1274,7 +1274,7 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpPluginFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>PluginFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PLUGIN_FEATURE_ENABLED&quot;</span>)]
-        </span><span class="kw">const </span>ENABLED = ffi::WP_PLUGIN_FEATURE_ENABLED <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ENABLED = ffi::WP_PLUGIN_FEATURE_ENABLED <span class="kw">as _</span>;
     }
 }
 
@@ -1330,22 +1330,22 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpProxyFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>ProxyFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PROXY_FEATURE_BOUND&quot;</span>)]
-        </span><span class="kw">const </span>PROXY_FEATURE_BOUND = ffi::WP_PROXY_FEATURE_BOUND <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PROXY_FEATURE_BOUND = ffi::WP_PROXY_FEATURE_BOUND <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURE_INFO&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_INFO = ffi::WP_PIPEWIRE_OBJECT_FEATURE_INFO <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_INFO = ffi::WP_PIPEWIRE_OBJECT_FEATURE_INFO <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE&quot;</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE <span class="kw">as _</span>;
 
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_PROXY_FEATURE_CUSTOM_START&quot;</span>)]
-        </span><span class="kw">const </span>PROXY_FEATURE_CUSTOM_START = <span class="number">1u32 </span>&lt;&lt; <span class="number">16</span>;
+        </span><span class="kw">const </span>PROXY_FEATURE_CUSTOM_START = <span class="number">1 </span>&lt;&lt; <span class="number">16</span>;
         <span class="kw">const </span>PROXY_FEATURE_CUSTOM = <span class="number">0xff00</span>;
     }
 }
@@ -1402,9 +1402,9 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpSessionItemFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>SessionItemFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_SESSION_ITEM_FEATURE_ACTIVE&quot;</span>)]
-        </span><span class="kw">const </span>ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_SESSION_ITEM_FEATURE_EXPORTED&quot;</span>)]
-        </span><span class="kw">const </span>EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED <span class="kw">as _</span>;
     }
 }
 
@@ -1460,7 +1460,7 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;WpSpaDeviceFeatures&quot;</span>)]
     </span><span class="kw">pub struct </span>SpaDeviceFeatures: u32 {
         <span class="attr">#[doc(alias = <span class="string">&quot;WP_SPA_DEVICE_FEATURE_ENABLED&quot;</span>)]
-        </span><span class="kw">const </span>ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED <span class="kw">as </span>u32;
+        </span><span class="kw">const </span>ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED <span class="kw">as _</span>;
 
         <span class="kw">const </span>PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
     }

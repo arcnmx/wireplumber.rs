@@ -64,13 +64,13 @@
     }
 
     <span class="comment">//#[doc(alias = &quot;wp_client_update_permissions&quot;)]
-    //pub fn update_permissions(&amp;self, n_perm: u32, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) {
+    //pub fn update_permissions(&amp;self, n_perm: u32, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
     //    unsafe { TODO: call ffi:wp_client_update_permissions() }
     //}
 
     </span><span class="attr">#[doc(alias = <span class="string">&quot;wp_client_update_permissions_array&quot;</span>)]
     </span><span class="kw">pub fn </span>update_permissions_array(<span class="kw-2">&amp;</span><span class="self">self</span>, permissions: <span class="kw-2">&amp;</span>[u64]) {
-        <span class="kw">let </span>n_perm = permissions.len() <span class="kw">as </span>u32;
+        <span class="kw">let </span>n_perm = permissions.len() <span class="kw">as _</span>;
         <span class="kw">unsafe </span>{
             ffi::wp_client_update_permissions_array(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, n_perm, permissions.to_glib_none().<span class="number">0</span>);
         }
