@@ -166,15 +166,15 @@
       '';
     } { };
     lib = with nixlib; {
-      featureForVersion = version:
-        if versionAtLeast version "0.4.12" then "v0_4_12"
-        else if versionAtLeast version "0.4.11" then "v0_4_11"
-        else if versionAtLeast version "0.4.10" then "v0_4_10"
-        else if versionAtLeast version "0.4.8" then "v0_4_8"
-        else if versionAtLeast version "0.4.6" then "v0_4_6"
-        else if versionAtLeast version "0.4.5" then "v0_4_5"
-        else if versionAtLeast version "0.4.3" then "v0_4_3"
-        else null;
+      featureVersions = [
+        "0.4.3" "0.4.5"
+        "0.4.6"
+        "0.4.8" "0.4.10"
+        "0.4.11" "0.4.12"
+      ];
+      featureForVersion = version: mapNullable (v:
+        "v" + replaceStrings [ "." ] [ "_" ] v
+      ) (findFirst (versionAtLeast version) null (reverseList inputs.self.lib.featureVersions));
     };
     config = rec {
       name = "wireplumber-rust";
