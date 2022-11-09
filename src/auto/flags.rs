@@ -292,22 +292,10 @@ impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
     }
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
-impl StaticType for LinkFeatures {
-    fn static_type() -> Type {
-        unsafe { from_glib(ffi::wp_link_features_get_type()) }
-    }
-}
-
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
 impl glib::value::ValueType for LinkFeatures {
     type Type = Self;
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
 unsafe impl<'a> FromValue<'a> for LinkFeatures {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
@@ -316,8 +304,6 @@ unsafe impl<'a> FromValue<'a> for LinkFeatures {
     }
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
 impl ToValue for LinkFeatures {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();

@@ -1,4 +1,4 @@
-use crate::pw::{self, Link, Node, Port, Properties, Direction};
+use crate::pw::{self, Link, LinkFeatures, Node, Port, Properties, Direction};
 use crate::core::Core;
 use crate::prelude::*;
 
@@ -47,5 +47,19 @@ impl LinkTarget for Port {
 			_ => unreachable!(),
 		}
 		Ok(())
+	}
+}
+
+#[cfg(feature = "v0_4_11")]
+impl StaticType for LinkFeatures {
+	fn static_type() -> Type {
+		unsafe { from_glib(ffi::wp_link_features_get_type()) }
+	}
+}
+
+#[cfg(not(feature = "v0_4_11"))]
+impl StaticType for LinkFeatures {
+	fn static_type() -> Type {
+		pw::ProxyFeatures::static_type()
 	}
 }

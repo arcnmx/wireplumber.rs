@@ -1,5 +1,5 @@
 use ::ffi::WpSpaType;
-use crate::{SpaIdTable, SpaIdValue};
+use crate::spa::{SpaIdTable, SpaIdValue};
 use crate::prelude::*;
 
 pub use pipewire_sys as ffi;

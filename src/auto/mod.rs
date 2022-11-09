@@ -99,9 +99,6 @@ pub use self::si_linkable::SiLinkable;
 mod spa_device;
 pub use self::spa_device::SpaDevice;
 
-mod spa_type;
-pub use self::spa_type::SpaType;
-
 mod state;
 pub use self::state::State;
 

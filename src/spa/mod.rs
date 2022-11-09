@@ -9,8 +9,8 @@
 //! C API docs for:
 //! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)
 //! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)
+
 pub use crate::auto::{
-	SpaType,
 	SpaPod,
 	SpaPodParser,
 	SpaPodBuilder,
@@ -45,6 +45,7 @@ mod traits;
 #[cfg(feature = "libspa")]
 mod libspa_pod;
 
+pub use type_::SpaType;
 pub use id_table::SpaIdTable;
 pub use id_value::SpaIdValue;
 #[cfg(feature = "libspa")]

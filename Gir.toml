@@ -24,7 +24,6 @@ generate = [
 	"Wp.ProxyFeatures",
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
-	"Wp.LinkFeatures",
 	"Wp.Object",
 	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Node", "Wp.Link", "Wp.Port",
 	"Wp.ObjectManager",
@@ -48,12 +47,8 @@ manual = [
 
 [[object]]
 name = "Wp.SpaType"
-status = "generate"
-fundamental_type = false # it technically may be, but gir rquires it to be Shared<> so :(
-boxed_inline = true
+status = "manual"
 conversion_type = "scalar"
-	[[object.derive]]
-	name = "PartialEq, Eq, PartialOrd, Ord, Hash"
 
 [[object]]
 name = "Wp.Core"
@@ -174,3 +169,14 @@ generate_display_trait = true
 name = "Wp.TransitionStep"
 status = "generate"
 generate_display_trait = true
+
+# flags
+
+[[object]]
+name = "Wp.LinkFeatures"
+status = "generate"
+version = "" # fails to parse, so removes cfg
+	[[object.member]]
+	# instead, apply the version cfg to all defined bits instead
+	pattern = ".*"
+	version = "0.4.11"

@@ -98,7 +98,7 @@ pub(crate) use crate::{
 	pw::{PipewireObject, Proxy, GlobalProxy, Port, Metadata, Properties, Endpoint, Direction, NodeState},
 	core::{Object, ObjectFeatures},
 	plugin::Plugin,
-	spa::{SpaIdTable, SpaIdValue, SpaPod},
+	spa::SpaPod,
 	session::{SessionItem, SiLink, SiLinkable, SiEndpoint, SiAcquisition},
 	registry::{ObjectManager, ObjectInterest, InterestMatch, InterestMatchFlags, ConstraintType, ConstraintVerb},
 	util::{WpIterator as Iterator, Transition},

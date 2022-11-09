@@ -1,5 +1,15 @@
-use crate::spa::SpaType;
+use crate::spa::SpaIdTable;
 use crate::prelude::*;
+
+glib::wrapper! {
+	#[doc(alias = "WpSpaType")]
+	#[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
+	pub struct SpaType(BoxedInline<ffi::WpSpaType>);
+
+	match fn {
+		type_ => || ffi::wp_spa_type_get_type(),
+	}
+}
 
 impl SpaType {
 	pub const ARRAY: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Array) };
@@ -65,6 +75,65 @@ impl SpaType {
 			libspa_sys::spa_types.iter().map(|ty|
 				Self::from_id_unchecked(ty.type_)
 			)
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_get_object_id_values_table")]
+	#[doc(alias = "get_object_id_values_table")]
+	pub fn object_id_values_table(&self) -> Option<SpaIdTable> {
+		unsafe {
+			from_glib(ffi::wp_spa_type_get_object_id_values_table(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_get_values_table")]
+	#[doc(alias = "get_values_table")]
+	pub fn values_table(&self) -> Option<SpaIdTable> {
+		unsafe {
+			from_glib(ffi::wp_spa_type_get_values_table(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_is_fundamental")]
+	pub fn is_fundamental(&self) -> bool {
+		unsafe {
+			from_glib(ffi::wp_spa_type_is_fundamental(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_is_id")]
+	pub fn is_id(&self) -> bool {
+		unsafe {
+			from_glib(ffi::wp_spa_type_is_id(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_is_object")]
+	pub fn is_object(&self) -> bool {
+		unsafe {
+			from_glib(ffi::wp_spa_type_is_object(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_name")]
+	pub fn name(&self) -> Option<glib::GString> {
+		unsafe {
+			from_glib_none(ffi::wp_spa_type_name(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_parent")]
+	#[must_use]
+	pub fn parent(&self) -> Option<SpaType> {
+		unsafe {
+			from_glib(ffi::wp_spa_type_parent(self.into_glib()))
+		}
+	}
+
+	#[doc(alias = "wp_spa_type_from_name")]
+	pub fn from_name(name: &str) -> Option<SpaType> {
+		unsafe {
+			from_glib(ffi::wp_spa_type_from_name(name.to_glib_none().0))
 		}
 	}
 }
