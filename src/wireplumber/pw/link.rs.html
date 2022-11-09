@@ -49,12 +49,8 @@
 <span id="49">49</span>
 <span id="50">50</span>
 <span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Link, Node, Port, Properties, Direction, ProxyFeatures};
-<span class="kw">use </span><span class="kw">crate</span>::core::{Core, Object};
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Link, Node, Port, Properties, Direction};
+<span class="kw">use </span><span class="kw">crate</span>::core::Core;
 <span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">impl </span>Link {
@@ -65,10 +61,6 @@
 
 		<span class="self">Self</span>::from_factory(core, <span class="string">&quot;link-factory&quot;</span>, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>props))
 			.ok_or_else(|| Error::new(LibraryErrorEnum::OperationFailed, <span class="string">&quot;factory did not produce a link???&quot;</span>))
-	}
-
-	<span class="kw">pub fn </span>activate_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; {
-		AsRef::&lt;Object&gt;::as_ref(<span class="self">self</span>).activate_future(ProxyFeatures::MINIMAL.into())
 	}
 
 	<span class="kw">pub fn </span>error_is_exists(e: <span class="kw-2">&amp;</span>Error) -&gt; bool {

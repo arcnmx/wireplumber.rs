@@ -118,6 +118,14 @@
 <span id="118">118</span>
 <span id="119">119</span>
 <span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 <span class="kw">use crate</span>::{
 	session::{SessionItemFeatures, SessionItem},
@@ -127,9 +135,12 @@
 	pw::{
 		MetadataFeatures, Metadata,
 		NodeFeatures, Node,
+		LinkFeatures, Link,
 		ProxyFeatures, Proxy,
 	},
 };
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">use </span><span class="kw">crate</span>::dbus::{DbusFeatures, Dbus};
 
 <span class="attr">#[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
 </span><span class="kw">pub struct </span>ObjectFeatures(<span class="kw">pub </span>u32); <span class="comment">// TODO: consider keeping this as u32, and just keep the inherent impls (requires no changes to `auto`)
@@ -236,7 +247,12 @@
 }
 
 <span class="macro">impl_object_features! </span>{
-	MetadataFeatures:Metadata, NodeFeatures:Node, PluginFeatures:Plugin, ProxyFeatures:Proxy, SessionItemFeatures:SessionItem, SpaDeviceFeatures:SpaDevice,
+	MetadataFeatures:Metadata, NodeFeatures:Node, LinkFeatures:Link, PluginFeatures:Plugin, ProxyFeatures:Proxy, SessionItemFeatures:SessionItem, SpaDeviceFeatures:SpaDevice,
+}
+
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="macro">impl_object_features! </span>{
+	DbusFeatures:Dbus,
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (85f4f41de 2022-11-08)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
