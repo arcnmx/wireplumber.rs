@@ -1273,6 +1273,8 @@ extern "C" {
     //=========================================================================
     // WpSiAdapterPortsState
     //=========================================================================
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
     pub fn wp_si_adapter_ports_state_get_type() -> GType;
 
     //=========================================================================
@@ -1443,8 +1445,8 @@ extern "C" {
     #[cfg(any(feature = "v0_4_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_from_string(json_str: *const c_char) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
     pub fn wp_spa_json_new_from_stringn(json_str: *const c_char, len: size_t) -> *mut WpSpaJson;
     #[cfg(any(feature = "v0_4_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]

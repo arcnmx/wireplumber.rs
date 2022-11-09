@@ -153,6 +153,9 @@ pub use self::enums::ConstraintVerb;
 pub use self::enums::Direction;
 pub use self::enums::LibraryErrorEnum;
 pub use self::enums::NodeState;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+pub use self::enums::SiAdapterPortsState;
 pub use self::enums::TransitionStep;
 
 mod flags;

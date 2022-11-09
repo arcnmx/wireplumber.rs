@@ -28,6 +28,8 @@ pub use crate::auto::{
 		SiLinkableExt,
 	},
 };
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+pub use crate::auto::SiAdapterPortsState;
 
 pub trait SiAdapterExt2: 'static {
 	#[doc(alias = "wp_si_adapter_set_ports_format")]

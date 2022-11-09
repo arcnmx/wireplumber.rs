@@ -3,9 +3,27 @@
 
 use crate::Object;
 use crate::SessionItem;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+use crate::SiAdapterPortsState;
 use crate::SpaPod;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+use glib::object::Cast;
 use glib::object::IsA;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+use std::boxed::Box as Box_;
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+use std::mem::transmute;
 use std::ptr;
 
 glib::wrapper! {
@@ -27,14 +45,16 @@ pub trait SiAdapterExt: 'static {
     #[doc(alias = "get_ports_format")]
     fn ports_format(&self) -> (SpaPod, Option<glib::GString>);
 
-    //#[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
-    //#[doc(alias = "wp_si_adapter_get_ports_state")]
-    //#[doc(alias = "get_ports_state")]
-    //fn ports_state(&self) -> /*Ignored*/SiAdapterPortsState;
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[doc(alias = "wp_si_adapter_get_ports_state")]
+    #[doc(alias = "get_ports_state")]
+    fn ports_state(&self) -> SiAdapterPortsState;
 
-    //#[doc(alias = "adapter-ports-state-changed")]
-    //fn connect_adapter_ports_state_changed<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[doc(alias = "adapter-ports-state-changed")]
+    fn connect_adapter_ports_state_changed<F: Fn(&Self, SiAdapterPortsState, SiAdapterPortsState) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SiAdapter>> SiAdapterExt for O {
@@ -46,14 +66,25 @@ impl<O: IsA<SiAdapter>> SiAdapterExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
-    //fn ports_state(&self) -> /*Ignored*/SiAdapterPortsState {
-    //    unsafe { TODO: call ffi:wp_si_adapter_get_ports_state() }
-    //}
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    fn ports_state(&self) -> SiAdapterPortsState {
+        unsafe {
+            from_glib(ffi::wp_si_adapter_get_ports_state(self.as_ref().to_glib_none().0))
+        }
+    }
 
-    //fn connect_adapter_ports_state_changed<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored object: Wp.SiAdapterPortsState
-    //    Ignored p0: Wp.SiAdapterPortsState
-    //}
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    fn connect_adapter_ports_state_changed<F: Fn(&Self, SiAdapterPortsState, SiAdapterPortsState) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn adapter_ports_state_changed_trampoline<P: IsA<SiAdapter>, F: Fn(&P, SiAdapterPortsState, SiAdapterPortsState) + 'static>(this: *mut ffi::WpSiAdapter, object: ffi::WpSiAdapterPortsState, p0: ffi::WpSiAdapterPortsState, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(SiAdapter::from_glib_borrow(this).unsafe_cast_ref(), from_glib(object), from_glib(p0))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"adapter-ports-state-changed\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(adapter_ports_state_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 }

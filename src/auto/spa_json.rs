@@ -49,6 +49,8 @@ impl SpaJson {
         }
     }
 
+    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
     #[doc(alias = "wp_spa_json_new_from_stringn")]
     #[doc(alias = "new_from_stringn")]
     pub fn from_stringn(json_str: &str) -> SpaJson {

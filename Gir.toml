@@ -153,6 +153,11 @@ status = "generate"
 generate_display_trait = true
 
 [[object]]
+name = "Wp.SiAdapterPortsState"
+status = "generate"
+generate_display_trait = true
+
+[[object]]
 name = "Wp.TransitionStep"
 status = "generate"
 generate_display_trait = true

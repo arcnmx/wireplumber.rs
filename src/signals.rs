@@ -163,3 +163,13 @@ def_signal! {
 		fn(&self)
 	}
 }
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+def_signal! {
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+	impl Notifies<"adapter-ports-state-changed" as AdapterPortsStateChanged> for crate::session::SiAdapter {
+		impl {const SIGNAL_ADAPTER_PORTS_STATE_CHANGED};
+		FLAGS = SignalFlags::RUN_LAST;
+		fn(&self, crate::session::SiAdapterPortsState, crate::session::SiAdapterPortsState)
+	}
+}

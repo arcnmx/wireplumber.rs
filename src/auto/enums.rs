@@ -458,6 +458,106 @@ impl ToValue for NodeState {
     }
 }
 
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WpSiAdapterPortsState")]
+pub enum SiAdapterPortsState {
+    #[doc(alias = "WP_SI_ADAPTER_PORTS_STATE_NONE")]
+    None,
+    #[doc(alias = "WP_SI_ADAPTER_PORTS_STATE_CONFIGURING")]
+    Configuring,
+    #[doc(alias = "WP_SI_ADAPTER_PORTS_STATE_CONFIGURED")]
+    Configured,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+impl fmt::Display for SiAdapterPortsState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SiAdapterPortsState::{}", match *self {
+            Self::None => "None",
+            Self::Configuring => "Configuring",
+            Self::Configured => "Configured",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[doc(hidden)]
+impl IntoGlib for SiAdapterPortsState {
+    type GlibType = ffi::WpSiAdapterPortsState;
+
+    fn into_glib(self) -> ffi::WpSiAdapterPortsState {
+        match self {
+            Self::None => ffi::WP_SI_ADAPTER_PORTS_STATE_NONE,
+            Self::Configuring => ffi::WP_SI_ADAPTER_PORTS_STATE_CONFIGURING,
+            Self::Configured => ffi::WP_SI_ADAPTER_PORTS_STATE_CONFIGURED,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WpSiAdapterPortsState> for SiAdapterPortsState {
+    unsafe fn from_glib(value: ffi::WpSiAdapterPortsState) -> Self {
+        match value {
+            ffi::WP_SI_ADAPTER_PORTS_STATE_NONE => Self::None,
+            ffi::WP_SI_ADAPTER_PORTS_STATE_CONFIGURING => Self::Configuring,
+            ffi::WP_SI_ADAPTER_PORTS_STATE_CONFIGURED => Self::Configured,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+impl StaticType for SiAdapterPortsState {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::wp_si_adapter_ports_state_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+impl glib::value::ValueType for SiAdapterPortsState {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+unsafe impl<'a> FromValue<'a> for SiAdapterPortsState {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+impl ToValue for SiAdapterPortsState {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]

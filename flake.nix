@@ -123,6 +123,9 @@
           -i '///_:record[@c:type="WpSpaJson"]' -t attr -n version -v 0.4.8 \
           -i '///_:record[@c:type="WpSpaJsonParser"]' -t attr -n version -v 0.4.8 \
           -i '///_:record[@c:type="WpSpaJsonBuilder"]' -t attr -n version -v 0.4.8 \
+          -i '///_:record[@c:type="WpSpaJson"]/_:constructor[@name="new_from_stringn"]' -t attr -n version -v 0.4.10 \
+          -i '///_:enumeration[@c:type="WpSiAdapterPortsState"]' -t attr -n version -v 0.4.10 \
+          -i '///_:interface[@c:type="WpSiAdapter"]/glib:signal[@name="adapter-ports-state-changed"]' -t attr -n version -v 0.4.10 \
           -u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
           -i '/_:repository/_:namespace' -t elem -n package \
           "$wireplumber/$girName" > $out/$girName
