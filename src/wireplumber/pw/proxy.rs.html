@@ -136,14 +136,22 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
 </pre><pre class="rust"><code><span class="kw">use </span>pipewire_sys::pw_proxy;
 <span class="kw">use </span><span class="kw">crate</span>::spa::SpaPod;
 <span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Proxy, ProxyFeatures, PipewireObject, FromPipewirePropertyString};
 <span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">impl </span>ProxyFeatures {
-	<span class="kw">pub const </span>ALL: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <span class="self">Self</span>::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL <span class="kw">as </span>u32) };
-	<span class="kw">pub const </span>MINIMAL: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <span class="self">Self</span>::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL <span class="kw">as </span>u32) };
+	<span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURES_ALL&quot;</span>)]
+	</span><span class="kw">pub const </span>ALL: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <span class="self">Self</span>::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL <span class="kw">as </span>u32) };
+
+	<span class="doccomment">/// ProxyFeatures::PROXY_FEATURE_BOUND | ProxyFeatures::PIPEWIRE_OBJECT_FEATURE_INFO
+	</span><span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL&quot;</span>)]
+	</span><span class="kw">pub const </span>MINIMAL: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <span class="self">Self</span>::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL <span class="kw">as </span>u32) };
 }
 
 <span class="kw">pub trait </span>ProxyExt2: <span class="lifetime">&#39;static </span>{

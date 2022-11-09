@@ -126,6 +126,26 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 <span class="kw">use crate</span>::{
 	session::{SessionItemFeatures, SessionItem},
@@ -185,7 +205,7 @@
 }
 
 <span class="macro">macro_rules! </span>impl_object_features {
-	($(<span class="macro-nonterminal">$id</span>:ident:<span class="macro-nonterminal">$ty</span>:ident,)<span class="kw-2">*</span>) =&gt; {
+	($(<span class="macro-nonterminal">$id</span>:ident:<span class="macro-nonterminal">$ty</span>:ident($(<span class="macro-nonterminal">$sub</span>:ident),<span class="kw-2">*</span>),)<span class="kw-2">*</span>) =&gt; {
 		$(
 			<span class="kw">impl </span>From&lt;<span class="macro-nonterminal">$id</span>&gt; <span class="kw">for </span>ObjectFeatures {
 				<span class="kw">fn </span>from(features: <span class="macro-nonterminal">$id</span>) -&gt; <span class="self">Self </span>{
@@ -199,30 +219,44 @@
 				}
 			}
 
+			$(
+				<span class="kw">impl </span>From&lt;<span class="macro-nonterminal">$id</span>&gt; <span class="kw">for </span><span class="macro-nonterminal">$sub </span>{
+					<span class="kw">fn </span>from(features: <span class="macro-nonterminal">$id</span>) -&gt; <span class="self">Self </span>{
+						<span class="self">Self</span>::from_bits_truncate(features.bits())
+					}
+				}
+
+				<span class="kw">impl </span>From&lt;<span class="macro-nonterminal">$sub</span>&gt; <span class="kw">for </span><span class="macro-nonterminal">$id </span>{
+					<span class="kw">fn </span>from(features: <span class="macro-nonterminal">$sub</span>) -&gt; <span class="macro-nonterminal">$id </span>{
+						<span class="macro-nonterminal">$id::from_bits_truncate</span>(features.bits())
+					}
+				}
+			)*
+
 			<span class="kw">impl </span><span class="macro-nonterminal">$ty </span>{
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_activate&quot;</span>)]
-				</span><span class="kw">pub fn </span>activate&lt;P, Q&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: <span class="macro-nonterminal">$id</span>, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;, callback: Q) <span class="kw">where
+				</span><span class="kw">pub fn </span>activate&lt;P, Q, F: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: F, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;, callback: Q) <span class="kw">where
 					</span>P: IsA&lt;::gio::Cancellable&gt;,
 					Q: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>,
 				{
-					ObjectExt::activate(<span class="self">self</span>, features.into(), cancellable, callback)
+					ObjectExt::activate(<span class="self">self</span>, features.into().into(), cancellable, callback)
 				}
 
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_activate_closure&quot;</span>)]
-				</span><span class="kw">pub fn </span>activate_closure&lt;P&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: <span class="macro-nonterminal">$id</span>, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;, closure: <span class="kw-2">&amp;</span>glib::Closure) <span class="kw">where
+				</span><span class="kw">pub fn </span>activate_closure&lt;P, F: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: F, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;, closure: <span class="kw-2">&amp;</span>glib::Closure) <span class="kw">where
 					</span>P: IsA&lt;gio::Cancellable&gt;,
 				{
-					ObjectExt::activate_closure(<span class="self">self</span>, features.into(), cancellable, closure)
+					ObjectExt::activate_closure(<span class="self">self</span>, features.into().into(), cancellable, closure)
 				}
 
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_activate&quot;</span>)]
-				</span><span class="kw">pub fn </span>activate_future(<span class="kw-2">&amp;</span><span class="self">self</span>, features: <span class="macro-nonterminal">$id</span>) -&gt; <span class="kw">impl </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + Unpin {
-					ObjectExt::activate_future(<span class="self">self</span>, features.into())
+				</span><span class="kw">pub fn </span>activate_future&lt;F: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: F) -&gt; <span class="kw">impl </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + Unpin {
+					ObjectExt::activate_future(<span class="self">self</span>, features.into().into())
 				}
 
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_deactivate&quot;</span>)]
-				</span><span class="kw">pub fn </span>deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, features: <span class="macro-nonterminal">$id</span>) {
-					ObjectExt::deactivate(<span class="self">self</span>, features.into())
+				</span><span class="kw">pub fn </span>deactivate&lt;F: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: F) {
+					ObjectExt::deactivate(<span class="self">self</span>, features.into().into())
 				}
 
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_get_active_features&quot;</span>)]
@@ -238,8 +272,8 @@
 				}
 
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_update_features&quot;</span>)]
-				</span><span class="kw">pub fn </span>update_features(<span class="kw-2">&amp;</span><span class="self">self</span>, activated: <span class="macro-nonterminal">$id</span>, deactivated: <span class="macro-nonterminal">$id</span>) {
-					ObjectExt::update_features(<span class="self">self</span>, activated.into(), deactivated.into())
+				</span><span class="kw">pub fn </span>update_features&lt;A: Into&lt;<span class="macro-nonterminal">$id</span>&gt;, D: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, activated: A, deactivated: D) {
+					ObjectExt::update_features(<span class="self">self</span>, activated.into().into(), deactivated.into().into())
 				}
 			}
 		)*
@@ -247,12 +281,18 @@
 }
 
 <span class="macro">impl_object_features! </span>{
-	MetadataFeatures:Metadata, NodeFeatures:Node, LinkFeatures:Link, PluginFeatures:Plugin, ProxyFeatures:Proxy, SessionItemFeatures:SessionItem, SpaDeviceFeatures:SpaDevice,
+	MetadataFeatures:Metadata(ProxyFeatures),
+	NodeFeatures:Node(ProxyFeatures),
+	LinkFeatures:Link(ProxyFeatures),
+	PluginFeatures:Plugin(),
+	ProxyFeatures:Proxy(),
+	SessionItemFeatures:SessionItem(),
+	SpaDeviceFeatures:SpaDevice(ProxyFeatures),
 }
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="macro">impl_object_features! </span>{
-	DbusFeatures:Dbus,
+	DbusFeatures:Dbus(),
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (85f4f41de 2022-11-08)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
