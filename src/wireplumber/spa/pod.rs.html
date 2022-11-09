@@ -328,18 +328,11 @@
 <span id="328">328</span>
 <span id="329">329</span>
 <span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
-<span id="336">336</span>
-<span id="337">337</span>
 </pre><pre class="rust"><code><span class="kw">use </span>libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
 <span class="kw">use </span><span class="kw">crate</span>::pw::SpaPropertyKey;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::pw::PipewireObject;
-<span class="kw">use </span><span class="kw">crate</span>::spa::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
+<span class="kw">use </span><span class="kw">crate</span>::spa::{SpaPod, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
 <span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">impl </span>SpaPod {
@@ -411,13 +404,6 @@
 	<span class="kw">pub fn </span>to_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="self">self</span>.as_bytes().into()
-		}
-	}
-
-	<span class="attr">#[doc(alias = <span class="string">&quot;get_spa_type&quot;</span>)]
-	</span><span class="kw">pub fn </span>spa_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaType&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_pod_get_spa_type(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
 		}
 	}
 
