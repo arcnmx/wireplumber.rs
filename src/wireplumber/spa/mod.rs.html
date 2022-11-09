@@ -55,6 +55,7 @@
 <span id="55">55</span>
 <span id="56">56</span>
 <span id="57">57</span>
+<span id="58">58</span>
 </pre><pre class="rust"><code><span class="doccomment">//! [Simple Plugin API](https://docs.pipewire.org/page_spa_plugins.html) [POD encoding](https://docs.pipewire.org/page_spa_pod.html)
 //!
 //! [SpaPod] wraps a [libspa_sys::spa_pod], providing high-level accessors and enabling mutation
@@ -66,8 +67,8 @@
 //! C API docs for:
 //! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)
 //! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)
+
 </span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	SpaType,
 	SpaPod,
 	SpaPodParser,
 	SpaPodBuilder,
@@ -102,6 +103,7 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
 </span><span class="kw">mod </span>libspa_pod;
 
+<span class="kw">pub use </span>type_::SpaType;
 <span class="kw">pub use </span>id_table::SpaIdTable;
 <span class="kw">pub use </span>id_value::SpaIdValue;
 <span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
