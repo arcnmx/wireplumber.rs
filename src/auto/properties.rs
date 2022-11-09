@@ -16,21 +16,6 @@ glib::wrapper! {
 }
 
 impl Properties {
-    //#[doc(alias = "wp_properties_new")]
-    //pub fn new(key: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new() }
-    //}
-
-    //#[doc(alias = "wp_properties_new_copy")]
-    //pub fn new_copy(props: /*Unimplemented*/Option<Basic: Pointer>) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new_copy() }
-    //}
-
-    //#[doc(alias = "wp_properties_new_copy_dict")]
-    //pub fn new_copy_dict(dict: /*Unimplemented*/Option<Basic: Pointer>) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new_copy_dict() }
-    //}
-
     #[doc(alias = "wp_properties_new_empty")]
     pub fn new_empty() -> Properties {
         unsafe {
@@ -45,26 +30,6 @@ impl Properties {
         }
     }
 
-    //#[doc(alias = "wp_properties_new_take")]
-    //pub fn new_take(props: /*Unimplemented*/Option<Basic: Pointer>) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new_take() }
-    //}
-
-    //#[doc(alias = "wp_properties_new_valist")]
-    //pub fn new_valist(key: &str, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new_valist() }
-    //}
-
-    //#[doc(alias = "wp_properties_new_wrap")]
-    //pub fn new_wrap(props: /*Unimplemented*/Option<Basic: Pointer>) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new_wrap() }
-    //}
-
-    //#[doc(alias = "wp_properties_new_wrap_dict")]
-    //pub fn new_wrap_dict(dict: /*Unimplemented*/Option<Basic: Pointer>) -> Properties {
-    //    unsafe { TODO: call ffi:wp_properties_new_wrap_dict() }
-    //}
-
     #[doc(alias = "wp_properties_add")]
     pub fn add(&self, props: &Properties) -> i32 {
         unsafe {
@@ -72,27 +37,12 @@ impl Properties {
         }
     }
 
-    //#[doc(alias = "wp_properties_add_from_dict")]
-    //pub fn add_from_dict(&self, dict: /*Unimplemented*/Option<Basic: Pointer>) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_add_from_dict() }
-    //}
-
-    //#[doc(alias = "wp_properties_add_keys")]
-    //pub fn add_keys(&self, props: &Properties, key1: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_add_keys() }
-    //}
-
     #[doc(alias = "wp_properties_add_keys_array")]
     pub fn add_keys_array(&self, props: &Properties, keys: &[&str]) -> i32 {
         unsafe {
             ffi::wp_properties_add_keys_array(self.to_glib_none().0, props.to_glib_none().0, keys.to_glib_none().0)
         }
     }
-
-    //#[doc(alias = "wp_properties_add_keys_from_dict")]
-    //pub fn add_keys_from_dict(&self, dict: /*Unimplemented*/Option<Basic: Pointer>, key1: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_add_keys_from_dict() }
-    //}
 
     #[doc(alias = "wp_properties_copy")]
 #[must_use]
@@ -141,11 +91,6 @@ impl Properties {
         }
     }
 
-    //#[doc(alias = "wp_properties_peek_dict")]
-    //pub fn peek_dict(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_properties_peek_dict() }
-    //}
-
     #[doc(alias = "wp_properties_set")]
     pub fn set(&self, key: &str, value: Option<&str>) -> i32 {
         unsafe {
@@ -153,32 +98,12 @@ impl Properties {
         }
     }
 
-    //#[doc(alias = "wp_properties_setf")]
-    //pub fn setf(&self, key: &str, format: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_setf() }
-    //}
-
-    //#[doc(alias = "wp_properties_setf_valist")]
-    //pub fn setf_valist(&self, key: &str, format: &str, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_setf_valist() }
-    //}
-
     #[doc(alias = "wp_properties_sort")]
     pub fn sort(&self) {
         unsafe {
             ffi::wp_properties_sort(self.to_glib_none().0);
         }
     }
-
-    //#[doc(alias = "wp_properties_to_pw_properties")]
-    //pub fn to_pw_properties(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_properties_to_pw_properties() }
-    //}
-
-    //#[doc(alias = "wp_properties_unref_and_take_pw_properties")]
-    //pub fn unref_and_take_pw_properties(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_properties_unref_and_take_pw_properties() }
-    //}
 
     #[doc(alias = "wp_properties_update")]
     pub fn update(&self, props: &Properties) -> i32 {
@@ -192,22 +117,12 @@ impl Properties {
     //    unsafe { TODO: call ffi:wp_properties_update_from_dict() }
     //}
 
-    //#[doc(alias = "wp_properties_update_keys")]
-    //pub fn update_keys(&self, props: &Properties, key1: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_update_keys() }
-    //}
-
     #[doc(alias = "wp_properties_update_keys_array")]
     pub fn update_keys_array(&self, props: &Properties, keys: &[&str]) -> i32 {
         unsafe {
             ffi::wp_properties_update_keys_array(self.to_glib_none().0, props.to_glib_none().0, keys.to_glib_none().0)
         }
     }
-
-    //#[doc(alias = "wp_properties_update_keys_from_dict")]
-    //pub fn update_keys_from_dict(&self, dict: /*Unimplemented*/Option<Basic: Pointer>, key1: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_update_keys_from_dict() }
-    //}
 
     #[doc(alias = "wp_properties_iterator_item_get_key")]
     pub fn iterator_item_get_key(item: &glib::Value) -> Option<glib::GString> {

@@ -17,8 +17,7 @@ generate = [
 	"Wp.Plugin", "Wp.ComponentLoader",
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
 	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
-	"Wp.SpaDevice", "Wp.SpaDeviceFeatures", "Wp.SpaPodBuilder",
-	"Wp.SpaJson", "Wp.SpaJsonBuilder", "Wp.SpaJsonParser",
+	"Wp.SpaDevice", "Wp.SpaDeviceFeatures",
 	"Wp.State",
 	"Wp.Dbus", "Wp.DbusFeatures",
 	"Wp.ProxyFeatures",
@@ -97,6 +96,12 @@ name = "Wp.Properties"
 status = "generate"
 	[[object.derive]]
 	name = "PartialEq, Eq, PartialOrd, Ord, Hash" # defaults excluding Debug
+	[[object.function]]
+	pattern = "(.*valist|new|add_keys|add_keys_from_dict|setf|update_keys|update_keys_from_dict)"
+	ignore = true
+	[[object.function]]
+	pattern = "(new_copy|new_copy_dict|new_take|new_wrap|new_wrap_dict|add_from_dict|peek_dict|to_pw_properties|unref_and_take_pw_properties)"
+	manual = true
 
 [[object]]
 name = "Wp.PropertiesItem"
@@ -180,3 +185,56 @@ version = "" # fails to parse, so removes cfg
 	# instead, apply the version cfg to all defined bits instead
 	pattern = ".*"
 	version = "0.4.11"
+
+# unsupported methods (mostly varargs fns)
+
+[[object]]
+name = "Wp.SpaJson"
+status = "generate"
+	[[object.function]]
+	pattern = "(.*valist|new_array|new_object|object_get|parse_array|parse_object)"
+	ignore = true
+	[[object.function]]
+	pattern = "(new_wrap|spa_json)"
+	manual = true
+
+[[object]]
+name = "Wp.SpaJsonParser"
+status = "generate"
+	[[object.function]]
+	pattern = "(get|get_valist)"
+	ignore = true
+
+[[object]]
+name = "Wp.SpaJsonBuilder"
+status = "generate"
+	[[object.function]]
+	pattern = "(add|add_valist)"
+	ignore = true
+
+[[object]]
+name = "Wp.SpaPod"
+status = "generate"
+	[[object.function]]
+	pattern = "(.*valist|new_choice|new_object|new_sequence|object)"
+	ignore = true
+	[[object.function]]
+	pattern = "(new_bytes|new_pointer|new_wrap|new_wrap_const|get_bytes|get_choice_type|get_pointer|get_spa_pod|set_pointer)"
+	manual = true
+
+[[object]]
+name = "Wp.SpaPodParser"
+status = "generate"
+	[[object.function]]
+	pattern = "(get|get_bytes|get_pointer|get_valist)"
+	ignore = true
+	[[object.function]]
+	pattern = "(new_object)"
+	manual = true
+
+[[object]]
+name = "Wp.SpaPodBuilder"
+status = "generate"
+	[[object.function]]
+	pattern = "(add|add_bytes|add_pointer|add_valist)"
+	ignore = true

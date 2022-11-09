@@ -51,22 +51,12 @@ impl SpaPodBuilder {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_builder_add")]
-    //pub fn add(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
-    //    unsafe { TODO: call ffi:wp_spa_pod_builder_add() }
-    //}
-
     #[doc(alias = "wp_spa_pod_builder_add_boolean")]
     pub fn add_boolean(&self, value: bool) {
         unsafe {
             ffi::wp_spa_pod_builder_add_boolean(self.to_glib_none().0, value.into_glib());
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_builder_add_bytes")]
-    //pub fn add_bytes(&self, value: /*Unimplemented*/Option<Basic: Pointer>, len: u32) {
-    //    unsafe { TODO: call ffi:wp_spa_pod_builder_add_bytes() }
-    //}
 
     #[doc(alias = "wp_spa_pod_builder_add_control")]
     pub fn add_control(&self, offset: u32, ctl_type: &str) {
@@ -138,11 +128,6 @@ impl SpaPodBuilder {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_builder_add_pointer")]
-    //pub fn add_pointer(&self, type_name: &str, value: /*Unimplemented*/Option<Basic: Pointer>) {
-    //    unsafe { TODO: call ffi:wp_spa_pod_builder_add_pointer() }
-    //}
-
     #[doc(alias = "wp_spa_pod_builder_add_property")]
     pub fn add_property(&self, key: &str) {
         unsafe {
@@ -170,11 +155,6 @@ impl SpaPodBuilder {
             ffi::wp_spa_pod_builder_add_string(self.to_glib_none().0, value.to_glib_none().0);
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_builder_add_valist")]
-    //pub fn add_valist(&self, args: /*Unknown conversion*//*Unimplemented*/Unsupported) {
-    //    unsafe { TODO: call ffi:wp_spa_pod_builder_add_valist() }
-    //}
 
     #[doc(alias = "wp_spa_pod_builder_end")]
     pub fn end(&self) -> Option<SpaPod> {

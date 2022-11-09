@@ -32,11 +32,6 @@ impl SpaPodParser {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_parser_get")]
-    //pub fn get(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_parser_get() }
-    //}
-
     #[doc(alias = "wp_spa_pod_parser_get_boolean")]
     #[doc(alias = "get_boolean")]
     pub fn boolean(&self) -> Option<bool> {
@@ -46,12 +41,6 @@ impl SpaPodParser {
             if ret { Some(from_glib(value.assume_init())) } else { None }
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_parser_get_bytes")]
-    //#[doc(alias = "get_bytes")]
-    //pub fn bytes(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> Option<u32> {
-    //    unsafe { TODO: call ffi:wp_spa_pod_parser_get_bytes() }
-    //}
 
     #[doc(alias = "wp_spa_pod_parser_get_double")]
     #[doc(alias = "get_double")]
@@ -132,12 +121,6 @@ impl SpaPodParser {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_parser_get_pointer")]
-    //#[doc(alias = "get_pointer")]
-    //pub fn pointer(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_parser_get_pointer() }
-    //}
-
     #[doc(alias = "wp_spa_pod_parser_get_rectangle")]
     #[doc(alias = "get_rectangle")]
     pub fn rectangle(&self) -> Option<(u32, u32)> {
@@ -158,10 +141,4 @@ impl SpaPodParser {
             if ret { Some(from_glib_full(value)) } else { None }
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_parser_get_valist")]
-    //#[doc(alias = "get_valist")]
-    //pub fn is_valist(&self, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_parser_get_valist() }
-    //}
 }

@@ -30,11 +30,6 @@ impl SpaJsonBuilder {
         }
     }
 
-    //#[doc(alias = "wp_spa_json_builder_add")]
-    //pub fn add(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
-    //    unsafe { TODO: call ffi:wp_spa_json_builder_add() }
-    //}
-
     #[doc(alias = "wp_spa_json_builder_add_boolean")]
     pub fn add_boolean(&self, value: bool) {
         unsafe {
@@ -83,11 +78,6 @@ impl SpaJsonBuilder {
             ffi::wp_spa_json_builder_add_string(self.to_glib_none().0, value.to_glib_none().0);
         }
     }
-
-    //#[doc(alias = "wp_spa_json_builder_add_valist")]
-    //pub fn add_valist(&self, args: /*Unknown conversion*//*Unimplemented*/Unsupported) {
-    //    unsafe { TODO: call ffi:wp_spa_json_builder_add_valist() }
-    //}
 
     #[doc(alias = "wp_spa_json_builder_end")]
     pub fn end(&self) -> Option<SpaJson> {

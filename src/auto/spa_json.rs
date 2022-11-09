@@ -20,16 +20,6 @@ glib::wrapper! {
 }
 
 impl SpaJson {
-    //#[doc(alias = "wp_spa_json_new_array")]
-    //pub fn new_array(format: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaJson {
-    //    unsafe { TODO: call ffi:wp_spa_json_new_array() }
-    //}
-
-    //#[doc(alias = "wp_spa_json_new_array_valist")]
-    //pub fn new_array_valist(format: Option<&str>, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> SpaJson {
-    //    unsafe { TODO: call ffi:wp_spa_json_new_array_valist() }
-    //}
-
     #[doc(alias = "wp_spa_json_new_boolean")]
     pub fn new_boolean(value: bool) -> SpaJson {
         unsafe {
@@ -77,27 +67,12 @@ impl SpaJson {
         }
     }
 
-    //#[doc(alias = "wp_spa_json_new_object")]
-    //pub fn new_object(key: Option<&str>, format: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaJson {
-    //    unsafe { TODO: call ffi:wp_spa_json_new_object() }
-    //}
-
-    //#[doc(alias = "wp_spa_json_new_object_valist")]
-    //pub fn new_object_valist(key: Option<&str>, format: Option<&str>, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> SpaJson {
-    //    unsafe { TODO: call ffi:wp_spa_json_new_object_valist() }
-    //}
-
     #[doc(alias = "wp_spa_json_new_string")]
     pub fn new_string(value: &str) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_new_string(value.to_glib_none().0))
         }
     }
-
-    //#[doc(alias = "wp_spa_json_new_wrap")]
-    //pub fn new_wrap(json: /*Unimplemented*/Option<Basic: Pointer>) -> SpaJson {
-    //    unsafe { TODO: call ffi:wp_spa_json_new_wrap() }
-    //}
 
     #[doc(alias = "wp_spa_json_copy")]
 #[must_use]
@@ -200,26 +175,6 @@ impl SpaJson {
         }
     }
 
-    //#[doc(alias = "wp_spa_json_object_get")]
-    //pub fn object_get(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_object_get() }
-    //}
-
-    //#[doc(alias = "wp_spa_json_object_get_valist")]
-    //pub fn object_get_valist(&self, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_object_get_valist() }
-    //}
-
-    //#[doc(alias = "wp_spa_json_parse_array")]
-    //pub fn parse_array(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_parse_array() }
-    //}
-
-    //#[doc(alias = "wp_spa_json_parse_array_valist")]
-    //pub fn parse_array_valist(&self, args: /*Unknown conversion*//*Unimplemented*/&mut Unsupported) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_parse_array_valist() }
-    //}
-
     #[doc(alias = "wp_spa_json_parse_boolean")]
     pub fn parse_boolean(&self) -> Option<bool> {
         unsafe {
@@ -246,16 +201,6 @@ impl SpaJson {
             if ret { Some(value.assume_init()) } else { None }
         }
     }
-
-    //#[doc(alias = "wp_spa_json_parse_object")]
-    //pub fn parse_object(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_parse_object() }
-    //}
-
-    //#[doc(alias = "wp_spa_json_parse_object_valist")]
-    //pub fn parse_object_valist(&self, args: /*Unknown conversion*//*Unimplemented*/&mut Unsupported) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_parse_object_valist() }
-    //}
 
     #[doc(alias = "wp_spa_json_parse_string")]
     pub fn parse_string(&self) -> Option<glib::GString> {

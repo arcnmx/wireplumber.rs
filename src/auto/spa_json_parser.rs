@@ -38,11 +38,6 @@ impl SpaJsonParser {
         }
     }
 
-    //#[doc(alias = "wp_spa_json_parser_get")]
-    //pub fn get(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_parser_get() }
-    //}
-
     #[doc(alias = "wp_spa_json_parser_get_boolean")]
     #[doc(alias = "get_boolean")]
     pub fn boolean(&self) -> Option<bool> {
@@ -96,10 +91,4 @@ impl SpaJsonParser {
             from_glib_full(ffi::wp_spa_json_parser_get_string(self.to_glib_none().0))
         }
     }
-
-    //#[doc(alias = "wp_spa_json_parser_get_valist")]
-    //#[doc(alias = "get_valist")]
-    //pub fn is_valist(&self, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_json_parser_get_valist() }
-    //}
 }

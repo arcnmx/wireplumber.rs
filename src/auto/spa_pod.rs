@@ -2,6 +2,7 @@
 // DO NOT EDIT
 
 use crate::Iterator;
+use crate::SpaType;
 use glib::translate::*;
 use std::mem;
 use std::ptr;
@@ -24,21 +25,6 @@ impl SpaPod {
             from_glib_full(ffi::wp_spa_pod_new_boolean(value.into_glib()))
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_new_bytes")]
-    //pub fn new_bytes(value: /*Unimplemented*/Option<Basic: Pointer>, len: u32) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_bytes() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_new_choice")]
-    //pub fn new_choice(choice_type: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_choice() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_new_choice_valist")]
-    //pub fn new_choice_valist(choice_type: &str, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_choice_valist() }
-    //}
 
     #[doc(alias = "wp_spa_pod_new_double")]
     pub fn new_double(value: f64) -> SpaPod {
@@ -96,21 +82,6 @@ impl SpaPod {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_new_object")]
-    //pub fn new_object(type_name: &str, id_name: &str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_object() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_new_object_valist")]
-    //pub fn new_object_valist(type_name: &str, id_name: &str, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_object_valist() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_new_pointer")]
-    //pub fn new_pointer(type_name: &str, value: /*Unimplemented*/Option<Basic: Pointer>) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_pointer() }
-    //}
-
     #[doc(alias = "wp_spa_pod_new_rectangle")]
     pub fn new_rectangle(width: u32, height: u32) -> SpaPod {
         unsafe {
@@ -118,32 +89,12 @@ impl SpaPod {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_new_sequence")]
-    //pub fn new_sequence(unit: u32, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_sequence() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_new_sequence_valist")]
-    //pub fn new_sequence_valist(unit: u32, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_sequence_valist() }
-    //}
-
     #[doc(alias = "wp_spa_pod_new_string")]
     pub fn new_string(value: &str) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_new_string(value.to_glib_none().0))
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_new_wrap")]
-    //pub fn new_wrap(pod: /*Unimplemented*/Option<Basic: Pointer>) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_wrap() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_new_wrap_const")]
-    //pub fn new_wrap_const(pod: /*Unimplemented*/Option<Basic: Pointer>) -> SpaPod {
-    //    unsafe { TODO: call ffi:wp_spa_pod_new_wrap_const() }
-    //}
 
     #[doc(alias = "wp_spa_pod_copy")]
 #[must_use]
@@ -202,12 +153,6 @@ impl SpaPod {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_get_bytes")]
-    //#[doc(alias = "get_bytes")]
-    //pub fn bytes(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> Option<u32> {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_bytes() }
-    //}
-
     #[doc(alias = "wp_spa_pod_get_choice_child")]
     #[doc(alias = "get_choice_child")]
 #[must_use]
@@ -216,12 +161,6 @@ impl SpaPod {
             from_glib_full(ffi::wp_spa_pod_get_choice_child(self.to_glib_none().0))
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_get_choice_type")]
-    //#[doc(alias = "get_choice_type")]
-    //pub fn choice_type(&self) -> /*Unimplemented*/Option<SpaIdValue> {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_choice_type() }
-    //}
 
     #[doc(alias = "wp_spa_pod_get_control")]
     #[doc(alias = "get_control")]
@@ -312,18 +251,6 @@ impl SpaPod {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_object() }
     //}
 
-    //#[doc(alias = "wp_spa_pod_get_object_valist")]
-    //#[doc(alias = "get_object_valist")]
-    //pub fn object_valist(&self, args: /*Unknown conversion*//*Unimplemented*/&mut Unsupported) -> Option<glib::GString> {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_object_valist() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_get_pointer")]
-    //#[doc(alias = "get_pointer")]
-    //pub fn pointer(&self, value: /*Unimplemented*/&mut Option<Basic: Pointer>) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_pointer() }
-    //}
-
     #[doc(alias = "wp_spa_pod_get_property")]
     #[doc(alias = "get_property")]
     pub fn property(&self) -> Option<(glib::GString, SpaPod)> {
@@ -346,11 +273,13 @@ impl SpaPod {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_get_spa_pod")]
-    //#[doc(alias = "get_spa_pod")]
-    //pub fn spa_pod(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_spa_pod() }
-    //}
+    #[doc(alias = "wp_spa_pod_get_spa_type")]
+    #[doc(alias = "get_spa_type")]
+    pub fn spa_type(&self) -> Option<SpaType> {
+        unsafe {
+            from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0))
+        }
+    }
 
     #[doc(alias = "wp_spa_pod_get_string")]
     #[doc(alias = "get_string")]
@@ -366,12 +295,6 @@ impl SpaPod {
     //#[doc(alias = "get_struct")]
     //pub fn is_struct(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
     //    unsafe { TODO: call ffi:wp_spa_pod_get_struct() }
-    //}
-
-    //#[doc(alias = "wp_spa_pod_get_struct_valist")]
-    //#[doc(alias = "get_struct_valist")]
-    //pub fn struct_valist(&self, args: /*Unknown conversion*//*Unimplemented*/&mut Unsupported) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_struct_valist() }
     //}
 
     #[doc(alias = "wp_spa_pod_is_array")]
@@ -590,11 +513,6 @@ impl SpaPod {
             from_glib(ffi::wp_spa_pod_set_pod(self.to_glib_none().0, pod.to_glib_none().0))
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_set_pointer")]
-    //pub fn set_pointer(&self, type_name: &str, value: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_set_pointer() }
-    //}
 
     #[doc(alias = "wp_spa_pod_set_rectangle")]
     pub fn set_rectangle(&self, width: u32, height: u32) -> bool {

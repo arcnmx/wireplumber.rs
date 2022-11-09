@@ -2,7 +2,7 @@ use libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
 use crate::pw::SpaPropertyKey;
 #[cfg(any(feature = "experimental", feature = "dox"))]
 use crate::pw::PipewireObject;
-use crate::spa::{SpaPod, SpaType, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
+use crate::spa::{SpaPod, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
 use crate::prelude::*;
 
 impl SpaPod {
@@ -74,13 +74,6 @@ impl SpaPod {
 	pub fn to_bytes(&self) -> Vec<u8> {
 		unsafe {
 			self.as_bytes().into()
-		}
-	}
-
-	#[doc(alias = "get_spa_type")]
-	pub fn spa_type(&self) -> Option<SpaType> {
-		unsafe {
-			from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0))
 		}
 	}
 
