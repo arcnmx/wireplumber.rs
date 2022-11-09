@@ -8,6 +8,8 @@ if cfg!(feature = "v0_4_10") {
         "0.4.8"
     } else if cfg!(feature = "v0_4_6") {
         "0.4.6"
+    } else if cfg!(feature = "v0_4_5") {
+        "0.4.5"
     } else if cfg!(feature = "v0_4_3") {
         "0.4.3"
     } else if cfg!(feature = "v0_4_2") {

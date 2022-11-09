@@ -40,9 +40,10 @@ pub use crate::auto::{
 	Core, InitFlags,
 	Object,
 	FeatureActivationTransition,
-	Factory,
 	traits::ObjectExt,
 };
+#[cfg(any(feature = "v0_4_5", feature = "dox"))]
+pub use crate::auto::Factory;
 
 mod core;
 

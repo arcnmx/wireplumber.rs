@@ -16,7 +16,11 @@ pub use self::device::Device;
 mod endpoint;
 pub use self::endpoint::Endpoint;
 
+#[cfg(any(feature = "v0_4_5", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_5")))]
 mod factory;
+#[cfg(any(feature = "v0_4_5", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_5")))]
 pub use self::factory::Factory;
 
 mod feature_activation_transition;

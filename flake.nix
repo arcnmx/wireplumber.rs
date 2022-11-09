@@ -118,6 +118,8 @@
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="key"]/@transfer-ownership' -v none \
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_string"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
+          -i '///_:class[@c:type="WpFactory"]' -t attr -n version -v 0.4.5 \
+          -i '///_:record[@c:type="WpFactoryClass"]' -t attr -n version -v 0.4.5 \
           -i '///_:record[@c:type="WpSpaJson"]' -t attr -n version -v 0.4.8 \
           -i '///_:record[@c:type="WpSpaJsonParser"]' -t attr -n version -v 0.4.8 \
           -i '///_:record[@c:type="WpSpaJsonBuilder"]' -t attr -n version -v 0.4.8 \
@@ -155,6 +157,7 @@
         if versionAtLeast version "0.4.10" then "v0_4_10"
         else if versionAtLeast version "0.4.8" then "v0_4_8"
         else if versionAtLeast version "0.4.6" then "v0_4_6"
+        else if versionAtLeast version "0.4.5" then "v0_4_5"
         else if versionAtLeast version "0.4.3" then "v0_4_3"
         else null;
     };
