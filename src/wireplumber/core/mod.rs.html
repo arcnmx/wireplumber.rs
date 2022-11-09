@@ -51,6 +51,7 @@
 <span id="51">51</span>
 <span id="52">52</span>
 <span id="53">53</span>
+<span id="54">54</span>
 </pre><pre class="rust"><code><span class="doccomment">//! WirePlumber&#39;s [entry point](Core) and base [Object] type.
 //!
 //! # PipeWire Main Loop
@@ -93,9 +94,10 @@
 	Core, InitFlags,
 	Object,
 	FeatureActivationTransition,
-	Factory,
 	traits::ObjectExt,
 };
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_5&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::Factory;
 
 <span class="kw">mod </span>core;
 
