@@ -88,6 +88,8 @@
 <span id="88">88</span>
 <span id="89">89</span>
 <span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Session item factories
 //!
 //! # See also
@@ -118,6 +120,8 @@
 		SiLinkableExt,
 	},
 };
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::SiAdapterPortsState;
 
 <span class="kw">pub trait </span>SiAdapterExt2: <span class="lifetime">&#39;static </span>{
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_si_adapter_set_ports_format&quot;</span>)]
