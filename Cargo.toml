@@ -26,6 +26,7 @@ glib = { version = "0.16" }
 gio = { version = "0.16" }
 pipewire-sys = { version = "0.5" }
 libspa-sys = { version = "0.5" }
+pipewire = { version = "0.5", optional = true }
 libspa = { version = "0.5", optional = true }
 futures-util = { version = "0.3", optional = true }
 serde = { version = "1.0", default-features = false, optional = true }
