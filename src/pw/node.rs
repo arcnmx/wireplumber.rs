@@ -88,3 +88,48 @@ impl IntoIterator for Node {
 		self.ports()
 	}
 }
+
+#[cfg(feature = "pipewire")]
+mod pipewire_types {
+	use crate::pw::NodeState;
+	use pipewire::node::NodeState as PwNodeState;
+
+	impl NodeState {
+		#[cfg_attr(feature = "dox", doc(cfg(feature = "pipewire")))]
+		pub fn from_pw(pw: PwNodeState) -> Result<NodeState, &str> {
+			Ok(match pw {
+				PwNodeState::Error(e) => return Err(e),
+				PwNodeState::Creating => NodeState::Creating,
+				PwNodeState::Suspended => NodeState::Suspended,
+				PwNodeState::Idle => NodeState::Idle,
+				PwNodeState::Running => NodeState::Running,
+			})
+		}
+
+		#[cfg_attr(feature = "dox", doc(cfg(feature = "pipewire")))]
+		pub fn to_pw(&self) -> Result<PwNodeState<'static>, i32> {
+			Ok(match self {
+				&NodeState::__Unknown(v) => return Err(v),
+				NodeState::Error => PwNodeState::Error(Default::default()),
+				NodeState::Creating => PwNodeState::Creating,
+				NodeState::Suspended => PwNodeState::Suspended,
+				NodeState::Idle => PwNodeState::Idle,
+				NodeState::Running => PwNodeState::Running,
+			})
+		}
+	}
+
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "pipewire")))]
+	impl From<PwNodeState<'_>> for NodeState {
+		fn from(pw: PwNodeState) -> Self {
+			Self::from_pw(pw).unwrap_or(NodeState::Error)
+		}
+	}
+
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "pipewire")))]
+	impl From<NodeState> for PwNodeState<'_> {
+		fn from(state: NodeState) -> Self {
+			state.to_pw().expect("Unsupported WpNodeState value")
+		}
+	}
+}
