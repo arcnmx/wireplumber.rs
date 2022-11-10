@@ -3,7 +3,7 @@
 
 use crate::{Core,GlobalProxy,Iterator,NodeState,Object,ObjectInterest,PipewireObject,Port,Properties,Proxy};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem,mem::transmute,ptr};
+use std::{boxed::Box as Box_,mem,mem::transmute};
 
 glib::wrapper! {
     #[doc(alias = "WpNode")]
@@ -48,16 +48,6 @@ impl Node {
     pub fn n_ports(&self) -> u32 {
         unsafe {
             ffi::wp_node_get_n_ports(self.to_glib_none().0)
-        }
-    }
-
-    #[doc(alias = "wp_node_get_state")]
-    #[doc(alias = "get_state")]
-    pub fn state(&self) -> (NodeState, glib::GString) {
-        unsafe {
-            let mut error = ptr::null();
-            let ret = from_glib(ffi::wp_node_get_state(self.to_glib_none().0, &mut error));
-            (ret, from_glib_none(error))
         }
     }
 
