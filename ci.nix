@@ -80,7 +80,7 @@ in {
             name = "publish";
             impure = true;
             skip = if env.platform != "gh-actions" || env.gh-event-name or null != "push" then env.gh-event-name or "github"
-              else if env.git-branch != "master" then "branch"
+              else if env.git-branch != "main" then "branch"
               else false;
             gitCommit = env.git-commit;
             docsBranch = "gh-pages";
