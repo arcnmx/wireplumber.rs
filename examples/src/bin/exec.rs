@@ -101,6 +101,13 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	if plugin_names.is_empty() {
 		info!(domain: LOG_DOMAIN, "skipped activation, no plugin specified");
 	}
+	if args.module_type.is_lua() {
+		// per-script plugins were introduced in wireplumber version 0.4.10
+		if let Some(script) = Plugin::find(&core, &format!("script:{}", path)) {
+			script.activate_future(PluginFeatures::ENABLED).await
+				.with_context(|| format!("failed to activate script:{}", path))?;
+		}
+	}
 
 	Ok(())
 }
