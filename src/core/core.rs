@@ -117,11 +117,8 @@ impl Core {
 		self.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.as_ref().map(|v| v.as_variant()))
 	}
 
-	#[cfg(any(feature = "enable-futures", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "enable-futures")))]
+	#[cfg(feature = "enable-futures")]
 	pub fn connect_future(&self) -> impl Future<Output=Result<(), Error>> {
-		use futures_util::{TryFutureExt, future};
-
 		let connect = self.signal_stream(Self::SIGNAL_CONNECTED);
 
 		let res = if self.connect() {
@@ -129,7 +126,12 @@ impl Core {
 		} else {
 			Err(Error::new(LibraryErrorEnum::OperationFailed, "failed to connect to pipewire"))
 		};
-		future::ready(res).and_then(|connect| connect.map_err(From::from).map_ok(drop))
+		async move {
+			match res {
+				Ok(connect) => connect.await.map_err(Into::into).map(drop),
+				Err(e) => Err(e),
+			}
+		}
 	}
 
 	pub fn run<F: FnOnce(&MainContext, MainLoop, Core)>(props: Option<&Properties>, setup: F) {
