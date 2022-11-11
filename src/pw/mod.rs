@@ -57,3 +57,26 @@ mod port;
 mod link;
 pub use link::LinkTarget;
 mod properties;
+
+#[cfg(feature = "libspa")]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+impl From<Direction> for libspa::Direction {
+	fn from(dir: Direction) -> Self {
+		match dir {
+			Direction::Input => Self::Input,
+			Direction::Output => Self::Output,
+			Direction::__Unknown(v) => panic!("unsupported WpDirection value: {}", v),
+		}
+	}
+}
+
+#[cfg(feature = "libspa")]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+impl From<libspa::Direction> for Direction {
+	fn from(dir: libspa::Direction) -> Self {
+		match dir {
+			libspa::Direction::Input => Self::Input,
+			libspa::Direction::Output => Self::Output,
+		}
+	}
+}
