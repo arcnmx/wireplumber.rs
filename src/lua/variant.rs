@@ -6,7 +6,7 @@ use crate::lua::{LuaString, LuaError};
 use crate::prelude::*;
 
 newtype_wrapper! {
-	/// A [Variant] that can be passed to a Lua script.
+	/// A [Variant](struct@Variant) that can be passed to a Lua script.
 	///
 	/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules
 	/// and their configuration data.
