@@ -48,7 +48,7 @@ pub use crate::util::{
 };
 
 #[cfg(feature = "glib-signal")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "enable-glib-signal")))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "glib-signal")))]
 #[doc(no_inline)]
 pub use glib_signal::ObjectSignalExt as _;
 

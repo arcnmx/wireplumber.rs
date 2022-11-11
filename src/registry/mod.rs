@@ -7,7 +7,7 @@
 //! # Example
 //!
 //! ```
-//! # #[cfg(feature = "enable-futures")]
+//! # #[cfg(feature = "futures")]
 //! use futures_util::StreamExt;
 //! use wireplumber::{
 //!   prelude::*,
@@ -22,13 +22,13 @@
 //!     Constraint::compare(ConstraintType::PwProperty, "media.class", "Audio/Sink", true),
 //!   ].iter().collect::<Interest<Node>>());
 //!
-//!   # #[cfg(feature = "enable-futures")]
+//!   # #[cfg(feature = "futures")]
 //!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
 //!
 //!   om.request_object_features(Object::static_type(), ObjectFeatures::ALL);
 //!   core.install_object_manager(&om);
 //!
-//!   # #[cfg(feature = "enable-futures")]
+//!   # #[cfg(feature = "futures")]
 //!   while let Some((obj,)) = objects.next().await {
 //!     let node = obj.dynamic_cast_ref::<Node>()
 //!       .expect("we're only interested in nodes");

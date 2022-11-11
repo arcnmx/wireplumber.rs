@@ -12,7 +12,7 @@
 //!   Core::init();
 //!   Core::run(None, |context, mainloop, core| {
 //!     context.spawn_local(async move {
-//!       # #[cfg(feature = "enable-futures")]
+//!       # #[cfg(feature = "futures")]
 //!       match core.connect_future().await {
 //!         Ok(()) => println!("Connected to PipeWire!"),
 //!         Err(e) => println!("Failed to connect: {:?}", e),

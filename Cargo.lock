@@ -395,7 +395,7 @@ dependencies = [
 [[package]]
 name = "glib-signal"
 version = "0.1.0"
-source = "git+https://github.com/arcnmx/glib-signal.rs.git#89deaeccfd4df937d365643542378c4bd48d650d"
+source = "git+https://github.com/arcnmx/glib-signal.rs.git#39c3110fdbe27748c9daf52882ca0b8514be08c0"
 dependencies = [
  "futures-channel",
  "futures-core",

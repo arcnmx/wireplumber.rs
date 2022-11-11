@@ -92,7 +92,7 @@ pub use log::Log;
 pub mod lua;
 
 #[cfg(feature = "glib-signal")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "enable-glib-signal")))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "glib-signal")))]
 pub mod signals;
 
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]

@@ -117,8 +117,8 @@ impl Core {
 		self.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.as_ref().map(|v| v.as_variant()))
 	}
 
-	#[cfg(feature = "enable-futures")]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "enable-futures")))]
+	#[cfg(feature = "futures")]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "futures")))]
 	pub fn connect_future(&self) -> impl Future<Output=Result<(), Error>> {
 		let connect = match () {
 			#[cfg(feature = "glib-signal")]

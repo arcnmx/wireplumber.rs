@@ -15,7 +15,7 @@ readme = "README.md"
 license = "MIT"
 
 [package.metadata.docs.rs]
-features = ["dox", "v0_4_12", "experimental", "enable-glib-signal", "enable-libspa", "enable-futures", "enable-serde"]
+features = ["dox", "v0_4_12", "experimental", "glib-signal", "libspa", "futures", "serde"]
 
 [badges]
 maintenance = { status = "passively-maintained" }
@@ -43,10 +43,10 @@ semver = "1.0"
 [features]
 default = []
 experimental = []
-enable-glib-signal = ["glib-signal"]
-enable-futures = ["glib-signal?/enable-futures", "futures-channel"]
-enable-libspa = ["libspa"]
-enable-serde = ["serde"]
+glib-signal = ["dep:glib-signal"]
+futures = ["glib-signal?/futures", "dep:futures-channel"]
+libspa = ["dep:libspa"]
+serde = ["dep:serde"]
 v0_4_2 = ["ffi/v0_4_2"]
 v0_4_3 = ["ffi/v0_4_3", "v0_4_2"]
 v0_4_5 = ["ffi/v0_4_5", "v0_4_3"]
@@ -55,7 +55,7 @@ v0_4_8 = ["ffi/v0_4_8", "v0_4_6"]
 v0_4_10 = ["ffi/v0_4_10", "v0_4_8"]
 v0_4_11 = ["ffi/v0_4_11", "v0_4_10"]
 v0_4_12 = ["ffi/v0_4_12", "v0_4_11"]
-dox = ["ffi/dox", "glib-signal/dox"]
+dox = ["ffi/dox", "glib-signal?/dox"]
 
 [workspace]
 members = ["sys", "examples"]
