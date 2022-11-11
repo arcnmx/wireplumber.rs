@@ -266,32 +266,68 @@
 <span id="266">266</span>
 <span id="267">267</span>
 <span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
 </pre><pre class="rust"><code><span class="doccomment">//! WirePlumber module example
 //!
 //! An example showing how to write a simple WirePlumber plugin module.
-//! Following along with the [source code](../src/static_link_module/static-link.rs.html) is recommended.
-//! Additional explanation and documentation is located in the [plugin module documentation](wireplumber::plugin).
+//! Following along with the [source code](../src/static_link_module/static-link.rs.html) is
+//! recommended. Additional explanation and documentation is located in the [plugin module
+//! documentation](wireplumber::plugin).
 
-</span><span class="kw">use </span>std::pin::Pin;
-<span class="kw">use </span>std::iter;
-<span class="kw">use </span>std::future::Future;
-
-<span class="kw">use </span>serde::{Serialize, Deserialize};
-<span class="kw">use </span>futures::{FutureExt, StreamExt, future};
-<span class="kw">use </span>futures::channel::mpsc;
-<span class="kw">use </span>glib::{Variant, Error, SourceId};
-<span class="kw">use </span>glib::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>glib::once_cell::unsync::OnceCell;
-
-<span class="kw">use </span>wireplumber::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>wireplumber::{
-	core::{Core, Object, ObjectFeatures},
-	plugin::{<span class="self">self</span>, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
-	registry::{ConstraintType, Constraint, Interest, ObjectManager},
-	pw::{<span class="self">self</span>, Node, Port, Link, Properties, ProxyFeatures},
-	lua::from_variant,
-	error,
-	info, warning,
+</span><span class="kw">use </span>{
+	futures::{channel::mpsc, future, FutureExt, StreamExt},
+	glib::{once_cell::unsync::OnceCell, prelude::<span class="kw-2">*</span>, Error, SourceId, Variant},
+	serde::{Deserialize, Serialize},
+	std::{future::Future, iter, pin::Pin},
+	wireplumber::{
+		core::{Core, Object, ObjectFeatures},
+		error, info,
+		lua::from_variant,
+		plugin::{<span class="self">self</span>, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
+		prelude::<span class="kw-2">*</span>,
+		pw::{<span class="self">self</span>, Link, Node, Port, Properties, ProxyFeatures},
+		registry::{Constraint, ConstraintType, Interest, ObjectManager},
+		warning,
+	},
 };
 
 <span class="doccomment">/// [GLib logging domain](glib::g_log) that doubles as the
@@ -314,7 +350,9 @@
 
 <span class="doccomment">/// serde boolean default
 </span><span class="attr">#[doc(hidden)]
-</span><span class="kw">fn </span>true_() -&gt; bool { <span class="bool-val">true </span>}
+</span><span class="kw">fn </span>true_() -&gt; bool {
+	<span class="bool-val">true
+</span>}
 
 <span class="doccomment">/// User configuration for the [StaticLink] plugin
 </span><span class="attr">#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
@@ -353,21 +391,39 @@
 }
 
 <span class="doccomment">/// Link all ports between `output` and `input` matching [`mappings`][PortMapping]
-</span><span class="kw">fn </span>link_ports&lt;<span class="lifetime">&#39;a</span>&gt;(mappings: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[PortMapping], core: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Core, output: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Node, input: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Node, link_props: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Properties) -&gt; <span class="kw">impl </span>Iterator&lt;Item=<span class="prelude-ty">Result</span>&lt;Link, Error&gt;&gt; + <span class="lifetime">&#39;a </span>{
+</span><span class="kw">fn </span>link_ports&lt;<span class="lifetime">&#39;a</span>&gt;(
+	mappings: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[PortMapping],
+	core: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Core,
+	output: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Node,
+	input: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Node,
+	link_props: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Properties,
+) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Result</span>&lt;Link, Error&gt;&gt; + <span class="lifetime">&#39;a </span>{
 	mappings.iter().flat_map(<span class="kw">move </span>|mapping| {
-		<span class="kw">let </span>port_input_interest: Interest&lt;Port&gt; = mapping.input.iter().chain(iter::once(
-			<span class="kw-2">&amp;</span>Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, <span class="string">&quot;in&quot;</span>, <span class="bool-val">true</span>)
-		)).collect();
+		<span class="kw">let </span>port_input_interest: Interest&lt;Port&gt; = mapping
+			.input
+			.iter()
+			.chain(iter::once(<span class="kw-2">&amp;</span>Constraint::compare(
+				ConstraintType::default(),
+				pw::PW_KEY_PORT_DIRECTION,
+				<span class="string">&quot;in&quot;</span>,
+				<span class="bool-val">true</span>,
+			)))
+			.collect();
 		<span class="kw">let </span>port_inputs = port_input_interest.filter(input);
 
-		<span class="kw">let </span>port_output_interest: Interest&lt;Port&gt; = mapping.output.iter().chain(iter::once(
-			<span class="kw-2">&amp;</span>Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, <span class="string">&quot;out&quot;</span>, <span class="bool-val">true</span>)
-		)).collect();
+		<span class="kw">let </span>port_output_interest: Interest&lt;Port&gt; = mapping
+			.output
+			.iter()
+			.chain(iter::once(<span class="kw-2">&amp;</span>Constraint::compare(
+				ConstraintType::default(),
+				pw::PW_KEY_PORT_DIRECTION,
+				<span class="string">&quot;out&quot;</span>,
+				<span class="bool-val">true</span>,
+			)))
+			.collect();
 		<span class="kw">let </span>port_outputs = <span class="kw">move </span>|| port_output_interest.filter(output);
 
-		port_inputs.flat_map(<span class="kw">move </span>|i| port_outputs().map(<span class="kw">move </span>|o|
-			Link::new(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span>o, <span class="kw-2">&amp;</span>i, link_props)
-		))
+		port_inputs.flat_map(<span class="kw">move </span>|i| port_outputs().map(<span class="kw">move </span>|o| Link::new(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span>o, <span class="kw-2">&amp;</span>i, link_props)))
 	})
 }
 
@@ -380,8 +436,9 @@
 	om: ObjectManager,
 	core: Core,
 	arg: StaticLinkArgs,
-	input_interest: Interest&lt;Node&gt;, output_interest: Interest&lt;Node&gt;,
-	<span class="kw-2">mut </span>rx: mpsc::Receiver&lt;()&gt;
+	input_interest: Interest&lt;Node&gt;,
+	output_interest: Interest&lt;Node&gt;,
+	<span class="kw-2">mut </span>rx: mpsc::Receiver&lt;()&gt;,
 ) {
 	<span class="kw">let </span>link_props = Properties::new_empty();
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
@@ -416,7 +473,11 @@
 }
 
 <span class="doccomment">/// The main entry point of the plugin
-</span><span class="kw">pub async fn </span>main_async(plugin: <span class="kw-2">&amp;</span>SimplePluginObject&lt;StaticLink&gt;, core: Core, arg: StaticLinkArgs) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>IntoIterator&lt;Item=<span class="kw">impl </span>Future&lt;Output=()&gt;&gt;, Error&gt; {
+</span><span class="kw">pub async fn </span>main_async(
+	plugin: <span class="kw-2">&amp;</span>SimplePluginObject&lt;StaticLink&gt;,
+	core: Core,
+	arg: StaticLinkArgs,
+) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>IntoIterator&lt;Item = <span class="kw">impl </span>Future&lt;Output = ()&gt;&gt;, Error&gt; {
 	<span class="kw">let </span>om = ObjectManager::new();
 
 	<span class="kw">let </span>output_interest: Interest&lt;Node&gt; = arg.output.iter().collect();
@@ -438,14 +499,21 @@
 					<span class="prelude-val">Some</span>(plugin) =&gt; plugin,
 					<span class="prelude-val">None </span>=&gt; <span class="kw">break</span>,
 				};
-				plugin.spawn_local(node.signal_stream(Node::SIGNAL_PORTS_CHANGED)
-					.map(|<span class="kw">_</span>| <span class="prelude-val">Ok</span>(())).forward(link_nodes_signal.clone()).map(drop)
+				plugin.spawn_local(
+					node
+						.signal_stream(Node::SIGNAL_PORTS_CHANGED)
+						.map(|<span class="kw">_</span>| <span class="prelude-val">Ok</span>(()))
+						.forward(link_nodes_signal.clone())
+						.map(drop),
 				);
 			}
 		}
 	};
-	<span class="kw">let </span>object_signals = om.signal_stream(ObjectManager::SIGNAL_OBJECTS_CHANGED)
-		.map(|<span class="kw">_</span>| <span class="prelude-val">Ok</span>(())).forward(link_nodes_signal).map(drop);
+	<span class="kw">let </span>object_signals = om
+		.signal_stream(ObjectManager::SIGNAL_OBJECTS_CHANGED)
+		.map(|<span class="kw">_</span>| <span class="prelude-val">Ok</span>(()))
+		.forward(link_nodes_signal)
+		.map(drop);
 
 	<span class="kw">let </span>signal_installed = om.signal_stream(ObjectManager::SIGNAL_INSTALLED);
 
@@ -457,7 +525,11 @@
 
 	<span class="kw">let </span>main_loop = main_loop(om, core, arg, input_interest, output_interest, rx);
 
-	<span class="prelude-val">Ok</span>([port_signals.boxed_local(), object_signals.boxed_local(), main_loop.boxed_local()])
+	<span class="prelude-val">Ok</span>([
+		port_signals.boxed_local(),
+		object_signals.boxed_local(),
+		main_loop.boxed_local(),
+	])
 }
 
 <span class="doccomment">/// The plugin instance
@@ -478,7 +550,7 @@
 
 <span class="doccomment">/// This makes [StaticLink] an async plugin that can be used with [plugin::plugin_export] below.
 </span><span class="kw">impl </span>AsyncPluginImpl <span class="kw">for </span>StaticLink {
-	<span class="kw">type </span>EnableFuture = Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt;&gt;&gt;;
+	<span class="kw">type </span>EnableFuture = Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt;&gt;&gt;;
 
 	<span class="kw">fn </span>register_source(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) {
 		<span class="self">self</span>.handles.push(source);
@@ -490,17 +562,24 @@
 	</span><span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, this: <span class="self">Self</span>::Type) -&gt; <span class="self">Self</span>::EnableFuture {
 		<span class="kw">let </span>core = this.plugin_core();
 		<span class="kw">let </span>context = this.plugin_context();
-		<span class="kw">let </span>res = <span class="self">self</span>.handles.try_init(context.clone())
+		<span class="kw">let </span>res = <span class="self">self
+			</span>.handles
+			.try_init(context.clone())
 			.map_err(|<span class="kw">_</span>| error::invariant(<span class="macro">format_args!</span>(<span class="string">&quot;{} plugin has already been enabled&quot;</span>, LOG_DOMAIN)));
 		<span class="kw">async move </span>{
 			res<span class="question-mark">?</span>;
-			<span class="kw">let </span>loops = this.args.get().unwrap().iter()
+			<span class="kw">let </span>loops = this
+				.args
+				.get()
+				.unwrap()
+				.iter()
 				.map(|arg| main_async(<span class="kw-2">&amp;</span>this, core.clone(), arg.clone()));
 			<span class="kw">for </span>spawn <span class="kw">in </span>future::try_join_all(loops).<span class="kw">await</span><span class="question-mark">?</span>.into_iter().flat_map(|l| l) {
 				this.spawn_local(spawn);
 			}
 			<span class="prelude-val">Ok</span>(())
-		}.boxed_local()
+		}
+		.boxed_local()
 	}
 
 	<span class="doccomment">/// Plugin deinitializer
@@ -521,7 +600,8 @@
 	}
 
 	<span class="kw">fn </span>decode_args(args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Args, Error&gt; {
-		args.map(|args| from_variant(<span class="kw-2">&amp;</span>args))
+		args
+			.map(|args| from_variant(<span class="kw-2">&amp;</span>args))
 			.unwrap_or(<span class="prelude-val">Ok</span>(Default::default()))
 			.map_err(error::invalid_argument)
 	}

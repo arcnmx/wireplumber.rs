@@ -262,6 +262,18 @@
 <span id="262">262</span>
 <span id="263">263</span>
 <span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
 </pre><pre class="rust"><code><span class="doccomment">//! wpexec example
 //!
 //! An example showing how to write a simple WirePlumber service.
@@ -269,19 +281,17 @@
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
-</span><span class="kw">use </span>anyhow::Context;
-<span class="kw">use </span>clap::{Parser, ArgEnum};
-<span class="kw">use </span>anyhow::{<span class="prelude-ty">Result</span>, format_err};
-<span class="kw">use </span>std::cell::RefCell;
-<span class="kw">use </span>std::rc::Rc;
-<span class="kw">use </span>std::path::Path;
-<span class="kw">use </span>std::{env, fs};
-
-<span class="kw">use </span>wireplumber::{
-	Core, Log, info, warning,
-	pw::{<span class="self">self</span>, Properties},
-	lua::LuaVariant,
-	plugin::{Plugin, PluginFeatures, ComponentLoader},
+</span><span class="kw">use </span>{
+	anyhow::{format_err, Context, <span class="prelude-ty">Result</span>},
+	clap::{ArgEnum, Parser},
+	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
+	wireplumber::{
+		info,
+		lua::LuaVariant,
+		plugin::{ComponentLoader, Plugin, PluginFeatures},
+		pw::{<span class="self">self</span>, Properties},
+		warning, Core, Log,
+	},
 };
 
 <span class="doccomment">/// [GLib logging domain](glib::g_log)
@@ -300,7 +310,10 @@
 	</span>Pipewire,
 }
 
-<span class="attr">#[cfg_attr(doc, doc = <span class="string">&quot;Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)&quot;</span>)]
+<span class="attr">#[cfg_attr(
+	doc,
+	doc = <span class="string">&quot;Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)&quot;
+</span>)]
 #[derive(Parser, Debug)]
 #[clap(version)]
 </span><span class="kw">struct </span>Args {
@@ -338,18 +351,26 @@
 			},
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
-	}.unwrap_or(path.into());
+	}
+	.unwrap_or(path.into());
 
 	<span class="kw">let </span>variant_args = args.variant()<span class="question-mark">?</span>;
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(module) = args.module_type.loader_module() {
-		core.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, <span class="prelude-val">None</span>)
+		core
+			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, <span class="prelude-val">None</span>)
 			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load the {:?} scripting module&quot;</span>, args.module_type))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>args.module_type.is_lua() {
-		core.load_lua_script(<span class="kw-2">&amp;</span>path, variant_args)
+		core
+			.load_lua_script(<span class="kw-2">&amp;</span>path, variant_args)
 			.context(<span class="string">&quot;failed to load the lua script&quot;</span>)<span class="question-mark">?</span>;
 	} <span class="kw">else </span>{
-		core.load_component(<span class="kw-2">&amp;</span>path, args.module_type.loader_type(), variant_args.as_ref().map(|v| v.as_variant()))
+		core
+			.load_component(
+				<span class="kw-2">&amp;</span>path,
+				args.module_type.loader_type(),
+				variant_args.as_ref().map(|v| v.as_variant()),
+			)
 			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load {} as a {}&quot;</span>, path, args.module_type.loader_type()))<span class="question-mark">?</span>;
 	}
 
@@ -357,9 +378,9 @@
 
 	<span class="kw">let </span>plugin_names = args.plugins();
 	<span class="kw">for </span>plugin_name <span class="kw">in </span><span class="kw-2">&amp;</span>plugin_names {
-		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name)
-			.ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">&quot;plugin {} not found&quot;</span>, plugin_name))<span class="question-mark">?</span>;
-		p.activate_future(PluginFeatures::ENABLED).<span class="kw">await
+		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">&quot;plugin {} not found&quot;</span>, plugin_name))<span class="question-mark">?</span>;
+		p.activate_future(PluginFeatures::ENABLED)
+			.<span class="kw">await
 			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate {:?} plugin&quot;</span>, plugin_name))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>plugin_names.is_empty() {
@@ -368,7 +389,9 @@
 	<span class="kw">if </span>args.module_type.is_lua() {
 		<span class="comment">// per-script plugins were introduced in wireplumber version 0.4.10
 		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;script:{}&quot;</span>, path)) {
-			script.activate_future(PluginFeatures::ENABLED).<span class="kw">await
+			script
+				.activate_future(PluginFeatures::ENABLED)
+				.<span class="kw">await
 				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate script:{}&quot;</span>, path))<span class="question-mark">?</span>;
 		}
 	}
@@ -412,7 +435,8 @@
 			<span class="comment">// exit this loop if we receive a SIGINT
 			</span><span class="kw">let </span>mainloop = mainloop.clone();
 			<span class="kw">move </span>|| mainloop.quit()
-		}).unwrap();
+		})
+		.unwrap();
 
 		<span class="kw">let </span>main_res = main_res.clone();
 		context.spawn_local(<span class="kw">async move </span>{
@@ -498,12 +522,14 @@
 		<span class="kw">match </span><span class="self">self</span>.module {
 			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>module) =&gt; <span class="prelude-val">Some</span>(module),
 			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><span class="self">self</span>.module_type {
-				ModuleType::Lua =&gt;
-					<span class="prelude-val">Some</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/script.lua&quot;</span>)),
+				ModuleType::Lua =&gt; <span class="prelude-val">Some</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/script.lua&quot;</span>)),
 				ModuleType::Wireplumber =&gt; {
 					<span class="kw">let </span>module_path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/../../../examples/libstatic_link_module.so&quot;</span>); <span class="comment">// TODO: .so is so linux
 					</span><span class="kw">if </span>fs::metadata(module_path).is_err() {
-						<span class="macro">warning!</span>(domain: LOG_DOMAIN, <span class="string">&quot;example module not found, try: cargo build -p wp-examples --example static-link-module&quot;</span>);
+						<span class="macro">warning!</span>(
+							domain: LOG_DOMAIN,
+							<span class="string">&quot;example module not found, try: cargo build -p wp-examples --example static-link-module&quot;
+						</span>);
 					}
 					<span class="prelude-val">Some</span>(module_path)
 				},
@@ -520,9 +546,7 @@
 	</span><span class="kw">fn </span>variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;LuaVariant&gt;&gt; {
 		<span class="kw">match </span><span class="self">self</span>.json_arg {
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; serde_json::from_str(json)
-				.map_err(Into::into)
-				.map(<span class="prelude-val">Some</span>),
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; serde_json::from_str(json).map_err(Into::into).map(<span class="prelude-val">Some</span>),
 		}
 	}
 }
