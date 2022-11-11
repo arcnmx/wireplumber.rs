@@ -54,6 +54,7 @@
 //! may also be helpful.
 
 #[allow(unused_imports)]
+#[rustfmt::skip]
 mod auto;
 
 pub use ffi;
@@ -61,27 +62,26 @@ pub use ffi;
 /// Export dependencies for use from macros
 #[doc(hidden)]
 pub mod lib {
-	pub use glib;
-	pub use gio;
+	pub use {gio, glib};
 }
 
-pub mod pw;
 pub mod prelude;
+pub mod pw;
 
-pub mod log;
-pub mod local;
-pub mod session;
-pub mod registry;
-pub mod plugin;
 #[cfg(any(feature = "v0_4_11", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
 pub mod dbus;
+pub mod local;
+pub mod log;
+pub mod plugin;
+pub mod registry;
+pub mod session;
 pub mod spa;
 pub mod util;
 
 pub mod error;
 #[doc(no_inline)]
-pub use error::{Result, Error};
+pub use error::{Error, Result};
 
 pub mod core;
 #[doc(no_inline)]
@@ -93,24 +93,21 @@ pub mod lua;
 
 pub mod signals;
 
-/// gir needs to know where to find these
-pub(crate) use crate::{
-	pw::{PipewireObject, Proxy, GlobalProxy, Port, Metadata, Properties, Endpoint, Direction, NodeState},
-	core::{Object, ObjectFeatures},
-	plugin::Plugin,
-	spa::{SpaPod, SpaType},
-	session::{SessionItem, SiLink, SiLinkable, SiEndpoint, SiAcquisition},
-	registry::{ObjectManager, ObjectInterest, InterestMatch, InterestMatchFlags, ConstraintType, ConstraintVerb},
-	util::{WpIterator as Iterator, Transition},
-};
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]
 pub(crate) use crate::pw::PropertiesItem;
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-pub(crate) use crate::spa::SpaJson;
 #[cfg(any(feature = "v0_4_10", feature = "dox"))]
 pub(crate) use crate::session::SiAdapterPortsState;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+pub(crate) use crate::spa::SpaJson;
+/// gir needs to know where to find these
 pub(crate) use crate::{
-	pw::LinkState,
-	dbus::DBusState,
+	core::{Object, ObjectFeatures},
+	plugin::Plugin,
+	pw::{Direction, Endpoint, GlobalProxy, Metadata, NodeState, PipewireObject, Port, Properties, Proxy},
+	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
+	session::{SessionItem, SiAcquisition, SiEndpoint, SiLink, SiLinkable},
+	spa::{SpaPod, SpaType},
+	util::{Transition, WpIterator as Iterator},
 };
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+pub(crate) use crate::{dbus::DBusState, pw::LinkState};

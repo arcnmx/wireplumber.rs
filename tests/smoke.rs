@@ -1,4 +1,3 @@
 use wireplumber::*;
 
-fn main() {
-}
+fn main() {}

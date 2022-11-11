@@ -1,29 +1,25 @@
 //! WirePlumber module example
 //!
 //! An example showing how to write a simple WirePlumber plugin module.
-//! Following along with the [source code](../src/static_link_module/static-link.rs.html) is recommended.
-//! Additional explanation and documentation is located in the [plugin module documentation](wireplumber::plugin).
+//! Following along with the [source code](../src/static_link_module/static-link.rs.html) is
+//! recommended. Additional explanation and documentation is located in the [plugin module
+//! documentation](wireplumber::plugin).
 
-use std::pin::Pin;
-use std::iter;
-use std::future::Future;
-
-use serde::{Serialize, Deserialize};
-use futures::{FutureExt, StreamExt, future};
-use futures::channel::mpsc;
-use glib::{Variant, Error, SourceId};
-use glib::prelude::*;
-use glib::once_cell::unsync::OnceCell;
-
-use wireplumber::prelude::*;
-use wireplumber::{
-	core::{Core, Object, ObjectFeatures},
-	plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
-	registry::{ConstraintType, Constraint, Interest, ObjectManager},
-	pw::{self, Node, Port, Link, Properties, ProxyFeatures},
-	lua::from_variant,
-	error,
-	info, warning,
+use {
+	futures::{channel::mpsc, future, FutureExt, StreamExt},
+	glib::{once_cell::unsync::OnceCell, prelude::*, Error, SourceId, Variant},
+	serde::{Deserialize, Serialize},
+	std::{future::Future, iter, pin::Pin},
+	wireplumber::{
+		core::{Core, Object, ObjectFeatures},
+		error, info,
+		lua::from_variant,
+		plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
+		prelude::*,
+		pw::{self, Link, Node, Port, Properties, ProxyFeatures},
+		registry::{Constraint, ConstraintType, Interest, ObjectManager},
+		warning,
+	},
 };
 
 /// [GLib logging domain](glib::g_log) that doubles as the
@@ -46,7 +42,9 @@ pub struct PortMapping {
 
 /// serde boolean default
 #[doc(hidden)]
-fn true_() -> bool { true }
+fn true_() -> bool {
+	true
+}
 
 /// User configuration for the [StaticLink] plugin
 #[derive(Debug, Clone, Deserialize, Serialize, Variant)]
@@ -85,21 +83,39 @@ impl Default for StaticLinkArgs {
 }
 
 /// Link all ports between `output` and `input` matching [`mappings`][PortMapping]
-fn link_ports<'a>(mappings: &'a [PortMapping], core: &'a Core, output: &'a Node, input: &'a Node, link_props: &'a Properties) -> impl Iterator<Item=Result<Link, Error>> + 'a {
+fn link_ports<'a>(
+	mappings: &'a [PortMapping],
+	core: &'a Core,
+	output: &'a Node,
+	input: &'a Node,
+	link_props: &'a Properties,
+) -> impl Iterator<Item = Result<Link, Error>> + 'a {
 	mappings.iter().flat_map(move |mapping| {
-		let port_input_interest: Interest<Port> = mapping.input.iter().chain(iter::once(
-			&Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, "in", true)
-		)).collect();
+		let port_input_interest: Interest<Port> = mapping
+			.input
+			.iter()
+			.chain(iter::once(&Constraint::compare(
+				ConstraintType::default(),
+				pw::PW_KEY_PORT_DIRECTION,
+				"in",
+				true,
+			)))
+			.collect();
 		let port_inputs = port_input_interest.filter(input);
 
-		let port_output_interest: Interest<Port> = mapping.output.iter().chain(iter::once(
-			&Constraint::compare(ConstraintType::default(), pw::PW_KEY_PORT_DIRECTION, "out", true)
-		)).collect();
+		let port_output_interest: Interest<Port> = mapping
+			.output
+			.iter()
+			.chain(iter::once(&Constraint::compare(
+				ConstraintType::default(),
+				pw::PW_KEY_PORT_DIRECTION,
+				"out",
+				true,
+			)))
+			.collect();
 		let port_outputs = move || port_output_interest.filter(output);
 
-		port_inputs.flat_map(move |i| port_outputs().map(move |o|
-			Link::new(&core, &o, &i, link_props)
-		))
+		port_inputs.flat_map(move |i| port_outputs().map(move |o| Link::new(&core, &o, &i, link_props)))
 	})
 }
 
@@ -112,8 +128,9 @@ pub async fn main_loop(
 	om: ObjectManager,
 	core: Core,
 	arg: StaticLinkArgs,
-	input_interest: Interest<Node>, output_interest: Interest<Node>,
-	mut rx: mpsc::Receiver<()>
+	input_interest: Interest<Node>,
+	output_interest: Interest<Node>,
+	mut rx: mpsc::Receiver<()>,
 ) {
 	let link_props = Properties::new_empty();
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
@@ -148,7 +165,11 @@ pub async fn main_loop(
 }
 
 /// The main entry point of the plugin
-pub async fn main_async(plugin: &SimplePluginObject<StaticLink>, core: Core, arg: StaticLinkArgs) -> Result<impl IntoIterator<Item=impl Future<Output=()>>, Error> {
+pub async fn main_async(
+	plugin: &SimplePluginObject<StaticLink>,
+	core: Core,
+	arg: StaticLinkArgs,
+) -> Result<impl IntoIterator<Item = impl Future<Output = ()>>, Error> {
 	let om = ObjectManager::new();
 
 	let output_interest: Interest<Node> = arg.output.iter().collect();
@@ -170,14 +191,21 @@ pub async fn main_async(plugin: &SimplePluginObject<StaticLink>, core: Core, arg
 					Some(plugin) => plugin,
 					None => break,
 				};
-				plugin.spawn_local(node.signal_stream(Node::SIGNAL_PORTS_CHANGED)
-					.map(|_| Ok(())).forward(link_nodes_signal.clone()).map(drop)
+				plugin.spawn_local(
+					node
+						.signal_stream(Node::SIGNAL_PORTS_CHANGED)
+						.map(|_| Ok(()))
+						.forward(link_nodes_signal.clone())
+						.map(drop),
 				);
 			}
 		}
 	};
-	let object_signals = om.signal_stream(ObjectManager::SIGNAL_OBJECTS_CHANGED)
-		.map(|_| Ok(())).forward(link_nodes_signal).map(drop);
+	let object_signals = om
+		.signal_stream(ObjectManager::SIGNAL_OBJECTS_CHANGED)
+		.map(|_| Ok(()))
+		.forward(link_nodes_signal)
+		.map(drop);
 
 	let signal_installed = om.signal_stream(ObjectManager::SIGNAL_INSTALLED);
 
@@ -189,7 +217,11 @@ pub async fn main_async(plugin: &SimplePluginObject<StaticLink>, core: Core, arg
 
 	let main_loop = main_loop(om, core, arg, input_interest, output_interest, rx);
 
-	Ok([port_signals.boxed_local(), object_signals.boxed_local(), main_loop.boxed_local()])
+	Ok([
+		port_signals.boxed_local(),
+		object_signals.boxed_local(),
+		main_loop.boxed_local(),
+	])
 }
 
 /// The plugin instance
@@ -210,7 +242,7 @@ pub struct StaticLink {
 
 /// This makes [StaticLink] an async plugin that can be used with [plugin::plugin_export] below.
 impl AsyncPluginImpl for StaticLink {
-	type EnableFuture = Pin<Box<dyn Future<Output=Result<(), Error>>>>;
+	type EnableFuture = Pin<Box<dyn Future<Output = Result<(), Error>>>>;
 
 	fn register_source(&self, source: SourceId) {
 		self.handles.push(source);
@@ -222,17 +254,24 @@ impl AsyncPluginImpl for StaticLink {
 	fn enable(&self, this: Self::Type) -> Self::EnableFuture {
 		let core = this.plugin_core();
 		let context = this.plugin_context();
-		let res = self.handles.try_init(context.clone())
+		let res = self
+			.handles
+			.try_init(context.clone())
 			.map_err(|_| error::invariant(format_args!("{} plugin has already been enabled", LOG_DOMAIN)));
 		async move {
 			res?;
-			let loops = this.args.get().unwrap().iter()
+			let loops = this
+				.args
+				.get()
+				.unwrap()
+				.iter()
 				.map(|arg| main_async(&this, core.clone(), arg.clone()));
 			for spawn in future::try_join_all(loops).await?.into_iter().flat_map(|l| l) {
 				this.spawn_local(spawn);
 			}
 			Ok(())
-		}.boxed_local()
+		}
+		.boxed_local()
 	}
 
 	/// Plugin deinitializer
@@ -253,7 +292,8 @@ impl SimplePlugin for StaticLink {
 	}
 
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
-		args.map(|args| from_variant(&args))
+		args
+			.map(|args| from_variant(&args))
 			.unwrap_or(Ok(Default::default()))
 			.map_err(error::invalid_argument)
 	}

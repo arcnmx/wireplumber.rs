@@ -16,6 +16,7 @@
     name = "cargo-${name}";
     command = "${cargo-bin config} " + command;
     impure = true;
+    ${if config.enableDocs && hasPrefix "fmt" command then "RUSTFMT" else null} = "${rustChannel.buildChannel.rustfmt}/bin/rustfmt";
     inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
     PKG_CONFIG_PATH = makeSearchPath "lib/pkgconfig" wpexec.buildInputs;
     "AR_${replaceStrings [ "-" ] [ "_" ] hostPlatform.config}" = "${stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}ar";
@@ -62,6 +63,10 @@ in {
         tasks = mkForce {
           docs-all.inputs = [
             (cargo config "doc-all" "doc --all-features --workspace --no-deps" { })
+          ];
+          fmt.inputs = [
+            (cargo config "fmt" "fmt --check" { })
+            (cargo config "fmt-examples" "fmt -p wp-examples --check" { })
           ];
           docs.inputs = [
             (cargo config "doc" ("clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${rustChannel.hostTarget.triple}/doc"

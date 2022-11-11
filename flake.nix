@@ -55,7 +55,7 @@
         inherit (arc'rustPlatforms.nightly.hostChannel) mkShell;
         enableRust = false;
         enableRustdoc = true;
-        rustTools = [ "rust-analyzer" ];
+        rustTools = [ "rust-analyzer" "rustfmt" ];
       };
       default = { outputs'devShells }: outputs'devShells.plain;
     };

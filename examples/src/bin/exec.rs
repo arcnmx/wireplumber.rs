@@ -5,19 +5,17 @@
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
-use anyhow::Context;
-use clap::{Parser, ArgEnum};
-use anyhow::{Result, format_err};
-use std::cell::RefCell;
-use std::rc::Rc;
-use std::path::Path;
-use std::{env, fs};
-
-use wireplumber::{
-	Core, Log, info, warning,
-	pw::{self, Properties},
-	lua::LuaVariant,
-	plugin::{Plugin, PluginFeatures, ComponentLoader},
+use {
+	anyhow::{format_err, Context, Result},
+	clap::{ArgEnum, Parser},
+	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
+	wireplumber::{
+		info,
+		lua::LuaVariant,
+		plugin::{ComponentLoader, Plugin, PluginFeatures},
+		pw::{self, Properties},
+		warning, Core, Log,
+	},
 };
 
 /// [GLib logging domain](glib::g_log)
@@ -36,7 +34,10 @@ enum ModuleType {
 	Pipewire,
 }
 
-#[cfg_attr(doc, doc = "Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)")]
+#[cfg_attr(
+	doc,
+	doc = "Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)"
+)]
 #[derive(Parser, Debug)]
 #[clap(version)]
 struct Args {
@@ -74,18 +75,26 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 			},
 			_ => None,
 		}
-	}.unwrap_or(path.into());
+	}
+	.unwrap_or(path.into());
 
 	let variant_args = args.variant()?;
 	if let Some(module) = args.module_type.loader_module() {
-		core.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, None)
+		core
+			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, None)
 			.with_context(|| format!("failed to load the {:?} scripting module", args.module_type))?;
 	}
 	if args.module_type.is_lua() {
-		core.load_lua_script(&path, variant_args)
+		core
+			.load_lua_script(&path, variant_args)
 			.context("failed to load the lua script")?;
 	} else {
-		core.load_component(&path, args.module_type.loader_type(), variant_args.as_ref().map(|v| v.as_variant()))
+		core
+			.load_component(
+				&path,
+				args.module_type.loader_type(),
+				variant_args.as_ref().map(|v| v.as_variant()),
+			)
 			.with_context(|| format!("failed to load {} as a {}", path, args.module_type.loader_type()))?;
 	}
 
@@ -93,9 +102,9 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 
 	let plugin_names = args.plugins();
 	for plugin_name in &plugin_names {
-		let p = Plugin::find(&core, plugin_name)
-			.ok_or_else(|| format_err!("plugin {} not found", plugin_name))?;
-		p.activate_future(PluginFeatures::ENABLED).await
+		let p = Plugin::find(&core, plugin_name).ok_or_else(|| format_err!("plugin {} not found", plugin_name))?;
+		p.activate_future(PluginFeatures::ENABLED)
+			.await
 			.with_context(|| format!("failed to activate {:?} plugin", plugin_name))?;
 	}
 	if plugin_names.is_empty() {
@@ -104,7 +113,9 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	if args.module_type.is_lua() {
 		// per-script plugins were introduced in wireplumber version 0.4.10
 		if let Some(script) = Plugin::find(&core, &format!("script:{}", path)) {
-			script.activate_future(PluginFeatures::ENABLED).await
+			script
+				.activate_future(PluginFeatures::ENABLED)
+				.await
 				.with_context(|| format!("failed to activate script:{}", path))?;
 		}
 	}
@@ -148,7 +159,8 @@ fn main() -> Result<()> {
 			// exit this loop if we receive a SIGINT
 			let mainloop = mainloop.clone();
 			move || mainloop.quit()
-		}).unwrap();
+		})
+		.unwrap();
 
 		let main_res = main_res.clone();
 		context.spawn_local(async move {
@@ -234,12 +246,14 @@ impl Args {
 		match self.module {
 			Some(ref module) => Some(module),
 			None => match self.module_type {
-				ModuleType::Lua =>
-					Some(concat!(env!("CARGO_MANIFEST_DIR"), "/script.lua")),
+				ModuleType::Lua => Some(concat!(env!("CARGO_MANIFEST_DIR"), "/script.lua")),
 				ModuleType::Wireplumber => {
 					let module_path = concat!(env!("OUT_DIR"), "/../../../examples/libstatic_link_module.so"); // TODO: .so is so linux
 					if fs::metadata(module_path).is_err() {
-						warning!(domain: LOG_DOMAIN, "example module not found, try: cargo build -p wp-examples --example static-link-module");
+						warning!(
+							domain: LOG_DOMAIN,
+							"example module not found, try: cargo build -p wp-examples --example static-link-module"
+						);
 					}
 					Some(module_path)
 				},
@@ -256,9 +270,7 @@ impl Args {
 	fn variant(&self) -> Result<Option<LuaVariant>> {
 		match self.json_arg {
 			None => Ok(None),
-			Some(ref json) => serde_json::from_str(json)
-				.map_err(Into::into)
-				.map(Some),
+			Some(ref json) => serde_json::from_str(json).map_err(Into::into).map(Some),
 		}
 	}
 }

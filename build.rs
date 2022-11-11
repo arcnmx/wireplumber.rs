@@ -1,6 +1,6 @@
 use std::env;
 
-use semver::{Version, Comparator, Op};
+use semver::{Comparator, Op, Version};
 
 fn main() {
 	println!("cargo:rerun-if-changed=build.rs");
@@ -13,13 +13,18 @@ fn main() {
 		Some(ver) => Some(ver),
 		None => {
 			let pw = pkg_config::Config::new()
-				.cargo_metadata(false).env_metadata(true)
-				.print_system_libs(false).print_system_cflags(false)
+				.cargo_metadata(false)
+				.env_metadata(true)
+				.print_system_libs(false)
+				.print_system_cflags(false)
 				.probe("libpipewire-0.3");
 			match pw {
 				Ok(pw) => Some(pw.version),
 				Err(e) => {
-					println!("cargo:warning=Failed to detect pipewire native library version: {:?}", e);
+					println!(
+						"cargo:warning=Failed to detect pipewire native library version: {:?}",
+						e
+					);
 					None
 				},
 			}
@@ -41,11 +46,7 @@ fn main() {
 			patch: Some(req_version.patch),
 			pre: Default::default(),
 		};
-		let max_patch = if req.matches(&pw_version) {
-			pw_version.patch
-		} else {
-			43
-		};
+		let max_patch = if req.matches(&pw_version) { pw_version.patch } else { 43 };
 		println!("cargo:rustc-cfg=pw_version=\"{}\"", pw_version);
 		for patch in 0..=max_patch {
 			req_version.patch = patch;
