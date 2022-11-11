@@ -111,6 +111,8 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
 </pre><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/&quot;</span>)]
 #![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
 
@@ -204,7 +206,9 @@
 
 <span class="kw">pub mod </span>lua;
 
-<span class="kw">pub mod </span>signals;
+<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;enable-glib-signal&quot;</span>)))]
+</span><span class="kw">pub mod </span>signals;
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::pw::PropertiesItem;

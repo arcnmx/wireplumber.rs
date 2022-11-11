@@ -90,6 +90,9 @@
 <span id="90">90</span>
 <span id="91">91</span>
 <span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Extension traits
 //!
 //! Wildcard imports give you access to all the goodies:
@@ -139,8 +142,11 @@
 	TransitionExt <span class="kw">as _</span>, TransitionExt2 <span class="kw">as _</span>,
 };
 
-<span class="attr">#[doc(no_inline)]
+<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;enable-glib-signal&quot;</span>)))]
+#[doc(no_inline)]
 </span><span class="kw">pub use </span>glib_signal::ObjectSignalExt <span class="kw">as _</span>;
+
 <span class="attr">#[doc(no_inline)]
 </span><span class="kw">pub use </span>glib::{
 	Cast <span class="kw">as _</span>,
