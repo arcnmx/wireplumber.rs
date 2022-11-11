@@ -47,8 +47,11 @@ pub use crate::util::{
 	TransitionExt as _, TransitionExt2 as _,
 };
 
+#[cfg(feature = "glib-signal")]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "enable-glib-signal")))]
 #[doc(no_inline)]
 pub use glib_signal::ObjectSignalExt as _;
+
 #[doc(no_inline)]
 pub use glib::{
 	Cast as _,

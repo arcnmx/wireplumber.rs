@@ -969,6 +969,7 @@ name = "wireplumber"
 version = "0.1.0"
 dependencies = [
  "bitflags",
+ "futures-channel",
  "futures-util",
  "gio",
  "glib",
