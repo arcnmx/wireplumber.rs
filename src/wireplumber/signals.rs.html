@@ -188,7 +188,7 @@
 //! These should not need to be used directly. Instead, use an associated const:
 //!
 //! ```
-//! # #[cfg(feature = &quot;enable-futures&quot;)]
+//! # #[cfg(feature = &quot;futures&quot;)]
 //! use futures_util::StreamExt;
 //! use wireplumber::{
 //!   prelude::*,
@@ -206,13 +206,13 @@
 //!     println!(&quot;{:?} installed&quot;, om);
 //!   });
 //!   // ... or receive events as an async Stream:
-//!   # #[cfg(feature = &quot;enable-futures&quot;)]
+//!   # #[cfg(feature = &quot;futures&quot;)]
 //!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
 //!
 //!   om.request_object_features(Object::static_type(), ObjectFeatures::ALL);
 //!   core.install_object_manager(&amp;om);
 //!
-//!   # #[cfg(feature = &quot;enable-futures&quot;)]
+//!   # #[cfg(feature = &quot;futures&quot;)]
 //!   while let Some((obj,)) = objects.next().await {
 //!     let node = obj.dynamic_cast_ref::&lt;Node&gt;()
 //!       .expect(&quot;we&#39;re only interested in nodes&quot;);

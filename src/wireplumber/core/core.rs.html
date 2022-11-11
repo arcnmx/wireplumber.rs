@@ -323,8 +323,8 @@
 		<span class="self">self</span>.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.as_ref().map(|v| v.as_variant()))
 	}
 
-	<span class="attr">#[cfg(feature = <span class="string">&quot;enable-futures&quot;</span>)]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;enable-futures&quot;</span>)))]
+	<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
+	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;futures&quot;</span>)))]
 	</span><span class="kw">pub fn </span>connect_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; {
 		<span class="kw">let </span>connect = <span class="kw">match </span>() {
 			<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
