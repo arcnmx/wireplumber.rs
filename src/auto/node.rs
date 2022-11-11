@@ -77,22 +77,12 @@ impl Node {
         }
     }
 
-    //#[doc(alias = "wp_node_lookup_port")]
-    //pub fn lookup_port(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<Port> {
-    //    unsafe { TODO: call ffi:wp_node_lookup_port() }
-    //}
-
     #[doc(alias = "wp_node_lookup_port_full")]
     pub fn lookup_port_full(&self, interest: &ObjectInterest) -> Option<Port> {
         unsafe {
             from_glib_full(ffi::wp_node_lookup_port_full(self.to_glib_none().0, interest.to_glib_full()))
         }
     }
-
-    //#[doc(alias = "wp_node_new_ports_filtered_iterator")]
-    //pub fn new_ports_filtered_iterator(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<Iterator> {
-    //    unsafe { TODO: call ffi:wp_node_new_ports_filtered_iterator() }
-    //}
 
     #[doc(alias = "wp_node_new_ports_filtered_iterator_full")]
     pub fn new_ports_filtered_iterator_full(&self, interest: &ObjectInterest) -> Option<Iterator> {

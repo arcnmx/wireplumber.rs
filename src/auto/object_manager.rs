@@ -30,11 +30,6 @@ impl ObjectManager {
         }
     }
 
-    //#[doc(alias = "wp_object_manager_add_interest")]
-    //pub fn add_interest(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
-    //    unsafe { TODO: call ffi:wp_object_manager_add_interest() }
-    //}
-
     #[doc(alias = "wp_object_manager_add_interest_full")]
     pub fn add_interest_full(&self, interest: &ObjectInterest) {
         unsafe {
@@ -57,22 +52,12 @@ impl ObjectManager {
         }
     }
 
-    //#[doc(alias = "wp_object_manager_lookup")]
-    //pub fn lookup(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<glib::Object> {
-    //    unsafe { TODO: call ffi:wp_object_manager_lookup() }
-    //}
-
     #[doc(alias = "wp_object_manager_lookup_full")]
     pub fn lookup_full(&self, interest: &ObjectInterest) -> Option<glib::Object> {
         unsafe {
             from_glib_full(ffi::wp_object_manager_lookup_full(self.to_glib_none().0, interest.to_glib_full()))
         }
     }
-
-    //#[doc(alias = "wp_object_manager_new_filtered_iterator")]
-    //pub fn new_filtered_iterator(&self, gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<Iterator> {
-    //    unsafe { TODO: call ffi:wp_object_manager_new_filtered_iterator() }
-    //}
 
     #[doc(alias = "wp_object_manager_new_filtered_iterator_full")]
     pub fn new_filtered_iterator_full(&self, interest: &ObjectInterest) -> Option<Iterator> {

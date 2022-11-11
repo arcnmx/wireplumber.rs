@@ -12,20 +12,18 @@ single_version_file = "sys/generate/src/Gir.version"
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [
 	"Wp.Proxy",
-	"Wp.ObjectInterest",
 	"Wp.GlobalProxy",
 	"Wp.Plugin", "Wp.ComponentLoader",
 	"Wp.SessionItem", "Wp.SessionItemFeatures",
 	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
-	"Wp.SpaDevice", "Wp.SpaDeviceFeatures",
+	"Wp.SpaDeviceFeatures",
 	"Wp.State",
 	"Wp.Dbus", "Wp.DbusFeatures",
 	"Wp.ProxyFeatures",
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
 	"Wp.Object",
-	"Wp.Client", "Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Node", "Wp.Link", "Wp.Port",
-	"Wp.ObjectManager",
+	"Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Link", "Wp.Port",
 	"Wp.ImplEndpoint",
 	"Wp.FeatureActivationTransition",
 	"Wp.SiEndpoint", "Wp.ImplMetadata",
@@ -41,7 +39,7 @@ manual = [
 	"GLib.Error", "GLib.Variant", "GLib.MainContext", "GLib.Source", "GLib.SourceFunc", "GLib.DestroyNotify", "GLib.Quark", "GLib.LogLevelFlags", "GLib.LogField", "GLib.LogWriterOutput",
 	"GObject.Closure", "GObject.Value", "GObject.Object",
 	"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
-	"Gio.DBusConnection", "Gio.BusType"
+	"Gio.DBusConnection", "Gio.BusType",
 ]
 
 [[object]]
@@ -53,8 +51,8 @@ conversion_type = "scalar"
 name = "Wp.Core"
 status = "generate"
 	[[object.function]]
-	name = "clone"
-	ignore = true
+	pattern = "(clone|get_pw_context|get_pw_core)"
+	manual = true
 
 [[object]]
 name = "Wp.SiAcquisition"
@@ -74,7 +72,14 @@ status = "generate"
 name = "Wp.Transition"
 status = "generate"
 	[[object.function]]
-	name = "return_error"
+	pattern = "(new|return_error)"
+	manual = true
+
+[[object]]
+name = "Wp.SpaDevice"
+status = "generate"
+	[[object.function]]
+	pattern = "(new_wrap|spa_device_handle)"
 	manual = true
 
 [[object]]
@@ -100,7 +105,7 @@ status = "generate"
 	pattern = "(.*valist|new|add_keys|add_keys_from_dict|setf|update_keys|update_keys_from_dict)"
 	ignore = true
 	[[object.function]]
-	pattern = "(new_copy|new_copy_dict|new_take|new_wrap|new_wrap_dict|add_from_dict|peek_dict|to_pw_properties|unref_and_take_pw_properties)"
+	pattern = "(new_copy|new_copy_dict|new_take|new_wrap|new_wrap_dict|add_from_dict|peek_dict|to_pw_properties|unref_and_take_pw_properties|update_from_dict)"
 	manual = true
 
 [[object]]
@@ -113,7 +118,24 @@ cfg_condition = 'feature = "v0_4_2"'
 name = "Wp.Iterator"
 status = "generate"
 	[[object.function]]
-	name = "new"
+	pattern = "(new|new_ptr_array|fold|foreach|get_user_data)"
+	manual = true
+
+[[object]]
+name = "Wp.ObjectManager"
+status = "generate"
+	[[object.function]]
+	pattern = "(add_interest|lookup|new_filtered_iterator)"
+	ignore = true
+
+[[object]]
+name = "Wp.ObjectInterest"
+status = "generate"
+	[[object.function]]
+	pattern = "(new|matches)"
+	manual = true
+	[[object.function]]
+	name = "new_valist"
 	ignore = true
 
 [[object]]
@@ -127,6 +149,20 @@ status = "generate"
 	[[object.function]]
 	name = "get_property"
 	manual = true
+
+[[object]]
+name = "Wp.Client"
+status = "generate"
+	[[object.function]]
+	name = "update_permissions"
+	ignore = true
+
+[[object]]
+name = "Wp.Node"
+status = "generate"
+	[[object.function]]
+	pattern = "(lookup_port|new_ports_filtered_iterator)"
+	ignore = true
 
 # enums
 
@@ -216,7 +252,7 @@ status = "generate"
 name = "Wp.SpaPod"
 status = "generate"
 	[[object.function]]
-	pattern = "(.*valist|new_choice|new_object|new_sequence|object)"
+	pattern = "(.*valist|new_choice|new_object|new_sequence|get_object|get_struct)"
 	ignore = true
 	[[object.function]]
 	pattern = "(new_bytes|new_pointer|new_wrap|new_wrap_const|get_bytes|get_choice_type|get_pointer|get_spa_pod|set_pointer)"

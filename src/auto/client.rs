@@ -24,11 +24,6 @@ impl Client {
         }
     }
 
-    //#[doc(alias = "wp_client_update_permissions")]
-    //pub fn update_permissions(&self, n_perm: u32, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
-    //    unsafe { TODO: call ffi:wp_client_update_permissions() }
-    //}
-
     #[doc(alias = "wp_client_update_permissions_array")]
     pub fn update_permissions_array(&self, permissions: &[u64]) {
         let n_perm = permissions.len() as _;

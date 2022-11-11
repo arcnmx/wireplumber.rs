@@ -245,12 +245,6 @@ impl SpaPod {
         }
     }
 
-    //#[doc(alias = "wp_spa_pod_get_object")]
-    //#[doc(alias = "get_object")]
-    //pub fn object(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> Option<glib::GString> {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_object() }
-    //}
-
     #[doc(alias = "wp_spa_pod_get_property")]
     #[doc(alias = "get_property")]
     pub fn property(&self) -> Option<(glib::GString, SpaPod)> {
@@ -290,12 +284,6 @@ impl SpaPod {
             if ret { Some(from_glib_none(value)) } else { None }
         }
     }
-
-    //#[doc(alias = "wp_spa_pod_get_struct")]
-    //#[doc(alias = "get_struct")]
-    //pub fn is_struct(&self, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> bool {
-    //    unsafe { TODO: call ffi:wp_spa_pod_get_struct() }
-    //}
 
     #[doc(alias = "wp_spa_pod_is_array")]
     pub fn is_array(&self) -> bool {

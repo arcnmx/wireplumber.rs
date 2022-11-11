@@ -23,11 +23,6 @@ impl Transition {
         pub const NONE: Option<&'static Transition> = None;
     
 
-    //#[doc(alias = "wp_transition_new")]
-    //pub fn new<P: FnOnce(Result<(), glib::Error>) + 'static>(type_: glib::types::Type, source_object: Option<&glib::Object>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) -> Transition {
-    //    unsafe { TODO: call ffi:wp_transition_new() }
-    //}
-
     #[doc(alias = "wp_transition_new_closure")]
     pub fn new_closure(type_: glib::types::Type, source_object: Option<&impl IsA<glib::Object>>, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: Option<&glib::Closure>) -> Transition {
         unsafe {

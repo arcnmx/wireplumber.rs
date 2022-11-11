@@ -34,11 +34,6 @@ impl SpaDevice {
         }
     }
 
-    //#[doc(alias = "wp_spa_device_new_wrap")]
-    //pub fn new_wrap(core: &Core, spa_device_handle: /*Unimplemented*/Option<Basic: Pointer>, properties: Option<&Properties>) -> SpaDevice {
-    //    unsafe { TODO: call ffi:wp_spa_device_new_wrap() }
-    //}
-
     #[doc(alias = "wp_spa_device_get_managed_object")]
     #[doc(alias = "get_managed_object")]
     pub fn managed_object(&self, id: u32) -> Option<glib::Object> {

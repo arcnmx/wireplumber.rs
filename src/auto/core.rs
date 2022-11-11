@@ -60,18 +60,6 @@ impl Core {
         }
     }
 
-    //#[doc(alias = "wp_core_get_pw_context")]
-    //#[doc(alias = "get_pw_context")]
-    //pub fn pw_context(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_core_get_pw_context() }
-    //}
-
-    //#[doc(alias = "wp_core_get_pw_core")]
-    //#[doc(alias = "get_pw_core")]
-    //pub fn pw_core(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_core_get_pw_core() }
-    //}
-
     #[doc(alias = "wp_core_get_remote_cookie")]
     #[doc(alias = "get_remote_cookie")]
     pub fn remote_cookie(&self) -> u32 {

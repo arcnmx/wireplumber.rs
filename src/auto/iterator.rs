@@ -15,27 +15,6 @@ glib::wrapper! {
 }
 
 impl Iterator {
-    //#[doc(alias = "wp_iterator_new_ptr_array")]
-    //pub fn new_ptr_array(items: /*Unimplemented*/&[&Basic: Pointer], item_type: glib::types::Type) -> Iterator {
-    //    unsafe { TODO: call ffi:wp_iterator_new_ptr_array() }
-    //}
-
-    //#[doc(alias = "wp_iterator_fold")]
-    //pub fn fold(&self, func: /*Unimplemented*/FnMut(&glib::Value, &glib::Value, /*Unimplemented*/Option<Basic: Pointer>) -> bool, ret: /*Unimplemented*/glib::Value, data: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
-    //    unsafe { TODO: call ffi:wp_iterator_fold() }
-    //}
-
-    //#[doc(alias = "wp_iterator_foreach")]
-    //pub fn foreach(&self, func: /*Unimplemented*/FnMut(&glib::Value, /*Unimplemented*/Option<Basic: Pointer>), data: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
-    //    unsafe { TODO: call ffi:wp_iterator_foreach() }
-    //}
-
-    //#[doc(alias = "wp_iterator_get_user_data")]
-    //#[doc(alias = "get_user_data")]
-    //pub fn user_data(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_iterator_get_user_data() }
-    //}
-
     #[doc(alias = "wp_iterator_next")]
     pub fn next(&self) -> Option<glib::Value> {
         unsafe {

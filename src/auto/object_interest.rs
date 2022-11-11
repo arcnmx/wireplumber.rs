@@ -22,11 +22,6 @@ glib::wrapper! {
 }
 
 impl ObjectInterest {
-    //#[doc(alias = "wp_object_interest_new")]
-    //pub fn new(gtype: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) -> ObjectInterest {
-    //    unsafe { TODO: call ffi:wp_object_interest_new() }
-    //}
-
     #[doc(alias = "wp_object_interest_new_type")]
     pub fn new_type(gtype: glib::types::Type) -> ObjectInterest {
         unsafe {
@@ -34,22 +29,12 @@ impl ObjectInterest {
         }
     }
 
-    //#[doc(alias = "wp_object_interest_new_valist")]
-    //pub fn new_valist(gtype: glib::types::Type, args: /*Unknown conversion*//*Unimplemented*/Unsupported) -> ObjectInterest {
-    //    unsafe { TODO: call ffi:wp_object_interest_new_valist() }
-    //}
-
     #[doc(alias = "wp_object_interest_add_constraint")]
     pub fn add_constraint(&self, type_: ConstraintType, subject: &str, verb: ConstraintVerb, value: Option<&glib::Variant>) {
         unsafe {
             ffi::wp_object_interest_add_constraint(self.to_glib_none().0, type_.into_glib(), subject.to_glib_none().0, verb.into_glib(), value.to_glib_none().0);
         }
     }
-
-    //#[doc(alias = "wp_object_interest_matches")]
-    //pub fn matches(&self, object: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
-    //    unsafe { TODO: call ffi:wp_object_interest_matches() }
-    //}
 
     #[doc(alias = "wp_object_interest_matches_full")]
     pub fn matches_full(&self, flags: InterestMatchFlags, object_type: glib::types::Type, object: Option<&impl IsA<glib::Object>>, pw_props: Option<&Properties>, pw_global_props: Option<&Properties>) -> InterestMatch {

@@ -112,11 +112,6 @@ impl Properties {
         }
     }
 
-    //#[doc(alias = "wp_properties_update_from_dict")]
-    //pub fn update_from_dict(&self, dict: /*Unimplemented*/Option<Basic: Pointer>) -> i32 {
-    //    unsafe { TODO: call ffi:wp_properties_update_from_dict() }
-    //}
-
     #[doc(alias = "wp_properties_update_keys_array")]
     pub fn update_keys_array(&self, props: &Properties, keys: &[&str]) -> i32 {
         unsafe {
