@@ -57,6 +57,29 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
 </pre><pre class="rust"><code><span class="doccomment">//! PipeWire proxy objects
 //!
 //! All types derived from [Proxy] describe an [object](PipewireObject) on the remote service, with
@@ -116,5 +139,28 @@
 <span class="kw">mod </span>link;
 <span class="kw">pub use </span>link::LinkTarget;
 <span class="kw">mod </span>properties;
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+</span><span class="kw">impl </span>From&lt;Direction&gt; <span class="kw">for </span>libspa::Direction {
+	<span class="kw">fn </span>from(dir: Direction) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span>dir {
+			Direction::Input =&gt; <span class="self">Self</span>::Input,
+			Direction::Output =&gt; <span class="self">Self</span>::Output,
+			Direction::__Unknown(v) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unsupported WpDirection value: {}&quot;</span>, v),
+		}
+	}
+}
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+</span><span class="kw">impl </span>From&lt;libspa::Direction&gt; <span class="kw">for </span>Direction {
+	<span class="kw">fn </span>from(dir: libspa::Direction) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span>dir {
+			libspa::Direction::Input =&gt; <span class="self">Self</span>::Input,
+			libspa::Direction::Output =&gt; <span class="self">Self</span>::Output,
+		}
+	}
+}
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (c1a859b25 2022-11-10)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
