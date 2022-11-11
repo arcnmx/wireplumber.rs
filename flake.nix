@@ -172,9 +172,11 @@
         "0.4.8" "0.4.10"
         "0.4.11" "0.4.12"
       ];
-      featureForVersion = version: mapNullable (v:
-        "v" + replaceStrings [ "." ] [ "_" ] v
-      ) (findFirst (versionAtLeast version) null (reverseList inputs.self.lib.featureVersions));
+      supportedVersions = version: filter (versionAtLeast version) inputs.self.lib.featureVersions;
+      versionFeatureName = version: "v" + replaceStrings [ "." ] [ "_" ] version;
+      featureForVersion = version: let
+        features = inputs.self.lib.supportedVersions version;
+      in if features == [ ] then null else inputs.self.lib.versionFeatureName (last features);
     };
     config = rec {
       name = "wireplumber-rust";

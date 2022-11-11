@@ -11,12 +11,13 @@
   }))));
   inherit (wireplumber-rust.packages.${system}) wpexec;
   versionFeature = toString (mapNullable (f: "--features ${f}") (wireplumber-rust.lib.featureForVersion wireplumber.version));
-  cargo-bin = config: "${if config.enableDocs then rustChannel.buildChannel.cargo else pkgs.cargo}/bin/cargo";
+  cargo-bin = config: "${if config.enableNightly then rustChannel.buildChannel.cargo else pkgs.cargo}/bin/cargo";
   cargo = config: name: command: args: ci.command ({
     name = "cargo-${name}";
+    displayName = "cargo " + command;
     command = "${cargo-bin config} " + command;
     impure = true;
-    ${if config.enableDocs && hasPrefix "fmt" command then "RUSTFMT" else null} = "${rustChannel.buildChannel.rustfmt}/bin/rustfmt";
+    ${if config.enableNightly && hasPrefix "fmt" command then "RUSTFMT" else null} = "${rustChannel.buildChannel.rustfmt}/bin/rustfmt";
     inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
     PKG_CONFIG_PATH = makeSearchPath "lib/pkgconfig" wpexec.buildInputs;
     "AR_${replaceStrings [ "-" ] [ "_" ] hostPlatform.config}" = "${stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}ar";
@@ -44,29 +45,70 @@ in {
     tasks = {
       build.inputs = [
         (cargo config "build-sys" "build -p wireplumber-sys" { })
-        (cargo config "test-sys" "test -p wireplumber-sys ${versionFeature}" { })
         (cargo config "build" "build" { })
-        (cargo config "test-wp" "test ${versionFeature}" { })
-        (cargo config "test" "test --workspace ${versionFeature}" { })
-        (cargo config "workspace" "build --workspace --examples --bins" { })
       ];
-      example.inputs = [ wpexec ];
+      test.inputs = cargo config "test" "test" {
+        buildDep = config.tasks.build.drv;
+      };
     };
     jobs = {
-      docs = { config, pkgs, ... }: {
+      example-wpexec = { config, ... }: {
+        ci.gh-actions.name = "wpexec";
+        tasks = mkForce {
+          example.inputs = wpexec;
+        };
+      };
+      test = { config, ... }: {
+        ci.gh-actions.name = "cargo test";
+        tasks = mkForce {
+          sys.inputs = cargo config "test-sys" "test -p wireplumber-sys ${versionFeature}" { };
+          test.inputs = cargo config "test-wp" "test ${versionFeature}" { };
+        };
+      };
+      features = { config, ... }: {
+        ci.gh-actions.name = "features";
+        tasks = mkForce {
+          features.inputs = [
+            (cargo config "libspa" "build -F libspa,futures" { })
+            (cargo config "glib-signal-sans-futures" "build -F glib-signal" { })
+            (cargo config "experimental" "build -F experimental" {
+              warn = true;
+            })
+          ];
+          versions.inputs = let
+            versions = init (wireplumber-rust.lib.supportedVersions wireplumber.version);
+          in map (version: cargo config "build-${version}" "build -F ${wireplumber-rust.lib.versionFeatureName version}" { }) versions;
+        };
+      };
+      examples = { config, ... }: {
+        ci.gh-actions.name = "cargo build --examples";
+        tasks = mkForce {
+          build.inputs = cargo config "workspace" "build --workspace --examples --bins" { };
+        };
+      };
+      docs = { config, ... }: {
+        ci.gh-actions.name = "cargo doc --workspace";
+        enableNightly = true;
+        tasks = mkForce {
+          docs-all.inputs = cargo config "doc" "doc --all-features --workspace --no-deps" { };
+        };
+      };
+      nightly = { config, ... }: {
+        ci.gh-actions.name = "cargo doc+fmt";
         ci.gh-actions = {
           checkoutOptions = {
             fetch-depth = 0;
           };
         };
-        enableDocs = true;
+        enableNightly = true;
         tasks = mkForce {
-          docs-all.inputs = [
-            (cargo config "doc-all" "doc --all-features --workspace --no-deps" { })
-          ];
           fmt.inputs = [
-            (cargo config "fmt" "fmt --check" { })
-            (cargo config "fmt-examples" "fmt -p wp-examples --check" { })
+            (cargo config "fmt" "fmt --check" {
+              cache = false;
+            })
+            (cargo config "fmt-examples" "fmt -p wp-examples --check" {
+              cache = false;
+            })
           ];
           docs.inputs = [
             (cargo config "doc" ("clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${rustChannel.hostTarget.triple}/doc"
@@ -77,12 +119,13 @@ in {
                 "${cargo-bin config} doc --no-deps --workspace --examples --document-private-items --all-features"
               ]
             ) {
-              docsDep = config.tasks.docs-all.drv;
+              displayName = "cargo doc";
               inherit (wireplumber-rust.devShells.${system}.plain.override { enableRustdoc = true; }) RUSTDOCFLAGS;
             })
           ];
           publish-docs.inputs = ci.command {
             name = "publish";
+            displayName = "publish docs";
             impure = true;
             skip = if env.platform != "gh-actions" || env.gh-event-name or null != "push" then env.gh-event-name or "github"
               else if env.git-branch != "main" then "branch"
@@ -119,6 +162,6 @@ in {
   };
 
   options = {
-    enableDocs = mkEnableOption "docs generation";
+    enableNightly = mkEnableOption "unstable rust";
   };
 }
