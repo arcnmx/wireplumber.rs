@@ -66,6 +66,7 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
+<span id="69">69</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Extension traits
 //!
 //! Wildcard imports give you access to all the goodies:
@@ -87,6 +88,7 @@
 <span class="attr">#[doc(no_inline)]
 </span><span class="kw">pub use </span>{
 	<span class="kw">crate</span>::{
+		core::Core,
 		core::ObjectExt <span class="kw">as _</span>,
 		plugin::{AsyncPluginExt <span class="kw">as _</span>, PluginExt <span class="kw">as _</span>},
 		pw::{
