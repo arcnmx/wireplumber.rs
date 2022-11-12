@@ -161,6 +161,26 @@ in {
           };
           publish-docs.inputs = let
             srcBranch = findFirst (v: v != null) null [ env.git-tag env.git-branch ];
+            reformat = writeTextFile {
+              name = "reformat.py";
+              # TODO: this adds whitespace because it breaks up inline elements too :(
+              text = ''
+                #!${python3.withPackages (p: [ p.beautifulsoup4 ])}/bin/python
+
+                from bs4 import BeautifulSoup
+                import sys
+
+                for path in sys.argv[1:]:
+                  with open(path, encoding='utf-8') as fp:
+                    soup = BeautifulSoup(fp)
+
+                  new_html = soup.prettify()
+
+                  with open(path, 'w', encoding='utf-8') as fp:
+                    fp.write(new_html)
+              '';
+              executable = true;
+            };
           in ci.command {
             name = "publish-docs";
             displayName = "publish docs";
@@ -192,6 +212,7 @@ in {
               rm -rf "./$srcBranch"
               mkdir -p "./$srcBranch"
               cp -a ''${CARGO_TARGET_DIR:-../target}/${rustChannel.hostTarget.triple}/doc/* "./$srcBranch/"
+              ${reformat} $(find "$srcBranch" -name '*.html')
               git add "$srcBranch"
 
               if [[ -n $releaseTag ]] && [[ $srcBranch != $releaseTag ]]; then
