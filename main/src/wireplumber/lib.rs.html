@@ -112,7 +112,6 @@
 <span id="112">112</span>
 <span id="113">113</span>
 <span id="114">114</span>
-<span id="115">115</span>
 </pre><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/v0.1.0/&quot;</span>)]
 #![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
 
@@ -141,8 +140,9 @@
 //!
 //! # Examples
 //!
-//! Besides those found in this documentation, [additional examples](https://github.com/arcnmx/wireplumber.rs/tree/main/examples/src)
-//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
+//! Besides those found in this documentation,
+</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">&quot;[additional examples](https://github.com/arcnmx/wireplumber.rs/tree/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/examples/src)&quot;</span>)]
+</span><span class="doccomment">//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
 //! built and run via Cargo:
 //!
 //! ```bash
@@ -158,12 +158,10 @@
 //! ```
 //!
 //! It&#39;s recommended to poke around their source code in a local checkout, but you can also view
-//! their generated documentation and source code online:
-//!
-//! - [wpexec](https://arcnmx.github.io/wireplumber.rs/wpexec/index.html)
-//! - [static-link module](https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html)
-//!
-//! # Upstream Documentation
+//! the generated documentation and source code online:
+</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">&quot;- [wpexec](https://arcnmx.github.io/wireplumber.rs/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/wpexec/index.html)&quot;</span>)]
+#![doc = <span class="macro">concat!</span>(<span class="string">&quot;- [static-link module](https://arcnmx.github.io/wireplumber.rs/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/static_link_module/index.html)&quot;</span>)]
+</span><span class="doccomment">//! # Upstream Documentation
 //!
 //! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)
 //! may also be helpful.
