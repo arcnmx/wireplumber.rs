@@ -14,6 +14,13 @@ repository = "https://github.com/arcnmx/wireplumber.rs/tree/main/sys"
 readme = "src/README.md"
 license = "MIT"
 
+include = [
+	"/src",
+	"/generate/src/lib.rs",
+	"/build.rs",
+	"/README*",
+]
+
 [package.metadata.system-deps.wireplumber_0_4]
 name = "wireplumber-0.4"
 version = "0.4"
