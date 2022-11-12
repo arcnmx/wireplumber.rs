@@ -1,10 +1,333 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `Signal` trait in crate `glib_signal`."><meta name="keywords" content="rust, rustlang, rust-lang, Signal"><title>Signal in glib_signal - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../glib_signal/index.html"><div class="logo-container"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../glib_signal/index.html"><div class="logo-container"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></div></a><h2 class="location"><a href="#">Signal</a></h2><div class="sidebar-elems"><section><h3><a href="#required-associated-types">Required Associated Types</a></h3><ul class="block"><li><a href="#associatedtype.Arguments">Arguments</a></li><li><a href="#associatedtype.Object">Object</a></li><li><a href="#associatedtype.Return">Return</a></li></ul><h3><a href="#required-associated-consts">Required Associated Constants</a></h3><ul class="block"><li><a href="#associatedconstant.NAME">NAME</a></li></ul><h3><a href="#provided-associated-consts">Provided Associated Constants</a></h3><ul class="block"><li><a href="#associatedconstant.FLAGS">FLAGS</a></li></ul><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.signal">signal</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><h2><a href="index.html">In glib_signal</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Trait <a href="index.html">glib_signal</a>::<wbr><a class="trait" href="#">Signal</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/glib_signal/lib.rs.html#37-49">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><div class="item-decl"><pre class="rust trait"><code>pub trait Signal: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> {
-    type <a href="#associatedtype.Object" class="associatedtype">Object</a>: <a class="trait" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html" title="trait glib::object::ObjectType">ObjectType</a>;
-    type <a href="#associatedtype.Arguments" class="associatedtype">Arguments</a>: for&lt;'a&gt; <a class="trait" href="trait.FromValues.html" title="trait glib_signal::FromValues">FromValues</a>&lt;'a&gt; + 'static;
-    type <a href="#associatedtype.Return" class="associatedtype">Return</a>: <a class="trait" href="trait.ToValueOption.html" title="trait glib_signal::ToValueOption">ToValueOption</a>;
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="API documentation for the Rust `Signal` trait in crate `glib_signal`." name="description"/>
+  <meta content="rust, rustlang, rust-lang, Signal" name="keywords"/>
+  <title>
+   Signal in glib_signal - Rust
+  </title>
+  <link as="font" crossorigin="" href="../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="sidebar-items.js">
+  </script>
+  <script defer="" src="../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc trait">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="mobile-topbar">
+   <button class="sidebar-menu-toggle">
+    ☰
+   </button>
+   <a class="sidebar-logo" href="../glib_signal/index.html">
+    <div class="logo-container">
+     <img alt="logo" class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg"/>
+    </div>
+   </a>
+   <h2>
+   </h2>
+  </nav>
+  <nav class="sidebar">
+   <a class="sidebar-logo" href="../glib_signal/index.html">
+    <div class="logo-container">
+     <img alt="logo" class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg"/>
+    </div>
+   </a>
+   <h2 class="location">
+    <a href="#">
+     Signal
+    </a>
+   </h2>
+   <div class="sidebar-elems">
+    <section>
+     <h3>
+      <a href="#required-associated-types">
+       Required Associated Types
+      </a>
+     </h3>
+     <ul class="block">
+      <li>
+       <a href="#associatedtype.Arguments">
+        Arguments
+       </a>
+      </li>
+      <li>
+       <a href="#associatedtype.Object">
+        Object
+       </a>
+      </li>
+      <li>
+       <a href="#associatedtype.Return">
+        Return
+       </a>
+      </li>
+     </ul>
+     <h3>
+      <a href="#required-associated-consts">
+       Required Associated Constants
+      </a>
+     </h3>
+     <ul class="block">
+      <li>
+       <a href="#associatedconstant.NAME">
+        NAME
+       </a>
+      </li>
+     </ul>
+     <h3>
+      <a href="#provided-associated-consts">
+       Provided Associated Constants
+      </a>
+     </h3>
+     <ul class="block">
+      <li>
+       <a href="#associatedconstant.FLAGS">
+        FLAGS
+       </a>
+      </li>
+     </ul>
+     <h3>
+      <a href="#provided-methods">
+       Provided Methods
+      </a>
+     </h3>
+     <ul class="block">
+      <li>
+       <a href="#method.signal">
+        signal
+       </a>
+      </li>
+     </ul>
+     <h3>
+      <a href="#implementors">
+       Implementors
+      </a>
+     </h3>
+    </section>
+    <h2>
+     <a href="index.html">
+      In glib_signal
+     </a>
+    </h2>
+   </div>
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="main-heading">
+      <h1 class="fqn">
+       Trait
+       <a href="index.html">
+        glib_signal
+       </a>
+       ::
+       <wbr>
+        <a class="trait" href="#">
+         Signal
+        </a>
+        <button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard">
+         <img alt="Copy item path" height="18" src="../static.files/clipboard-7571035ce49a181d.svg" width="19"/>
+        </button>
+       </wbr>
+      </h1>
+      <span class="out-of-band">
+       <a class="srclink" href="../src/glib_signal/lib.rs.html#37-49">
+        source
+       </a>
+       ·
+       <button id="toggle-all-docs" title="collapse all docs">
+        [
+        <span>
+         −
+        </span>
+        ]
+       </button>
+      </span>
+     </div>
+     <div class="item-decl">
+      <pre class="rust trait"><code>pub trait Signal: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> {
+    type <a class="associatedtype" href="#associatedtype.Object">Object</a>: <a class="trait" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html" title="trait glib::object::ObjectType">ObjectType</a>;
+    type <a class="associatedtype" href="#associatedtype.Arguments">Arguments</a>: for&lt;'a&gt; <a class="trait" href="trait.FromValues.html" title="trait glib_signal::FromValues">FromValues</a>&lt;'a&gt; + 'static;
+    type <a class="associatedtype" href="#associatedtype.Return">Return</a>: <a class="trait" href="trait.ToValueOption.html" title="trait glib_signal::ToValueOption">ToValueOption</a>;
 
-    const <a href="#associatedconstant.NAME" class="constant">NAME</a>: &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;
-    const <a href="#associatedconstant.FLAGS" class="constant">FLAGS</a>: <a class="struct" href="struct.SignalFlags.html" title="struct glib_signal::SignalFlags">SignalFlags</a> = _;
+    const <a class="constant" href="#associatedconstant.NAME">NAME</a>: &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;
+    const <a class="constant" href="#associatedconstant.FLAGS">FLAGS</a>: <a class="struct" href="struct.SignalFlags.html" title="struct glib_signal::SignalFlags">SignalFlags</a> = _;
 
-    fn <a href="#method.signal" class="fnname">signal</a>() -&gt; <a class="struct" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/signal/struct.SignalId.html" title="struct glib::subclass::signal::SignalId">SignalId</a> { ... }
-}</code></pre></div><h2 id="required-associated-types" class="small-section-header">Required Associated Types<a href="#required-associated-types" class="anchor"></a></h2><div class="methods"><section id="associatedtype.Object" class="method has-srclink"><a class="srclink rightside" href="../src/glib_signal/lib.rs.html#38">source</a><h4 class="code-header">type <a href="#associatedtype.Object" class="associatedtype">Object</a>: <a class="trait" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html" title="trait glib::object::ObjectType">ObjectType</a></h4></section><section id="associatedtype.Arguments" class="method has-srclink"><a class="srclink rightside" href="../src/glib_signal/lib.rs.html#39">source</a><h4 class="code-header">type <a href="#associatedtype.Arguments" class="associatedtype">Arguments</a>: for&lt;'a&gt; <a class="trait" href="trait.FromValues.html" title="trait glib_signal::FromValues">FromValues</a>&lt;'a&gt; + 'static</h4></section><section id="associatedtype.Return" class="method has-srclink"><a class="srclink rightside" href="../src/glib_signal/lib.rs.html#40">source</a><h4 class="code-header">type <a href="#associatedtype.Return" class="associatedtype">Return</a>: <a class="trait" href="trait.ToValueOption.html" title="trait glib_signal::ToValueOption">ToValueOption</a></h4></section></div><h2 id="required-associated-consts" class="small-section-header">Required Associated Constants<a href="#required-associated-consts" class="anchor"></a></h2><div class="methods"><section id="associatedconstant.NAME" class="method has-srclink"><a class="srclink rightside" href="../src/glib_signal/lib.rs.html#42">source</a><h4 class="code-header">const <a href="#associatedconstant.NAME" class="constant">NAME</a>: &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></h4></section></div><h2 id="provided-associated-consts" class="small-section-header">Provided Associated Constants<a href="#provided-associated-consts" class="anchor"></a></h2><div class="methods"><section id="associatedconstant.FLAGS" class="method has-srclink"><a class="srclink rightside" href="../src/glib_signal/lib.rs.html#43">source</a><h4 class="code-header">const <a href="#associatedconstant.FLAGS" class="constant">FLAGS</a>: <a class="struct" href="struct.SignalFlags.html" title="struct glib_signal::SignalFlags">SignalFlags</a> = _</h4></section></div><h2 id="provided-methods" class="small-section-header">Provided Methods<a href="#provided-methods" class="anchor"></a></h2><div class="methods"><section id="method.signal" class="method has-srclink"><a class="srclink rightside" href="../src/glib_signal/lib.rs.html#45-48">source</a><h4 class="code-header">fn <a href="#method.signal" class="fnname">signal</a>() -&gt; <a class="struct" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/signal/struct.SignalId.html" title="struct glib::subclass::signal::SignalId">SignalId</a></h4></section></div><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div id="implementors-list"></div><script src="../implementors/glib_signal/trait.Signal.js" async></script></section></div></main><div id="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+    fn <a class="fnname" href="#method.signal">signal</a>() -&gt; <a class="struct" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/signal/struct.SignalId.html" title="struct glib::subclass::signal::SignalId">SignalId</a> { ... }
+}</code></pre>
+     </div>
+     <h2 class="small-section-header" id="required-associated-types">
+      Required Associated Types
+      <a class="anchor" href="#required-associated-types">
+      </a>
+     </h2>
+     <div class="methods">
+      <section class="method has-srclink" id="associatedtype.Object">
+       <a class="srclink rightside" href="../src/glib_signal/lib.rs.html#38">
+        source
+       </a>
+       <h4 class="code-header">
+        type
+        <a class="associatedtype" href="#associatedtype.Object">
+         Object
+        </a>
+        :
+        <a class="trait" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html" title="trait glib::object::ObjectType">
+         ObjectType
+        </a>
+       </h4>
+      </section>
+      <section class="method has-srclink" id="associatedtype.Arguments">
+       <a class="srclink rightside" href="../src/glib_signal/lib.rs.html#39">
+        source
+       </a>
+       <h4 class="code-header">
+        type
+        <a class="associatedtype" href="#associatedtype.Arguments">
+         Arguments
+        </a>
+        : for&lt;'a&gt;
+        <a class="trait" href="trait.FromValues.html" title="trait glib_signal::FromValues">
+         FromValues
+        </a>
+        &lt;'a&gt; + 'static
+       </h4>
+      </section>
+      <section class="method has-srclink" id="associatedtype.Return">
+       <a class="srclink rightside" href="../src/glib_signal/lib.rs.html#40">
+        source
+       </a>
+       <h4 class="code-header">
+        type
+        <a class="associatedtype" href="#associatedtype.Return">
+         Return
+        </a>
+        :
+        <a class="trait" href="trait.ToValueOption.html" title="trait glib_signal::ToValueOption">
+         ToValueOption
+        </a>
+       </h4>
+      </section>
+     </div>
+     <h2 class="small-section-header" id="required-associated-consts">
+      Required Associated Constants
+      <a class="anchor" href="#required-associated-consts">
+      </a>
+     </h2>
+     <div class="methods">
+      <section class="method has-srclink" id="associatedconstant.NAME">
+       <a class="srclink rightside" href="../src/glib_signal/lib.rs.html#42">
+        source
+       </a>
+       <h4 class="code-header">
+        const
+        <a class="constant" href="#associatedconstant.NAME">
+         NAME
+        </a>
+        : &amp;'static
+        <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">
+         str
+        </a>
+       </h4>
+      </section>
+     </div>
+     <h2 class="small-section-header" id="provided-associated-consts">
+      Provided Associated Constants
+      <a class="anchor" href="#provided-associated-consts">
+      </a>
+     </h2>
+     <div class="methods">
+      <section class="method has-srclink" id="associatedconstant.FLAGS">
+       <a class="srclink rightside" href="../src/glib_signal/lib.rs.html#43">
+        source
+       </a>
+       <h4 class="code-header">
+        const
+        <a class="constant" href="#associatedconstant.FLAGS">
+         FLAGS
+        </a>
+        :
+        <a class="struct" href="struct.SignalFlags.html" title="struct glib_signal::SignalFlags">
+         SignalFlags
+        </a>
+        = _
+       </h4>
+      </section>
+     </div>
+     <h2 class="small-section-header" id="provided-methods">
+      Provided Methods
+      <a class="anchor" href="#provided-methods">
+      </a>
+     </h2>
+     <div class="methods">
+      <section class="method has-srclink" id="method.signal">
+       <a class="srclink rightside" href="../src/glib_signal/lib.rs.html#45-48">
+        source
+       </a>
+       <h4 class="code-header">
+        fn
+        <a class="fnname" href="#method.signal">
+         signal
+        </a>
+        () -&gt;
+        <a class="struct" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/signal/struct.SignalId.html" title="struct glib::subclass::signal::SignalId">
+         SignalId
+        </a>
+       </h4>
+      </section>
+     </div>
+     <h2 class="small-section-header" id="implementors">
+      Implementors
+      <a class="anchor" href="#implementors">
+      </a>
+     </h2>
+     <div id="implementors-list">
+     </div>
+     <script async="" src="../implementors/glib_signal/trait.Signal.js">
+     </script>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="glib_signal" data-resource-suffix="" data-root-path="../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

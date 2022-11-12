@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/spa_pod_parser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>spa_pod_parser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/auto/spa_pod_parser.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   spa_pod_parser.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -142,7 +209,8 @@
 <span id="142">142</span>
 <span id="143">143</span>
 <span id="144">144</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre>
+      <pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // DO NOT EDIT
 
 </span><span class="kw">use </span><span class="kw">crate</span>::SpaPod;
@@ -162,22 +230,22 @@
 }
 
 <span class="kw">impl </span>SpaPodParser {
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_new_struct&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_new_struct"</span>)]
     </span><span class="kw">pub fn </span>new_struct(pod: <span class="kw-2">&amp;</span>SpaPod) -&gt; SpaPodParser {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::wp_spa_pod_parser_new_struct(pod.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_end&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_end"</span>)]
     </span><span class="kw">pub fn </span>end(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::wp_spa_pod_parser_end(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_boolean&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_boolean&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_boolean"</span>)]
+    #[doc(alias = <span class="string">"get_boolean"</span>)]
     </span><span class="kw">pub fn </span>boolean(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -186,8 +254,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_double&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_double&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_double"</span>)]
+    #[doc(alias = <span class="string">"get_double"</span>)]
     </span><span class="kw">pub fn </span>double(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -196,8 +264,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_fd&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_fd&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_fd"</span>)]
+    #[doc(alias = <span class="string">"get_fd"</span>)]
     </span><span class="kw">pub fn </span>fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i64&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -206,8 +274,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_float&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_float&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_float"</span>)]
+    #[doc(alias = <span class="string">"get_float"</span>)]
     </span><span class="kw">pub fn </span>float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f32&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -216,8 +284,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_fraction&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_fraction&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_fraction"</span>)]
+    #[doc(alias = <span class="string">"get_fraction"</span>)]
     </span><span class="kw">pub fn </span>fraction(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(u32, u32)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>num = mem::MaybeUninit::uninit();
@@ -227,8 +295,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_id&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_id&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_id"</span>)]
+    #[doc(alias = <span class="string">"get_id"</span>)]
     </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -237,8 +305,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_int&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_int&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_int"</span>)]
+    #[doc(alias = <span class="string">"get_int"</span>)]
     </span><span class="kw">pub fn </span>int(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -247,8 +315,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_long&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_long&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_long"</span>)]
+    #[doc(alias = <span class="string">"get_long"</span>)]
     </span><span class="kw">pub fn </span>long(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i64&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = mem::MaybeUninit::uninit();
@@ -257,16 +325,16 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_pod&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_pod&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_pod"</span>)]
+    #[doc(alias = <span class="string">"get_pod"</span>)]
     </span><span class="kw">pub fn </span>pod(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaPod&gt; {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::wp_spa_pod_parser_get_pod(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_rectangle&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_rectangle&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_rectangle"</span>)]
+    #[doc(alias = <span class="string">"get_rectangle"</span>)]
     </span><span class="kw">pub fn </span>rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(u32, u32)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>width = mem::MaybeUninit::uninit();
@@ -276,8 +344,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_string&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_string&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_parser_get_string"</span>)]
+    #[doc(alias = <span class="string">"get_string"</span>)]
     </span><span class="kw">pub fn </span>string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>value = ptr::null();
@@ -286,5 +354,12 @@
         }
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

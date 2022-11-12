@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/enums.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/auto/enums.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   enums.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -862,7 +929,8 @@
 <span id="862">862</span>
 <span id="863">863</span>
 <span id="864">864</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre>
+      <pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // DO NOT EDIT
 
 </span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
@@ -875,15 +943,15 @@
 <span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpConstraintType&quot;</span>)]
+#[doc(alias = <span class="string">"WpConstraintType"</span>)]
 </span><span class="kw">pub enum </span>ConstraintType {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_NONE&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_TYPE_NONE"</span>)]
     </span><span class="prelude-val">None</span>,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_TYPE_PW_GLOBAL_PROPERTY"</span>)]
     </span>PwGlobalProperty,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_PW_PROPERTY&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_TYPE_PW_PROPERTY"</span>)]
     </span>PwProperty,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_TYPE_G_PROPERTY&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_TYPE_G_PROPERTY"</span>)]
     </span>GProperty,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
@@ -891,12 +959,12 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>ConstraintType {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;ConstraintType::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::None =&gt; <span class="string">&quot;None&quot;</span>,
-            <span class="self">Self</span>::PwGlobalProperty =&gt; <span class="string">&quot;PwGlobalProperty&quot;</span>,
-            <span class="self">Self</span>::PwProperty =&gt; <span class="string">&quot;PwProperty&quot;</span>,
-            <span class="self">Self</span>::GProperty =&gt; <span class="string">&quot;GProperty&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"ConstraintType::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; <span class="string">"None"</span>,
+            <span class="self">Self</span>::PwGlobalProperty =&gt; <span class="string">"PwGlobalProperty"</span>,
+            <span class="self">Self</span>::PwProperty =&gt; <span class="string">"PwProperty"</span>,
+            <span class="self">Self</span>::GProperty =&gt; <span class="string">"GProperty"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
@@ -939,10 +1007,10 @@
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>ConstraintType {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>ConstraintType {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
@@ -964,21 +1032,21 @@
 <span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpConstraintVerb&quot;</span>)]
+#[doc(alias = <span class="string">"WpConstraintVerb"</span>)]
 </span><span class="kw">pub enum </span>ConstraintVerb {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_EQUALS&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_EQUALS"</span>)]
     </span>Equals,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_NOT_EQUALS&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_NOT_EQUALS"</span>)]
     </span>NotEquals,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IN_LIST&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_IN_LIST"</span>)]
     </span>InList,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IN_RANGE&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_IN_RANGE"</span>)]
     </span>InRange,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_MATCHES&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_MATCHES"</span>)]
     </span>Matches,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IS_PRESENT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_IS_PRESENT"</span>)]
     </span>IsPresent,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_CONSTRAINT_VERB_IS_ABSENT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_CONSTRAINT_VERB_IS_ABSENT"</span>)]
     </span>IsAbsent,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
@@ -986,15 +1054,15 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>ConstraintVerb {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;ConstraintVerb::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::Equals =&gt; <span class="string">&quot;Equals&quot;</span>,
-            <span class="self">Self</span>::NotEquals =&gt; <span class="string">&quot;NotEquals&quot;</span>,
-            <span class="self">Self</span>::InList =&gt; <span class="string">&quot;InList&quot;</span>,
-            <span class="self">Self</span>::InRange =&gt; <span class="string">&quot;InRange&quot;</span>,
-            <span class="self">Self</span>::Matches =&gt; <span class="string">&quot;Matches&quot;</span>,
-            <span class="self">Self</span>::IsPresent =&gt; <span class="string">&quot;IsPresent&quot;</span>,
-            <span class="self">Self</span>::IsAbsent =&gt; <span class="string">&quot;IsAbsent&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"ConstraintVerb::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Equals =&gt; <span class="string">"Equals"</span>,
+            <span class="self">Self</span>::NotEquals =&gt; <span class="string">"NotEquals"</span>,
+            <span class="self">Self</span>::InList =&gt; <span class="string">"InList"</span>,
+            <span class="self">Self</span>::InRange =&gt; <span class="string">"InRange"</span>,
+            <span class="self">Self</span>::Matches =&gt; <span class="string">"Matches"</span>,
+            <span class="self">Self</span>::IsPresent =&gt; <span class="string">"IsPresent"</span>,
+            <span class="self">Self</span>::IsAbsent =&gt; <span class="string">"IsAbsent"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
@@ -1043,10 +1111,10 @@
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>ConstraintVerb {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>ConstraintVerb {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
@@ -1065,38 +1133,38 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpDBusState&quot;</span>)]
+#[doc(alias = <span class="string">"WpDBusState"</span>)]
 </span><span class="kw">pub enum </span>DBusState {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DBUS_STATE_CLOSED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_DBUS_STATE_CLOSED"</span>)]
     </span>Closed,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DBUS_STATE_CONNECTING&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_DBUS_STATE_CONNECTING"</span>)]
     </span>Connecting,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DBUS_STATE_CONNECTED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_DBUS_STATE_CONNECTED"</span>)]
     </span>Connected,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>fmt::Display <span class="kw">for </span>DBusState {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;DBusState::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::Closed =&gt; <span class="string">&quot;Closed&quot;</span>,
-            <span class="self">Self</span>::Connecting =&gt; <span class="string">&quot;Connecting&quot;</span>,
-            <span class="self">Self</span>::Connected =&gt; <span class="string">&quot;Connected&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"DBusState::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Closed =&gt; <span class="string">"Closed"</span>,
+            <span class="self">Self</span>::Connecting =&gt; <span class="string">"Connecting"</span>,
+            <span class="self">Self</span>::Connected =&gt; <span class="string">"Connected"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 #[doc(hidden)]
 </span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>DBusState {
     <span class="kw">type </span>GlibType = ffi::WpDBusState;
@@ -1111,8 +1179,8 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 #[doc(hidden)]
 </span><span class="kw">impl </span>FromGlib&lt;ffi::WpDBusState&gt; <span class="kw">for </span>DBusState {
     <span class="kw">unsafe fn </span>from_glib(value: ffi::WpDBusState) -&gt; <span class="self">Self </span>{
@@ -1125,32 +1193,32 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>StaticType <span class="kw">for </span>DBusState {
     <span class="kw">fn </span>static_type() -&gt; Type {
         <span class="kw">unsafe </span>{ from_glib(ffi::wp_dbus_state_get_type()) }
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>DBusState {
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
-</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>DBusState {
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>DBusState {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>ToValue <span class="kw">for </span>DBusState {
     <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
@@ -1168,11 +1236,11 @@
 <span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpDirection&quot;</span>)]
+#[doc(alias = <span class="string">"WpDirection"</span>)]
 </span><span class="kw">pub enum </span>Direction {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DIRECTION_INPUT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_DIRECTION_INPUT"</span>)]
     </span>Input,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_DIRECTION_OUTPUT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_DIRECTION_OUTPUT"</span>)]
     </span>Output,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
@@ -1180,10 +1248,10 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>Direction {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;Direction::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::Input =&gt; <span class="string">&quot;Input&quot;</span>,
-            <span class="self">Self</span>::Output =&gt; <span class="string">&quot;Output&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"Direction::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Input =&gt; <span class="string">"Input"</span>,
+            <span class="self">Self</span>::Output =&gt; <span class="string">"Output"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
@@ -1222,10 +1290,10 @@
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>Direction {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>Direction {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
@@ -1247,13 +1315,13 @@
 <span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpLibraryErrorEnum&quot;</span>)]
+#[doc(alias = <span class="string">"WpLibraryErrorEnum"</span>)]
 </span><span class="kw">pub enum </span>LibraryErrorEnum {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LIBRARY_ERROR_INVARIANT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LIBRARY_ERROR_INVARIANT"</span>)]
     </span>Invariant,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LIBRARY_ERROR_INVALID_ARGUMENT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LIBRARY_ERROR_INVALID_ARGUMENT"</span>)]
     </span>InvalidArgument,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LIBRARY_ERROR_OPERATION_FAILED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LIBRARY_ERROR_OPERATION_FAILED"</span>)]
     </span>OperationFailed,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
@@ -1261,11 +1329,11 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>LibraryErrorEnum {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;LibraryErrorEnum::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::Invariant =&gt; <span class="string">&quot;Invariant&quot;</span>,
-            <span class="self">Self</span>::InvalidArgument =&gt; <span class="string">&quot;InvalidArgument&quot;</span>,
-            <span class="self">Self</span>::OperationFailed =&gt; <span class="string">&quot;OperationFailed&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"LibraryErrorEnum::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Invariant =&gt; <span class="string">"Invariant"</span>,
+            <span class="self">Self</span>::InvalidArgument =&gt; <span class="string">"InvalidArgument"</span>,
+            <span class="self">Self</span>::OperationFailed =&gt; <span class="string">"OperationFailed"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
@@ -1306,10 +1374,10 @@
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>LibraryErrorEnum {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>LibraryErrorEnum {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
@@ -1328,50 +1396,50 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpLinkState&quot;</span>)]
+#[doc(alias = <span class="string">"WpLinkState"</span>)]
 </span><span class="kw">pub enum </span>LinkState {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_ERROR&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_ERROR"</span>)]
     </span>Error,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_UNLINKED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_UNLINKED"</span>)]
     </span>Unlinked,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_INIT&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_INIT"</span>)]
     </span>Init,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_NEGOTIATING&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_NEGOTIATING"</span>)]
     </span>Negotiating,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_ALLOCATING&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_ALLOCATING"</span>)]
     </span>Allocating,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_PAUSED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_PAUSED"</span>)]
     </span>Paused,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_LINK_STATE_ACTIVE&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_LINK_STATE_ACTIVE"</span>)]
     </span>Active,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>fmt::Display <span class="kw">for </span>LinkState {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;LinkState::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::Error =&gt; <span class="string">&quot;Error&quot;</span>,
-            <span class="self">Self</span>::Unlinked =&gt; <span class="string">&quot;Unlinked&quot;</span>,
-            <span class="self">Self</span>::Init =&gt; <span class="string">&quot;Init&quot;</span>,
-            <span class="self">Self</span>::Negotiating =&gt; <span class="string">&quot;Negotiating&quot;</span>,
-            <span class="self">Self</span>::Allocating =&gt; <span class="string">&quot;Allocating&quot;</span>,
-            <span class="self">Self</span>::Paused =&gt; <span class="string">&quot;Paused&quot;</span>,
-            <span class="self">Self</span>::Active =&gt; <span class="string">&quot;Active&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"LinkState::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Error =&gt; <span class="string">"Error"</span>,
+            <span class="self">Self</span>::Unlinked =&gt; <span class="string">"Unlinked"</span>,
+            <span class="self">Self</span>::Init =&gt; <span class="string">"Init"</span>,
+            <span class="self">Self</span>::Negotiating =&gt; <span class="string">"Negotiating"</span>,
+            <span class="self">Self</span>::Allocating =&gt; <span class="string">"Allocating"</span>,
+            <span class="self">Self</span>::Paused =&gt; <span class="string">"Paused"</span>,
+            <span class="self">Self</span>::Active =&gt; <span class="string">"Active"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 #[doc(hidden)]
 </span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>LinkState {
     <span class="kw">type </span>GlibType = ffi::WpLinkState;
@@ -1390,8 +1458,8 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 #[doc(hidden)]
 </span><span class="kw">impl </span>FromGlib&lt;ffi::WpLinkState&gt; <span class="kw">for </span>LinkState {
     <span class="kw">unsafe fn </span>from_glib(value: ffi::WpLinkState) -&gt; <span class="self">Self </span>{
@@ -1408,32 +1476,32 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>StaticType <span class="kw">for </span>LinkState {
     <span class="kw">fn </span>static_type() -&gt; Type {
         <span class="kw">unsafe </span>{ from_glib(ffi::wp_link_state_get_type()) }
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>LinkState {
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
-</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>LinkState {
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>LinkState {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">impl </span>ToValue <span class="kw">for </span>LinkState {
     <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
@@ -1451,17 +1519,17 @@
 <span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpNodeState&quot;</span>)]
+#[doc(alias = <span class="string">"WpNodeState"</span>)]
 </span><span class="kw">pub enum </span>NodeState {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_ERROR&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_NODE_STATE_ERROR"</span>)]
     </span>Error,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_CREATING&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_NODE_STATE_CREATING"</span>)]
     </span>Creating,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_SUSPENDED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_NODE_STATE_SUSPENDED"</span>)]
     </span>Suspended,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_IDLE&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_NODE_STATE_IDLE"</span>)]
     </span>Idle,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_NODE_STATE_RUNNING&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_NODE_STATE_RUNNING"</span>)]
     </span>Running,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
@@ -1469,13 +1537,13 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>NodeState {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;NodeState::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::Error =&gt; <span class="string">&quot;Error&quot;</span>,
-            <span class="self">Self</span>::Creating =&gt; <span class="string">&quot;Creating&quot;</span>,
-            <span class="self">Self</span>::Suspended =&gt; <span class="string">&quot;Suspended&quot;</span>,
-            <span class="self">Self</span>::Idle =&gt; <span class="string">&quot;Idle&quot;</span>,
-            <span class="self">Self</span>::Running =&gt; <span class="string">&quot;Running&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"NodeState::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Error =&gt; <span class="string">"Error"</span>,
+            <span class="self">Self</span>::Creating =&gt; <span class="string">"Creating"</span>,
+            <span class="self">Self</span>::Suspended =&gt; <span class="string">"Suspended"</span>,
+            <span class="self">Self</span>::Idle =&gt; <span class="string">"Idle"</span>,
+            <span class="self">Self</span>::Running =&gt; <span class="string">"Running"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
@@ -1520,10 +1588,10 @@
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>NodeState {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>NodeState {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
@@ -1542,38 +1610,38 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpSiAdapterPortsState&quot;</span>)]
+#[doc(alias = <span class="string">"WpSiAdapterPortsState"</span>)]
 </span><span class="kw">pub enum </span>SiAdapterPortsState {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_SI_ADAPTER_PORTS_STATE_NONE&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_SI_ADAPTER_PORTS_STATE_NONE"</span>)]
     </span><span class="prelude-val">None</span>,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_SI_ADAPTER_PORTS_STATE_CONFIGURING&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_SI_ADAPTER_PORTS_STATE_CONFIGURING"</span>)]
     </span>Configuring,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_SI_ADAPTER_PORTS_STATE_CONFIGURED&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_SI_ADAPTER_PORTS_STATE_CONFIGURED"</span>)]
     </span>Configured,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 </span><span class="kw">impl </span>fmt::Display <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;SiAdapterPortsState::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::None =&gt; <span class="string">&quot;None&quot;</span>,
-            <span class="self">Self</span>::Configuring =&gt; <span class="string">&quot;Configuring&quot;</span>,
-            <span class="self">Self</span>::Configured =&gt; <span class="string">&quot;Configured&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"SiAdapterPortsState::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; <span class="string">"None"</span>,
+            <span class="self">Self</span>::Configuring =&gt; <span class="string">"Configuring"</span>,
+            <span class="self">Self</span>::Configured =&gt; <span class="string">"Configured"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 #[doc(hidden)]
 </span><span class="kw">impl </span>IntoGlib <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">type </span>GlibType = ffi::WpSiAdapterPortsState;
@@ -1588,8 +1656,8 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 #[doc(hidden)]
 </span><span class="kw">impl </span>FromGlib&lt;ffi::WpSiAdapterPortsState&gt; <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">unsafe fn </span>from_glib(value: ffi::WpSiAdapterPortsState) -&gt; <span class="self">Self </span>{
@@ -1602,32 +1670,32 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 </span><span class="kw">impl </span>StaticType <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">fn </span>static_type() -&gt; Type {
         <span class="kw">unsafe </span>{ from_glib(ffi::wp_si_adapter_ports_state_get_type()) }
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 </span><span class="kw">impl </span>glib::value::ValueType <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
-</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>SiAdapterPortsState {
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
+</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
+#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
 </span><span class="kw">impl </span>ToValue <span class="kw">for </span>SiAdapterPortsState {
     <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Value {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
@@ -1645,13 +1713,13 @@
 <span class="attr">#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
-#[doc(alias = <span class="string">&quot;WpTransitionStep&quot;</span>)]
+#[doc(alias = <span class="string">"WpTransitionStep"</span>)]
 </span><span class="kw">pub enum </span>TransitionStep {
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_TRANSITION_STEP_NONE&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_TRANSITION_STEP_NONE"</span>)]
     </span><span class="prelude-val">None</span>,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_TRANSITION_STEP_ERROR&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_TRANSITION_STEP_ERROR"</span>)]
     </span>Error,
-    <span class="attr">#[doc(alias = <span class="string">&quot;WP_TRANSITION_STEP_CUSTOM_START&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WP_TRANSITION_STEP_CUSTOM_START"</span>)]
     </span>CustomStart,
 <span class="attr">#[doc(hidden)]
     </span>__Unknown(i32),
@@ -1659,11 +1727,11 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>TransitionStep {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;TransitionStep::{}&quot;</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            <span class="self">Self</span>::None =&gt; <span class="string">&quot;None&quot;</span>,
-            <span class="self">Self</span>::Error =&gt; <span class="string">&quot;Error&quot;</span>,
-            <span class="self">Self</span>::CustomStart =&gt; <span class="string">&quot;CustomStart&quot;</span>,
-            <span class="kw">_ </span>=&gt; <span class="string">&quot;Unknown&quot;</span>,
+        <span class="macro">write!</span>(f, <span class="string">"TransitionStep::{}"</span>, <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::None =&gt; <span class="string">"None"</span>,
+            <span class="self">Self</span>::Error =&gt; <span class="string">"Error"</span>,
+            <span class="self">Self</span>::CustomStart =&gt; <span class="string">"CustomStart"</span>,
+            <span class="kw">_ </span>=&gt; <span class="string">"Unknown"</span>,
         })
     }
 }
@@ -1704,10 +1772,10 @@
     <span class="kw">type </span>Type = <span class="self">Self</span>;
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>TransitionStep {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>TransitionStep {
     <span class="kw">type </span>Checker = glib::value::GenericValueTypeChecker&lt;<span class="self">Self</span>&gt;;
 
-    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>glib::Value) -&gt; <span class="self">Self </span>{
+    <span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>glib::Value) -&gt; <span class="self">Self </span>{
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().<span class="number">0</span>))
     }
 }
@@ -1726,5 +1794,12 @@
     }
 }
 
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

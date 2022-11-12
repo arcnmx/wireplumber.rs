@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/transition.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>transition.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/auto/transition.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   transition.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -134,7 +201,8 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre>
+      <pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // DO NOT EDIT
 
 </span><span class="kw">use </span>glib::object::Cast;
@@ -147,7 +215,7 @@
 <span class="kw">use </span>std::ptr;
 
 <span class="macro">glib::wrapper! </span>{
-    <span class="attr">#[doc(alias = <span class="string">&quot;WpTransition&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"WpTransition"</span>)]
     </span><span class="kw">pub struct </span>Transition(Object&lt;ffi::WpTransition, ffi::WpTransitionClass&gt;) @implements gio::AsyncResult;
 
     <span class="kw">match fn </span>{
@@ -156,17 +224,17 @@
 }
 
 <span class="kw">impl </span>Transition {
-        <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Transition&gt; = <span class="prelude-val">None</span>;
+        <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>Transition&gt; = <span class="prelude-val">None</span>;
     
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_new_closure&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_transition_new_closure"</span>)]
     </span><span class="kw">pub fn </span>new_closure(type_: glib::types::Type, source_object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;glib::Object&gt;&gt;, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::Cancellable&gt;&gt;, closure: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>glib::Closure&gt;) -&gt; Transition {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::wp_transition_new_closure(type_.into_glib(), source_object.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>, cancellable.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>, closure.to_glib_none().<span class="number">0</span>))
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_finish&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_transition_finish"</span>)]
     </span><span class="kw">pub fn </span>finish(res: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::AsyncResult&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::Error&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
@@ -177,40 +245,40 @@
     }
 }
 
-<span class="kw">pub trait </span>TransitionExt: <span class="lifetime">&#39;static </span>{
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_advance&quot;</span>)]
+<span class="kw">pub trait </span>TransitionExt: <span class="lifetime">'static </span>{
+    <span class="attr">#[doc(alias = <span class="string">"wp_transition_advance"</span>)]
     </span><span class="kw">fn </span>advance(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_get_completed&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_completed&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"wp_transition_get_completed"</span>)]
+    #[doc(alias = <span class="string">"get_completed"</span>)]
     </span><span class="kw">fn </span>is_completed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="comment">//#[doc(alias = &quot;wp_transition_get_data&quot;)]
-    //#[doc(alias = &quot;get_data&quot;)]
+    <span class="comment">//#[doc(alias = "wp_transition_get_data")]
+    //#[doc(alias = "get_data")]
     //fn data(&amp;self) -&gt; /*Unimplemented*/Option&lt;Basic: Pointer&gt;;
 
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_get_source_object&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_source_object&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"wp_transition_get_source_object"</span>)]
+    #[doc(alias = <span class="string">"get_source_object"</span>)]
     </span><span class="kw">fn </span>source_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::Object&gt;;
 
-    <span class="comment">//#[doc(alias = &quot;wp_transition_get_source_tag&quot;)]
-    //#[doc(alias = &quot;get_source_tag&quot;)]
+    <span class="comment">//#[doc(alias = "wp_transition_get_source_tag")]
+    //#[doc(alias = "get_source_tag")]
     //fn source_tag(&amp;self) -&gt; /*Unimplemented*/Option&lt;Basic: Pointer&gt;;
 
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;wp_transition_had_error&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"wp_transition_had_error"</span>)]
     </span><span class="kw">fn </span>had_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="comment">//#[doc(alias = &quot;wp_transition_is_tagged&quot;)]
+    <span class="comment">//#[doc(alias = "wp_transition_is_tagged")]
     //fn is_tagged(&amp;self, tag: /*Unimplemented*/Option&lt;Basic: Pointer&gt;) -&gt; bool;
 
-    //#[doc(alias = &quot;wp_transition_set_data&quot;)]
+    //#[doc(alias = "wp_transition_set_data")]
     //fn set_data(&amp;self, data: /*Unimplemented*/Option&lt;Basic: Pointer&gt;);
 
-    //#[doc(alias = &quot;wp_transition_set_source_tag&quot;)]
+    //#[doc(alias = "wp_transition_set_source_tag")]
     //fn set_source_tag(&amp;self, tag: /*Unimplemented*/Option&lt;Basic: Pointer&gt;);
 
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;completed&quot;</span>)]
-    </span><span class="kw">fn </span>connect_completed_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
+    </span><span class="attr">#[doc(alias = <span class="string">"completed"</span>)]
+    </span><span class="kw">fn </span>connect_completed_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;Transition&gt;&gt; TransitionExt <span class="kw">for </span>O {
@@ -258,17 +326,24 @@
     //    unsafe { TODO: call ffi:wp_transition_set_source_tag() }
     //}
 
-    </span><span class="kw">fn </span>connect_completed_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_completed_trampoline&lt;P: IsA&lt;Transition&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(this: <span class="kw-2">*mut </span>ffi::WpTransition, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+    </span><span class="kw">fn </span>connect_completed_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_completed_trampoline&lt;P: IsA&lt;Transition&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">'static</span>&gt;(this: <span class="kw-2">*mut </span>ffi::WpTransition, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
             f(Transition::from_glib_borrow(this).unsafe_cast_ref())
         }
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(<span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <span class="string">b&quot;notify::completed\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(notify_completed_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>())), Box_::into_raw(f))
+            connect_raw(<span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <span class="string">b"notify::completed\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(notify_completed_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>())), Box_::into_raw(f))
         }
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

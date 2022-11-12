@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/id_value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>id_value.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/spa/id_value.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   id_value.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -127,7 +194,8 @@
 <span id="127">127</span>
 <span id="128">128</span>
 <span id="129">129</span>
-</pre><pre class="rust"><code><span class="kw">use </span>{
+</pre>
+      <pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		prelude::<span class="kw-2">*</span>,
 		spa::{SpaIdTable, SpaType},
@@ -171,7 +239,7 @@
 	}
 
 	<span class="kw">pub fn </span>parse_unknown_name(id_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;WpSpaType&gt; {
-		<span class="kw">if </span>id_name.starts_with(<span class="string">&quot;id-&quot;</span>) {
+		<span class="kw">if </span>id_name.starts_with(<span class="string">"id-"</span>) {
 			&lt;WpSpaType&gt;::from_str_radix(<span class="kw-2">&amp;</span>id_name[<span class="number">2</span>..], <span class="number">16</span>).ok()
 		} <span class="kw">else </span>{
 			<span class="prelude-val">None
@@ -184,7 +252,7 @@
 			<span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::parse_unknown_name(key_name),
 		};
 		<span class="prelude-val">Err</span>(raw.unwrap_or_else(|| {
-			<span class="macro">wp_warning!</span>(<span class="string">&quot;expected to find spa key {key_name:?} of {context:?}&quot;</span>);
+			<span class="macro">wp_warning!</span>(<span class="string">"expected to find spa key {key_name:?} of {context:?}"</span>);
 			ffi::WP_SPA_TYPE_INVALID
 		}))
 	}
@@ -194,22 +262,22 @@
 	}
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>SpaIdValue {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>&gt; FromValue&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>SpaIdValue {
 	<span class="kw">type </span>Checker = glib::value::GenericValueTypeOrNoneChecker&lt;<span class="self">Self</span>&gt;;
 
-	<span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Value) -&gt; <span class="self">Self </span>{
+	<span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span>optional: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib(value.get::&lt;Pointer&gt;().unwrap() <span class="kw">as </span>ffi::WpSpaIdValue);
 		optional.unwrap() <span class="comment">// TODO
 	</span>}
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>SpaIdValue {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">&quot;SpaIdValue&quot;</span>);
-		f.field(<span class="string">&quot;raw&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.into_glib());
-		f.field(<span class="string">&quot;number&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.number());
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">"SpaIdValue"</span>);
+		f.field(<span class="string">"raw"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.into_glib());
+		f.field(<span class="string">"number"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.number());
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <span class="self">self</span>.name() {
-			f.field(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span>name);
+			f.field(<span class="string">"name"</span>, <span class="kw-2">&amp;</span>name);
 		}
 		f.finish()
 	}
@@ -256,5 +324,12 @@
 <span class="kw">impl </span>OptionIntoGlib <span class="kw">for </span>SpaIdValue {
 	<span class="kw">const </span>GLIB_NONE: ffi::WpSpaIdValue = ptr::null();
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

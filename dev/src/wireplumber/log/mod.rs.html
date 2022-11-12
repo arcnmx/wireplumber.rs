@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/log/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/log/mod.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   mod.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -128,7 +195,8 @@
 <span id="128">128</span>
 <span id="129">129</span>
 <span id="130">130</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Logging macros and utilities
+</pre>
+      <pre class="rust"><code><span class="doccomment">//! Logging macros and utilities
 //!
 //! # See also
 //!
@@ -151,39 +219,39 @@
 <span class="kw">pub struct </span>Log(());
 
 <span class="kw">impl </span>Log {
-	<span class="attr">#[doc(alias = <span class="string">&quot;WP_LOG_LEVEL_TRACE&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"WP_LOG_LEVEL_TRACE"</span>)]
 	</span><span class="kw">pub const </span>LEVEL_TRACE: LogLevelFlags = LogLevelFlags::from_bits_truncate(ffi::WP_LOG_LEVEL_TRACE <span class="kw">as _</span>);
 
-	<span class="comment">/*#[doc(alias = &quot;WP_OBJECT_FORMAT&quot;)]
+	<span class="comment">/*#[doc(alias = "WP_OBJECT_FORMAT")]
 	pub const OBJECT_FORMAT: CStr = ffi::WP_OBJECT_FORMAT;*/
 
-	</span><span class="kw">pub fn </span>domain() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+	</span><span class="kw">pub fn </span>domain() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
 		LibraryErrorEnum::domain().as_str()
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_level_is_enabled&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_log_level_is_enabled"</span>)]
 	</span><span class="kw">pub fn </span>level_is_enabled&lt;L: Into&lt;LogLevelFlags&gt;&gt;(flags: L) -&gt; bool {
 		<span class="kw">unsafe </span>{ from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_set_level&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_log_set_level"</span>)]
 	</span><span class="kw">pub fn </span>set_level(level: <span class="kw-2">&amp;</span>str) {
-		env::set_var(<span class="string">&quot;WIREPLUMBER_DEBUG&quot;</span>, level); <span class="comment">// XXX: this doesn&#39;t seem to work properly otherwise?
+		env::set_var(<span class="string">"WIREPLUMBER_DEBUG"</span>, level); <span class="comment">// XXX: this doesn't seem to work properly otherwise?
 		</span><span class="kw">unsafe </span>{ ffi::wp_log_set_level(level.to_glib_none().<span class="number">0</span>) }
 	}
 
 	<span class="kw">pub fn </span>set_default_level(level: <span class="kw-2">&amp;</span>str) {
-		<span class="kw">if </span>env::var_os(<span class="string">&quot;WIREPLUMBER_DEBUG&quot;</span>).is_none() {
+		<span class="kw">if </span>env::var_os(<span class="string">"WIREPLUMBER_DEBUG"</span>).is_none() {
 			<span class="self">Self</span>::set_level(level)
 		}
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_log_get_instance&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_log_get_instance"</span>)]
 	</span><span class="kw">pub fn </span>spa_log() -&gt; <span class="kw-2">*mut </span>spa_log {
 		<span class="kw">unsafe </span>{ ffi::wp_spa_log_get_instance() }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_structured_standard&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_log_structured_standard"</span>)]
 	</span><span class="kw">pub fn </span>log_string&lt;M: Into&lt;GString&gt;, L: Into&lt;LogLevelFlags&gt;&gt;(log_level: L, context: StructuredLogContext, message: M) {
 		<span class="kw">unsafe </span>{
 			<span class="comment">// XXX: so much allocation, it burns...
@@ -206,7 +274,7 @@
 				function.<span class="number">0</span>,
 				obj_type.into_glib(),
 				obj.as_ref().map(|o| o.<span class="number">0</span>).unwrap_or(ptr::null()) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-				<span class="string">b&quot;%s\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+				<span class="string">b"%s\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
 				message.as_ptr(),
 			)
 		}
@@ -218,11 +286,11 @@
 		args: fmt::Arguments,
 	) {
 		<span class="kw">let </span><span class="kw-2">mut </span>message = GStringBuilder::default();
-		<span class="kw">let _ </span>= <span class="macro">write!</span>(message, <span class="string">&quot;{args}&quot;</span>);
+		<span class="kw">let _ </span>= <span class="macro">write!</span>(message, <span class="string">"{args}"</span>);
 		<span class="self">Self</span>::log_string(log_level.into(), context.to_object(), message.into_string())
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_writer_default&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_log_writer_default"</span>)]
 	</span><span class="kw">pub unsafe fn </span>writer_default&lt;L: Into&lt;LogLevelFlags&gt;&gt;(
 		log_levels: L,
 		fields: <span class="kw-2">&amp;</span>[glib::ffi::GLogField],
@@ -234,17 +302,17 @@
 </span>}
 
 <span class="attr">#[derive(Debug, Clone, Default)]
-</span><span class="kw">pub struct </span>StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, O = GObject&gt; {
-	<span class="kw">pub </span>domain: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
-	<span class="kw">pub </span>file: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+</span><span class="kw">pub struct </span>StructuredLogContext&lt;<span class="lifetime">'a</span>, O = GObject&gt; {
+	<span class="kw">pub </span>domain: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;,
+	<span class="kw">pub </span>file: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
 	<span class="kw">pub </span>line: <span class="prelude-ty">Option</span>&lt;u32&gt;,
-	<span class="kw">pub </span>function: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
-	<span class="kw">pub </span>object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>O&gt;,
+	<span class="kw">pub </span>function: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;,
+	<span class="kw">pub </span>object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>O&gt;,
 	<span class="kw">pub </span>object_type: <span class="prelude-ty">Option</span>&lt;Type&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, O&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, O&gt; {
-	<span class="kw">fn </span>to_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, GObject&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, O&gt; StructuredLogContext&lt;<span class="lifetime">'a</span>, O&gt; {
+	<span class="kw">fn </span>to_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StructuredLogContext&lt;<span class="lifetime">'a</span>, GObject&gt;
 	<span class="kw">where
 		</span>O: AsRef&lt;GObject&gt;,
 	{
@@ -258,5 +326,12 @@
 		}
 	}
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

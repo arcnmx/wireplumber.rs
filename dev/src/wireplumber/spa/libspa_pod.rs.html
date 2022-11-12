@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/libspa_pod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>libspa_pod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/spa/libspa_pod.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   libspa_pod.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -474,7 +541,8 @@
 <span id="474">474</span>
 <span id="475">475</span>
 <span id="476">476</span>
-</pre><pre class="rust"><code><span class="kw">use </span>{
+</pre>
+      <pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		prelude::<span class="kw-2">*</span>,
 		spa::{SpaBool, SpaIdTable, SpaIdValue, SpaPod, SpaPodBuilder, SpaPrimitive, SpaType, SpaValue},
@@ -490,22 +558,22 @@
 };
 
 <span class="kw">impl </span>SpaPod {
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+	<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 	</span><span class="kw">pub fn </span>spa_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Id&gt; {
 		<span class="self">self</span>.id().map(Id)
 	}
 
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+	<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 	</span><span class="kw">pub fn </span>spa_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Fd&gt; {
 		<span class="self">self</span>.fd().map(Fd)
 	}
 
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-	</span><span class="kw">pub fn </span>deserialize&lt;<span class="lifetime">&#39;de</span>, P: PodDeserialize&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;de </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;P, DeserializeError&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;de </span>[u8]&gt;&gt; {
+	<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
+	</span><span class="kw">pub fn </span>deserialize&lt;<span class="lifetime">'de</span>, P: PodDeserialize&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'de </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;P, DeserializeError&lt;<span class="kw-2">&amp;</span><span class="lifetime">'de </span>[u8]&gt;&gt; {
 		<span class="kw">unsafe </span>{ PodDeserializer::deserialize_ptr(NonNull::new_unchecked(<span class="self">self</span>.spa_pod_raw() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*mut </span><span class="kw">_</span>)) }
 	}
 
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+	<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 	</span><span class="kw">pub fn </span>serialize&lt;P: PodSerialize&gt;(value: <span class="kw-2">&amp;</span>P) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, GenError&gt; {
 		<span class="kw">use </span>std::io::Cursor;
 
@@ -519,7 +587,7 @@
 	}
 
 	<span class="attr">#[cfg(none)]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+	#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 	</span><span class="kw">pub fn </span>to_pod_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Value, DeserializeError&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt; {
 		<span class="comment">// TODO: broken due to https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/31
 		</span><span class="self">self</span>.deserialize()
@@ -531,7 +599,7 @@
 			values.next().ok_or_else(|| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;wrong number of values for {choice_type:?} choice&quot;</span>),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"wrong number of values for {choice_type:?} choice"</span>),
 				)
 			})
 		};
@@ -561,12 +629,12 @@
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown choice type: {choice_type:?}&quot;</span>),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"unknown choice type: {choice_type:?}"</span>),
 				)),
 		}))
 	}
 
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+	<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 	</span><span class="kw">pub fn </span>to_pod_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Value, Error&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">match </span>() {
 			<span class="kw">_ if </span><span class="self">self</span>.is_none() =&gt; Value::None,
@@ -594,7 +662,7 @@
 				<span class="kw">let </span>ids = type_.object_id_values_table().unwrap();
 				<span class="kw">let </span>values = type_.values_table().unwrap();
 				<span class="self">self</span>.parse_object(|parser, id_name| {
-					<span class="kw">let </span>value_id = ids.find_value_from_short_name(id_name.unwrap()).unwrap(); <span class="comment">// TODO: parse &quot;id-%08x&quot; strings .-.
+					<span class="kw">let </span>value_id = ids.find_value_from_short_name(id_name.unwrap()).unwrap(); <span class="comment">// TODO: parse "id-%08x" strings .-.
 					</span><span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, Error&gt;(Value::Object(Object {
 						type_: type_.into_glib(),
 						id: value_id.number(),
@@ -612,13 +680,13 @@
 				})<span class="question-mark">?
 			</span>},
 			<span class="kw">_ if </span><span class="self">self</span>.is_sequence() =&gt; {
-				<span class="macro">wp_warning!</span>(<span class="string">&quot;unsupported sequence spa type for {self:?}&quot;</span>);
+				<span class="macro">wp_warning!</span>(<span class="string">"unsupported sequence spa type for {self:?}"</span>);
 				Value::Struct(
 					<span class="self">self
 						</span>.iterator()
 						.map(|pod| pod.control().unwrap())
 						.map(|(offset, type_name, value)| {
-							<span class="macro">wp_warning!</span>(<span class="string">&quot;discarding sequence context ({offset}, {type_name}) for {value:?}&quot;</span>);
+							<span class="macro">wp_warning!</span>(<span class="string">"discarding sequence context ({offset}, {type_name}) for {value:?}"</span>);
 							value.to_pod_value()
 						})
 						.collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()<span class="question-mark">?</span>,
@@ -641,7 +709,7 @@
 					type_ =&gt;
 						<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA array child type {type_:?}&quot;</span>),
+							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"unsupported SPA array child type {type_:?}"</span>),
 						)),
 				})
 			},
@@ -651,7 +719,7 @@
 				<span class="kw">let </span>choice_type = <span class="self">self</span>.choice_type().ok_or_else(|| {
 					Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown choice type for {child:?}&quot;</span>),
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"unknown choice type for {child:?}"</span>),
 					)
 				})<span class="question-mark">?</span>;
 				Value::Choice(<span class="kw">match </span>type_ {
@@ -666,24 +734,24 @@
 					type_ =&gt;
 						<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA choice child type {type_:?}&quot;</span>),
+							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"unsupported SPA choice child type {type_:?}"</span>),
 						)),
 				})
 			},
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA type {:?}&quot;</span>, <span class="self">self</span>.spa_type()),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"unsupported SPA type {:?}"</span>, <span class="self">self</span>.spa_type()),
 				)),
 		})
 	}
 
-	<span class="kw">pub fn </span>debug(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; DebugValue&lt;<span class="lifetime">&#39;static</span>, <span class="lifetime">&#39;static</span>&gt; {
+	<span class="kw">pub fn </span>debug(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; DebugValue&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt; {
 		DebugValue::with_value(<span class="self">self</span>.to_pod_value().unwrap())
 	}
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 </span><span class="kw">impl </span>TryInto&lt;Value&gt; <span class="kw">for </span>SpaPod {
 	<span class="kw">type </span>Error = Error;
 
@@ -693,12 +761,12 @@
 }
 
 <span class="attr">#[derive(Copy, Clone)]
-</span><span class="kw">struct </span>DebugProperty&lt;<span class="lifetime">&#39;a</span>&gt; {
-	object: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Object,
-	property: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Property,
+</span><span class="kw">struct </span>DebugProperty&lt;<span class="lifetime">'a</span>&gt; {
+	object: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Object,
+	property: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Property,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DebugProperty&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DebugProperty&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>parent_values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt; {
 		<span class="kw">let </span>type_ = SpaType::from_id(<span class="self">self</span>.object.type_);
 		type_.and_then(|ty| ty.values_table())
@@ -723,14 +791,14 @@
 	}
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-</span><span class="kw">pub struct </span>DebugValue&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>&gt; {
-	container: <span class="prelude-ty">Option</span>&lt;DebugProperty&lt;<span class="lifetime">&#39;o</span>&gt;&gt;,
-	value: Cow&lt;<span class="lifetime">&#39;v</span>, Value&gt;,
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
+</span><span class="kw">pub struct </span>DebugValue&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>&gt; {
+	container: <span class="prelude-ty">Option</span>&lt;DebugProperty&lt;<span class="lifetime">'o</span>&gt;&gt;,
+	value: Cow&lt;<span class="lifetime">'v</span>, Value&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>&gt; DebugValue&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>&gt; {
-	<span class="kw">pub fn </span>new(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>Value) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>&gt; DebugValue&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>&gt; {
+	<span class="kw">pub fn </span>new(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>Value) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			container: <span class="prelude-val">None</span>,
 			value: Cow::Borrowed(value),
@@ -745,47 +813,47 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>&gt; Debug <span class="kw">for </span>DebugValue&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>&gt; {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>&gt; Debug <span class="kw">for </span>DebugValue&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>&gt; {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 		<span class="kw">struct </span>DebugType(SpaType);
 		<span class="kw">impl </span>Debug <span class="kw">for </span>DebugType {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <span class="self">self</span>.<span class="number">0</span>.name() {
-					<span class="macro">write!</span>(f, <span class="string">&quot;{name} ({:?})&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.into_glib())
+					<span class="macro">write!</span>(f, <span class="string">"{name} ({:?})"</span>, <span class="self">self</span>.<span class="number">0</span>.into_glib())
 				} <span class="kw">else </span>{
-					<span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.into_glib())
+					<span class="macro">write!</span>(f, <span class="string">"{}"</span>, <span class="self">self</span>.<span class="number">0</span>.into_glib())
 				}
 			}
 		}
 		<span class="kw">struct </span>DebugIdValue(SpaIdValue);
 		<span class="kw">impl </span>Debug <span class="kw">for </span>DebugIdValue {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(short_name) = <span class="self">self</span>.<span class="number">0</span>.short_name() {
-					<span class="macro">write!</span>(f, <span class="string">&quot;{short_name:?} ({:?})&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.number())
+					<span class="macro">write!</span>(f, <span class="string">"{short_name:?} ({:?})"</span>, <span class="self">self</span>.<span class="number">0</span>.number())
 				} <span class="kw">else </span>{
-					<span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.number())
+					<span class="macro">write!</span>(f, <span class="string">"{}"</span>, <span class="self">self</span>.<span class="number">0</span>.number())
 				}
 			}
 		}
 
 		<span class="kw">struct </span>DebugValueList&lt;I&gt;(I);
-		<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>, I: Clone + Iterator&lt;Item = DebugValue&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;o</span>&gt;&gt;&gt; Debug <span class="kw">for </span>DebugValueList&lt;I&gt; {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>, I: Clone + Iterator&lt;Item = DebugValue&lt;<span class="lifetime">'v</span>, <span class="lifetime">'o</span>&gt;&gt;&gt; Debug <span class="kw">for </span>DebugValueList&lt;I&gt; {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 				f.debug_list().entries(<span class="self">self</span>.<span class="number">0</span>.clone()).finish()
 			}
 		}
 
-		<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Debug <span class="kw">for </span>DebugProperty&lt;<span class="lifetime">&#39;a</span>&gt; {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-				<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">&quot;Property&quot;</span>);
+		<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Debug <span class="kw">for </span>DebugProperty&lt;<span class="lifetime">'a</span>&gt; {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+				<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">"Property"</span>);
 
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(key) = <span class="self">self</span>.key_value() {
-					f.field(<span class="string">&quot;key&quot;</span>, <span class="kw-2">&amp;</span>DebugIdValue(key));
+					f.field(<span class="string">"key"</span>, <span class="kw-2">&amp;</span>DebugIdValue(key));
 				} <span class="kw">else </span>{
-					f.field(<span class="string">&quot;key&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.property.key);
+					f.field(<span class="string">"key"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.property.key);
 				}
-				f.field(<span class="string">&quot;flags&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.property.flags)
-					.field(<span class="string">&quot;value&quot;</span>, <span class="kw-2">&amp;</span>DebugValue {
+				f.field(<span class="string">"flags"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.property.flags)
+					.field(<span class="string">"value"</span>, <span class="kw-2">&amp;</span>DebugValue {
 						container: <span class="prelude-val">Some</span>(DebugProperty {
 							object: <span class="self">self</span>.object,
 							property: <span class="kw-2">&amp;</span><span class="self">self</span>.property,
@@ -795,11 +863,11 @@
 					.finish()
 			}
 		}
-		<span class="kw">struct </span>DebugPropertyList&lt;<span class="lifetime">&#39;a</span>&gt; {
-			object: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Object,
+		<span class="kw">struct </span>DebugPropertyList&lt;<span class="lifetime">'a</span>&gt; {
+			object: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Object,
 		}
-		<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Debug <span class="kw">for </span>DebugPropertyList&lt;<span class="lifetime">&#39;a</span>&gt; {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Debug <span class="kw">for </span>DebugPropertyList&lt;<span class="lifetime">'a</span>&gt; {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 				f.debug_list()
 					.entries(<span class="self">self</span>.object.properties.iter().map(|property| DebugProperty {
 						object: <span class="self">self</span>.object,
@@ -808,26 +876,26 @@
 					.finish()
 			}
 		}
-		<span class="kw">struct </span>DebugId&lt;<span class="lifetime">&#39;a</span>&gt; {
-			container: <span class="prelude-ty">Option</span>&lt;DebugProperty&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+		<span class="kw">struct </span>DebugId&lt;<span class="lifetime">'a</span>&gt; {
+			container: <span class="prelude-ty">Option</span>&lt;DebugProperty&lt;<span class="lifetime">'a</span>&gt;&gt;,
 			id: Id,
 		}
-		<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Debug <span class="kw">for </span>DebugId&lt;<span class="lifetime">&#39;a</span>&gt; {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Debug <span class="kw">for </span>DebugId&lt;<span class="lifetime">'a</span>&gt; {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 				<span class="kw">let </span>table = <span class="self">self</span>.container.and_then(|prop| prop.key_table());
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(id) = table.and_then(|table| table.find_value(<span class="self">self</span>.id.<span class="number">0</span>)) {
-					<span class="macro">write!</span>(f, <span class="string">&quot;{:?}&quot;</span>, DebugIdValue(id))
+					<span class="macro">write!</span>(f, <span class="string">"{:?}"</span>, DebugIdValue(id))
 				} <span class="kw">else </span>{
-					<span class="macro">write!</span>(f, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.id)
+					<span class="macro">write!</span>(f, <span class="string">"{:?}"</span>, <span class="self">self</span>.id)
 				}
 			}
 		}
-		<span class="kw">struct </span>DebugIdList&lt;<span class="lifetime">&#39;a</span>&gt; {
-			container: <span class="prelude-ty">Option</span>&lt;DebugProperty&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
-			ids: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[Id],
+		<span class="kw">struct </span>DebugIdList&lt;<span class="lifetime">'a</span>&gt; {
+			container: <span class="prelude-ty">Option</span>&lt;DebugProperty&lt;<span class="lifetime">'a</span>&gt;&gt;,
+			ids: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[Id],
 		}
-		<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Debug <span class="kw">for </span>DebugIdList&lt;<span class="lifetime">&#39;a</span>&gt; {
-			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+		<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Debug <span class="kw">for </span>DebugIdList&lt;<span class="lifetime">'a</span>&gt; {
+			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
 				f.debug_list()
 					.entries(<span class="self">self</span>.ids.iter().copied().map(|id| DebugId {
 						container: <span class="self">self</span>.container,
@@ -839,21 +907,21 @@
 
 		<span class="kw">match </span><span class="kw-2">&amp;*</span><span class="self">self</span>.value {
 			<span class="kw-2">&amp;</span>Value::Id(id) =&gt; f
-				.debug_tuple(<span class="string">&quot;Id&quot;</span>)
+				.debug_tuple(<span class="string">"Id"</span>)
 				.field(<span class="kw-2">&amp;</span>DebugId {
 					container: <span class="self">self</span>.container,
 					id,
 				})
 				.finish(),
 			Value::ValueArray(ValueArray::Id(ids)) =&gt; f
-				.debug_tuple(<span class="string">&quot;Ids&quot;</span>)
+				.debug_tuple(<span class="string">"Ids"</span>)
 				.field(<span class="kw-2">&amp;</span>DebugIdList {
 					container: <span class="self">self</span>.container,
 					ids,
 				})
 				.finish(),
 			Value::Struct(values) =&gt; f
-				.debug_tuple(<span class="string">&quot;Struct&quot;</span>)
+				.debug_tuple(<span class="string">"Struct"</span>)
 				.field(<span class="kw-2">&amp;</span>DebugValueList(values.iter().map(|value| DebugValue {
 					container: <span class="self">self</span>.container,
 					value: Cow::Borrowed(value),
@@ -863,37 +931,37 @@
 				<span class="kw">let </span>type_ = SpaType::from_id(obj.type_);
 				<span class="kw">let </span>id_table = type_.and_then(|ty| ty.object_id_values_table());
 
-				<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">&quot;Object&quot;</span>);
+				<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">"Object"</span>);
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(type_) = type_ {
-					f.field(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span>DebugType(type_));
+					f.field(<span class="string">"type"</span>, <span class="kw-2">&amp;</span>DebugType(type_));
 				} <span class="kw">else </span>{
-					f.field(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span>obj.type_);
+					f.field(<span class="string">"type"</span>, <span class="kw-2">&amp;</span>obj.type_);
 				}
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(id) = id_table.and_then(|table| table.find_value(obj.id)) {
-					f.field(<span class="string">&quot;id&quot;</span>, <span class="kw-2">&amp;</span>DebugIdValue(id));
+					f.field(<span class="string">"id"</span>, <span class="kw-2">&amp;</span>DebugIdValue(id));
 				} <span class="kw">else </span>{
-					f.field(<span class="string">&quot;id&quot;</span>, <span class="kw-2">&amp;</span>obj.id);
+					f.field(<span class="string">"id"</span>, <span class="kw-2">&amp;</span>obj.id);
 				}
-				f.field(<span class="string">&quot;properties&quot;</span>, <span class="kw-2">&amp;</span>DebugPropertyList { object: obj }).finish()
+				f.field(<span class="string">"properties"</span>, <span class="kw-2">&amp;</span>DebugPropertyList { object: obj }).finish()
 			},
 			Value::Choice(choice) =&gt; {
-				<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_tuple(<span class="string">&quot;Choice&quot;</span>);
+				<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_tuple(<span class="string">"Choice"</span>);
 				<span class="kw">match </span>choice {
 					ChoiceValue::Id(id) =&gt; <span class="macro">todo!</span>(),
 					choice =&gt; f.field(choice),
 				}
 				.finish()
 			},
-			value =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{value:?}&quot;</span>),
+			value =&gt; <span class="macro">write!</span>(f, <span class="string">"{value:?}"</span>),
 		}
 	}
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 </span><span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>Id {
 	<span class="kw">const </span>TYPE: SpaType = SpaType::ID;
 }
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 </span><span class="kw">impl </span>SpaValue <span class="kw">for </span>Id {
 	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
 		builder.add_id(<span class="self">self</span>.<span class="number">0</span>)
@@ -902,20 +970,20 @@
 	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Id {
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>SpaPod&gt; <span class="kw">for </span>Id {
 	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		pod.id().map(Id).ok_or(GlibNoneError)
 	}
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 </span><span class="kw">impl </span>SpaPrimitive <span class="kw">for </span>Fd {
 	<span class="kw">const </span>TYPE: SpaType = SpaType::FD;
 }
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 </span><span class="kw">impl </span>SpaValue <span class="kw">for </span>Fd {
 	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
 		builder.add_fd(<span class="self">self</span>.<span class="number">0</span>)
@@ -924,16 +992,16 @@
 	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Fd {
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>SpaPod&gt; <span class="kw">for </span>Fd {
 	<span class="kw">type </span>Error = GlibNoneError;
 
-	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		pod.fd().map(Fd).ok_or(GlibNoneError)
 	}
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
 </span><span class="kw">impl </span>SpaValue <span class="kw">for </span>Value {
 	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
 		builder.add_pod(<span class="macro">todo!</span>())
@@ -942,13 +1010,20 @@
 	<span class="kw">type </span>Owned = <span class="self">Self</span>;
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Value {
+<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"libspa"</span>)))]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>SpaPod&gt; <span class="kw">for </span>Value {
 	<span class="kw">type </span>Error = Error;
 
-	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		pod.to_pod_value()
 	}
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>

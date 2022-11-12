@@ -1,4 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/core/core.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>core.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="rustdoc" name="generator"/>
+  <meta content="Source of the Rust file `src/core/core.rs`." name="description"/>
+  <meta content="rust, rustlang, rust-lang" name="keywords"/>
+  <title>
+   core.rs - source
+  </title>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
+  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
+  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
+  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
+  <script id="default-settings">
+  </script>
+  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
+  </script>
+  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
+  </script>
+  <script defer="" src="../../../source-files.js">
+  </script>
+  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
+  </script>
+  <noscript>
+   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
+  </noscript>
+  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
+  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
+ </head>
+ <body class="rustdoc source">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+  </nav>
+  <main>
+   <div class="width-limiter">
+    <nav class="sub">
+     <a class="sub-logo-container" href="../../../wireplumber/index.html">
+      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
+     </a>
+     <form class="search-form">
+      <span>
+      </span>
+      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
+      <div id="help-button" tabindex="-1" title="help">
+       <a href="../../../help.html">
+        ?
+       </a>
+      </div>
+      <div id="settings-menu" tabindex="-1">
+       <a href="../../../settings.html" title="settings">
+        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
+       </a>
+      </div>
+     </form>
+    </nav>
+    <section class="content" id="main-content">
+     <div class="example-wrap">
+      <pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -206,7 +273,8 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
-</pre><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>))]
+</pre>
+      <pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::plugin::LookupDirs;
 <span class="kw">use </span>{
 	<span class="kw">crate</span>::{lua::ToLuaTable, plugin::ComponentLoader, prelude::<span class="kw-2">*</span>, Core, InitFlags, Properties},
@@ -215,50 +283,50 @@
 };
 
 <span class="kw">impl </span>Core {
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_init&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_init"</span>)]
 	</span><span class="kw">pub fn </span>init_with_flags(flags: InitFlags) {
 		<span class="kw">unsafe </span>{ ffi::wp_init(flags.into_glib()) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_init&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_init"</span>)]
 	</span><span class="kw">pub fn </span>init() {
 		<span class="self">Self</span>::init_with_flags(InitFlags::ALL)
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_12&quot;</span>)))]
-	#[doc(alias = <span class="string">&quot;wp_get_library_version&quot;</span>)]
+	<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_12"</span>, feature = <span class="string">"dox"</span>))]
+	#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_12"</span>)))]
+	#[doc(alias = <span class="string">"wp_get_library_version"</span>)]
 	</span><span class="kw">pub fn </span>library_version() -&gt; String {
 		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_library_version()) }
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_12&quot;</span>)))]
-	#[doc(alias = <span class="string">&quot;wp_get_library_api_version&quot;</span>)]
+	<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_12"</span>, feature = <span class="string">"dox"</span>))]
+	#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_12"</span>)))]
+	#[doc(alias = <span class="string">"wp_get_library_api_version"</span>)]
 	</span><span class="kw">pub fn </span>library_api_version() -&gt; String {
 		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_library_api_version()) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_get_module_dir&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_get_module_dir"</span>)]
 	</span><span class="kw">pub fn </span>module_dir() -&gt; String {
 		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_module_dir()) }
 	}
 
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;v0_4_2&quot;</span>, deprecated = <span class="string">&quot;use `find_file` instead&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;wp_get_config_dir&quot;</span>)]
+	<span class="attr">#[cfg_attr(feature = <span class="string">"v0_4_2"</span>, deprecated = <span class="string">"use `find_file` instead"</span>)]
+	#[doc(alias = <span class="string">"wp_get_config_dir"</span>)]
 	</span><span class="kw">pub fn </span>config_dir() -&gt; String {
 		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_config_dir()) }
 	}
 
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;v0_4_2&quot;</span>, deprecated = <span class="string">&quot;use `find_file` instead&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;wp_get_data_dir&quot;</span>)]
+	<span class="attr">#[cfg_attr(feature = <span class="string">"v0_4_2"</span>, deprecated = <span class="string">"use `find_file` instead"</span>)]
+	#[doc(alias = <span class="string">"wp_get_data_dir"</span>)]
 	</span><span class="kw">pub fn </span>data_dir() -&gt; String {
 		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_data_dir()) }
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
-	#[doc(alias = <span class="string">&quot;wp_find_file&quot;</span>)]
+	<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
+	#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+	#[doc(alias = <span class="string">"wp_find_file"</span>)]
 	</span><span class="kw">pub fn </span>find_file(dirs: LookupDirs, filename: <span class="kw-2">&amp;</span>str, subdir: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
 		<span class="kw">unsafe </span>{
 			from_glib_full(ffi::wp_find_file(
@@ -269,9 +337,9 @@
 		}
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
-	#[doc(alias = <span class="string">&quot;wp_new_files_iterator&quot;</span>)]
+	<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
+	#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+	#[doc(alias = <span class="string">"wp_new_files_iterator"</span>)]
 	</span><span class="kw">pub fn </span>find_files(dirs: LookupDirs, subdir: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, suffix: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; ValueIterator&lt;String&gt; {
 		<span class="kw">unsafe </span>{
 			ValueIterator::with_inner(from_glib_full(ffi::wp_new_files_iterator(
@@ -282,32 +350,32 @@
 		}
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_clone&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_core_clone"</span>)]
 	</span><span class="kw">pub fn </span>clone_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_core_clone(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_g_main_context&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_g_main_context&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_core_get_g_main_context"</span>)]
+	#[doc(alias = <span class="string">"get_g_main_context"</span>)]
 	</span><span class="kw">pub fn </span>default_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext {
 		<span class="self">self
 			</span>.g_main_context()
 			.unwrap_or_else(|| MainContext::ref_thread_default())
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_pw_core&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_pw_core&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_core_get_pw_core"</span>)]
+	#[doc(alias = <span class="string">"get_pw_core"</span>)]
 	</span><span class="kw">pub fn </span>pw_core_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>pw_core {
 		<span class="kw">unsafe </span>{ ffi::wp_core_get_pw_core(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_pw_context&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_pw_context&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_core_get_pw_context"</span>)]
+	#[doc(alias = <span class="string">"get_pw_context"</span>)]
 	</span><span class="kw">pub fn </span>pw_context_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NonNull&lt;pw_context&gt; {
-		<span class="kw">unsafe </span>{ NonNull::new(ffi::wp_core_get_pw_context(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)).expect(<span class="string">&quot;pw_context for WpCore&quot;</span>) }
+		<span class="kw">unsafe </span>{ NonNull::new(ffi::wp_core_get_pw_context(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)).expect(<span class="string">"pw_context for WpCore"</span>) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_load_component&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_core_load_component"</span>)]
 	</span><span class="kw">pub fn </span>load_lua_script&lt;A: ToLuaTable&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, script_path: <span class="kw-2">&amp;</span>str, args: A) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
 		<span class="kw">let </span>args = args
 			.to_lua_variant()
@@ -319,13 +387,13 @@
 		)
 	}
 
-	<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;futures&quot;</span>)))]
+	<span class="attr">#[cfg(feature = <span class="string">"futures"</span>)]
+	#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"futures"</span>)))]
 	</span><span class="kw">pub fn </span>connect_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; {
 		<span class="kw">let </span>connect = <span class="kw">match </span>() {
-			<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
+			<span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
 			</span>() =&gt; <span class="self">self</span>.signal_stream(<span class="self">Self</span>::SIGNAL_CONNECTED),
-			<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
+			<span class="attr">#[cfg(not(feature = <span class="string">"glib-signal"</span>))]
 			</span>() =&gt; {
 				<span class="kw">use </span>std::{
 					cell::RefCell,
@@ -345,7 +413,7 @@
 					<span class="kw">move </span>|core| {
 						<span class="kw">if let </span><span class="prelude-val">Some</span>(tx) = tx.borrow_mut().take() {
 							<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = tx.send(()) {
-								<span class="macro">wp_info!</span>(<span class="string">&quot;connection future ignored: {:?}&quot;</span>, e);
+								<span class="macro">wp_info!</span>(<span class="string">"connection future ignored: {:?}"</span>, e);
 							}
 						}
 						<span class="kw">match </span>signal_id.fetch_and(<span class="number">0</span>, Ordering::SeqCst) {
@@ -361,21 +429,21 @@
 		};
 
 		<span class="kw">let </span>res = <span class="kw">match </span><span class="self">self</span>.connect() {
-			<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
+			<span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
 			</span><span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(connect.once()),
-			<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
+			<span class="attr">#[cfg(not(feature = <span class="string">"glib-signal"</span>))]
 			</span><span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(connect),
 			<span class="bool-val">false </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
 				LibraryErrorEnum::OperationFailed,
-				<span class="string">&quot;failed to connect to pipewire&quot;</span>,
+				<span class="string">"failed to connect to pipewire"</span>,
 			)),
 		};
 
 		<span class="kw">async move </span>{
 			<span class="kw">match </span>res {
-				<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
+				<span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
 				</span><span class="prelude-val">Ok</span>(connect) =&gt; connect.<span class="kw">await</span>.map_err(Into::into).map(drop),
-				<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
+				<span class="attr">#[cfg(not(feature = <span class="string">"glib-signal"</span>))]
 				</span><span class="prelude-val">Ok</span>(connect) =&gt; connect.<span class="kw">await</span>.map_err(|e| <span class="kw">crate</span>::error::invariant(e)),
 				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
 			}
@@ -406,13 +474,20 @@
 }
 
 <span class="attr">#[test]
-#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>))]
+#[cfg(any(feature = <span class="string">"v0_4_2"</span>))]
 </span><span class="kw">fn </span>wp_new_files_iterator() {
-	<span class="kw">let </span>file = Core::find_file(LookupDirs::PREFIX_SHARE, <span class="string">&quot;create-item.lua&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;scripts&quot;</span>));
+	<span class="kw">let </span>file = Core::find_file(LookupDirs::PREFIX_SHARE, <span class="string">"create-item.lua"</span>, <span class="prelude-val">Some</span>(<span class="string">"scripts"</span>));
 	<span class="macro">assert!</span>(file.is_some());
 
-	<span class="kw">let </span>files = Core::find_files(LookupDirs::PREFIX_SHARE, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;.conf&quot;</span>));
+	<span class="kw">let </span>files = Core::find_files(LookupDirs::PREFIX_SHARE, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="string">".conf"</span>));
 	<span class="macro">assert_ne!</span>(<span class="number">0</span>, files.count());
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
+</code></pre>
+     </div>
+    </section>
+   </div>
+  </main>
+  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
+  </div>
+ </body>
+</html>
