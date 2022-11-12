@@ -235,7 +235,7 @@
 		<span class="kw">let </span>value = <span class="self">self</span>.iter.next()<span class="question-mark">?</span>;
 		<span class="kw">let </span>value = <span class="kw">match </span>value.get() {
 			<span class="prelude-val">Ok</span>(value) =&gt; value,
-			<span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;iterator contained unexpected value type {}&quot;</span>, e),
+			<span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;iterator contained unexpected value type {e}&quot;</span>),
 		};
 		<span class="prelude-val">Some</span>(f(value))
 	}

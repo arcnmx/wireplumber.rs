@@ -474,11 +474,6 @@
 <span id="474">474</span>
 <span id="475">475</span>
 <span id="476">476</span>
-<span id="477">477</span>
-<span id="478">478</span>
-<span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
 </pre><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		prelude::<span class="kw-2">*</span>,
@@ -536,7 +531,7 @@
 			values.next().ok_or_else(|| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;wrong number of values for {:?} choice&quot;</span>, choice_type),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;wrong number of values for {choice_type:?} choice&quot;</span>),
 				)
 			})
 		};
@@ -566,7 +561,7 @@
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown choice type: {:?}&quot;</span>, choice_type),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown choice type: {choice_type:?}&quot;</span>),
 				)),
 		}))
 	}
@@ -617,18 +612,13 @@
 				})<span class="question-mark">?
 			</span>},
 			<span class="kw">_ if </span><span class="self">self</span>.is_sequence() =&gt; {
-				<span class="macro">wp_warning!</span>(<span class="string">&quot;unsupported sequence spa type for {:?}&quot;</span>, <span class="self">self</span>);
+				<span class="macro">wp_warning!</span>(<span class="string">&quot;unsupported sequence spa type for {self:?}&quot;</span>);
 				Value::Struct(
 					<span class="self">self
 						</span>.iterator()
 						.map(|pod| pod.control().unwrap())
 						.map(|(offset, type_name, value)| {
-							<span class="macro">wp_warning!</span>(
-								<span class="string">&quot;discarding sequence context ({}, {}) for {:?}&quot;</span>,
-								offset,
-								type_name,
-								value
-							);
+							<span class="macro">wp_warning!</span>(<span class="string">&quot;discarding sequence context ({offset}, {type_name}) for {value:?}&quot;</span>);
 							value.to_pod_value()
 						})
 						.collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()<span class="question-mark">?</span>,
@@ -651,7 +641,7 @@
 					type_ =&gt;
 						<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA array child type {:?}&quot;</span>, type_),
+							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA array child type {type_:?}&quot;</span>),
 						)),
 				})
 			},
@@ -661,7 +651,7 @@
 				<span class="kw">let </span>choice_type = <span class="self">self</span>.choice_type().ok_or_else(|| {
 					Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown choice type for {:?}&quot;</span>, child),
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown choice type for {child:?}&quot;</span>),
 					)
 				})<span class="question-mark">?</span>;
 				Value::Choice(<span class="kw">match </span>type_ {
@@ -676,7 +666,7 @@
 					type_ =&gt;
 						<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA choice child type {:?}&quot;</span>, type_),
+							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA choice child type {type_:?}&quot;</span>),
 						)),
 				})
 			},
@@ -761,7 +751,7 @@
 		<span class="kw">impl </span>Debug <span class="kw">for </span>DebugType {
 			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <span class="self">self</span>.<span class="number">0</span>.name() {
-					<span class="macro">write!</span>(f, <span class="string">&quot;{} ({:?})&quot;</span>, name, <span class="self">self</span>.<span class="number">0</span>.into_glib())
+					<span class="macro">write!</span>(f, <span class="string">&quot;{name} ({:?})&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.into_glib())
 				} <span class="kw">else </span>{
 					<span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.into_glib())
 				}
@@ -771,7 +761,7 @@
 		<span class="kw">impl </span>Debug <span class="kw">for </span>DebugIdValue {
 			<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
 				<span class="kw">if let </span><span class="prelude-val">Some</span>(short_name) = <span class="self">self</span>.<span class="number">0</span>.short_name() {
-					<span class="macro">write!</span>(f, <span class="string">&quot;{:?} ({:?})&quot;</span>, short_name, <span class="self">self</span>.<span class="number">0</span>.number())
+					<span class="macro">write!</span>(f, <span class="string">&quot;{short_name:?} ({:?})&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.number())
 				} <span class="kw">else </span>{
 					<span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.number())
 				}
@@ -894,7 +884,7 @@
 				}
 				.finish()
 			},
-			value =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{:?}&quot;</span>, value),
+			value =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{value:?}&quot;</span>),
 		}
 	}
 }

@@ -25,7 +25,7 @@ objects change on the remote service if they match any filters specified by the 
   <span class="kw">while let </span><span class="prelude-val">Some</span>((obj,)) = objects.next().<span class="kw">await </span>{
     <span class="kw">let </span>node = obj.dynamic_cast_ref::&lt;Node&gt;()
       .expect(<span class="string">&quot;we&#39;re only interested in nodes&quot;</span>);
-    <span class="macro">println!</span>(<span class="string">&quot;new object: {:?}&quot;</span>, node);
+    <span class="macro">println!</span>(<span class="string">&quot;new object: {node:?}&quot;</span>);
   }
 }</code></pre></div>
 <h2 id="see-also"><a href="#see-also">See also</a></h2>

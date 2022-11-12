@@ -339,9 +339,6 @@
 <span id="339">339</span>
 <span id="340">340</span>
 <span id="341">341</span>
-<span id="342">342</span>
-<span id="343">343</span>
-<span id="344">344</span>
 </pre><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::pw::PipewireObject;
 <span class="kw">use </span>{
@@ -527,17 +524,14 @@
 					.ok_or_else(|| {
 						Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} is missing expected length prefix&quot;</span>, <span class="self">self</span>),
+							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {self:?} is missing expected length prefix&quot;</span>),
 						)
 					})
 					.and_then(|pod| {
 						(<span class="kw-2">&amp;</span>pod).try_into().map_err(|e| {
 							Error::new(
 								LibraryErrorEnum::InvalidArgument,
-								<span class="kw-2">&amp;</span><span class="macro">format!</span>(
-									<span class="string">&quot;pod struct {:?} length could not be parsed from {:?}: {:?}&quot;</span>,
-									<span class="self">self</span>, pod, e
-								),
+								<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {self:?} length could not be parsed from {pod:?}: {e:?}&quot;</span>),
 							)
 						})
 					})<span class="question-mark">?</span>,
@@ -549,7 +543,7 @@
 			<span class="prelude-val">Some</span>(len) <span class="kw">if </span>len &lt; <span class="number">0 </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} has invalid length {}&quot;</span>, <span class="self">self</span>, len),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {self:?} has invalid length {len}&quot;</span>),
 				)),
 			<span class="prelude-val">Some</span>(len) =&gt; <span class="prelude-val">Some</span>(len <span class="kw">as </span>usize),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
@@ -562,7 +556,7 @@
 				<span class="kw">if </span>values.len() &gt;= length {
 					<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;too many entries in pod struct {:?}: {:?}&quot;</span>, <span class="self">self</span>, values),
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;too many entries in pod struct {self:?}: {values:?}&quot;</span>),
 					))
 				}
 			}
@@ -570,7 +564,7 @@
 			<span class="kw">let </span>key: String = (<span class="kw-2">&amp;</span>key).try_into().map_err(|e| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;key {:?} was not a string: {:?}&quot;</span>, key, e),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;key {key:?} was not a string: {e:?}&quot;</span>),
 				)
 			})<span class="question-mark">?</span>;
 			<span class="kw">let </span>value = <span class="kw">match </span>params.next() {
@@ -578,7 +572,7 @@
 				<span class="prelude-val">None </span>=&gt;
 					<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unexpected key {:?} due to uneven amount of params on {:?}&quot;</span>, key, <span class="self">self</span>),
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unexpected key {key:?} due to uneven amount of params on {self:?}&quot;</span>),
 					)),
 			};
 			values.push((key, value));
@@ -609,7 +603,7 @@
 		<span class="kw">let </span>find_id = <span class="kw">match </span>key.spa_property_key_with_table(values) {
 			<span class="prelude-val">Ok</span>(id) =&gt; id,
 			<span class="prelude-val">Err</span>(e) =&gt; {
-				<span class="macro">wp_warning!</span>(<span class="string">&quot;unknown spa key {:?} for {:?}: {:?}&quot;</span>, key, <span class="self">self</span>, e);
+				<span class="macro">wp_warning!</span>(<span class="string">&quot;unknown spa key {key:?} for {self:?}: {e:?}&quot;</span>);
 				<span class="kw">return </span><span class="prelude-val">None
 			</span>},
 		};
@@ -629,7 +623,7 @@
 			.and_then(|pod| <span class="kw">match </span>TryInto::try_into(<span class="kw-2">&amp;</span>pod) {
 				<span class="prelude-val">Ok</span>(v) =&gt; <span class="prelude-val">Some</span>(v),
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to convert spa key {:?} for {:?}: {:?}&quot;</span>, key, <span class="self">self</span>, e);
+					<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to convert spa key {key:?} for {self:?}: {e:?}&quot;</span>);
 					<span class="prelude-val">None
 				</span>},
 			})
@@ -643,7 +637,7 @@
 		<span class="kw">if </span>pod.set_pod(value) {
 			<span class="prelude-val">Some</span>(pod)
 		} <span class="kw">else </span>{
-			<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to set spa key {:?} of type {:?} to {:?}&quot;</span>, key, pod, value);
+			<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to set spa key {key:?} of type {pod:?} to {value:?}&quot;</span>);
 			<span class="prelude-val">None
 		</span>}
 	}
@@ -654,7 +648,7 @@
 		<span class="kw">if </span>!<span class="self">self</span>.is_object() {
 			<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to apply spa pod to {:?}: {:?} is not an object&quot;</span>, obj, <span class="self">self</span>),
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to apply spa pod to {obj:?}: {self:?} is not an object&quot;</span>),
 			))
 		}
 
@@ -665,7 +659,7 @@
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;could not apply unknown spa type {:?} to {:?}&quot;</span>, type_, obj),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;could not apply unknown spa type {type_:?} to {obj:?}&quot;</span>),
 				)),
 		};
 
@@ -675,7 +669,7 @@
 		} <span class="kw">else </span>{
 			<span class="prelude-val">Err</span>(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to apply param {} to {:?}&quot;</span>, name, obj),
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to apply param {name} to {obj:?}&quot;</span>),
 			))
 		}
 	}

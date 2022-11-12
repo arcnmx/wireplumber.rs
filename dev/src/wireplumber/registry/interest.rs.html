@@ -763,7 +763,7 @@
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, s),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {s}&quot;</span>),
 				)),
 		})
 	}
@@ -784,7 +784,7 @@
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, value),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {value}&quot;</span>),
 				)),
 		})
 	}
@@ -868,7 +868,7 @@
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, s),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {s}&quot;</span>),
 				)),
 		})
 	}

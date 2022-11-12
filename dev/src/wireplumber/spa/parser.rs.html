@@ -79,7 +79,7 @@
 			<span class="kw">let </span>id_name = id_name.and_then(|id_name| <span class="kw">match </span>id_name.to_str() {
 				<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(str),
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to parse spa pod ID name as UTF-8: {:?}&quot;</span>, id_name);
+					<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to parse spa pod ID name as UTF-8: {id_name:?}&quot;</span>);
 					<span class="prelude-val">None
 				</span>},
 			});
