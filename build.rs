@@ -6,6 +6,10 @@ fn main() {
 	println!("cargo:rerun-if-changed=build.rs");
 	println!("cargo:rerun-if-env-changed=PIPEWIRE_VERSION");
 
+	if env::var("RELEASE_TAG").is_err() {
+		println!("cargo:rustc-env=RELEASE_TAG=main");
+	}
+
 	// pipewire-sys uses bindgen at compile time, so we can't rely on its compatibility
 	// without explicitly knowing the installed system library version it binds to
 	let explicit_pw_version: Option<String> = env::var("PIPEWIRE_VERSION").ok();

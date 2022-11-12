@@ -11,9 +11,8 @@ categories = ["external-ffi-bindings"]
 documentation = "http://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber_sys/"
 homepage = "http://arcnmx.github.io/wireplumber.rs/"
 repository = "https://github.com/arcnmx/wireplumber.rs/tree/main/sys"
-README = "src/README.md"
+readme = "src/README.md"
 license = "MIT"
-license-file = "../COPYING"
 
 [package.metadata.system-deps.wireplumber_0_4]
 name = "wireplumber-0.4"

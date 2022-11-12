@@ -26,7 +26,8 @@
 //!
 //! # Examples
 //!
-//! Besides those found in this documentation, [additional examples](https://github.com/arcnmx/wireplumber.rs/tree/main/examples/src)
+//! Besides those found in this documentation,
+#![doc = concat!("[additional examples](https://github.com/arcnmx/wireplumber.rs/tree/", env!("RELEASE_TAG"), "/examples/src)")]
 //! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
 //! built and run via Cargo:
 //!
@@ -43,11 +44,9 @@
 //! ```
 //!
 //! It's recommended to poke around their source code in a local checkout, but you can also view
-//! their generated documentation and source code online:
-//!
-//! - [wpexec](https://arcnmx.github.io/wireplumber.rs/wpexec/index.html)
-//! - [static-link module](https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html)
-//!
+//! the generated documentation and source code online:
+#![doc = concat!("- [wpexec](https://arcnmx.github.io/wireplumber.rs/", env!("RELEASE_TAG"), "/wpexec/index.html)")]
+#![doc = concat!("- [static-link module](https://arcnmx.github.io/wireplumber.rs/", env!("RELEASE_TAG"), "/static_link_module/index.html)")]
 //! # Upstream Documentation
 //!
 //! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)

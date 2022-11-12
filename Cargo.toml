@@ -14,9 +14,8 @@ documentation = "http://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber/"
 repository = "https://github.com/arcnmx/wireplumber.rs"
 readme = "src/README.md"
 license = "MIT"
-license-file = "COPYING"
 
-[metadata]
+[package.metadata]
 branches = ["main", "dev"]
 
 [package.metadata.docs.rs]

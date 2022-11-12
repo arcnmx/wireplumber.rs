@@ -289,7 +289,7 @@
       in if features == [ ] then null else self.lib.versionFeatureName (last features);
       cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
       inherit (self.lib.cargoToml.package) version;
-      inherit (self.lib.cargoToml.metadata) branches;
+      inherit (self.lib.cargoToml.package.metadata) branches;
       releaseTag = "v${self.lib.version}";
     };
     config = rec {

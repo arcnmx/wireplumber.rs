@@ -131,6 +131,7 @@ in {
             ) {
               displayName = "cargo doc";
               inherit (wireplumber-rust.devShells.${system}.plain.override { enableRustdoc = true; }) RUSTDOCFLAGS;
+              RELEASE_TAG = if v0 env.git-tag then env.git-tag else wplib.releaseTag;
             })
           ];
           refs.inputs = let
