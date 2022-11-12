@@ -267,14 +267,6 @@ impl SpaPod {
         }
     }
 
-    #[doc(alias = "wp_spa_pod_get_spa_type")]
-    #[doc(alias = "get_spa_type")]
-    pub fn spa_type(&self) -> Option<SpaType> {
-        unsafe {
-            from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0))
-        }
-    }
-
     #[doc(alias = "wp_spa_pod_get_string")]
     #[doc(alias = "get_string")]
     pub fn string(&self) -> Option<glib::GString> {

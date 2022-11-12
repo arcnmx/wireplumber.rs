@@ -4,7 +4,7 @@ use {
 	crate::{
 		prelude::*,
 		pw::SpaPropertyKey,
-		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPodParser, SpaPrimitive, SpaValue},
+		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPodParser, SpaPrimitive, SpaType, SpaValue},
 	},
 	libspa_sys::{spa_fraction, spa_pod, spa_rectangle},
 };
@@ -98,6 +98,12 @@ impl SpaPod {
 	#[doc(alias = "wp_spa_pod_new_pointer")]
 	pub fn new_pointer(type_name: &str, value: gconstpointer) -> SpaPod {
 		unsafe { from_glib_full(ffi::wp_spa_pod_new_pointer(type_name.to_glib_none().0, value)) }
+	}
+
+	#[doc(alias = "wp_spa_pod_get_spa_type")]
+	#[doc(alias = "get_spa_type")]
+	pub fn spa_type(&self) -> Option<SpaType> {
+		unsafe { from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0)) }
 	}
 
 	#[doc(alias = "wp_spa_pod_get_bytes")]

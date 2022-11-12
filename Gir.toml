@@ -83,13 +83,6 @@ status = "generate"
 	manual = true
 
 [[object]]
-name = "Wp.SpaPod"
-status = "generate"
-	[[object.function]]
-	name = "get_spa_type"
-	manual = true
-
-[[object]]
 name = "Wp.SpaPodParser"
 status = "generate"
 	[[object.function]]
@@ -255,7 +248,7 @@ status = "generate"
 	pattern = "(.*valist|new_choice|new_object|new_sequence|get_object|get_struct)"
 	ignore = true
 	[[object.function]]
-	pattern = "(new_bytes|new_pointer|new_wrap|new_wrap_const|get_bytes|get_choice_type|get_pointer|get_spa_pod|set_pointer)"
+	pattern = "(new_bytes|new_pointer|new_wrap|new_wrap_const|get_bytes|get_choice_type|get_pointer|get_spa_type|get_spa_pod|set_pointer)"
 	manual = true
 
 [[object]]
