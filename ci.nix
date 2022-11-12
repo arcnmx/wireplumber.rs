@@ -191,11 +191,11 @@ in {
               rm -rf "./$srcBranch"
               mkdir -p "./$srcBranch"
               cp -a ''${CARGO_TARGET_DIR:-../target}/${rustChannel.hostTarget.triple}/doc/* "./$srcBranch/"
-              git add -A "$srcBranch"
+              git add "$srcBranch"
 
               if [[ -n $releaseTag ]] && [[ $srcBranch != $releaseTag ]]; then
-                ln -sf "$srcBranch" "$releaseTag"
-                git add -A "$releaseTag"
+                ln -sfn "$srcBranch" "$releaseTag"
+                git add "$releaseTag"
               fi
 
               if [[ -n $(git status --porcelain) ]]; then
