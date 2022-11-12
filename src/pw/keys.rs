@@ -1,8 +1,11 @@
-use ::ffi::WpSpaType;
-use crate::spa::{SpaIdTable, SpaIdValue};
-use crate::prelude::*;
-
 pub use pipewire_sys as ffi;
+use {
+	crate::{
+		prelude::*,
+		spa::{SpaIdTable, SpaIdValue},
+	},
+	::ffi::WpSpaType,
+};
 
 #[derive(Copy, Clone)]
 #[repr(transparent)]
@@ -11,16 +14,12 @@ pub struct PipewireKey(&'static [u8]);
 impl PipewireKey {
 	#[inline]
 	pub fn as_cstr(&self) -> &'static CStr {
-		unsafe {
-			CStr::from_bytes_with_nul_unchecked(self.0)
-		}
+		unsafe { CStr::from_bytes_with_nul_unchecked(self.0) }
 	}
 
 	#[inline]
 	pub fn as_str<'a>(&self) -> &'a str {
-		unsafe {
-			str::from_utf8_unchecked(self.as_cstr().to_bytes())
-		}
+		unsafe { str::from_utf8_unchecked(self.as_cstr().to_bytes()) }
 	}
 }
 
@@ -83,9 +82,14 @@ pub trait PipewirePropertyStringIterExt: Sized {
 	}
 }
 
-impl<T: IntoIterator<Item=I>, I: ToPipewirePropertyString> PipewirePropertyStringIterExt for PipewirePropertyStringIter<T> { }
+impl<T: IntoIterator<Item = I>, I: ToPipewirePropertyString> PipewirePropertyStringIterExt
+	for PipewirePropertyStringIter<T>
+{
+}
 
-impl<T: IntoIterator<Item=I>, I: ToPipewirePropertyString> ToPipewirePropertyString for PipewirePropertyStringIter<T> {
+impl<T: IntoIterator<Item = I>, I: ToPipewirePropertyString> ToPipewirePropertyString
+	for PipewirePropertyStringIter<T>
+{
 	type Output = String;
 
 	fn pipewire_string(self) -> Self::Output {
@@ -107,7 +111,8 @@ impl<T: ToPipewirePropertyString> ToPipewirePropertyString for Vec<T> {
 	}
 }
 
-impl<'a, T> ToPipewirePropertyString for &'a Vec<T> where
+impl<'a, T> ToPipewirePropertyString for &'a Vec<T>
+where
 	&'a T: ToPipewirePropertyString,
 {
 	type Output = String;
@@ -117,7 +122,8 @@ impl<'a, T> ToPipewirePropertyString for &'a Vec<T> where
 	}
 }
 
-impl<'a, T> ToPipewirePropertyString for &'a [T] where
+impl<'a, T> ToPipewirePropertyString for &'a [T]
+where
 	&'a T: ToPipewirePropertyString,
 {
 	type Output = String;
@@ -251,7 +257,7 @@ pub trait SpaPropertyKey: Debug {
 	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<WpSpaType, Self::Error>;
 }
 
-pub trait SpaPropertyKeyId: SpaPropertyKey<Error=Infallible> {
+pub trait SpaPropertyKeyId: SpaPropertyKey<Error = Infallible> {
 	fn spa_property_key(&self) -> WpSpaType;
 }
 
@@ -280,7 +286,8 @@ impl SpaPropertyKey for str {
 	type Error = ();
 
 	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<WpSpaType, Self::Error> {
-		table.and_then(|table| table.find_value_from_short_name(self))
+		table
+			.and_then(|table| table.find_value_from_short_name(self))
 			.map(|v| v.number())
 			.or_else(|| SpaIdValue::parse_unknown_name(self))
 			.ok_or(())

@@ -1,6 +1,10 @@
-use ffi::WpSpaType;
-use crate::spa::{SpaType, SpaIdTable};
-use crate::prelude::*;
+use {
+	crate::{
+		prelude::*,
+		spa::{SpaIdTable, SpaType},
+	},
+	ffi::WpSpaType,
+};
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
@@ -10,21 +14,15 @@ pub struct SpaIdValue {
 
 impl SpaIdValue {
 	pub fn number(&self) -> WpSpaType {
-		unsafe {
-			ffi::wp_spa_id_value_number(self.into_glib())
-		}
+		unsafe { ffi::wp_spa_id_value_number(self.into_glib()) }
 	}
 
 	pub fn name(&self) -> Option<String> {
-		unsafe {
-			from_glib_none(ffi::wp_spa_id_value_name(self.into_glib()))
-		}
+		unsafe { from_glib_none(ffi::wp_spa_id_value_name(self.into_glib())) }
 	}
 
 	pub fn short_name(&self) -> Option<String> {
-		unsafe {
-			from_glib_none(ffi::wp_spa_id_value_short_name(self.into_glib()))
-		}
+		unsafe { from_glib_none(ffi::wp_spa_id_value_short_name(self.into_glib())) }
 	}
 
 	pub fn value_type(&self) -> (Option<SpaType>, Option<SpaIdTable>) {
@@ -71,9 +69,7 @@ unsafe impl<'a> FromValue<'a> for SpaIdValue {
 	type Checker = glib::value::GenericValueTypeOrNoneChecker<Self>;
 
 	unsafe fn from_value(value: &'a Value) -> Self {
-		let optional: Option<Self> = from_glib(
-			value.get::<Pointer>().unwrap() as ffi::WpSpaIdValue
-		);
+		let optional: Option<Self> = from_glib(value.get::<Pointer>().unwrap() as ffi::WpSpaIdValue);
 		optional.unwrap() // TODO
 	}
 }
@@ -92,17 +88,13 @@ impl fmt::Debug for SpaIdValue {
 
 impl StaticType for SpaIdValue {
 	fn static_type() -> Type {
-		unsafe {
-			from_glib(ffi::wp_spa_id_value_get_type())
-		}
+		unsafe { from_glib(ffi::wp_spa_id_value_get_type()) }
 	}
 }
 
 impl UnsafeFrom<NonNull<libc::c_void>> for SpaIdValue {
 	unsafe fn unsafe_from(inner: NonNull<libc::c_void>) -> Self {
-		Self {
-			inner,
-		}
+		Self { inner }
 	}
 }
 
@@ -118,7 +110,9 @@ impl TryFromGlib<ffi::WpSpaIdValue> for SpaIdValue {
 	type Error = GlibNoneError;
 
 	unsafe fn try_from_glib(val: ffi::WpSpaIdValue) -> Result<Self, Self::Error> {
-		NonNull::new(val as *mut _).map(|ptr| Self::unsafe_from(ptr)).ok_or(GlibNoneError)
+		NonNull::new(val as *mut _)
+			.map(|ptr| Self::unsafe_from(ptr))
+			.ok_or(GlibNoneError)
 	}
 }
 

@@ -1,5 +1,7 @@
-use crate::spa::{SpaPodParser, SpaPod};
-use crate::prelude::*;
+use crate::{
+	prelude::*,
+	spa::{SpaPod, SpaPodParser},
+};
 
 impl SpaPodParser {
 	#[doc(alias = "wp_spa_pod_parser_new_object")]
@@ -31,7 +33,11 @@ impl SpaPodParser {
 		let mut data = ptr::null();
 		let mut len = 0;
 		unsafe {
-			if from_glib(ffi::wp_spa_pod_parser_get_bytes(self.to_glib_none().0, &mut data, &mut len)) {
+			if from_glib(ffi::wp_spa_pod_parser_get_bytes(
+				self.to_glib_none().0,
+				&mut data,
+				&mut len,
+			)) {
 				Some(slice::from_raw_parts(data as *const u8, len as usize))
 			} else {
 				None

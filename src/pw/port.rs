@@ -1,5 +1,7 @@
-use crate::pw::{self, Port, PipewireObject};
-use crate::prelude::*;
+use crate::{
+	prelude::*,
+	pw::{self, PipewireObject, Port},
+};
 
 impl Port {
 	pub fn node_id(&self) -> Result<u32, Error> {
@@ -14,9 +16,7 @@ impl Port {
 
 impl Display for Port {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_ALIAS, |name| {
-			f.write_str(name)
-		}) {
+		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_ALIAS, |name| f.write_str(name)) {
 			return res
 		}
 
@@ -27,9 +27,7 @@ impl Display for Port {
 			write!(f, ".{}", index)?;
 		}
 
-		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_NAME, |name| {
-			write!(f, ":{}", name)
-		}) {
+		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_NAME, |name| write!(f, ":{}", name)) {
 			return res
 		}
 

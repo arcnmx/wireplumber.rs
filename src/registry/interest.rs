@@ -1,6 +1,8 @@
-use crate::registry::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch};
-use crate::pw::{PipewireObject, Properties};
-use crate::prelude::*;
+use crate::{
+	prelude::*,
+	pw::{PipewireObject, Properties},
+	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest},
+};
 
 impl ObjectInterest {
 	/*#[doc(alias = "wp_object_interest_matches")]
@@ -17,7 +19,13 @@ impl ObjectInterest {
 
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_props(&self, props: &Properties) -> bool {
-		self.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), None::<&GObject>, Some(props), None) == InterestMatch::all()
+		self.matches_full(
+			InterestMatchFlags::CHECK_ALL,
+			Properties::static_type(),
+			None::<&GObject>,
+			Some(props),
+			None,
+		) == InterestMatch::all()
 	}
 
 	#[doc(alias = "wp_object_interest_matches")]
@@ -35,9 +43,7 @@ pub struct Interest<T: StaticType> {
 
 impl<T: StaticType> Interest<T> {
 	pub fn new() -> Self {
-		unsafe {
-			Self::wrap_unchecked(ObjectInterest::new_type(T::static_type()))
-		}
+		unsafe { Self::wrap_unchecked(ObjectInterest::new_type(T::static_type())) }
 	}
 
 	pub unsafe fn wrap_unchecked(interest: ObjectInterest) -> Self {
@@ -55,21 +61,25 @@ impl<T: StaticType> Interest<T> {
 		self.interest
 	}
 
-	pub fn matches_object<O: IsA<GObject>>(&self, object: &O) -> bool where T: IsA<O> {
+	pub fn matches_object<O: IsA<GObject>>(&self, object: &O) -> bool
+	where
+		T: IsA<O>,
+	{
 		self.interest.matches_object(object)
 	}
 
-	pub fn constrain<'o, O: IsA<GObject>>(&self, object: &'o O) -> Option<&'o T> where T: IsA<O> {
+	pub fn constrain<'o, O: IsA<GObject>>(&self, object: &'o O) -> Option<&'o T>
+	where
+		T: IsA<O>,
+	{
 		if self.matches_object(object) {
-			Some(unsafe {
-				object.unsafe_cast_ref()
-			})
+			Some(unsafe { object.unsafe_cast_ref() })
 		} else {
 			None
 		}
 	}
 
-	pub fn filter<C: InterestContainer<T>>(&self, container: &C) -> ValueIterator::<T> {
+	pub fn filter<C: InterestContainer<T>>(&self, container: &C) -> ValueIterator<T> {
 		container.filter(self)
 	}
 
@@ -95,7 +105,7 @@ impl<T: StaticType> Deref for Interest<T> {
 }
 
 impl<C: Borrow<Constraint>, T: StaticType> Extend<C> for Interest<T> {
-	fn extend<I: IntoIterator<Item=C>>(&mut self, iter: I) {
+	fn extend<I: IntoIterator<Item = C>>(&mut self, iter: I) {
 		for constraint in iter {
 			constraint.borrow().add_to(&self)
 		}
@@ -103,7 +113,7 @@ impl<C: Borrow<Constraint>, T: StaticType> Extend<C> for Interest<T> {
 }
 
 impl<C: Borrow<Constraint>, T: StaticType> FromIterator<C> for Interest<T> {
-	fn from_iter<I: IntoIterator<Item=C>>(iter: I) -> Self {
+	fn from_iter<I: IntoIterator<Item = C>>(iter: I) -> Self {
 		let mut interest = Self::new();
 		interest.extend(iter);
 		interest
@@ -124,7 +134,11 @@ impl Constraint {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: if present { ConstraintVerb::IsPresent } else { ConstraintVerb::IsAbsent },
+			verb: if present {
+				ConstraintVerb::IsPresent
+			} else {
+				ConstraintVerb::IsAbsent
+			},
 			value: None,
 		}
 	}
@@ -133,7 +147,11 @@ impl Constraint {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: if equal { ConstraintVerb::Equals } else { ConstraintVerb::NotEquals },
+			verb: if equal {
+				ConstraintVerb::Equals
+			} else {
+				ConstraintVerb::NotEquals
+			},
 			value: Some(value.to_variant()),
 		}
 	}
@@ -156,7 +174,11 @@ impl Constraint {
 		}
 	}
 
-	pub fn in_list<S: Into<String>, V: ToVariant, I: Iterator<Item=V>>(type_: ConstraintType, subject: S, one_of: I) -> Self {
+	pub fn in_list<S: Into<String>, V: ToVariant, I: Iterator<Item = V>>(
+		type_: ConstraintType,
+		subject: S,
+		one_of: I,
+	) -> Self {
 		let values = one_of.map(|v| v.to_variant());
 		Self {
 			type_,
@@ -183,7 +205,11 @@ impl FromStr for ConstraintVerb {
 			"matches" | "#" => ConstraintVerb::Matches,
 			"is-present" | "+" => ConstraintVerb::IsPresent,
 			"is-absent" | "-" => ConstraintVerb::IsAbsent,
-			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown constraint verb {}", s))),
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unknown constraint verb {}", s),
+				)),
 		})
 	}
 }
@@ -200,7 +226,11 @@ impl TryFrom<char> for ConstraintVerb {
 			'#' => ConstraintVerb::Matches,
 			'+' => ConstraintVerb::IsPresent,
 			'-' => ConstraintVerb::IsAbsent,
-			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown constraint verb {}", value))),
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unknown constraint verb {}", value),
+				)),
 		})
 	}
 }
@@ -214,25 +244,20 @@ impl StaticVariantType for ConstraintVerb {
 impl FromVariant for ConstraintVerb {
 	fn from_variant(variant: &Variant) -> Option<Self> {
 		match variant.classify() {
-			VariantClass::String =>
-				variant.get::<String>()
-				.and_then(|s| Self::from_str(&s).ok()),
-			_ => unsafe {
-				Some(from_glib(variant.get()?))
-			},
+			VariantClass::String => variant.get::<String>().and_then(|s| Self::from_str(&s).ok()),
+			_ => unsafe { Some(from_glib(variant.get()?)) },
 		}
 	}
 }
 
 impl ToVariant for ConstraintVerb {
 	fn to_variant(&self) -> Variant {
-		str::from_utf8(&[self.symbol() as u8])
-			.unwrap()
-			.to_variant()
+		str::from_utf8(&[self.symbol() as u8]).unwrap().to_variant()
 	}
 }
 
 impl ConstraintVerb {
+	#[rustfmt::skip]
 	pub fn value_type(&self) -> Option<()> {
 		match self {
 			ConstraintVerb::__Unknown(_) => panic!("unknown constraint verb"),
@@ -285,7 +310,11 @@ impl FromStr for ConstraintType {
 			"pw-global" => ConstraintType::PwGlobalProperty,
 			"pw" => ConstraintType::PwProperty,
 			"gobject" => ConstraintType::GProperty,
-			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown constraint type {}", s))),
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unknown constraint type {}", s),
+				)),
 		})
 	}
 }
@@ -299,12 +328,8 @@ impl StaticVariantType for ConstraintType {
 impl FromVariant for ConstraintType {
 	fn from_variant(variant: &Variant) -> Option<Self> {
 		match variant.classify() {
-			VariantClass::String =>
-				variant.get::<String>()
-				.and_then(|s| Self::from_str(&s).ok()),
-			_ => unsafe {
-				Some(from_glib(variant.get()?))
-			},
+			VariantClass::String => variant.get::<String>().and_then(|s| Self::from_str(&s).ok()),
+			_ => unsafe { Some(from_glib(variant.get()?)) },
 		}
 	}
 }
@@ -329,18 +354,21 @@ impl ConstraintType {
 
 #[cfg(feature = "serde")]
 mod impl_serde {
-	use super::{Constraint, ConstraintVerb, ConstraintType};
-	use crate::lua::{LuaVariant, LuaError};
-	use glib::{Variant, ToVariant};
-	use serde::{Deserialize, Deserializer, Serialize, Serializer, de::{self, Error as _, Visitor, SeqAccess, MapAccess, Unexpected}, ser::SerializeStruct};
-	use std::str::FromStr;
-	use std::borrow::Cow;
-	use std::fmt;
+	use {
+		super::{Constraint, ConstraintType, ConstraintVerb},
+		crate::lua::{LuaError, LuaVariant},
+		glib::{ToVariant, Variant},
+		serde::{
+			de::{self, Error as _, MapAccess, SeqAccess, Unexpected, Visitor},
+			ser::SerializeStruct,
+			Deserialize, Deserializer, Serialize, Serializer,
+		},
+		std::{borrow::Cow, fmt, str::FromStr},
+	};
 
 	impl<'de> Deserialize<'de> for ConstraintVerb {
 		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-			<Cow<String>>::deserialize(deserializer)
-				.and_then(|s| Self::from_str(&s).map_err(D::Error::custom))
+			<Cow<String>>::deserialize(deserializer).and_then(|s| Self::from_str(&s).map_err(D::Error::custom))
 		}
 	}
 
@@ -352,8 +380,7 @@ mod impl_serde {
 
 	impl<'de> Deserialize<'de> for ConstraintType {
 		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-			<Cow<String>>::deserialize(deserializer)
-				.and_then(|s| Self::from_str(&s).map_err(D::Error::custom))
+			<Cow<String>>::deserialize(deserializer).and_then(|s| Self::from_str(&s).map_err(D::Error::custom))
 		}
 	}
 
@@ -370,14 +397,20 @@ mod impl_serde {
 			state.serialize_field("type", &self.type_)?;
 			state.serialize_field("subject", &self.subject)?;
 			state.serialize_field("verb", &self.verb)?;
-			state.serialize_field("value", &self.value.as_ref()
-				.map(LuaVariant::convert_from)
-				.transpose().map_err(LuaError::serde_error_ser)?
+			state.serialize_field(
+				"value",
+				&self
+					.value
+					.as_ref()
+					.map(LuaVariant::convert_from)
+					.transpose()
+					.map_err(LuaError::serde_error_ser)?,
 			)?;
 			state.end()
 		}
 	}
 
+	#[rustfmt::skip]
 	impl<'de> Deserialize<'de> for Constraint {
 		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
 			enum Field { Type, Subject, Verb, Value }
@@ -482,25 +515,25 @@ mod impl_serde {
 						match key {
 							Field::Type => {
 								if type_.is_some() {
-									return Err(V::Error::duplicate_field("type"));
+									return Err(V::Error::duplicate_field("type"))
 								}
 								type_ = Some(map.next_value()?);
 							},
 							Field::Subject => {
 								if subject.is_some() {
-									return Err(V::Error::duplicate_field("subject"));
+									return Err(V::Error::duplicate_field("subject"))
 								}
 								subject = Some(map.next_value()?);
 							},
 							Field::Verb => {
 								if verb.is_some() {
-									return Err(V::Error::duplicate_field("verb"));
+									return Err(V::Error::duplicate_field("verb"))
 								}
 								verb = Some(map.next_value()?);
 							},
 							Field::Value => {
 								if value.is_some() {
-									return Err(V::Error::duplicate_field("value"));
+									return Err(V::Error::duplicate_field("value"))
 								}
 								value = Some(map.next_value()?);
 							},

@@ -1,9 +1,14 @@
-use std::num::ParseIntError;
-use std::str::Utf8Error;
-use std::{num::TryFromIntError, convert::Infallible, fmt, error::Error as StdError};
-use glib::variant::VariantTypeMismatchError;
-use crate::error;
-use crate::prelude::*;
+use {
+	crate::{error, prelude::*},
+	glib::variant::VariantTypeMismatchError,
+	std::{
+		convert::Infallible,
+		error::Error as StdError,
+		fmt,
+		num::{ParseIntError, TryFromIntError},
+		str::Utf8Error,
+	},
+};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LuaError {
@@ -14,10 +19,7 @@ pub enum LuaError {
 	Utf8(Utf8Error),
 	TypeMismatch(VariantTypeMismatchError),
 	UnsupportedType(Cow<'static, VariantTy>),
-	LengthMismatch {
-		actual: usize,
-		expected: usize,
-	},
+	LengthMismatch { actual: usize, expected: usize },
 }
 
 impl From<TryFromIntError> for LuaError {
@@ -52,7 +54,7 @@ impl From<Error> for LuaError {
 
 impl From<Infallible> for LuaError {
 	fn from(v: Infallible) -> Self {
-		match v { }
+		match v {}
 	}
 }
 
@@ -75,10 +77,8 @@ impl fmt::Display for LuaError {
 			LuaError::Parse(e) => fmt::Display::fmt(e, f),
 			LuaError::Utf8(e) => fmt::Display::fmt(e, f),
 			LuaError::TypeMismatch(e) => fmt::Display::fmt(e, f),
-			LuaError::UnsupportedType(t) =>
-				write!(f, "type {} is not supported by lua", t),
-			LuaError::LengthMismatch { actual, expected } =>
-				write!(f, "invalid length {}, expected {}", actual, expected),
+			LuaError::UnsupportedType(t) => write!(f, "type {} is not supported by lua", t),
+			LuaError::LengthMismatch { actual, expected } => write!(f, "invalid length {}, expected {}", actual, expected),
 		}
 	}
 }
@@ -101,10 +101,7 @@ impl serde::de::Error for LuaError {
 	fn invalid_length(actual: usize, expected: &dyn serde::de::Expected) -> Self {
 		let expected = expected.to_string();
 		match expected.parse() {
-			Ok(expected) => LuaError::LengthMismatch {
-				actual,
-				expected,
-			},
+			Ok(expected) => LuaError::LengthMismatch { actual, expected },
 			_ => Self::custom(format_args!("invalid length {}, expected {}", actual, expected)),
 		}
 	}

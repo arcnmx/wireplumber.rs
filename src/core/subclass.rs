@@ -1,17 +1,33 @@
-use glib::subclass::prelude::{ObjectImpl as GObjectImpl, *};
-use crate::prelude::*;
-use crate::core::{Object, ObjectFeatures, FeatureActivationTransition};
+use {
+	crate::{
+		core::{FeatureActivationTransition, Object, ObjectFeatures},
+		prelude::*,
+	},
+	glib::subclass::prelude::{ObjectImpl as GObjectImpl, *},
+};
 
 pub trait ObjectImpl: GObjectImpl + ObjectImplExt {
 	fn supported_features(&self, object: &Self::Type) -> ObjectFeatures {
 		self.parent_supported_features(object)
 	}
 
-	fn activate_get_next_step(&self, object: &Self::Type, transition: FeatureActivationTransition, step: u32, features: ObjectFeatures) -> u32 {
+	fn activate_get_next_step(
+		&self,
+		object: &Self::Type,
+		transition: FeatureActivationTransition,
+		step: u32,
+		features: ObjectFeatures,
+	) -> u32 {
 		self.parent_activate_get_next_step(object, transition, step, features)
 	}
 
-	fn activate_execute_step(&self, object: &Self::Type, transition: FeatureActivationTransition, step: u32, features: ObjectFeatures) {
+	fn activate_execute_step(
+		&self,
+		object: &Self::Type,
+		transition: FeatureActivationTransition,
+		step: u32,
+		features: ObjectFeatures,
+	) {
 		self.parent_activate_execute_step(object, transition, step, features)
 	}
 
@@ -24,8 +40,20 @@ pub trait ObjectImplExt: ObjectSubclass {
 	fn parent_class(&self) -> &ffi::WpObjectClass;
 	fn parent_supported_features(&self, object: &Self::Type) -> ObjectFeatures;
 	fn parent_deactivate(&self, object: &Self::Type, features: ObjectFeatures);
-	fn parent_activate_get_next_step(&self, object: &Self::Type, transition: FeatureActivationTransition, step: u32, features: ObjectFeatures) -> u32;
-	fn parent_activate_execute_step(&self, object: &Self::Type, transition: FeatureActivationTransition, step: u32, features: ObjectFeatures);
+	fn parent_activate_get_next_step(
+		&self,
+		object: &Self::Type,
+		transition: FeatureActivationTransition,
+		step: u32,
+		features: ObjectFeatures,
+	) -> u32;
+	fn parent_activate_execute_step(
+		&self,
+		object: &Self::Type,
+		transition: FeatureActivationTransition,
+		step: u32,
+		features: ObjectFeatures,
+	);
 }
 
 unsafe impl<T: ObjectImpl> IsSubclassable<T> for Object {
@@ -48,28 +76,42 @@ unsafe impl<T: ObjectImpl> IsSubclassable<T> for Object {
 			this.deactivate(object.unsafe_cast_ref(), from_glib(features))
 		}
 
-		unsafe extern "C" fn activate_get_next_step<T: ObjectImpl>(object: *mut ffi::WpObject,
+		unsafe extern "C" fn activate_get_next_step<T: ObjectImpl>(
+			object: *mut ffi::WpObject,
 			transition: *mut ffi::WpFeatureActivationTransition,
-			step: u32, features: ffi::WpObjectFeatures
+			step: u32,
+			features: ffi::WpObjectFeatures,
 		) -> u32 {
 			let this = &*(object as *mut T::Instance);
 			let this = this.imp();
 			let object: Borrowed<Object> = from_glib_borrow(object);
 
 			// TODO: check ownership of transition
-			this.activate_get_next_step(object.unsafe_cast_ref(), from_glib_none(transition), step, from_glib(features))
+			this.activate_get_next_step(
+				object.unsafe_cast_ref(),
+				from_glib_none(transition),
+				step,
+				from_glib(features),
+			)
 		}
 
-		unsafe extern "C" fn activate_execute_step<T: ObjectImpl>(object: *mut ffi::WpObject,
+		unsafe extern "C" fn activate_execute_step<T: ObjectImpl>(
+			object: *mut ffi::WpObject,
 			transition: *mut ffi::WpFeatureActivationTransition,
-			step: u32, features: ffi::WpObjectFeatures
+			step: u32,
+			features: ffi::WpObjectFeatures,
 		) {
 			let this = &*(object as *mut T::Instance);
 			let this = this.imp();
 			let object: Borrowed<Object> = from_glib_borrow(object);
 
 			// TODO: check ownership of transition
-			this.activate_execute_step(object.unsafe_cast_ref(), from_glib_none(transition), step, from_glib(features))
+			this.activate_execute_step(
+				object.unsafe_cast_ref(),
+				from_glib_none(transition),
+				step,
+				from_glib(features),
+			)
 		}
 
 		let klass = class.as_mut();
@@ -91,23 +133,36 @@ impl<T: ObjectImpl> ObjectImplExt for T {
 
 	fn parent_supported_features(&self, object: &Self::Type) -> ObjectFeatures {
 		let parent = self.parent_class();
-		let f = parent.get_supported_features.expect("No parent class implementation for \"get_supported_features\"");
-		unsafe {
-			from_glib(f(object.unsafe_cast_ref::<Object>().to_glib_none().0))
-		}
+		let f = parent
+			.get_supported_features
+			.expect("No parent class implementation for \"get_supported_features\"");
+		unsafe { from_glib(f(object.unsafe_cast_ref::<Object>().to_glib_none().0)) }
 	}
 
 	fn parent_deactivate(&self, object: &Self::Type, features: ObjectFeatures) {
 		let parent = self.parent_class();
-		let f = parent.deactivate.expect("No parent class implementation for \"deactivate\"");
+		let f = parent
+			.deactivate
+			.expect("No parent class implementation for \"deactivate\"");
 		unsafe {
-			f(object.unsafe_cast_ref::<Object>().to_glib_none().0, features.into_glib())
+			f(
+				object.unsafe_cast_ref::<Object>().to_glib_none().0,
+				features.into_glib(),
+			)
 		}
 	}
 
-	fn parent_activate_get_next_step(&self, object: &Self::Type, transition: FeatureActivationTransition, step: u32, features: ObjectFeatures) -> u32 {
+	fn parent_activate_get_next_step(
+		&self,
+		object: &Self::Type,
+		transition: FeatureActivationTransition,
+		step: u32,
+		features: ObjectFeatures,
+	) -> u32 {
 		let parent = self.parent_class();
-		let f = parent.activate_get_next_step.expect("No parent class implementation for \"activate_get_next_step\"");
+		let f = parent
+			.activate_get_next_step
+			.expect("No parent class implementation for \"activate_get_next_step\"");
 		unsafe {
 			f(
 				object.unsafe_cast_ref::<Object>().to_glib_none().0,
@@ -118,9 +173,17 @@ impl<T: ObjectImpl> ObjectImplExt for T {
 		}
 	}
 
-	fn parent_activate_execute_step(&self, object: &Self::Type, transition: FeatureActivationTransition, step: u32, features: ObjectFeatures) {
+	fn parent_activate_execute_step(
+		&self,
+		object: &Self::Type,
+		transition: FeatureActivationTransition,
+		step: u32,
+		features: ObjectFeatures,
+	) {
 		let parent = self.parent_class();
-		let f = parent.activate_execute_step.expect("No parent class implementation for \"activate_execute_step\"");
+		let f = parent
+			.activate_execute_step
+			.expect("No parent class implementation for \"activate_execute_step\"");
 		unsafe {
 			f(
 				object.unsafe_cast_ref::<Object>().to_glib_none().0,

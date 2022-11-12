@@ -1,6 +1,8 @@
-use crate::prelude::*;
-use crate::pw::{self, Node, Port, PipewireObject};
-use crate::registry::{Interest, InterestContainer, ObjectInterest};
+use crate::{
+	prelude::*,
+	pw::{self, Node, PipewireObject, Port},
+	registry::{Interest, InterestContainer, ObjectInterest},
+};
 
 impl Node {
 	#[doc(alias = "wp_node_new_ports_iterator")]
@@ -29,9 +31,9 @@ impl Node {
 	}
 
 	pub fn device_details(&self) -> Result<Option<(u32, Option<u32>)>, Error> {
-		self.device_id().and_then(|id| self.device_index().map(|index|
-			id.map(|id| (id, index))
-		))
+		self
+			.device_id()
+			.and_then(|id| self.device_index().map(|index| id.map(|id| (id, index))))
 	}
 
 	pub fn name(&self) -> Option<String> {
@@ -51,9 +53,7 @@ impl Node {
 
 impl Display for Node {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		if let Some(res) = self.with_pw_property(pw::PW_KEY_NODE_NAME, |name| {
-			f.write_str(name)
-		}) {
+		if let Some(res) = self.with_pw_property(pw::PW_KEY_NODE_NAME, |name| f.write_str(name)) {
 			return res
 		}
 

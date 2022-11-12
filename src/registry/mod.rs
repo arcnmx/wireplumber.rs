@@ -44,16 +44,12 @@
 //! - [ObjectManager](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_manager_api.html)
 //! - [Interest](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_interest_api.html)
 use crate::prelude::*;
-
-pub use crate::auto::{
-	ObjectManager,
-	ObjectInterest,
-	ConstraintType, ConstraintVerb,
-	InterestMatch, InterestMatchFlags,
+pub use {
+	self::interest::{Constraint, Interest, InterestContainer},
+	crate::auto::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
 };
 
 mod interest;
-pub use interest::{Constraint, Interest, InterestContainer};
 
 impl ObjectManager {
 	#[doc(alias = "wp_object_manager_new_iterator")]
@@ -70,8 +66,7 @@ impl ObjectManager {
 	#[doc(alias = "wp_object_manager_lookup")]
 	#[doc(alias = "wp_object_manager_lookup_full")]
 	pub fn lookup<T: ObjectType>(&self, interest: &Interest<T>) -> Option<T> {
-		self.lookup_full(interest)
-			.map(|obj| unsafe { obj.unsafe_cast() })
+		self.lookup_full(interest).map(|obj| unsafe { obj.unsafe_cast() })
 	}
 }
 

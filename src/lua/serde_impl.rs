@@ -1,8 +1,16 @@
-use std::fmt;
-use glib::VariantDict;
-use serde::{Serialize, Deserialize, ser::{self, SerializeSeq, SerializeMap}, de};
-use crate::lua::{LuaVariant, LuaTable, LuaError, LuaValue, Deserializer};
-use crate::prelude::*;
+use {
+	crate::{
+		lua::{Deserializer, LuaError, LuaTable, LuaValue, LuaVariant},
+		prelude::*,
+	},
+	glib::VariantDict,
+	serde::{
+		de,
+		ser::{self, SerializeMap, SerializeSeq},
+		Deserialize, Serialize,
+	},
+	std::fmt,
+};
 
 struct Visitor;
 
@@ -79,8 +87,7 @@ impl<'de> de::Visitor<'de> for Visitor {
 			dict.insert_value(&key, LuaVariant::as_variant(&value));
 		}
 
-		dict.end().try_into()
-			.map_err(LuaError::serde_error)
+		dict.end().try_into().map_err(LuaError::serde_error)
 	}
 
 	fn visit_none<E: de::Error>(self) -> Result<Self::Value, E> {
@@ -116,17 +123,11 @@ impl<'de> de::Visitor<'de> for TableVisitor {
 	}
 
 	fn visit_map<A: de::MapAccess<'de>>(self, map: A) -> Result<Self::Value, A::Error> {
-		Visitor.visit_map(map)
-			.map(|v| unsafe {
-				UnsafeFrom::unsafe_from(v)
-			})
+		Visitor.visit_map(map).map(|v| unsafe { UnsafeFrom::unsafe_from(v) })
 	}
 
 	fn visit_seq<A: de::SeqAccess<'de>>(self, seq: A) -> Result<Self::Value, A::Error> {
-		Visitor.visit_seq(seq)
-			.map(|v| unsafe {
-				UnsafeFrom::unsafe_from(v)
-			})
+		Visitor.visit_seq(seq).map(|v| unsafe { UnsafeFrom::unsafe_from(v) })
 	}
 }
 
@@ -150,7 +151,8 @@ impl<'v> Serialize for LuaVariant<'v> {
 			LuaValue::Table(t) => match t.is_array() {
 				Some(true) | None => {
 					let len = t.array_len();
-					let len = len.try_into()
+					let len = len
+						.try_into()
 						.map_err(|e| ser::Error::custom(format_args!("Lua array length {} too large for usize: {}", len, e)))?;
 					let mut ser = serializer.serialize_seq(Some(len))?;
 					for v in t.iter_array() {

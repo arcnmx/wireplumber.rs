@@ -36,8 +36,10 @@
 //! }
 //! ```
 
-use glib_signal::{def_signal, SignalFlags, Pointer};
-use crate::prelude::*;
+use {
+	crate::prelude::*,
+	glib_signal::{def_signal, Pointer, SignalFlags},
+};
 
 def_signal! {
 	impl Notifies<"connected" as Connected> for crate::core::Core {

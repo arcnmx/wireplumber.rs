@@ -12,84 +12,57 @@
 //! }
 //! ```
 
-#[doc(no_inline)]
-pub use crate::session::{
-	SessionItemExt as _,
-	SiAcquisitionExt as _, SiAcquisitionExt2 as _,
-	SiAdapterExt as _, SiAdapterExt2 as _,
-	SiEndpointExt as _,
-	SiFactoryExt as _,
-	SiLinkExt as _,
-	SiLinkableExt as _,
-};
-
-#[doc(no_inline)]
-pub use crate::pw::{
-	PipewirePropertyStringIterExt as _,
-	EndpointExt as _,
-	GlobalProxyExt as _,
-	MetadataExt as _,
-	PipewireObjectExt as _, PipewireObjectExt2 as _,
-	ProxyExt as _, ProxyExt2 as _,
-};
-
-#[doc(no_inline)]
-pub use crate::plugin::{
-	PluginExt as _,
-	AsyncPluginExt as _,
-};
-
-#[doc(no_inline)]
-pub use crate::core::ObjectExt as _;
-
-#[doc(no_inline)]
-pub use crate::util::{
-	TransitionExt as _, TransitionExt2 as _,
-};
-
 #[cfg(feature = "glib-signal")]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "glib-signal")))]
 #[doc(no_inline)]
 pub use glib_signal::ObjectSignalExt as _;
-
 #[doc(no_inline)]
-pub use glib::{
-	Cast as _,
-	IsA as _,
-	StaticType as _,
+pub use {
+	crate::{
+		core::ObjectExt as _,
+		plugin::{AsyncPluginExt as _, PluginExt as _},
+		pw::{
+			EndpointExt as _, GlobalProxyExt as _, MetadataExt as _, PipewireObjectExt as _, PipewireObjectExt2 as _,
+			PipewirePropertyStringIterExt as _, ProxyExt as _, ProxyExt2 as _,
+		},
+		session::{
+			SessionItemExt as _, SiAcquisitionExt as _, SiAcquisitionExt2 as _, SiAdapterExt as _, SiAdapterExt2 as _,
+			SiEndpointExt as _, SiFactoryExt as _, SiLinkExt as _, SiLinkableExt as _,
+		},
+		util::{TransitionExt as _, TransitionExt2 as _},
+	},
+	glib::{Cast as _, IsA as _, StaticType as _},
 };
-
 /// this crate uses the prelude too!
 #[allow(unused_imports)]
-pub(crate) use crate::{
-	error::{LibraryErrorEnum, Error},
-	util::{ValueIterator, WpIterator},
-	log::{
-		wp_trace, wp_debug, wp_message, wp_info, wp_warning, wp_critical,
+pub(crate) use {
+	crate::{
+		error::{Error, LibraryErrorEnum},
+		log::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning},
+		util::{ValueIterator, WpIterator},
 	},
-};
-pub(crate) use glib::{
-	Cast, IsA, ObjectType, StaticType,
-	Object as GObject, ObjectExt as GObjectExt,
-	error::ErrorDomain,
-	translate::*,
-	ffi::{gpointer, gconstpointer},
-	types::{Pointer, Pointee},
-	Type,
-	Value, value::FromValue,
-	Variant, ToVariant, FromVariant, StaticVariantType, VariantClass, VariantTy,
-};
-pub(crate) use std::{
-	iter::{self, FromIterator},
-	marker::PhantomData,
-	future::Future,
-	convert::{TryFrom, TryInto, Infallible},
-	borrow::{Cow, Borrow},
-	fmt::{self, Debug, Display, Write as _},
-	str::{self, FromStr},
-	ops::Deref,
-	ffi::{CStr, CString},
-	ptr::{self, NonNull},
-	mem, slice,
-	pin::Pin,
+	glib::{
+		error::ErrorDomain,
+		ffi::{gconstpointer, gpointer},
+		translate::*,
+		types::{Pointee, Pointer},
+		value::FromValue,
+		Cast, FromVariant, IsA, Object as GObject, ObjectExt as GObjectExt, ObjectType, StaticType, StaticVariantType,
+		ToVariant, Type, Value, Variant, VariantClass, VariantTy,
+	},
+	std::{
+		borrow::{Borrow, Cow},
+		convert::{Infallible, TryFrom, TryInto},
+		ffi::{CStr, CString},
+		fmt::{self, Debug, Display, Write as _},
+		future::Future,
+		iter::{self, FromIterator},
+		marker::PhantomData,
+		mem,
+		ops::Deref,
+		pin::Pin,
+		ptr::{self, NonNull},
+		slice,
+		str::{self, FromStr},
+	},
 };

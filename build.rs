@@ -1,6 +1,7 @@
-use std::env;
-
-use semver::{Comparator, Op, Version};
+use {
+	semver::{Comparator, Op, Version},
+	std::env,
+};
 
 fn main() {
 	println!("cargo:rerun-if-changed=build.rs");

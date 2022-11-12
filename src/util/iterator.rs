@@ -1,5 +1,4 @@
-use crate::util::WpIterator;
-use crate::prelude::*;
+use crate::{prelude::*, util::WpIterator};
 
 impl WpIterator {
 	#[doc(alias = "wp_iterator_new")]
@@ -8,7 +7,7 @@ impl WpIterator {
 	}
 
 	#[doc(alias = "wp_iterator_new_ptr_array")]
-	pub unsafe fn with_pointers<I: IntoIterator<Item=gpointer>>(items: I, type_: Type) -> Self {
+	pub unsafe fn with_pointers<I: IntoIterator<Item = gpointer>>(items: I, type_: Type) -> Self {
 		let array = glib::ffi::g_ptr_array_new();
 		for item in items {
 			glib::ffi::g_ptr_array_add(array, item);
@@ -17,25 +16,19 @@ impl WpIterator {
 	}
 
 	pub fn empty(type_: Type) -> Self {
-		unsafe {
-			Self::with_pointers(iter::empty(), type_)
-		}
+		unsafe { Self::with_pointers(iter::empty(), type_) }
 	}
 
 	#[doc(alias = "wp_iterator_get_user_data")]
 	#[doc(alias = "get_user_data")]
 	pub fn user_data(&self) -> gpointer {
-		unsafe {
-			ffi::wp_iterator_get_user_data(self.to_glib_none().0)
-		}
+		unsafe { ffi::wp_iterator_get_user_data(self.to_glib_none().0) }
 	}
 }
 
 impl<T: ObjectType> FromIterator<T> for WpIterator {
-	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
-		unsafe {
-			Self::with_pointers(iter.into_iter().map(|o| o.to_glib_full() as *mut _), T::static_type())
-		}
+	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+		unsafe { Self::with_pointers(iter.into_iter().map(|o| o.to_glib_full() as *mut _), T::static_type()) }
 	}
 }
 
@@ -47,7 +40,7 @@ impl Iterator for WpIterator {
 	}
 }
 
-impl iter::FusedIterator for WpIterator { }
+impl iter::FusedIterator for WpIterator {}
 
 #[repr(transparent)]
 pub struct ValueIterator<T> {
@@ -56,7 +49,10 @@ pub struct ValueIterator<T> {
 }
 
 impl<T> ValueIterator<T> {
-	pub fn new<I: IntoIterator>(iter: I) -> Self where Self: FromIterator<I::Item> {
+	pub fn new<I: IntoIterator>(iter: I) -> Self
+	where
+		Self: FromIterator<I::Item>,
+	{
 		FromIterator::from_iter(iter)
 	}
 
@@ -93,14 +89,12 @@ impl<T: StaticType> Default for ValueIterator<T> {
 impl<T: StaticType> fmt::Debug for ValueIterator<T> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		let name = format!("ValueIterator<{}>", T::static_type().name());
-		f.debug_tuple(&name)
-			.field(&self.iter)
-			.finish()
+		f.debug_tuple(&name).field(&self.iter).finish()
 	}
 }
 
 impl<T: ObjectType> FromIterator<T> for ValueIterator<T> {
-	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
+	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
 		Self::with_inner(FromIterator::from_iter(iter))
 	}
 }
@@ -124,7 +118,7 @@ impl<T: for<'v> FromValue<'v>> Iterator for ValueIterator<T> {
 	}
 }
 
-impl<T> iter::FusedIterator for ValueIterator<T> where Self: Iterator { }
+impl<T> iter::FusedIterator for ValueIterator<T> where Self: Iterator {}
 
 #[test]
 fn object_iterator() {

@@ -1,9 +1,14 @@
-use std::borrow::Cow;
-use glib::VariantType;
-use glib::variant::VariantTypeMismatchError;
-use glib::variant::DictEntry;
-use crate::lua::{LuaString, LuaError};
-use crate::prelude::*;
+use {
+	crate::{
+		lua::{LuaError, LuaString},
+		prelude::*,
+	},
+	glib::{
+		variant::{DictEntry, VariantTypeMismatchError},
+		VariantType,
+	},
+	std::borrow::Cow,
+};
 
 newtype_wrapper! {
 	/// A [Variant](struct@Variant) that can be passed to a Lua script.
@@ -72,9 +77,11 @@ impl LuaType {
 				_ => LuaType::Float,
 			},
 			VariantClass::Variant => Self::with_variant(&var.as_variant().expect("VariantTy"))?,
-			VariantClass::Array if ty.element().is_dict_entry() => match var.iter().map(|v|
-				Self::with_variant(&v.child_value(0)).and_then(|_| Self::with_variant(&v.child_value(1)).map(drop))
-			).collect() {
+			VariantClass::Array if ty.element().is_dict_entry() => match var
+				.iter()
+				.map(|v| Self::with_variant(&v.child_value(0)).and_then(|_| Self::with_variant(&v.child_value(1)).map(drop)))
+				.collect()
+			{
 				Ok(()) => LuaType::Table,
 				Err(e) => return Err(e),
 			},
@@ -124,9 +131,11 @@ impl<'a> LuaValue<'a> {
 			LuaValue::Integer(v) => v.to_string().into(),
 			LuaValue::Float(v) => v.to_string().into(),
 			LuaValue::String(v) => v.borrowed(),
-			LuaValue::Table(_) => return Err(LuaError::TypeMismatch(
-				VariantTypeMismatchError::new(VariantTy::VARDICT.to_owned(), VariantTy::STRING.to_owned())
-			)),
+			LuaValue::Table(_) =>
+				return Err(LuaError::TypeMismatch(VariantTypeMismatchError::new(
+					VariantTy::VARDICT.to_owned(),
+					VariantTy::STRING.to_owned(),
+				))),
 		})
 	}
 
@@ -135,51 +144,50 @@ impl<'a> LuaValue<'a> {
 			LuaValue::Integer(v) => Ok(v),
 			LuaValue::Float(v) => Ok(v as i64),
 			LuaValue::String(ref s) => s.parse(),
-			ref v => Err(LuaError::TypeMismatch(VariantTypeMismatchError::new(match v {
-				LuaValue::Nil => VariantTy::UNIT,
-				LuaValue::Boolean(..) => VariantTy::BOOLEAN,
-				LuaValue::Table(t) if t.is_array().unwrap_or(false) => VariantTy::ARRAY,
-				_ => VariantTy::VARDICT,
-			}.to_owned(), VariantTy::INT64.to_owned()))),
+			ref v => Err(LuaError::TypeMismatch(VariantTypeMismatchError::new(
+				match v {
+					LuaValue::Nil => VariantTy::UNIT,
+					LuaValue::Boolean(..) => VariantTy::BOOLEAN,
+					LuaValue::Table(t) if t.is_array().unwrap_or(false) => VariantTy::ARRAY,
+					_ => VariantTy::VARDICT,
+				}
+				.to_owned(),
+				VariantTy::INT64.to_owned(),
+			))),
 		}
 	}
 }
 
 impl<'v> LuaVariant<'v> {
 	pub fn nil() -> Self {
-		unsafe {
-			Self::unsafe_from(().to_variant())
-		}
+		unsafe { Self::unsafe_from(().to_variant()) }
 	}
 
 	fn check(v: &Variant) -> Result<(), LuaError> {
 		// used by Self::wrap and Self::borrow
-		LuaType::with_variant(v)
-			.map(drop)
+		LuaType::with_variant(v).map(drop)
 	}
 
 	pub fn convert_from(v: &Variant) -> Result<Self, LuaError> {
 		if Self::check(&v).is_ok() {
-			return Ok(unsafe {
-				Self::unsafe_from(v.clone())
-			})
+			return Ok(unsafe { Self::unsafe_from(v.clone()) })
 		}
 
 		match v.classify() {
-			VariantClass::Variant => LuaVariant::convert_from(
-				&v.as_variant().expect("VariantClass")
-			),
+			VariantClass::Variant => LuaVariant::convert_from(&v.as_variant().expect("VariantClass")),
 			VariantClass::Byte => Ok(Self::from(v.get::<u8>().expect("VariantClass") as u16)),
 			VariantClass::Maybe => match v.as_maybe() {
 				Some(v) => LuaVariant::convert_from(&v),
 				None => Ok(().into()),
 			},
-			VariantClass::Array if v.type_().element().is_dict_entry() => v.iter()
-				.map(|v| LuaVariant::convert_from(&v.child_value(0)).and_then(|k| LuaVariant::convert_from(&v.child_value(1)).map(|v| (k, v))))
+			VariantClass::Array if v.type_().element().is_dict_entry() => v
+				.iter()
+				.map(|v| {
+					LuaVariant::convert_from(&v.child_value(0))
+						.and_then(|k| LuaVariant::convert_from(&v.child_value(1)).map(|v| (k, v)))
+				})
 				.collect(),
-			VariantClass::Array | VariantClass::Tuple => v.iter()
-				.map(|v| LuaVariant::convert_from(&v))
-				.collect(),
+			VariantClass::Array | VariantClass::Tuple => v.iter().map(|v| LuaVariant::convert_from(&v)).collect(),
 			_ => Err(LuaError::UnsupportedType(Cow::Owned(v.type_().to_owned()))),
 		}
 	}
@@ -201,14 +209,14 @@ impl<'v> LuaVariant<'v> {
 			LuaType::Float => self.get_float().and_then(|f| f.ok()).map(LuaValue::Float),
 			LuaType::String => self.get_string().map(LuaValue::String),
 			LuaType::Table => LuaTable::borrow(self.as_variant()).ok().map(LuaValue::Table),
-		}.expect("LuaType")
+		}
+		.expect("LuaType")
 	}
 
 	pub fn flattened(&self) -> Self {
 		match self.as_variant().classify() {
-			VariantClass::Variant => unsafe {
-				LuaVariant::unsafe_from(self.as_variant().as_variant().expect("VariantClass"))
-			}.flattened(),
+			VariantClass::Variant =>
+				unsafe { LuaVariant::unsafe_from(self.as_variant().as_variant().expect("VariantClass")) }.flattened(),
 			_ => self.clone(),
 		}
 	}
@@ -231,9 +239,7 @@ impl<'v> LuaVariant<'v> {
 
 	pub fn get_table<'a>(&'a self) -> Option<LuaTable<'a>> {
 		match self.lua_type() {
-			LuaType::Table => Some(unsafe {
-				LuaTable::unsafe_from(self.flattened().into_inner())
-			}),
+			LuaType::Table => Some(unsafe { LuaTable::unsafe_from(self.flattened().into_inner()) }),
 			_ => None,
 		}
 	}
@@ -243,12 +249,14 @@ impl<'v> LuaVariant<'v> {
 	}
 
 	pub fn get_float(&self) -> Option<Result<f64, LuaError>> {
-		const MAX_SAFE_INTEGER: i64 = 2^53 - 1;
-		const MAX_SAFE_INTEGER_UNSIGNED: u64 = 2^53 - 1;
-		const MIN_SAFE_INTEGER: i64 = -(2^53 - 1);
+		const MAX_SAFE_INTEGER: i64 = 2 ^ 53 - 1;
+		const MAX_SAFE_INTEGER_UNSIGNED: u64 = 2 ^ 53 - 1;
+		const MIN_SAFE_INTEGER: i64 = -(2 ^ 53 - 1);
 		Some(match self.as_variant().classify() {
 			VariantClass::Double => Ok(self.as_variant().get::<f64>().expect("VariantClass")),
-			VariantClass::Boolean => u8::from(self.as_variant().get::<bool>().unwrap()).try_into().map_err(Into::into),
+			VariantClass::Boolean => u8::from(self.as_variant().get::<bool>().unwrap())
+				.try_into()
+				.map_err(Into::into),
 			VariantClass::Byte => self.as_variant().get::<u8>().unwrap().try_into().map_err(Into::into),
 			VariantClass::Uint16 => self.as_variant().get::<u16>().unwrap().try_into().map_err(Into::into),
 			VariantClass::Uint32 => self.as_variant().get::<u32>().unwrap().try_into().map_err(Into::into),
@@ -267,7 +275,9 @@ impl<'v> LuaVariant<'v> {
 		})
 	}
 
-	pub fn get_integer<T>(&self) -> Option<Result<T, LuaError>> where
+	#[rustfmt::skip]
+	pub fn get_integer<T>(&self) -> Option<Result<T, LuaError>>
+	where
 		T: TryFrom<bool>, <T as TryFrom<bool>>::Error: Into<LuaError>,
 		T: TryFrom<u8>, <T as TryFrom<u8>>::Error: Into<LuaError>,
 		T: TryFrom<u16>, <T as TryFrom<u16>>::Error: Into<LuaError>,
@@ -313,25 +323,21 @@ newtype_wrapper! {
 impl<'v> LuaTable<'v> {
 	fn check(v: &Variant) -> Result<(), LuaError> {
 		// used by Self::wrap and Self::borrow
-		LuaType::with_variant(v)
-			.and_then(|ty| match ty {
-				LuaType::Table => Ok(()),
-				_ => Err(LuaError::TypeMismatch(
-					VariantTypeMismatchError::new(v.type_().to_owned(), VariantTy::ARRAY.to_owned())
-				)),
-			})
+		LuaType::with_variant(v).and_then(|ty| match ty {
+			LuaType::Table => Ok(()),
+			_ => Err(LuaError::TypeMismatch(VariantTypeMismatchError::new(
+				v.type_().to_owned(),
+				VariantTy::ARRAY.to_owned(),
+			))),
+		})
 	}
 
 	pub fn into_lua_variant(self) -> LuaVariant<'v> {
-		unsafe {
-			LuaVariant::unsafe_from(self.into_inner())
-		}
+		unsafe { LuaVariant::unsafe_from(self.into_inner()) }
 	}
 
 	pub fn lua_variant(&self) -> LuaVariant {
-		unsafe {
-			LuaVariant::unsafe_from(self.as_variant())
-		}
+		unsafe { LuaVariant::unsafe_from(self.as_variant()) }
 	}
 
 	pub fn entry_len(&self) -> usize {
@@ -344,7 +350,8 @@ impl<'v> LuaTable<'v> {
 
 	/// Lua's `n` field, if it exists
 	pub fn table_getn(&self) -> Option<u64> {
-		self.by_key(&"n".into())
+		self
+			.by_key(&"n".into())
 			.and_then(|v| v.get_integer())
 			.and_then(|v| v.ok())
 	}
@@ -353,18 +360,30 @@ impl<'v> LuaTable<'v> {
 		self.as_variant().type_().is_subtype_of(VariantTy::DICTIONARY)
 	}
 
-	pub fn iter_dict_entries<'a>(&'a self) -> impl Iterator<Item=DictEntry<LuaVariant<'static>, LuaVariant<'static>>> + 'a {
-		self.as_variant().iter().enumerate()
-			.map(move |(i, v)| unsafe { match self.variant_is_dict() {
-				true => DictEntry::new(LuaVariant::unsafe_from(v.child_value(0)), LuaVariant::unsafe_from(v.child_value(1))),
+	pub fn iter_dict_entries<'a>(
+		&'a self,
+	) -> impl Iterator<Item = DictEntry<LuaVariant<'static>, LuaVariant<'static>>> + 'a {
+		self.as_variant().iter().enumerate().map(move |(i, v)| unsafe {
+			match self.variant_is_dict() {
+				true => DictEntry::new(
+					LuaVariant::unsafe_from(v.child_value(0)),
+					LuaVariant::unsafe_from(v.child_value(1)),
+				),
 				false => DictEntry::new((i as u64 + 1).into(), LuaVariant::unsafe_from(v)),
-			} })
+			}
+		})
 	}
 
-	pub fn iter_array_indices<'a>(&'a self) -> impl Iterator<Item=Option<u64>> + 'a {
-		self.as_variant().iter().enumerate()
+	pub fn iter_array_indices<'a>(&'a self) -> impl Iterator<Item = Option<u64>> + 'a {
+		self
+			.as_variant()
+			.iter()
+			.enumerate()
 			.map(move |(i, v)| match self.variant_is_dict() {
-				true => unsafe { LuaVariant::unsafe_from(v.child_value(0)) }.lua_value().to_integer().ok()
+				true => unsafe { LuaVariant::unsafe_from(v.child_value(0)) }
+					.lua_value()
+					.to_integer()
+					.ok()
 					.and_then(|i| i.try_into().ok())
 					.and_then(|idx: u64| idx.checked_sub(1)),
 				false => Some(i as u64),
@@ -372,59 +391,64 @@ impl<'v> LuaTable<'v> {
 	}
 
 	pub fn array_indices(&self) -> Vec<(usize, u64)> {
-		let mut indices: Vec<_> = self.iter_array_indices().enumerate()
+		let mut indices: Vec<_> = self
+			.iter_array_indices()
+			.enumerate()
 			.filter_map(|(i, idx)| idx.map(|idx| (i, idx)))
 			.collect();
 		indices.sort_by_key(|&(_, idx)| idx);
 		indices
 	}
 
-	pub fn iter_array_entries<'a>(&'a self) -> impl Iterator<Item=(u64, LuaVariant<'static>)> + 'a {
-		self.array_indices().into_iter()
+	pub fn iter_array_entries<'a>(&'a self) -> impl Iterator<Item = (u64, LuaVariant<'static>)> + 'a {
+		self
+			.array_indices()
+			.into_iter()
 			.map(move |(i, idx)| (idx, self.value_at(i).expect("array_indices")))
 	}
 
-	pub fn iter_array<'a>(&'a self) -> impl Iterator<Item=Option<LuaVariant<'static>>> + 'a {
+	pub fn iter_array<'a>(&'a self) -> impl Iterator<Item = Option<LuaVariant<'static>>> + 'a {
 		let indices = self.array_indices();
-		let last = self.table_getn()
-			.or_else(|| indices.last().map(|&(_, idx)| idx));
+		let last = self.table_getn().or_else(|| indices.last().map(|&(_, idx)| idx));
 
 		let mut indices = indices.into_iter().peekable();
-		(0..=last.unwrap_or(0))
-			.map(move |idx| match indices.peek() {
-				Some(&(_, next)) if idx == next => {
-					indices.next()
-						.map(|(i, _)| self.value_at(i).expect("array_indices"))
-				},
-				Some(_) => None,
-				None => indices.next().map(|_| unreachable!("array_indices")),
-			})
+		(0..=last.unwrap_or(0)).map(move |idx| match indices.peek() {
+			Some(&(_, next)) if idx == next => indices.next().map(|(i, _)| self.value_at(i).expect("array_indices")),
+			Some(_) => None,
+			None => indices.next().map(|_| unreachable!("array_indices")),
+		})
 	}
 
 	pub fn array_len(&self) -> u64 {
-		self.table_getn()
+		self
+			.table_getn()
 			.or_else(|| self.array_indices().last().map(|&(_, idx)| idx))
 			.unwrap_or(0)
 	}
 
 	pub fn key_at(&self, index: usize) -> Option<LuaVariant<'static>> {
 		match self.variant_is_dict() {
-			true => self.as_variant().try_child_value(index)
+			true => self
+				.as_variant()
+				.try_child_value(index)
 				.map(|v| unsafe { LuaVariant::unsafe_from(v.child_value(0)) }),
 			false => None,
 		}
 	}
 
 	pub fn value_at(&self, index: usize) -> Option<LuaVariant<'static>> {
-		self.as_variant().try_child_value(index)
-			.map(|v| unsafe { LuaVariant::unsafe_from(match self.variant_is_dict() {
+		self.as_variant().try_child_value(index).map(|v| unsafe {
+			LuaVariant::unsafe_from(match self.variant_is_dict() {
 				true => v.child_value(1),
 				false => v,
-			}) })
+			})
+		})
 	}
 
 	pub fn by_key(&self, key: &LuaVariant) -> Option<LuaVariant<'static>> {
-		self.iter_dict_entries().find(|e| e.key() == key)
+		self
+			.iter_dict_entries()
+			.find(|e| e.key() == key)
 			.map(|e| e.value().owned())
 	}
 
@@ -448,12 +472,16 @@ impl<'v> LuaTable<'v> {
 			return Ok(self)
 		}
 
-		self.iter_dict_entries()
-			.map(|e|
-				e.key().lua_value().to_lua_string()
+		self
+			.iter_dict_entries()
+			.map(|e| {
+				e.key()
+					.lua_value()
+					.to_lua_string()
 					.and_then(|s| s.into_string().map_err(Into::into))
 					.map(|s| (s, e.value().owned()))
-			).collect()
+			})
+			.collect()
 	}
 }
 
@@ -464,45 +492,47 @@ impl StaticVariantType for LuaTable<'_> {
 }
 
 impl<'a, 'v, V: StaticVariantType + Into<LuaVariant<'v>>> FromIterator<V> for LuaTable<'a> {
-	fn from_iter<T: IntoIterator<Item=V>>(iter: T) -> Self {
+	fn from_iter<T: IntoIterator<Item = V>>(iter: T) -> Self {
 		unsafe {
-			UnsafeFrom::unsafe_from(
-				Variant::array_from_iter_with_type(&V::static_variant_type(), iter.into_iter().map(|v| v.into().to_variant()))
-			)
+			UnsafeFrom::unsafe_from(Variant::array_from_iter_with_type(
+				&V::static_variant_type(),
+				iter.into_iter().map(|v| v.into().to_variant()),
+			))
 		}
 	}
 }
 
-impl<'a, 'v, K: StaticVariantType + Into<LuaVariant<'v>>, V: StaticVariantType + Into<LuaVariant<'v>>> FromIterator<(K, V)> for LuaTable<'a> {
-	fn from_iter<I: IntoIterator<Item=(K, V)>>(iter: I) -> Self {
+impl<'a, 'v, K: StaticVariantType + Into<LuaVariant<'v>>, V: StaticVariantType + Into<LuaVariant<'v>>>
+	FromIterator<(K, V)> for LuaTable<'a>
+{
+	fn from_iter<I: IntoIterator<Item = (K, V)>>(iter: I) -> Self {
 		let entry_type = VariantType::new_dict_entry(&K::static_variant_type(), &V::static_variant_type());
-		let entries = iter.into_iter()
+		let entries = iter
+			.into_iter()
 			.map(|(k, v)| Variant::from_dict_entry(&k.into().into_variant(), &v.into().into_variant()));
-		unsafe {
-			UnsafeFrom::unsafe_from(
-				Variant::array_from_iter_with_type(&entry_type, entries)
-			)
-		}
+		unsafe { UnsafeFrom::unsafe_from(Variant::array_from_iter_with_type(&entry_type, entries)) }
 	}
 }
 
 impl<'a, 'v> FromIterator<LuaVariant<'v>> for LuaVariant<'a> {
-	fn from_iter<T: IntoIterator<Item=LuaVariant<'v>>>(iter: T) -> Self {
-		LuaTable::from_iter(iter)
-			.into_lua_variant()
+	fn from_iter<T: IntoIterator<Item = LuaVariant<'v>>>(iter: T) -> Self {
+		LuaTable::from_iter(iter).into_lua_variant()
 	}
 }
 
-impl<'a, 'v, K: StaticVariantType + Into<LuaVariant<'v>>, V: StaticVariantType + Into<LuaVariant<'v>>> FromIterator<(K, V)> for LuaVariant<'a> {
-	fn from_iter<I: IntoIterator<Item=(K, V)>>(iter: I) -> Self {
-		LuaTable::from_iter(iter)
-			.into_lua_variant()
+impl<'a, 'v, K: StaticVariantType + Into<LuaVariant<'v>>, V: StaticVariantType + Into<LuaVariant<'v>>>
+	FromIterator<(K, V)> for LuaVariant<'a>
+{
+	fn from_iter<I: IntoIterator<Item = (K, V)>>(iter: I) -> Self {
+		LuaTable::from_iter(iter).into_lua_variant()
 	}
 }
 
 impl<'a> ToVariant for LuaTable<'a> {
 	fn to_variant(&self) -> Variant {
-		self.clone().into_vardict()
+		self
+			.clone()
+			.into_vardict()
 			.expect("VarDict requires UTF8 keys")
 			.into_variant()
 	}
@@ -510,9 +540,7 @@ impl<'a> ToVariant for LuaTable<'a> {
 
 impl<'a> From<LuaTable<'a>> for LuaVariant<'a> {
 	fn from(v: LuaTable<'a>) -> Self {
-		unsafe {
-			LuaVariant::unsafe_from(v.into_inner())
-		}
+		unsafe { LuaVariant::unsafe_from(v.into_inner()) }
 	}
 }
 
@@ -559,8 +587,6 @@ lua_primitives! {
 
 impl<'v, 's, S: Into<LuaString<'s>>> From<S> for LuaVariant<'v> {
 	fn from(s: S) -> Self {
-		unsafe {
-			Self::unsafe_from(s.into().to_variant())
-		}
+		unsafe { Self::unsafe_from(s.into().to_variant()) }
 	}
 }

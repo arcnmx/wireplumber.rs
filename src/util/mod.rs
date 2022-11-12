@@ -8,15 +8,10 @@
 //! - [Transition](https://pipewire.pages.freedesktop.org/wireplumber/c_api/transitions_api.html)
 //! - [State Storage](https://pipewire.pages.freedesktop.org/wireplumber/c_api/state_api.html)
 
-pub use crate::auto::{
-	State,
-	Iterator as WpIterator,
-	Transition, TransitionStep,
-	traits::TransitionExt,
+pub use {
+	self::{iterator::ValueIterator, transition::TransitionExt2},
+	crate::auto::{traits::TransitionExt, Iterator as WpIterator, State, Transition, TransitionStep},
 };
 
-mod transition;
-pub use transition::TransitionExt2;
-
 mod iterator;
-pub use iterator::ValueIterator;
+mod transition;

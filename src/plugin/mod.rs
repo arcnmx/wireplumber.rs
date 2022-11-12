@@ -99,21 +99,16 @@
 //! - [Plugin](https://pipewire.pages.freedesktop.org/wireplumber/c_api/plugin_api.html)
 //! - [Component Loader](https://pipewire.pages.freedesktop.org/wireplumber/c_api/component_loader_api.html)
 
-pub use crate::auto::{
-	Plugin, PluginFeatures,
-	ComponentLoader, LookupDirs,
-	traits::PluginExt,
+pub use {
+	self::{
+		loader::{ComponentLoaderImpl, ComponentLoaderImplExt},
+		subclass::{
+			plugin_export, simple_plugin_subclass, AsyncPluginExt, AsyncPluginImpl, ModuleExport, ModuleWrapper, PluginImpl,
+			PluginImplExt, SimplePlugin, SimplePluginObject, SourceHandles, SourceHandlesCell,
+		},
+	},
+	crate::auto::{traits::PluginExt, ComponentLoader, LookupDirs, Plugin, PluginFeatures},
 };
 
 mod loader;
-pub use loader::{ComponentLoaderImpl, ComponentLoaderImplExt};
-
 mod subclass;
-pub use subclass::{
-	PluginImpl, PluginImplExt,
-	AsyncPluginImpl, AsyncPluginExt,
-	SourceHandles, SourceHandlesCell,
-	SimplePlugin, simple_plugin_subclass,
-	SimplePluginObject,
-	ModuleExport, ModuleWrapper, plugin_export,
-};

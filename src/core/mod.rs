@@ -36,19 +36,16 @@
 //! - [Core](https://pipewire.pages.freedesktop.org/wireplumber/c_api/core_api.html)
 //! - [Object](https://pipewire.pages.freedesktop.org/wireplumber/c_api/object_api.html)
 
-pub use crate::auto::{
-	Core, InitFlags,
-	Object,
-	FeatureActivationTransition,
-	traits::ObjectExt,
-};
 #[cfg(any(feature = "v0_4_5", feature = "dox"))]
 pub use crate::auto::Factory;
+pub use {
+	self::{
+		features::ObjectFeatures,
+		subclass::{ObjectImpl, ObjectImplExt},
+	},
+	crate::auto::{traits::ObjectExt, Core, FeatureActivationTransition, InitFlags, Object},
+};
 
 mod core;
-
 mod features;
-pub use features::ObjectFeatures;
-
 mod subclass;
-pub use subclass::{ObjectImpl, ObjectImplExt};

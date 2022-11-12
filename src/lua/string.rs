@@ -1,8 +1,8 @@
-use std::{ops::Deref, fmt, str};
-use glib::variant::VariantTypeMismatchError;
-
-use crate::lua::LuaError;
-use crate::prelude::*;
+use {
+	crate::{lua::LuaError, prelude::*},
+	glib::variant::VariantTypeMismatchError,
+	std::{fmt, ops::Deref, str},
+};
 
 newtype_wrapper! {
 	#[derive(Debug, Ord, Eq, Clone, Hash)]
@@ -16,9 +16,7 @@ impl<'a> LuaString<'a> {
 
 	pub fn into_string(self) -> Result<String, str::Utf8Error> {
 		match self.as_str() {
-			Ok(..) => Ok(unsafe {
-				String::from_utf8_unchecked(self.into_bytes())
-			}),
+			Ok(..) => Ok(unsafe { String::from_utf8_unchecked(self.into_bytes()) }),
 			Err(e) => Err(e),
 		}
 	}
@@ -30,10 +28,12 @@ impl<'a> LuaString<'a> {
 		}
 	}
 
-	pub fn parse<F: FromStr>(&self) -> Result<F, LuaError> where
+	pub fn parse<F: FromStr>(&self) -> Result<F, LuaError>
+	where
 		F::Err: Into<LuaError>,
 	{
-		self.as_str()
+		self
+			.as_str()
 			.map_err(Into::into)
 			.and_then(|s| s.parse().map_err(Into::into))
 	}
@@ -52,15 +52,14 @@ impl<'a> TryFrom<&'a Variant> for LuaString<'a> {
 
 	fn try_from(variant: &'a Variant) -> Result<Self, Self::Error> {
 		match variant.classify() {
-			VariantClass::Variant =>
-				Self::try_from(variant.as_variant().expect("VariantClass")),
-			VariantClass::String =>
-				Ok(Self::from(variant.str().expect("VariantClass"))),
+			VariantClass::Variant => Self::try_from(variant.as_variant().expect("VariantClass")),
+			VariantClass::String => Ok(Self::from(variant.str().expect("VariantClass"))),
 			VariantClass::Array if variant.type_() == VariantTy::BYTE_STRING =>
 				Ok(Self::from(variant.fixed_array::<u8>().expect("VariantClass"))),
-			_ => Err(LuaError::TypeMismatch(
-				VariantTypeMismatchError::new(variant.type_().to_owned(), VariantTy::STRING.to_owned())
-			)),
+			_ => Err(LuaError::TypeMismatch(VariantTypeMismatchError::new(
+				variant.type_().to_owned(),
+				VariantTy::STRING.to_owned(),
+			))),
 		}
 	}
 }
@@ -69,8 +68,7 @@ impl<'a> TryFrom<Variant> for LuaString<'a> {
 	type Error = LuaError;
 
 	fn try_from(variant: Variant) -> Result<Self, Self::Error> {
-		LuaString::try_from(&variant)
-			.map(|s| s.owned())
+		LuaString::try_from(&variant).map(|s| s.owned())
 	}
 }
 

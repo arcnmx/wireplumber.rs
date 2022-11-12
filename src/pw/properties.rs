@@ -1,16 +1,17 @@
-use libspa_sys::spa_dict;
-use pipewire_sys::pw_properties;
-use crate::prelude::*;
-
-use crate::pw::{Properties, ToPipewirePropertyString};
 #[cfg(feature = "v0_4_2")]
 use crate::pw::PropertiesItem;
+use {
+	crate::{
+		prelude::*,
+		pw::{Properties, ToPipewirePropertyString},
+	},
+	libspa_sys::spa_dict,
+	pipewire_sys::pw_properties,
+};
 
 impl Properties {
 	pub fn new_clone(props: &Self) -> Properties {
-		unsafe {
-			Self::new_wrap_mut(props.to_pw_properties().as_ptr())
-		}
+		unsafe { Self::new_wrap_mut(props.to_pw_properties().as_ptr()) }
 	}
 
 	#[doc(alias = "wp_properties_new_copy")]
@@ -45,23 +46,17 @@ impl Properties {
 
 	#[doc(alias = "wp_properties_peek_dict")]
 	pub fn peek_dict(&self) -> &spa_dict {
-		unsafe {
-			&*ffi::wp_properties_peek_dict(self.to_glib_none().0)
-		}
+		unsafe { &*ffi::wp_properties_peek_dict(self.to_glib_none().0) }
 	}
 
 	#[doc(alias = "wp_properties_to_pw_properties")]
 	pub fn to_pw_properties(&self) -> NonNull<pw_properties> {
-		unsafe {
-			NonNull::new_unchecked(ffi::wp_properties_to_pw_properties(self.to_glib_none().0))
-		}
+		unsafe { NonNull::new_unchecked(ffi::wp_properties_to_pw_properties(self.to_glib_none().0)) }
 	}
 
 	#[doc(alias = "wp_properties_unref_and_take_pw_properties")]
 	pub fn unref_and_take_pw_properties(self) -> NonNull<pw_properties> {
-		unsafe {
-			NonNull::new_unchecked(ffi::wp_properties_unref_and_take_pw_properties(self.to_glib_full()))
-		}
+		unsafe { NonNull::new_unchecked(ffi::wp_properties_unref_and_take_pw_properties(self.to_glib_full())) }
 	}
 
 	#[doc(alias = "wp_properties_update_from_dict")]
@@ -88,12 +83,12 @@ impl Properties {
 	}
 
 	#[cfg(feature = "v0_4_2")]
-	pub fn keys(&self) -> impl Iterator<Item=String> {
+	pub fn keys(&self) -> impl Iterator<Item = String> {
 		self.items().map(|kv| kv.key_string())
 	}
 
 	#[cfg(feature = "v0_4_2")]
-	pub fn values(&self) -> impl Iterator<Item=String> {
+	pub fn values(&self) -> impl Iterator<Item = String> {
 		self.items().map(|kv| kv.value_string())
 	}
 }
@@ -130,7 +125,7 @@ mod properties_item {
 }
 
 impl FromIterator<(String, String)> for Properties {
-	fn from_iter<T: IntoIterator<Item=(String, String)>>(iter: T) -> Self {
+	fn from_iter<T: IntoIterator<Item = (String, String)>>(iter: T) -> Self {
 		let mut props = Self::new_empty();
 		props.extend(iter);
 		props
@@ -138,7 +133,7 @@ impl FromIterator<(String, String)> for Properties {
 }
 
 impl<K: AsRef<str>, V: ToPipewirePropertyString> Extend<(K, V)> for Properties {
-	fn extend<T: IntoIterator<Item=(K, V)>>(&mut self, iter: T) {
+	fn extend<T: IntoIterator<Item = (K, V)>>(&mut self, iter: T) {
 		for (k, v) in iter {
 			self.insert(k.as_ref(), v)
 		}
@@ -148,7 +143,7 @@ impl<K: AsRef<str>, V: ToPipewirePropertyString> Extend<(K, V)> for Properties {
 #[cfg(feature = "v0_4_2")]
 impl<'a> IntoIterator for &'a Properties {
 	type Item = (String, String);
-	type IntoIter = iter::Map<ValueIterator<PropertiesItem>, fn (PropertiesItem) -> Self::Item>;
+	type IntoIter = iter::Map<ValueIterator<PropertiesItem>, fn(PropertiesItem) -> Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.iter()
@@ -158,7 +153,7 @@ impl<'a> IntoIterator for &'a Properties {
 #[cfg(feature = "v0_4_2")]
 impl IntoIterator for Properties {
 	type Item = (String, String);
-	type IntoIter = iter::Map<ValueIterator<PropertiesItem>, fn (PropertiesItem) -> Self::Item>;
+	type IntoIter = iter::Map<ValueIterator<PropertiesItem>, fn(PropertiesItem) -> Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.iter()
@@ -171,15 +166,11 @@ impl Debug for Properties {
 		struct DebugProps<'a>(&'a Properties);
 		impl Debug for DebugProps<'_> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-				f.debug_map()
-					.entries(self.0)
-					.finish()
+				f.debug_map().entries(self.0).finish()
 			}
 		}
 		let props = DebugProps(self);
-		f.debug_tuple("wp::Properties")
-			.field(&props)
-			.finish()
+		f.debug_tuple("wp::Properties").field(&props).finish()
 	}
 }
 
@@ -187,8 +178,7 @@ impl Debug for Properties {
 impl Debug for Properties {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		// TODO?
-		f.debug_tuple("wp::Properties")
-			.finish()
+		f.debug_tuple("wp::Properties").finish()
 	}
 }
 

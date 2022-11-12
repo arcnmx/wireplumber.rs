@@ -1,9 +1,13 @@
-use libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
-use crate::pw::SpaPropertyKey;
 #[cfg(any(feature = "experimental", feature = "dox"))]
 use crate::pw::PipewireObject;
-use crate::spa::{SpaPod, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
-use crate::prelude::*;
+use {
+	crate::{
+		prelude::*,
+		pw::SpaPropertyKey,
+		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPodParser, SpaPrimitive, SpaValue},
+	},
+	libspa_sys::{spa_fraction, spa_pod, spa_rectangle},
+};
 
 impl SpaPod {
 	/// # Safety
@@ -39,18 +43,17 @@ impl SpaPod {
 	}
 
 	pub fn with_pod(bytes: &[u8]) -> Self {
-		unsafe {
-			Self::with_copy(
-				&Self::with_pod_unchecked(bytes)
-			)
-		}
+		unsafe { Self::with_copy(&Self::with_pod_unchecked(bytes)) }
 	}
 
 	fn parse_<R, F: FnOnce(&SpaPodParser, Option<&str>) -> R>(&self, f: F) -> Result<R, Error> {
 		let (parser, id_name) = match () {
 			_ if self.is_object() => Ok(SpaPodParser::new_object(self)),
 			_ if self.is_struct() => Ok((SpaPodParser::new_struct(self), None)),
-			_ => Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unsupported SPA type {:?}", self.spa_type()))),
+			_ => Err(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				&format!("unsupported SPA type {:?}", self.spa_type()),
+			)),
 		}?;
 		let res = f(&parser, id_name);
 		parser.end();
@@ -72,9 +75,7 @@ impl SpaPod {
 	}
 
 	pub fn to_bytes(&self) -> Vec<u8> {
-		unsafe {
-			self.as_bytes().into()
-		}
+		unsafe { self.as_bytes().into() }
 	}
 
 	/// borrows pod for the lifetime of the returned object
@@ -91,16 +92,12 @@ impl SpaPod {
 
 	#[doc(alias = "wp_spa_pod_new_bytes")]
 	pub fn new_bytes(value: &[u8]) -> SpaPod {
-		unsafe {
-			from_glib_full(ffi::wp_spa_pod_new_bytes(value.as_ptr() as *const _, value.len() as _))
-		}
+		unsafe { from_glib_full(ffi::wp_spa_pod_new_bytes(value.as_ptr() as *const _, value.len() as _)) }
 	}
 
 	#[doc(alias = "wp_spa_pod_new_pointer")]
 	pub fn new_pointer(type_name: &str, value: gconstpointer) -> SpaPod {
-		unsafe {
-			from_glib_full(ffi::wp_spa_pod_new_pointer(type_name.to_glib_none().0, value))
-		}
+		unsafe { from_glib_full(ffi::wp_spa_pod_new_pointer(type_name.to_glib_none().0, value)) }
 	}
 
 	#[doc(alias = "wp_spa_pod_get_bytes")]
@@ -120,9 +117,7 @@ impl SpaPod {
 	#[doc(alias = "wp_spa_pod_get_choice_type")]
 	#[doc(alias = "get_choice_type")]
 	pub fn choice_type(&self) -> Option<SpaIdValue> {
-		unsafe {
-			from_glib(ffi::wp_spa_pod_get_choice_type(self.to_glib_none().0))
-		}
+		unsafe { from_glib(ffi::wp_spa_pod_get_choice_type(self.to_glib_none().0)) }
 	}
 
 	#[doc(alias = "wp_spa_pod_get_pointer")]
@@ -141,7 +136,11 @@ impl SpaPod {
 	#[doc(alias = "wp_spa_pod_set_pointer")]
 	pub fn set_pointer(&self, type_name: &str, value: gconstpointer) -> bool {
 		unsafe {
-			from_glib(ffi::wp_spa_pod_set_pointer(self.to_glib_none().0, type_name.to_glib_none().0, value))
+			from_glib(ffi::wp_spa_pod_set_pointer(
+				self.to_glib_none().0,
+				type_name.to_glib_none().0,
+				value,
+			))
 		}
 	}
 
@@ -149,37 +148,27 @@ impl SpaPod {
 		ValueIterator::with_inner(self.new_iterator().unwrap())
 	}
 
-	pub fn array_pointers(&self) -> impl Iterator<Item=Pointer> {
+	pub fn array_pointers(&self) -> impl Iterator<Item = Pointer> {
 		self.new_iterator().unwrap().map(|v| v.get().unwrap())
 	}
 
-	pub fn array_iterator<T: SpaPrimitive>(&self) -> impl Iterator<Item=T> {
+	pub fn array_iterator<T: SpaPrimitive>(&self) -> impl Iterator<Item = T> {
 		// TODO: assert type via T!!!
-		self.array_pointers().map(|p| unsafe {
-			*(p as *const T)
-		})
+		self.array_pointers().map(|p| unsafe { *(p as *const T) })
 	}
 
 	#[doc(alias = "wp_spa_pod_get_spa_pod")]
 	#[doc(alias = "get_spa_pod")]
 	pub fn spa_pod_raw(&self) -> &spa_pod {
-		unsafe {
-			&*ffi::wp_spa_pod_get_spa_pod(self.to_glib_none().0)
-		}
+		unsafe { &*ffi::wp_spa_pod_get_spa_pod(self.to_glib_none().0) }
 	}
 
 	pub fn spa_rectangle(&self) -> Option<spa_rectangle> {
-		self.rectangle().map(|(width, height)| spa_rectangle {
-			width,
-			height,
-		})
+		self.rectangle().map(|(width, height)| spa_rectangle { width, height })
 	}
 
 	pub fn spa_fraction(&self) -> Option<spa_fraction> {
-		self.fraction().map(|(num, denom)| spa_fraction {
-			num,
-			denom,
-		})
+		self.fraction().map(|(num, denom)| spa_fraction { num, denom })
 	}
 
 	#[cfg(any(feature = "experimental", feature = "dox"))]
@@ -188,24 +177,36 @@ impl SpaPod {
 		let mut params = self.iterator();
 
 		let length: Option<i32> = if length_prefix {
-			Some(params.next()
-				.ok_or_else(|| Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					&format!("pod struct {:?} is missing expected length prefix", self),
-				)).and_then(|pod| (&pod).try_into()
-					.map_err(|e| Error::new(
-						LibraryErrorEnum::InvalidArgument,
-						&format!("pod struct {:?} length could not be parsed from {:?}: {:?}", self, pod, e),
-					))
-				)?)
+			Some(
+				params
+					.next()
+					.ok_or_else(|| {
+						Error::new(
+							LibraryErrorEnum::InvalidArgument,
+							&format!("pod struct {:?} is missing expected length prefix", self),
+						)
+					})
+					.and_then(|pod| {
+						(&pod).try_into().map_err(|e| {
+							Error::new(
+								LibraryErrorEnum::InvalidArgument,
+								&format!(
+									"pod struct {:?} length could not be parsed from {:?}: {:?}",
+									self, pod, e
+								),
+							)
+						})
+					})?,
+			)
 		} else {
 			None
 		};
 		let length = match length {
-			Some(len) if len < 0 => return Err(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				&format!("pod struct {:?} has invalid length {}", self, len),
-			)),
+			Some(len) if len < 0 =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("pod struct {:?} has invalid length {}", self, len),
+				)),
 			Some(len) => Some(len as usize),
 			None => None,
 		};
@@ -222,33 +223,41 @@ impl SpaPod {
 				}
 			}
 
-			let key: String = (&key).try_into()
-				.map_err(|e| Error::new(
+			let key: String = (&key).try_into().map_err(|e| {
+				Error::new(
 					LibraryErrorEnum::InvalidArgument,
 					&format!("key {:?} was not a string: {:?}", key, e),
-				))?;
+				)
+			})?;
 			let value = match params.next() {
 				Some(v) => v,
-				None => return Err(Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					&format!("unexpected key {:?} due to uneven amount of params on {:?}", key, self),
-				)),
+				None =>
+					return Err(Error::new(
+						LibraryErrorEnum::InvalidArgument,
+						&format!("unexpected key {:?} due to uneven amount of params on {:?}", key, self),
+					)),
 			};
 			values.push((key, value));
 		}
 		Ok(values.into_iter())
 	}
 
-	pub fn spa_properties(&self) -> impl Iterator<Item=(Result<SpaIdValue, ffi::WpSpaType>, SpaPod)> {
+	pub fn spa_properties(&self) -> impl Iterator<Item = (Result<SpaIdValue, ffi::WpSpaType>, SpaPod)> {
 		let type_ = self.spa_type();
 		let values = type_.and_then(|ty| ty.values_table());
-		self.iterator().map(move |pod| pod.property().unwrap())
-			.map(move |(key_name, pod)| (
-				SpaIdValue::value_or_name(&type_, &key_name,
-					values.and_then(|values| values.find_value_from_short_name(&key_name))
-				),
-				pod,
-			))
+		self
+			.iterator()
+			.map(move |pod| pod.property().unwrap())
+			.map(move |(key_name, pod)| {
+				(
+					SpaIdValue::value_or_name(
+						&type_,
+						&key_name,
+						values.and_then(|values| values.find_value_from_short_name(&key_name)),
+					),
+					pod,
+				)
+			})
 	}
 
 	pub fn find_spa_property<K: SpaPropertyKey>(&self, key: &K) -> Option<SpaPod> {
@@ -260,15 +269,19 @@ impl SpaPod {
 				return None
 			},
 		};
-		self.spa_properties().find(|&(id, ..)| SpaIdValue::result_number(id) == find_id)
+		self
+			.spa_properties()
+			.find(|&(id, ..)| SpaIdValue::result_number(id) == find_id)
 			.map(|(_, pod)| pod)
 	}
 
-	pub fn spa_property<T, K: SpaPropertyKey>(&self, key: &K) -> Option<T> where
+	pub fn spa_property<T, K: SpaPropertyKey>(&self, key: &K) -> Option<T>
+	where
 		for<'a> &'a SpaPod: TryInto<T>,
 		for<'a> <&'a SpaPod as TryInto<T>>::Error: Debug,
 	{
-		self.find_spa_property(key)
+		self
+			.find_spa_property(key)
 			.and_then(|pod| match TryInto::try_into(&pod) {
 				Ok(v) => Some(v),
 				Err(e) => {
@@ -305,10 +318,11 @@ impl SpaPod {
 		let name = match type_.number() {
 			libspa_sys::SPA_TYPE_OBJECT_Props => "Props",
 			libspa_sys::SPA_TYPE_OBJECT_ParamRoute => "Route",
-			_ => return Err(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				&format!("could not apply unknown spa type {:?} to {:?}", type_, obj),
-			)),
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("could not apply unknown spa type {:?} to {:?}", type_, obj),
+				)),
 		};
 
 		let flags = Default::default();
@@ -324,7 +338,7 @@ impl SpaPod {
 }
 
 impl<T: SpaValue> FromIterator<T> for SpaPod {
-	fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
+	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
 		SpaPodBuilder::from_iter(iter).end().unwrap()
 	}
 }

@@ -1,14 +1,15 @@
-use libspa::pod::{
-	deserialize::{DeserializeError, PodDeserialize, PodDeserializer},
-	serialize::{GenError, PodSerialize, PodSerializer},
-	Value, ValueArray, Object, Property, PropertyFlags, ChoiceValue, CanonicalFixedSizedPod,
-};
-use libspa::utils::{Id, Fd, Choice, ChoiceEnum, ChoiceFlags};
-use crate::{
-	prelude::*,
-	spa::{
-		SpaPod, SpaType, SpaIdTable, SpaIdValue,
-		SpaPodBuilder, SpaValue, SpaPrimitive, SpaBool,
+use {
+	crate::{
+		prelude::*,
+		spa::{SpaBool, SpaIdTable, SpaIdValue, SpaPod, SpaPodBuilder, SpaPrimitive, SpaType, SpaValue},
+	},
+	libspa::{
+		pod::{
+			deserialize::{DeserializeError, PodDeserialize, PodDeserializer},
+			serialize::{GenError, PodSerialize, PodSerializer},
+			CanonicalFixedSizedPod, ChoiceValue, Object, Property, PropertyFlags, Value, ValueArray,
+		},
+		utils::{Choice, ChoiceEnum, ChoiceFlags, Fd, Id},
 	},
 };
 
@@ -25,11 +26,7 @@ impl SpaPod {
 
 	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
 	pub fn deserialize<'de, P: PodDeserialize<'de>>(&'de self) -> Result<P, DeserializeError<&'de [u8]>> {
-		unsafe {
-			PodDeserializer::deserialize_ptr(NonNull::new_unchecked(
-				self.spa_pod_raw() as *const _ as *mut _
-			))
-		}
+		unsafe { PodDeserializer::deserialize_ptr(NonNull::new_unchecked(self.spa_pod_raw() as *const _ as *mut _)) }
 	}
 
 	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
@@ -54,9 +51,14 @@ impl SpaPod {
 
 	fn pod_choice<T: SpaPrimitive + CanonicalFixedSizedPod>(&self, choice_type: SpaIdValue) -> Result<Choice<T>, Error> {
 		let mut values = self.array_iterator::<T>();
-		let mut next_value = || values.next().ok_or_else(||
-			Error::new(LibraryErrorEnum::InvalidArgument, &format!("wrong number of values for {:?} choice", choice_type))
-		);
+		let mut next_value = || {
+			values.next().ok_or_else(|| {
+				Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("wrong number of values for {:?} choice", choice_type),
+				)
+			})
+		};
 		let flags = ChoiceFlags::empty();
 		let default = next_value()?;
 		Ok(Choice(flags, match choice_type.number() {
@@ -80,9 +82,11 @@ impl SpaPod {
 				default,
 				flags: values.collect(),
 			},
-			_ => return Err(
-				Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown choice type: {:?}", choice_type))
-			),
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unknown choice type: {:?}", choice_type),
+				)),
 		}))
 	}
 
@@ -103,7 +107,10 @@ impl SpaPod {
 			_ if self.is_rectangle() => Value::Rectangle(self.spa_rectangle().unwrap()),
 			_ if self.is_fraction() => Value::Fraction(self.spa_fraction().unwrap()),
 			_ if self.is_struct() => self.parse_struct(|parser| {
-				self.iterator().map(|pod| pod.to_pod_value()).collect::<Result<_, Error>>()
+				self
+					.iterator()
+					.map(|pod| pod.to_pod_value())
+					.collect::<Result<_, Error>>()
 					.map(Value::Struct)
 			})?,
 			_ if self.is_object() => {
@@ -115,26 +122,38 @@ impl SpaPod {
 					Ok::<_, Error>(Value::Object(Object {
 						type_: type_.into_glib(),
 						id: value_id.number(),
-						properties: self.spa_properties().map(|(id, pod)| pod.to_pod_value().map(|value| Property {
-							key: SpaIdValue::result_number(id),
-							flags: PropertyFlags::empty(),
-							value,
-						})).collect::<Result<_, Error>>()?,
+						properties: self
+							.spa_properties()
+							.map(|(id, pod)| {
+								pod.to_pod_value().map(|value| Property {
+									key: SpaIdValue::result_number(id),
+									flags: PropertyFlags::empty(),
+									value,
+								})
+							})
+							.collect::<Result<_, Error>>()?,
 					}))
 				})?
 			},
 			_ if self.is_sequence() => {
 				wp_warning!("unsupported sequence spa type for {:?}", self);
-				Value::Struct(self.iterator().map(|pod| pod.control().unwrap())
-					.map(|(offset, type_name, value)| {
-						wp_warning!("discarding sequence context ({}, {}) for {:?}", offset, type_name, value);
-						value.to_pod_value()
-					})
-					.collect::<Result<_, _>>()?
+				Value::Struct(
+					self
+						.iterator()
+						.map(|pod| pod.control().unwrap())
+						.map(|(offset, type_name, value)| {
+							wp_warning!(
+								"discarding sequence context ({}, {}) for {:?}",
+								offset,
+								type_name,
+								value
+							);
+							value.to_pod_value()
+						})
+						.collect::<Result<_, _>>()?,
 				)
 			},
 			_ if self.is_array() => {
-
 				let child = self.array_child().unwrap();
 				let type_ = child.spa_type().unwrap();
 				Value::ValueArray(match type_ {
@@ -148,14 +167,22 @@ impl SpaPod {
 					_ if child.is_fd() => ValueArray::Fd(self.array_iterator().collect()),
 					_ if child.is_rectangle() => ValueArray::Rectangle(self.array_iterator().collect()),
 					_ if child.is_fraction() => ValueArray::Fraction(self.array_iterator().collect()),
-					type_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unsupported SPA array child type {:?}", type_))),
+					type_ =>
+						return Err(Error::new(
+							LibraryErrorEnum::InvalidArgument,
+							&format!("unsupported SPA array child type {:?}", type_),
+						)),
 				})
 			},
 			_ if self.is_choice() => {
 				let child = self.choice_child().unwrap();
 				let type_ = child.spa_type();
-				let choice_type = self.choice_type()
-					.ok_or_else(|| Error::new(LibraryErrorEnum::InvalidArgument, &format!("unknown choice type for {:?}", child)))?;
+				let choice_type = self.choice_type().ok_or_else(|| {
+					Error::new(
+						LibraryErrorEnum::InvalidArgument,
+						&format!("unknown choice type for {:?}", child),
+					)
+				})?;
 				Value::Choice(match type_ {
 					_ if child.is_int() => ChoiceValue::Int(child.pod_choice(choice_type)?),
 					_ if child.is_long() => ChoiceValue::Long(child.pod_choice(choice_type)?),
@@ -165,10 +192,18 @@ impl SpaPod {
 					_ if child.is_fd() => ChoiceValue::Fd(child.pod_choice(choice_type)?),
 					_ if child.is_rectangle() => ChoiceValue::Rectangle(child.pod_choice(choice_type)?),
 					_ if child.is_fraction() => ChoiceValue::Fraction(child.pod_choice(choice_type)?),
-					type_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unsupported SPA choice child type {:?}", type_))),
+					type_ =>
+						return Err(Error::new(
+							LibraryErrorEnum::InvalidArgument,
+							&format!("unsupported SPA choice child type {:?}", type_),
+						)),
 				})
 			},
-			_ => return Err(Error::new(LibraryErrorEnum::InvalidArgument, &format!("unsupported SPA type {:?}", self.spa_type()))),
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unsupported SPA type {:?}", self.spa_type()),
+				)),
 		})
 	}
 
@@ -189,17 +224,19 @@ impl TryInto<Value> for SpaPod {
 #[derive(Copy, Clone)]
 struct DebugProperty<'a> {
 	object: &'a Object,
-	property: &'a Property
+	property: &'a Property,
 }
 
 impl<'a> DebugProperty<'a> {
-	fn parent_values_table(&self) -> Option<SpaIdTable>{
+	fn parent_values_table(&self) -> Option<SpaIdTable> {
 		let type_ = SpaType::from_id(self.object.type_);
 		type_.and_then(|ty| ty.values_table())
 	}
 
 	fn key_value(&self) -> Option<SpaIdValue> {
-		self.parent_values_table().and_then(|table| table.find_value(self.property.key))
+		self
+			.parent_values_table()
+			.and_then(|table| table.find_value(self.property.key))
 	}
 
 	fn key_table(&self) -> Option<SpaIdTable> {
@@ -237,7 +274,7 @@ impl<'v, 'o> DebugValue<'v, 'o> {
 	}
 }
 
-impl <'v, 'o> Debug for DebugValue<'v, 'o> {
+impl<'v, 'o> Debug for DebugValue<'v, 'o> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		struct DebugType(SpaType);
 		impl Debug for DebugType {
@@ -261,11 +298,9 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 		}
 
 		struct DebugValueList<I>(I);
-		impl<'v, 'o, I: Clone + Iterator<Item=DebugValue<'v, 'o>>> Debug for DebugValueList<I> {
+		impl<'v, 'o, I: Clone + Iterator<Item = DebugValue<'v, 'o>>> Debug for DebugValueList<I> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-				f.debug_list()
-					.entries(self.0.clone())
-					.finish()
+				f.debug_list().entries(self.0.clone()).finish()
 			}
 		}
 
@@ -285,7 +320,8 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 							property: &self.property,
 						}),
 						value: Cow::Borrowed(&self.property.value),
-					}).finish()
+					})
+					.finish()
 			}
 		}
 		struct DebugPropertyList<'a> {
@@ -297,7 +333,8 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 					.entries(self.object.properties.iter().map(|property| DebugProperty {
 						object: self.object,
 						property,
-					})).finish()
+					}))
+					.finish()
 			}
 		}
 		struct DebugId<'a> {
@@ -306,8 +343,7 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 		}
 		impl<'a> Debug for DebugId<'a> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-				let table = self.container
-					.and_then(|prop| prop.key_table());
+				let table = self.container.and_then(|prop| prop.key_table());
 				if let Some(id) = table.and_then(|table| table.find_value(self.id.0)) {
 					write!(f, "{:?}", DebugIdValue(id))
 				} else {
@@ -317,7 +353,7 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 		}
 		struct DebugIdList<'a> {
 			container: Option<DebugProperty<'a>>,
-			ids: &'a [Id]
+			ids: &'a [Id],
 		}
 		impl<'a> Debug for DebugIdList<'a> {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -325,30 +361,33 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 					.entries(self.ids.iter().copied().map(|id| DebugId {
 						container: self.container,
 						id,
-					})).finish()
+					}))
+					.finish()
 			}
 		}
 
 		match &*self.value {
-			&Value::Id(id) => {
-				f.debug_tuple("Id")
-					.field(&DebugId {
-						container: self.container,
-						id,
-					}).finish()
-			},
-			Value::ValueArray(ValueArray::Id(ids)) => {
-				f.debug_tuple("Ids")
-					.field(&DebugIdList {
-						container: self.container,
-						ids,
-					}).finish()
-			},
-			Value::Struct(values) => f.debug_tuple("Struct")
+			&Value::Id(id) => f
+				.debug_tuple("Id")
+				.field(&DebugId {
+					container: self.container,
+					id,
+				})
+				.finish(),
+			Value::ValueArray(ValueArray::Id(ids)) => f
+				.debug_tuple("Ids")
+				.field(&DebugIdList {
+					container: self.container,
+					ids,
+				})
+				.finish(),
+			Value::Struct(values) => f
+				.debug_tuple("Struct")
 				.field(&DebugValueList(values.iter().map(|value| DebugValue {
 					container: self.container,
 					value: Cow::Borrowed(value),
-				}))).finish(),
+				})))
+				.finish(),
 			Value::Object(obj) => {
 				let type_ = SpaType::from_id(obj.type_);
 				let id_table = type_.and_then(|ty| ty.object_id_values_table());
@@ -364,16 +403,15 @@ impl <'v, 'o> Debug for DebugValue<'v, 'o> {
 				} else {
 					f.field("id", &obj.id);
 				}
-				f.field("properties", &DebugPropertyList {
-					object: obj,
-				}).finish()
+				f.field("properties", &DebugPropertyList { object: obj }).finish()
 			},
 			Value::Choice(choice) => {
 				let mut f = f.debug_tuple("Choice");
 				match choice {
 					ChoiceValue::Id(id) => todo!(),
 					choice => f.field(choice),
-				}.finish()
+				}
+				.finish()
 			},
 			value => write!(f, "{:?}", value),
 		}
@@ -398,8 +436,7 @@ impl<'a> TryFrom<&'a SpaPod> for Id {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.id().map(Id)
-			.ok_or(GlibNoneError)
+		pod.id().map(Id).ok_or(GlibNoneError)
 	}
 }
 
@@ -421,8 +458,7 @@ impl<'a> TryFrom<&'a SpaPod> for Fd {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.fd().map(Fd)
-			.ok_or(GlibNoneError)
+		pod.fd().map(Fd).ok_or(GlibNoneError)
 	}
 }
 

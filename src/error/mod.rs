@@ -4,13 +4,14 @@
 //!
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
 
-use glib::{Quark, error::ErrorDomain};
-use std::fmt::Display;
-use crate::prelude::*;
-
 pub use crate::auto::LibraryErrorEnum;
 #[doc(no_inline)]
 pub use glib::Error;
+use {
+	crate::prelude::*,
+	glib::{error::ErrorDomain, Quark},
+	std::fmt::Display,
+};
 
 pub type Result<T> = std::result::Result<T, Error>;
 
@@ -18,9 +19,7 @@ impl ErrorDomain for LibraryErrorEnum {
 	#[doc(alias = "WP_DOMAIN_LIBRARY")]
 	#[doc(alias = "wp_domain_library_quark")]
 	fn domain() -> Quark {
-		unsafe {
-			from_glib(ffi::wp_domain_library_quark())
-		}
+		unsafe { from_glib(ffi::wp_domain_library_quark()) }
 	}
 
 	fn code(self) -> i32 {
@@ -29,9 +28,9 @@ impl ErrorDomain for LibraryErrorEnum {
 
 	fn from(code: i32) -> Option<Self> {
 		match code {
-			ffi::WP_LIBRARY_ERROR_INVARIANT | ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT | ffi::WP_LIBRARY_ERROR_OPERATION_FAILED => unsafe {
-				Some(from_glib(code))
-			},
+			ffi::WP_LIBRARY_ERROR_INVARIANT
+			| ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT
+			| ffi::WP_LIBRARY_ERROR_OPERATION_FAILED => unsafe { Some(from_glib(code)) },
 			_ => None,
 		}
 	}

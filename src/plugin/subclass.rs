@@ -1,12 +1,17 @@
-use glib::subclass::prelude::*;
-use glib::object::{BorrowedObject, ObjectSubclassIs};
-use glib::{SourceId, MainContext};
-use std::panic::catch_unwind;
-use std::cell::RefCell;
-use crate::plugin::{Plugin, PluginFeatures};
-use crate::core::{Core, Object, ObjectImpl};
-use crate::util::Transition;
-use crate::prelude::*;
+use {
+	crate::{
+		core::{Core, Object, ObjectImpl},
+		plugin::{Plugin, PluginFeatures},
+		prelude::*,
+		util::Transition,
+	},
+	glib::{
+		object::{BorrowedObject, ObjectSubclassIs},
+		subclass::prelude::*,
+		MainContext, SourceId,
+	},
+	std::{cell::RefCell, panic::catch_unwind},
+};
 
 pub trait PluginImpl: ObjectImpl + PluginImplExt {
 	fn enable(&self, plugin: &Self::Type, error_handler: Transition) {
@@ -37,16 +42,17 @@ impl<T: PluginImpl> PluginImplExt for T {
 		let parent = PluginImplExt::parent_class(self);
 		let f = parent.enable.expect("No parent class implementation for \"enable\"");
 		unsafe {
-			f(plugin.unsafe_cast_ref::<Plugin>().to_glib_none().0, error_handler.to_glib_none().0)
+			f(
+				plugin.unsafe_cast_ref::<Plugin>().to_glib_none().0,
+				error_handler.to_glib_none().0,
+			)
 		}
 	}
 
 	fn parent_disable(&self, plugin: &Self::Type) {
 		let parent = PluginImplExt::parent_class(self);
 		let f = parent.disable.expect("No parent class implementation for \"disable\"");
-		unsafe {
-			f(plugin.unsafe_cast_ref::<Plugin>().to_glib_none().0)
-		}
+		unsafe { f(plugin.unsafe_cast_ref::<Plugin>().to_glib_none().0) }
 	}
 }
 
@@ -78,12 +84,14 @@ unsafe impl<T: PluginImpl> IsSubclassable<T> for Plugin {
 }
 
 pub trait AsyncPluginImpl: ObjectSubclass {
-	type EnableFuture: Future<Output=Result<(), Error>>;
+	type EnableFuture: Future<Output = Result<(), Error>>;
 	fn enable(&self, plugin: Self::Type) -> Self::EnableFuture;
 
-	fn disable(&self) { }
+	fn disable(&self) {}
 
-	fn register_source(&self, source: SourceId) { let _ = source; }
+	fn register_source(&self, source: SourceId) {
+		let _ = source;
+	}
 }
 
 pub trait AsyncPluginExt: IsA<Plugin> {
@@ -93,17 +101,20 @@ pub trait AsyncPluginExt: IsA<Plugin> {
 
 	fn plugin_context(&self) -> MainContext;
 
-	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F);
+	fn spawn_local<F: Future<Output = ()> + 'static>(&self, f: F);
 }
 
 impl Plugin {
 	pub fn core(&self) -> Core {
-		self.upcast_ref::<Object>().core()
+		self
+			.upcast_ref::<Object>()
+			.core()
 			.expect("plugin requires an active Core")
 	}
 }
 
-impl<T: IsA<Plugin> + ObjectSubclassIsExt> AsyncPluginExt for T where
+impl<T: IsA<Plugin> + ObjectSubclassIsExt> AsyncPluginExt for T
+where
 	<T as ObjectSubclassIs>::Subclass: AsyncPluginImpl,
 {
 	fn as_plugin(&self) -> &Plugin {
@@ -118,13 +129,14 @@ impl<T: IsA<Plugin> + ObjectSubclassIsExt> AsyncPluginExt for T where
 		self.plugin_core().default_context()
 	}
 
-	fn spawn_local<F: Future<Output=()> + 'static>(&self, f: F) {
+	fn spawn_local<F: Future<Output = ()> + 'static>(&self, f: F) {
 		let source = self.plugin_context().spawn_local(f);
 		self.imp().register_source(source);
 	}
 }
 
-impl<T: AsyncPluginImpl + ObjectImpl> PluginImpl for T where
+impl<T: AsyncPluginImpl + ObjectImpl> PluginImpl for T
+where
 	<T as ObjectSubclass>::Type: AsyncPluginExt,
 {
 	fn enable(&self, this: &Self::Type, error_handler: Transition) {
@@ -133,7 +145,9 @@ impl<T: AsyncPluginImpl + ObjectImpl> PluginImpl for T where
 
 		let enable_handle = this.plugin_context().spawn_local(async move {
 			match enable.await {
-				Ok(()) => plugin.as_plugin().update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
+				Ok(()) => plugin
+					.as_plugin()
+					.update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
 				Err(e) => error_handler.return_error(e),
 			}
 		});
@@ -226,14 +240,15 @@ pub trait SimplePlugin: ObjectSubclass {
 
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error>;
 
-	fn init_args(&self, args: Self::Args) { let _ = args; unimplemented!() }
-	fn new_plugin(core: &Core, args: Self::Args) -> Self::Type where
+	fn init_args(&self, args: Self::Args) {
+		let _ = args;
+		unimplemented!()
+	}
+	fn new_plugin(core: &Core, args: Self::Args) -> Self::Type
+	where
 		Self::Type: IsA<GObject>,
 	{
-		let res: Self::Type = GObject::new(&[
-			("name", &Self::NAME),
-			("core", core),
-		]);
+		let res: Self::Type = GObject::new(&[("name", &Self::NAME), ("core", core)]);
 		res.imp().init_args(args);
 		res
 	}
@@ -243,8 +258,9 @@ glib::wrapper! {
 	pub struct SimplePluginObject<T: SimplePlugin>(ObjectSubclass<T>) @extends Plugin, Object;
 }
 
-impl<T> Deref for SimplePluginObject<T> where
-	T: SimplePlugin + ObjectSubclass<Type=Self>,
+impl<T> Deref for SimplePluginObject<T>
+where
+	T: SimplePlugin + ObjectSubclass<Type = Self>,
 {
 	type Target = T;
 
@@ -291,9 +307,7 @@ pub struct ModuleWrapper<T>(PhantomData<T>);
 
 impl<T: ModuleExport> ModuleExport for ModuleWrapper<T> {
 	fn init(core: Core, args: Option<Variant>) -> Result<(), Error> {
-		let res = catch_unwind(|| {
-			T::init(core, args)
-		});
+		let res = catch_unwind(|| T::init(core, args));
 		match res {
 			Ok(res) => res,
 			Err(panic) => Err({
@@ -310,7 +324,8 @@ impl<T: ModuleExport> ModuleExport for ModuleWrapper<T> {
 	}
 }
 
-impl<T: SimplePlugin> ModuleExport for T where
+impl<T: SimplePlugin> ModuleExport for T
+where
 	T::Type: IsA<GObject> + IsA<Plugin>,
 {
 	fn init(core: Core, args: Option<Variant>) -> Result<(), Error> {
@@ -336,7 +351,7 @@ macro_rules! plugin_export {
 		pub unsafe extern "C" fn wireplumber__module_init(
 			core: std::ptr::NonNull<$crate::ffi::WpCore>,
 			args: *mut $crate::lib::glib::ffi::GVariant,
-			error: std::ptr::NonNull<*mut $crate::lib::glib::ffi::GError>
+			error: std::ptr::NonNull<*mut $crate::lib::glib::ffi::GError>,
 		) -> glib::ffi::gboolean {
 			use $crate::lib::glib::translate::{IntoGlib, ToGlibPtr};
 

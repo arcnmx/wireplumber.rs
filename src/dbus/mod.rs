@@ -1,3 +1,1 @@
-pub use crate::auto::{
-	Dbus, DbusFeatures, DBusState,
-};
+pub use crate::auto::{DBusState, Dbus, DbusFeatures};

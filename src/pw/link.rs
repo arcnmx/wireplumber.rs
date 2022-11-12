@@ -1,10 +1,17 @@
-use crate::pw::{self, Link, LinkFeatures, Node, Port, Properties, Direction};
-use crate::core::Core;
-use crate::prelude::*;
+use crate::{
+	core::Core,
+	prelude::*,
+	pw::{self, Direction, Link, LinkFeatures, Node, Port, Properties},
+};
 
 impl Link {
 	#[doc(alias("wp_link_new_from_factory"))]
-	pub fn new<O: LinkTarget + Debug, I: LinkTarget + Debug>(core: &Core, output: &O, input: &I, props: &Properties) -> Result<Self, Error> {
+	pub fn new<O: LinkTarget + Debug, I: LinkTarget + Debug>(
+		core: &Core,
+		output: &O,
+		input: &I,
+		props: &Properties,
+	) -> Result<Self, Error> {
 		let props = Properties::new_clone(props);
 		output.write_props(&props, Direction::Output)?;
 		input.write_props(&props, Direction::Input)?;

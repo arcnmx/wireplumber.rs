@@ -1,7 +1,10 @@
-use glib::ffi::gboolean;
-use glib::GString;
-use crate::spa::{SpaPodBuilder, SpaPod, SpaType};
-use crate::prelude::*;
+use {
+	crate::{
+		prelude::*,
+		spa::{SpaPod, SpaPodBuilder, SpaType},
+	},
+	glib::{ffi::gboolean, GString},
+};
 
 pub trait SpaPrimitive: SpaValue + Copy + Into<<Self as SpaValue>::Owned> {
 	const TYPE: SpaType;
@@ -50,9 +53,7 @@ pub struct SpaBool(gboolean);
 
 impl From<SpaBool> for bool {
 	fn from(v: SpaBool) -> Self {
-		unsafe {
-			from_glib(v.0)
-		}
+		unsafe { from_glib(v.0) }
 	}
 }
 
@@ -77,9 +78,7 @@ impl<'a> TryFrom<&'a SpaPod> for SpaBool {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.boolean()
-			.map(Into::into)
-			.ok_or(GlibNoneError)
+		pod.boolean().map(Into::into).ok_or(GlibNoneError)
 	}
 }
 
@@ -87,8 +86,7 @@ impl<'a> TryFrom<&'a SpaPod> for bool {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.boolean()
-			.ok_or(GlibNoneError)
+		pod.boolean().ok_or(GlibNoneError)
 	}
 }
 
@@ -107,8 +105,7 @@ impl<'a> TryFrom<&'a SpaPod> for i32 {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.int()
-			.ok_or(GlibNoneError)
+		pod.int().ok_or(GlibNoneError)
 	}
 }
 
@@ -118,9 +115,10 @@ impl<'a> TryFrom<&'a SpaPod> for u32 {
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
 		i32::try_from(pod)
 			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
-			.and_then(|v| v.try_into()
-				.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
-			)
+			.and_then(|v| {
+				v.try_into()
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
+			})
 	}
 }
 
@@ -139,8 +137,7 @@ impl<'a> TryFrom<&'a SpaPod> for i64 {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.long()
-			.ok_or(GlibNoneError)
+		pod.long().ok_or(GlibNoneError)
 	}
 }
 
@@ -150,9 +147,10 @@ impl<'a> TryFrom<&'a SpaPod> for u64 {
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
 		i64::try_from(pod)
 			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
-			.and_then(|v| v.try_into()
-				.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
-			)
+			.and_then(|v| {
+				v.try_into()
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
+			})
 	}
 }
 
@@ -171,8 +169,7 @@ impl<'a> TryFrom<&'a SpaPod> for f32 {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.float()
-			.ok_or(GlibNoneError)
+		pod.float().ok_or(GlibNoneError)
 	}
 }
 
@@ -191,8 +188,7 @@ impl<'a> TryFrom<&'a SpaPod> for f64 {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.double()
-			.ok_or(GlibNoneError)
+		pod.double().ok_or(GlibNoneError)
 	}
 }
 
@@ -208,8 +204,7 @@ impl<'a> TryFrom<&'a SpaPod> for GString {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.string()
-			.ok_or(GlibNoneError)
+		pod.string().ok_or(GlibNoneError)
 	}
 }
 
@@ -217,8 +212,7 @@ impl<'a> TryFrom<&'a SpaPod> for String {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		<GString as TryFrom<&'a SpaPod>>::try_from(pod)
-			.map(Into::into)
+		<GString as TryFrom<&'a SpaPod>>::try_from(pod).map(Into::into)
 	}
 }
 
@@ -234,9 +228,7 @@ impl<'a> TryFrom<&'a SpaPod> for Vec<u8> {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.bytes()
-			.map(Into::into)
-			.ok_or(GlibNoneError)
+		pod.bytes().map(Into::into).ok_or(GlibNoneError)
 	}
 }
 
@@ -255,8 +247,7 @@ impl<'a> TryFrom<&'a SpaPod> for libspa_sys::spa_rectangle {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.spa_rectangle()
-			.ok_or(GlibNoneError)
+		pod.spa_rectangle().ok_or(GlibNoneError)
 	}
 }
 
@@ -275,8 +266,7 @@ impl<'a> TryFrom<&'a SpaPod> for libspa_sys::spa_fraction {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		pod.spa_fraction()
-			.ok_or(GlibNoneError)
+		pod.spa_fraction().ok_or(GlibNoneError)
 	}
 }
 
@@ -296,7 +286,8 @@ impl<'a> TryFrom<&'a SpaPod> for SpaPod {
 	}
 }
 
-impl<T: SpaPrimitive> SpaValue for [T] where
+impl<T: SpaPrimitive> SpaValue for [T]
+where
 	Vec<T::Owned>: for<'a> TryFrom<&'a SpaPod>,
 {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
@@ -314,7 +305,8 @@ impl<T: SpaPrimitive> SpaValue for [T] where
 	type Owned = Vec<T::Owned>;
 }
 
-impl<'a, T: for<'f> TryFrom<&'f SpaPod>> TryFrom<&'a SpaPod> for Vec<T> where
+impl<'a, T: for<'f> TryFrom<&'f SpaPod>> TryFrom<&'a SpaPod> for Vec<T>
+where
 	for<'f> <T as TryFrom<&'f SpaPod>>::Error: Into<GlibNoneError>,
 {
 	type Error = GlibNoneError;
@@ -324,15 +316,16 @@ impl<'a, T: for<'f> TryFrom<&'f SpaPod>> TryFrom<&'a SpaPod> for Vec<T> where
 			return Err(GlibNoneError)
 		}
 
-		pod.iterator().map(|pod|
-			T::try_from(&pod)
-				.map_err(Into::into)
-		).collect()
+		pod
+			.iterator()
+			.map(|pod| T::try_from(&pod).map_err(Into::into))
+			.collect()
 	}
 }
 
 /// Struct
-impl<'a, T: Sized> SpaValue for [&'a dyn SpaValue<Owned=T>] where
+impl<'a, T: Sized> SpaValue for [&'a dyn SpaValue<Owned = T>]
+where
 	Vec<T>: for<'f> TryFrom<&'f SpaPod>,
 	T: for<'f> TryFrom<&'f SpaPod>,
 {

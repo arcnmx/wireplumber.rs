@@ -1,5 +1,4 @@
-use crate::util::Transition;
-use crate::prelude::*;
+use crate::{prelude::*, util::Transition};
 
 pub trait TransitionExt2: 'static {
 	fn return_error(&self, error: Error);

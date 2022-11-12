@@ -1,12 +1,13 @@
-use std::borrow::Cow;
-use serde::de::{self, Visitor, IntoDeserializer};
-use glib::{Variant, VariantTy, variant::VariantTypeMismatchError};
-use crate::lua::{LuaVariant, LuaTable, LuaError, LuaType};
+use {
+	crate::lua::{LuaError, LuaTable, LuaType, LuaVariant},
+	glib::{variant::VariantTypeMismatchError, Variant, VariantTy},
+	serde::de::{self, IntoDeserializer, Visitor},
+	std::borrow::Cow,
+};
 
 #[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
 pub fn from_variant<'de, D: de::Deserialize<'de>, V: AsRef<Variant>>(v: V) -> Result<D, LuaError> {
-	LuaVariant::convert_from(v.as_ref())
-		.and_then(|v| D::deserialize(v.into_deserializer()))
+	LuaVariant::convert_from(v.as_ref()).and_then(|v| D::deserialize(v.into_deserializer()))
 }
 
 #[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
@@ -39,9 +40,10 @@ impl<'a> Deserializer<'a> {
 	}
 
 	fn error(&self, wanted: &VariantTy) -> LuaError {
-		LuaError::TypeMismatch(
-			VariantTypeMismatchError::new(self.variant.flattened().as_variant().type_().to_owned(), wanted.to_owned())
-		)
+		LuaError::TypeMismatch(VariantTypeMismatchError::new(
+			self.variant.flattened().as_variant().type_().to_owned(),
+			wanted.to_owned(),
+		))
 	}
 
 	fn unsupported(&self) -> LuaError {
@@ -66,7 +68,8 @@ impl<'a> Deserializer<'a> {
 		match self.variant.flattened().inner_ref() {
 			Err(v) => v.str().map(|s| Cow::Owned(s.into())),
 			Ok(v) => v.str().map(Cow::Borrowed),
-		}.ok_or_else(|| self.error(VariantTy::STRING))
+		}
+		.ok_or_else(|| self.error(VariantTy::STRING))
 	}
 }
 
@@ -86,8 +89,7 @@ impl<'a, 'de> de::Deserializer<'de> for Deserializer<'a> {
 			LuaType::String => self.deserialize_str(visitor),
 			LuaType::Table if self.variant.get_table().expect("LuaType").is_array().unwrap_or(true) =>
 				self.deserialize_seq(visitor),
-			LuaType::Table =>
-				self.deserialize_map(visitor),
+			LuaType::Table => self.deserialize_map(visitor),
 		}
 	}
 
@@ -150,7 +152,10 @@ impl<'a, 'de> de::Deserializer<'de> for Deserializer<'a> {
 	fn deserialize_bytes<V: Visitor<'de>>(self, visitor: V) -> Result<V::Value, Self::Error> {
 		match self.variant.lua_type() {
 			LuaType::String => self.deserialize_str(visitor),
-			LuaType::Table => visitor.visit_seq(SeqDeserializer::new(self.clone().variant.get_table().unwrap().iter_array(), self)),
+			LuaType::Table => visitor.visit_seq(SeqDeserializer::new(
+				self.clone().variant.get_table().unwrap().iter_array(),
+				self,
+			)),
 			_ => Err(self.error(VariantTy::BYTE_STRING)),
 		}
 	}
@@ -174,11 +179,7 @@ impl<'a, 'de> de::Deserializer<'de> for Deserializer<'a> {
 		}
 	}
 
-	fn deserialize_unit_struct<V: Visitor<'de>>(
-		self,
-		_name: &'static str,
-		visitor: V,
-	) -> Result<V::Value, Self::Error> {
+	fn deserialize_unit_struct<V: Visitor<'de>>(self, _name: &'static str, visitor: V) -> Result<V::Value, Self::Error> {
 		self.deserialize_unit(visitor)
 	}
 
@@ -192,7 +193,10 @@ impl<'a, 'de> de::Deserializer<'de> for Deserializer<'a> {
 
 	fn deserialize_seq<V: Visitor<'de>>(self, visitor: V) -> Result<V::Value, Self::Error> {
 		match self.variant.lua_type() {
-			LuaType::Table => visitor.visit_seq(SeqDeserializer::new(self.clone().variant.get_table().unwrap().iter_array(), self)),
+			LuaType::Table => visitor.visit_seq(SeqDeserializer::new(
+				self.clone().variant.get_table().unwrap().iter_array(),
+				self,
+			)),
 			_ => Err(self.error(VariantTy::ARRAY)),
 		}
 	}
@@ -230,7 +234,9 @@ impl<'a, 'de> de::Deserializer<'de> for Deserializer<'a> {
 		_fields: &'static [&'static str],
 		visitor: V,
 	) -> Result<V::Value, Self::Error> {
-		let table = self.variant.get_table()
+		let table = self
+			.variant
+			.get_table()
 			.ok_or_else(|| self.error(VariantTy::DICTIONARY))?;
 		if table.is_array().unwrap_or(false) {
 			self.deserialize_seq(visitor)
@@ -281,7 +287,9 @@ impl<'v, 'de> de::EnumAccess<'de> for EnumDeserializer<'v> {
 	type Variant = Self;
 
 	fn variant_seed<V: de::DeserializeSeed<'de>>(self, _seed: V) -> Result<(V::Value, Self::Variant), Self::Error> {
-		Err(LuaError::Custom(format!("unimplemented wireplumber::lua::EnumDeserializer::variant_seed")))
+		Err(LuaError::Custom(format!(
+			"unimplemented wireplumber::lua::EnumDeserializer::variant_seed"
+		)))
 	}
 }
 
@@ -289,15 +297,21 @@ impl<'v, 'de> de::VariantAccess<'de> for EnumDeserializer<'v> {
 	type Error = LuaError;
 
 	fn unit_variant(self) -> Result<(), Self::Error> {
-		Err(LuaError::Custom(format!("unimplemented wireplumber::lua::EnumDeserializer::unit_variant")))
+		Err(LuaError::Custom(format!(
+			"unimplemented wireplumber::lua::EnumDeserializer::unit_variant"
+		)))
 	}
 
 	fn newtype_variant_seed<T: de::DeserializeSeed<'de>>(self, _seed: T) -> Result<T::Value, Self::Error> {
-		Err(LuaError::Custom(format!("unimplemented wireplumber::lua::EnumDeserializer::newtype_variant_seed")))
+		Err(LuaError::Custom(format!(
+			"unimplemented wireplumber::lua::EnumDeserializer::newtype_variant_seed"
+		)))
 	}
 
 	fn tuple_variant<V: Visitor<'de>>(self, _len: usize, _visitor: V) -> Result<V::Value, Self::Error> {
-		Err(LuaError::Custom(format!("unimplemented wireplumber::lua::EnumDeserializer::tuple_variant")))
+		Err(LuaError::Custom(format!(
+			"unimplemented wireplumber::lua::EnumDeserializer::tuple_variant"
+		)))
 	}
 
 	fn struct_variant<V: Visitor<'de>>(
@@ -305,7 +319,9 @@ impl<'v, 'de> de::VariantAccess<'de> for EnumDeserializer<'v> {
 		_fields: &'static [&'static str],
 		_visitor: V,
 	) -> Result<V::Value, Self::Error> {
-		Err(LuaError::Custom(format!("unimplemented wireplumber::lua::EnumDeserializer::struct_variant")))
+		Err(LuaError::Custom(format!(
+			"unimplemented wireplumber::lua::EnumDeserializer::struct_variant"
+		)))
 	}
 }
 
@@ -365,11 +381,13 @@ impl<'v, I> SeqDeserializer<'v, I> {
 	}
 }
 
-impl<'v, 'de, 'i, I: Iterator<Item=Option<LuaVariant<'i>>>> de::SeqAccess<'de> for SeqDeserializer<'v, I> {
+impl<'v, 'de, 'i, I: Iterator<Item = Option<LuaVariant<'i>>>> de::SeqAccess<'de> for SeqDeserializer<'v, I> {
 	type Error = LuaError;
 
 	fn next_element_seed<T: de::DeserializeSeed<'de>>(&mut self, seed: T) -> Result<Option<T::Value>, Self::Error> {
-		self.iter.next()
+		self
+			.iter
+			.next()
 			.map(|v| seed.deserialize(self.de.change_variant(v.unwrap_or_else(|| LuaVariant::nil()))))
 			.transpose()
 	}
@@ -400,7 +418,7 @@ impl<'v, 'de> de::MapAccess<'de> for MapDeserializer<'v> {
 	fn next_key_seed<K: de::DeserializeSeed<'de>>(&mut self, seed: K) -> Result<Option<K::Value>, Self::Error> {
 		let table = self.table();
 		if self.index >= table.entry_len() {
-			return Ok(None);
+			return Ok(None)
 		}
 		match table.key_at(self.index) {
 			Some(key) => seed.deserialize(key.into_deserializer()).map(Some),
@@ -410,7 +428,9 @@ impl<'v, 'de> de::MapAccess<'de> for MapDeserializer<'v> {
 	}
 
 	fn next_value_seed<V: de::DeserializeSeed<'de>>(&mut self, seed: V) -> Result<V::Value, Self::Error> {
-		let value = self.table().value_at(self.index)
+		let value = self
+			.table()
+			.value_at(self.index)
 			.ok_or_else(|| -> LuaError { todo!() })?;
 		self.index += 1;
 		seed.deserialize(self.de.change_variant(value))

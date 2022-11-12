@@ -4,20 +4,19 @@
 //!
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/log_api.html)
 
-use glib::{GString, GStringBuilder, LogLevelFlags};
-use libspa_sys::spa_log;
-use std::env;
-use crate::prelude::*;
-
 mod macros;
-pub use macros::{
-	log,
-	trace, debug, message, info, warning, critical,
-};
+
 #[doc(hidden)]
-pub use macros::_log_inner;
+pub use self::macros::_log_inner;
+pub use self::macros::{critical, debug, info, log, message, trace, warning};
 #[allow(unused_imports)]
-pub(crate) use macros::{wp_trace, wp_debug, wp_message, wp_info, wp_warning, wp_critical};
+pub(crate) use self::macros::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning};
+use {
+	crate::prelude::*,
+	glib::{GString, GStringBuilder, LogLevelFlags},
+	libspa_sys::spa_log,
+	std::env,
+};
 
 pub struct Log(());
 
@@ -34,17 +33,13 @@ impl Log {
 
 	#[doc(alias = "wp_log_level_is_enabled")]
 	pub fn level_is_enabled<L: Into<LogLevelFlags>>(flags: L) -> bool {
-		unsafe {
-			from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib())) }
 	}
 
 	#[doc(alias = "wp_log_set_level")]
 	pub fn set_level(level: &str) {
 		env::set_var("WIREPLUMBER_DEBUG", level); // XXX: this doesn't seem to work properly otherwise?
-		unsafe {
-			ffi::wp_log_set_level(level.to_glib_none().0)
-		}
+		unsafe { ffi::wp_log_set_level(level.to_glib_none().0) }
 	}
 
 	pub fn set_default_level(level: &str) {
@@ -55,9 +50,7 @@ impl Log {
 
 	#[doc(alias = "wp_spa_log_get_instance")]
 	pub fn spa_log() -> *mut spa_log {
-		unsafe {
-			ffi::wp_spa_log_get_instance()
-		}
+		unsafe { ffi::wp_spa_log_get_instance() }
 	}
 
 	#[doc(alias = "wp_log_structured_standard")]
@@ -76,22 +69,35 @@ impl Log {
 			let obj = context.object.as_ref().map(|obj| (*obj).to_glib_none());
 			let message = message.into();
 			ffi::wp_log_structured_standard(
-				domain.0, log_level.into().into_glib(),
-				file.0, line.0, function.0,
-				obj_type.into_glib(), obj.as_ref().map(|o| o.0).unwrap_or(ptr::null()) as *mut _,
-				b"%s\0".as_ptr() as *const _, message.as_ptr()
+				domain.0,
+				log_level.into().into_glib(),
+				file.0,
+				line.0,
+				function.0,
+				obj_type.into_glib(),
+				obj.as_ref().map(|o| o.0).unwrap_or(ptr::null()) as *mut _,
+				b"%s\0".as_ptr() as *const _,
+				message.as_ptr(),
 			)
 		}
 	}
 
-	pub fn log_args<O: AsRef<GObject>, L: Into<LogLevelFlags>>(log_level: L, context: StructuredLogContext<O>, args: fmt::Arguments) {
+	pub fn log_args<O: AsRef<GObject>, L: Into<LogLevelFlags>>(
+		log_level: L,
+		context: StructuredLogContext<O>,
+		args: fmt::Arguments,
+	) {
 		let mut message = GStringBuilder::default();
 		let _ = write!(message, "{}", args);
 		Self::log_string(log_level.into(), context.to_object(), message.into_string())
 	}
 
 	#[doc(alias = "wp_log_writer_default")]
-	pub unsafe fn writer_default<L: Into<LogLevelFlags>>(log_levels: L, fields: &[glib::ffi::GLogField], user_data: gpointer) -> glib::ffi::GLogWriterOutput {
+	pub unsafe fn writer_default<L: Into<LogLevelFlags>>(
+		log_levels: L,
+		fields: &[glib::ffi::GLogField],
+		user_data: gpointer,
+	) -> glib::ffi::GLogWriterOutput {
 		ffi::wp_log_writer_default(log_levels.into().into_glib(), fields.as_ptr(), fields.len(), user_data)
 	}
 	// TODO: wp_log_writer_default, wp_log_structured_standard
@@ -108,7 +114,10 @@ pub struct StructuredLogContext<'a, O = GObject> {
 }
 
 impl<'a, O> StructuredLogContext<'a, O> {
-	fn to_object(&self) -> StructuredLogContext<'a, GObject> where O: AsRef<GObject> {
+	fn to_object(&self) -> StructuredLogContext<'a, GObject>
+	where
+		O: AsRef<GObject>,
+	{
 		StructuredLogContext {
 			domain: self.domain,
 			file: self.file,

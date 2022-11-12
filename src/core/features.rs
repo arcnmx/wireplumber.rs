@@ -1,18 +1,13 @@
-use crate::prelude::*;
-use crate::{
-	session::{SessionItemFeatures, SessionItem},
-	local::{SpaDeviceFeatures, SpaDevice},
-	plugin::{PluginFeatures, Plugin},
-	core::ObjectExt,
-	pw::{
-		MetadataFeatures, Metadata,
-		NodeFeatures, Node,
-		LinkFeatures, Link,
-		ProxyFeatures, Proxy,
-	},
-};
 #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-use crate::dbus::{DbusFeatures, Dbus};
+use crate::dbus::{Dbus, DbusFeatures};
+use crate::{
+	core::ObjectExt,
+	local::{SpaDevice, SpaDeviceFeatures},
+	plugin::{Plugin, PluginFeatures},
+	prelude::*,
+	pw::{Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures, Proxy, ProxyFeatures},
+	session::{SessionItem, SessionItemFeatures},
+};
 
 // TODO: consider keeping this as u32, and just keep the inherent impls
 // (requires no changes to `auto`)

@@ -1,5 +1,4 @@
-use crate::spa::SpaIdTable;
-use crate::prelude::*;
+use crate::{prelude::*, spa::SpaIdTable};
 
 glib::wrapper! {
 	#[doc(alias = "WpSpaType")]
@@ -27,13 +26,18 @@ impl SpaType {
 	pub const NONE: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_None) };
 	pub const OBJECT: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Object) };
 	pub const OBJECT_FORMAT: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Format) };
-	pub const OBJECT_PARAM_BUFFERS: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamBuffers) };
+	pub const OBJECT_PARAM_BUFFERS: Self =
+		unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamBuffers) };
 	pub const OBJECT_PARAM_IO: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamIO) };
-	pub const OBJECT_PARAM_LATENCY: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamLatency) };
+	pub const OBJECT_PARAM_LATENCY: Self =
+		unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamLatency) };
 	pub const OBJECT_PARAM_META: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamMeta) };
-	pub const OBJECT_PARAM_PORT_CONFIG: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamPortConfig) };
-	pub const OBJECT_PARAM_PROCESS_LATENCY: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProcessLatency) };
-	pub const OBJECT_PARAM_PROFILE: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProfile) };
+	pub const OBJECT_PARAM_PORT_CONFIG: Self =
+		unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamPortConfig) };
+	pub const OBJECT_PARAM_PROCESS_LATENCY: Self =
+		unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProcessLatency) };
+	pub const OBJECT_PARAM_PROFILE: Self =
+		unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProfile) };
 	pub const OBJECT_PARAM_ROUTE: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamRoute) };
 	pub const OBJECT_PROFILER: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Profiler) };
 	pub const OBJECT_PROP_INFO: Self = unsafe { SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_PropInfo) };
@@ -60,9 +64,7 @@ impl SpaType {
 	}
 
 	pub const unsafe fn from_id_unchecked(inner: ffi::WpSpaType) -> Self {
-		Self {
-			inner,
-		}
+		Self { inner }
 	}
 
 	pub fn number(&self) -> ffi::WpSpaType {
@@ -70,71 +72,51 @@ impl SpaType {
 	}
 
 	#[cfg(libspa_linked)]
-	pub fn root_types() -> impl Iterator<Item=Self> {
-		unsafe {
-			libspa_sys::spa_types.iter().map(|ty|
-				Self::from_id_unchecked(ty.type_)
-			)
-		}
+	pub fn root_types() -> impl Iterator<Item = Self> {
+		unsafe { libspa_sys::spa_types.iter().map(|ty| Self::from_id_unchecked(ty.type_)) }
 	}
 
 	#[doc(alias = "wp_spa_type_get_object_id_values_table")]
 	#[doc(alias = "get_object_id_values_table")]
 	pub fn object_id_values_table(&self) -> Option<SpaIdTable> {
-		unsafe {
-			from_glib(ffi::wp_spa_type_get_object_id_values_table(self.into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_get_object_id_values_table(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_get_values_table")]
 	#[doc(alias = "get_values_table")]
 	pub fn values_table(&self) -> Option<SpaIdTable> {
-		unsafe {
-			from_glib(ffi::wp_spa_type_get_values_table(self.into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_get_values_table(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_is_fundamental")]
 	pub fn is_fundamental(&self) -> bool {
-		unsafe {
-			from_glib(ffi::wp_spa_type_is_fundamental(self.into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_is_fundamental(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_is_id")]
 	pub fn is_id(&self) -> bool {
-		unsafe {
-			from_glib(ffi::wp_spa_type_is_id(self.into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_is_id(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_is_object")]
 	pub fn is_object(&self) -> bool {
-		unsafe {
-			from_glib(ffi::wp_spa_type_is_object(self.into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_is_object(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_name")]
 	pub fn name(&self) -> Option<glib::GString> {
-		unsafe {
-			from_glib_none(ffi::wp_spa_type_name(self.into_glib()))
-		}
+		unsafe { from_glib_none(ffi::wp_spa_type_name(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_parent")]
 	#[must_use]
 	pub fn parent(&self) -> Option<SpaType> {
-		unsafe {
-			from_glib(ffi::wp_spa_type_parent(self.into_glib()))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_parent(self.into_glib())) }
 	}
 
 	#[doc(alias = "wp_spa_type_from_name")]
 	pub fn from_name(name: &str) -> Option<SpaType> {
-		unsafe {
-			from_glib(ffi::wp_spa_type_from_name(name.to_glib_none().0))
-		}
+		unsafe { from_glib(ffi::wp_spa_type_from_name(name.to_glib_none().0)) }
 	}
 }
 

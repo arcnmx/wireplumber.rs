@@ -56,50 +56,39 @@
 #[rustfmt::skip]
 mod auto;
 
-pub use ffi;
-
 /// Export dependencies for use from macros
 #[doc(hidden)]
 pub mod lib {
 	pub use {gio, glib};
 }
 
-pub mod prelude;
-pub mod pw;
-
+pub mod core;
 #[cfg(any(feature = "v0_4_11", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
 pub mod dbus;
+pub mod error;
 pub mod local;
 pub mod log;
+pub mod lua;
 pub mod plugin;
+pub mod prelude;
+pub mod pw;
 pub mod registry;
 pub mod session;
-pub mod spa;
-pub mod util;
-
-pub mod error;
-#[doc(no_inline)]
-pub use error::{Error, Result};
-
-pub mod core;
-#[doc(no_inline)]
-pub use crate::core::{Core, InitFlags};
-
-pub use log::Log;
-
-pub mod lua;
-
 #[cfg(feature = "glib-signal")]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "glib-signal")))]
 pub mod signals;
+pub mod spa;
+pub mod util;
 
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-pub(crate) use crate::pw::PropertiesItem;
+pub(crate) use self::pw::PropertiesItem;
 #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-pub(crate) use crate::session::SiAdapterPortsState;
+pub(crate) use self::session::SiAdapterPortsState;
 #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-pub(crate) use crate::spa::SpaJson;
+pub(crate) use self::spa::SpaJson;
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+pub(crate) use self::{dbus::DBusState, pw::LinkState};
 /// gir needs to know where to find these
 pub(crate) use crate::{
 	core::{Object, ObjectFeatures},
@@ -110,5 +99,12 @@ pub(crate) use crate::{
 	spa::{SpaPod, SpaType},
 	util::{Transition, WpIterator as Iterator},
 };
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-pub(crate) use crate::{dbus::DBusState, pw::LinkState};
+#[doc(no_inline)]
+pub use {
+	self::{
+		core::{Core, InitFlags},
+		error::{Error, Result},
+		log::Log,
+	},
+	ffi,
+};

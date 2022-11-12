@@ -8,25 +8,28 @@
 //! - it must be of type `VariantDict`, so values must always be boxed
 //! - arrays must be converted to dictionary form, with string keys beginning with "1"
 
+#[cfg(feature = "serde")]
+pub use self::{
+	deserializer::{from_variant, Deserializer},
+	serializer::{to_variant, Serializer},
+};
+pub use self::{
+	error::LuaError,
+	string::LuaString,
+	traits::ToLuaTable,
+	variant::{LuaTable, LuaType, LuaValue, LuaVariant},
+};
+
 #[macro_use]
 mod macros;
-mod variant;
-mod string;
 mod error;
+mod string;
 mod traits;
-pub use variant::{LuaVariant, LuaTable, LuaType, LuaValue};
-pub use string::LuaString;
-pub use error::LuaError;
-pub use traits::ToLuaTable;
+mod variant;
 
-#[cfg(feature = "serde")]
-mod serde_impl;
 #[cfg(feature = "serde")]
 mod deserializer;
 #[cfg(feature = "serde")]
-mod serializer;
+mod serde_impl;
 #[cfg(feature = "serde")]
-pub use self::{
-	serializer::{Serializer, to_variant},
-	deserializer::{Deserializer, from_variant},
-};
+mod serializer;

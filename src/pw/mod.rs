@@ -22,41 +22,30 @@
 //! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/c_api/metadata_api.html)
 //! - [Endpoint](https://pipewire.pages.freedesktop.org/wireplumber/c_api/endpoint_api.html)
 
-pub use crate::auto::{
-	PipewireObject,
-	Proxy, ProxyFeatures,
-	GlobalProxy,
-	Endpoint,
-	Device,
-	Node, NodeState, NodeFeatures,
-	Port, Direction,
-	Link, LinkFeatures,
-	Metadata, MetadataFeatures,
-	Properties,
-	traits::{
-		PipewireObjectExt,
-		ProxyExt,
-		GlobalProxyExt,
-		EndpointExt,
-		MetadataExt,
-	},
-};
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+pub use crate::auto::LinkState;
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
 pub use crate::auto::PropertiesItem;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-pub use crate::auto::LinkState;
+pub use {
+	self::{
+		keys::*,
+		link::LinkTarget,
+		proxy::{PipewireObjectExt2, ProxyExt2},
+	},
+	crate::auto::{
+		traits::{EndpointExt, GlobalProxyExt, MetadataExt, PipewireObjectExt, ProxyExt},
+		Device, Direction, Endpoint, GlobalProxy, Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures,
+		NodeState, PipewireObject, Port, Properties, Proxy, ProxyFeatures,
+	},
+};
 
 mod keys;
-pub use keys::*;
-
-mod proxy;
-pub use proxy::{PipewireObjectExt2, ProxyExt2};
+mod link;
 mod node;
 mod port;
-mod link;
-pub use link::LinkTarget;
 mod properties;
+mod proxy;
 
 #[cfg(feature = "libspa")]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]

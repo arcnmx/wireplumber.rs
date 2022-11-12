@@ -1,7 +1,11 @@
-use serde::{ser, Serialize};
-use glib::{Variant, ToVariant, VariantTy, VariantType, variant::VariantTypeMismatchError};
-use crate::lua::{LuaVariant, LuaError};
-use crate::prelude::*;
+use {
+	crate::{
+		lua::{LuaError, LuaVariant},
+		prelude::*,
+	},
+	glib::{variant::VariantTypeMismatchError, ToVariant, Variant, VariantTy, VariantType},
+	serde::{ser, Serialize},
+};
 
 #[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
 pub fn to_variant<S: ser::Serialize>(v: S) -> Result<LuaVariant<'static>, LuaError> {
@@ -22,15 +26,11 @@ impl Default for Serializer {
 
 impl Serializer {
 	pub fn new() -> Self {
-		Self {
-			humanize: true,
-		}
+		Self { humanize: true }
 	}
 
 	pub fn inhuman(self) -> Self {
-		Self {
-			humanize: false,
-		}
+		Self { humanize: false }
 	}
 }
 
@@ -121,7 +121,12 @@ impl ser::Serializer for Serializer {
 		self.serialize_unit()
 	}
 
-	fn serialize_unit_variant(self, _name: &'static str, variant_index: u32, variant: &'static str) -> Result<Self::Ok, Self::Error> {
+	fn serialize_unit_variant(
+		self,
+		_name: &'static str,
+		variant_index: u32,
+		variant: &'static str,
+	) -> Result<Self::Ok, Self::Error> {
 		if self.is_human_readable() {
 			self.serialize_str(variant)
 		} else {
@@ -129,13 +134,22 @@ impl ser::Serializer for Serializer {
 		}
 	}
 
-	fn serialize_newtype_struct<T: Serialize + ?Sized>(self, _name: &'static str, value: &T) -> Result<Self::Ok, Self::Error> {
+	fn serialize_newtype_struct<T: Serialize + ?Sized>(
+		self,
+		_name: &'static str,
+		value: &T,
+	) -> Result<Self::Ok, Self::Error> {
 		value.serialize(self)
 	}
 
-	fn serialize_newtype_variant<T: Serialize + ?Sized>(self, name: &'static str, variant_index: u32, variant: &'static str, value: &T) -> Result<Self::Ok, Self::Error> {
-		VariantSerializer::new(self, value, name, variant_index, variant)
-			.serialize()
+	fn serialize_newtype_variant<T: Serialize + ?Sized>(
+		self,
+		name: &'static str,
+		variant_index: u32,
+		variant: &'static str,
+		value: &T,
+	) -> Result<Self::Ok, Self::Error> {
+		VariantSerializer::new(self, value, name, variant_index, variant).serialize()
 	}
 
 	fn serialize_seq(self, len: Option<usize>) -> Result<Self::SerializeSeq, Self::Error> {
@@ -150,11 +164,16 @@ impl ser::Serializer for Serializer {
 		self.serialize_tuple(len)
 	}
 
-	fn serialize_tuple_variant(self, name: &'static str, variant_index: u32, variant: &'static str, len: usize) -> Result<Self::SerializeTupleVariant, Self::Error> {
-		self.serialize_tuple(len)
-			.map(|ser|
-				VariantSerializer::new(self, ser, name, variant_index, variant)
-			)
+	fn serialize_tuple_variant(
+		self,
+		name: &'static str,
+		variant_index: u32,
+		variant: &'static str,
+		len: usize,
+	) -> Result<Self::SerializeTupleVariant, Self::Error> {
+		self
+			.serialize_tuple(len)
+			.map(|ser| VariantSerializer::new(self, ser, name, variant_index, variant))
 	}
 
 	fn serialize_map(self, len: Option<usize>) -> Result<Self::SerializeMap, Self::Error> {
@@ -163,9 +182,7 @@ impl ser::Serializer for Serializer {
 
 	fn serialize_struct(self, _name: &'static str, len: usize) -> Result<Self::SerializeStruct, Self::Error> {
 		Ok(if self.is_human_readable() {
-			StructSerializer::Map(
-				MapSerializer::new(self, Some(VariantTy::STRING), Some(len))
-			)
+			StructSerializer::Map(MapSerializer::new(self, Some(VariantTy::STRING), Some(len)))
 		} else {
 			StructSerializer::Seq(SeqSerializer::new(self, Some(len)))
 		})
@@ -178,10 +195,9 @@ impl ser::Serializer for Serializer {
 		variant: &'static str,
 		len: usize,
 	) -> Result<Self::SerializeStructVariant, Self::Error> {
-		self.serialize_struct(name, len)
-			.map(|ser|
-				VariantSerializer::new(self, ser, name, variant_index, variant)
-			)
+		self
+			.serialize_struct(name, len)
+			.map(|ser| VariantSerializer::new(self, ser, name, variant_index, variant))
 	}
 }
 
@@ -206,16 +222,16 @@ impl ser::SerializeSeq for SeqSerializer {
 	type Error = LuaError;
 
 	fn serialize_element<S: Serialize + ?Sized>(&mut self, value: &S) -> Result<(), Self::Error> {
-		value.serialize(self.ser)
-			.map(|v| self.variants.push(v))
+		value.serialize(self.ser).map(|v| self.variants.push(v))
 	}
 
 	fn end(self) -> Result<Self::Ok, Self::Error> {
 		match self.size {
-			Some(size) if size != self.variants.len() => return Err(LuaError::LengthMismatch {
-				actual: self.variants.len(),
-				expected: size,
-			}),
+			Some(size) if size != self.variants.len() =>
+				return Err(LuaError::LengthMismatch {
+					actual: self.variants.len(),
+					expected: size,
+				}),
 			_ => (),
 		}
 		Ok(LuaVariant::from_iter(self.variants))
@@ -288,38 +304,41 @@ impl ser::SerializeMap for MapSerializer {
 	fn serialize_key<T: Serialize + ?Sized>(&mut self, key: &T) -> Result<(), Self::Error> {
 		let key = key.serialize(self.ser)?;
 		match self.key_type {
-			Some(key_type) if !key.as_variant().type_().is_subtype_of(key_type) => return Err(LuaError::TypeMismatch(
-				VariantTypeMismatchError::new(key.as_variant().type_().to_owned(), key_type.to_owned())
-			)),
+			Some(key_type) if !key.as_variant().type_().is_subtype_of(key_type) =>
+				return Err(LuaError::TypeMismatch(VariantTypeMismatchError::new(
+					key.as_variant().type_().to_owned(),
+					key_type.to_owned(),
+				))),
 			_ => (),
 		}
 		Ok(self.keys.push(key.into_variant()))
 	}
 
 	fn serialize_value<T: Serialize + ?Sized>(&mut self, value: &T) -> Result<(), Self::Error> {
-		value.serialize(self.ser)
-			.map(|v| self.values.push(v.into_variant()))
+		value.serialize(self.ser).map(|v| self.values.push(v.into_variant()))
 	}
 
 	fn end(self) -> Result<Self::Ok, Self::Error> {
 		match self.size {
-			Some(expected) if expected != self.values.len() => return Err(LuaError::LengthMismatch {
-				actual: self.values.len(),
-				expected,
-			}),
+			Some(expected) if expected != self.values.len() =>
+				return Err(LuaError::LengthMismatch {
+					actual: self.values.len(),
+					expected,
+				}),
 			_ => (),
 		}
 
 		let key_type = self.key_type;
 		let elem_ty = VariantType::new_dict_entry(&self.key_type.unwrap_or(VariantTy::VARIANT), VariantTy::VARIANT);
 
-		let entries = self.keys.into_iter()
+		let entries = self
+			.keys
+			.into_iter()
 			.map(|k| if key_type.is_some() { k } else { k.to_variant() })
 			.zip(self.values.into_iter())
 			.map(|(k, v)| Variant::from_dict_entry(&k, &v));
 
-		Variant::array_from_iter_with_type(&elem_ty, entries)
-			.try_into()
+		Variant::array_from_iter_with_type(&elem_ty, entries).try_into()
 	}
 }
 
@@ -327,11 +346,7 @@ impl ser::SerializeStruct for MapSerializer {
 	type Ok = LuaVariant<'static>;
 	type Error = LuaError;
 
-	fn serialize_field<T: ?Sized>(
-		&mut self,
-		key: &'static str,
-		value: &T,
-	) -> Result<(), Self::Error>
+	fn serialize_field<T: ?Sized>(&mut self, key: &'static str, value: &T) -> Result<(), Self::Error>
 	where
 		T: Serialize,
 	{
@@ -352,11 +367,7 @@ impl ser::SerializeStruct for StructSerializer {
 	type Ok = LuaVariant<'static>;
 	type Error = LuaError;
 
-	fn serialize_field<T: ?Sized>(
-		&mut self,
-		key: &'static str,
-		value: &T,
-	) -> Result<(), Self::Error>
+	fn serialize_field<T: ?Sized>(&mut self, key: &'static str, value: &T) -> Result<(), Self::Error>
 	where
 		T: Serialize,
 	{
@@ -428,13 +439,16 @@ impl<S> VariantSerializer<S> {
 		}
 	}
 
-	fn serialize(self) -> Result<LuaVariant<'static>, LuaError> where S: Serialize {
-		self.inner.serialize(self.state.ser)
-			.and_then(|v| self.state.tag(v))
+	fn serialize(self) -> Result<LuaVariant<'static>, LuaError>
+	where
+		S: Serialize,
+	{
+		self.inner.serialize(self.state.ser).and_then(|v| self.state.tag(v))
 	}
 }
 
-impl<S: ser::SerializeTuple> ser::SerializeTupleVariant for VariantSerializer<S> where
+impl<S: ser::SerializeTuple> ser::SerializeTupleVariant for VariantSerializer<S>
+where
 	S::Ok: AsRef<Variant> + Into<LuaVariant<'static>>,
 	S::Error: Into<LuaError>,
 {
@@ -442,19 +456,17 @@ impl<S: ser::SerializeTuple> ser::SerializeTupleVariant for VariantSerializer<S>
 	type Error = LuaError;
 
 	fn serialize_field<T: Serialize + ?Sized>(&mut self, value: &T) -> Result<(), Self::Error> {
-		self.inner.serialize_element(value)
-			.map_err(Into::into)
+		self.inner.serialize_element(value).map_err(Into::into)
 	}
 
 	fn end(self) -> Result<Self::Ok, Self::Error> {
 		let state = self.state;
-		self.inner.end()
-			.map_err(Into::into)
-			.and_then(|ok| state.tag(ok))
+		self.inner.end().map_err(Into::into).and_then(|ok| state.tag(ok))
 	}
 }
 
-impl<S: ser::SerializeStruct> ser::SerializeStructVariant for VariantSerializer<S> where
+impl<S: ser::SerializeStruct> ser::SerializeStructVariant for VariantSerializer<S>
+where
 	S::Ok: AsRef<Variant> + Into<LuaVariant<'static>>,
 	S::Error: Into<LuaError>,
 {
@@ -462,19 +474,15 @@ impl<S: ser::SerializeStruct> ser::SerializeStructVariant for VariantSerializer<
 	type Error = LuaError;
 
 	fn serialize_field<T: Serialize + ?Sized>(&mut self, key: &'static str, value: &T) -> Result<(), Self::Error> {
-		self.inner.serialize_field(key, value)
-			.map_err(Into::into)
+		self.inner.serialize_field(key, value).map_err(Into::into)
 	}
 
 	fn skip_field(&mut self, key: &'static str) -> Result<(), Self::Error> {
-		self.inner.skip_field(key)
-			.map_err(Into::into)
+		self.inner.skip_field(key).map_err(Into::into)
 	}
 
 	fn end(self) -> Result<Self::Ok, Self::Error> {
 		let state = self.state;
-		self.inner.end()
-			.map_err(Into::into)
-			.and_then(|ok| state.tag(ok))
+		self.inner.end().map_err(Into::into).and_then(|ok| state.tag(ok))
 	}
 }

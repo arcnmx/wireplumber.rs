@@ -90,7 +90,7 @@ pub use _log_inner;
 
 #[cfg(test)]
 mod tests {
-	use crate::{Log, Core, InitFlags};
+	use crate::{Core, InitFlags, Log};
 
 	#[test]
 	fn log() {

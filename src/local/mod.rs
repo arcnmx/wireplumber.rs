@@ -8,13 +8,7 @@
 //! - [ImplModule](https://pipewire.pages.freedesktop.org/wireplumber/c_api/impl_module_api.html)
 //! - [SpaDevice](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_device_api.html)
 
-pub use crate::auto::{
-	ImplModule,
-	ImplEndpoint,
-	ImplMetadata,
-	ImplNode,
-	SpaDevice, SpaDeviceFeatures,
-};
+pub use crate::auto::{ImplEndpoint, ImplMetadata, ImplModule, ImplNode, SpaDevice, SpaDeviceFeatures};
 
-mod node;
 mod device;
+mod node;

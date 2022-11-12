@@ -1,5 +1,7 @@
-use crate::lua::{LuaTable, LuaError};
-use crate::prelude::*;
+use crate::{
+	lua::{LuaError, LuaTable},
+	prelude::*,
+};
 
 pub trait ToLuaTable {
 	fn to_lua_variant(self) -> Result<Option<LuaTable<'static>>, LuaError>;
@@ -11,20 +13,23 @@ impl ToLuaTable for () {
 	}
 }
 
-impl<T: TryInto<LuaTable<'static>>> ToLuaTable for T where
+impl<T: TryInto<LuaTable<'static>>> ToLuaTable for T
+where
 	T::Error: Into<LuaError>,
 {
 	fn to_lua_variant(self) -> Result<Option<LuaTable<'static>>, LuaError> {
-		self.try_into().map(Some)
-			.map_err(Into::into)
+		self.try_into().map(Some).map_err(Into::into)
 	}
 }
 
-impl<'a, T: TryInto<LuaTable<'a>>> ToLuaTable for Option<T> where
+impl<'a, T: TryInto<LuaTable<'a>>> ToLuaTable for Option<T>
+where
 	T::Error: Into<LuaError>,
 {
 	fn to_lua_variant(self) -> Result<Option<LuaTable<'static>>, LuaError> {
-		self.map(TryInto::try_into).transpose()
+		self
+			.map(TryInto::try_into)
+			.transpose()
 			.map_err(Into::into)
 			.map(|v| v.map(|v| v.owned()))
 	}
@@ -32,7 +37,7 @@ impl<'a, T: TryInto<LuaTable<'a>>> ToLuaTable for Option<T> where
 
 #[test]
 fn to_lua_variant() {
-	fn assert_impl<T: ToLuaTable>() { }
+	fn assert_impl<T: ToLuaTable>() {}
 
 	assert_impl::<LuaTable>();
 	assert_impl::<Option<LuaTable>>();
