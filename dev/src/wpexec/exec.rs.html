@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="rustdoc" name="generator"/>
-  <meta content="Source of the Rust file `examples/src/bin/exec.rs`." name="description"/>
-  <meta content="rust, rustlang, rust-lang" name="keywords"/>
-  <title>
-   exec.rs - source
-  </title>
-  <link as="font" crossorigin="" href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link href="../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
-  <link href="../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
-  <link href="../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
-  <link disabled="" href="../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
-  <link disabled="" href="../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
-  <script id="default-settings">
-  </script>
-  <script src="../../static.files/storage-d43fa987303ecbbb.js">
-  </script>
-  <script defer="" src="../../static.files/source-script-74087aa2e88f4475.js">
-  </script>
-  <script defer="" src="../../source-files.js">
-  </script>
-  <script defer="" src="../../static.files/main-c2d2a5dbaed13e6b.js">
-  </script>
-  <noscript>
-   <link href="../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
-  </noscript>
-  <link href="../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
-  <link href="../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
-  <link href="../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
- </head>
- <body class="rustdoc source">
-  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
-  <nav class="sidebar">
-  </nav>
-  <main>
-   <div class="width-limiter">
-    <nav class="sub">
-     <a class="sub-logo-container" href="../../wpexec/index.html">
-      <img alt="logo" class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg"/>
-     </a>
-     <form class="search-form">
-      <span>
-      </span>
-      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
-      <div id="help-button" tabindex="-1" title="help">
-       <a href="../../help.html">
-        ?
-       </a>
-      </div>
-      <div id="settings-menu" tabindex="-1">
-       <a href="../../settings.html" title="settings">
-        <img alt="Change settings" height="22" src="../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
-       </a>
-      </div>
-     </form>
-    </nav>
-    <section class="content" id="main-content">
-     <div class="example-wrap">
-      <pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `examples/src/bin/exec.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../wpexec/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -341,8 +274,7 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
-</pre>
-      <pre class="rust"><code><span class="doccomment">//! wpexec example
+</pre><pre class="rust"><code><span class="doccomment">//! wpexec example
 //!
 //! An example showing how to write a simple WirePlumber service.
 //! Following along with the [source code](../src/wpexec/exec.rs.html) is recommended.
@@ -363,7 +295,7 @@
 };
 
 <span class="doccomment">/// [GLib logging domain](glib::g_log)
-</span><span class="kw">const </span>LOG_DOMAIN: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"wpexec.rs"</span>;
+</span><span class="kw">const </span>LOG_DOMAIN: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;wpexec.rs&quot;</span>;
 
 <span class="doccomment">/// The type of module to be loaded
 </span><span class="attr">#[derive(ArgEnum, Copy, Clone, Debug)]
@@ -380,22 +312,22 @@
 
 <span class="attr">#[cfg_attr(
 	doc,
-	doc = <span class="string">"Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)"
+	doc = <span class="string">&quot;Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)&quot;
 </span>)]
 #[derive(Parser, Debug)]
 #[clap(version)]
 </span><span class="kw">struct </span>Args {
-	<span class="attr">#[clap(arg_enum, short = <span class="string">'t'</span>, long = <span class="string">"type"</span>, default_value = <span class="string">"lua"</span>)]
+	<span class="attr">#[clap(arg_enum, short = <span class="string">&#39;t&#39;</span>, long = <span class="string">&quot;type&quot;</span>, default_value = <span class="string">&quot;lua&quot;</span>)]
 	</span>module_type: ModuleType,
 
 	<span class="doccomment">/// Arguments to pass to the loaded module
 	///
 	/// Lua scripts only support arrays and dictionary maps.
-	</span><span class="attr">#[clap(short = <span class="string">'J'</span>, long = <span class="string">"json"</span>)]
+	</span><span class="attr">#[clap(short = <span class="string">&#39;J&#39;</span>, long = <span class="string">&quot;json&quot;</span>)]
 	</span>json_arg: <span class="prelude-ty">Option</span>&lt;String&gt;,
 
 	<span class="doccomment">/// Associated plugins to load, provided by the module
-	</span><span class="attr">#[clap(short, long = <span class="string">"plugin"</span>)]
+	</span><span class="attr">#[clap(short, long = <span class="string">&quot;plugin&quot;</span>)]
 	</span>plugins: Vec&lt;String&gt;,
 
 	<span class="doccomment">/// Name or full path of the module or script to load
@@ -407,7 +339,7 @@
 /// Once this function returns, the script will continue to run in the background until
 /// the service is interrupted.
 </span><span class="kw">async fn </span>main_async(core: <span class="kw-2">&amp;</span>Core, args: <span class="kw-2">&amp;</span>Args) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-	<span class="kw">let </span>path = args.module().expect(<span class="string">"already checked this in main()"</span>);
+	<span class="kw">let </span>path = args.module().expect(<span class="string">&quot;already checked this in main()&quot;</span>);
 	<span class="kw">let </span>path = {
 		<span class="kw">let </span>path = Path::new(path);
 		<span class="kw">match </span>args.module_type.module_dir() {
@@ -426,12 +358,12 @@
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(module) = args.module_type.loader_module() {
 		core
 			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, <span class="prelude-val">None</span>)
-			.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load the {:?} scripting module"</span>, args.module_type))<span class="question-mark">?</span>;
+			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load the {:?} scripting module&quot;</span>, args.module_type))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>args.module_type.is_lua() {
 		core
 			.load_lua_script(<span class="kw-2">&amp;</span>path, variant_args)
-			.context(<span class="string">"failed to load the lua script"</span>)<span class="question-mark">?</span>;
+			.context(<span class="string">&quot;failed to load the lua script&quot;</span>)<span class="question-mark">?</span>;
 	} <span class="kw">else </span>{
 		core
 			.load_component(
@@ -439,28 +371,28 @@
 				args.module_type.loader_type(),
 				variant_args.as_ref().map(|v| v.as_variant()),
 			)
-			.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load {path} as a {}"</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
+			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load {path} as a {}&quot;</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
 	}
 
 	core.connect_future().<span class="kw">await</span><span class="question-mark">?</span>;
 
 	<span class="kw">let </span>plugin_names = args.plugins();
 	<span class="kw">for </span>plugin_name <span class="kw">in </span><span class="kw-2">&amp;</span>plugin_names {
-		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">"plugin {plugin_name} not found"</span>))<span class="question-mark">?</span>;
+		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">&quot;plugin {plugin_name} not found&quot;</span>))<span class="question-mark">?</span>;
 		p.activate_future(PluginFeatures::ENABLED)
 			.<span class="kw">await
-			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to activate {plugin_name:?} plugin"</span>))<span class="question-mark">?</span>;
+			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate {plugin_name:?} plugin&quot;</span>))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>plugin_names.is_empty() {
-		<span class="macro">info!</span>(domain: LOG_DOMAIN, <span class="string">"skipped activation, no plugin specified"</span>);
+		<span class="macro">info!</span>(domain: LOG_DOMAIN, <span class="string">&quot;skipped activation, no plugin specified&quot;</span>);
 	}
 	<span class="kw">if </span>args.module_type.is_lua() {
 		<span class="comment">// per-script plugins were introduced in wireplumber version 0.4.10
-		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"script:{path}"</span>)) {
+		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;script:{path}&quot;</span>)) {
 			script
 				.activate_future(PluginFeatures::ENABLED)
 				.<span class="kw">await
-				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to activate script:{path}"</span>))<span class="question-mark">?</span>;
+				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate script:{path}&quot;</span>))<span class="question-mark">?</span>;
 		}
 	}
 
@@ -474,14 +406,14 @@
 ///
 /// See also: [Core::run]
 </span><span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-	<span class="comment">// info logging by default so we can see what's going on
-	</span>wireplumber::Log::set_default_level(<span class="string">"3"</span>);
+	<span class="comment">// info logging by default so we can see what&#39;s going on
+	</span>wireplumber::Log::set_default_level(<span class="string">&quot;3&quot;</span>);
 
 	<span class="comment">// let clap build a CLI from argv for us
 	</span><span class="kw">let </span>args = Args::parse();
 
 	<span class="kw">if </span>args.module().is_none() {
-		<span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">format_err!</span>(<span class="string">"no default module available for {:?}"</span>, args.module_type))
+		<span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">format_err!</span>(<span class="string">&quot;no default module available for {:?}&quot;</span>, args.module_type))
 	}
 
 	<span class="comment">// bail out early if invalid args are provided
@@ -511,7 +443,7 @@
 			<span class="comment">// set up the requested module or script...
 			</span><span class="kw">let </span>res = main_async(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span>args).<span class="kw">await</span>;
 			<span class="kw">if </span>res.is_err() {
-				<span class="comment">// bail out if we couldn't successfully load it after all
+				<span class="comment">// bail out if we couldn&#39;t successfully load it after all
 				</span>mainloop.quit();
 			}
 			<span class="kw-2">*</span>main_res.borrow_mut() = <span class="prelude-val">Some</span>(res)
@@ -521,8 +453,8 @@
 	<span class="kw">let </span>main_res = main_res.borrow_mut().take();
 	<span class="kw">match </span>main_res {
 		<span class="prelude-val">Some</span>(res) =&gt; res,
-		<span class="comment">// we didn't get far enough to store the result; likely it timed out or something
-		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format_err!</span>(<span class="string">"could not connect to pipewire"</span>)),
+		<span class="comment">// we didn&#39;t get far enough to store the result; likely it timed out or something
+		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format_err!</span>(<span class="string">&quot;could not connect to pipewire&quot;</span>)),
 	}
 }
 
@@ -533,9 +465,9 @@
 
 	<span class="doccomment">/// Environment variable that affects path resolution for this module type
 	///
-	/// The wireplumber [ComponentLoader] generally doesn't accept absolute paths for modules.
+	/// The wireplumber [ComponentLoader] generally doesn&#39;t accept absolute paths for modules.
 	/// This environment variable can be modified in order to help it find the module to load.
-	</span><span class="kw">fn </span>module_dir(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
+	</span><span class="kw">fn </span>module_dir(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
 		<span class="kw">match </span><span class="self">self </span>{
 			ModuleType::Lua | ModuleType::LuaConfig =&gt; <span class="prelude-val">None</span>,
 			ModuleType::Wireplumber =&gt; <span class="prelude-val">Some</span>(ComponentLoader::DIR_WIREPLUMBER_MODULE),
@@ -548,7 +480,7 @@
 	/// While wireplumber has built-in support for loading modules, the Lua scripting engine is itself
 	/// implemented as a module, which must be loaded first. Afterwards, lua scripts may be loaded
 	/// as modules (well, components) themselves.
-	</span><span class="kw">fn </span>loader_module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
+	</span><span class="kw">fn </span>loader_module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
 		<span class="kw">match </span><span class="self">self </span>{
 			ModuleType::Lua | ModuleType::LuaConfig =&gt; <span class="prelude-val">Some</span>(ComponentLoader::MODULE_LOADER_LUA),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -558,7 +490,7 @@
 	<span class="doccomment">/// The type name expected by a [ComponentLoader]
 	///
 	/// This is passed on to [Core::load_component].
-	</span><span class="kw">fn </span>loader_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
+	</span><span class="kw">fn </span>loader_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
 		<span class="kw">match </span><span class="self">self </span>{
 			ModuleType::Lua =&gt; ComponentLoader::TYPE_LUA_SCRIPT,
 			ModuleType::LuaConfig =&gt; ComponentLoader::TYPE_LUA_CONFIG,
@@ -571,12 +503,12 @@
 <span class="kw">impl </span>Args {
 	<span class="doccomment">/// The [Plugin] names to load as part of initialization
 	///
-	/// For example, the [ModuleType::Lua] module provides a `lua-scripting` plugin that's responsible
+	/// For example, the [ModuleType::Lua] module provides a `lua-scripting` plugin that&#39;s responsible
 	/// for loading and running lua scripts.
 	</span><span class="kw">fn </span>plugins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
 		<span class="kw">match </span><span class="self">self</span>.module_type {
 			ModuleType::Lua =&gt; <span class="macro">vec!</span>[ComponentLoader::PLUGIN_LOADER_LUA],
-			ModuleType::Wireplumber <span class="kw">if </span><span class="self">self</span>.plugins.is_empty() &amp;&amp; <span class="self">self</span>.module.is_none() =&gt; <span class="macro">vec!</span>[<span class="string">"static-link"</span>],
+			ModuleType::Wireplumber <span class="kw">if </span><span class="self">self</span>.plugins.is_empty() &amp;&amp; <span class="self">self</span>.module.is_none() =&gt; <span class="macro">vec!</span>[<span class="string">&quot;static-link&quot;</span>],
 			ModuleType::Wireplumber | ModuleType::LuaConfig =&gt; <span class="self">self</span>.plugins.iter().map(|s| s.as_str()).collect(),
 			ModuleType::Pipewire =&gt; <span class="macro">todo!</span>(),
 		}
@@ -585,18 +517,18 @@
 	<span class="doccomment">/// The module or script to load
 	///
 	/// This can be a full path or often just be a name if WirePlumber knows where to find it
-	/// (the rules for this are convoluted though, so I won't get into that here)
+	/// (the rules for this are convoluted though, so I won&#39;t get into that here)
 	</span><span class="kw">fn </span>module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
 		<span class="kw">match </span><span class="self">self</span>.module {
 			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>module) =&gt; <span class="prelude-val">Some</span>(module),
 			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><span class="self">self</span>.module_type {
-				ModuleType::Lua =&gt; <span class="prelude-val">Some</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/script.lua"</span>)),
+				ModuleType::Lua =&gt; <span class="prelude-val">Some</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/script.lua&quot;</span>)),
 				ModuleType::Wireplumber =&gt; {
-					<span class="kw">let </span>module_path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">"OUT_DIR"</span>), <span class="string">"/../../../examples/libstatic_link_module.so"</span>); <span class="comment">// TODO: .so is so linux
+					<span class="kw">let </span>module_path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/../../../examples/libstatic_link_module.so&quot;</span>); <span class="comment">// TODO: .so is so linux
 					</span><span class="kw">if </span>fs::metadata(module_path).is_err() {
 						<span class="macro">warning!</span>(
 							domain: LOG_DOMAIN,
-							<span class="string">"example module not found, try: cargo build -p wp-examples --example static-link-module"
+							<span class="string">&quot;example module not found, try: cargo build -p wp-examples --example static-link-module&quot;
 						</span>);
 					}
 					<span class="prelude-val">Some</span>(module_path)
@@ -608,7 +540,7 @@
 
 	<span class="doccomment">/// A JSON-like blob of data to pass as an argument to the script or module to be loaded
 	///
-	/// In practice this must be a dictionary or array because lua scripts can't work with other
+	/// In practice this must be a dictionary or array because lua scripts can&#39;t work with other
 	/// types of data as the top-level container, but more specific types may be usable by other
 	/// modules. See [wireplumber::lua] for a more detailed explanation.
 	</span><span class="kw">fn </span>variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;LuaVariant&gt;&gt; {
@@ -618,12 +550,5 @@
 		}
 	}
 }
-</code></pre>
-     </div>
-    </section>
-   </div>
-  </main>
-  <div data-current-crate="wpexec" data-resource-suffix="" data-root-path="../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../static.files/" data-themes="" id="rustdoc-vars">
-  </div>
- </body>
-</html>
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wpexec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

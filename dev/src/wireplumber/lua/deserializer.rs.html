@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="rustdoc" name="generator"/>
-  <meta content="Source of the Rust file `src/lua/deserializer.rs`." name="description"/>
-  <meta content="rust, rustlang, rust-lang" name="keywords"/>
-  <title>
-   deserializer.rs - source
-  </title>
-  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
-  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
-  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
-  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
-  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
-  <script id="default-settings">
-  </script>
-  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
-  </script>
-  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
-  </script>
-  <script defer="" src="../../../source-files.js">
-  </script>
-  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
-  </script>
-  <noscript>
-   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
-  </noscript>
-  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
- </head>
- <body class="rustdoc source">
-  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
-  <nav class="sidebar">
-  </nav>
-  <main>
-   <div class="width-limiter">
-    <nav class="sub">
-     <a class="sub-logo-container" href="../../../wireplumber/index.html">
-      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
-     </a>
-     <form class="search-form">
-      <span>
-      </span>
-      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
-      <div id="help-button" tabindex="-1" title="help">
-       <a href="../../../help.html">
-        ?
-       </a>
-      </div>
-      <div id="settings-menu" tabindex="-1">
-       <a href="../../../settings.html" title="settings">
-        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
-       </a>
-      </div>
-     </form>
-    </nav>
-    <section class="content" id="main-content">
-     <div class="example-wrap">
-      <pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/deserializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deserializer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -523,28 +456,27 @@
 <span id="456">456</span>
 <span id="457">457</span>
 <span id="458">458</span>
-</pre>
-      <pre class="rust"><code><span class="kw">use </span>{
+</pre><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::lua::{LuaError, LuaTable, LuaType, LuaVariant},
 	glib::{variant::VariantTypeMismatchError, Variant, VariantTy},
 	serde::de::{<span class="self">self</span>, IntoDeserializer, Visitor},
 	std::borrow::Cow,
 };
 
-<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"serde"</span>)))]
-</span><span class="kw">pub fn </span>from_variant&lt;<span class="lifetime">'de</span>, D: de::Deserialize&lt;<span class="lifetime">'de</span>&gt;, V: AsRef&lt;Variant&gt;&gt;(v: V) -&gt; <span class="prelude-ty">Result</span>&lt;D, LuaError&gt; {
+<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
+</span><span class="kw">pub fn </span>from_variant&lt;<span class="lifetime">&#39;de</span>, D: de::Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;, V: AsRef&lt;Variant&gt;&gt;(v: V) -&gt; <span class="prelude-ty">Result</span>&lt;D, LuaError&gt; {
 	LuaVariant::convert_from(v.as_ref()).and_then(|v| D::deserialize(v.into_deserializer()))
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"serde"</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
 #[derive(Debug, Clone)]
-</span><span class="kw">pub struct </span>Deserializer&lt;<span class="lifetime">'a</span>&gt; {
-	variant: LuaVariant&lt;<span class="lifetime">'a</span>&gt;,
+</span><span class="kw">pub struct </span>Deserializer&lt;<span class="lifetime">&#39;a</span>&gt; {
+	variant: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;,
 	humanize: bool,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Deserializer&lt;<span class="lifetime">'a</span>&gt; {
-	<span class="kw">pub fn </span>new(variant: LuaVariant&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Deserializer&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">pub fn </span>new(variant: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			variant,
 			humanize: <span class="bool-val">true</span>,
@@ -558,7 +490,7 @@
 		}
 	}
 
-	<span class="kw">fn </span>change_variant&lt;<span class="lifetime">'v</span>, V: Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, variant: V) -&gt; Deserializer&lt;<span class="lifetime">'v</span>&gt; {
+	<span class="kw">fn </span>change_variant&lt;<span class="lifetime">&#39;v</span>, V: Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, variant: V) -&gt; Deserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
 		Deserializer {
 			variant: variant.into(),
 			humanize: <span class="self">self</span>.humanize,
@@ -599,83 +531,83 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'de</span>&gt; de::Deserializer&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>Deserializer&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>&gt; de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Deserializer&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>is_human_readable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
 		<span class="self">self</span>.humanize
 	}
 
-	<span class="kw">fn </span>deserialize_any&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_any&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::Nil =&gt; <span class="self">self</span>.deserialize_unit(visitor),
 			LuaType::Boolean =&gt; <span class="self">self</span>.deserialize_bool(visitor),
 			LuaType::Integer =&gt; <span class="self">self</span>.deserialize_i64(visitor),
 			LuaType::Float =&gt; <span class="self">self</span>.deserialize_f64(visitor),
 			LuaType::String =&gt; <span class="self">self</span>.deserialize_str(visitor),
-			LuaType::Table <span class="kw">if </span><span class="self">self</span>.variant.get_table().expect(<span class="string">"LuaType"</span>).is_array().unwrap_or(<span class="bool-val">true</span>) =&gt;
+			LuaType::Table <span class="kw">if </span><span class="self">self</span>.variant.get_table().expect(<span class="string">&quot;LuaType&quot;</span>).is_array().unwrap_or(<span class="bool-val">true</span>) =&gt;
 				<span class="self">self</span>.deserialize_seq(visitor),
 			LuaType::Table =&gt; <span class="self">self</span>.deserialize_map(visitor),
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_bool&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_bool&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_bool(<span class="self">self</span>.variant.get_bool().ok_or_else(|| <span class="self">self</span>.error(VariantTy::BOOLEAN))<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_i8&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_i8&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_i8(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::INT16)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_i16&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_i16&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_i16(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::INT16)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_i32&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_i32&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_i32(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::INT32)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_i64&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_i64&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_i64(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::INT64)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_u8&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_u8&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_u8(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::BYTE)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_u16&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_u16&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_u16(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::UINT16)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_u32&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_u32&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_u32(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::UINT32)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_u64&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_u64&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_u64(<span class="self">self</span>.try_num(<span class="self">self</span>.variant.get_integer(), VariantTy::UINT64)<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_f32&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_f32&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_f32(<span class="self">self</span>.try_get_float()<span class="question-mark">? </span><span class="kw">as </span>f32)
 	}
 
-	<span class="kw">fn </span>deserialize_f64&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_f64&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_f64(<span class="self">self</span>.try_get_float()<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_char&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_char&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.deserialize_str(visitor)
 	}
 
-	<span class="kw">fn </span>deserialize_str&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_str&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_str(<span class="kw-2">&amp;</span><span class="self">self</span>.str()<span class="question-mark">?</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_string&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_string&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_string(<span class="self">self</span>.str()<span class="question-mark">?</span>.into_owned())
 	}
 
-	<span class="kw">fn </span>deserialize_bytes&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_bytes&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::String =&gt; <span class="self">self</span>.deserialize_str(visitor),
 			LuaType::Table =&gt; visitor.visit_seq(SeqDeserializer::new(
@@ -686,18 +618,18 @@
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_byte_buf&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_byte_buf&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.deserialize_bytes(visitor)
 	}
 
-	<span class="kw">fn </span>deserialize_option&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_option&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::Nil =&gt; visitor.visit_unit(),
 			<span class="kw">_ </span>=&gt; visitor.visit_some(<span class="self">self</span>),
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_unit&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_unit&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.variant.get_nil().ok_or_else(|| <span class="self">self</span>.error(VariantTy::UNIT))<span class="question-mark">?</span>;
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::Nil =&gt; visitor.visit_unit(),
@@ -705,19 +637,19 @@
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_unit_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_unit_struct&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.deserialize_unit(visitor)
 	}
 
-	<span class="kw">fn </span>deserialize_newtype_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
+	<span class="kw">fn </span>deserialize_newtype_struct&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_newtype_struct(<span class="self">self</span>)
 	}
 
-	<span class="kw">fn </span>deserialize_seq&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_seq&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::Table =&gt; visitor.visit_seq(SeqDeserializer::new(
 				<span class="self">self</span>.clone().variant.get_table().unwrap().iter_array(),
@@ -727,10 +659,10 @@
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_tuple&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, len: usize, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_tuple&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, len: usize, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::Nil =&gt; visitor.visit_unit(),
-			LuaType::Table =&gt; <span class="kw">match </span><span class="self">self</span>.variant.get_table().expect(<span class="string">"LuaType"</span>).array_len() {
+			LuaType::Table =&gt; <span class="kw">match </span><span class="self">self</span>.variant.get_table().expect(<span class="string">&quot;LuaType&quot;</span>).array_len() {
 				actual <span class="kw">if </span>actual != len <span class="kw">as </span>u64 =&gt; <span class="prelude-val">Err</span>(LuaError::LengthMismatch {
 					actual: actual <span class="kw">as </span>usize,
 					expected: len,
@@ -741,23 +673,23 @@
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_tuple_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
+	<span class="kw">fn </span>deserialize_tuple_struct&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		len: usize,
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.deserialize_tuple(len, visitor)
 	}
 
-	<span class="kw">fn </span>deserialize_map&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_map&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_map(MapDeserializer::new(<span class="self">self</span>))
 	}
 
-	<span class="kw">fn </span>deserialize_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
+	<span class="kw">fn </span>deserialize_struct&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
-		_fields: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str],
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+		_fields: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str],
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>table = <span class="self">self
@@ -771,10 +703,10 @@
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_enum&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
+	<span class="kw">fn </span>deserialize_enum&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
-		_variants: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str],
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+		_variants: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str],
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
@@ -783,11 +715,11 @@
 		}
 	}
 
-	<span class="kw">fn </span>deserialize_ignored_any&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_ignored_any&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		visitor.visit_unit()
 	}
 
-	<span class="kw">fn </span>deserialize_identifier&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>deserialize_identifier&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant.lua_type() {
 			LuaType::Integer =&gt; <span class="self">self</span>.deserialize_i64(visitor),
 			LuaType::Float =&gt; <span class="self">self</span>.deserialize_f64(visitor),
@@ -798,119 +730,119 @@
 }
 
 <span class="attr">#[repr(transparent)]
-</span><span class="kw">struct </span>EnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
-	_de: Deserializer&lt;<span class="lifetime">'v</span>&gt;,
+</span><span class="kw">struct </span>EnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	_de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; EnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
-	<span class="kw">fn </span>new(de: Deserializer&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; EnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>new(de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ _de: de }
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'de</span>&gt; de::EnumAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>EnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;de</span>&gt; de::EnumAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>EnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 	<span class="kw">type </span>Variant = <span class="self">Self</span>;
 
-	<span class="kw">fn </span>variant_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, <span class="self">Self</span>::Variant), <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>variant_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, <span class="self">Self</span>::Variant), <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(LuaError::Custom(<span class="macro">format!</span>(
-			<span class="string">"unimplemented wireplumber::lua::EnumDeserializer::variant_seed"
+			<span class="string">&quot;unimplemented wireplumber::lua::EnumDeserializer::variant_seed&quot;
 		</span>)))
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'de</span>&gt; de::VariantAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>EnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;de</span>&gt; de::VariantAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>EnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>unit_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(LuaError::Custom(<span class="macro">format!</span>(
-			<span class="string">"unimplemented wireplumber::lua::EnumDeserializer::unit_variant"
+			<span class="string">&quot;unimplemented wireplumber::lua::EnumDeserializer::unit_variant&quot;
 		</span>)))
 	}
 
-	<span class="kw">fn </span>newtype_variant_seed&lt;T: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>newtype_variant_seed&lt;T: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(LuaError::Custom(<span class="macro">format!</span>(
-			<span class="string">"unimplemented wireplumber::lua::EnumDeserializer::newtype_variant_seed"
+			<span class="string">&quot;unimplemented wireplumber::lua::EnumDeserializer::newtype_variant_seed&quot;
 		</span>)))
 	}
 
-	<span class="kw">fn </span>tuple_variant&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _len: usize, _visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>tuple_variant&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _len: usize, _visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(LuaError::Custom(<span class="macro">format!</span>(
-			<span class="string">"unimplemented wireplumber::lua::EnumDeserializer::tuple_variant"
+			<span class="string">&quot;unimplemented wireplumber::lua::EnumDeserializer::tuple_variant&quot;
 		</span>)))
 	}
 
-	<span class="kw">fn </span>struct_variant&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
+	<span class="kw">fn </span>struct_variant&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
 		<span class="self">self</span>,
-		_fields: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str],
+		_fields: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str],
 		_visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(LuaError::Custom(<span class="macro">format!</span>(
-			<span class="string">"unimplemented wireplumber::lua::EnumDeserializer::struct_variant"
+			<span class="string">&quot;unimplemented wireplumber::lua::EnumDeserializer::struct_variant&quot;
 		</span>)))
 	}
 }
 
 <span class="attr">#[repr(transparent)]
-</span><span class="kw">struct </span>UnitEnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
-	de: Deserializer&lt;<span class="lifetime">'v</span>&gt;,
+</span><span class="kw">struct </span>UnitEnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; UnitEnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
-	<span class="kw">fn </span>new(de: Deserializer&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; UnitEnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>new(de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ de }
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'de</span>&gt; de::EnumAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>UnitEnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;de</span>&gt; de::EnumAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>UnitEnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 	<span class="kw">type </span>Variant = <span class="self">Self</span>;
 
-	<span class="kw">fn </span>variant_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, <span class="self">Self</span>::Variant), <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>variant_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, <span class="self">Self</span>::Variant), <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>value = seed.deserialize(<span class="self">self</span>.de.clone())<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>((value, <span class="self">self</span>))
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'de</span>&gt; de::VariantAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>UnitEnumDeserializer&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;de</span>&gt; de::VariantAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>UnitEnumDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>unit_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(())
 	}
 
-	<span class="kw">fn </span>newtype_variant_seed&lt;T: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>newtype_variant_seed&lt;T: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(<span class="self">self</span>.de.unsupported())
 	}
 
-	<span class="kw">fn </span>tuple_variant&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _len: usize, _visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>tuple_variant&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _len: usize, _visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(<span class="self">self</span>.de.unsupported())
 	}
 
-	<span class="kw">fn </span>struct_variant&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
+	<span class="kw">fn </span>struct_variant&lt;V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
 		<span class="self">self</span>,
-		_fields: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str],
+		_fields: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str],
 		_visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Err</span>(<span class="self">self</span>.de.unsupported())
 	}
 }
 
-<span class="kw">struct </span>SeqDeserializer&lt;<span class="lifetime">'v</span>, I&gt; {
-	de: Deserializer&lt;<span class="lifetime">'v</span>&gt;,
+<span class="kw">struct </span>SeqDeserializer&lt;<span class="lifetime">&#39;v</span>, I&gt; {
+	de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;,
 	iter: I,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, I&gt; SeqDeserializer&lt;<span class="lifetime">'v</span>, I&gt; {
-	<span class="kw">fn </span>new(iter: I, de: Deserializer&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, I&gt; SeqDeserializer&lt;<span class="lifetime">&#39;v</span>, I&gt; {
+	<span class="kw">fn </span>new(iter: I, de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ iter, de }
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'de</span>, <span class="lifetime">'i</span>, I: Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'i</span>&gt;&gt;&gt;&gt; de::SeqAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>SeqDeserializer&lt;<span class="lifetime">'v</span>, I&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;i</span>, I: Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;i</span>&gt;&gt;&gt;&gt; de::SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>SeqDeserializer&lt;<span class="lifetime">&#39;v</span>, I&gt; {
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>next_element_seed&lt;T: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T::Value&gt;, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>next_element_seed&lt;T: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T::Value&gt;, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self
 			</span>.iter
 			.next()
@@ -923,25 +855,25 @@
 	</span>}
 }
 
-<span class="kw">struct </span>MapDeserializer&lt;<span class="lifetime">'v</span>&gt; {
-	de: Deserializer&lt;<span class="lifetime">'v</span>&gt;,
+<span class="kw">struct </span>MapDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;,
 	index: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; MapDeserializer&lt;<span class="lifetime">'v</span>&gt; {
-	<span class="kw">fn </span>new(de: Deserializer&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; MapDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>new(de: Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ de, index: <span class="number">0 </span>}
 	}
 
 	<span class="kw">fn </span>table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaTable {
-		<span class="self">self</span>.de.variant.get_table().expect(<span class="string">"MapDeserializer"</span>)
+		<span class="self">self</span>.de.variant.get_table().expect(<span class="string">&quot;MapDeserializer&quot;</span>)
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'de</span>&gt; de::MapAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>MapDeserializer&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;de</span>&gt; de::MapAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>MapDeserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>next_key_seed&lt;K: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: K) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;K::Value&gt;, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>next_key_seed&lt;K: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: K) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;K::Value&gt;, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>table = <span class="self">self</span>.table();
 		<span class="kw">if </span><span class="self">self</span>.index &gt;= table.entry_len() {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
@@ -953,7 +885,7 @@
 		}
 	}
 
-	<span class="kw">fn </span>next_value_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>next_value_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>value = <span class="self">self
 			</span>.table()
 			.value_at(<span class="self">self</span>.index)
@@ -962,7 +894,7 @@
 		seed.deserialize(<span class="self">self</span>.de.change_variant(value))
 	}
 
-	<span class="comment">/*fn next_entry_seed&lt;K: de::DeserializeSeed&lt;'de&gt;, V: de::DeserializeSeed&lt;'de&gt;&gt;(&amp;mut self, kseed: K, vseed: V) -&gt; Result&lt;Option&lt;(K::Value, V::Value)&gt;, Self::Error&gt; {
+	<span class="comment">/*fn next_entry_seed&lt;K: de::DeserializeSeed&lt;&#39;de&gt;, V: de::DeserializeSeed&lt;&#39;de&gt;&gt;(&amp;mut self, kseed: K, vseed: V) -&gt; Result&lt;Option&lt;(K::Value, V::Value)&gt;, Self::Error&gt; {
 		todo!()
 	}*/
 
@@ -971,23 +903,16 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt; <span class="kw">for </span>Deserializer&lt;<span class="lifetime">'v</span>&gt; {
-	<span class="kw">fn </span>from(v: LuaVariant&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <span class="kw">for </span>Deserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>from(v: LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::new(v)
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">'v</span>&gt;&gt; <span class="kw">for </span>Deserializer&lt;<span class="lifetime">'v</span>&gt; {
-	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <span class="kw">for </span>Deserializer&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::new(v.into())
 	}
 }
-</code></pre>
-     </div>
-    </section>
-   </div>
-  </main>
-  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
-  </div>
- </body>
-</html>
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

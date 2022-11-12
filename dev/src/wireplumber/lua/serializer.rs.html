@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="rustdoc" name="generator"/>
-  <meta content="Source of the Rust file `src/lua/serializer.rs`." name="description"/>
-  <meta content="rust, rustlang, rust-lang" name="keywords"/>
-  <title>
-   serializer.rs - source
-  </title>
-  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
-  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
-  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
-  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
-  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
-  <script id="default-settings">
-  </script>
-  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
-  </script>
-  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
-  </script>
-  <script defer="" src="../../../source-files.js">
-  </script>
-  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
-  </script>
-  <noscript>
-   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
-  </noscript>
-  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
- </head>
- <body class="rustdoc source">
-  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
-  <nav class="sidebar">
-  </nav>
-  <main>
-   <div class="width-limiter">
-    <nav class="sub">
-     <a class="sub-logo-container" href="../../../wireplumber/index.html">
-      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
-     </a>
-     <form class="search-form">
-      <span>
-      </span>
-      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
-      <div id="help-button" tabindex="-1" title="help">
-       <a href="../../../help.html">
-        ?
-       </a>
-      </div>
-      <div id="settings-menu" tabindex="-1">
-       <a href="../../../settings.html" title="settings">
-        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
-       </a>
-      </div>
-     </form>
-    </nav>
-    <section class="content" id="main-content">
-     <div class="example-wrap">
-      <pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/serializer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>serializer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -553,8 +486,7 @@
 <span id="486">486</span>
 <span id="487">487</span>
 <span id="488">488</span>
-</pre>
-      <pre class="rust"><code><span class="kw">use </span>{
+</pre><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		lua::{LuaError, LuaVariant},
 		prelude::<span class="kw-2">*</span>,
@@ -563,12 +495,12 @@
 	serde::{ser, Serialize},
 };
 
-<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"serde"</span>)))]
-</span><span class="kw">pub fn </span>to_variant&lt;S: ser::Serialize&gt;(v: S) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, LuaError&gt; {
+<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
+</span><span class="kw">pub fn </span>to_variant&lt;S: ser::Serialize&gt;(v: S) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaError&gt; {
 	v.serialize(Serializer::new())
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"serde"</span>)))]
+<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
 #[derive(Debug, Copy, Clone)]
 </span><span class="kw">pub struct </span>Serializer {
 	humanize: bool,
@@ -591,7 +523,7 @@
 }
 
 <span class="kw">impl </span>ser::Serializer <span class="kw">for </span>Serializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 	<span class="kw">type </span>SerializeSeq = SeqSerializer;
 	<span class="kw">type </span>SerializeTuple = SeqSerializer;
@@ -673,15 +605,15 @@
 		<span class="prelude-val">Ok</span>(LuaVariant::nil())
 	}
 
-	<span class="kw">fn </span>serialize_unit_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_unit_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.serialize_unit()
 	}
 
 	<span class="kw">fn </span>serialize_unit_variant(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		variant_index: u32,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">if </span><span class="self">self</span>.is_human_readable() {
 			<span class="self">self</span>.serialize_str(variant)
@@ -692,7 +624,7 @@
 
 	<span class="kw">fn </span>serialize_newtype_struct&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		value: <span class="kw-2">&amp;</span>T,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
 		value.serialize(<span class="self">self</span>)
@@ -700,9 +632,9 @@
 
 	<span class="kw">fn </span>serialize_newtype_variant&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(
 		<span class="self">self</span>,
-		name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		variant_index: u32,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		value: <span class="kw-2">&amp;</span>T,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
 		VariantSerializer::new(<span class="self">self</span>, value, name, variant_index, variant).serialize()
@@ -716,15 +648,15 @@
 		<span class="self">self</span>.serialize_seq(<span class="prelude-val">Some</span>(len))
 	}
 
-	<span class="kw">fn </span>serialize_tuple_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleStruct, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_tuple_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleStruct, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.serialize_tuple(len)
 	}
 
 	<span class="kw">fn </span>serialize_tuple_variant(
 		<span class="self">self</span>,
-		name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		variant_index: u32,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		len: usize,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleVariant, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self
@@ -736,7 +668,7 @@
 		<span class="prelude-val">Ok</span>(MapSerializer::new(<span class="self">self</span>, <span class="prelude-val">None</span>, len))
 	}
 
-	<span class="kw">fn </span>serialize_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStruct, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStruct, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">if </span><span class="self">self</span>.is_human_readable() {
 			StructSerializer::Map(MapSerializer::new(<span class="self">self</span>, <span class="prelude-val">Some</span>(VariantTy::STRING), <span class="prelude-val">Some</span>(len)))
 		} <span class="kw">else </span>{
@@ -746,9 +678,9 @@
 
 	<span class="kw">fn </span>serialize_struct_variant(
 		<span class="self">self</span>,
-		name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		variant_index: u32,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 		len: usize,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStructVariant, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self
@@ -760,7 +692,7 @@
 <span class="kw">pub struct </span>SeqSerializer {
 	ser: Serializer,
 	size: <span class="prelude-ty">Option</span>&lt;usize&gt;,
-	variants: Vec&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;,
+	variants: Vec&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
 }
 
 <span class="kw">impl </span>SeqSerializer {
@@ -774,7 +706,7 @@
 }
 
 <span class="kw">impl </span>ser::SerializeSeq <span class="kw">for </span>SeqSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>serialize_element&lt;S: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>S) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
@@ -795,7 +727,7 @@
 }
 
 <span class="kw">impl </span>ser::SerializeTuple <span class="kw">for </span>SeqSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>serialize_element&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
@@ -808,7 +740,7 @@
 }
 
 <span class="kw">impl </span>ser::SerializeTupleStruct <span class="kw">for </span>SeqSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
@@ -821,10 +753,10 @@
 }
 
 <span class="kw">impl </span>ser::SerializeStruct <span class="kw">for </span>SeqSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
 		ser::SerializeTupleStruct::serialize_field(<span class="self">self</span>, value)
 	}
 
@@ -835,14 +767,14 @@
 
 <span class="kw">pub struct </span>MapSerializer {
 	ser: Serializer,
-	key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>VariantTy&gt;,
+	key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>VariantTy&gt;,
 	keys: Vec&lt;Variant&gt;,
 	values: Vec&lt;Variant&gt;,
 	size: <span class="prelude-ty">Option</span>&lt;usize&gt;,
 }
 
 <span class="kw">impl </span>MapSerializer {
-	<span class="kw">fn </span>new(ser: Serializer, key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>VariantTy&gt;, size: <span class="prelude-ty">Option</span>&lt;usize&gt;) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>new(ser: Serializer, key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>VariantTy&gt;, size: <span class="prelude-ty">Option</span>&lt;usize&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			ser,
 			key_type,
@@ -854,7 +786,7 @@
 }
 
 <span class="kw">impl </span>ser::SerializeMap <span class="kw">for </span>MapSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>serialize_key&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
@@ -899,10 +831,10 @@
 }
 
 <span class="kw">impl </span>ser::SerializeStruct <span class="kw">for </span>MapSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
+	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
 	<span class="kw">where
 		</span>T: Serialize,
 	{
@@ -920,10 +852,10 @@
 }
 
 <span class="kw">impl </span>ser::SerializeStruct <span class="kw">for </span>StructSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
+	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
 	<span class="kw">where
 		</span>T: Serialize,
 	{
@@ -942,7 +874,7 @@
 }
 
 <span class="kw">impl </span>ser::SerializeTupleStruct <span class="kw">for </span>StructSerializer {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
@@ -962,13 +894,13 @@
 
 <span class="kw">struct </span>VariantSerializerState {
 	ser: Serializer,
-	_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+	_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 	variant_index: u32,
-	variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+	variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
 }
 
 <span class="kw">impl </span>VariantSerializerState {
-	<span class="kw">fn </span>tag&lt;V: AsRef&lt;Variant&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;&gt;(<span class="self">self</span>, variant: V) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, LuaError&gt; {
+	<span class="kw">fn </span>tag&lt;V: AsRef&lt;Variant&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt;(<span class="self">self</span>, variant: V) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaError&gt; {
 		<span class="kw">let </span>variant = LuaVariant::convert_from(variant.as_ref())<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="kw">match </span>ser::Serializer::is_human_readable(<span class="kw-2">&amp;</span><span class="self">self</span>.ser) {
 			<span class="bool-val">true </span>=&gt; iter::once((<span class="self">self</span>.variant, variant)).collect(),
@@ -983,7 +915,7 @@
 }
 
 <span class="kw">impl</span>&lt;S&gt; VariantSerializer&lt;S&gt; {
-	<span class="kw">fn </span>new(ser: Serializer, inner: S, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, variant_index: u32, variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>new(ser: Serializer, inner: S, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, variant_index: u32, variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			inner,
 			state: VariantSerializerState {
@@ -995,7 +927,7 @@
 		}
 	}
 
-	<span class="kw">fn </span>serialize(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, LuaError&gt;
+	<span class="kw">fn </span>serialize(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaError&gt;
 	<span class="kw">where
 		</span>S: Serialize,
 	{
@@ -1005,10 +937,10 @@
 
 <span class="kw">impl</span>&lt;S: ser::SerializeTuple&gt; ser::SerializeTupleVariant <span class="kw">for </span>VariantSerializer&lt;S&gt;
 <span class="kw">where
-	</span>S::Ok: AsRef&lt;Variant&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;,
+	</span>S::Ok: AsRef&lt;Variant&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
 	S::Error: Into&lt;LuaError&gt;,
 {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
@@ -1023,17 +955,17 @@
 
 <span class="kw">impl</span>&lt;S: ser::SerializeStruct&gt; ser::SerializeStructVariant <span class="kw">for </span>VariantSerializer&lt;S&gt;
 <span class="kw">where
-	</span>S::Ok: AsRef&lt;Variant&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;,
+	</span>S::Ok: AsRef&lt;Variant&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
 	S::Error: Into&lt;LuaError&gt;,
 {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_field&lt;T: Serialize + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.inner.serialize_field(key, value).map_err(Into::into)
 	}
 
-	<span class="kw">fn </span>skip_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>skip_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.inner.skip_field(key).map_err(Into::into)
 	}
 
@@ -1042,12 +974,5 @@
 		<span class="self">self</span>.inner.end().map_err(Into::into).and_then(|ok| state.tag(ok))
 	}
 }
-</code></pre>
-     </div>
-    </section>
-   </div>
-  </main>
-  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
-  </div>
- </body>
-</html>
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

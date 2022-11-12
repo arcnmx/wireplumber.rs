@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="rustdoc" name="generator"/>
-  <meta content="Source of the Rust file `src/lua/variant.rs`." name="description"/>
-  <meta content="rust, rustlang, rust-lang" name="keywords"/>
-  <title>
-   variant.rs - source
-  </title>
-  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link href="../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
-  <link href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
-  <link href="../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
-  <link disabled="" href="../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
-  <link disabled="" href="../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
-  <script id="default-settings">
-  </script>
-  <script src="../../../static.files/storage-d43fa987303ecbbb.js">
-  </script>
-  <script defer="" src="../../../static.files/source-script-74087aa2e88f4475.js">
-  </script>
-  <script defer="" src="../../../source-files.js">
-  </script>
-  <script defer="" src="../../../static.files/main-c2d2a5dbaed13e6b.js">
-  </script>
-  <noscript>
-   <link href="../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
-  </noscript>
-  <link href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
- </head>
- <body class="rustdoc source">
-  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
-  <nav class="sidebar">
-  </nav>
-  <main>
-   <div class="width-limiter">
-    <nav class="sub">
-     <a class="sub-logo-container" href="../../../wireplumber/index.html">
-      <img alt="logo" class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg"/>
-     </a>
-     <form class="search-form">
-      <span>
-      </span>
-      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
-      <div id="help-button" tabindex="-1" title="help">
-       <a href="../../../help.html">
-        ?
-       </a>
-      </div>
-      <div id="settings-menu" tabindex="-1">
-       <a href="../../../settings.html" title="settings">
-        <img alt="Change settings" height="22" src="../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
-       </a>
-      </div>
-     </form>
-    </nav>
-    <section class="content" id="main-content">
-     <div class="example-wrap">
-      <pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -657,8 +590,7 @@
 <span id="590">590</span>
 <span id="591">591</span>
 <span id="592">592</span>
-</pre>
-      <pre class="rust"><code><span class="kw">use </span>{
+</pre><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		lua::{LuaError, LuaString},
 		prelude::<span class="kw-2">*</span>,
@@ -736,7 +668,7 @@
 				<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
 				<span class="kw">_ </span>=&gt; LuaType::Float,
 			},
-			VariantClass::Variant =&gt; <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>var.as_variant().expect(<span class="string">"VariantTy"</span>))<span class="question-mark">?</span>,
+			VariantClass::Variant =&gt; <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>var.as_variant().expect(<span class="string">&quot;VariantTy&quot;</span>))<span class="question-mark">?</span>,
 			VariantClass::Array <span class="kw">if </span>ty.element().is_dict_entry() =&gt; <span class="kw">match </span>var
 				.iter()
 				.map(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>)).and_then(|<span class="kw">_</span>| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(drop)))
@@ -763,16 +695,16 @@
 	}
 }
 
-<span class="kw">pub enum </span>LuaValue&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">pub enum </span>LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
 	Nil,
 	Boolean(bool),
 	Integer(i64),
 	Float(f64),
-	String(LuaString&lt;<span class="lifetime">'a</span>&gt;),
-	Table(LuaTable&lt;<span class="lifetime">'a</span>&gt;),
+	String(LuaString&lt;<span class="lifetime">&#39;a</span>&gt;),
+	Table(LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;),
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; LuaValue&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
 		<span class="kw">match </span><span class="self">self </span>{
 			LuaValue::Nil =&gt; LuaType::Nil,
@@ -786,7 +718,7 @@
 
 	<span class="kw">pub fn </span>to_lua_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaString, LuaError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self">self </span>{
-			LuaValue::Nil =&gt; <span class="string">b"nil"</span>[..].into(),
+			LuaValue::Nil =&gt; <span class="string">b&quot;nil&quot;</span>[..].into(),
 			LuaValue::Boolean(v) =&gt; v.to_string().into(),
 			LuaValue::Integer(v) =&gt; v.to_string().into(),
 			LuaValue::Float(v) =&gt; v.to_string().into(),
@@ -818,7 +750,7 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; LuaVariant&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">pub fn </span>nil() -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(().to_variant()) }
 	}
@@ -834,8 +766,8 @@
 		}
 
 		<span class="kw">match </span>v.classify() {
-			VariantClass::Variant =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.as_variant().expect(<span class="string">"VariantClass"</span>)),
-			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(v.get::&lt;u8&gt;().expect(<span class="string">"VariantClass"</span>) <span class="kw">as </span>u16)),
+			VariantClass::Variant =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)),
+			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(v.get::&lt;u8&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>) <span class="kw">as </span>u16)),
 			VariantClass::Maybe =&gt; <span class="kw">match </span>v.as_maybe() {
 				<span class="prelude-val">Some</span>(v) =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v),
 				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().into()),
@@ -870,18 +802,18 @@
 			LuaType::String =&gt; <span class="self">self</span>.get_string().map(LuaValue::String),
 			LuaType::Table =&gt; LuaTable::borrow(<span class="self">self</span>.as_variant()).ok().map(LuaValue::Table),
 		}
-		.expect(<span class="string">"LuaType"</span>)
+		.expect(<span class="string">&quot;LuaType&quot;</span>)
 	}
 
 	<span class="kw">pub fn </span>flattened(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
 		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
 			VariantClass::Variant =&gt;
-				<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="self">self</span>.as_variant().as_variant().expect(<span class="string">"VariantClass"</span>)) }.flattened(),
+				<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="self">self</span>.as_variant().as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)) }.flattened(),
 			<span class="kw">_ </span>=&gt; <span class="self">self</span>.clone(),
 		}
 	}
 
-	<span class="kw">pub fn </span>get_nil&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
+	<span class="kw">pub fn </span>get_nil&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
 		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
 			VariantClass::Tuple =&gt; <span class="self">self</span>.as_variant().get(),
 			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_nil(),
@@ -889,7 +821,7 @@
 		}
 	}
 
-	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
 		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
 			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get(),
 			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_bool(),
@@ -897,7 +829,7 @@
 		}
 	}
 
-	<span class="kw">pub fn </span>get_table&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">'a</span>&gt;&gt; {
+	<span class="kw">pub fn </span>get_table&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
 		<span class="kw">match </span><span class="self">self</span>.lua_type() {
 			LuaType::Table =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ LuaTable::unsafe_from(<span class="self">self</span>.flattened().into_inner()) }),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -913,7 +845,7 @@
 		<span class="kw">const </span>MAX_SAFE_INTEGER_UNSIGNED: u64 = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
 		<span class="kw">const </span>MIN_SAFE_INTEGER: i64 = -(<span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>);
 		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
-			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>.as_variant().get::&lt;f64&gt;().expect(<span class="string">"VariantClass"</span>)),
+			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>.as_variant().get::&lt;f64&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>)),
 			VariantClass::Boolean =&gt; u8::from(<span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap())
 				.try_into()
 				.map_err(Into::into),
@@ -962,13 +894,13 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; StaticVariantType <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
-	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">'static</span>, VariantTy&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; StaticVariantType <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
 		VariantTy::VARIANT.into()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ToVariant <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
 		Variant::from_variant(<span class="self">self</span>.as_variant())
 	}
@@ -980,7 +912,7 @@
 	</span><span class="kw">pub struct </span>LuaTable(Variant ;<span class="question-mark">? </span>LuaError);
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; LuaTable&lt;<span class="lifetime">'v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
 		<span class="comment">// used by Self::wrap and Self::borrow
 		</span>LuaType::with_variant(v).and_then(|ty| <span class="kw">match </span>ty {
@@ -992,7 +924,7 @@
 		})
 	}
 
-	<span class="kw">pub fn </span>into_lua_variant(<span class="self">self</span>) -&gt; LuaVariant&lt;<span class="lifetime">'v</span>&gt; {
+	<span class="kw">pub fn </span>into_lua_variant(<span class="self">self</span>) -&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="self">self</span>.into_inner()) }
 	}
 
@@ -1008,10 +940,10 @@
 		<span class="self">self</span>.entry_len() == <span class="number">0
 	</span>}
 
-	<span class="doccomment">/// Lua's `n` field, if it exists
+	<span class="doccomment">/// Lua&#39;s `n` field, if it exists
 	</span><span class="kw">pub fn </span>table_getn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u64&gt; {
 		<span class="self">self
-			</span>.by_key(<span class="kw-2">&amp;</span><span class="string">"n"</span>.into())
+			</span>.by_key(<span class="kw-2">&amp;</span><span class="string">&quot;n&quot;</span>.into())
 			.and_then(|v| v.get_integer())
 			.and_then(|v| v.ok())
 	}
@@ -1020,9 +952,9 @@
 		<span class="self">self</span>.as_variant().type_().is_subtype_of(VariantTy::DICTIONARY)
 	}
 
-	<span class="kw">pub fn </span>iter_dict_entries&lt;<span class="lifetime">'a</span>&gt;(
-		<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
-	) -&gt; <span class="kw">impl </span>Iterator&lt;Item = DictEntry&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;&gt; + <span class="lifetime">'a </span>{
+	<span class="kw">pub fn </span>iter_dict_entries&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+	) -&gt; <span class="kw">impl </span>Iterator&lt;Item = DictEntry&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
 		<span class="self">self</span>.as_variant().iter().enumerate().map(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{
 			<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
 				<span class="bool-val">true </span>=&gt; DictEntry::new(
@@ -1034,7 +966,7 @@
 		})
 	}
 
-	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;u64&gt;&gt; + <span class="lifetime">'a </span>{
+	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;u64&gt;&gt; + <span class="lifetime">&#39;a </span>{
 		<span class="self">self
 			</span>.as_variant()
 			.iter()
@@ -1060,22 +992,22 @@
 		indices
 	}
 
-	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (u64, LuaVariant&lt;<span class="lifetime">'static</span>&gt;)&gt; + <span class="lifetime">'a </span>{
+	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (u64, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;)&gt; + <span class="lifetime">&#39;a </span>{
 		<span class="self">self
 			</span>.array_indices()
 			.into_iter()
-			.map(<span class="kw">move </span>|(i, idx)| (idx, <span class="self">self</span>.value_at(i).expect(<span class="string">"array_indices"</span>)))
+			.map(<span class="kw">move </span>|(i, idx)| (idx, <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>)))
 	}
 
-	<span class="kw">pub fn </span>iter_array&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;&gt; + <span class="lifetime">'a </span>{
+	<span class="kw">pub fn </span>iter_array&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
 		<span class="kw">let </span>indices = <span class="self">self</span>.array_indices();
 		<span class="kw">let </span>last = <span class="self">self</span>.table_getn().or_else(|| indices.last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx));
 
 		<span class="kw">let </span><span class="kw-2">mut </span>indices = indices.into_iter().peekable();
 		(<span class="number">0</span>..=last.unwrap_or(<span class="number">0</span>)).map(<span class="kw">move </span>|idx| <span class="kw">match </span>indices.peek() {
-			<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span>idx == next =&gt; indices.next().map(|(i, <span class="kw">_</span>)| <span class="self">self</span>.value_at(i).expect(<span class="string">"array_indices"</span>)),
+			<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span>idx == next =&gt; indices.next().map(|(i, <span class="kw">_</span>)| <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>)),
 			<span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-			<span class="prelude-val">None </span>=&gt; indices.next().map(|<span class="kw">_</span>| <span class="macro">unreachable!</span>(<span class="string">"array_indices"</span>)),
+			<span class="prelude-val">None </span>=&gt; indices.next().map(|<span class="kw">_</span>| <span class="macro">unreachable!</span>(<span class="string">&quot;array_indices&quot;</span>)),
 		})
 	}
 
@@ -1086,7 +1018,7 @@
 			.unwrap_or(<span class="number">0</span>)
 	}
 
-	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt; {
+	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
 		<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
 			<span class="bool-val">true </span>=&gt; <span class="self">self
 				</span>.as_variant()
@@ -1096,7 +1028,7 @@
 		}
 	}
 
-	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt; {
+	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
 		<span class="self">self</span>.as_variant().try_child_value(index).map(|v| <span class="kw">unsafe </span>{
 			LuaVariant::unsafe_from(<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
 				<span class="bool-val">true </span>=&gt; v.child_value(<span class="number">1</span>),
@@ -1105,7 +1037,7 @@
 		})
 	}
 
-	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt; {
+	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
 		<span class="self">self
 			</span>.iter_dict_entries()
 			.find(|e| e.key() == key)
@@ -1145,13 +1077,13 @@
 	}
 }
 
-<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'_</span>&gt; {
-	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">'static</span>, VariantTy&gt; {
+<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
 		VariantTy::VARDICT.into()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = V&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{
 			UnsafeFrom::unsafe_from(Variant::array_from_iter_with_type(
@@ -1162,8 +1094,8 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt;
-	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;
+	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;
 {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = (K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span>entry_type = VariantType::new_dict_entry(<span class="kw-2">&amp;</span>K::static_variant_type(), <span class="kw-2">&amp;</span>V::static_variant_type());
@@ -1174,46 +1106,46 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>&gt; FromIterator&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
-	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>&gt; FromIterator&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
 		LuaTable::from_iter(iter).into_lua_variant()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt;
-	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;
+	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;
 {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = (K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		LuaTable::from_iter(iter).into_lua_variant()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ToVariant <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
 		<span class="self">self
 			</span>.clone()
 			.into_vardict()
-			.expect(<span class="string">"VarDict requires UTF8 keys"</span>)
+			.expect(<span class="string">&quot;VarDict requires UTF8 keys&quot;</span>)
 			.into_variant()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
-	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.into_inner()) }
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; UnsafeFrom&lt;LuaVariant&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
-	<span class="kw">unsafe fn </span>unsafe_from(v: LuaVariant&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UnsafeFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">unsafe fn </span>unsafe_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::unsafe_from(v.into_inner())
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;LuaVariant&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">type </span>Error = LuaError;
 
-	<span class="kw">fn </span>try_from(v: LuaVariant&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>try_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="self">Self</span>::try_from(v.into_inner())
 	}
 }
@@ -1221,7 +1153,7 @@
 <span class="macro">macro_rules! </span>lua_primitives {
 	($(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
 		$(
-			<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="macro-nonterminal">$ty</span>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
+			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;<span class="macro-nonterminal">$ty</span>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
 				<span class="kw">fn </span>from(v: <span class="macro-nonterminal">$ty</span>) -&gt; <span class="self">Self </span>{
 					<span class="kw">unsafe </span>{
 						<span class="self">Self</span>::unsafe_from(v.to_variant())
@@ -1237,25 +1169,18 @@
 	bool, f64, (),
 }
 
-<span class="comment">/*impl&lt;'a, 'v&gt; From&lt;&amp;'a str&gt; for LuaVariant&lt;'v&gt; {
-	fn from(s: &amp;'a str) -&gt; Self {
+<span class="comment">/*impl&lt;&#39;a, &#39;v&gt; From&lt;&amp;&#39;a str&gt; for LuaVariant&lt;&#39;v&gt; {
+	fn from(s: &amp;&#39;a str) -&gt; Self {
 		unsafe {
 			Self::unsafe_from(s.to_variant())
 		}
 	}
 }*/
 
-</span><span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'s</span>, S: Into&lt;LuaString&lt;<span class="lifetime">'s</span>&gt;&gt;&gt; From&lt;S&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'v</span>&gt; {
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;s</span>, S: Into&lt;LuaString&lt;<span class="lifetime">&#39;s</span>&gt;&gt;&gt; From&lt;S&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">fn </span>from(s: S) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(s.into().to_variant()) }
 	}
 }
-</code></pre>
-     </div>
-    </section>
-   </div>
-  </main>
-  <div data-current-crate="wireplumber" data-resource-suffix="" data-root-path="../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../static.files/" data-themes="" id="rustdoc-vars">
-  </div>
- </body>
-</html>
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

@@ -1,71 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="rustdoc" name="generator"/>
-  <meta content="Source of the Rust file `sys/src/../generate/src/lib.rs`." name="description"/>
-  <meta content="rust, rustlang, rust-lang" name="keywords"/>
-  <title>
-   lib.rs - source
-  </title>
-  <link as="font" crossorigin="" href="../../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link as="font" crossorigin="" href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2" rel="preload" type="font/woff2"/>
-  <link href="../../../../../static.files/normalize-76eba96aa4d2e634.css" rel="stylesheet"/>
-  <link href="../../../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle" rel="stylesheet"/>
-  <link href="../../../../../static.files/light-777f3e9583f8c92d.css" id="themeStyle" rel="stylesheet"/>
-  <link disabled="" href="../../../../../static.files/dark-e2f4109f2e82e3af.css" rel="stylesheet"/>
-  <link disabled="" href="../../../../../static.files/ayu-c360e709a65bed99.css" rel="stylesheet"/>
-  <script id="default-settings">
-  </script>
-  <script src="../../../../../static.files/storage-d43fa987303ecbbb.js">
-  </script>
-  <script defer="" src="../../../../../static.files/source-script-74087aa2e88f4475.js">
-  </script>
-  <script defer="" src="../../../../../source-files.js">
-  </script>
-  <script defer="" src="../../../../../static.files/main-c2d2a5dbaed13e6b.js">
-  </script>
-  <noscript>
-   <link href="../../../../../static.files/noscript-13285aec31fa243e.css" rel="stylesheet"/>
-  </noscript>
-  <link href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png" rel="alternate icon" type="image/png"/>
-  <link href="../../../../../static.files/favicon-2c020d218678b618.svg" rel="icon" type="image/svg+xml"/>
- </head>
- <body class="rustdoc source">
-  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
-  <nav class="sidebar">
-  </nav>
-  <main>
-   <div class="width-limiter">
-    <nav class="sub">
-     <a class="sub-logo-container" href="../../../../../wireplumber_sys/index.html">
-      <img alt="logo" class="rust-logo" src="../../../../../static.files/rust-logo-151179464ae7ed46.svg"/>
-     </a>
-     <form class="search-form">
-      <span>
-      </span>
-      <input autocomplete="off" class="search-input" name="search" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" spellcheck="false" type="search"/>
-      <div id="help-button" tabindex="-1" title="help">
-       <a href="../../../../../help.html">
-        ?
-       </a>
-      </div>
-      <div id="settings-menu" tabindex="-1">
-       <a href="../../../../../settings.html" title="settings">
-        <img alt="Change settings" height="22" src="../../../../../static.files/wheel-5ec35bf9ca753509.svg" width="22"/>
-       </a>
-      </div>
-     </form>
-    </nav>
-    <section class="content" id="main-content">
-     <div class="example-wrap">
-      <pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `sys/src/../generate/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-eabf764633b9d7be.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../../static.files/light-777f3e9583f8c92d.css"><link rel="stylesheet" disabled href="../../../../../static.files/dark-e2f4109f2e82e3af.css"><link rel="stylesheet" disabled href="../../../../../static.files/ayu-c360e709a65bed99.css"><script id="default-settings" ></script><script src="../../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../../../source-files.js"></script><script defer src="../../../../../static.files/main-c2d2a5dbaed13e6b.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../../wireplumber_sys/index.html"><img class="rust-logo" src="../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -2340,8 +2273,7 @@
 <span id="2273">2273</span>
 <span id="2274">2274</span>
 <span id="2275">2275</span>
-</pre>
-      <pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // DO NOT EDIT
 
 </span><span class="attr">#![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
@@ -2351,7 +2283,7 @@
 <span class="kw">use </span>libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 <span class="kw">use </span><span class="kw">crate</span>::WpSpaType;
 
-<span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">type </span>spa_json = c_void; <span class="comment">// TODO: https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/36
 
 </span><span class="kw">use </span>glib_sys <span class="kw">as </span>glib;
@@ -2432,7 +2364,7 @@
 <span class="kw">pub const </span>WP_ITERATOR_METHODS_VERSION: c_int = <span class="number">0</span>;
 <span class="kw">pub const </span>WP_LOG_LEVEL_TRACE: c_int = <span class="number">256</span>;
 <span class="kw">pub const </span>WP_OBJECT_FEATURES_ALL: WpObjectFeatures = <span class="number">4294967295</span>;
-<span class="kw">pub const </span>WP_OBJECT_FORMAT: <span class="kw-2">*const </span>c_char = <span class="string">b"&lt;%s:%p&gt;\0" </span><span class="kw">as </span><span class="kw-2">*const </span>u8 <span class="kw">as </span><span class="kw-2">*const </span>c_char;
+<span class="kw">pub const </span>WP_OBJECT_FORMAT: <span class="kw-2">*const </span>c_char = <span class="string">b&quot;&lt;%s:%p&gt;\0&quot; </span><span class="kw">as </span><span class="kw-2">*const </span>u8 <span class="kw">as </span><span class="kw-2">*const </span>c_char;
 <span class="kw">pub const </span>WP_PIPEWIRE_OBJECT_FEATURES_ALL: c_int = <span class="number">1009</span>;
 <span class="kw">pub const </span>WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL: c_int = <span class="number">17</span>;
 <span class="kw">pub const </span>WP_SPA_TYPE_INVALID: WpSpaType = <span class="number">4294967295</span>;
@@ -2495,8 +2427,8 @@
 <span class="kw">pub const </span>WP_SPA_DEVICE_FEATURE_ENABLED: WpSpaDeviceFeatures = <span class="number">65536</span>;
 
 <span class="comment">// Callbacks
-</span><span class="kw">pub type </span>WpIteratorFoldFunc = <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*const </span>gobject::GValue, <span class="kw-2">*mut </span>gobject::GValue, gpointer) -&gt; gboolean&gt;;
-<span class="kw">pub type </span>WpIteratorForeachFunc = <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*const </span>gobject::GValue, gpointer)&gt;;
+</span><span class="kw">pub type </span>WpIteratorFoldFunc = <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*const </span>gobject::GValue, <span class="kw-2">*mut </span>gobject::GValue, gpointer) -&gt; gboolean&gt;;
+<span class="kw">pub type </span>WpIteratorForeachFunc = <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*const </span>gobject::GValue, gpointer)&gt;;
 
 <span class="comment">// Records
 </span><span class="attr">#[derive(Copy, Clone)]
@@ -2507,8 +2439,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpClientClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpClientClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpClientClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2517,17 +2449,17 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpComponentLoaderClass {
     <span class="kw">pub </span>parent_class: WpPluginClass,
-    <span class="kw">pub </span>supports_type: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpComponentLoader, <span class="kw-2">*const </span>c_char) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>load: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpComponentLoader, <span class="kw-2">*const </span>c_char, <span class="kw-2">*const </span>c_char, <span class="kw-2">*mut </span>glib::GVariant, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>supports_type: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpComponentLoader, <span class="kw-2">*const </span>c_char) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>load: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpComponentLoader, <span class="kw-2">*const </span>c_char, <span class="kw-2">*const </span>c_char, <span class="kw-2">*mut </span>glib::GVariant, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">6</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpComponentLoaderClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpComponentLoaderClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"supports_type"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.supports_type)
-         .field(<span class="string">"load"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.load)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpComponentLoaderClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;supports_type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.supports_type)
+         .field(<span class="string">&quot;load&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.load)
          .finish()
     }
 }
@@ -2540,8 +2472,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpCoreClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpCoreClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpCoreClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2554,8 +2486,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpDbusClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpDbusClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpDbusClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2568,8 +2500,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpDeviceClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpDeviceClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpDeviceClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2583,8 +2515,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpEndpointClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpEndpointClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpEndpointClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2597,8 +2529,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpFactoryClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpFactoryClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpFactoryClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2611,8 +2543,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpFeatureActivationTransitionClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpFeatureActivationTransitionClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpFeatureActivationTransitionClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2626,8 +2558,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpGlobalProxyClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpGlobalProxyClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpGlobalProxyClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2640,8 +2572,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplEndpointClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplEndpointClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplEndpointClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2654,8 +2586,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplMetadataClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplMetadataClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplMetadataClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2668,8 +2600,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplModuleClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplModuleClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplModuleClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2682,8 +2614,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplNodeClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplNodeClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplNodeClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2696,7 +2628,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpIterator {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpIterator @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpIterator @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -2705,22 +2637,22 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpIteratorMethods {
     <span class="kw">pub </span>version: u32,
-    <span class="kw">pub </span>reset: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator)&gt;,
-    <span class="kw">pub </span>next: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator, <span class="kw-2">*mut </span>gobject::GValue) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>fold: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator, WpIteratorFoldFunc, <span class="kw-2">*mut </span>gobject::GValue, gpointer) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>foreach: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator, WpIteratorForeachFunc, gpointer) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>finalize: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator)&gt;,
+    <span class="kw">pub </span>reset: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator)&gt;,
+    <span class="kw">pub </span>next: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator, <span class="kw-2">*mut </span>gobject::GValue) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>fold: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator, WpIteratorFoldFunc, <span class="kw-2">*mut </span>gobject::GValue, gpointer) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>foreach: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator, WpIteratorForeachFunc, gpointer) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>finalize: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpIterator)&gt;,
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpIteratorMethods {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpIteratorMethods @ {self:p}"</span>))
-         .field(<span class="string">"version"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.version)
-         .field(<span class="string">"reset"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.reset)
-         .field(<span class="string">"next"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.next)
-         .field(<span class="string">"fold"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.fold)
-         .field(<span class="string">"foreach"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.foreach)
-         .field(<span class="string">"finalize"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.finalize)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpIteratorMethods @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;version&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.version)
+         .field(<span class="string">&quot;reset&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.reset)
+         .field(<span class="string">&quot;next&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.next)
+         .field(<span class="string">&quot;fold&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.fold)
+         .field(<span class="string">&quot;foreach&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.foreach)
+         .field(<span class="string">&quot;finalize&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.finalize)
          .finish()
     }
 }
@@ -2733,8 +2665,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpLinkClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpLinkClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpLinkClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2748,8 +2680,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpMetadataClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpMetadataClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpMetadataClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2762,8 +2694,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpNodeClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpNodeClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpNodeClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2772,21 +2704,21 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpObjectClass {
     <span class="kw">pub </span>parent_class: gobject::GObjectClass,
-    <span class="kw">pub </span>get_supported_features: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject) -&gt; WpObjectFeatures&gt;,
-    <span class="kw">pub </span>activate_get_next_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject, <span class="kw-2">*mut </span>WpFeatureActivationTransition, c_uint, WpObjectFeatures) -&gt; c_uint&gt;,
-    <span class="kw">pub </span>activate_execute_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject, <span class="kw-2">*mut </span>WpFeatureActivationTransition, c_uint, WpObjectFeatures)&gt;,
-    <span class="kw">pub </span>deactivate: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject, WpObjectFeatures)&gt;,
+    <span class="kw">pub </span>get_supported_features: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject) -&gt; WpObjectFeatures&gt;,
+    <span class="kw">pub </span>activate_get_next_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject, <span class="kw-2">*mut </span>WpFeatureActivationTransition, c_uint, WpObjectFeatures) -&gt; c_uint&gt;,
+    <span class="kw">pub </span>activate_execute_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject, <span class="kw-2">*mut </span>WpFeatureActivationTransition, c_uint, WpObjectFeatures)&gt;,
+    <span class="kw">pub </span>deactivate: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpObject, WpObjectFeatures)&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">8</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpObjectClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpObjectClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"get_supported_features"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_supported_features)
-         .field(<span class="string">"activate_get_next_step"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.activate_get_next_step)
-         .field(<span class="string">"activate_execute_step"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.activate_execute_step)
-         .field(<span class="string">"deactivate"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.deactivate)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpObjectClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;get_supported_features&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_supported_features)
+         .field(<span class="string">&quot;activate_get_next_step&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.activate_get_next_step)
+         .field(<span class="string">&quot;activate_execute_step&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.activate_execute_step)
+         .field(<span class="string">&quot;deactivate&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.deactivate)
          .finish()
     }
 }
@@ -2799,7 +2731,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpObjectInterest {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpObjectInterest @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpObjectInterest @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -2812,8 +2744,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpObjectManagerClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpObjectManagerClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpObjectManagerClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2822,27 +2754,27 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpPipewireObjectInterface {
     <span class="kw">pub </span>parent_iface: gobject::GTypeInterface,
-    <span class="kw">pub </span>get_native_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject) -&gt; gconstpointer&gt;,
-    <span class="kw">pub </span>get_properties: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject) -&gt; <span class="kw-2">*mut </span>WpProperties&gt;,
-    <span class="kw">pub </span>get_param_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
-    <span class="kw">pub </span>enum_params: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*const </span>c_char, <span class="kw-2">*mut </span>WpSpaPod, <span class="kw-2">*mut </span>gio::GCancellable, gio::GAsyncReadyCallback, gpointer)&gt;,
-    <span class="kw">pub </span>enum_params_finish: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*mut </span>gio::GAsyncResult, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; <span class="kw-2">*mut </span>WpIterator&gt;,
-    <span class="kw">pub </span>enum_params_sync: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*const </span>c_char, <span class="kw-2">*mut </span>WpSpaPod) -&gt; <span class="kw-2">*mut </span>WpIterator&gt;,
-    <span class="kw">pub </span>set_param: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*const </span>c_char, u32, <span class="kw-2">*mut </span>WpSpaPod) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>get_native_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject) -&gt; gconstpointer&gt;,
+    <span class="kw">pub </span>get_properties: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject) -&gt; <span class="kw-2">*mut </span>WpProperties&gt;,
+    <span class="kw">pub </span>get_param_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
+    <span class="kw">pub </span>enum_params: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*const </span>c_char, <span class="kw-2">*mut </span>WpSpaPod, <span class="kw-2">*mut </span>gio::GCancellable, gio::GAsyncReadyCallback, gpointer)&gt;,
+    <span class="kw">pub </span>enum_params_finish: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*mut </span>gio::GAsyncResult, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; <span class="kw-2">*mut </span>WpIterator&gt;,
+    <span class="kw">pub </span>enum_params_sync: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*const </span>c_char, <span class="kw-2">*mut </span>WpSpaPod) -&gt; <span class="kw-2">*mut </span>WpIterator&gt;,
+    <span class="kw">pub </span>set_param: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPipewireObject, <span class="kw-2">*const </span>c_char, u32, <span class="kw-2">*mut </span>WpSpaPod) -&gt; gboolean&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">5</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPipewireObjectInterface {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpPipewireObjectInterface @ {self:p}"</span>))
-         .field(<span class="string">"parent_iface"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_iface)
-         .field(<span class="string">"get_native_info"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_native_info)
-         .field(<span class="string">"get_properties"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_properties)
-         .field(<span class="string">"get_param_info"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_param_info)
-         .field(<span class="string">"enum_params"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enum_params)
-         .field(<span class="string">"enum_params_finish"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enum_params_finish)
-         .field(<span class="string">"enum_params_sync"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enum_params_sync)
-         .field(<span class="string">"set_param"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.set_param)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpPipewireObjectInterface @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_iface&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_iface)
+         .field(<span class="string">&quot;get_native_info&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_native_info)
+         .field(<span class="string">&quot;get_properties&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_properties)
+         .field(<span class="string">&quot;get_param_info&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_param_info)
+         .field(<span class="string">&quot;enum_params&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enum_params)
+         .field(<span class="string">&quot;enum_params_finish&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enum_params_finish)
+         .field(<span class="string">&quot;enum_params_sync&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enum_params_sync)
+         .field(<span class="string">&quot;set_param&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.set_param)
          .finish()
     }
 }
@@ -2851,17 +2783,17 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpPluginClass {
     <span class="kw">pub </span>parent_class: WpObjectClass,
-    <span class="kw">pub </span>enable: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPlugin, <span class="kw-2">*mut </span>WpTransition)&gt;,
-    <span class="kw">pub </span>disable: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPlugin)&gt;,
+    <span class="kw">pub </span>enable: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPlugin, <span class="kw-2">*mut </span>WpTransition)&gt;,
+    <span class="kw">pub </span>disable: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpPlugin)&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">6</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPluginClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpPluginClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"enable"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enable)
-         .field(<span class="string">"disable"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.disable)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpPluginClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;enable&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enable)
+         .field(<span class="string">&quot;disable&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.disable)
          .finish()
     }
 }
@@ -2874,8 +2806,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPortClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpPortClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpPortClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -2888,7 +2820,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpProperties {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpProperties @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpProperties @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -2901,7 +2833,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPropertiesItem {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpPropertiesItem @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpPropertiesItem @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -2912,23 +2844,23 @@
     <span class="kw">pub </span>parent_class: WpObjectClass,
     <span class="kw">pub </span>pw_iface_type: <span class="kw-2">*const </span>c_char,
     <span class="kw">pub </span>pw_iface_version: u32,
-    <span class="kw">pub </span>pw_proxy_created: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy, <span class="kw-2">*mut </span>pw_proxy)&gt;,
-    <span class="kw">pub </span>pw_proxy_destroyed: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy)&gt;,
-    <span class="kw">pub </span>bound: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy, u32)&gt;,
-    <span class="kw">pub </span>error: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy, c_int, c_int, <span class="kw-2">*const </span>c_char)&gt;,
+    <span class="kw">pub </span>pw_proxy_created: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy, <span class="kw-2">*mut </span>pw_proxy)&gt;,
+    <span class="kw">pub </span>pw_proxy_destroyed: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy)&gt;,
+    <span class="kw">pub </span>bound: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy, u32)&gt;,
+    <span class="kw">pub </span>error: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpProxy, c_int, c_int, <span class="kw-2">*const </span>c_char)&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">6</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpProxyClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpProxyClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"pw_iface_type"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_iface_type)
-         .field(<span class="string">"pw_iface_version"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_iface_version)
-         .field(<span class="string">"pw_proxy_created"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_proxy_created)
-         .field(<span class="string">"pw_proxy_destroyed"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_proxy_destroyed)
-         .field(<span class="string">"bound"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.bound)
-         .field(<span class="string">"error"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.error)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpProxyClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;pw_iface_type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_iface_type)
+         .field(<span class="string">&quot;pw_iface_version&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_iface_version)
+         .field(<span class="string">&quot;pw_proxy_created&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_proxy_created)
+         .field(<span class="string">&quot;pw_proxy_destroyed&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.pw_proxy_destroyed)
+         .field(<span class="string">&quot;bound&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.bound)
+         .field(<span class="string">&quot;error&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.error)
          .finish()
     }
 }
@@ -2937,27 +2869,27 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSessionItemClass {
     <span class="kw">pub </span>parent_class: WpObjectClass,
-    <span class="kw">pub </span>reset: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem)&gt;,
-    <span class="kw">pub </span>configure: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, <span class="kw-2">*mut </span>WpProperties) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>get_associated_proxy: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, GType) -&gt; gpointer&gt;,
-    <span class="kw">pub </span>disable_active: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem)&gt;,
-    <span class="kw">pub </span>disable_exported: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem)&gt;,
-    <span class="kw">pub </span>enable_active: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, <span class="kw-2">*mut </span>WpTransition)&gt;,
-    <span class="kw">pub </span>enable_exported: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, <span class="kw-2">*mut </span>WpTransition)&gt;,
+    <span class="kw">pub </span>reset: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem)&gt;,
+    <span class="kw">pub </span>configure: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, <span class="kw-2">*mut </span>WpProperties) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>get_associated_proxy: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, GType) -&gt; gpointer&gt;,
+    <span class="kw">pub </span>disable_active: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem)&gt;,
+    <span class="kw">pub </span>disable_exported: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem)&gt;,
+    <span class="kw">pub </span>enable_active: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, <span class="kw-2">*mut </span>WpTransition)&gt;,
+    <span class="kw">pub </span>enable_exported: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSessionItem, <span class="kw-2">*mut </span>WpTransition)&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">5</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSessionItemClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSessionItemClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"reset"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.reset)
-         .field(<span class="string">"configure"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.configure)
-         .field(<span class="string">"get_associated_proxy"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_associated_proxy)
-         .field(<span class="string">"disable_active"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.disable_active)
-         .field(<span class="string">"disable_exported"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.disable_exported)
-         .field(<span class="string">"enable_active"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enable_active)
-         .field(<span class="string">"enable_exported"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enable_exported)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSessionItemClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;reset&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.reset)
+         .field(<span class="string">&quot;configure&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.configure)
+         .field(<span class="string">&quot;get_associated_proxy&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_associated_proxy)
+         .field(<span class="string">&quot;disable_active&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.disable_active)
+         .field(<span class="string">&quot;disable_exported&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.disable_exported)
+         .field(<span class="string">&quot;enable_active&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enable_active)
+         .field(<span class="string">&quot;enable_exported&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.enable_exported)
          .finish()
     }
 }
@@ -2966,19 +2898,19 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSiAcquisitionInterface {
     <span class="kw">pub </span>interface: gobject::GTypeInterface,
-    <span class="kw">pub </span>acquire: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAcquisition, <span class="kw-2">*mut </span>WpSiLink, <span class="kw-2">*mut </span>WpSiLinkable, gio::GAsyncReadyCallback, gpointer)&gt;,
-    <span class="kw">pub </span>acquire_finish: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAcquisition, <span class="kw-2">*mut </span>gio::GAsyncResult, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>release: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAcquisition, <span class="kw-2">*mut </span>WpSiLink, <span class="kw-2">*mut </span>WpSiLinkable)&gt;,
+    <span class="kw">pub </span>acquire: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAcquisition, <span class="kw-2">*mut </span>WpSiLink, <span class="kw-2">*mut </span>WpSiLinkable, gio::GAsyncReadyCallback, gpointer)&gt;,
+    <span class="kw">pub </span>acquire_finish: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAcquisition, <span class="kw-2">*mut </span>gio::GAsyncResult, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>release: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAcquisition, <span class="kw-2">*mut </span>WpSiLink, <span class="kw-2">*mut </span>WpSiLinkable)&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">5</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiAcquisitionInterface {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiAcquisitionInterface @ {self:p}"</span>))
-         .field(<span class="string">"interface"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
-         .field(<span class="string">"acquire"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.acquire)
-         .field(<span class="string">"acquire_finish"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.acquire_finish)
-         .field(<span class="string">"release"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.release)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiAcquisitionInterface @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;interface&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
+         .field(<span class="string">&quot;acquire&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.acquire)
+         .field(<span class="string">&quot;acquire_finish&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.acquire_finish)
+         .field(<span class="string">&quot;release&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.release)
          .finish()
     }
 }
@@ -2987,21 +2919,21 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSiAdapterInterface {
     <span class="kw">pub </span>interface: gobject::GTypeInterface,
-    <span class="kw">pub </span>get_ports_format: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter, <span class="kw-2">*mut *const </span>c_char) -&gt; <span class="kw-2">*mut </span>WpSpaPod&gt;,
-    <span class="kw">pub </span>set_ports_format: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter, <span class="kw-2">*mut </span>WpSpaPod, <span class="kw-2">*const </span>c_char, gio::GAsyncReadyCallback, gpointer)&gt;,
-    <span class="kw">pub </span>set_ports_format_finish: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter, <span class="kw-2">*mut </span>gio::GAsyncResult, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean&gt;,
-    <span class="kw">pub </span>get_ports_state: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter) -&gt; WpSiAdapterPortsState&gt;,
+    <span class="kw">pub </span>get_ports_format: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter, <span class="kw-2">*mut *const </span>c_char) -&gt; <span class="kw-2">*mut </span>WpSpaPod&gt;,
+    <span class="kw">pub </span>set_ports_format: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter, <span class="kw-2">*mut </span>WpSpaPod, <span class="kw-2">*const </span>c_char, gio::GAsyncReadyCallback, gpointer)&gt;,
+    <span class="kw">pub </span>set_ports_format_finish: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter, <span class="kw-2">*mut </span>gio::GAsyncResult, <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean&gt;,
+    <span class="kw">pub </span>get_ports_state: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiAdapter) -&gt; WpSiAdapterPortsState&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">4</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiAdapterInterface {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiAdapterInterface @ {self:p}"</span>))
-         .field(<span class="string">"interface"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
-         .field(<span class="string">"get_ports_format"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_ports_format)
-         .field(<span class="string">"set_ports_format"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.set_ports_format)
-         .field(<span class="string">"set_ports_format_finish"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.set_ports_format_finish)
-         .field(<span class="string">"get_ports_state"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_ports_state)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiAdapterInterface @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;interface&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
+         .field(<span class="string">&quot;get_ports_format&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_ports_format)
+         .field(<span class="string">&quot;set_ports_format&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.set_ports_format)
+         .field(<span class="string">&quot;set_ports_format_finish&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.set_ports_format_finish)
+         .field(<span class="string">&quot;get_ports_state&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_ports_state)
          .finish()
     }
 }
@@ -3010,17 +2942,17 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSiEndpointInterface {
     <span class="kw">pub </span>interface: gobject::GTypeInterface,
-    <span class="kw">pub </span>get_registration_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiEndpoint) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
-    <span class="kw">pub </span>get_properties: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiEndpoint) -&gt; <span class="kw-2">*mut </span>WpProperties&gt;,
+    <span class="kw">pub </span>get_registration_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiEndpoint) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
+    <span class="kw">pub </span>get_properties: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiEndpoint) -&gt; <span class="kw-2">*mut </span>WpProperties&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">6</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiEndpointInterface {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiEndpointInterface @ {self:p}"</span>))
-         .field(<span class="string">"interface"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
-         .field(<span class="string">"get_registration_info"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_registration_info)
-         .field(<span class="string">"get_properties"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_properties)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiEndpointInterface @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;interface&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
+         .field(<span class="string">&quot;get_registration_info&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_registration_info)
+         .field(<span class="string">&quot;get_properties&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_properties)
          .finish()
     }
 }
@@ -3029,15 +2961,15 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSiFactoryClass {
     <span class="kw">pub </span>parent_class: gobject::GObjectClass,
-    <span class="kw">pub </span>construct: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiFactory, <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*mut </span>WpSessionItem&gt;,
+    <span class="kw">pub </span>construct: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiFactory, <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*mut </span>WpSessionItem&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">7</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiFactoryClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiFactoryClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"construct"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.construct)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiFactoryClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;construct&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.construct)
          .finish()
     }
 }
@@ -3046,21 +2978,21 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSiLinkInterface {
     <span class="kw">pub </span>interface: gobject::GTypeInterface,
-    <span class="kw">pub </span>get_registration_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
-    <span class="kw">pub </span>get_properties: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>WpProperties&gt;,
-    <span class="kw">pub </span>get_out_item: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>WpSiLinkable&gt;,
-    <span class="kw">pub </span>get_in_item: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>WpSiLinkable&gt;,
+    <span class="kw">pub </span>get_registration_info: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
+    <span class="kw">pub </span>get_properties: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>WpProperties&gt;,
+    <span class="kw">pub </span>get_out_item: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>WpSiLinkable&gt;,
+    <span class="kw">pub </span>get_in_item: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLink) -&gt; <span class="kw-2">*mut </span>WpSiLinkable&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">4</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiLinkInterface {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiLinkInterface @ {self:p}"</span>))
-         .field(<span class="string">"interface"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
-         .field(<span class="string">"get_registration_info"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_registration_info)
-         .field(<span class="string">"get_properties"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_properties)
-         .field(<span class="string">"get_out_item"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_out_item)
-         .field(<span class="string">"get_in_item"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_in_item)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiLinkInterface @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;interface&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
+         .field(<span class="string">&quot;get_registration_info&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_registration_info)
+         .field(<span class="string">&quot;get_properties&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_properties)
+         .field(<span class="string">&quot;get_out_item&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_out_item)
+         .field(<span class="string">&quot;get_in_item&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_in_item)
          .finish()
     }
 }
@@ -3069,17 +3001,17 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpSiLinkableInterface {
     <span class="kw">pub </span>interface: gobject::GTypeInterface,
-    <span class="kw">pub </span>get_ports: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLinkable, <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
-    <span class="kw">pub </span>get_acquisition: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLinkable) -&gt; <span class="kw-2">*mut </span>WpSiAcquisition&gt;,
+    <span class="kw">pub </span>get_ports: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLinkable, <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*mut </span>glib::GVariant&gt;,
+    <span class="kw">pub </span>get_acquisition: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpSiLinkable) -&gt; <span class="kw-2">*mut </span>WpSiAcquisition&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">6</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiLinkableInterface {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiLinkableInterface @ {self:p}"</span>))
-         .field(<span class="string">"interface"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
-         .field(<span class="string">"get_ports"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_ports)
-         .field(<span class="string">"get_acquisition"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_acquisition)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiLinkableInterface @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;interface&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.interface)
+         .field(<span class="string">&quot;get_ports&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_ports)
+         .field(<span class="string">&quot;get_acquisition&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_acquisition)
          .finish()
     }
 }
@@ -3092,8 +3024,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaDeviceClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaDeviceClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaDeviceClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -3106,7 +3038,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaJson {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaJson @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaJson @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3119,7 +3051,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaJsonBuilder {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaJsonBuilder @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaJsonBuilder @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3132,7 +3064,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaJsonParser {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaJsonParser @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaJsonParser @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3145,7 +3077,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaPod {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaPod @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaPod @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3158,7 +3090,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaPodBuilder {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaPodBuilder @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaPodBuilder @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3171,7 +3103,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaPodParser {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaPodParser @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaPodParser @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3184,8 +3116,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpStateClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpStateClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpStateClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
          .finish()
     }
 }
@@ -3194,17 +3126,17 @@
 #[repr(C)]
 </span><span class="kw">pub struct </span>WpTransitionClass {
     <span class="kw">pub </span>parent_class: gobject::GObjectClass,
-    <span class="kw">pub </span>get_next_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpTransition, c_uint) -&gt; c_uint&gt;,
-    <span class="kw">pub </span>execute_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpTransition, c_uint)&gt;,
+    <span class="kw">pub </span>get_next_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpTransition, c_uint) -&gt; c_uint&gt;,
+    <span class="kw">pub </span>execute_step: <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>WpTransition, c_uint)&gt;,
     <span class="kw">pub </span>_wp_padding: [gpointer; <span class="number">6</span>],
 }
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpTransitionClass {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpTransitionClass @ {self:p}"</span>))
-         .field(<span class="string">"parent_class"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
-         .field(<span class="string">"get_next_step"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_next_step)
-         .field(<span class="string">"execute_step"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.execute_step)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpTransitionClass @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_class&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_class)
+         .field(<span class="string">&quot;get_next_step&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.get_next_step)
+         .field(<span class="string">&quot;execute_step&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.execute_step)
          .finish()
     }
 }
@@ -3218,7 +3150,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpClient {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpClient @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpClient @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3231,8 +3163,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpComponentLoader {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpComponentLoader @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpComponentLoader @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3245,7 +3177,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpCore {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpCore @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpCore @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3258,7 +3190,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpDbus {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpDbus @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpDbus @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3271,7 +3203,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpDevice {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpDevice @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpDevice @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3284,8 +3216,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpEndpoint {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpEndpoint @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpEndpoint @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3298,7 +3230,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpFactory {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpFactory @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpFactory @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3311,7 +3243,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpFeatureActivationTransition {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpFeatureActivationTransition @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpFeatureActivationTransition @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3324,8 +3256,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpGlobalProxy {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpGlobalProxy @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpGlobalProxy @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3338,7 +3270,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplEndpoint {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplEndpoint @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplEndpoint @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3351,7 +3283,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplMetadata {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplMetadata @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplMetadata @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3364,7 +3296,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplModule {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplModule @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplModule @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3377,7 +3309,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpImplNode {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpImplNode @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpImplNode @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3390,7 +3322,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpLink {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpLink @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpLink @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3403,8 +3335,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpMetadata {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpMetadata @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpMetadata @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3417,7 +3349,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpNode {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpNode @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpNode @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3430,8 +3362,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpObject {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpObject @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpObject @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3444,7 +3376,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpObjectManager {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpObjectManager @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpObjectManager @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3457,8 +3389,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPlugin {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpPlugin @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpPlugin @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3471,7 +3403,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPort {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpPort @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpPort @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3484,8 +3416,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpProxy {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpProxy @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpProxy @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3498,8 +3430,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSessionItem {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSessionItem @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSessionItem @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3512,8 +3444,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiFactory {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSiFactory @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSiFactory @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3526,7 +3458,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSpaDevice {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpSpaDevice @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpSpaDevice @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3539,7 +3471,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpState {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpState @ {self:p}"</span>))
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpState @ {self:p}&quot;</span>))
          .finish()
     }
 }
@@ -3552,8 +3484,8 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpTransition {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"WpTransition @ {self:p}"</span>))
-         .field(<span class="string">"parent_instance"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;WpTransition @ {self:p}&quot;</span>))
+         .field(<span class="string">&quot;parent_instance&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.parent_instance)
          .finish()
     }
 }
@@ -3567,7 +3499,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpPipewireObject {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">"WpPipewireObject @ {self:p}"</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;WpPipewireObject @ {self:p}&quot;</span>)
     }
 }
 
@@ -3579,7 +3511,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiAcquisition {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">"WpSiAcquisition @ {self:p}"</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;WpSiAcquisition @ {self:p}&quot;</span>)
     }
 }
 
@@ -3591,7 +3523,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiAdapter {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">"WpSiAdapter @ {self:p}"</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;WpSiAdapter @ {self:p}&quot;</span>)
     }
 }
 
@@ -3603,7 +3535,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiEndpoint {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">"WpSiEndpoint @ {self:p}"</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;WpSiEndpoint @ {self:p}&quot;</span>)
     }
 }
 
@@ -3615,7 +3547,7 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiLink {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">"WpSiLink @ {self:p}"</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;WpSiLink @ {self:p}&quot;</span>)
     }
 }
 
@@ -3627,13 +3559,13 @@
 
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>WpSiLinkable {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">"WpSiLinkable @ {self:p}"</span>)
+        <span class="macro">write!</span>(f, <span class="string">&quot;WpSiLinkable @ {self:p}&quot;</span>)
     }
 }
 
 
-<span class="attr">#[link(name = <span class="string">"wireplumber-0.4"</span>)]
-</span><span class="kw">extern </span><span class="string">"C" </span>{
+<span class="attr">#[link(name = <span class="string">&quot;wireplumber-0.4&quot;</span>)]
+</span><span class="kw">extern </span><span class="string">&quot;C&quot; </span>{
 
     <span class="comment">//=========================================================================
     // WpConstraintType
@@ -3648,8 +3580,8 @@
     <span class="comment">//=========================================================================
     // WpDBusState
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_state_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
@@ -3665,8 +3597,8 @@
     <span class="comment">//=========================================================================
     // WpLinkState
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_link_state_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
@@ -3677,8 +3609,8 @@
     <span class="comment">//=========================================================================
     // WpSiAdapterPortsState
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_si_adapter_ports_state_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
@@ -3689,8 +3621,8 @@
     <span class="comment">//=========================================================================
     // WpDbusFeatures
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_features_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
@@ -3711,8 +3643,8 @@
     <span class="comment">//=========================================================================
     // WpLinkFeatures
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_link_features_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
@@ -3803,8 +3735,8 @@
     <span class="kw">pub fn </span>wp_properties_copy(other: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpProperties;
     <span class="kw">pub fn </span>wp_properties_ensure_unique_owner(self_: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpProperties;
     <span class="kw">pub fn </span>wp_properties_get(self_: <span class="kw-2">*mut </span>WpProperties, key: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_properties_get_count(self_: <span class="kw-2">*mut </span>WpProperties) -&gt; c_uint;
     <span class="kw">pub fn </span>wp_properties_matches(self_: <span class="kw-2">*mut </span>WpProperties, other: <span class="kw-2">*mut </span>WpProperties) -&gt; gboolean;
     <span class="kw">pub fn </span>wp_properties_new_iterator(self_: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpIterator;
@@ -3829,236 +3761,236 @@
     // WpPropertiesItem
     //=========================================================================
     </span><span class="kw">pub fn </span>wp_properties_item_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_properties_item_get_key(self_: <span class="kw-2">*mut </span>WpPropertiesItem) -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_properties_item_get_value(self_: <span class="kw-2">*mut </span>WpPropertiesItem) -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_properties_item_ref(self_: <span class="kw-2">*mut </span>WpPropertiesItem) -&gt; <span class="kw-2">*mut </span>WpPropertiesItem;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_properties_item_unref(self_: <span class="kw-2">*mut </span>WpPropertiesItem);
 
     <span class="comment">//=========================================================================
     // WpSpaJson
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_array(format: <span class="kw-2">*const </span>c_char, ...) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_new_array_valist(format: *const c_char, args: /*Unimplemented*/va_list) -&gt; *mut WpSpaJson;
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_boolean(value: gboolean) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_float(value: c_float) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_from_string(json_str: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_from_stringn(json_str: <span class="kw-2">*const </span>c_char, len: size_t) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_int(value: c_int) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_null() -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_object(key: <span class="kw-2">*const </span>c_char, format: <span class="kw-2">*const </span>c_char, ...) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_new_object_valist(key: *const c_char, format: *const c_char, args: /*Unimplemented*/va_list) -&gt; *mut WpSpaJson;
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_string(value: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_wrap(json: <span class="kw-2">*mut </span>spa_json) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_copy(other: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_ensure_unique_owner(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_get_data(self_: <span class="kw-2">*const </span>WpSpaJson) -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_get_size(self_: <span class="kw-2">*const </span>WpSpaJson) -&gt; size_t;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_get_spa_json(self_: <span class="kw-2">*const </span>WpSpaJson) -&gt; <span class="kw-2">*const </span>spa_json;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_array(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_boolean(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_float(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_int(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_null(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_object(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_string(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_is_unique_owner(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_new_iterator(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>WpIterator;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_object_get(self_: <span class="kw-2">*mut </span>WpSpaJson, ...) -&gt; gboolean;
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_object_get_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -&gt; gboolean;
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parse_array(self_: <span class="kw-2">*mut </span>WpSpaJson, ...) -&gt; gboolean;
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_parse_array_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -&gt; gboolean;
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parse_boolean(self_: <span class="kw-2">*mut </span>WpSpaJson, value: <span class="kw-2">*mut </span>gboolean) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parse_float(self_: <span class="kw-2">*mut </span>WpSpaJson, value: <span class="kw-2">*mut </span>c_float) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parse_int(self_: <span class="kw-2">*mut </span>WpSpaJson, value: <span class="kw-2">*mut </span>c_int) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parse_object(self_: <span class="kw-2">*mut </span>WpSpaJson, ...) -&gt; gboolean;
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_parse_object_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -&gt; gboolean;
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parse_string(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_ref(self_: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_to_string(self_: <span class="kw-2">*const </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_unref(self_: <span class="kw-2">*mut </span>WpSpaJson);
 
     <span class="comment">//=========================================================================
     // WpSpaJsonBuilder
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_new_array() -&gt; <span class="kw-2">*mut </span>WpSpaJsonBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_new_object() -&gt; <span class="kw-2">*mut </span>WpSpaJsonBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, ...);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_boolean(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, value: gboolean);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_float(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, value: c_float);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_int(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, value: c_int);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_json(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, json: <span class="kw-2">*mut </span>WpSpaJson);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_null(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_property(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, key: <span class="kw-2">*const </span>c_char);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_add_string(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder, value: <span class="kw-2">*const </span>c_char);
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_builder_add_valist(self_: *mut WpSpaJsonBuilder, args: /*Unimplemented*/va_list);
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_end(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_ref(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder) -&gt; <span class="kw-2">*mut </span>WpSpaJsonBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_builder_unref(self_: <span class="kw-2">*mut </span>WpSpaJsonBuilder);
 
     <span class="comment">//=========================================================================
     // WpSpaJsonParser
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_new_array(json: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>WpSpaJsonParser;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_new_object(json: <span class="kw-2">*mut </span>WpSpaJson) -&gt; <span class="kw-2">*mut </span>WpSpaJsonParser;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_end(self_: <span class="kw-2">*mut </span>WpSpaJsonParser);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get(self_: <span class="kw-2">*mut </span>WpSpaJsonParser, ...) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_boolean(self_: <span class="kw-2">*mut </span>WpSpaJsonParser, value: <span class="kw-2">*mut </span>gboolean) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_float(self_: <span class="kw-2">*mut </span>WpSpaJsonParser, value: <span class="kw-2">*mut </span>c_float) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_int(self_: <span class="kw-2">*mut </span>WpSpaJsonParser, value: <span class="kw-2">*mut </span>c_int) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_json(self_: <span class="kw-2">*mut </span>WpSpaJsonParser) -&gt; <span class="kw-2">*mut </span>WpSpaJson;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_null(self_: <span class="kw-2">*mut </span>WpSpaJsonParser) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_get_string(self_: <span class="kw-2">*mut </span>WpSpaJsonParser) -&gt; <span class="kw-2">*mut </span>c_char;
-    <span class="comment">//#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    <span class="comment">//#[cfg(any(feature = &quot;v0_4_8&quot;, feature = &quot;dox&quot;))]
+    //#[cfg_attr(feature = &quot;dox&quot;, doc(cfg(feature = &quot;v0_4_8&quot;)))]
     //pub fn wp_spa_json_parser_get_valist(self_: *mut WpSpaJsonParser, args: /*Unimplemented*/va_list) -&gt; gboolean;
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_ref(self_: <span class="kw-2">*mut </span>WpSpaJsonParser) -&gt; <span class="kw-2">*mut </span>WpSpaJsonParser;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_8"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_8"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_json_parser_unref(self_: <span class="kw-2">*mut </span>WpSpaJsonParser);
 
     <span class="comment">//=========================================================================
@@ -4238,8 +4170,8 @@
     <span class="kw">pub fn </span>wp_core_get_remote_properties(self_: <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*mut </span>WpProperties;
     <span class="kw">pub fn </span>wp_core_get_remote_user_name(self_: <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*const </span>c_char;
     <span class="kw">pub fn </span>wp_core_get_remote_version(self_: <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_core_get_vm_type(self_: <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*mut </span>c_char;
     <span class="kw">pub fn </span>wp_core_idle_add(self_: <span class="kw-2">*mut </span>WpCore, source: <span class="kw-2">*mut *mut </span>glib::GSource, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     <span class="kw">pub fn </span>wp_core_idle_add_closure(self_: <span class="kw-2">*mut </span>WpCore, source: <span class="kw-2">*mut *mut </span>glib::GSource, closure: <span class="kw-2">*mut </span>gobject::GClosure);
@@ -4247,8 +4179,8 @@
     <span class="kw">pub fn </span>wp_core_is_connected(self_: <span class="kw-2">*mut </span>WpCore) -&gt; gboolean;
     <span class="kw">pub fn </span>wp_core_load_component(self_: <span class="kw-2">*mut </span>WpCore, component: <span class="kw-2">*const </span>c_char, type_: <span class="kw-2">*const </span>c_char, args: <span class="kw-2">*mut </span>glib::GVariant, error: <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean;
     <span class="kw">pub fn </span>wp_core_sync(self_: <span class="kw-2">*mut </span>WpCore, cancellable: <span class="kw-2">*mut </span>gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer) -&gt; gboolean;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_6"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_6"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_core_sync_closure(self_: <span class="kw-2">*mut </span>WpCore, cancellable: <span class="kw-2">*mut </span>gio::GCancellable, closure: <span class="kw-2">*mut </span>gobject::GClosure) -&gt; gboolean;
     <span class="kw">pub fn </span>wp_core_sync_finish(self_: <span class="kw-2">*mut </span>WpCore, res: <span class="kw-2">*mut </span>gio::GAsyncResult, error: <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean;
     <span class="kw">pub fn </span>wp_core_timeout_add(self_: <span class="kw-2">*mut </span>WpCore, source: <span class="kw-2">*mut *mut </span>glib::GSource, timeout_ms: c_uint, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
@@ -4258,20 +4190,20 @@
     <span class="comment">//=========================================================================
     // WpDbus
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_get_instance(core: <span class="kw-2">*mut </span>WpCore, bus_type: gio::GBusType) -&gt; <span class="kw-2">*mut </span>WpDbus;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_get_bus_type(self_: <span class="kw-2">*mut </span>WpDbus) -&gt; gio::GBusType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_get_connection(self_: <span class="kw-2">*mut </span>WpDbus) -&gt; <span class="kw-2">*mut </span>gio::GDBusConnection;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_dbus_get_state(self_: <span class="kw-2">*mut </span>WpDbus) -&gt; WpDBusState;
 
     <span class="comment">//=========================================================================
@@ -4291,8 +4223,8 @@
     <span class="comment">//=========================================================================
     // WpFactory
     //=========================================================================
-    </span><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_5"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_5"</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_5&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_5&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_factory_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
@@ -4321,16 +4253,16 @@
     //=========================================================================
     </span><span class="kw">pub fn </span>wp_impl_metadata_get_type() -&gt; GType;
     <span class="kw">pub fn </span>wp_impl_metadata_new(core: <span class="kw-2">*mut </span>WpCore) -&gt; <span class="kw-2">*mut </span>WpImplMetadata;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_3"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_3"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_3&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_3&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_impl_metadata_new_full(core: <span class="kw-2">*mut </span>WpCore, name: <span class="kw-2">*const </span>c_char, properties: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpImplMetadata;
 
     <span class="comment">//=========================================================================
     // WpImplModule
     //=========================================================================
     </span><span class="kw">pub fn </span>wp_impl_module_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_impl_module_load(core: <span class="kw-2">*mut </span>WpCore, name: <span class="kw-2">*const </span>c_char, arguments: <span class="kw-2">*const </span>c_char, properties: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpImplModule;
 
     <span class="comment">//=========================================================================
@@ -4346,8 +4278,8 @@
     </span><span class="kw">pub fn </span>wp_link_get_type() -&gt; GType;
     <span class="kw">pub fn </span>wp_link_new_from_factory(core: <span class="kw-2">*mut </span>WpCore, factory_name: <span class="kw-2">*const </span>c_char, properties: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpLink;
     <span class="kw">pub fn </span>wp_link_get_linked_object_ids(self_: <span class="kw-2">*mut </span>WpLink, output_node: <span class="kw-2">*mut </span>u32, output_port: <span class="kw-2">*mut </span>u32, input_node: <span class="kw-2">*mut </span>u32, input_port: <span class="kw-2">*mut </span>u32);
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_link_get_state(self_: <span class="kw-2">*mut </span>WpLink, error: <span class="kw-2">*mut *const </span>c_char) -&gt; WpLinkState;
 
     <span class="comment">//=========================================================================
@@ -4380,8 +4312,8 @@
     // WpObject
     //=========================================================================
     </span><span class="kw">pub fn </span>wp_object_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_6"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_6"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_object_abort_activation(self_: <span class="kw-2">*mut </span>WpObject, msg: <span class="kw-2">*const </span>c_char);
     <span class="kw">pub fn </span>wp_object_activate(self_: <span class="kw-2">*mut </span>WpObject, features: WpObjectFeatures, cancellable: <span class="kw-2">*mut </span>gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
     <span class="kw">pub fn </span>wp_object_activate_closure(self_: <span class="kw-2">*mut </span>WpObject, features: WpObjectFeatures, cancellable: <span class="kw-2">*mut </span>gio::GCancellable, closure: <span class="kw-2">*mut </span>gobject::GClosure);
@@ -4467,8 +4399,8 @@
     <span class="kw">pub fn </span>wp_spa_device_new_wrap(core: <span class="kw-2">*mut </span>WpCore, spa_device_handle: gpointer, properties: <span class="kw-2">*mut </span>WpProperties) -&gt; <span class="kw-2">*mut </span>WpSpaDevice;
     <span class="kw">pub fn </span>wp_spa_device_get_managed_object(self_: <span class="kw-2">*mut </span>WpSpaDevice, id: c_uint) -&gt; <span class="kw-2">*mut </span>gobject::GObject;
     <span class="kw">pub fn </span>wp_spa_device_get_properties(self_: <span class="kw-2">*mut </span>WpSpaDevice) -&gt; <span class="kw-2">*mut </span>WpProperties;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_11"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_spa_device_new_managed_object_iterator(self_: <span class="kw-2">*mut </span>WpSpaDevice) -&gt; <span class="kw-2">*mut </span>WpIterator;
     <span class="kw">pub fn </span>wp_spa_device_store_managed_object(self_: <span class="kw-2">*mut </span>WpSpaDevice, id: c_uint, object: <span class="kw-2">*mut </span>gobject::GObject);
 
@@ -4541,8 +4473,8 @@
     //=========================================================================
     </span><span class="kw">pub fn </span>wp_si_adapter_get_type() -&gt; GType;
     <span class="kw">pub fn </span>wp_si_adapter_get_ports_format(self_: <span class="kw-2">*mut </span>WpSiAdapter, mode: <span class="kw-2">*mut *const </span>c_char) -&gt; <span class="kw-2">*mut </span>WpSpaPod;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_10"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_si_adapter_get_ports_state(self_: <span class="kw-2">*mut </span>WpSiAdapter) -&gt; WpSiAdapterPortsState;
     <span class="kw">pub fn </span>wp_si_adapter_set_ports_format(self_: <span class="kw-2">*mut </span>WpSiAdapter, format: <span class="kw-2">*mut </span>WpSpaPod, mode: <span class="kw-2">*const </span>c_char, callback: gio::GAsyncReadyCallback, data: gpointer);
     <span class="kw">pub fn </span>wp_si_adapter_set_ports_format_finish(self_: <span class="kw-2">*mut </span>WpSiAdapter, res: <span class="kw-2">*mut </span>gio::GAsyncResult, error: <span class="kw-2">*mut *mut </span>glib::GError) -&gt; gboolean;
@@ -4574,16 +4506,16 @@
     // Other functions
     //=========================================================================
     </span><span class="kw">pub fn </span>wp_domain_library_quark() -&gt; glib::GQuark;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_find_file(dirs: WpLookupDirs, filename: <span class="kw-2">*const </span>c_char, subdir: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*mut </span>c_char;
     <span class="kw">pub fn </span>wp_get_config_dir() -&gt; <span class="kw-2">*const </span>c_char;
     <span class="kw">pub fn </span>wp_get_data_dir() -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_12"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_12"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_12&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_get_library_api_version() -&gt; <span class="kw-2">*const </span>c_char;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_12"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_12"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_12&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_get_library_version() -&gt; <span class="kw-2">*const </span>c_char;
     <span class="kw">pub fn </span>wp_get_module_dir() -&gt; <span class="kw-2">*const </span>c_char;
     <span class="kw">pub fn </span>wp_init(flags: WpInitFlags);
@@ -4591,8 +4523,8 @@
     <span class="kw">pub fn </span>wp_log_set_level(level_str: <span class="kw-2">*const </span>c_char);
     <span class="kw">pub fn </span>wp_log_structured_standard(log_domain: <span class="kw-2">*const </span>c_char, log_level: glib::GLogLevelFlags, file: <span class="kw-2">*const </span>c_char, line: <span class="kw-2">*const </span>c_char, func: <span class="kw-2">*const </span>c_char, object_type: GType, object: gconstpointer, message_format: <span class="kw-2">*const </span>c_char, ...);
     <span class="kw">pub fn </span>wp_log_writer_default(log_level: glib::GLogLevelFlags, fields: <span class="kw-2">*const </span>glib::GLogField, n_fields: size_t, user_data: gpointer) -&gt; glib::GLogWriterOutput;
-    <span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>, feature = <span class="string">"dox"</span>))]
-    #[cfg_attr(feature = <span class="string">"dox"</span>, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>wp_new_files_iterator(dirs: WpLookupDirs, subdir: <span class="kw-2">*const </span>c_char, suffix: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*mut </span>WpIterator;
     <span class="kw">pub fn </span>wp_spa_dynamic_id_table_register(name: <span class="kw-2">*const </span>c_char, values: <span class="kw-2">*const </span>spa_type_info) -&gt; WpSpaIdTable;
     <span class="kw">pub fn </span>wp_spa_dynamic_type_deinit();
@@ -4616,12 +4548,5 @@
     <span class="kw">pub fn </span>wp_spa_log_get_instance() -&gt; <span class="kw-2">*mut </span>spa_log;
 
 }
-</code></pre>
-     </div>
-    </section>
-   </div>
-  </main>
-  <div data-current-crate="wireplumber_sys" data-resource-suffix="" data-root-path="../../../../../" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-css="settings-a66f7524084a489a.css" data-settings-js="settings-3a0b9947ba1bd99a.js" data-static-root-path="../../../../../static.files/" data-themes="" id="rustdoc-vars">
-  </div>
- </body>
-</html>
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="wireplumber_sys" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
