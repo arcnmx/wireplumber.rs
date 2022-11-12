@@ -1,6 +1,6 @@
 [package]
 name = "wireplumber"
-version = "0.1.0"
+version = "0.1.0" # keep in sync with documentation and html_root_url
 authors = ["arcnmx"]
 build = "build.rs"
 edition = "2021"
@@ -8,17 +8,22 @@ rust-version = "1.60"
 
 description = "WirePlumber bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
+categories = ["multimedia::audio", "api-bindings"]
 
-documentation = "http://arcnmx.github.io/wireplumber.rs/wireplumber/"
+documentation = "http://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber/"
 repository = "https://github.com/arcnmx/wireplumber.rs"
-readme = "README.md"
+readme = "src/README.md"
 license = "MIT"
+license-file = "COPYING"
+
+[metadata]
+branches = ["main", "dev"]
 
 [package.metadata.docs.rs]
 features = ["dox", "v0_4_12", "experimental", "glib-signal", "libspa", "futures", "serde"]
 
 [badges]
-maintenance = { status = "passively-maintained" }
+maintenance = { status = "actively-maintained" }
 
 [dependencies]
 libc = "0.2"

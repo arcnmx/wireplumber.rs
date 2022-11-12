@@ -12,15 +12,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { flakelib, nixpkgs, ... }@inputs: let
+  outputs = { self, flakelib, nixpkgs, ... }@inputs: let
     nixlib = nixpkgs.lib;
+    impure = builtins ? currentSystem;
   in flakelib {
     inherit inputs;
+    systems = [ "x86_64-linux" "aarch64-linux" ];
     devShells = {
       plain = {
         mkShell, wpexec
       , wireplumber, pipewire, glib
-      , pkg-config, wireplumber-gir, wpdev-gir, wpdev-todo
+      , pkg-config, wireplumber-gir, wpdev-gir, wpdev-todo, wpdev-readmes
       , enableRustdoc ? false
       , enableRust ? true, cargo
       , rustTools ? [ ]
@@ -42,13 +44,15 @@
       in mkShell {
         inherit rustTools;
         buildInputs = [ wireplumber pipewire glib ];
-        nativeBuildInputs = [ pkg-config wpdev-gir wpdev-todo ] ++ nixlib.optional enableRust cargo;
+        nativeBuildInputs = [ pkg-config wpdev-gir wpdev-todo wpdev-readmes ] ++ nixlib.optional enableRust cargo;
         RUSTDOCFLAGS = nixlib.optionals enableRustdoc RUSTDOCFLAGS;
         GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
       };
-      stable = { rust'stable, outputs'devShells'plain }: outputs'devShells'plain.override {
-        inherit (rust'stable) mkShell;
+      stable = { rust'stable, arc'rustPlatforms, outputs'devShells'plain }: let
+        stable = if impure then rust'stable else arc'rustPlatforms.stable.hostChannel;
+      in outputs'devShells'plain.override {
+        inherit (stable) mkShell;
         enableRust = false;
       };
       dev = { arc'rustPlatforms, outputs'devShells'plain }: outputs'devShells'plain.override {
@@ -60,11 +64,18 @@
       default = { outputs'devShells }: outputs'devShells.plain;
     };
     packages = {
-      wpexec = { stdenv, rustPlatform, lib, wireplumber, pipewire, glib, pkg-config, libclang }: rustPlatform.buildRustPackage rec {
+      wpexec = {
+        stdenv, rustPlatform, lib
+      , wireplumber, pipewire, glib
+      , pkg-config, libclang
+      , buildType ? "release"
+      }: with lib; rustPlatform.buildRustPackage rec {
         pname = "wpexec-rs";
-        version = inputs.self.lastModifiedDate or "0";
+        version = if buildType == "release"
+          then self.lib.version
+          else self.lastModifiedDate or self.lib.version;
 
-        src = inputs.self;
+        src = self;
         cargoLock = {
           lockFile = ./Cargo.lock;
           outputHashes = {
@@ -75,10 +86,10 @@
         buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [ pkg-config ];
 
-        cargoBuildFlags = "-p wp-examples --bin wpexec";
-        cargoBuildFeatures = [ (lib.featureForVersion wireplumber.version) ];
+        cargoBuildFlags = "--workspace --bin wpexec";
+        buildFeatures = mapNullable singleton (self.lib.featureForVersion wireplumber.version);
 
-        buildType = "debug";
+        inherit buildType;
         doCheck = false;
 
         LIBCLANG_PATH = "${libclang.lib}/lib";
@@ -86,6 +97,15 @@
           "-I${stdenv.cc.cc}/lib/gcc/${stdenv.hostPlatform.config}/${stdenv.cc.cc.version}/include"
           "-I${stdenv.cc.libc.dev}/include"
         ];
+
+        meta = with lib; {
+          description = "A WirePlumber utility ported to Rust";
+          homepage = "https://github.com/arcnmx/wireplumber.rs";
+          license = lib.licenses.mit;
+          maintainers = [ maintainers.arcnmx ];
+          platforms = platforms.linux;
+          mainProgram = "wpexec";
+        };
       };
       gir-rs-0_16 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage rec {
         inherit (gir-rs) postPatch meta pname;
@@ -144,6 +164,73 @@
           $out/$girName
       '';
     };
+    checks = {
+      rustfmt = { rustfmt, cargo, wpexec, runCommand }: runCommand "wireplumber-cargo-fmt-check" {
+        nativeBuildInputs = [ cargo (rustfmt.override { asNightly = true; }) ];
+        inherit (wpexec) src;
+        meta.name = "cargo fmt (nix run .#wpdev-fmt)";
+      } ''
+        cargo fmt --check \
+          --manifest-path $src/Cargo.toml \
+          -p wireplumber -p wp-examples
+        touch $out
+      '';
+      readme = { wpdev-readme, diffutils, runCommand }: runCommand "wireplumber-readme-check" {
+        nativeBuildInputs = [ diffutils ];
+        expected = wpdev-readme;
+        src = ./src/README.md;
+        meta.name = "diff src/README.md (nix run .#wpdev-readmes)";
+      } ''
+        diff --color=always -uN $src $expected
+        touch $out
+      '';
+      readme-sys = { wpdev-sys-readme, diffutils, runCommand }: runCommand "wireplumber-readme-sys-check" {
+        nativeBuildInputs = [ diffutils ];
+        expected = wpdev-sys-readme;
+        src = ./sys/src/README.md;
+        meta.name = "diff sys/src/README.md (nix run .#wpdev-readmes)";
+      } ''
+        diff --color=always -uN $src $expected
+        touch $out
+      '';
+      release-branch = { gnugrep, linkFarm, runCommand }: let
+        checks = [
+          {
+            name = "src/lib.rs";
+            pattern = ''html_root_url.*/$releaseTag/\")]'';
+          }
+          {
+            name = "sys/src/lib.rs";
+            pattern = ''html_root_url.*/$releaseTag/\")]'';
+          }
+          {
+            name = "src/README.md";
+            pattern = ''/tree/$releaseTag/examples'';
+          }
+          {
+            name = "Cargo.toml";
+            pattern = ''documentation.*/$releaseTag/wireplumber/\"'';
+          }
+          {
+            name = "sys/Cargo.toml";
+            pattern = ''documentation.*/$releaseTag/wireplumber_sys/\"'';
+          }
+        ];
+      in runCommand "wireplumber-release-check" {
+        nativeBuildInputs = [ gnugrep ];
+        inherit (self.lib) releaseTag;
+        src = if impure
+          then linkFarm "wireplumber.rs" (map ({ name, pattern }: {
+            inherit name;
+            path = ./. + "/${name}";
+          }) checks) else self;
+      } (''
+        cd $src
+      '' + nixlib.concatMapStringsSep "\n" ({ name, pattern }: ''
+        echo grep ${name} -e "${pattern}" >&2
+        grep ${name} -e "${pattern}"
+      '') checks);
+    };
     legacyPackages = { callPackageSet }: callPackageSet {
       wpdev-gir = { writeShellScriptBin, gir-rs-0_16, wireplumber-gir, gobject-introspection }: let
         gir-dirs = nixlib.concatMapStringsSep " " (dev:
@@ -164,6 +251,29 @@
         cd ${toString ./.}
         exec ${nixlib.getExe wpdev-gir} -m not_bound
       '';
+      wpdev-fmt = { writeShellScriptBin }: writeShellScriptBin "wpfmt" ''
+      '';
+      wpdev-readmes = { writeShellScriptBin }: writeShellScriptBin "readmes" ''
+        cp --no-preserve=all "$(nix build --no-link .#wpdev-readme --print-out-paths)" src/README.md &&
+        cp --no-preserve=all "$(nix build --no-link .#wpdev-sys-readme --print-out-paths)" sys/src/README.md
+      '';
+      wpdev-readme = { runCommand, asciidoctor, pandoc }: runCommand "wireplumber-${self.lastModifiedDate or self.lib.releaseTag}-README.md" {
+        nativeBuildInputs = [ asciidoctor pandoc ];
+        src = ./README.adoc;
+        baseurl = "https://github.com/arcnmx/wireplumber.rs";
+        inherit (self.lib) releaseTag;
+      } ''
+        asciidoctor $src -b docbook5 -o - \
+          -a release="$releaseTag" \
+          -a relative-tree="$baseurl/tree/$releaseTag/" \
+          -a relative-blob="$baseurl/blob/$releaseTag/" \
+        | pandoc -f docbook -t gfm \
+          --columns=120 --wrap=none \
+          > $out
+      '';
+      wpdev-sys-readme = { wpdev-readme }: wpdev-readme.overrideAttrs (_: {
+        src = ./sys/README.adoc;
+      });
     } { };
     lib = with nixlib; {
       featureVersions = [
@@ -172,11 +282,15 @@
         "0.4.8" "0.4.10"
         "0.4.11" "0.4.12"
       ];
-      supportedVersions = version: filter (versionAtLeast version) inputs.self.lib.featureVersions;
+      supportedVersions = version: filter (versionAtLeast version) self.lib.featureVersions;
       versionFeatureName = version: "v" + replaceStrings [ "." ] [ "_" ] version;
       featureForVersion = version: let
-        features = inputs.self.lib.supportedVersions version;
-      in if features == [ ] then null else inputs.self.lib.versionFeatureName (last features);
+        features = self.lib.supportedVersions version;
+      in if features == [ ] then null else self.lib.versionFeatureName (last features);
+      cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+      inherit (self.lib.cargoToml.package) version;
+      inherit (self.lib.cargoToml.metadata) branches;
+      releaseTag = "v${self.lib.version}";
     };
     config = rec {
       name = "wireplumber-rust";

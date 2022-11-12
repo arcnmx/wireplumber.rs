@@ -9,8 +9,12 @@
   wireplumber-rust = Flake.CallDir ./. (Flake.Lock.Node.inputs (Flake.Lock.root (Flake.Lock.New (lockData // {
     override.sources.nixpkgs = pkgs.path;
   }))));
-  inherit (wireplumber-rust.packages.${system}) wpexec;
-  versionFeature = toString (mapNullable (f: "--features ${f}") (wireplumber-rust.lib.featureForVersion wireplumber.version));
+  checks = wireplumber-rust.checks.${system};
+  wplib = wireplumber-rust.lib;
+  wpexec = wireplumber-rust.packages.${system}.wpexec.override {
+    buildType = "debug";
+  };
+  versionFeature = toString (mapNullable (f: "--features ${f}") (wplib.featureForVersion wireplumber.version));
   cargo-bin = config: "${if config.enableNightly then rustChannel.buildChannel.cargo else pkgs.cargo}/bin/cargo";
   cargo = config: name: command: args: ci.command ({
     name = "cargo-${name}";
@@ -23,6 +27,8 @@
     "AR_${replaceStrings [ "-" ] [ "_" ] hostPlatform.config}" = "${stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}ar";
   } // args);
   rustChannel = channels.rust.nightly;
+  v0' = builtins.match ''^(v)?[0-9].*$'';
+  v0 = v: v != null && v0' v != null;
 in {
   config = {
     name = "wireplumber.rs";
@@ -76,8 +82,8 @@ in {
             })
           ];
           versions.inputs = let
-            versions = init (wireplumber-rust.lib.supportedVersions wireplumber.version);
-          in map (version: cargo config "build-${version}" "build -F ${wireplumber-rust.lib.versionFeatureName version}" { }) versions;
+            versions = init (wplib.supportedVersions wireplumber.version);
+          in map (version: cargo config "build-${version}" "build -F ${wplib.versionFeatureName version}" { }) versions;
         };
       };
       examples = { config, ... }: {
@@ -110,6 +116,10 @@ in {
               cache = false;
             })
           ];
+          readme.inputs = [
+            checks.readme
+            checks.readme-sys
+          ];
           docs.inputs = [
             (cargo config "doc" ("clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${rustChannel.hostTarget.triple}/doc"
               # `cargo clean --doc` does nothing afaict?
@@ -123,16 +133,50 @@ in {
               inherit (wireplumber-rust.devShells.${system}.plain.override { enableRustdoc = true; }) RUSTDOCFLAGS;
             })
           ];
-          publish-docs.inputs = ci.command {
-            name = "publish";
+          refs.inputs = let
+            checks = {
+              tag = {
+                message = "tag ${env.git-tag} does not match Cargo.toml version ${wplib.version}";
+                check = hasPrefix "v" env.git-tag &&
+                  removePrefix "v" env.git-tag == wplib.version;
+              };
+              branch = {
+                message = "branch ${env.git-branch} does not match Cargo.toml version ${wplib.version}";
+                check = hasPrefix "v" env.git-branch &&
+                  hasPrefix (removeSuffix "x" (removePrefix "v" env.git-branch)) wplib.version;
+              };
+            };
+            check =
+              if env.git-tag != null && v0 env.git-tag then checks.tag
+              else if env.git-branch != null && v0 env.git-branch then checks.branch
+              else null;
+          in ci.command {
+            name = "check-ref";
+            displayName = "git ref valid";
+            command = optionalString (check != null && !check.check) ''
+              printf %s ${escapeShellArg check.message} >&2
+              exit 1
+            '';
+          };
+          publish-docs.inputs = let
+            srcBranch = findFirst (v: v != null) null [ env.git-tag env.git-branch ];
+          in ci.command {
+            name = "publish-docs";
             displayName = "publish docs";
             impure = true;
             skip = if env.platform != "gh-actions" || env.gh-event-name or null != "push" then env.gh-event-name or "github"
-              else if env.git-branch != "main" then "branch"
+              else if env.git-tag != null && ! v0 env.git-tag then "unversioned tag"
+              else if env.git-branch != null && ! (elem env.git-branch wplib.branches || v0 env.git-branch) then "feature branch"
+              else if srcBranch == null then "unknown branch"
               else false;
             gitCommit = env.git-commit;
             docsBranch = "gh-pages";
+            inherit srcBranch;
+            releaseTag = if env.git-branch == "main" || v0 env.git-branch then wplib.releaseTag
+              else if v0 env.git-tag then env.git-tag
+              else "";
             docsDep = config.tasks.docs.drv;
+            refsDep = config.tasks.refs.drv;
             environment = [ "CARGO_TARGET_DIR" ];
             command = ''
               git fetch origin
@@ -144,14 +188,20 @@ in {
               git branch -D pages || true
               git checkout --orphan pages && git rm -rf .
               git reset --hard origin/$docsBranch -- || true
-              rm -rf ./*
-              cp -a ''${CARGO_TARGET_DIR:-../target}/${rustChannel.hostTarget.triple}/doc/* ./
+              rm -rf "./$srcBranch"
+              mkdir -p "./$srcBranch"
+              cp -a ''${CARGO_TARGET_DIR:-../target}/${rustChannel.hostTarget.triple}/doc/* "./$srcBranch/"
+              git add -A "$srcBranch"
 
-              git add -A
+              if [[ -n $releaseTag ]] && [[ $srcBranch != $releaseTag ]]; then
+                ln -sf "$srcBranch" "$releaseTag"
+                git add -A "$releaseTag"
+              fi
+
               if [[ -n $(git status --porcelain) ]]; then
                 export GIT_{COMMITTER,AUTHOR}_EMAIL=ghost@konpaku.2hu
                 export GIT_{COMMITTER,AUTHOR}_NAME=ghost
-                git commit -m "$gitCommit"
+                git commit -m "$srcBranch: $gitCommit"
                 git push origin HEAD:$docsBranch
               fi
             '';

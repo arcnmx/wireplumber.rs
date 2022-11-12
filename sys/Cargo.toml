@@ -1,12 +1,19 @@
 [package]
 name = "wireplumber-sys"
-version = "0.1.0"
+version = "0.1.0" # keep in sync with html_root_url
 edition = "2021"
 build = "./generate/build.rs"
 
-documentation = "http://arcnmx.github.io/wireplumber.rs/wp_sys/"
-repository = "https://github.com/arcnmx/wireplumber.rs/tree/HEAD/sys"
+description = "WirePlumber FFI bindings"
+keywords = ["pipewire"]
+categories = ["external-ffi-bindings"]
+
+documentation = "http://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber_sys/"
+homepage = "http://arcnmx.github.io/wireplumber.rs/"
+repository = "https://github.com/arcnmx/wireplumber.rs/tree/main/sys"
+README = "src/README.md"
 license = "MIT"
+license-file = "../COPYING"
 
 [package.metadata.system-deps.wireplumber_0_4]
 name = "wireplumber-0.4"
@@ -37,7 +44,7 @@ version = "0.4.11"
 version = "0.4.12"
 
 [package.metadata.docs.rs]
-features = ["dox"]
+features = ["dox", "v0_4_12"]
 
 [dependencies]
 libc = "0.2"

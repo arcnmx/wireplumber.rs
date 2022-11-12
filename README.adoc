@@ -1,12 +1,29 @@
 = WirePlumber Rust Bindings
 :source-highlighter: highlight.js
+:crate: wireplumber
+:release: main
+:relative-tree:
+:relative-blob:
+:url-pw: https://pipewire.org/
+:url-pw-api: https://docs.pipewire.org/page_api.html
+:url-wp: https://pipewire.pages.freedesktop.org/wireplumber/index.html
+:url-docs: https://arcnmx.github.io/wireplumber.rs/{release}/{crate}/
+:url-docs-modules: {url-docs}#modules
+:url-crates: https://crates.io/crates/{crate}
+:badge-crates: https://img.shields.io/crates/v/{crate}.svg?style=flat-square
+:badge-docs: https://img.shields.io/badge/API-docs-blue.svg?style=flat-square
+:badge-license: https://img.shields.io/badge/license-MIT-ff69b4.svg?style=flat-square
 
-This crate provides a high-level interface to https://pipewire.org/[PipeWire]'s https://docs.pipewire.org/page_api.html[API] via https://pipewire.pages.freedesktop.org/wireplumber/index.html[libwireplumber].
-Explore the https://arcnmx.github.io/wireplumber.rs/wireplumber/[crate documentation] and the various https://arcnmx.github.io/wireplumber.rs/wireplumber/#modules[modules] for information on how to start using WirePlumber with Rust.
+link:{url-crates}[image:{badge-crates}["latest release",title="crates.io"]]
+link:{url-docs}[image:{badge-docs}["docs",title="API documentation"]]
+link:{relative-blob}COPYING[image:{badge-license}["MIT",title="License"]]
+
+This crate provides a high-level interface to {url-pw}[PipeWire]'s {url-pw-api}[API] via {url-wp}[libwireplumber].
+Explore the {url-docs}[crate documentation] and the various {url-docs-modules}[modules] for information on how to start using WirePlumber with Rust.
 
 == Examples
 
-Some link:examples/[examples] are provided that can be built and run via Cargo:
+Some link:{relative-tree}examples/[examples] are provided that can be built and run via Cargo:
 
 [source,bash]
 ----
