@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["DebugValue",""],["SpaBool",""],["SpaIdTable",""],["SpaIdValue",""],["SpaJson",""],["SpaJsonBuilder",""],["SpaJsonParser",""],["SpaPod",""],["SpaPodBuilder",""],["SpaPodParser",""],["SpaProps",""],["SpaRoute",""],["SpaRoutes",""],["SpaType",""]],"trait":[["SpaPrimitive",""],["SpaValue",""]]};

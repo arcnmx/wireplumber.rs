@@ -1,0 +1,1134 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-52d73ba8755f90af.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-8a5340150ffb8218.css"><link rel="stylesheet" disabled href="../../../static.files/dark-19c2b904a5b0636e.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-4f0dd21410274c70.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-0dede64717b247ca.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-201a7e04dc4c6fce.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
+<span class="kw">use </span>glib::VariantType;
+<span class="kw">use </span>glib::variant::VariantTypeMismatchError;
+<span class="kw">use </span>glib::variant::DictEntry;
+<span class="kw">use </span><span class="kw">crate</span>::lua::{LuaString, LuaError};
+<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+
+<span class="macro">newtype_wrapper! </span>{
+	<span class="doccomment">/// A [Variant](struct@Variant) that can be passed to a Lua script.
+	///
+	/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules
+	/// and their configuration data.
+	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
+	</span><span class="kw">pub struct </span>LuaVariant(Variant ;<span class="question-mark">? </span>LuaError);
+}
+
+<span class="attr">#[derive(Copy, Clone, Debug, PartialOrd, Ord, PartialEq, Eq, Hash)]
+</span><span class="kw">pub enum </span>LuaType {
+	Nil,
+	Boolean,
+	Integer,
+	Float,
+	String,
+	Table,
+}
+
+<span class="kw">impl </span>LuaType {
+	<span class="kw">pub fn </span>with_variant_type(ty: <span class="kw-2">&amp;</span>VariantTy) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="prelude-val">Some</span>(<span class="kw">match </span>ty {
+			ty <span class="kw">if </span>ty == VariantTy::UNIT =&gt; LuaType::Nil,
+			ty <span class="kw">if </span>ty == VariantTy::BOOLEAN =&gt; LuaType::Boolean,
+			ty <span class="kw">if </span>ty == VariantTy::INT64 || ty == VariantTy::INT32 || ty == VariantTy::INT16
+				|| ty == VariantTy::UINT32 || ty == VariantTy::UINT16
+				=&gt; LuaType::Integer,
+			ty <span class="kw">if </span>ty == VariantTy::DOUBLE =&gt; LuaType::Float,
+			ty <span class="kw">if </span>ty == VariantTy::STRING <span class="comment">/*|| ty == VariantTy::BYTE_STRING*/ </span>=&gt; LuaType::String,
+			ty <span class="kw">if </span>ty.is_subtype_of(VariantTy::DICTIONARY) =&gt; <span class="kw">match </span>ty.element() {
+				ty <span class="kw">if </span><span class="self">Self</span>::with_variant_type(ty.key()).is_some() &amp;&amp; <span class="self">Self</span>::with_variant_type(ty.value()).is_some() =&gt; LuaType::Table,
+				<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+			},
+			ty <span class="kw">if </span>ty.is_array() &amp;&amp; <span class="self">Self</span>::with_variant_type(ty.element()).is_some() =&gt; LuaType::Table,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+		})
+	}
+
+	<span class="kw">pub fn </span>with_lua_variant(var: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="self">Self </span>{
+		<span class="kw">const </span>MAX_SAFE_INTEGER: u64 = i64::MAX <span class="kw">as </span>u64;
+		<span class="kw">match </span><span class="self">Self</span>::with_variant_type(var.as_variant().type_()) {
+			<span class="prelude-val">Some</span>(ty) =&gt; ty,
+			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span>var.as_variant().classify() {
+				VariantClass::Uint64 =&gt; <span class="kw">match </span>var.as_variant().get::&lt;u64&gt;() {
+					<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
+					<span class="kw">_ </span>=&gt; LuaType::Float,
+				},
+				VariantClass::Variant =&gt; <span class="self">Self</span>::with_lua_variant(<span class="kw-2">&amp;</span>var.flattened()),
+				<span class="kw">_ </span>=&gt; LuaType::Table,
+			},
+		}
+	}
+
+	<span class="kw">pub fn </span>with_variant(var: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+		<span class="kw">const </span>MAX_SAFE_INTEGER: u64 = i64::MAX <span class="kw">as </span>u64;
+
+		<span class="kw">let </span>ty = var.type_();
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = <span class="self">Self</span>::with_variant_type(ty) {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(ty)
+		}
+
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span>var.classify() {
+			VariantClass::Uint64 =&gt; <span class="kw">match </span>var.get::&lt;u64&gt;() {
+				<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
+				<span class="kw">_ </span>=&gt; LuaType::Float,
+			},
+			VariantClass::Variant =&gt; <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>var.as_variant().expect(<span class="string">&quot;VariantTy&quot;</span>))<span class="question-mark">?</span>,
+			VariantClass::Array <span class="kw">if </span>ty.element().is_dict_entry() =&gt; <span class="kw">match </span>var.iter().map(|v|
+				<span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>)).and_then(|<span class="kw">_</span>| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(drop))
+			).collect() {
+				<span class="prelude-val">Ok</span>(()) =&gt; LuaType::Table,
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
+			},
+			VariantClass::Array <span class="kw">if </span>var.iter().all(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v).is_ok()) =&gt; LuaType::Table,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(LuaError::UnsupportedType(Cow::Owned(ty.to_owned()))),
+		})
+	}
+
+	<span class="kw">pub fn </span>is_numeric(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Integer | LuaType::Float)
+	}
+
+	<span class="kw">pub fn </span>is_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Table)
+	}
+
+	<span class="kw">pub fn </span>is_nil(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Nil)
+	}
+}
+
+<span class="kw">pub enum </span>LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
+	Nil,
+	Boolean(bool),
+	Integer(i64),
+	Float(f64),
+	String(LuaString&lt;<span class="lifetime">&#39;a</span>&gt;),
+	Table(LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;),
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
+		<span class="kw">match </span><span class="self">self </span>{
+			LuaValue::Nil =&gt; LuaType::Nil,
+			LuaValue::Boolean(..) =&gt; LuaType::Boolean,
+			LuaValue::Integer(..) =&gt; LuaType::Integer,
+			LuaValue::Float(..) =&gt; LuaType::Float,
+			LuaValue::String(..) =&gt; LuaType::String,
+			LuaValue::Table(..) =&gt; LuaType::Table,
+		}
+	}
+
+	<span class="kw">pub fn </span>to_lua_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaString, LuaError&gt; {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self">self </span>{
+			LuaValue::Nil =&gt; <span class="string">b&quot;nil&quot;</span>[..].into(),
+			LuaValue::Boolean(v) =&gt; v.to_string().into(),
+			LuaValue::Integer(v) =&gt; v.to_string().into(),
+			LuaValue::Float(v) =&gt; v.to_string().into(),
+			LuaValue::String(v) =&gt; v.borrowed(),
+			LuaValue::Table(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(LuaError::TypeMismatch(
+				VariantTypeMismatchError::new(VariantTy::VARDICT.to_owned(), VariantTy::STRING.to_owned())
+			)),
+		})
+	}
+
+	<span class="kw">pub fn </span>to_integer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;i64, LuaError&gt; {
+		<span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+			LuaValue::Integer(v) =&gt; <span class="prelude-val">Ok</span>(v),
+			LuaValue::Float(v) =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>i64),
+			LuaValue::String(<span class="kw-2">ref </span>s) =&gt; s.parse(),
+			<span class="kw-2">ref </span>v =&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(VariantTypeMismatchError::new(<span class="kw">match </span>v {
+				LuaValue::Nil =&gt; VariantTy::UNIT,
+				LuaValue::Boolean(..) =&gt; VariantTy::BOOLEAN,
+				LuaValue::Table(t) <span class="kw">if </span>t.is_array().unwrap_or(<span class="bool-val">false</span>) =&gt; VariantTy::ARRAY,
+				<span class="kw">_ </span>=&gt; VariantTy::VARDICT,
+			}.to_owned(), VariantTy::INT64.to_owned()))),
+		}
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">pub fn </span>nil() -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			<span class="self">Self</span>::unsafe_from(().to_variant())
+		}
+	}
+
+	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
+		<span class="comment">// used by Self::wrap and Self::borrow
+		</span>LuaType::with_variant(v)
+			.map(drop)
+	}
+
+	<span class="kw">pub fn </span>convert_from(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+		<span class="kw">if </span><span class="self">Self</span>::check(<span class="kw-2">&amp;</span>v).is_ok() {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{
+				<span class="self">Self</span>::unsafe_from(v.clone())
+			})
+		}
+
+		<span class="kw">match </span>v.classify() {
+			VariantClass::Variant =&gt; LuaVariant::convert_from(
+				<span class="kw-2">&amp;</span>v.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)
+			),
+			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(v.get::&lt;u8&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>) <span class="kw">as </span>u16)),
+			VariantClass::Maybe =&gt; <span class="kw">match </span>v.as_maybe() {
+				<span class="prelude-val">Some</span>(v) =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v),
+				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().into()),
+			},
+			VariantClass::Array <span class="kw">if </span>v.type_().element().is_dict_entry() =&gt; v.iter()
+				.map(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>)).and_then(|k| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(|v| (k, v))))
+				.collect(),
+			VariantClass::Array | VariantClass::Tuple =&gt; v.iter()
+				.map(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v))
+				.collect(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::UnsupportedType(Cow::Owned(v.type_().to_owned()))),
+		}
+	}
+
+	<span class="kw">pub fn </span>with_bytes&lt;B: AsRef&lt;[u8]&gt;&gt;(bytes: B) -&gt; <span class="self">Self </span>{
+		<span class="comment">// TODO: LuaString::from(bytes.as_ref()).into() if BYTE_STRINGs are ever supported upstream
+		</span>bytes.as_ref().iter().map(|<span class="kw-2">&amp;</span>v| LuaVariant::from(v <span class="kw">as </span>u16)).collect()
+	}
+
+	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
+		LuaType::with_lua_variant(<span class="self">self</span>)
+	}
+
+	<span class="kw">pub fn </span>lua_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaValue {
+		<span class="kw">match </span><span class="self">self</span>.lua_type() {
+			LuaType::Nil =&gt; <span class="prelude-val">Some</span>(LuaValue::Nil),
+			LuaType::Boolean =&gt; <span class="self">self</span>.get_bool().map(LuaValue::Boolean),
+			LuaType::Integer =&gt; <span class="self">self</span>.get_integer().and_then(|i| i.ok()).map(LuaValue::Integer),
+			LuaType::Float =&gt; <span class="self">self</span>.get_float().and_then(|f| f.ok()).map(LuaValue::Float),
+			LuaType::String =&gt; <span class="self">self</span>.get_string().map(LuaValue::String),
+			LuaType::Table =&gt; LuaTable::borrow(<span class="self">self</span>.as_variant()).ok().map(LuaValue::Table),
+		}.expect(<span class="string">&quot;LuaType&quot;</span>)
+	}
+
+	<span class="kw">pub fn </span>flattened(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Variant =&gt; <span class="kw">unsafe </span>{
+				LuaVariant::unsafe_from(<span class="self">self</span>.as_variant().as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>))
+			}.flattened(),
+			<span class="kw">_ </span>=&gt; <span class="self">self</span>.clone(),
+		}
+	}
+
+	<span class="kw">pub fn </span>get_nil&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
+		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Tuple =&gt; <span class="self">self</span>.as_variant().get(),
+			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_nil(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+		}
+	}
+
+	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get(),
+			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_bool(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+		}
+	}
+
+	<span class="kw">pub fn </span>get_table&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="kw">match </span><span class="self">self</span>.lua_type() {
+			LuaType::Table =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{
+				LuaTable::unsafe_from(<span class="self">self</span>.flattened().into_inner())
+			}),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+		}
+	}
+
+	<span class="kw">pub fn </span>get_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaString&gt; {
+		LuaString::try_from(<span class="self">self</span>.as_variant()).ok()
+	}
+
+	<span class="kw">pub fn </span>get_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;f64, LuaError&gt;&gt; {
+		<span class="kw">const </span>MAX_SAFE_INTEGER: i64 = <span class="number">2</span>^<span class="number">53 </span>- <span class="number">1</span>;
+		<span class="kw">const </span>MAX_SAFE_INTEGER_UNSIGNED: u64 = <span class="number">2</span>^<span class="number">53 </span>- <span class="number">1</span>;
+		<span class="kw">const </span>MIN_SAFE_INTEGER: i64 = -(<span class="number">2</span>^<span class="number">53 </span>- <span class="number">1</span>);
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>.as_variant().get::&lt;f64&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>)),
+			VariantClass::Boolean =&gt; u8::from(<span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap()).try_into().map_err(Into::into),
+			VariantClass::Byte =&gt; <span class="self">self</span>.as_variant().get::&lt;u8&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint16 =&gt; <span class="self">self</span>.as_variant().get::&lt;u16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint32 =&gt; <span class="self">self</span>.as_variant().get::&lt;u32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint64 =&gt; <span class="kw">match </span><span class="self">self</span>.as_variant().get::&lt;u64&gt;().unwrap() {
+				v @ <span class="number">0</span>..=MAX_SAFE_INTEGER_UNSIGNED =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>f64),
+				v =&gt; <span class="prelude-val">Err</span>(i32::try_from(v).unwrap_err().into()),
+			},
+			VariantClass::Int16 =&gt; <span class="self">self</span>.as_variant().get::&lt;i16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int32 =&gt; <span class="self">self</span>.as_variant().get::&lt;i32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int64 =&gt; <span class="kw">match </span><span class="self">self</span>.as_variant().get::&lt;i64&gt;().unwrap() {
+				v @ MIN_SAFE_INTEGER..=MAX_SAFE_INTEGER =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>f64),
+				v =&gt; <span class="prelude-val">Err</span>(u32::try_from(v).unwrap_err().into()),
+			},
+			VariantClass::Variant =&gt; <span class="kw">return </span><span class="self">self</span>.flattened().get_float(),
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+		})
+	}
+
+	<span class="kw">pub fn </span>get_integer&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;T, LuaError&gt;&gt; <span class="kw">where
+		</span>T: TryFrom&lt;bool&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;bool&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u8&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u8&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u16&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u16&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u32&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u32&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;u64&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u64&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;i16&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i16&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;i32&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i32&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		T: TryFrom&lt;i64&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i64&gt;&gt;::Error: Into&lt;LuaError&gt;,
+	{
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Byte =&gt; <span class="self">self</span>.as_variant().get::&lt;u8&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint16 =&gt; <span class="self">self</span>.as_variant().get::&lt;u16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint32 =&gt; <span class="self">self</span>.as_variant().get::&lt;u32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Uint64 =&gt; <span class="self">self</span>.as_variant().get::&lt;u64&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int16 =&gt; <span class="self">self</span>.as_variant().get::&lt;i16&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int32 =&gt; <span class="self">self</span>.as_variant().get::&lt;i32&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Int64 =&gt; <span class="self">self</span>.as_variant().get::&lt;i64&gt;().unwrap().try_into().map_err(Into::into),
+			VariantClass::Variant =&gt; <span class="kw">return </span><span class="self">self</span>.flattened().get_integer::&lt;T&gt;(),
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+		})
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; StaticVariantType <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
+		VariantTy::VARIANT.into()
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
+		Variant::from_variant(<span class="self">self</span>.as_variant())
+	}
+}
+
+<span class="macro">newtype_wrapper! </span>{
+	<span class="doccomment">/// A specialized [LuaVariant] that is both an array and dictionary.
+	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
+	</span><span class="kw">pub struct </span>LuaTable(Variant ;<span class="question-mark">? </span>LuaError);
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
+		<span class="comment">// used by Self::wrap and Self::borrow
+		</span>LuaType::with_variant(v)
+			.and_then(|ty| <span class="kw">match </span>ty {
+				LuaType::Table =&gt; <span class="prelude-val">Ok</span>(()),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(
+					VariantTypeMismatchError::new(v.type_().to_owned(), VariantTy::ARRAY.to_owned())
+				)),
+			})
+	}
+
+	<span class="kw">pub fn </span>into_lua_variant(<span class="self">self</span>) -&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+		<span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(<span class="self">self</span>.into_inner())
+		}
+	}
+
+	<span class="kw">pub fn </span>lua_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaVariant {
+		<span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(<span class="self">self</span>.as_variant())
+		}
+	}
+
+	<span class="kw">pub fn </span>entry_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+		<span class="self">self</span>.as_variant().n_children()
+	}
+
+	<span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.entry_len() == <span class="number">0
+	</span>}
+
+	<span class="doccomment">/// Lua&#39;s `n` field, if it exists
+	</span><span class="kw">pub fn </span>table_getn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u64&gt; {
+		<span class="self">self</span>.by_key(<span class="kw-2">&amp;</span><span class="string">&quot;n&quot;</span>.into())
+			.and_then(|v| v.get_integer())
+			.and_then(|v| v.ok())
+	}
+
+	<span class="kw">pub fn </span>variant_is_dict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.as_variant().type_().is_subtype_of(VariantTy::DICTIONARY)
+	}
+
+	<span class="kw">pub fn </span>iter_dict_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=DictEntry&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self">self</span>.as_variant().iter().enumerate()
+			.map(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{ <span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+				<span class="bool-val">true </span>=&gt; DictEntry::new(LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)), LuaVariant::unsafe_from(v.child_value(<span class="number">1</span>))),
+				<span class="bool-val">false </span>=&gt; DictEntry::new((i <span class="kw">as </span>u64 + <span class="number">1</span>).into(), LuaVariant::unsafe_from(v)),
+			} })
+	}
+
+	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=<span class="prelude-ty">Option</span>&lt;u64&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self">self</span>.as_variant().iter().enumerate()
+			.map(<span class="kw">move </span>|(i, v)| <span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+				<span class="bool-val">true </span>=&gt; <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)) }.lua_value().to_integer().ok()
+					.and_then(|i| i.try_into().ok())
+					.and_then(|idx: u64| idx.checked_sub(<span class="number">1</span>)),
+				<span class="bool-val">false </span>=&gt; <span class="prelude-val">Some</span>(i <span class="kw">as </span>u64),
+			})
+	}
+
+	<span class="kw">pub fn </span>array_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(usize, u64)&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>indices: Vec&lt;<span class="kw">_</span>&gt; = <span class="self">self</span>.iter_array_indices().enumerate()
+			.filter_map(|(i, idx)| idx.map(|idx| (i, idx)))
+			.collect();
+		indices.sort_by_key(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx);
+		indices
+	}
+
+	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=(u64, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;)&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self">self</span>.array_indices().into_iter()
+			.map(<span class="kw">move </span>|(i, idx)| (idx, <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>)))
+	}
+
+	<span class="kw">pub fn </span>iter_array&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=<span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="kw">let </span>indices = <span class="self">self</span>.array_indices();
+		<span class="kw">let </span>last = <span class="self">self</span>.table_getn()
+			.or_else(|| indices.last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx));
+
+		<span class="kw">let </span><span class="kw-2">mut </span>indices = indices.into_iter().peekable();
+		(<span class="number">0</span>..=last.unwrap_or(<span class="number">0</span>))
+			.map(<span class="kw">move </span>|idx| <span class="kw">match </span>indices.peek() {
+				<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span>idx == next =&gt; {
+					indices.next()
+						.map(|(i, <span class="kw">_</span>)| <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>))
+				},
+				<span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+				<span class="prelude-val">None </span>=&gt; indices.next().map(|<span class="kw">_</span>| <span class="macro">unreachable!</span>(<span class="string">&quot;array_indices&quot;</span>)),
+			})
+	}
+
+	<span class="kw">pub fn </span>array_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+		<span class="self">self</span>.table_getn()
+			.or_else(|| <span class="self">self</span>.array_indices().last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx))
+			.unwrap_or(<span class="number">0</span>)
+	}
+
+	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+			<span class="bool-val">true </span>=&gt; <span class="self">self</span>.as_variant().try_child_value(index)
+				.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)) }),
+			<span class="bool-val">false </span>=&gt; <span class="prelude-val">None</span>,
+		}
+	}
+
+	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="self">self</span>.as_variant().try_child_value(index)
+			.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+				<span class="bool-val">true </span>=&gt; v.child_value(<span class="number">1</span>),
+				<span class="bool-val">false </span>=&gt; v,
+			}) })
+	}
+
+	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="self">self</span>.iter_dict_entries().find(|e| e.key() == key)
+			.map(|e| e.value().owned())
+	}
+
+	<span class="kw">pub fn </span>is_array(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+		<span class="kw">if </span><span class="self">self</span>.table_getn().is_some() {
+			<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
+		}
+
+		<span class="kw">match </span><span class="self">self</span>.iter_array_indices().all(|i| i.is_some()) {
+			<span class="bool-val">true </span><span class="kw">if </span><span class="self">self</span>.is_empty() =&gt; <span class="prelude-val">None</span>,
+			v =&gt; <span class="prelude-val">Some</span>(v),
+		}
+	}
+
+	<span class="kw">pub fn </span>is_vardict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.as_variant().type_() == VariantTy::VARDICT
+	}
+
+	<span class="kw">pub fn </span>into_vardict(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+		<span class="kw">if </span><span class="self">self</span>.is_vardict() {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self</span>)
+		}
+
+		<span class="self">self</span>.iter_dict_entries()
+			.map(|e|
+				e.key().lua_value().to_lua_string()
+					.and_then(|s| s.into_string().map_err(Into::into))
+					.map(|s| (s, e.value().owned()))
+			).collect()
+	}
+}
+
+<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
+		VariantTy::VARDICT.into()
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item=V&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			UnsafeFrom::unsafe_from(
+				Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span>V::static_variant_type(), iter.into_iter().map(|v| v.into().to_variant()))
+			)
+		}
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=(K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span>entry_type = VariantType::new_dict_entry(<span class="kw-2">&amp;</span>K::static_variant_type(), <span class="kw-2">&amp;</span>V::static_variant_type());
+		<span class="kw">let </span>entries = iter.into_iter()
+			.map(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span>k.into().into_variant(), <span class="kw-2">&amp;</span>v.into().into_variant()));
+		<span class="kw">unsafe </span>{
+			UnsafeFrom::unsafe_from(
+				Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span>entry_type, entries)
+			)
+		}
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>&gt; FromIterator&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item=LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
+		LuaTable::from_iter(iter)
+			.into_lua_variant()
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=(K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+		LuaTable::from_iter(iter)
+			.into_lua_variant()
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
+		<span class="self">self</span>.clone().into_vardict()
+			.expect(<span class="string">&quot;VarDict requires UTF8 keys&quot;</span>)
+			.into_variant()
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(v.into_inner())
+		}
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UnsafeFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">unsafe fn </span>unsafe_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::unsafe_from(v.into_inner())
+	}
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">type </span>Error = LuaError;
+
+	<span class="kw">fn </span>try_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="self">Self</span>::try_from(v.into_inner())
+	}
+}
+
+<span class="macro">macro_rules! </span>lua_primitives {
+	($(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
+		$(
+			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;<span class="macro-nonterminal">$ty</span>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+				<span class="kw">fn </span>from(v: <span class="macro-nonterminal">$ty</span>) -&gt; <span class="self">Self </span>{
+					<span class="kw">unsafe </span>{
+						<span class="self">Self</span>::unsafe_from(v.to_variant())
+					}
+				}
+			}
+		)*
+	};
+}
+
+<span class="macro">lua_primitives! </span>{
+	i16, u16, i32, u32, i64, u64,
+	bool, f64, (),
+}
+
+<span class="comment">/*impl&lt;&#39;a, &#39;v&gt; From&lt;&amp;&#39;a str&gt; for LuaVariant&lt;&#39;v&gt; {
+	fn from(s: &amp;&#39;a str) -&gt; Self {
+		unsafe {
+			Self::unsafe_from(s.to_variant())
+		}
+	}
+}*/
+
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;s</span>, S: Into&lt;LuaString&lt;<span class="lifetime">&#39;s</span>&gt;&gt;&gt; From&lt;S&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>from(s: S) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			<span class="self">Self</span>::unsafe_from(s.into().to_variant())
+		}
+	}
+}
+</code></pre></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (c1a859b25 2022-11-10)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

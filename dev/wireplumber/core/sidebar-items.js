@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Core",""],["Factory",""],["FeatureActivationTransition",""],["InitFlags",""],["Object",""],["ObjectFeatures",""]],"trait":[["ObjectExt",""],["ObjectImpl",""],["ObjectImplExt",""]]};
