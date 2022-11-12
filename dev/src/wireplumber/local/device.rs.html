@@ -22,16 +22,31 @@
 <span id="22">22</span>
 <span id="23">23</span>
 <span id="24">24</span>
-</pre><pre class="rust"><code><span class="kw">use </span>libspa_sys::spa_device;
-<span class="kw">use crate</span>::{Core, local::SpaDevice, pw::Properties};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{local::SpaDevice, prelude::<span class="kw-2">*</span>, pw::Properties, Core},
+	libspa_sys::spa_device,
+};
 
 <span class="kw">impl </span>SpaDevice {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_device_new_wrap&quot;</span>)]
 	</span><span class="kw">pub fn </span>new_wrap(core: <span class="kw-2">&amp;</span>Core, spa_device_handle: NonNull&lt;spa_device&gt;, properties: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Properties&gt;) -&gt; SpaDevice {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span>properties = properties.map(|p| p.to_glib_none().<span class="number">0</span>).unwrap_or(ptr::null_mut());
-			from_glib_full(ffi::wp_spa_device_new_wrap(core.to_glib_none().<span class="number">0</span>, spa_device_handle.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, properties))
+			from_glib_full(ffi::wp_spa_device_new_wrap(
+				core.to_glib_none().<span class="number">0</span>,
+				spa_device_handle.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+				properties,
+			))
 		}
 	}
 
@@ -39,8 +54,13 @@
 	</span><span class="kw">pub fn </span>spa_device_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;spa_device&gt;&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(Type::POINTER);
-			glib::gobject_ffi::g_object_get_property(<span class="self">self</span>.upcast_ref::&lt;GObject&gt;().to_glib_none().<span class="number">0</span>, <span class="string">b&quot;spa-device-handle\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, value.to_glib_none_mut().<span class="number">0</span>);
-			value.get::&lt;<span class="prelude-ty">Option</span>&lt;NonNull&lt;Pointee&gt;&gt;&gt;()
+			glib::gobject_ffi::g_object_get_property(
+				<span class="self">self</span>.upcast_ref::&lt;GObject&gt;().to_glib_none().<span class="number">0</span>,
+				<span class="string">b&quot;spa-device-handle\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+				value.to_glib_none_mut().<span class="number">0</span>,
+			);
+			value
+				.get::&lt;<span class="prelude-ty">Option</span>&lt;NonNull&lt;Pointee&gt;&gt;&gt;()
 				.expect(<span class="string">&quot;spa-device-handle property&quot;</span>)
 				.map(|p| p.cast())
 		}

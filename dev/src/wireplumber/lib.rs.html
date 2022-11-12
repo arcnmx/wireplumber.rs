@@ -108,11 +108,6 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
 </pre><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/v0.1.0/&quot;</span>)]
 #![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
 
@@ -141,8 +136,9 @@
 //!
 //! # Examples
 //!
-//! Besides those found in this documentation, [additional examples](https://github.com/arcnmx/wireplumber.rs/tree/main/examples/src)
-//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
+//! Besides those found in this documentation,
+</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">&quot;[additional examples](https://github.com/arcnmx/wireplumber.rs/tree/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/examples/src)&quot;</span>)]
+</span><span class="doccomment">//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
 //! built and run via Cargo:
 //!
 //! ```bash
@@ -158,12 +154,10 @@
 //! ```
 //!
 //! It&#39;s recommended to poke around their source code in a local checkout, but you can also view
-//! their generated documentation and source code online:
-//!
-//! - [wpexec](https://arcnmx.github.io/wireplumber.rs/wpexec/index.html)
-//! - [static-link module](https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html)
-//!
-//! # Upstream Documentation
+//! the generated documentation and source code online:
+</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">&quot;- [wpexec](https://arcnmx.github.io/wireplumber.rs/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/wpexec/index.html)&quot;</span>)]
+#![doc = <span class="macro">concat!</span>(<span class="string">&quot;- [static-link module](https://arcnmx.github.io/wireplumber.rs/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/static_link_module/index.html)&quot;</span>)]
+</span><span class="doccomment">//! # Upstream Documentation
 //!
 //! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)
 //! may also be helpful.
@@ -172,50 +166,39 @@
 #[rustfmt::skip]
 </span><span class="kw">mod </span>auto;
 
-<span class="kw">pub use </span>ffi;
-
 <span class="doccomment">/// Export dependencies for use from macros
 </span><span class="attr">#[doc(hidden)]
 </span><span class="kw">pub mod </span>lib {
 	<span class="kw">pub use </span>{gio, glib};
 }
 
-<span class="kw">pub mod </span>prelude;
-<span class="kw">pub mod </span>pw;
-
+<span class="kw">pub mod </span>core;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
 </span><span class="kw">pub mod </span>dbus;
+<span class="kw">pub mod </span>error;
 <span class="kw">pub mod </span>local;
 <span class="kw">pub mod </span>log;
+<span class="kw">pub mod </span>lua;
 <span class="kw">pub mod </span>plugin;
+<span class="kw">pub mod </span>prelude;
+<span class="kw">pub mod </span>pw;
 <span class="kw">pub mod </span>registry;
 <span class="kw">pub mod </span>session;
-<span class="kw">pub mod </span>spa;
-<span class="kw">pub mod </span>util;
-
-<span class="kw">pub mod </span>error;
-<span class="attr">#[doc(no_inline)]
-</span><span class="kw">pub use </span>error::{Error, <span class="prelude-ty">Result</span>};
-
-<span class="kw">pub mod </span>core;
-<span class="attr">#[doc(no_inline)]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::core::{Core, InitFlags};
-
-<span class="kw">pub use </span>log::Log;
-
-<span class="kw">pub mod </span>lua;
-
 <span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
 #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)))]
 </span><span class="kw">pub mod </span>signals;
+<span class="kw">pub mod </span>spa;
+<span class="kw">pub mod </span>util;
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::pw::PropertiesItem;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::pw::PropertiesItem;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::session::SiAdapterPortsState;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::session::SiAdapterPortsState;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">crate</span>::spa::SpaJson;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::spa::SpaJson;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::{dbus::DBusState, pw::LinkState};
 <span class="doccomment">/// gir needs to know where to find these
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use crate</span>::{
 	core::{Object, ObjectFeatures},
@@ -226,7 +209,14 @@
 	spa::{SpaPod, SpaType},
 	util::{Transition, WpIterator <span class="kw">as </span>Iterator},
 };
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use crate</span>::{dbus::DBusState, pw::LinkState};
+<span class="attr">#[doc(no_inline)]
+</span><span class="kw">pub use </span>{
+	<span class="self">self</span>::{
+		core::{Core, InitFlags},
+		error::{Error, <span class="prelude-ty">Result</span>},
+		log::Log,
+	},
+	ffi,
+};
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

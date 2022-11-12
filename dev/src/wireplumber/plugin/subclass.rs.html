@@ -352,15 +352,36 @@
 <span id="352">352</span>
 <span id="353">353</span>
 <span id="354">354</span>
-</pre><pre class="rust"><code><span class="kw">use </span>glib::subclass::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>glib::object::{BorrowedObject, ObjectSubclassIs};
-<span class="kw">use </span>glib::{SourceId, MainContext};
-<span class="kw">use </span>std::panic::catch_unwind;
-<span class="kw">use </span>std::cell::RefCell;
-<span class="kw">use </span><span class="kw">crate</span>::plugin::{Plugin, PluginFeatures};
-<span class="kw">use </span><span class="kw">crate</span>::core::{Core, Object, ObjectImpl};
-<span class="kw">use </span><span class="kw">crate</span>::util::Transition;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		core::{Core, Object, ObjectImpl},
+		plugin::{Plugin, PluginFeatures},
+		prelude::<span class="kw-2">*</span>,
+		util::Transition,
+	},
+	glib::{
+		object::{BorrowedObject, ObjectSubclassIs},
+		subclass::prelude::<span class="kw-2">*</span>,
+		MainContext, SourceId,
+	},
+	std::{cell::RefCell, panic::catch_unwind},
+};
 
 <span class="kw">pub trait </span>PluginImpl: ObjectImpl + PluginImplExt {
 	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
@@ -391,16 +412,17 @@
 		<span class="kw">let </span>parent = PluginImplExt::parent_class(<span class="self">self</span>);
 		<span class="kw">let </span>f = parent.enable.expect(<span class="string">&quot;No parent class implementation for \&quot;enable\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			f(plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>, error_handler.to_glib_none().<span class="number">0</span>)
+			f(
+				plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>,
+				error_handler.to_glib_none().<span class="number">0</span>,
+			)
 		}
 	}
 
 	<span class="kw">fn </span>parent_disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
 		<span class="kw">let </span>parent = PluginImplExt::parent_class(<span class="self">self</span>);
 		<span class="kw">let </span>f = parent.disable.expect(<span class="string">&quot;No parent class implementation for \&quot;disable\&quot;&quot;</span>);
-		<span class="kw">unsafe </span>{
-			f(plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ f(plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>) }
 	}
 }
 
@@ -432,12 +454,14 @@
 }
 
 <span class="kw">pub trait </span>AsyncPluginImpl: ObjectSubclass {
-	<span class="kw">type </span>EnableFuture: Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt;;
+	<span class="kw">type </span>EnableFuture: Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt;;
 	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="self">Self</span>::Type) -&gt; <span class="self">Self</span>::EnableFuture;
 
-	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>) { }
+	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
 
-	<span class="kw">fn </span>register_source(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) { <span class="kw">let _ </span>= source; }
+	<span class="kw">fn </span>register_source(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) {
+		<span class="kw">let _ </span>= source;
+	}
 }
 
 <span class="kw">pub trait </span>AsyncPluginExt: IsA&lt;Plugin&gt; {
@@ -447,17 +471,20 @@
 
 	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext;
 
-	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output=()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F);
+	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output = ()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F);
 }
 
 <span class="kw">impl </span>Plugin {
 	<span class="kw">pub fn </span>core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core {
-		<span class="self">self</span>.upcast_ref::&lt;Object&gt;().core()
+		<span class="self">self
+			</span>.upcast_ref::&lt;Object&gt;()
+			.core()
 			.expect(<span class="string">&quot;plugin requires an active Core&quot;</span>)
 	}
 }
 
-<span class="kw">impl</span>&lt;T: IsA&lt;Plugin&gt; + ObjectSubclassIsExt&gt; AsyncPluginExt <span class="kw">for </span>T <span class="kw">where
+<span class="kw">impl</span>&lt;T: IsA&lt;Plugin&gt; + ObjectSubclassIsExt&gt; AsyncPluginExt <span class="kw">for </span>T
+<span class="kw">where
 	</span>&lt;T <span class="kw">as </span>ObjectSubclassIs&gt;::Subclass: AsyncPluginImpl,
 {
 	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Plugin {
@@ -472,13 +499,14 @@
 		<span class="self">self</span>.plugin_core().default_context()
 	}
 
-	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output=()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) {
+	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output = ()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) {
 		<span class="kw">let </span>source = <span class="self">self</span>.plugin_context().spawn_local(f);
 		<span class="self">self</span>.imp().register_source(source);
 	}
 }
 
-<span class="kw">impl</span>&lt;T: AsyncPluginImpl + ObjectImpl&gt; PluginImpl <span class="kw">for </span>T <span class="kw">where
+<span class="kw">impl</span>&lt;T: AsyncPluginImpl + ObjectImpl&gt; PluginImpl <span class="kw">for </span>T
+<span class="kw">where
 	</span>&lt;T <span class="kw">as </span>ObjectSubclass&gt;::Type: AsyncPluginExt,
 {
 	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, this: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
@@ -487,7 +515,9 @@
 
 		<span class="kw">let </span>enable_handle = this.plugin_context().spawn_local(<span class="kw">async move </span>{
 			<span class="kw">match </span>enable.<span class="kw">await </span>{
-				<span class="prelude-val">Ok</span>(()) =&gt; plugin.as_plugin().update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
+				<span class="prelude-val">Ok</span>(()) =&gt; plugin
+					.as_plugin()
+					.update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
 				<span class="prelude-val">Err</span>(e) =&gt; error_handler.return_error(e),
 			}
 		});
@@ -521,7 +551,8 @@
 	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
 		<span class="kw">for </span>source <span class="kw">in </span><span class="self">self</span>.handles.drain(..) {
 			<span class="kw">if let </span><span class="prelude-val">Some</span>(source) = <span class="self">self</span>.context.find_source_by_id(<span class="kw-2">&amp;</span>source) {
-				<span class="comment">// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?
+				<span class="comment">// TODO: will completed future sources be considered destroyed?
+				// or will they never exist on the context to begin with?
 				// if !source.is_destroyed() { }
 				</span>source.destroy();
 			}
@@ -579,14 +610,15 @@
 
 	<span class="kw">fn </span>decode_args(args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Args, Error&gt;;
 
-	<span class="kw">fn </span>init_args(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="self">Self</span>::Args) { <span class="kw">let _ </span>= args; <span class="macro">unimplemented!</span>() }
-	<span class="kw">fn </span>new_plugin(core: <span class="kw-2">&amp;</span>Core, args: <span class="self">Self</span>::Args) -&gt; <span class="self">Self</span>::Type <span class="kw">where
+	<span class="kw">fn </span>init_args(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="self">Self</span>::Args) {
+		<span class="kw">let _ </span>= args;
+		<span class="macro">unimplemented!</span>()
+	}
+	<span class="kw">fn </span>new_plugin(core: <span class="kw-2">&amp;</span>Core, args: <span class="self">Self</span>::Args) -&gt; <span class="self">Self</span>::Type
+	<span class="kw">where
 		</span><span class="self">Self</span>::Type: IsA&lt;GObject&gt;,
 	{
-		<span class="kw">let </span>res: <span class="self">Self</span>::Type = GObject::new(<span class="kw-2">&amp;</span>[
-			(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><span class="self">Self</span>::NAME),
-			(<span class="string">&quot;core&quot;</span>, core),
-		]);
+		<span class="kw">let </span>res: <span class="self">Self</span>::Type = GObject::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><span class="self">Self</span>::NAME), (<span class="string">&quot;core&quot;</span>, core)]);
 		res.imp().init_args(args);
 		res
 	}
@@ -596,8 +628,9 @@
 	<span class="kw">pub struct </span>SimplePluginObject&lt;T: SimplePlugin&gt;(ObjectSubclass&lt;T&gt;) @extends Plugin, Object;
 }
 
-<span class="kw">impl</span>&lt;T&gt; Deref <span class="kw">for </span>SimplePluginObject&lt;T&gt; <span class="kw">where
-	</span>T: SimplePlugin + ObjectSubclass&lt;Type=<span class="self">Self</span>&gt;,
+<span class="kw">impl</span>&lt;T&gt; Deref <span class="kw">for </span>SimplePluginObject&lt;T&gt;
+<span class="kw">where
+	</span>T: SimplePlugin + ObjectSubclass&lt;Type = <span class="self">Self</span>&gt;,
 {
 	<span class="kw">type </span>Target = T;
 
@@ -644,9 +677,7 @@
 
 <span class="kw">impl</span>&lt;T: ModuleExport&gt; ModuleExport <span class="kw">for </span>ModuleWrapper&lt;T&gt; {
 	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-		<span class="kw">let </span>res = catch_unwind(|| {
-			T::init(core, args)
-		});
+		<span class="kw">let </span>res = catch_unwind(|| T::init(core, args));
 		<span class="kw">match </span>res {
 			<span class="prelude-val">Ok</span>(res) =&gt; res,
 			<span class="prelude-val">Err</span>(panic) =&gt; <span class="prelude-val">Err</span>({
@@ -663,7 +694,8 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;T: SimplePlugin&gt; ModuleExport <span class="kw">for </span>T <span class="kw">where
+<span class="kw">impl</span>&lt;T: SimplePlugin&gt; ModuleExport <span class="kw">for </span>T
+<span class="kw">where
 	</span>T::Type: IsA&lt;GObject&gt; + IsA&lt;Plugin&gt;,
 {
 	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
@@ -689,7 +721,7 @@
 		</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>wireplumber__module_init(
 			core: std::ptr::NonNull&lt;<span class="macro-nonterminal">$crate::ffi::WpCore</span>&gt;,
 			args: <span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GVariant</span>,
-			error: std::ptr::NonNull&lt;<span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GError</span>&gt;
+			error: std::ptr::NonNull&lt;<span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GError</span>&gt;,
 		) -&gt; glib::ffi::gboolean {
 			<span class="kw">use </span><span class="macro-nonterminal">$crate::lib::glib::translate</span>::{IntoGlib, ToGlibPtr};
 

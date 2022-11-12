@@ -204,20 +204,20 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
-</pre><pre class="rust"><code><span class="kw">use </span>pipewire_sys::{pw_core, pw_context};
-<span class="kw">use </span>glib::{MainContext, MainLoop};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-<span class="kw">use crate</span>::{Properties, Core, InitFlags, lua::ToLuaTable};
-<span class="kw">use </span><span class="kw">crate</span>::plugin::ComponentLoader;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>))]
+<span id="207">207</span>
+<span id="208">208</span>
+</pre><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::plugin::LookupDirs;
+<span class="kw">use </span>{
+	<span class="kw">crate</span>::{lua::ToLuaTable, plugin::ComponentLoader, prelude::<span class="kw-2">*</span>, Core, InitFlags, Properties},
+	glib::{MainContext, MainLoop},
+	pipewire_sys::{pw_context, pw_core},
+};
 
 <span class="kw">impl </span>Core {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_init&quot;</span>)]
 	</span><span class="kw">pub fn </span>init_with_flags(flags: InitFlags) {
-		<span class="kw">unsafe </span>{
-			ffi::wp_init(flags.into_glib())
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_init(flags.into_glib()) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_init&quot;</span>)]
@@ -229,41 +229,31 @@
 	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_12&quot;</span>)))]
 	#[doc(alias = <span class="string">&quot;wp_get_library_version&quot;</span>)]
 	</span><span class="kw">pub fn </span>library_version() -&gt; String {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_get_library_version())
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_library_version()) }
 	}
 
 	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_12&quot;</span>)))]
 	#[doc(alias = <span class="string">&quot;wp_get_library_api_version&quot;</span>)]
 	</span><span class="kw">pub fn </span>library_api_version() -&gt; String {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_get_library_api_version())
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_library_api_version()) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_get_module_dir&quot;</span>)]
 	</span><span class="kw">pub fn </span>module_dir() -&gt; String {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_get_module_dir())
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_module_dir()) }
 	}
 
 	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;v0_4_2&quot;</span>, deprecated = <span class="string">&quot;use `find_file` instead&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_get_config_dir&quot;</span>)]
 	</span><span class="kw">pub fn </span>config_dir() -&gt; String {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_get_config_dir())
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_config_dir()) }
 	}
 
 	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;v0_4_2&quot;</span>, deprecated = <span class="string">&quot;use `find_file` instead&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_get_data_dir&quot;</span>)]
 	</span><span class="kw">pub fn </span>data_dir() -&gt; String {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_get_data_dir())
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_get_data_dir()) }
 	}
 
 	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
@@ -271,7 +261,11 @@
 	#[doc(alias = <span class="string">&quot;wp_find_file&quot;</span>)]
 	</span><span class="kw">pub fn </span>find_file(dirs: LookupDirs, filename: <span class="kw-2">&amp;</span>str, subdir: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
 		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_find_file(dirs.into_glib(), filename.to_glib_none().<span class="number">0</span>, subdir.to_glib_none().<span class="number">0</span>))
+			from_glib_full(ffi::wp_find_file(
+				dirs.into_glib(),
+				filename.to_glib_none().<span class="number">0</span>,
+				subdir.to_glib_none().<span class="number">0</span>,
+			))
 		}
 	}
 
@@ -280,59 +274,66 @@
 	#[doc(alias = <span class="string">&quot;wp_new_files_iterator&quot;</span>)]
 	</span><span class="kw">pub fn </span>find_files(dirs: LookupDirs, subdir: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, suffix: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; ValueIterator&lt;String&gt; {
 		<span class="kw">unsafe </span>{
-			ValueIterator::with_inner(
-				from_glib_full(ffi::wp_new_files_iterator(dirs.into_glib(), subdir.to_glib_none().<span class="number">0</span>, suffix.to_glib_none().<span class="number">0</span>))
-			)
+			ValueIterator::with_inner(from_glib_full(ffi::wp_new_files_iterator(
+				dirs.into_glib(),
+				subdir.to_glib_none().<span class="number">0</span>,
+				suffix.to_glib_none().<span class="number">0</span>,
+			)))
 		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_clone&quot;</span>)]
 	</span><span class="kw">pub fn </span>clone_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_core_clone(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_core_clone(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_g_main_context&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_g_main_context&quot;</span>)]
 	</span><span class="kw">pub fn </span>default_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext {
-		<span class="self">self</span>.g_main_context()
+		<span class="self">self
+			</span>.g_main_context()
 			.unwrap_or_else(|| MainContext::ref_thread_default())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_pw_core&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_pw_core&quot;</span>)]
 	</span><span class="kw">pub fn </span>pw_core_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>pw_core {
-		<span class="kw">unsafe </span>{
-			ffi::wp_core_get_pw_core(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_core_get_pw_core(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_get_pw_context&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_pw_context&quot;</span>)]
 	</span><span class="kw">pub fn </span>pw_context_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NonNull&lt;pw_context&gt; {
-		<span class="kw">unsafe </span>{
-			NonNull::new(ffi::wp_core_get_pw_context(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
-				.expect(<span class="string">&quot;pw_context for WpCore&quot;</span>)
-		}
+		<span class="kw">unsafe </span>{ NonNull::new(ffi::wp_core_get_pw_context(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)).expect(<span class="string">&quot;pw_context for WpCore&quot;</span>) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_core_load_component&quot;</span>)]
 	</span><span class="kw">pub fn </span>load_lua_script&lt;A: ToLuaTable&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, script_path: <span class="kw-2">&amp;</span>str, args: A) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-		<span class="kw">let </span>args = args.to_lua_variant().and_then(|v| v.map(|v| v.into_vardict()).transpose())<span class="question-mark">?</span>;
-		<span class="self">self</span>.load_component(script_path, ComponentLoader::TYPE_LUA_SCRIPT, args.as_ref().map(|v| v.as_variant()))
+		<span class="kw">let </span>args = args
+			.to_lua_variant()
+			.and_then(|v| v.map(|v| v.into_vardict()).transpose())<span class="question-mark">?</span>;
+		<span class="self">self</span>.load_component(
+			script_path,
+			ComponentLoader::TYPE_LUA_SCRIPT,
+			args.as_ref().map(|v| v.as_variant()),
+		)
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
 	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;futures&quot;</span>)))]
-	</span><span class="kw">pub fn </span>connect_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; {
+	</span><span class="kw">pub fn </span>connect_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; {
 		<span class="kw">let </span>connect = <span class="kw">match </span>() {
 			<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
 			</span>() =&gt; <span class="self">self</span>.signal_stream(<span class="self">Self</span>::SIGNAL_CONNECTED),
 			<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
 			</span>() =&gt; {
-				<span class="kw">use </span>std::sync::{Arc, atomic::{AtomicU64, Ordering}};
-				<span class="kw">use </span>std::cell::RefCell;
+				<span class="kw">use </span>std::{
+					cell::RefCell,
+					sync::{
+						atomic::{AtomicU64, Ordering},
+						Arc,
+					},
+				};
 
 				<span class="kw">let </span>(tx, rx) = futures_channel::oneshot::channel();
 
@@ -349,9 +350,7 @@
 						}
 						<span class="kw">match </span>signal_id.fetch_and(<span class="number">0</span>, Ordering::SeqCst) {
 							<span class="number">0 </span>=&gt; (),
-							signal =&gt; glib::signal::signal_handler_disconnect(core, <span class="kw">unsafe </span>{
-								from_glib(signal)
-							}),
+							signal =&gt; glib::signal::signal_handler_disconnect(core, <span class="kw">unsafe </span>{ from_glib(signal) }),
 						}
 					}
 				});
@@ -366,7 +365,10 @@
 			</span><span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(connect.once()),
 			<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
 			</span><span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(connect),
-			<span class="bool-val">false </span>=&gt; <span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::OperationFailed, <span class="string">&quot;failed to connect to pipewire&quot;</span>)),
+			<span class="bool-val">false </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
+				LibraryErrorEnum::OperationFailed,
+				<span class="string">&quot;failed to connect to pipewire&quot;</span>,
+			)),
 		};
 
 		<span class="kw">async move </span>{
@@ -383,19 +385,21 @@
 	<span class="kw">pub fn </span>run&lt;F: FnOnce(<span class="kw-2">&amp;</span>MainContext, MainLoop, Core)&gt;(props: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Properties&gt;, setup: F) {
 		<span class="kw">let </span>mainloop = MainLoop::new(<span class="prelude-val">None</span>, <span class="bool-val">false</span>);
 		<span class="kw">let </span>context = mainloop.context();
-		<span class="kw">let </span>core = context.with_thread_default(|| {
-			<span class="kw">let </span>core = Core::new(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>context), props);
-			<span class="kw">let </span>_disconnect_handler = core.connect_disconnected({
-				<span class="kw">let </span>mainloop = mainloop.clone();
-				<span class="kw">move </span>|_core| mainloop.quit()
-			});
+		<span class="kw">let </span>core = context
+			.with_thread_default(|| {
+				<span class="kw">let </span>core = Core::new(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>context), props);
+				<span class="kw">let </span>_disconnect_handler = core.connect_disconnected({
+					<span class="kw">let </span>mainloop = mainloop.clone();
+					<span class="kw">move </span>|_core| mainloop.quit()
+				});
 
-			setup(<span class="kw-2">&amp;</span>context, mainloop.clone(), core.clone());
+				setup(<span class="kw-2">&amp;</span>context, mainloop.clone(), core.clone());
 
-			mainloop.run();
+				mainloop.run();
 
-			core
-		}).unwrap();
+				core
+			})
+			.unwrap();
 
 		core.disconnect();
 	}

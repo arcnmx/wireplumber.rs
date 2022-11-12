@@ -119,26 +119,34 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Logging macros and utilities
 //!
 //! # See also
 //!
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/log_api.html)
 
-</span><span class="kw">use </span>glib::{GString, GStringBuilder, LogLevelFlags};
-<span class="kw">use </span>libspa_sys::spa_log;
-<span class="kw">use </span>std::env;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</span><span class="kw">mod </span>macros;
 
-<span class="kw">mod </span>macros;
-<span class="kw">pub use </span>macros::{
-	log,
-	trace, debug, message, info, warning, critical,
-};
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">pub use </span>macros::_log_inner;
+</span><span class="kw">pub use </span><span class="self">self</span>::macros::_log_inner;
+<span class="kw">pub use </span><span class="self">self</span>::macros::{critical, debug, info, log, message, trace, warning};
 <span class="attr">#[allow(unused_imports)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>macros::{wp_trace, wp_debug, wp_message, wp_info, wp_warning, wp_critical};
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::macros::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning};
+<span class="kw">use </span>{
+	<span class="kw">crate</span>::prelude::<span class="kw-2">*</span>,
+	glib::{GString, GStringBuilder, LogLevelFlags},
+	libspa_sys::spa_log,
+	std::env,
+};
 
 <span class="kw">pub struct </span>Log(());
 
@@ -155,17 +163,13 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_level_is_enabled&quot;</span>)]
 	</span><span class="kw">pub fn </span>level_is_enabled&lt;L: Into&lt;LogLevelFlags&gt;&gt;(flags: L) -&gt; bool {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_set_level&quot;</span>)]
 	</span><span class="kw">pub fn </span>set_level(level: <span class="kw-2">&amp;</span>str) {
 		env::set_var(<span class="string">&quot;WIREPLUMBER_DEBUG&quot;</span>, level); <span class="comment">// XXX: this doesn&#39;t seem to work properly otherwise?
-		</span><span class="kw">unsafe </span>{
-			ffi::wp_log_set_level(level.to_glib_none().<span class="number">0</span>)
-		}
+		</span><span class="kw">unsafe </span>{ ffi::wp_log_set_level(level.to_glib_none().<span class="number">0</span>) }
 	}
 
 	<span class="kw">pub fn </span>set_default_level(level: <span class="kw-2">&amp;</span>str) {
@@ -176,9 +180,7 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_log_get_instance&quot;</span>)]
 	</span><span class="kw">pub fn </span>spa_log() -&gt; <span class="kw-2">*mut </span>spa_log {
-		<span class="kw">unsafe </span>{
-			ffi::wp_spa_log_get_instance()
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_spa_log_get_instance() }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_structured_standard&quot;</span>)]
@@ -197,22 +199,35 @@
 			<span class="kw">let </span>obj = context.object.as_ref().map(|obj| (<span class="kw-2">*</span>obj).to_glib_none());
 			<span class="kw">let </span>message = message.into();
 			ffi::wp_log_structured_standard(
-				domain.<span class="number">0</span>, log_level.into().into_glib(),
-				file.<span class="number">0</span>, line.<span class="number">0</span>, function.<span class="number">0</span>,
-				obj_type.into_glib(), obj.as_ref().map(|o| o.<span class="number">0</span>).unwrap_or(ptr::null()) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-				<span class="string">b&quot;%s\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, message.as_ptr()
+				domain.<span class="number">0</span>,
+				log_level.into().into_glib(),
+				file.<span class="number">0</span>,
+				line.<span class="number">0</span>,
+				function.<span class="number">0</span>,
+				obj_type.into_glib(),
+				obj.as_ref().map(|o| o.<span class="number">0</span>).unwrap_or(ptr::null()) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+				<span class="string">b&quot;%s\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+				message.as_ptr(),
 			)
 		}
 	}
 
-	<span class="kw">pub fn </span>log_args&lt;O: AsRef&lt;GObject&gt;, L: Into&lt;LogLevelFlags&gt;&gt;(log_level: L, context: StructuredLogContext&lt;O&gt;, args: fmt::Arguments) {
+	<span class="kw">pub fn </span>log_args&lt;O: AsRef&lt;GObject&gt;, L: Into&lt;LogLevelFlags&gt;&gt;(
+		log_level: L,
+		context: StructuredLogContext&lt;O&gt;,
+		args: fmt::Arguments,
+	) {
 		<span class="kw">let </span><span class="kw-2">mut </span>message = GStringBuilder::default();
 		<span class="kw">let _ </span>= <span class="macro">write!</span>(message, <span class="string">&quot;{}&quot;</span>, args);
 		<span class="self">Self</span>::log_string(log_level.into(), context.to_object(), message.into_string())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_writer_default&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>writer_default&lt;L: Into&lt;LogLevelFlags&gt;&gt;(log_levels: L, fields: <span class="kw-2">&amp;</span>[glib::ffi::GLogField], user_data: gpointer) -&gt; glib::ffi::GLogWriterOutput {
+	</span><span class="kw">pub unsafe fn </span>writer_default&lt;L: Into&lt;LogLevelFlags&gt;&gt;(
+		log_levels: L,
+		fields: <span class="kw-2">&amp;</span>[glib::ffi::GLogField],
+		user_data: gpointer,
+	) -&gt; glib::ffi::GLogWriterOutput {
 		ffi::wp_log_writer_default(log_levels.into().into_glib(), fields.as_ptr(), fields.len(), user_data)
 	}
 	<span class="comment">// TODO: wp_log_writer_default, wp_log_structured_standard
@@ -229,7 +244,10 @@
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, O&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, O&gt; {
-	<span class="kw">fn </span>to_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, GObject&gt; <span class="kw">where </span>O: AsRef&lt;GObject&gt; {
+	<span class="kw">fn </span>to_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, GObject&gt;
+	<span class="kw">where
+		</span>O: AsRef&lt;GObject&gt;,
+	{
 		StructuredLogContext {
 			domain: <span class="self">self</span>.domain,
 			file: <span class="self">self</span>.file,

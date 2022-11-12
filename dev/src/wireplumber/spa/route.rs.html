@@ -127,9 +127,25 @@
 <span id="127">127</span>
 <span id="128">128</span>
 <span id="129">129</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::spa::{SpaPod, SpaProps};
-<span class="kw">use </span><span class="kw">crate</span>::pw::PipewireObject;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{
+	prelude::<span class="kw-2">*</span>,
+	pw::PipewireObject,
+	spa::{SpaPod, SpaProps},
+};
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
 #[derive(Debug, Clone)]
@@ -140,9 +156,7 @@
 <span class="kw">impl </span>SpaRoute {
 	<span class="kw">pub fn </span>with_params(params: SpaPod) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
 		<span class="comment">// TODO: assert id/type, also check for existence of appropriate fields
-		</span><span class="prelude-val">Ok</span>(<span class="self">Self </span>{
-			params,
-		})
+		</span><span class="prelude-val">Ok</span>(<span class="self">Self </span>{ params })
 	}
 
 	<span class="kw">pub fn </span>into_params(<span class="self">self</span>) -&gt; SpaPod {
@@ -150,58 +164,72 @@
 	}
 
 	<span class="kw">pub fn </span>props(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaProps&gt; {
-		<span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_props)
+		<span class="self">self
+			</span>.params
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_props)
 			.map(|props| SpaProps::with_params(props).unwrap()) <span class="comment">// TODO: assert this too in constructor?
 	</span>}
 
-	<span class="kw">pub fn </span>info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="kw">impl </span>Iterator&lt;Item=(String, String)&gt;&gt; {
-		<span class="kw">let </span>res = <span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_info) {
+	<span class="kw">pub fn </span>info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="kw">impl </span>Iterator&lt;Item = (String, String)&gt;&gt; {
+		<span class="kw">let </span>res = <span class="kw">match </span><span class="self">self
+			</span>.params
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_info)
+		{
 			<span class="prelude-val">Some</span>(params) =&gt; params.struct_fields(<span class="bool-val">true</span>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(Vec::new().into_iter()),
 		}<span class="question-mark">?</span>;
 
 		res
-			.map(|(key, value)| (<span class="kw-2">&amp;</span>value).try_into().map(|v| (key, v))
-				.map_err(|e| Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;expected a string route info value, got {:?} instead: {:?}&quot;</span>, value, e)
-				))
-			).collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw">_</span>&gt;, <span class="kw">_</span>&gt;&gt;()
+			.map(|(key, value)| {
+				(<span class="kw-2">&amp;</span>value).try_into().map(|v| (key, v)).map_err(|e| {
+					Error::new(
+						LibraryErrorEnum::InvalidArgument,
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;expected a string route info value, got {:?} instead: {:?}&quot;</span>, value, e),
+					)
+				})
+			})
+			.collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw">_</span>&gt;, <span class="kw">_</span>&gt;&gt;()
 			.map(|v| v.into_iter())
 	}
 
-	<span class="kw">pub fn </span>profile_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=u32&gt; {
-		<span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_profiles) {
-			<span class="prelude-val">Some</span>(params) =&gt; params.array_iterator::&lt;i32&gt;()
-				.map(|i| i.try_into().unwrap())
-				.collect(),
+	<span class="kw">pub fn </span>profile_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = u32&gt; {
+		<span class="kw">match </span><span class="self">self
+			</span>.params
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_profiles)
+		{
+			<span class="prelude-val">Some</span>(params) =&gt; params.array_iterator::&lt;i32&gt;().map(|i| i.try_into().unwrap()).collect(),
 			<span class="prelude-val">None </span>=&gt; Vec::new(),
-		}.into_iter()
+		}
+		.into_iter()
 	}
 
-	<span class="kw">pub fn </span>device_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=u32&gt; {
-		<span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_devices) {
-			<span class="prelude-val">Some</span>(params) =&gt; params.array_iterator::&lt;i32&gt;()
-				.map(|i| i.try_into().unwrap())
-				.collect(),
+	<span class="kw">pub fn </span>device_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = u32&gt; {
+		<span class="kw">match </span><span class="self">self
+			</span>.params
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_devices)
+		{
+			<span class="prelude-val">Some</span>(params) =&gt; params.array_iterator::&lt;i32&gt;().map(|i| i.try_into().unwrap()).collect(),
 			<span class="prelude-val">None </span>=&gt; Vec::new(),
-		}.into_iter()
+		}
+		.into_iter()
 	}
 
 	<span class="kw">pub fn </span>index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-		<span class="self">self</span>.params.spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_index)
+		<span class="self">self
+			</span>.params
+			.spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_index)
 			.unwrap()
 	}
 
 	<span class="kw">pub fn </span>device_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-		<span class="self">self</span>.params.spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_index)
+		<span class="self">self
+			</span>.params
+			.spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_param_route_SPA_PARAM_ROUTE_index)
 			.unwrap()
 	}
 
 	<span class="kw">pub fn </span>has_volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="self">self</span>.props()
-			.map(|props| props.has_volume())
-			.unwrap_or_default()
+		<span class="self">self</span>.props().map(|props| props.has_volume()).unwrap_or_default()
 	}
 
 	<span class="kw">pub fn </span>contains_device(<span class="kw-2">&amp;</span><span class="self">self</span>, device_index: u32) -&gt; bool {
@@ -216,7 +244,7 @@
 }
 
 <span class="kw">impl </span>SpaRoutes {
-	<span class="kw">pub fn </span>with_params&lt;I: IntoIterator&lt;Item=SpaRoute&gt;&gt;(routes: I) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>with_params&lt;I: IntoIterator&lt;Item = SpaRoute&gt;&gt;(routes: I) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			routes: routes.into_iter().collect(),
 		}
@@ -226,9 +254,8 @@
 		<span class="self">self</span>.routes
 	}
 
-	<span class="kw">pub fn </span>into_params(<span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=SpaPod&gt; {
-		<span class="self">self</span>.routes.into_iter()
-			.map(|r| r.into_params())
+	<span class="kw">pub fn </span>into_params(<span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = SpaPod&gt; {
+		<span class="self">self</span>.routes.into_iter().map(|r| r.into_params())
 	}
 
 	<span class="kw">pub async fn </span>from_object&lt;O: IsA&lt;PipewireObject&gt;&gt;(obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
@@ -237,7 +264,8 @@
 	}
 
 	<span class="kw">pub fn </span>has_volume(<span class="kw-2">&amp;</span><span class="self">self</span>, device_index: u32) -&gt; bool {
-		<span class="self">self</span>.by_device_index(device_index)
+		<span class="self">self
+			</span>.by_device_index(device_index)
 			.map(|dev| dev.has_volume())
 			.unwrap_or_default()
 	}
@@ -252,7 +280,7 @@
 }
 
 <span class="kw">impl </span>FromIterator&lt;SpaRoute&gt; <span class="kw">for </span>SpaRoutes {
-	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=SpaRoute&gt;&gt;(i: I) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = SpaRoute&gt;&gt;(i: I) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::with_params(i)
 	}
 }

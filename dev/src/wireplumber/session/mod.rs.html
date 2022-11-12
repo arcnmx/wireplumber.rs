@@ -90,6 +90,56 @@
 <span id="90">90</span>
 <span id="91">91</span>
 <span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Session item factories
 //!
 //! # See also
@@ -99,84 +149,134 @@
 //! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_factory_api.html)
 //! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/c_api/session_item_api.html)
 //! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_interfaces_api.html)
-</span><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span><span class="kw">crate</span>::spa::SpaPod;
-
-<span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	SessionItem, SessionItemFeatures,
-	SiAcquisition,
-	SiAdapter,
-	SiEndpoint,
-	SiFactory,
-	SiLink,
-	SiLinkable,
-	traits::{
-		SessionItemExt,
-		SiAcquisitionExt,
-		SiAdapterExt,
-		SiEndpointExt,
-		SiFactoryExt,
-		SiLinkExt,
-		SiLinkableExt,
-	},
-};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::auto::SiAdapterPortsState;
+<span class="kw">pub use </span><span class="kw">crate</span>::auto::{
+	traits::{SessionItemExt, SiAcquisitionExt, SiAdapterExt, SiEndpointExt, SiFactoryExt, SiLinkExt, SiLinkableExt},
+	SessionItem, SessionItemFeatures, SiAcquisition, SiAdapter, SiEndpoint, SiFactory, SiLink, SiLinkable,
+};
+<span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, spa::SpaPod};
 
 <span class="kw">pub trait </span>SiAdapterExt2: <span class="lifetime">&#39;static </span>{
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_si_adapter_set_ports_format&quot;</span>)]
-	</span><span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;, mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, callback: P);
+	</span><span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+		callback: P,
+	);
 
-	<span class="kw">fn </span>set_ports_format_future(<span class="kw-2">&amp;</span><span class="self">self</span>, format: <span class="prelude-ty">Option</span>&lt;SpaPod&gt;, mode: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+	<span class="kw">fn </span>set_ports_format_future(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		format: <span class="prelude-ty">Option</span>&lt;SpaPod&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;String&gt;,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;SiAdapter&gt;&gt; SiAdapterExt2 <span class="kw">for </span>O {
-	<span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;, mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, callback: P) {
+	<span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+		callback: P,
+	) {
 		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>;
 		<span class="kw">let </span>callback = Box::new(callback) <span class="kw">as </span>Box&lt;DynCallback&gt;;
 		<span class="kw">let </span>userdata = Box::into_raw(Box::new(callback));
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>set_ports_format_trampoline(_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject, res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult, user_data: gpointer) {
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>set_ports_format_trampoline(
+			_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
+			res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
+			user_data: gpointer,
+		) {
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
 			<span class="kw">let _ </span>= ffi::wp_si_adapter_set_ports_format_finish(_source_object <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, res, <span class="kw-2">&amp;mut </span>error);
-			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() { <span class="prelude-val">Ok</span>(()) } <span class="kw">else </span>{ <span class="prelude-val">Err</span>(from_glib_full(error)) };
+			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
+				<span class="prelude-val">Ok</span>(())
+			} <span class="kw">else </span>{
+				<span class="prelude-val">Err</span>(from_glib_full(error))
+			};
 			<span class="kw">let </span>callback = Box::from_raw(user_data <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;DynCallback&gt;);
 			callback(result)
 		}
 		<span class="kw">unsafe </span>{
-			ffi::wp_si_adapter_set_ports_format(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, format.to_glib_full(), mode.to_glib_none().<span class="number">0</span>, <span class="prelude-val">Some</span>(set_ports_format_trampoline), userdata <span class="kw">as </span><span class="kw-2">*mut </span>libc::c_void)
+			ffi::wp_si_adapter_set_ports_format(
+				<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+				format.to_glib_full(),
+				mode.to_glib_none().<span class="number">0</span>,
+				<span class="prelude-val">Some</span>(set_ports_format_trampoline),
+				userdata <span class="kw">as </span><span class="kw-2">*mut </span>libc::c_void,
+			)
 		}
 	}
 
-	<span class="kw">fn </span>set_ports_format_future(<span class="kw-2">&amp;</span><span class="self">self</span>, format: <span class="prelude-ty">Option</span>&lt;SpaPod&gt;, mode: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+	<span class="kw">fn </span>set_ports_format_future(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		format: <span class="prelude-ty">Option</span>&lt;SpaPod&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;String&gt;,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
 		Box::pin(gio::GioFuture::new(<span class="self">self</span>, <span class="kw">move </span>|obj, _cancellable, send| {
-			obj.set_ports_format(format.as_ref(), mode.as_ref().map(|s| s.as_str()), <span class="kw">move </span>|res| send.resolve(res))
+			obj.set_ports_format(format.as_ref(), mode.as_ref().map(|s| s.as_str()), <span class="kw">move </span>|res| {
+				send.resolve(res)
+			})
 		}))
 	}
 }
 
 <span class="kw">pub trait </span>SiAcquisitionExt2: <span class="lifetime">&#39;static </span>{
-	<span class="kw">fn </span>acquire&lt;P: IsA&lt;SiLink&gt;, Q: IsA&lt;SiLinkable&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, acquisitor: <span class="kw-2">&amp;</span>P, item: <span class="kw-2">&amp;</span>Q, callback: R);
-	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;SiLink&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;SiLinkable&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, acquisitor: P, item: Q) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+	<span class="kw">fn </span>acquire&lt;P: IsA&lt;SiLink&gt;, Q: IsA&lt;SiLinkable&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		acquisitor: <span class="kw-2">&amp;</span>P,
+		item: <span class="kw-2">&amp;</span>Q,
+		callback: R,
+	);
+	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;SiLink&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;SiLinkable&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		acquisitor: P,
+		item: Q,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;SiAcquisition&gt;&gt; SiAcquisitionExt2 <span class="kw">for </span>O {
-	<span class="kw">fn </span>acquire&lt;P: IsA&lt;SiLink&gt;, Q: IsA&lt;SiLinkable&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, acquisitor: <span class="kw-2">&amp;</span>P, item: <span class="kw-2">&amp;</span>Q, callback: R) {
+	<span class="kw">fn </span>acquire&lt;P: IsA&lt;SiLink&gt;, Q: IsA&lt;SiLinkable&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		acquisitor: <span class="kw-2">&amp;</span>P,
+		item: <span class="kw-2">&amp;</span>Q,
+		callback: R,
+	) {
 		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>;
 		<span class="kw">let </span>callback = Box::new(callback) <span class="kw">as </span>Box&lt;DynCallback&gt;;
 		<span class="kw">let </span>userdata = Box::into_raw(Box::new(callback));
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>acquire_trampoline(_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject, res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult, user_data: gpointer) {
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>acquire_trampoline(
+			_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
+			res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
+			user_data: gpointer,
+		) {
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
 			<span class="kw">let _ </span>= ffi::wp_si_acquisition_acquire_finish(_source_object <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, res, <span class="kw-2">&amp;mut </span>error);
-			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() { <span class="prelude-val">Ok</span>(()) } <span class="kw">else </span>{ <span class="prelude-val">Err</span>(from_glib_full(error)) };
+			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
+				<span class="prelude-val">Ok</span>(())
+			} <span class="kw">else </span>{
+				<span class="prelude-val">Err</span>(from_glib_full(error))
+			};
 			<span class="kw">let </span>callback = Box::from_raw(user_data <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;DynCallback&gt;);
 			callback(result)
 		}
 		<span class="kw">unsafe </span>{
-			ffi::wp_si_acquisition_acquire(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, acquisitor.as_ref().to_glib_none().<span class="number">0</span>, item.as_ref().to_glib_none().<span class="number">0</span>, <span class="prelude-val">Some</span>(acquire_trampoline), userdata <span class="kw">as </span><span class="kw-2">*mut </span>libc::c_void)
+			ffi::wp_si_acquisition_acquire(
+				<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+				acquisitor.as_ref().to_glib_none().<span class="number">0</span>,
+				item.as_ref().to_glib_none().<span class="number">0</span>,
+				<span class="prelude-val">Some</span>(acquire_trampoline),
+				userdata <span class="kw">as </span><span class="kw-2">*mut </span>libc::c_void,
+			)
 		}
 	}
 
-	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;SiLink&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;SiLinkable&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, acquisitor: P, item: Q) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;SiLink&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;SiLinkable&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		acquisitor: P,
+		item: Q,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
 		Box::pin(gio::GioFuture::new(<span class="self">self</span>, <span class="kw">move </span>|obj, _cancellable, send| {
 			obj.acquire(acquisitor.as_ref(), item.as_ref(), <span class="kw">move </span>|res| send.resolve(res))
 		}))

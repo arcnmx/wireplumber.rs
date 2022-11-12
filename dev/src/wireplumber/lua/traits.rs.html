@@ -41,8 +41,15 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::lua::{LuaTable, LuaError};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{
+	lua::{LuaError, LuaTable},
+	prelude::<span class="kw-2">*</span>,
+};
 
 <span class="kw">pub trait </span>ToLuaTable {
 	<span class="kw">fn </span>to_lua_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;static</span>&gt;&gt;, LuaError&gt;;
@@ -54,20 +61,23 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;T: TryInto&lt;LuaTable&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; ToLuaTable <span class="kw">for </span>T <span class="kw">where
+<span class="kw">impl</span>&lt;T: TryInto&lt;LuaTable&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; ToLuaTable <span class="kw">for </span>T
+<span class="kw">where
 	</span>T::Error: Into&lt;LuaError&gt;,
 {
 	<span class="kw">fn </span>to_lua_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;static</span>&gt;&gt;, LuaError&gt; {
-		<span class="self">self</span>.try_into().map(<span class="prelude-val">Some</span>)
-			.map_err(Into::into)
+		<span class="self">self</span>.try_into().map(<span class="prelude-val">Some</span>).map_err(Into::into)
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: TryInto&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; ToLuaTable <span class="kw">for </span><span class="prelude-ty">Option</span>&lt;T&gt; <span class="kw">where
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: TryInto&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; ToLuaTable <span class="kw">for </span><span class="prelude-ty">Option</span>&lt;T&gt;
+<span class="kw">where
 	</span>T::Error: Into&lt;LuaError&gt;,
 {
 	<span class="kw">fn </span>to_lua_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;static</span>&gt;&gt;, LuaError&gt; {
-		<span class="self">self</span>.map(TryInto::try_into).transpose()
+		<span class="self">self
+			</span>.map(TryInto::try_into)
+			.transpose()
 			.map_err(Into::into)
 			.map(|v| v.map(|v| v.owned()))
 	}
@@ -75,7 +85,7 @@
 
 <span class="attr">#[test]
 </span><span class="kw">fn </span>to_lua_variant() {
-	<span class="kw">fn </span>assert_impl&lt;T: ToLuaTable&gt;() { }
+	<span class="kw">fn </span>assert_impl&lt;T: ToLuaTable&gt;() {}
 
 	assert_impl::&lt;LuaTable&gt;();
 	assert_impl::&lt;<span class="prelude-ty">Option</span>&lt;LuaTable&gt;&gt;();

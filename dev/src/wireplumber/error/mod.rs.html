@@ -58,20 +58,20 @@
 <span id="58">58</span>
 <span id="59">59</span>
 <span id="60">60</span>
-<span id="61">61</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Error handling and the [Result] alias
 //!
 //! # See also
 //!
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
 
-</span><span class="kw">use </span>glib::{Quark, error::ErrorDomain};
-<span class="kw">use </span>std::fmt::Display;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-
-<span class="kw">pub use </span><span class="kw">crate</span>::auto::LibraryErrorEnum;
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::LibraryErrorEnum;
 <span class="attr">#[doc(no_inline)]
 </span><span class="kw">pub use </span>glib::Error;
+<span class="kw">use </span>{
+	<span class="kw">crate</span>::prelude::<span class="kw-2">*</span>,
+	glib::{error::ErrorDomain, Quark},
+	std::fmt::Display,
+};
 
 <span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
 
@@ -79,9 +79,7 @@
 	<span class="attr">#[doc(alias = <span class="string">&quot;WP_DOMAIN_LIBRARY&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_domain_library_quark&quot;</span>)]
 	</span><span class="kw">fn </span>domain() -&gt; Quark {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_domain_library_quark())
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_domain_library_quark()) }
 	}
 
 	<span class="kw">fn </span>code(<span class="self">self</span>) -&gt; i32 {
@@ -90,9 +88,9 @@
 
 	<span class="kw">fn </span>from(code: i32) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">match </span>code {
-			ffi::WP_LIBRARY_ERROR_INVARIANT | ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT | ffi::WP_LIBRARY_ERROR_OPERATION_FAILED =&gt; <span class="kw">unsafe </span>{
-				<span class="prelude-val">Some</span>(from_glib(code))
-			},
+			ffi::WP_LIBRARY_ERROR_INVARIANT
+			| ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT
+			| ffi::WP_LIBRARY_ERROR_OPERATION_FAILED =&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(code)) },
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}

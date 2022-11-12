@@ -104,13 +104,11 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
-</pre><pre class="rust"><code><span class="kw">use </span>std::{ops::Deref, fmt, str};
-<span class="kw">use </span>glib::variant::VariantTypeMismatchError;
-
-<span class="kw">use </span><span class="kw">crate</span>::lua::LuaError;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{lua::LuaError, prelude::<span class="kw-2">*</span>},
+	glib::variant::VariantTypeMismatchError,
+	std::{fmt, ops::Deref, str},
+};
 
 <span class="macro">newtype_wrapper! </span>{
 	<span class="attr">#[derive(Debug, Ord, Eq, Clone, Hash)]
@@ -124,9 +122,7 @@
 
 	<span class="kw">pub fn </span>into_string(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, str::Utf8Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.as_str() {
-			<span class="prelude-val">Ok</span>(..) =&gt; <span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{
-				String::from_utf8_unchecked(<span class="self">self</span>.into_bytes())
-			}),
+			<span class="prelude-val">Ok</span>(..) =&gt; <span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{ String::from_utf8_unchecked(<span class="self">self</span>.into_bytes()) }),
 			<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
 		}
 	}
@@ -138,10 +134,12 @@
 		}
 	}
 
-	<span class="kw">pub fn </span>parse&lt;F: FromStr&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;F, LuaError&gt; <span class="kw">where
+	<span class="kw">pub fn </span>parse&lt;F: FromStr&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;F, LuaError&gt;
+	<span class="kw">where
 		</span>F::Err: Into&lt;LuaError&gt;,
 	{
-		<span class="self">self</span>.as_str()
+		<span class="self">self
+			</span>.as_str()
 			.map_err(Into::into)
 			.and_then(|s| s.parse().map_err(Into::into))
 	}
@@ -160,15 +158,14 @@
 
 	<span class="kw">fn </span>try_from(variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span>variant.classify() {
-			VariantClass::Variant =&gt;
-				<span class="self">Self</span>::try_from(variant.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)),
-			VariantClass::String =&gt;
-				<span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(variant.str().expect(<span class="string">&quot;VariantClass&quot;</span>))),
+			VariantClass::Variant =&gt; <span class="self">Self</span>::try_from(variant.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)),
+			VariantClass::String =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(variant.str().expect(<span class="string">&quot;VariantClass&quot;</span>))),
 			VariantClass::Array <span class="kw">if </span>variant.type_() == VariantTy::BYTE_STRING =&gt;
 				<span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(variant.fixed_array::&lt;u8&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>))),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(
-				VariantTypeMismatchError::new(variant.type_().to_owned(), VariantTy::STRING.to_owned())
-			)),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(VariantTypeMismatchError::new(
+				variant.type_().to_owned(),
+				VariantTy::STRING.to_owned(),
+			))),
 		}
 	}
 }
@@ -177,8 +174,7 @@
 	<span class="kw">type </span>Error = LuaError;
 
 	<span class="kw">fn </span>try_from(variant: Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		LuaString::try_from(<span class="kw-2">&amp;</span>variant)
-			.map(|s| s.owned())
+		LuaString::try_from(<span class="kw-2">&amp;</span>variant).map(|s| s.owned())
 	}
 }
 

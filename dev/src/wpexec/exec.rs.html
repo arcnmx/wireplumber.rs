@@ -277,7 +277,7 @@
 </pre><pre class="rust"><code><span class="doccomment">//! wpexec example
 //!
 //! An example showing how to write a simple WirePlumber service.
-//! Following along with the [source code](../src/exec/exec.rs.html) is recommended.
+//! Following along with the [source code](../src/wpexec/exec.rs.html) is recommended.
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
@@ -286,11 +286,11 @@
 	clap::{ArgEnum, Parser},
 	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
 	wireplumber::{
-		info,
+		log::{info, warning},
 		lua::LuaVariant,
-		plugin::{ComponentLoader, Plugin, PluginFeatures},
+		plugin::<span class="kw-2">*</span>,
+		prelude::<span class="kw-2">*</span>,
 		pw::{<span class="self">self</span>, Properties},
-		warning, Core, Log,
 	},
 };
 
@@ -407,7 +407,7 @@
 /// See also: [Core::run]
 </span><span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
 	<span class="comment">// info logging by default so we can see what&#39;s going on
-	</span>Log::set_default_level(<span class="string">&quot;3&quot;</span>);
+	</span>wireplumber::Log::set_default_level(<span class="string">&quot;3&quot;</span>);
 
 	<span class="comment">// let clap build a CLI from argv for us
 	</span><span class="kw">let </span>args = Args::parse();

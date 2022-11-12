@@ -89,10 +89,6 @@
 <span id="89">89</span>
 <span id="90">90</span>
 <span id="91">91</span>
-<span id="92">92</span>
-<span id="93">93</span>
-<span id="94">94</span>
-<span id="95">95</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Remote object change notifications
 //!
 //! When combined with a [Core](crate::core::Core), an [ObjectManager] emits signals whenever
@@ -139,16 +135,12 @@
 //! - [ObjectManager](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_manager_api.html)
 //! - [Interest](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_interest_api.html)
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-
-<span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	ObjectManager,
-	ObjectInterest,
-	ConstraintType, ConstraintVerb,
-	InterestMatch, InterestMatchFlags,
+<span class="kw">pub use </span>{
+	<span class="self">self</span>::interest::{Constraint, Interest, InterestContainer},
+	<span class="kw">crate</span>::auto::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
 };
 
 <span class="kw">mod </span>interest;
-<span class="kw">pub use </span>interest::{Constraint, Interest, InterestContainer};
 
 <span class="kw">impl </span>ObjectManager {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_new_iterator&quot;</span>)]
@@ -165,14 +157,14 @@
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_lookup&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_object_manager_lookup_full&quot;</span>)]
 	</span><span class="kw">pub fn </span>lookup&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
-		<span class="self">self</span>.lookup_full(interest)
-			.map(|obj| <span class="kw">unsafe </span>{ obj.unsafe_cast() })
+		<span class="self">self</span>.lookup_full(interest).map(|obj| <span class="kw">unsafe </span>{ obj.unsafe_cast() })
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; IntoIterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ObjectManager {
-	<span class="kw">type </span>Item = GObject; <span class="comment">// TODO: crate::Object instead? or do factories not impl it?
-	</span><span class="kw">type </span>IntoIter = ValueIterator&lt;GObject&gt;;
+	<span class="comment">// TODO: crate::Object instead? or do factories not impl it?
+	</span><span class="kw">type </span>Item = GObject;
+	<span class="kw">type </span>IntoIter = ValueIterator&lt;GObject&gt;;
 
 	<span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
 		<span class="self">self</span>.objects()

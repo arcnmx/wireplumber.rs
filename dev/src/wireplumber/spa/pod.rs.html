@@ -328,12 +328,30 @@
 <span id="328">328</span>
 <span id="329">329</span>
 <span id="330">330</span>
-</pre><pre class="rust"><code><span class="kw">use </span>libspa_sys::{spa_pod, spa_rectangle, spa_fraction};
-<span class="kw">use </span><span class="kw">crate</span>::pw::SpaPropertyKey;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+</pre><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::pw::PipewireObject;
-<span class="kw">use </span><span class="kw">crate</span>::spa::{SpaPod, SpaIdValue, SpaPodParser, SpaPodBuilder, SpaPrimitive, SpaValue};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		prelude::<span class="kw-2">*</span>,
+		pw::SpaPropertyKey,
+		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPodParser, SpaPrimitive, SpaValue},
+	},
+	libspa_sys::{spa_fraction, spa_pod, spa_rectangle},
+};
 
 <span class="kw">impl </span>SpaPod {
 	<span class="doccomment">/// # Safety
@@ -369,18 +387,17 @@
 	}
 
 	<span class="kw">pub fn </span>with_pod(bytes: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{
-			<span class="self">Self</span>::with_copy(
-				<span class="kw-2">&amp;</span><span class="self">Self</span>::with_pod_unchecked(bytes)
-			)
-		}
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_copy(<span class="kw-2">&amp;</span><span class="self">Self</span>::with_pod_unchecked(bytes)) }
 	}
 
 	<span class="kw">fn </span>parse_&lt;R, F: FnOnce(<span class="kw-2">&amp;</span>SpaPodParser, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;R, Error&gt; {
 		<span class="kw">let </span>(parser, id_name) = <span class="kw">match </span>() {
 			<span class="kw">_ if </span><span class="self">self</span>.is_object() =&gt; <span class="prelude-val">Ok</span>(SpaPodParser::new_object(<span class="self">self</span>)),
 			<span class="kw">_ if </span><span class="self">self</span>.is_struct() =&gt; <span class="prelude-val">Ok</span>((SpaPodParser::new_struct(<span class="self">self</span>), <span class="prelude-val">None</span>)),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA type {:?}&quot;</span>, <span class="self">self</span>.spa_type()))),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA type {:?}&quot;</span>, <span class="self">self</span>.spa_type()),
+			)),
 		}<span class="question-mark">?</span>;
 		<span class="kw">let </span>res = f(<span class="kw-2">&amp;</span>parser, id_name);
 		parser.end();
@@ -402,9 +419,7 @@
 	}
 
 	<span class="kw">pub fn </span>to_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-		<span class="kw">unsafe </span>{
-			<span class="self">self</span>.as_bytes().into()
-		}
+		<span class="kw">unsafe </span>{ <span class="self">self</span>.as_bytes().into() }
 	}
 
 	<span class="doccomment">/// borrows pod for the lifetime of the returned object
@@ -421,16 +436,12 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_new_bytes&quot;</span>)]
 	</span><span class="kw">pub fn </span>new_bytes(value: <span class="kw-2">&amp;</span>[u8]) -&gt; SpaPod {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_spa_pod_new_bytes(value.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, value.len() <span class="kw">as _</span>))
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_bytes(value.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, value.len() <span class="kw">as _</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_new_pointer&quot;</span>)]
 	</span><span class="kw">pub fn </span>new_pointer(type_name: <span class="kw-2">&amp;</span>str, value: gconstpointer) -&gt; SpaPod {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_spa_pod_new_pointer(type_name.to_glib_none().<span class="number">0</span>, value))
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_pointer(type_name.to_glib_none().<span class="number">0</span>, value)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_bytes&quot;</span>)]
@@ -450,9 +461,7 @@
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_choice_type&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_choice_type&quot;</span>)]
 	</span><span class="kw">pub fn </span>choice_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdValue&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_pod_get_choice_type(<span class="self">self</span>.to_glib_none().<span class="number">0</span>))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_choice_type(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_pointer&quot;</span>)]
@@ -471,7 +480,11 @@
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_set_pointer&quot;</span>)]
 	</span><span class="kw">pub fn </span>set_pointer(<span class="kw-2">&amp;</span><span class="self">self</span>, type_name: <span class="kw-2">&amp;</span>str, value: gconstpointer) -&gt; bool {
 		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_pod_set_pointer(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, type_name.to_glib_none().<span class="number">0</span>, value))
+			from_glib(ffi::wp_spa_pod_set_pointer(
+				<span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+				type_name.to_glib_none().<span class="number">0</span>,
+				value,
+			))
 		}
 	}
 
@@ -479,37 +492,27 @@
 		ValueIterator::with_inner(<span class="self">self</span>.new_iterator().unwrap())
 	}
 
-	<span class="kw">pub fn </span>array_pointers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=Pointer&gt; {
+	<span class="kw">pub fn </span>array_pointers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = Pointer&gt; {
 		<span class="self">self</span>.new_iterator().unwrap().map(|v| v.get().unwrap())
 	}
 
-	<span class="kw">pub fn </span>array_iterator&lt;T: SpaPrimitive&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=T&gt; {
+	<span class="kw">pub fn </span>array_iterator&lt;T: SpaPrimitive&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = T&gt; {
 		<span class="comment">// TODO: assert type via T!!!
-		</span><span class="self">self</span>.array_pointers().map(|p| <span class="kw">unsafe </span>{
-			<span class="kw-2">*</span>(p <span class="kw">as </span><span class="kw-2">*const </span>T)
-		})
+		</span><span class="self">self</span>.array_pointers().map(|p| <span class="kw">unsafe </span>{ <span class="kw-2">*</span>(p <span class="kw">as </span><span class="kw-2">*const </span>T) })
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_spa_pod&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_spa_pod&quot;</span>)]
 	</span><span class="kw">pub fn </span>spa_pod_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>spa_pod {
-		<span class="kw">unsafe </span>{
-			<span class="kw-2">&amp;*</span>ffi::wp_spa_pod_get_spa_pod(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>ffi::wp_spa_pod_get_spa_pod(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
 	}
 
 	<span class="kw">pub fn </span>spa_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;spa_rectangle&gt; {
-		<span class="self">self</span>.rectangle().map(|(width, height)| spa_rectangle {
-			width,
-			height,
-		})
+		<span class="self">self</span>.rectangle().map(|(width, height)| spa_rectangle { width, height })
 	}
 
 	<span class="kw">pub fn </span>spa_fraction(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;spa_fraction&gt; {
-		<span class="self">self</span>.fraction().map(|(num, denom)| spa_fraction {
-			num,
-			denom,
-		})
+		<span class="self">self</span>.fraction().map(|(num, denom)| spa_fraction { num, denom })
 	}
 
 	<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
@@ -518,24 +521,36 @@
 		<span class="kw">let </span><span class="kw-2">mut </span>params = <span class="self">self</span>.iterator();
 
 		<span class="kw">let </span>length: <span class="prelude-ty">Option</span>&lt;i32&gt; = <span class="kw">if </span>length_prefix {
-			<span class="prelude-val">Some</span>(params.next()
-				.ok_or_else(|| Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} is missing expected length prefix&quot;</span>, <span class="self">self</span>),
-				)).and_then(|pod| (<span class="kw-2">&amp;</span>pod).try_into()
-					.map_err(|e| Error::new(
-						LibraryErrorEnum::InvalidArgument,
-						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} length could not be parsed from {:?}: {:?}&quot;</span>, <span class="self">self</span>, pod, e),
-					))
-				)<span class="question-mark">?</span>)
+			<span class="prelude-val">Some</span>(
+				params
+					.next()
+					.ok_or_else(|| {
+						Error::new(
+							LibraryErrorEnum::InvalidArgument,
+							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} is missing expected length prefix&quot;</span>, <span class="self">self</span>),
+						)
+					})
+					.and_then(|pod| {
+						(<span class="kw-2">&amp;</span>pod).try_into().map_err(|e| {
+							Error::new(
+								LibraryErrorEnum::InvalidArgument,
+								<span class="kw-2">&amp;</span><span class="macro">format!</span>(
+									<span class="string">&quot;pod struct {:?} length could not be parsed from {:?}: {:?}&quot;</span>,
+									<span class="self">self</span>, pod, e
+								),
+							)
+						})
+					})<span class="question-mark">?</span>,
+			)
 		} <span class="kw">else </span>{
 			<span class="prelude-val">None
 		</span>};
 		<span class="kw">let </span>length = <span class="kw">match </span>length {
-			<span class="prelude-val">Some</span>(len) <span class="kw">if </span>len &lt; <span class="number">0 </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} has invalid length {}&quot;</span>, <span class="self">self</span>, len),
-			)),
+			<span class="prelude-val">Some</span>(len) <span class="kw">if </span>len &lt; <span class="number">0 </span>=&gt;
+				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {:?} has invalid length {}&quot;</span>, <span class="self">self</span>, len),
+				)),
 			<span class="prelude-val">Some</span>(len) =&gt; <span class="prelude-val">Some</span>(len <span class="kw">as </span>usize),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
 		};
@@ -552,33 +567,41 @@
 				}
 			}
 
-			<span class="kw">let </span>key: String = (<span class="kw-2">&amp;</span>key).try_into()
-				.map_err(|e| Error::new(
+			<span class="kw">let </span>key: String = (<span class="kw-2">&amp;</span>key).try_into().map_err(|e| {
+				Error::new(
 					LibraryErrorEnum::InvalidArgument,
 					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;key {:?} was not a string: {:?}&quot;</span>, key, e),
-				))<span class="question-mark">?</span>;
+				)
+			})<span class="question-mark">?</span>;
 			<span class="kw">let </span>value = <span class="kw">match </span>params.next() {
 				<span class="prelude-val">Some</span>(v) =&gt; v,
-				<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unexpected key {:?} due to uneven amount of params on {:?}&quot;</span>, key, <span class="self">self</span>),
-				)),
+				<span class="prelude-val">None </span>=&gt;
+					<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+						LibraryErrorEnum::InvalidArgument,
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unexpected key {:?} due to uneven amount of params on {:?}&quot;</span>, key, <span class="self">self</span>),
+					)),
 			};
 			values.push((key, value));
 		}
 		<span class="prelude-val">Ok</span>(values.into_iter())
 	}
 
-	<span class="kw">pub fn </span>spa_properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item=(<span class="prelude-ty">Result</span>&lt;SpaIdValue, ffi::WpSpaType&gt;, SpaPod)&gt; {
+	<span class="kw">pub fn </span>spa_properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<span class="prelude-ty">Result</span>&lt;SpaIdValue, ffi::WpSpaType&gt;, SpaPod)&gt; {
 		<span class="kw">let </span>type_ = <span class="self">self</span>.spa_type();
 		<span class="kw">let </span>values = type_.and_then(|ty| ty.values_table());
-		<span class="self">self</span>.iterator().map(<span class="kw">move </span>|pod| pod.property().unwrap())
-			.map(<span class="kw">move </span>|(key_name, pod)| (
-				SpaIdValue::value_or_name(<span class="kw-2">&amp;</span>type_, <span class="kw-2">&amp;</span>key_name,
-					values.and_then(|values| values.find_value_from_short_name(<span class="kw-2">&amp;</span>key_name))
-				),
-				pod,
-			))
+		<span class="self">self
+			</span>.iterator()
+			.map(<span class="kw">move </span>|pod| pod.property().unwrap())
+			.map(<span class="kw">move </span>|(key_name, pod)| {
+				(
+					SpaIdValue::value_or_name(
+						<span class="kw-2">&amp;</span>type_,
+						<span class="kw-2">&amp;</span>key_name,
+						values.and_then(|values| values.find_value_from_short_name(<span class="kw-2">&amp;</span>key_name)),
+					),
+					pod,
+				)
+			})
 	}
 
 	<span class="kw">pub fn </span>find_spa_property&lt;K: SpaPropertyKey&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;SpaPod&gt; {
@@ -590,15 +613,19 @@
 				<span class="kw">return </span><span class="prelude-val">None
 			</span>},
 		};
-		<span class="self">self</span>.spa_properties().find(|<span class="kw-2">&amp;</span>(id, ..)| SpaIdValue::result_number(id) == find_id)
+		<span class="self">self
+			</span>.spa_properties()
+			.find(|<span class="kw-2">&amp;</span>(id, ..)| SpaIdValue::result_number(id) == find_id)
 			.map(|(<span class="kw">_</span>, pod)| pod)
 	}
 
-	<span class="kw">pub fn </span>spa_property&lt;T, K: SpaPropertyKey&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; <span class="kw">where
+	<span class="kw">pub fn </span>spa_property&lt;T, K: SpaPropertyKey&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
+	<span class="kw">where
 		for</span>&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod: TryInto&lt;T&gt;,
 		<span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; &lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod <span class="kw">as </span>TryInto&lt;T&gt;&gt;::Error: Debug,
 	{
-		<span class="self">self</span>.find_spa_property(key)
+		<span class="self">self
+			</span>.find_spa_property(key)
 			.and_then(|pod| <span class="kw">match </span>TryInto::try_into(<span class="kw-2">&amp;</span>pod) {
 				<span class="prelude-val">Ok</span>(v) =&gt; <span class="prelude-val">Some</span>(v),
 				<span class="prelude-val">Err</span>(e) =&gt; {
@@ -635,10 +662,11 @@
 		<span class="kw">let </span>name = <span class="kw">match </span>type_.number() {
 			libspa_sys::SPA_TYPE_OBJECT_Props =&gt; <span class="string">&quot;Props&quot;</span>,
 			libspa_sys::SPA_TYPE_OBJECT_ParamRoute =&gt; <span class="string">&quot;Route&quot;</span>,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;could not apply unknown spa type {:?} to {:?}&quot;</span>, type_, obj),
-			)),
+			<span class="kw">_ </span>=&gt;
+				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;could not apply unknown spa type {:?} to {:?}&quot;</span>, type_, obj),
+				)),
 		};
 
 		<span class="kw">let </span>flags = Default::default();
@@ -654,7 +682,7 @@
 }
 
 <span class="kw">impl</span>&lt;T: SpaValue&gt; FromIterator&lt;T&gt; <span class="kw">for </span>SpaPod {
-	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		SpaPodBuilder::from_iter(iter).end().unwrap()
 	}
 }

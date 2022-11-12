@@ -30,6 +30,9 @@
 <span id="30">30</span>
 <span id="31">31</span>
 <span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Lua script execution
 //!
 //! The types in this module facilitate integration with the built-in
@@ -40,27 +43,30 @@
 //! - it must be of type `VariantDict`, so values must always be boxed
 //! - arrays must be converted to dictionary form, with string keys beginning with &quot;1&quot;
 
-</span><span class="attr">#[macro_use]
-</span><span class="kw">mod </span>macros;
-<span class="kw">mod </span>variant;
-<span class="kw">mod </span>string;
-<span class="kw">mod </span>error;
-<span class="kw">mod </span>traits;
-<span class="kw">pub use </span>variant::{LuaVariant, LuaTable, LuaType, LuaValue};
-<span class="kw">pub use </span>string::LuaString;
-<span class="kw">pub use </span>error::LuaError;
-<span class="kw">pub use </span>traits::ToLuaTable;
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+</span><span class="kw">pub use </span><span class="self">self</span>::{
+	deserializer::{from_variant, Deserializer},
+	serializer::{to_variant, Serializer},
+};
+<span class="kw">pub use </span><span class="self">self</span>::{
+	error::LuaError,
+	string::LuaString,
+	traits::ToLuaTable,
+	variant::{LuaTable, LuaType, LuaValue, LuaVariant},
+};
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">mod </span>serde_impl;
+<span class="attr">#[macro_use]
+</span><span class="kw">mod </span>macros;
+<span class="kw">mod </span>error;
+<span class="kw">mod </span>string;
+<span class="kw">mod </span>traits;
+<span class="kw">mod </span>variant;
+
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
 </span><span class="kw">mod </span>deserializer;
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">mod </span>serializer;
+</span><span class="kw">mod </span>serde_impl;
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">pub use </span><span class="self">self</span>::{
-	serializer::{Serializer, to_variant},
-	deserializer::{Deserializer, from_variant},
-};
+</span><span class="kw">mod </span>serializer;
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
