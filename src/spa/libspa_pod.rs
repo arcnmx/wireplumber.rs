@@ -55,7 +55,7 @@ impl SpaPod {
 			values.next().ok_or_else(|| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("wrong number of values for {:?} choice", choice_type),
+					&format!("wrong number of values for {choice_type:?} choice"),
 				)
 			})
 		};
@@ -85,7 +85,7 @@ impl SpaPod {
 			_ =>
 				return Err(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("unknown choice type: {:?}", choice_type),
+					&format!("unknown choice type: {choice_type:?}"),
 				)),
 		}))
 	}
@@ -136,18 +136,13 @@ impl SpaPod {
 				})?
 			},
 			_ if self.is_sequence() => {
-				wp_warning!("unsupported sequence spa type for {:?}", self);
+				wp_warning!("unsupported sequence spa type for {self:?}");
 				Value::Struct(
 					self
 						.iterator()
 						.map(|pod| pod.control().unwrap())
 						.map(|(offset, type_name, value)| {
-							wp_warning!(
-								"discarding sequence context ({}, {}) for {:?}",
-								offset,
-								type_name,
-								value
-							);
+							wp_warning!("discarding sequence context ({offset}, {type_name}) for {value:?}");
 							value.to_pod_value()
 						})
 						.collect::<Result<_, _>>()?,
@@ -170,7 +165,7 @@ impl SpaPod {
 					type_ =>
 						return Err(Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							&format!("unsupported SPA array child type {:?}", type_),
+							&format!("unsupported SPA array child type {type_:?}"),
 						)),
 				})
 			},
@@ -180,7 +175,7 @@ impl SpaPod {
 				let choice_type = self.choice_type().ok_or_else(|| {
 					Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						&format!("unknown choice type for {:?}", child),
+						&format!("unknown choice type for {child:?}"),
 					)
 				})?;
 				Value::Choice(match type_ {
@@ -195,7 +190,7 @@ impl SpaPod {
 					type_ =>
 						return Err(Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							&format!("unsupported SPA choice child type {:?}", type_),
+							&format!("unsupported SPA choice child type {type_:?}"),
 						)),
 				})
 			},
@@ -280,7 +275,7 @@ impl<'v, 'o> Debug for DebugValue<'v, 'o> {
 		impl Debug for DebugType {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				if let Some(name) = self.0.name() {
-					write!(f, "{} ({:?})", name, self.0.into_glib())
+					write!(f, "{name} ({:?})", self.0.into_glib())
 				} else {
 					write!(f, "{}", self.0.into_glib())
 				}
@@ -290,7 +285,7 @@ impl<'v, 'o> Debug for DebugValue<'v, 'o> {
 		impl Debug for DebugIdValue {
 			fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 				if let Some(short_name) = self.0.short_name() {
-					write!(f, "{:?} ({:?})", short_name, self.0.number())
+					write!(f, "{short_name:?} ({:?})", self.0.number())
 				} else {
 					write!(f, "{}", self.0.number())
 				}
@@ -413,7 +408,7 @@ impl<'v, 'o> Debug for DebugValue<'v, 'o> {
 				}
 				.finish()
 			},
-			value => write!(f, "{:?}", value),
+			value => write!(f, "{value:?}"),
 		}
 	}
 }

@@ -54,7 +54,7 @@ impl From<Direction> for libspa::Direction {
 		match dir {
 			Direction::Input => Self::Input,
 			Direction::Output => Self::Output,
-			Direction::__Unknown(v) => panic!("unsupported WpDirection value: {}", v),
+			Direction::__Unknown(v) => panic!("unsupported WpDirection value: {v}"),
 		}
 	}
 }

@@ -41,7 +41,7 @@ impl SpaRoute {
 				(&value).try_into().map(|v| (key, v)).map_err(|e| {
 					Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						&format!("expected a string route info value, got {:?} instead: {:?}", value, e),
+						&format!("expected a string route info value, got {value:?} instead: {e:?}"),
 					)
 				})
 			})

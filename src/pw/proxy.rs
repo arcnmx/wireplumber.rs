@@ -99,13 +99,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 		self
 			.with_pw_property_cstr(key, move |cstr| match cstr.to_str() {
 				Err(e) => {
-					wp_warning!(
-						self: this,
-						"pw_property {} ({:?}) was not valid UTF-8: {:?}",
-						key,
-						cstr,
-						e
-					);
+					wp_warning!(self: this, "pw_property {key} ({cstr:?}) was not valid UTF-8: {e:?}");
 					None
 				},
 				Ok(str) => Some(f(str)),
@@ -117,11 +111,11 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 		match self.with_pw_property(key, T::from_pipewire_string) {
 			None => Err(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				&format!("pw_property {} not found", key),
+				&format!("pw_property {key} not found"),
 			)),
 			Some(Err(e)) => Err(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				&format!("pw_property {} failed to parse: {:?}", key, e),
+				&format!("pw_property {key} failed to parse: {e:?}"),
 			)),
 			Some(Ok(v)) => Ok(v),
 		}
@@ -134,7 +128,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt2 for O {
 			.map_err(|e| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("pw_property {} failed to parse: {:?}", key, e),
+					&format!("pw_property {key} failed to parse: {e:?}"),
 				)
 			})
 	}
@@ -158,7 +152,7 @@ impl Display for PipewireObject {
 		f.write_str("pw.object")?;
 
 		self
-			.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| write!(f, "({})", id))
+			.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| write!(f, "({id})"))
 			.unwrap_or(Ok(()))
 	}
 }

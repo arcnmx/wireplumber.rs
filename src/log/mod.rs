@@ -88,7 +88,7 @@ impl Log {
 		args: fmt::Arguments,
 	) {
 		let mut message = GStringBuilder::default();
-		let _ = write!(message, "{}", args);
+		let _ = write!(message, "{args}");
 		Self::log_string(log_level.into(), context.to_object(), message.into_string())
 	}
 

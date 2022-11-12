@@ -19,7 +19,7 @@ impl SpaPodParser {
 			let id_name = id_name.and_then(|id_name| match id_name.to_str() {
 				Ok(str) => Some(str),
 				Err(e) => {
-					wp_warning!("failed to parse spa pod ID name as UTF-8: {:?}", id_name);
+					wp_warning!("failed to parse spa pod ID name as UTF-8: {id_name:?}");
 					None
 				},
 			});

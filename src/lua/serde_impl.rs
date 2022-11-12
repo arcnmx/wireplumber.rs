@@ -153,7 +153,7 @@ impl<'v> Serialize for LuaVariant<'v> {
 					let len = t.array_len();
 					let len = len
 						.try_into()
-						.map_err(|e| ser::Error::custom(format_args!("Lua array length {} too large for usize: {}", len, e)))?;
+						.map_err(|e| ser::Error::custom(format_args!("Lua array length {len} too large for usize: {e}")))?;
 					let mut ser = serializer.serialize_seq(Some(len))?;
 					for v in t.iter_array() {
 						match v {

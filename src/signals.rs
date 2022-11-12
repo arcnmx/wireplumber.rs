@@ -18,7 +18,7 @@
 //!
 //!   // register a callback for a signal...
 //!   om.handle(ObjectManager::SIGNAL_INSTALLED, |om, ()| {
-//!     println!("{:?} installed", om);
+//!     println!("{om:?} installed");
 //!   });
 //!   // ... or receive events as an async Stream:
 //!   # #[cfg(feature = "futures")]
@@ -31,7 +31,7 @@
 //!   while let Some((obj,)) = objects.next().await {
 //!     let node = obj.dynamic_cast_ref::<Node>()
 //!       .expect("we're only interested in nodes");
-//!     println!("new object: {:?}", node);
+//!     println!("new object: {node:?}");
 //!   }
 //! }
 //! ```

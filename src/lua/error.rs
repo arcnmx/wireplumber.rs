@@ -77,8 +77,8 @@ impl fmt::Display for LuaError {
 			LuaError::Parse(e) => fmt::Display::fmt(e, f),
 			LuaError::Utf8(e) => fmt::Display::fmt(e, f),
 			LuaError::TypeMismatch(e) => fmt::Display::fmt(e, f),
-			LuaError::UnsupportedType(t) => write!(f, "type {} is not supported by lua", t),
-			LuaError::LengthMismatch { actual, expected } => write!(f, "invalid length {}, expected {}", actual, expected),
+			LuaError::UnsupportedType(t) => write!(f, "type {t} is not supported by lua"),
+			LuaError::LengthMismatch { actual, expected } => write!(f, "invalid length {actual}, expected {expected}"),
 		}
 	}
 }
@@ -102,7 +102,7 @@ impl serde::de::Error for LuaError {
 		let expected = expected.to_string();
 		match expected.parse() {
 			Ok(expected) => LuaError::LengthMismatch { actual, expected },
-			_ => Self::custom(format_args!("invalid length {}, expected {}", actual, expected)),
+			_ => Self::custom(format_args!("invalid length {actual}, expected {expected}")),
 		}
 	}
 

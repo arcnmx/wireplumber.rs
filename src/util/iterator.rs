@@ -104,7 +104,7 @@ impl<T: for<'v> FromValue<'v>> ValueIterator<T> {
 		let value = self.iter.next()?;
 		let value = match value.get() {
 			Ok(value) => value,
-			Err(e) => panic!("iterator contained unexpected value type {}", e),
+			Err(e) => panic!("iterator contained unexpected value type {e}"),
 		};
 		Some(f(value))
 	}

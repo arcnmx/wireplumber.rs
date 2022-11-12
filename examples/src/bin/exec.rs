@@ -95,28 +95,28 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 				args.module_type.loader_type(),
 				variant_args.as_ref().map(|v| v.as_variant()),
 			)
-			.with_context(|| format!("failed to load {} as a {}", path, args.module_type.loader_type()))?;
+			.with_context(|| format!("failed to load {path} as a {}", args.module_type.loader_type()))?;
 	}
 
 	core.connect_future().await?;
 
 	let plugin_names = args.plugins();
 	for plugin_name in &plugin_names {
-		let p = Plugin::find(&core, plugin_name).ok_or_else(|| format_err!("plugin {} not found", plugin_name))?;
+		let p = Plugin::find(&core, plugin_name).ok_or_else(|| format_err!("plugin {plugin_name} not found"))?;
 		p.activate_future(PluginFeatures::ENABLED)
 			.await
-			.with_context(|| format!("failed to activate {:?} plugin", plugin_name))?;
+			.with_context(|| format!("failed to activate {plugin_name:?} plugin"))?;
 	}
 	if plugin_names.is_empty() {
 		info!(domain: LOG_DOMAIN, "skipped activation, no plugin specified");
 	}
 	if args.module_type.is_lua() {
 		// per-script plugins were introduced in wireplumber version 0.4.10
-		if let Some(script) = Plugin::find(&core, &format!("script:{}", path)) {
+		if let Some(script) = Plugin::find(&core, &format!("script:{path}")) {
 			script
 				.activate_future(PluginFeatures::ENABLED)
 				.await
-				.with_context(|| format!("failed to activate script:{}", path))?;
+				.with_context(|| format!("failed to activate script:{path}"))?;
 		}
 	}
 

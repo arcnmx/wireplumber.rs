@@ -183,17 +183,14 @@ impl SpaPod {
 					.ok_or_else(|| {
 						Error::new(
 							LibraryErrorEnum::InvalidArgument,
-							&format!("pod struct {:?} is missing expected length prefix", self),
+							&format!("pod struct {self:?} is missing expected length prefix"),
 						)
 					})
 					.and_then(|pod| {
 						(&pod).try_into().map_err(|e| {
 							Error::new(
 								LibraryErrorEnum::InvalidArgument,
-								&format!(
-									"pod struct {:?} length could not be parsed from {:?}: {:?}",
-									self, pod, e
-								),
+								&format!("pod struct {self:?} length could not be parsed from {pod:?}: {e:?}"),
 							)
 						})
 					})?,
@@ -205,7 +202,7 @@ impl SpaPod {
 			Some(len) if len < 0 =>
 				return Err(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("pod struct {:?} has invalid length {}", self, len),
+					&format!("pod struct {self:?} has invalid length {len}"),
 				)),
 			Some(len) => Some(len as usize),
 			None => None,
@@ -218,7 +215,7 @@ impl SpaPod {
 				if values.len() >= length {
 					return Err(Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						&format!("too many entries in pod struct {:?}: {:?}", self, values),
+						&format!("too many entries in pod struct {self:?}: {values:?}"),
 					))
 				}
 			}
@@ -226,7 +223,7 @@ impl SpaPod {
 			let key: String = (&key).try_into().map_err(|e| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("key {:?} was not a string: {:?}", key, e),
+					&format!("key {key:?} was not a string: {e:?}"),
 				)
 			})?;
 			let value = match params.next() {
@@ -234,7 +231,7 @@ impl SpaPod {
 				None =>
 					return Err(Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						&format!("unexpected key {:?} due to uneven amount of params on {:?}", key, self),
+						&format!("unexpected key {key:?} due to uneven amount of params on {self:?}"),
 					)),
 			};
 			values.push((key, value));
@@ -265,7 +262,7 @@ impl SpaPod {
 		let find_id = match key.spa_property_key_with_table(values) {
 			Ok(id) => id,
 			Err(e) => {
-				wp_warning!("unknown spa key {:?} for {:?}: {:?}", key, self, e);
+				wp_warning!("unknown spa key {key:?} for {self:?}: {e:?}");
 				return None
 			},
 		};
@@ -285,7 +282,7 @@ impl SpaPod {
 			.and_then(|pod| match TryInto::try_into(&pod) {
 				Ok(v) => Some(v),
 				Err(e) => {
-					wp_warning!("failed to convert spa key {:?} for {:?}: {:?}", key, self, e);
+					wp_warning!("failed to convert spa key {key:?} for {self:?}: {e:?}");
 					None
 				},
 			})
@@ -299,7 +296,7 @@ impl SpaPod {
 		if pod.set_pod(value) {
 			Some(pod)
 		} else {
-			wp_warning!("failed to set spa key {:?} of type {:?} to {:?}", key, pod, value);
+			wp_warning!("failed to set spa key {key:?} of type {pod:?} to {value:?}");
 			None
 		}
 	}
@@ -310,7 +307,7 @@ impl SpaPod {
 		if !self.is_object() {
 			return Err(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				&format!("failed to apply spa pod to {:?}: {:?} is not an object", obj, self),
+				&format!("failed to apply spa pod to {obj:?}: {self:?} is not an object"),
 			))
 		}
 
@@ -321,7 +318,7 @@ impl SpaPod {
 			_ =>
 				return Err(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("could not apply unknown spa type {:?} to {:?}", type_, obj),
+					&format!("could not apply unknown spa type {type_:?} to {obj:?}"),
 				)),
 		};
 
@@ -331,7 +328,7 @@ impl SpaPod {
 		} else {
 			Err(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				&format!("failed to apply param {} to {:?}", name, obj),
+				&format!("failed to apply param {name} to {obj:?}"),
 			))
 		}
 	}

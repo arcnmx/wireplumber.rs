@@ -97,7 +97,7 @@ impl<T: IntoIterator<Item = I>, I: ToPipewirePropertyString> ToPipewirePropertyS
 		for (i, v) in self.0.into_iter().enumerate() {
 			let prefix = if i == 0 { "" } else { "," };
 			let item = v.pipewire_string();
-			let _ = write!(&mut out, "{}{}", prefix, item.as_ref());
+			let _ = write!(&mut out, "{prefix}{}", item.as_ref());
 		}
 		out
 	}

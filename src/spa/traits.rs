@@ -114,10 +114,10 @@ impl<'a> TryFrom<&'a SpaPod> for u32 {
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
 		i32::try_from(pod)
-			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{e:?}")))
 			.and_then(|v| {
 				v.try_into()
-					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{e:?}")))
 			})
 	}
 }
@@ -146,10 +146,10 @@ impl<'a> TryFrom<&'a SpaPod> for u64 {
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
 		i64::try_from(pod)
-			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{e:?}")))
 			.and_then(|v| {
 				v.try_into()
-					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{:?}", e)))
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, &format!("{e:?}")))
 			})
 	}
 }
@@ -298,7 +298,7 @@ where
 		if let Some(pod) = struct_.end() {
 			builder.add_pod(&pod)
 		} else {
-			wp_critical!("failed to build spa struct with {:?}", struct_)
+			wp_critical!("failed to build spa struct with {struct_:?}")
 		}
 	}
 
@@ -337,7 +337,7 @@ where
 		if let Some(pod) = struct_.end() {
 			builder.add_pod(&pod)
 		} else {
-			wp_critical!("failed to build spa struct with {:?}", struct_)
+			wp_critical!("failed to build spa struct with {struct_:?}")
 		}
 	}
 

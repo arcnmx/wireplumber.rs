@@ -55,7 +55,7 @@ impl SpaIdValue {
 			None => Self::parse_unknown_name(key_name),
 		};
 		Err(raw.unwrap_or_else(|| {
-			wp_warning!("expected to find spa key {:?} of {:?}", key_name, context);
+			wp_warning!("expected to find spa key {key_name:?} of {context:?}");
 			ffi::WP_SPA_TYPE_INVALID
 		}))
 	}

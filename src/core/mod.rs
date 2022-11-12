@@ -15,7 +15,7 @@
 //!       # #[cfg(feature = "futures")]
 //!       match core.connect_future().await {
 //!         Ok(()) => println!("Connected to PipeWire!"),
-//!         Err(e) => println!("Failed to connect: {:?}", e),
+//!         Err(e) => println!("Failed to connect: {e:?}"),
 //!       }
 //!       mainloop.quit(); // return from Core::run() and disconnect
 //!     });

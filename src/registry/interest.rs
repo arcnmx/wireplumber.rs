@@ -208,7 +208,7 @@ impl FromStr for ConstraintVerb {
 			_ =>
 				return Err(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("unknown constraint verb {}", s),
+					&format!("unknown constraint verb {s}"),
 				)),
 		})
 	}
@@ -229,7 +229,7 @@ impl TryFrom<char> for ConstraintVerb {
 			_ =>
 				return Err(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("unknown constraint verb {}", value),
+					&format!("unknown constraint verb {value}"),
 				)),
 		})
 	}
@@ -313,7 +313,7 @@ impl FromStr for ConstraintType {
 			_ =>
 				return Err(Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					&format!("unknown constraint type {}", s),
+					&format!("unknown constraint type {s}"),
 				)),
 		})
 	}

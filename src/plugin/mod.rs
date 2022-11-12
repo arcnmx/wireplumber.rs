@@ -54,7 +54,7 @@
 //!     let core = this.core().unwrap();
 //!     Box::pin(async move {
 //!       let arg = this.arg.borrow().unwrap_or_default();
-//!       wireplumber::info!(domain: DOMAIN, "enabling on {:?} with {}...", core, arg);
+//!       wireplumber::info!(domain: DOMAIN, "enabling on {core:?} with {arg}...");
 //!       Ok(())
 //!     })
 //!   }

@@ -142,7 +142,7 @@ pub async fn main_loop(
 
 		let mut links = Vec::new();
 		for (input, output) in pairs {
-			info!(domain: LOG_DOMAIN, "linking {} to {}", input, output);
+			info!(domain: LOG_DOMAIN, "linking {input} to {output}");
 			if arg.port_mappings.is_empty() {
 				links.push(Link::new(&core, &output, &input, &link_props));
 			} else {
@@ -257,7 +257,7 @@ impl AsyncPluginImpl for StaticLink {
 		let res = self
 			.handles
 			.try_init(context.clone())
-			.map_err(|_| error::invariant(format_args!("{} plugin has already been enabled", LOG_DOMAIN)));
+			.map_err(|_| error::invariant(format_args!("{LOG_DOMAIN} plugin has already been enabled")));
 		async move {
 			res?;
 			let loops = this

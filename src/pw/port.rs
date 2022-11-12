@@ -21,13 +21,13 @@ impl Display for Port {
 		}
 
 		if let Ok(node) = self.node_id() {
-			write!(f, "{}", node)?;
+			write!(f, "{node}")?;
 		}
 		if let Ok(index) = self.port_index() {
-			write!(f, ".{}", index)?;
+			write!(f, ".{index}")?;
 		}
 
-		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_NAME, |name| write!(f, ":{}", name)) {
+		if let Some(res) = self.with_pw_property(pw::PW_KEY_PORT_NAME, |name| write!(f, ":{name}")) {
 			return res
 		}
 

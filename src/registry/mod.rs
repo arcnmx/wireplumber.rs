@@ -32,7 +32,7 @@
 //!   while let Some((obj,)) = objects.next().await {
 //!     let node = obj.dynamic_cast_ref::<Node>()
 //!       .expect("we're only interested in nodes");
-//!     println!("new object: {:?}", node);
+//!     println!("new object: {node:?}");
 //!   }
 //! }
 //! ```
