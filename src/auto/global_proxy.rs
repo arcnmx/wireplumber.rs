@@ -25,7 +25,7 @@ pub trait GlobalProxyExt: 'static {
 
     #[doc(alias = "wp_global_proxy_get_global_properties")]
     #[doc(alias = "get_global_properties")]
-    fn global_properties(&self) -> Option<Properties>;
+    fn global_properties(&self) -> Properties;
 
     #[doc(alias = "wp_global_proxy_get_permissions")]
     #[doc(alias = "get_permissions")]
@@ -45,7 +45,7 @@ impl<O: IsA<GlobalProxy>> GlobalProxyExt for O {
         }
     }
 
-    fn global_properties(&self) -> Option<Properties> {
+    fn global_properties(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_global_proxy_get_global_properties(self.as_ref().to_glib_none().0))
         }

@@ -59,14 +59,14 @@ impl Node {
     }
 
     #[doc(alias = "wp_node_new_ports_filtered_iterator_full")]
-    pub fn new_ports_filtered_iterator_full(&self, interest: ObjectInterest) -> Option<Iterator> {
+    pub fn new_ports_filtered_iterator_full(&self, interest: ObjectInterest) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_node_new_ports_filtered_iterator_full(self.to_glib_none().0, interest.into_glib_ptr()))
         }
     }
 
     #[doc(alias = "wp_node_new_ports_iterator")]
-    pub fn new_ports_iterator(&self) -> Option<Iterator> {
+    pub fn new_ports_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_node_new_ports_iterator(self.to_glib_none().0))
         }

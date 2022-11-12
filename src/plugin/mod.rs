@@ -51,7 +51,7 @@
 //! impl AsyncPluginImpl for MyPlugin {
 //!   type EnableFuture = Pin<Box<dyn Future<Output=wireplumber::Result<()>>>>;
 //!   fn enable(&self, this: Self::Type) -> Self::EnableFuture {
-//!     let core = this.core().unwrap();
+//!     let core = this.core();
 //!     Box::pin(async move {
 //!       let arg = this.arg.borrow().unwrap_or_default();
 //!       wireplumber::info!(domain: DOMAIN, "enabling on {core:?} with {arg}...");

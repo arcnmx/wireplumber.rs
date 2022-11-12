@@ -80,7 +80,7 @@ impl SpaJsonBuilder {
     }
 
     #[doc(alias = "wp_spa_json_builder_end")]
-    pub fn end(&self) -> Option<SpaJson> {
+    pub fn end(&self) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_builder_end(self.to_glib_none().0))
         }

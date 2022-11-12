@@ -114,7 +114,7 @@ impl SpaPod {
 					.map(Value::Struct)
 			})?,
 			_ if self.is_object() => {
-				let type_ = self.spa_type().unwrap();
+				let type_ = self.spa_type();
 				let ids = type_.object_id_values_table().unwrap();
 				let values = type_.values_table().unwrap();
 				self.parse_object(|parser, id_name| {
@@ -149,8 +149,8 @@ impl SpaPod {
 				)
 			},
 			_ if self.is_array() => {
-				let child = self.array_child().unwrap();
-				let type_ = child.spa_type().unwrap();
+				let child = self.array_child();
+				let type_ = child.spa_type();
 				Value::ValueArray(match type_ {
 					_ if child.is_none() => ValueArray::None(self.array_pointers().map(drop).collect()),
 					_ if child.is_boolean() => ValueArray::Bool(self.array_iterator::<SpaBool>().map(Into::into).collect()),
@@ -170,7 +170,7 @@ impl SpaPod {
 				})
 			},
 			_ if self.is_choice() => {
-				let child = self.choice_child().unwrap();
+				let child = self.choice_child();
 				let type_ = child.spa_type();
 				let choice_type = self.choice_type().ok_or_else(|| {
 					Error::new(

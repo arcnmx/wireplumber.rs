@@ -30,7 +30,7 @@ impl ObjectInterest {
 
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_pw_object<O: IsA<PipewireObject>>(&self, object: &O) -> bool {
-		self.matches_props(&object.as_ref().properties().unwrap())
+		self.matches_props(&object.as_ref().properties())
 	}
 }
 

@@ -3,7 +3,7 @@
 
 use crate::{Properties};
 use glib::{translate::*};
-use std::{ptr};
+use std::{fmt,ptr};
 
 glib::wrapper! {
     #[doc(alias = "WpState")]
@@ -31,7 +31,7 @@ impl State {
 
     #[doc(alias = "wp_state_get_location")]
     #[doc(alias = "get_location")]
-    pub fn location(&self) -> Option<glib::GString> {
+    pub fn location(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_state_get_location(self.to_glib_none().0))
         }
@@ -39,14 +39,14 @@ impl State {
 
     #[doc(alias = "wp_state_get_name")]
     #[doc(alias = "get_name")]
-    pub fn name(&self) -> Option<glib::GString> {
+    pub fn name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_state_get_name(self.to_glib_none().0))
         }
     }
 
     #[doc(alias = "wp_state_load")]
-    pub fn load(&self) -> Option<Properties> {
+    pub fn load(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_state_load(self.to_glib_none().0))
         }
@@ -60,5 +60,12 @@ impl State {
             debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
         }
+    }
+}
+
+impl fmt::Display for State {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(&self.name())
     }
 }

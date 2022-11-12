@@ -28,7 +28,7 @@ impl SpaDevice {
 
     #[doc(alias = "wp_spa_device_get_managed_object")]
     #[doc(alias = "get_managed_object")]
-    pub fn managed_object(&self, id: u32) -> Option<glib::Object> {
+    pub fn managed_object(&self, id: u32) -> glib::Object {
         unsafe {
             from_glib_full(ffi::wp_spa_device_get_managed_object(self.to_glib_none().0, id))
         }
@@ -36,7 +36,7 @@ impl SpaDevice {
 
     #[doc(alias = "wp_spa_device_get_properties")]
     #[doc(alias = "get_properties")]
-    pub fn properties(&self) -> Option<Properties> {
+    pub fn properties(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_spa_device_get_properties(self.to_glib_none().0))
         }
@@ -45,7 +45,7 @@ impl SpaDevice {
     #[cfg(any(feature = "v0_4_11", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "wp_spa_device_new_managed_object_iterator")]
-    pub fn new_managed_object_iterator(&self) -> Option<Iterator> {
+    pub fn new_managed_object_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_spa_device_new_managed_object_iterator(self.to_glib_none().0))
         }

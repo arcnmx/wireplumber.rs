@@ -46,7 +46,7 @@ impl Core {
 
     #[doc(alias = "wp_core_get_properties")]
     #[doc(alias = "get_properties")]
-    pub fn properties(&self) -> Option<Properties> {
+    pub fn properties(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_core_get_properties(self.to_glib_none().0))
         }
@@ -62,7 +62,7 @@ impl Core {
 
     #[doc(alias = "wp_core_get_remote_host_name")]
     #[doc(alias = "get_remote_host_name")]
-    pub fn remote_host_name(&self) -> Option<glib::GString> {
+    pub fn remote_host_name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_core_get_remote_host_name(self.to_glib_none().0))
         }
@@ -70,7 +70,7 @@ impl Core {
 
     #[doc(alias = "wp_core_get_remote_name")]
     #[doc(alias = "get_remote_name")]
-    pub fn remote_name(&self) -> Option<glib::GString> {
+    pub fn remote_name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_core_get_remote_name(self.to_glib_none().0))
         }
@@ -78,7 +78,7 @@ impl Core {
 
     #[doc(alias = "wp_core_get_remote_properties")]
     #[doc(alias = "get_remote_properties")]
-    pub fn remote_properties(&self) -> Option<Properties> {
+    pub fn remote_properties(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_core_get_remote_properties(self.to_glib_none().0))
         }
@@ -86,7 +86,7 @@ impl Core {
 
     #[doc(alias = "wp_core_get_remote_user_name")]
     #[doc(alias = "get_remote_user_name")]
-    pub fn remote_user_name(&self) -> Option<glib::GString> {
+    pub fn remote_user_name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_core_get_remote_user_name(self.to_glib_none().0))
         }
@@ -94,7 +94,7 @@ impl Core {
 
     #[doc(alias = "wp_core_get_remote_version")]
     #[doc(alias = "get_remote_version")]
-    pub fn remote_version(&self) -> Option<glib::GString> {
+    pub fn remote_version(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_core_get_remote_version(self.to_glib_none().0))
         }

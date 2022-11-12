@@ -39,7 +39,7 @@ pub trait MetadataExt: 'static {
     fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, Option<glib::GString>);
 
     #[doc(alias = "wp_metadata_new_iterator")]
-    fn new_iterator(&self, subject: u32) -> Option<Iterator>;
+    fn new_iterator(&self, subject: u32) -> Iterator;
 
     #[doc(alias = "wp_metadata_set")]
     fn set(&self, subject: u32, key: Option<&str>, type_: Option<&str>, value: Option<&str>);
@@ -63,7 +63,7 @@ impl<O: IsA<Metadata>> MetadataExt for O {
         }
     }
 
-    fn new_iterator(&self, subject: u32) -> Option<Iterator> {
+    fn new_iterator(&self, subject: u32) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_metadata_new_iterator(self.as_ref().to_glib_none().0, subject))
         }

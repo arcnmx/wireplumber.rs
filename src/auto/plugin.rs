@@ -3,6 +3,7 @@
 
 use crate::{Core,Object};
 use glib::{prelude::*,translate::*};
+use std::{fmt};
 
 glib::wrapper! {
     #[doc(alias = "WpPlugin")]
@@ -25,17 +26,24 @@ impl Plugin {
     }
 }
 
+impl fmt::Display for Plugin {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(&PluginExt::name(self))
+    }
+}
+
 pub trait PluginExt: 'static {
     #[doc(alias = "wp_plugin_get_name")]
     #[doc(alias = "get_name")]
-    fn name(&self) -> Option<glib::GString>;
+    fn name(&self) -> glib::GString;
 
     #[doc(alias = "wp_plugin_register")]
     fn register(self);
 }
 
 impl<O: IsA<Plugin>> PluginExt for O {
-    fn name(&self) -> Option<glib::GString> {
+    fn name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_plugin_get_name(self.as_ref().to_glib_none().0))
         }

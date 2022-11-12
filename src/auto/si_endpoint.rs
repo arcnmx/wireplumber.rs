@@ -26,7 +26,7 @@ pub trait SiEndpointExt: 'static {
 
     #[doc(alias = "wp_si_endpoint_get_registration_info")]
     #[doc(alias = "get_registration_info")]
-    fn registration_info(&self) -> Option<glib::Variant>;
+    fn registration_info(&self) -> glib::Variant;
 
     #[doc(alias = "endpoint-properties-changed")]
     fn connect_endpoint_properties_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -39,7 +39,7 @@ impl<O: IsA<SiEndpoint>> SiEndpointExt for O {
         }
     }
 
-    fn registration_info(&self) -> Option<glib::Variant> {
+    fn registration_info(&self) -> glib::Variant {
         unsafe {
             from_glib_full(ffi::wp_si_endpoint_get_registration_info(self.as_ref().to_glib_none().0))
         }

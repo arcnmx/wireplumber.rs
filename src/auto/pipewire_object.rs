@@ -39,10 +39,10 @@ pub trait PipewireObjectExt: 'static {
 
     #[doc(alias = "wp_pipewire_object_get_properties")]
     #[doc(alias = "get_properties")]
-    fn properties(&self) -> Option<Properties>;
+    fn properties(&self) -> Properties;
 
     #[doc(alias = "wp_pipewire_object_new_properties_iterator")]
-    fn new_properties_iterator(&self) -> Option<Iterator>;
+    fn new_properties_iterator(&self) -> Iterator;
 
     #[doc(alias = "wp_pipewire_object_set_param")]
     fn set_param(&self, id: &str, flags: u32, param: SpaPod) -> bool;
@@ -121,13 +121,13 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }
     }
 
-    fn properties(&self) -> Option<Properties> {
+    fn properties(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_pipewire_object_get_properties(self.as_ref().to_glib_none().0))
         }
     }
 
-    fn new_properties_iterator(&self) -> Option<Iterator> {
+    fn new_properties_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_pipewire_object_new_properties_iterator(self.as_ref().to_glib_none().0))
         }

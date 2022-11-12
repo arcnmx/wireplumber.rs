@@ -22,11 +22,11 @@ impl SiLink {
 pub trait SiLinkExt: 'static {
     #[doc(alias = "wp_si_link_get_in_item")]
     #[doc(alias = "get_in_item")]
-    fn in_item(&self) -> Option<SiLinkable>;
+    fn in_item(&self) -> SiLinkable;
 
     #[doc(alias = "wp_si_link_get_out_item")]
     #[doc(alias = "get_out_item")]
-    fn out_item(&self) -> Option<SiLinkable>;
+    fn out_item(&self) -> SiLinkable;
 
     #[doc(alias = "wp_si_link_get_properties")]
     #[doc(alias = "get_properties")]
@@ -34,20 +34,20 @@ pub trait SiLinkExt: 'static {
 
     #[doc(alias = "wp_si_link_get_registration_info")]
     #[doc(alias = "get_registration_info")]
-    fn registration_info(&self) -> Option<glib::Variant>;
+    fn registration_info(&self) -> glib::Variant;
 
     #[doc(alias = "link-properties-changed")]
     fn connect_link_properties_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SiLink>> SiLinkExt for O {
-    fn in_item(&self) -> Option<SiLinkable> {
+    fn in_item(&self) -> SiLinkable {
         unsafe {
             from_glib_none(ffi::wp_si_link_get_in_item(self.as_ref().to_glib_none().0))
         }
     }
 
-    fn out_item(&self) -> Option<SiLinkable> {
+    fn out_item(&self) -> SiLinkable {
         unsafe {
             from_glib_none(ffi::wp_si_link_get_out_item(self.as_ref().to_glib_none().0))
         }
@@ -59,7 +59,7 @@ impl<O: IsA<SiLink>> SiLinkExt for O {
         }
     }
 
-    fn registration_info(&self) -> Option<glib::Variant> {
+    fn registration_info(&self) -> glib::Variant {
         unsafe {
             from_glib_full(ffi::wp_si_link_get_registration_info(self.as_ref().to_glib_none().0))
         }

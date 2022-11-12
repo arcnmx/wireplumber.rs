@@ -3,6 +3,7 @@
 
 use crate::{Core,SessionItem};
 use glib::{prelude::*,translate::*};
+use std::{fmt};
 
 glib::wrapper! {
     #[doc(alias = "WpSiFactory")]
@@ -39,23 +40,30 @@ impl SiFactory {
     }
 }
 
+impl fmt::Display for SiFactory {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(&SiFactoryExt::name(self))
+    }
+}
+
 pub trait SiFactoryExt: 'static {
     #[doc(alias = "wp_si_factory_construct")]
-    fn construct(&self, core: &Core) -> Option<SessionItem>;
+    fn construct(&self, core: &Core) -> SessionItem;
 
     #[doc(alias = "wp_si_factory_get_name")]
     #[doc(alias = "get_name")]
-    fn name(&self) -> Option<glib::GString>;
+    fn name(&self) -> glib::GString;
 }
 
 impl<O: IsA<SiFactory>> SiFactoryExt for O {
-    fn construct(&self, core: &Core) -> Option<SessionItem> {
+    fn construct(&self, core: &Core) -> SessionItem {
         unsafe {
             from_glib_full(ffi::wp_si_factory_construct(self.as_ref().to_glib_none().0, core.to_glib_none().0))
         }
     }
 
-    fn name(&self) -> Option<glib::GString> {
+    fn name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_si_factory_get_name(self.as_ref().to_glib_none().0))
         }

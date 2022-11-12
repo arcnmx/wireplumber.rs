@@ -59,13 +59,13 @@ impl ObjectManager {
 
 	#[doc(alias = "wp_object_manager_new_iterator")]
 	pub fn objects<T: ObjectType>(&self) -> ValueIterator<T> {
-		ValueIterator::with_inner(self.new_iterator().unwrap())
+		ValueIterator::with_inner(self.new_iterator())
 	}
 
 	#[doc(alias = "wp_object_manager_new_filtered_iterator")]
 	#[doc(alias = "wp_object_manager_new_filtered_iterator_full")]
 	pub fn filtered<T: ObjectType>(&self, interest: ObjectInterest) -> ValueIterator<T> {
-		ValueIterator::with_inner(self.new_filtered_iterator_full(interest.into()).unwrap())
+		ValueIterator::with_inner(self.new_filtered_iterator_full(interest))
 	}
 
 	#[doc(alias = "wp_object_manager_lookup")]

@@ -3,7 +3,7 @@
 
 use crate::{Direction,GlobalProxy,Object,PipewireObject,Proxy};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_,fmt,mem::transmute};
 
 glib::wrapper! {
     #[doc(alias = "WpEndpoint")]
@@ -19,6 +19,13 @@ impl Endpoint {
     
 }
 
+impl fmt::Display for Endpoint {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(&EndpointExt::name(self))
+    }
+}
+
 pub trait EndpointExt: 'static {
     #[doc(alias = "wp_endpoint_get_direction")]
     #[doc(alias = "get_direction")]
@@ -26,11 +33,11 @@ pub trait EndpointExt: 'static {
 
     #[doc(alias = "wp_endpoint_get_media_class")]
     #[doc(alias = "get_media_class")]
-    fn media_class(&self) -> Option<glib::GString>;
+    fn media_class(&self) -> glib::GString;
 
     #[doc(alias = "wp_endpoint_get_name")]
     #[doc(alias = "get_name")]
-    fn name(&self) -> Option<glib::GString>;
+    fn name(&self) -> glib::GString;
 
     #[doc(alias = "direction")]
     fn connect_direction_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -49,13 +56,13 @@ impl<O: IsA<Endpoint>> EndpointExt for O {
         }
     }
 
-    fn media_class(&self) -> Option<glib::GString> {
+    fn media_class(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_endpoint_get_media_class(self.as_ref().to_glib_none().0))
         }
     }
 
-    fn name(&self) -> Option<glib::GString> {
+    fn name(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_endpoint_get_name(self.as_ref().to_glib_none().0))
         }

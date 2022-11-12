@@ -21,7 +21,7 @@ impl PropertiesItem {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
     #[doc(alias = "wp_properties_item_get_key")]
     #[doc(alias = "get_key")]
-    pub fn key(&self) -> Option<glib::GString> {
+    pub fn key(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_properties_item_get_key(self.to_glib_none().0))
         }
@@ -31,7 +31,7 @@ impl PropertiesItem {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
     #[doc(alias = "wp_properties_item_get_value")]
     #[doc(alias = "get_value")]
-    pub fn value(&self) -> Option<glib::GString> {
+    pub fn value(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_properties_item_get_value(self.to_glib_none().0))
         }

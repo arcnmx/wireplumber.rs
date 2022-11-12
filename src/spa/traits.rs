@@ -282,7 +282,7 @@ impl<'a> TryFrom<&'a SpaPod> for SpaPod {
 	type Error = GlibNoneError;
 
 	fn try_from(pod: &'a SpaPod) -> Result<Self, Self::Error> {
-		Ok(pod.copy().unwrap())
+		Ok(pod.copy())
 	}
 }
 
@@ -295,11 +295,7 @@ where
 		for item in self {
 			item.add_to_builder(&struct_);
 		}
-		if let Some(pod) = struct_.end() {
-			builder.add_pod(&pod)
-		} else {
-			wp_critical!("failed to build spa struct with {struct_:?}")
-		}
+		builder.add_pod(&struct_.end());
 	}
 
 	type Owned = Vec<T::Owned>;
@@ -334,11 +330,7 @@ where
 		for &item in self {
 			SpaValue::add_to_builder(item, &struct_);
 		}
-		if let Some(pod) = struct_.end() {
-			builder.add_pod(&pod)
-		} else {
-			wp_critical!("failed to build spa struct with {struct_:?}")
-		}
+		builder.add_pod(&struct_.end());
 	}
 
 	type Owned = Vec<T>;

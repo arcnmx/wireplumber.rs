@@ -43,7 +43,7 @@ pub trait ObjectExt: 'static {
 
     #[doc(alias = "wp_object_get_core")]
     #[doc(alias = "get_core")]
-    fn core(&self) -> Option<Core>;
+    fn core(&self) -> Core;
 
     #[doc(alias = "wp_object_get_supported_features")]
     #[doc(alias = "get_supported_features")]
@@ -127,7 +127,7 @@ impl<O: IsA<Object>> ObjectExt for O {
         }
     }
 
-    fn core(&self) -> Option<Core> {
+    fn core(&self) -> Core {
         unsafe {
             from_glib_full(ffi::wp_object_get_core(self.as_ref().to_glib_none().0))
         }

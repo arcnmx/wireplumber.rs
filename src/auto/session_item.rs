@@ -51,11 +51,11 @@ pub trait SessionItemExt: 'static {
 
     #[doc(alias = "wp_session_item_get_properties")]
     #[doc(alias = "get_properties")]
-    fn properties(&self) -> Option<Properties>;
+    fn properties(&self) -> Properties;
 
     #[doc(alias = "wp_session_item_get_property")]
     #[doc(alias = "get_property")]
-    fn property(&self, key: &str) -> Option<glib::GString>;
+    fn property(&self, key: &str) -> glib::GString;
 
     #[doc(alias = "wp_session_item_is_configured")]
     fn is_configured(&self) -> bool;
@@ -104,13 +104,13 @@ impl<O: IsA<SessionItem>> SessionItemExt for O {
         }
     }
 
-    fn properties(&self) -> Option<Properties> {
+    fn properties(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_session_item_get_properties(self.as_ref().to_glib_none().0))
         }
     }
 
-    fn property(&self, key: &str) -> Option<glib::GString> {
+    fn property(&self, key: &str) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_session_item_get_property(self.as_ref().to_glib_none().0, key.to_glib_none().0))
         }

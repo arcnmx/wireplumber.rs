@@ -25,7 +25,7 @@ impl Dbus {
 
     #[doc(alias = "wp_dbus_get_connection")]
     #[doc(alias = "get_connection")]
-    pub fn connection(&self) -> Option<gio::DBusConnection> {
+    pub fn connection(&self) -> gio::DBusConnection {
         unsafe {
             from_glib_none(ffi::wp_dbus_get_connection(self.to_glib_none().0))
         }
@@ -50,7 +50,7 @@ impl Dbus {
 
     #[doc(alias = "wp_dbus_get_instance")]
     #[doc(alias = "get_instance")]
-    pub fn instance(core: &Core, bus_type: gio::BusType) -> Option<Dbus> {
+    pub fn instance(core: &Core, bus_type: gio::BusType) -> Dbus {
         unsafe {
             from_glib_none(ffi::wp_dbus_get_instance(core.to_glib_none().0, bus_type.into_glib()))
         }

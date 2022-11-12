@@ -96,7 +96,7 @@ impl SpaPod {
 
     #[doc(alias = "wp_spa_pod_copy")]
 #[must_use]
-    pub fn copy(&self) -> Option<SpaPod> {
+    pub fn copy(&self) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_copy(self.to_glib_none().0))
         }
@@ -104,7 +104,7 @@ impl SpaPod {
 
     #[doc(alias = "wp_spa_pod_ensure_unique_owner")]
 #[must_use]
-    pub fn ensure_unique_owner(self) -> Option<SpaPod> {
+    pub fn ensure_unique_owner(self) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_ensure_unique_owner(self.into_glib_ptr()))
         }
@@ -119,7 +119,7 @@ impl SpaPod {
 
     #[doc(alias = "wp_spa_pod_filter")]
 #[must_use]
-    pub fn filter(&self, filter: &SpaPod) -> Option<SpaPod> {
+    pub fn filter(&self, filter: &SpaPod) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_filter(self.to_glib_none().0, filter.to_glib_none().0))
         }
@@ -135,7 +135,7 @@ impl SpaPod {
     #[doc(alias = "wp_spa_pod_get_array_child")]
     #[doc(alias = "get_array_child")]
 #[must_use]
-    pub fn array_child(&self) -> Option<SpaPod> {
+    pub fn array_child(&self) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_get_array_child(self.to_glib_none().0))
         }
@@ -154,7 +154,7 @@ impl SpaPod {
     #[doc(alias = "wp_spa_pod_get_choice_child")]
     #[doc(alias = "get_choice_child")]
 #[must_use]
-    pub fn choice_child(&self) -> Option<SpaPod> {
+    pub fn choice_child(&self) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_get_choice_child(self.to_glib_none().0))
         }
@@ -423,7 +423,7 @@ impl SpaPod {
     }
 
     #[doc(alias = "wp_spa_pod_new_iterator")]
-    pub fn new_iterator(&self) -> Option<Iterator> {
+    pub fn new_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_new_iterator(self.to_glib_none().0))
         }

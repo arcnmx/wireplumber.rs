@@ -76,7 +76,7 @@ impl SpaJson {
 
     #[doc(alias = "wp_spa_json_copy")]
 #[must_use]
-    pub fn copy(&self) -> Option<SpaJson> {
+    pub fn copy(&self) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_copy(self.to_glib_none().0))
         }
@@ -84,7 +84,7 @@ impl SpaJson {
 
     #[doc(alias = "wp_spa_json_ensure_unique_owner")]
 #[must_use]
-    pub fn ensure_unique_owner(self) -> Option<SpaJson> {
+    pub fn ensure_unique_owner(self) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_ensure_unique_owner(self.into_glib_ptr()))
         }
@@ -92,7 +92,7 @@ impl SpaJson {
 
     #[doc(alias = "wp_spa_json_get_data")]
     #[doc(alias = "get_data")]
-    pub fn data(&self) -> Option<glib::GString> {
+    pub fn data(&self) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_spa_json_get_data(self.to_glib_none().0))
         }
@@ -169,7 +169,7 @@ impl SpaJson {
     }
 
     #[doc(alias = "wp_spa_json_new_iterator")]
-    pub fn new_iterator(&self) -> Option<Iterator> {
+    pub fn new_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_spa_json_new_iterator(self.to_glib_none().0))
         }
@@ -203,7 +203,7 @@ impl SpaJson {
     }
 
     #[doc(alias = "wp_spa_json_parse_string")]
-    pub fn parse_string(&self) -> Option<glib::GString> {
+    pub fn parse_string(&self) -> glib::GString {
         unsafe {
             from_glib_full(ffi::wp_spa_json_parse_string(self.to_glib_none().0))
         }

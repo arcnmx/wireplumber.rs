@@ -86,7 +86,7 @@ impl SpaJsonParser {
 
     #[doc(alias = "wp_spa_json_parser_get_string")]
     #[doc(alias = "get_string")]
-    pub fn string(&self) -> Option<glib::GString> {
+    pub fn string(&self) -> glib::GString {
         unsafe {
             from_glib_full(ffi::wp_spa_json_parser_get_string(self.to_glib_none().0))
         }

@@ -157,7 +157,7 @@ impl SpaPodBuilder {
     }
 
     #[doc(alias = "wp_spa_pod_builder_end")]
-    pub fn end(&self) -> Option<SpaPod> {
+    pub fn end(&self) -> SpaPod {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_builder_end(self.to_glib_none().0))
         }

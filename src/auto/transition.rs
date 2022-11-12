@@ -49,7 +49,7 @@ pub trait TransitionExt: 'static {
 
     #[doc(alias = "wp_transition_get_source_object")]
     #[doc(alias = "get_source_object")]
-    fn source_object(&self) -> Option<glib::Object>;
+    fn source_object(&self) -> glib::Object;
 
     //#[doc(alias = "wp_transition_get_source_tag")]
     //#[doc(alias = "get_source_tag")]
@@ -88,7 +88,7 @@ impl<O: IsA<Transition>> TransitionExt for O {
     //    unsafe { TODO: call ffi:wp_transition_get_data() }
     //}
 
-    fn source_object(&self) -> Option<glib::Object> {
+    fn source_object(&self) -> glib::Object {
         unsafe {
             from_glib_none(ffi::wp_transition_get_source_object(self.as_ref().to_glib_none().0))
         }

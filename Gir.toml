@@ -6,7 +6,7 @@ min_cfg_version = "0.4"
 work_mode = "normal"
 split_build_rs = true
 generate_display_trait = false
-# trust_return_value_nullability = true # TODO: manually go through everything...
+trust_return_value_nullability = true
 single_version_file = "sys/generate/src/Gir.version"
 girs_directories = ["sys/generate/src", "gir-files"]
 

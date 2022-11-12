@@ -46,7 +46,7 @@ impl Properties {
 
     #[doc(alias = "wp_properties_copy")]
 #[must_use]
-    pub fn copy(&self) -> Option<Properties> {
+    pub fn copy(&self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_properties_copy(self.to_glib_none().0))
         }
@@ -54,7 +54,7 @@ impl Properties {
 
     #[doc(alias = "wp_properties_ensure_unique_owner")]
 #[must_use]
-    pub fn ensure_unique_owner(self) -> Option<Properties> {
+    pub fn ensure_unique_owner(self) -> Properties {
         unsafe {
             from_glib_full(ffi::wp_properties_ensure_unique_owner(self.into_glib_ptr()))
         }
@@ -85,7 +85,7 @@ impl Properties {
     }
 
     #[doc(alias = "wp_properties_new_iterator")]
-    pub fn new_iterator(&self) -> Option<Iterator> {
+    pub fn new_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_properties_new_iterator(self.to_glib_none().0))
         }
@@ -120,14 +120,14 @@ impl Properties {
     }
 
     #[doc(alias = "wp_properties_iterator_item_get_key")]
-    pub fn iterator_item_get_key(item: &glib::Value) -> Option<glib::GString> {
+    pub fn iterator_item_get_key(item: &glib::Value) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_properties_iterator_item_get_key(item.to_glib_none().0))
         }
     }
 
     #[doc(alias = "wp_properties_iterator_item_get_value")]
-    pub fn iterator_item_get_value(item: &glib::Value) -> Option<glib::GString> {
+    pub fn iterator_item_get_value(item: &glib::Value) -> glib::GString {
         unsafe {
             from_glib_none(ffi::wp_properties_iterator_item_get_value(item.to_glib_none().0))
         }

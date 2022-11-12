@@ -79,7 +79,7 @@ impl Properties {
 
 	#[cfg(feature = "v0_4_2")]
 	pub fn items(&self) -> ValueIterator<PropertiesItem> {
-		ValueIterator::with_inner(self.new_iterator().unwrap())
+		ValueIterator::with_inner(self.new_iterator())
 	}
 
 	#[cfg(feature = "v0_4_2")]
@@ -99,11 +99,11 @@ mod properties_item {
 
 	impl PropertiesItem {
 		pub fn key_string(&self) -> String {
-			self.key().unwrap().into()
+			self.key().into()
 		}
 
 		pub fn value_string(&self) -> String {
-			self.value().unwrap().into()
+			self.value().into()
 		}
 
 		pub fn key_value(&self) -> (String, String) {

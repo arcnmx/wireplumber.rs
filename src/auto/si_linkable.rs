@@ -25,7 +25,7 @@ pub trait SiLinkableExt: 'static {
 
     #[doc(alias = "wp_si_linkable_get_ports")]
     #[doc(alias = "get_ports")]
-    fn ports(&self, context: Option<&str>) -> Option<glib::Variant>;
+    fn ports(&self, context: Option<&str>) -> glib::Variant;
 }
 
 impl<O: IsA<SiLinkable>> SiLinkableExt for O {
@@ -35,7 +35,7 @@ impl<O: IsA<SiLinkable>> SiLinkableExt for O {
         }
     }
 
-    fn ports(&self, context: Option<&str>) -> Option<glib::Variant> {
+    fn ports(&self, context: Option<&str>) -> glib::Variant {
         unsafe {
             from_glib_full(ffi::wp_si_linkable_get_ports(self.as_ref().to_glib_none().0, context.to_glib_none().0))
         }

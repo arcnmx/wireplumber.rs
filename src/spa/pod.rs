@@ -39,7 +39,7 @@ impl SpaPod {
 	}
 
 	pub fn with_copy(pod: &SpaPod) -> Self {
-		pod.copy().unwrap()
+		pod.copy()
 	}
 
 	pub fn with_pod(bytes: &[u8]) -> Self {
@@ -102,8 +102,11 @@ impl SpaPod {
 
 	#[doc(alias = "wp_spa_pod_get_spa_type")]
 	#[doc(alias = "get_spa_type")]
-	pub fn spa_type(&self) -> Option<SpaType> {
-		unsafe { from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0)) }
+	pub fn spa_type(&self) -> SpaType {
+		unsafe {
+			let type_: Option<_> = from_glib(ffi::wp_spa_pod_get_spa_type(self.to_glib_none().0));
+			type_.unwrap() // TODO: is it guaranteed to be non-zero?
+		}
 	}
 
 	#[doc(alias = "wp_spa_pod_get_bytes")]
@@ -151,11 +154,11 @@ impl SpaPod {
 	}
 
 	pub fn iterator(&self) -> ValueIterator<SpaPod> {
-		ValueIterator::with_inner(self.new_iterator().unwrap())
+		ValueIterator::with_inner(self.new_iterator())
 	}
 
 	pub fn array_pointers(&self) -> impl Iterator<Item = Pointer> {
-		self.new_iterator().unwrap().map(|v| v.get().unwrap())
+		self.new_iterator().map(|v| v.get().unwrap())
 	}
 
 	pub fn array_iterator<T: SpaPrimitive>(&self) -> impl Iterator<Item = T> {
@@ -247,7 +250,7 @@ impl SpaPod {
 
 	pub fn spa_properties(&self) -> impl Iterator<Item = (Result<SpaIdValue, ffi::WpSpaType>, SpaPod)> {
 		let type_ = self.spa_type();
-		let values = type_.and_then(|ty| ty.values_table());
+		let values = type_.values_table();
 		self
 			.iterator()
 			.map(move |pod| pod.property().unwrap())
@@ -264,7 +267,7 @@ impl SpaPod {
 	}
 
 	pub fn find_spa_property<K: SpaPropertyKey>(&self, key: &K) -> Option<SpaPod> {
-		let values = self.spa_type().and_then(|ty| ty.values_table());
+		let values = self.spa_type().values_table();
 		let find_id = match key.spa_property_key_with_table(values) {
 			Ok(id) => id,
 			Err(e) => {
@@ -317,7 +320,7 @@ impl SpaPod {
 			))
 		}
 
-		let type_ = self.spa_type().unwrap();
+		let type_ = self.spa_type();
 		let name = match type_.number() {
 			libspa_sys::SPA_TYPE_OBJECT_Props => "Props",
 			libspa_sys::SPA_TYPE_OBJECT_ParamRoute => "Route",
@@ -342,6 +345,6 @@ impl SpaPod {
 
 impl<T: SpaValue> FromIterator<T> for SpaPod {
 	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
-		SpaPodBuilder::from_iter(iter).end().unwrap()
+		SpaPodBuilder::from_iter(iter).end()
 	}
 }

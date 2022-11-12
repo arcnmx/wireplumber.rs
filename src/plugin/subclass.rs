@@ -106,10 +106,7 @@ pub trait AsyncPluginExt: IsA<Plugin> {
 
 impl Plugin {
 	pub fn core(&self) -> Core {
-		self
-			.upcast_ref::<Object>()
-			.core()
-			.expect("plugin requires an active Core")
+		self.upcast_ref::<Object>().core()
 	}
 }
 
