@@ -18,6 +18,12 @@ $ cargo build --workspace --examples &&
   cargo run -p wp-examples --bin wpexec -- --type wireplumber
 ```
 
+## External
+
+Projects using wireplumber.rs:
+
+-   [WirePlumber Scripts](https://github.com/arcnmx/wireplumber-scripts) is a personal collection of plugins, some previously written as Lua scripts.
+
 # Use Cases
 
 This project aims to facilitate the following applications:
