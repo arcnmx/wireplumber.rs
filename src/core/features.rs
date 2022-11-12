@@ -14,8 +14,10 @@ use crate::{
 #[cfg(any(feature = "v0_4_11", feature = "dox"))]
 use crate::dbus::{DbusFeatures, Dbus};
 
+// TODO: consider keeping this as u32, and just keep the inherent impls
+// (requires no changes to `auto`)
 #[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
-pub struct ObjectFeatures(pub u32); // TODO: consider keeping this as u32, and just keep the inherent impls (requires no changes to `auto`)
+pub struct ObjectFeatures(pub u32);
 
 impl FromGlib<u32> for ObjectFeatures {
 	unsafe fn from_glib(features: u32) -> Self {

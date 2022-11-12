@@ -76,7 +76,8 @@ impl ObjectManager {
 }
 
 impl<'a> IntoIterator for &'a ObjectManager {
-	type Item = GObject; // TODO: crate::Object instead? or do factories not impl it?
+	// TODO: crate::Object instead? or do factories not impl it?
+	type Item = GObject;
 	type IntoIter = ValueIterator<GObject>;
 
 	fn into_iter(self) -> Self::IntoIter {

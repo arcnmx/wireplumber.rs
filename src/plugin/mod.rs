@@ -1,6 +1,7 @@
 //! Externally loaded modules
 //!
-//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).
+//! [Plugins](Plugin) can be provided via
+//! [externally loaded components](crate::core::Core::load_component).
 //!
 //! # Loading a Plugin
 //!

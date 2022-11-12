@@ -6,7 +6,8 @@ impl SpaPodParser {
 	pub fn new_object(pod: &SpaPod) -> (Self, Option<&'static str>) {
 		unsafe {
 			// TODO: this needs a lifetime to attach the parser's lifetime to `pod`
-			// TODO: this can return back `wp_spa_id_value_short_name(wp_spa_id_table_find_value (table, id))` via second parameter
+			// TODO: this can return back `wp_spa_id_value_short_name(wp_spa_id_table_find_value (table, id))`
+			// via second parameter
 			let mut id_name = ptr::null();
 			let res = from_glib_full(ffi::wp_spa_pod_parser_new_object(pod.to_glib_none().0, &mut id_name));
 			let id_name = match id_name {

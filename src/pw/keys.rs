@@ -276,7 +276,8 @@ impl SpaPropertyKeyId for SpaIdValue {
 }
 
 impl SpaPropertyKey for str {
-	type Error = (); // TODO
+	// TODO
+	type Error = ();
 
 	fn spa_property_key_with_table(&self, table: Option<SpaIdTable>) -> Result<WpSpaType, Self::Error> {
 		table.and_then(|table| table.find_value_from_short_name(self))

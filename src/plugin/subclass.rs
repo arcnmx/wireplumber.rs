@@ -167,7 +167,8 @@ impl SourceHandles {
 	pub fn clear(&mut self) {
 		for source in self.handles.drain(..) {
 			if let Some(source) = self.context.find_source_by_id(&source) {
-				// TODO: will completed future sources be considered destroyed? or will they never exist on the context to begin with?
+				// TODO: will completed future sources be considered destroyed?
+				// or will they never exist on the context to begin with?
 				// if !source.is_destroyed() { }
 				source.destroy();
 			}
