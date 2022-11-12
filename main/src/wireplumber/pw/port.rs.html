@@ -34,10 +34,10 @@
 <span id="34">34</span>
 <span id="35">35</span>
 <span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Port, PipewireObject};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{
+	prelude::<span class="kw-2">*</span>,
+	pw::{<span class="self">self</span>, PipewireObject, Port},
+};
 
 <span class="kw">impl </span>Port {
 	<span class="kw">pub fn </span>node_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
@@ -52,9 +52,7 @@
 
 <span class="kw">impl </span>Display <span class="kw">for </span>Port {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_PORT_ALIAS, |name| {
-			f.write_str(name)
-		}) {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_PORT_ALIAS, |name| f.write_str(name)) {
 			<span class="kw">return </span>res
 		}
 
@@ -65,9 +63,7 @@
 			<span class="macro">write!</span>(f, <span class="string">&quot;.{}&quot;</span>, index)<span class="question-mark">?</span>;
 		}
 
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_PORT_NAME, |name| {
-			<span class="macro">write!</span>(f, <span class="string">&quot;:{}&quot;</span>, name)
-		}) {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_PORT_NAME, |name| <span class="macro">write!</span>(f, <span class="string">&quot;:{}&quot;</span>, name)) {
 			<span class="kw">return </span>res
 		}
 

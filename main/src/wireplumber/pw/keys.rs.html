@@ -291,11 +291,22 @@
 <span id="291">291</span>
 <span id="292">292</span>
 <span id="293">293</span>
-</pre><pre class="rust"><code><span class="kw">use </span>::ffi::WpSpaType;
-<span class="kw">use </span><span class="kw">crate</span>::spa::{SpaIdTable, SpaIdValue};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-
-<span class="kw">pub use </span>pipewire_sys <span class="kw">as </span>ffi;
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+</pre><pre class="rust"><code><span class="kw">pub use </span>pipewire_sys <span class="kw">as </span>ffi;
+<span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		prelude::<span class="kw-2">*</span>,
+		spa::{SpaIdTable, SpaIdValue},
+	},
+	::ffi::WpSpaType,
+};
 
 <span class="attr">#[derive(Copy, Clone)]
 #[repr(transparent)]
@@ -304,16 +315,12 @@
 <span class="kw">impl </span>PipewireKey {
 	<span class="attr">#[inline]
 	</span><span class="kw">pub fn </span>as_cstr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>CStr {
-		<span class="kw">unsafe </span>{
-			CStr::from_bytes_with_nul_unchecked(<span class="self">self</span>.<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ CStr::from_bytes_with_nul_unchecked(<span class="self">self</span>.<span class="number">0</span>) }
 	}
 
 	<span class="attr">#[inline]
 	</span><span class="kw">pub fn </span>as_str&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
-		<span class="kw">unsafe </span>{
-			str::from_utf8_unchecked(<span class="self">self</span>.as_cstr().to_bytes())
-		}
+		<span class="kw">unsafe </span>{ str::from_utf8_unchecked(<span class="self">self</span>.as_cstr().to_bytes()) }
 	}
 }
 
@@ -376,9 +383,14 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item=I&gt;, I: ToPipewirePropertyString&gt; PipewirePropertyStringIterExt <span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt; { }
+<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item = I&gt;, I: ToPipewirePropertyString&gt; PipewirePropertyStringIterExt
+	<span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt;
+{
+}
 
-<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item=I&gt;, I: ToPipewirePropertyString&gt; ToPipewirePropertyString <span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item = I&gt;, I: ToPipewirePropertyString&gt; ToPipewirePropertyString
+	<span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt;
+{
 	<span class="kw">type </span>Output = String;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
@@ -400,7 +412,8 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Vec&lt;T&gt; <span class="kw">where
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Vec&lt;T&gt;
+<span class="kw">where
 	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: ToPipewirePropertyString,
 {
 	<span class="kw">type </span>Output = String;
@@ -410,7 +423,8 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T] <span class="kw">where
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T]
+<span class="kw">where
 	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: ToPipewirePropertyString,
 {
 	<span class="kw">type </span>Output = String;
@@ -544,7 +558,7 @@
 	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt;;
 }
 
-<span class="kw">pub trait </span>SpaPropertyKeyId: SpaPropertyKey&lt;Error=Infallible&gt; {
+<span class="kw">pub trait </span>SpaPropertyKeyId: SpaPropertyKey&lt;Error = Infallible&gt; {
 	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType;
 }
 
@@ -569,10 +583,12 @@
 }
 
 <span class="kw">impl </span>SpaPropertyKey <span class="kw">for </span>str {
-	<span class="kw">type </span>Error = (); <span class="comment">// TODO
+	<span class="comment">// TODO
+	</span><span class="kw">type </span>Error = ();
 
-	</span><span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt; {
-		table.and_then(|table| table.find_value_from_short_name(<span class="self">self</span>))
+	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt; {
+		table
+			.and_then(|table| table.find_value_from_short_name(<span class="self">self</span>))
 			.map(|v| v.number())
 			.or_else(|| SpaIdValue::parse_unknown_name(<span class="self">self</span>))
 			.ok_or(())

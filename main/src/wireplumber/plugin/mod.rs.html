@@ -112,13 +112,10 @@
 <span id="112">112</span>
 <span id="113">113</span>
 <span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Externally loaded modules
 //!
-//! [Plugins](Plugin) can be provided via [externally loaded components](crate::core::Core::load_component).
+//! [Plugins](Plugin) can be provided via
+//! [externally loaded components](crate::core::Core::load_component).
 //!
 //! # Loading a Plugin
 //!
@@ -216,23 +213,18 @@
 //! - [Plugin](https://pipewire.pages.freedesktop.org/wireplumber/c_api/plugin_api.html)
 //! - [Component Loader](https://pipewire.pages.freedesktop.org/wireplumber/c_api/component_loader_api.html)
 
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	Plugin, PluginFeatures,
-	ComponentLoader, LookupDirs,
-	traits::PluginExt,
+</span><span class="kw">pub use </span>{
+	<span class="self">self</span>::{
+		loader::{ComponentLoaderImpl, ComponentLoaderImplExt},
+		subclass::{
+			plugin_export, simple_plugin_subclass, AsyncPluginExt, AsyncPluginImpl, ModuleExport, ModuleWrapper, PluginImpl,
+			PluginImplExt, SimplePlugin, SimplePluginObject, SourceHandles, SourceHandlesCell,
+		},
+	},
+	<span class="kw">crate</span>::auto::{traits::PluginExt, ComponentLoader, LookupDirs, Plugin, PluginFeatures},
 };
 
 <span class="kw">mod </span>loader;
-<span class="kw">pub use </span>loader::{ComponentLoaderImpl, ComponentLoaderImplExt};
-
 <span class="kw">mod </span>subclass;
-<span class="kw">pub use </span>subclass::{
-	PluginImpl, PluginImplExt,
-	AsyncPluginImpl, AsyncPluginExt,
-	SourceHandles, SourceHandlesCell,
-	SimplePlugin, simple_plugin_subclass,
-	SimplePluginObject,
-	ModuleExport, ModuleWrapper, plugin_export,
-};
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

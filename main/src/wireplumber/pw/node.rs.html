@@ -88,9 +88,11 @@
 <span id="88">88</span>
 <span id="89">89</span>
 <span id="90">90</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Node, Port, PipewireObject};
-<span class="kw">use </span><span class="kw">crate</span>::registry::{Interest, InterestContainer, ObjectInterest};
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{
+	prelude::<span class="kw-2">*</span>,
+	pw::{<span class="self">self</span>, Node, PipewireObject, Port},
+	registry::{Interest, InterestContainer, ObjectInterest},
+};
 
 <span class="kw">impl </span>Node {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_new_ports_iterator&quot;</span>)]
@@ -119,9 +121,9 @@
 	}
 
 	<span class="kw">pub fn </span>device_details(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;(u32, <span class="prelude-ty">Option</span>&lt;u32&gt;)&gt;, Error&gt; {
-		<span class="self">self</span>.device_id().and_then(|id| <span class="self">self</span>.device_index().map(|index|
-			id.map(|id| (id, index))
-		))
+		<span class="self">self
+			</span>.device_id()
+			.and_then(|id| <span class="self">self</span>.device_index().map(|index| id.map(|id| (id, index))))
 	}
 
 	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
@@ -141,9 +143,7 @@
 
 <span class="kw">impl </span>Display <span class="kw">for </span>Node {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_NODE_NAME, |name| {
-			f.write_str(name)
-		}) {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_NODE_NAME, |name| f.write_str(name)) {
 			<span class="kw">return </span>res
 		}
 

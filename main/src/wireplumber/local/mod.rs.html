@@ -12,12 +12,6 @@
 <span id="12">12</span>
 <span id="13">13</span>
 <span id="14">14</span>
-<span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Wrappers around [`pw_impl_node`](pipewire_sys::pw_impl_node) and other local objects
 //!
 //! # See also
@@ -28,15 +22,9 @@
 //! - [ImplModule](https://pipewire.pages.freedesktop.org/wireplumber/c_api/impl_module_api.html)
 //! - [SpaDevice](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_device_api.html)
 
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	ImplModule,
-	ImplEndpoint,
-	ImplMetadata,
-	ImplNode,
-	SpaDevice, SpaDeviceFeatures,
-};
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{ImplEndpoint, ImplMetadata, ImplModule, ImplNode, SpaDevice, SpaDeviceFeatures};
 
-<span class="kw">mod </span>node;
 <span class="kw">mod </span>device;
+<span class="kw">mod </span>node;
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

@@ -69,17 +69,6 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
-<span id="78">78</span>
-<span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
 </pre><pre class="rust"><code><span class="doccomment">//! PipeWire proxy objects
 //!
 //! All types derived from [Proxy] describe an [object](PipewireObject) on the remote service, with
@@ -104,41 +93,30 @@
 //! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/c_api/metadata_api.html)
 //! - [Endpoint](https://pipewire.pages.freedesktop.org/wireplumber/c_api/endpoint_api.html)
 
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	PipewireObject,
-	Proxy, ProxyFeatures,
-	GlobalProxy,
-	Endpoint,
-	Device,
-	Node, NodeState, NodeFeatures,
-	Port, Direction,
-	Link, LinkFeatures,
-	Metadata, MetadataFeatures,
-	Properties,
-	traits::{
-		PipewireObjectExt,
-		ProxyExt,
-		GlobalProxyExt,
-		EndpointExt,
-		MetadataExt,
-	},
-};
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::LinkState;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::auto::PropertiesItem;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::LinkState;
+<span class="kw">pub use </span>{
+	<span class="self">self</span>::{
+		keys::<span class="kw-2">*</span>,
+		link::LinkTarget,
+		proxy::{PipewireObjectExt2, ProxyExt2},
+	},
+	<span class="kw">crate</span>::auto::{
+		traits::{EndpointExt, GlobalProxyExt, MetadataExt, PipewireObjectExt, ProxyExt},
+		Device, Direction, Endpoint, GlobalProxy, Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures,
+		NodeState, PipewireObject, Port, Properties, Proxy, ProxyFeatures,
+	},
+};
 
 <span class="kw">mod </span>keys;
-<span class="kw">pub use </span>keys::<span class="kw-2">*</span>;
-
-<span class="kw">mod </span>proxy;
-<span class="kw">pub use </span>proxy::{PipewireObjectExt2, ProxyExt2};
+<span class="kw">mod </span>link;
 <span class="kw">mod </span>node;
 <span class="kw">mod </span>port;
-<span class="kw">mod </span>link;
-<span class="kw">pub use </span>link::LinkTarget;
 <span class="kw">mod </span>properties;
+<span class="kw">mod </span>proxy;
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
 #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]

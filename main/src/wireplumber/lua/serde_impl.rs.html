@@ -206,11 +206,21 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
-</pre><pre class="rust"><code><span class="kw">use </span>std::fmt;
-<span class="kw">use </span>glib::VariantDict;
-<span class="kw">use </span>serde::{Serialize, Deserialize, ser::{<span class="self">self</span>, SerializeSeq, SerializeMap}, de};
-<span class="kw">use </span><span class="kw">crate</span>::lua::{LuaVariant, LuaTable, LuaError, LuaValue, Deserializer};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="209">209</span>
+<span id="210">210</span>
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		lua::{Deserializer, LuaError, LuaTable, LuaValue, LuaVariant},
+		prelude::<span class="kw-2">*</span>,
+	},
+	glib::VariantDict,
+	serde::{
+		de,
+		ser::{<span class="self">self</span>, SerializeMap, SerializeSeq},
+		Deserialize, Serialize,
+	},
+	std::fmt,
+};
 
 <span class="kw">struct </span>Visitor;
 
@@ -287,8 +297,7 @@
 			dict.insert_value(<span class="kw-2">&amp;</span>key, LuaVariant::as_variant(<span class="kw-2">&amp;</span>value));
 		}
 
-		dict.end().try_into()
-			.map_err(LuaError::serde_error)
+		dict.end().try_into().map_err(LuaError::serde_error)
 	}
 
 	<span class="kw">fn </span>visit_none&lt;E: de::Error&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
@@ -324,17 +333,11 @@
 	}
 
 	<span class="kw">fn </span>visit_map&lt;A: de::MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, map: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
-		Visitor.visit_map(map)
-			.map(|v| <span class="kw">unsafe </span>{
-				UnsafeFrom::unsafe_from(v)
-			})
+		Visitor.visit_map(map).map(|v| <span class="kw">unsafe </span>{ UnsafeFrom::unsafe_from(v) })
 	}
 
 	<span class="kw">fn </span>visit_seq&lt;A: de::SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, seq: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
-		Visitor.visit_seq(seq)
-			.map(|v| <span class="kw">unsafe </span>{
-				UnsafeFrom::unsafe_from(v)
-			})
+		Visitor.visit_seq(seq).map(|v| <span class="kw">unsafe </span>{ UnsafeFrom::unsafe_from(v) })
 	}
 }
 
@@ -358,7 +361,8 @@
 			LuaValue::Table(t) =&gt; <span class="kw">match </span>t.is_array() {
 				<span class="prelude-val">Some</span>(<span class="bool-val">true</span>) | <span class="prelude-val">None </span>=&gt; {
 					<span class="kw">let </span>len = t.array_len();
-					<span class="kw">let </span>len = len.try_into()
+					<span class="kw">let </span>len = len
+						.try_into()
 						.map_err(|e| ser::Error::custom(<span class="macro">format_args!</span>(<span class="string">&quot;Lua array length {} too large for usize: {}&quot;</span>, len, e)))<span class="question-mark">?</span>;
 					<span class="kw">let </span><span class="kw-2">mut </span>ser = serializer.serialize_seq(<span class="prelude-val">Some</span>(len))<span class="question-mark">?</span>;
 					<span class="kw">for </span>v <span class="kw">in </span>t.iter_array() {

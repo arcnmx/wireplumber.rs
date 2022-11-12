@@ -25,28 +25,28 @@
 <span id="25">25</span>
 <span id="26">26</span>
 <span id="27">27</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>pipewire_sys::pw_impl_node;
-
-<span class="kw">use crate</span>::{
-	Core,
-	local::ImplNode,
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{local::ImplNode, prelude::<span class="kw-2">*</span>, Core},
+	pipewire_sys::pw_impl_node,
 };
 
 <span class="kw">impl </span>ImplNode {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_impl_node_new_wrap&quot;</span>)]
 	</span><span class="kw">pub fn </span>new_wrap(core: <span class="kw-2">&amp;</span>Core, node: <span class="kw-2">*mut </span>pw_impl_node) -&gt; ImplNode {
-		<span class="kw">unsafe </span>{
-			from_glib_full(ffi::wp_impl_node_new_wrap(core.to_glib_none().<span class="number">0</span>, node))
-		}
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_impl_node_new_wrap(core.to_glib_none().<span class="number">0</span>, node)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;pw-impl-node&quot;</span>)]
 	</span><span class="kw">pub fn </span>pw_impl_node(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;pw_impl_node&gt;&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(Type::POINTER);
-			glib::gobject_ffi::g_object_get_property(<span class="self">self</span>.upcast_ref::&lt;GObject&gt;().to_glib_none().<span class="number">0</span>, <span class="string">b&quot;pw-impl-node\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, value.to_glib_none_mut().<span class="number">0</span>);
-			value.get::&lt;<span class="prelude-ty">Option</span>&lt;NonNull&lt;Pointee&gt;&gt;&gt;()
+			glib::gobject_ffi::g_object_get_property(
+				<span class="self">self</span>.upcast_ref::&lt;GObject&gt;().to_glib_none().<span class="number">0</span>,
+				<span class="string">b&quot;pw-impl-node\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+				value.to_glib_none_mut().<span class="number">0</span>,
+			);
+			value
+				.get::&lt;<span class="prelude-ty">Option</span>&lt;NonNull&lt;Pointee&gt;&gt;&gt;()
 				.expect(<span class="string">&quot;pw-impl-node property&quot;</span>)
 				.map(|p| p.cast())
 		}

@@ -129,14 +129,7 @@
 <span id="129">129</span>
 <span id="130">130</span>
 <span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::util::WpIterator;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, util::WpIterator};
 
 <span class="kw">impl </span>WpIterator {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_iterator_new&quot;</span>)]
@@ -145,7 +138,7 @@
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_iterator_new_ptr_array&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>with_pointers&lt;I: IntoIterator&lt;Item=gpointer&gt;&gt;(items: I, type_: Type) -&gt; <span class="self">Self </span>{
+	</span><span class="kw">pub unsafe fn </span>with_pointers&lt;I: IntoIterator&lt;Item = gpointer&gt;&gt;(items: I, type_: Type) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span>array = glib::ffi::g_ptr_array_new();
 		<span class="kw">for </span>item <span class="kw">in </span>items {
 			glib::ffi::g_ptr_array_add(array, item);
@@ -154,25 +147,19 @@
 	}
 
 	<span class="kw">pub fn </span>empty(type_: Type) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{
-			<span class="self">Self</span>::with_pointers(iter::empty(), type_)
-		}
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_pointers(iter::empty(), type_) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_iterator_get_user_data&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_user_data&quot;</span>)]
 	</span><span class="kw">pub fn </span>user_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gpointer {
-		<span class="kw">unsafe </span>{
-			ffi::wp_iterator_get_user_data(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_iterator_get_user_data(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
 	}
 }
 
 <span class="kw">impl</span>&lt;T: ObjectType&gt; FromIterator&lt;T&gt; <span class="kw">for </span>WpIterator {
-	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{
-			<span class="self">Self</span>::with_pointers(iter.into_iter().map(|o| o.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>), T::static_type())
-		}
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_pointers(iter.into_iter().map(|o| o.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>), T::static_type()) }
 	}
 }
 
@@ -184,7 +171,7 @@
 	}
 }
 
-<span class="kw">impl </span>iter::FusedIterator <span class="kw">for </span>WpIterator { }
+<span class="kw">impl </span>iter::FusedIterator <span class="kw">for </span>WpIterator {}
 
 <span class="attr">#[repr(transparent)]
 </span><span class="kw">pub struct </span>ValueIterator&lt;T&gt; {
@@ -193,7 +180,10 @@
 }
 
 <span class="kw">impl</span>&lt;T&gt; ValueIterator&lt;T&gt; {
-	<span class="kw">pub fn </span>new&lt;I: IntoIterator&gt;(iter: I) -&gt; <span class="self">Self </span><span class="kw">where </span><span class="self">Self</span>: FromIterator&lt;I::Item&gt; {
+	<span class="kw">pub fn </span>new&lt;I: IntoIterator&gt;(iter: I) -&gt; <span class="self">Self
+	</span><span class="kw">where
+		</span><span class="self">Self</span>: FromIterator&lt;I::Item&gt;,
+	{
 		FromIterator::from_iter(iter)
 	}
 
@@ -230,14 +220,12 @@
 <span class="kw">impl</span>&lt;T: StaticType&gt; fmt::Debug <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
 		<span class="kw">let </span>name = <span class="macro">format!</span>(<span class="string">&quot;ValueIterator&lt;{}&gt;&quot;</span>, T::static_type().name());
-		f.debug_tuple(<span class="kw-2">&amp;</span>name)
-			.field(<span class="kw-2">&amp;</span><span class="self">self</span>.iter)
-			.finish()
+		f.debug_tuple(<span class="kw-2">&amp;</span>name).field(<span class="kw-2">&amp;</span><span class="self">self</span>.iter).finish()
 	}
 }
 
 <span class="kw">impl</span>&lt;T: ObjectType&gt; FromIterator&lt;T&gt; <span class="kw">for </span>ValueIterator&lt;T&gt; {
-	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::with_inner(FromIterator::from_iter(iter))
 	}
 }
@@ -261,7 +249,7 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;T&gt; iter::FusedIterator <span class="kw">for </span>ValueIterator&lt;T&gt; <span class="kw">where </span><span class="self">Self</span>: Iterator { }
+<span class="kw">impl</span>&lt;T&gt; iter::FusedIterator <span class="kw">for </span>ValueIterator&lt;T&gt; <span class="kw">where </span><span class="self">Self</span>: Iterator {}
 
 <span class="attr">#[test]
 </span><span class="kw">fn </span>object_iterator() {

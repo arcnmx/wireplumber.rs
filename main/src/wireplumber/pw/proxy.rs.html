@@ -140,10 +140,36 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
-</pre><pre class="rust"><code><span class="kw">use </span>pipewire_sys::pw_proxy;
-<span class="kw">use </span><span class="kw">crate</span>::spa::SpaPod;
-<span class="kw">use </span><span class="kw">crate</span>::pw::{<span class="self">self</span>, Proxy, ProxyFeatures, PipewireObject, FromPipewirePropertyString};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		prelude::<span class="kw-2">*</span>,
+		pw::{<span class="self">self</span>, FromPipewirePropertyString, PipewireObject, Proxy, ProxyFeatures},
+		spa::SpaPod,
+	},
+	pipewire_sys::pw_proxy,
+};
 
 <span class="kw">impl </span>ProxyFeatures {
 	<span class="attr">#[doc(alias = <span class="string">&quot;WP_PIPEWIRE_OBJECT_FEATURES_ALL&quot;</span>)]
@@ -167,15 +193,11 @@
 
 <span class="kw">impl</span>&lt;O: IsA&lt;Proxy&gt;&gt; ProxyExt2 <span class="kw">for </span>O {
 	<span class="kw">fn </span>pw_proxy_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>pw_proxy {
-		<span class="kw">unsafe </span>{
-			ffi::wp_proxy_get_pw_proxy(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_proxy_get_pw_proxy(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
 	}
 
 	<span class="kw">fn </span>set_pw_proxy_raw(<span class="kw-2">&amp;</span><span class="self">self</span>, proxy: <span class="kw-2">*mut </span>pw_proxy) {
-		<span class="kw">unsafe </span>{
-			ffi::wp_proxy_set_pw_proxy(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, proxy)
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_proxy_set_pw_proxy(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, proxy) }
 	}
 }
 
@@ -200,14 +222,16 @@
 	<span class="kw">fn </span>pw_property_optional&lt;T: FromPipewirePropertyString&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T&gt;, Error&gt;;
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_pipewire_object_enum_params&quot;</span>)]
-	</span><span class="kw">fn </span>params_future(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, filter: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;ValueIterator&lt;SpaPod&gt;, Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+	</span><span class="kw">fn </span>params_future(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		id: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+		filter: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;ValueIterator&lt;SpaPod&gt;, Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;PipewireObject&gt;&gt; PipewireObjectExt2 <span class="kw">for </span>O {
 	<span class="kw">fn </span>native_info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gconstpointer {
-		<span class="kw">unsafe </span>{
-			ffi::wp_pipewire_object_get_native_info(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ ffi::wp_pipewire_object_get_native_info(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
 	}
 
 	<span class="kw">fn </span>object_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
@@ -236,50 +260,70 @@
 
 	<span class="kw">fn </span>with_pw_property&lt;R, F: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str, f: F) -&gt; <span class="prelude-ty">Option</span>&lt;R&gt; {
 		<span class="kw">let </span>this = <span class="self">self</span>.as_ref();
-		<span class="self">self</span>.with_pw_property_cstr(key, <span class="kw">move </span>|cstr| <span class="kw">match </span>cstr.to_str() {
-			<span class="prelude-val">Err</span>(e) =&gt; {
-				<span class="macro">wp_warning!</span>(<span class="self">self</span>: this, <span class="string">&quot;pw_property {} ({:?}) was not valid UTF-8: {:?}&quot;</span>, key, cstr, e);
-				<span class="prelude-val">None
-			</span>},
-			<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(f(str)),
-		}).flatten()
+		<span class="self">self
+			</span>.with_pw_property_cstr(key, <span class="kw">move </span>|cstr| <span class="kw">match </span>cstr.to_str() {
+				<span class="prelude-val">Err</span>(e) =&gt; {
+					<span class="macro">wp_warning!</span>(
+						<span class="self">self</span>: this,
+						<span class="string">&quot;pw_property {} ({:?}) was not valid UTF-8: {:?}&quot;</span>,
+						key,
+						cstr,
+						e
+					);
+					<span class="prelude-val">None
+				</span>},
+				<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(f(str)),
+			})
+			.flatten()
 	}
 
 	<span class="kw">fn </span>pw_property&lt;T: FromPipewirePropertyString&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;T, Error&gt; {
 		<span class="kw">match </span><span class="self">self</span>.with_pw_property(key, T::from_pipewire_string) {
-			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} not found&quot;</span>, key))),
-			<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; <span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} failed to parse: {:?}&quot;</span>, key, e))),
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} not found&quot;</span>, key),
+			)),
+			<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; <span class="prelude-val">Err</span>(Error::new(
+				LibraryErrorEnum::InvalidArgument,
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} failed to parse: {:?}&quot;</span>, key, e),
+			)),
 			<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(v)) =&gt; <span class="prelude-val">Ok</span>(v),
 		}
 	}
 
 	<span class="kw">fn </span>pw_property_optional&lt;T: FromPipewirePropertyString&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T&gt;, Error&gt; {
-		<span class="self">self</span>.with_pw_property(key, T::from_pipewire_string)
+		<span class="self">self
+			</span>.with_pw_property(key, T::from_pipewire_string)
 			.transpose()
-			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} failed to parse: {:?}&quot;</span>, key, e)))
+			.map_err(|e| {
+				Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} failed to parse: {:?}&quot;</span>, key, e),
+				)
+			})
 	}
 
-	<span class="kw">fn </span>params_future(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, filter: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output=<span class="prelude-ty">Result</span>&lt;ValueIterator&lt;SpaPod&gt;, Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+	<span class="kw">fn </span>params_future(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		id: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+		filter: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;ValueIterator&lt;SpaPod&gt;, Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
 		<span class="kw">let </span>res = <span class="self">self</span>.enum_params_future(id, filter);
-		Box::pin(<span class="kw">async move </span>{
-			res.<span class="kw">await</span>.map(|r| ValueIterator::with_inner(r.unwrap()))
-		})
+		Box::pin(<span class="kw">async move </span>{ res.<span class="kw">await</span>.map(|r| ValueIterator::with_inner(r.unwrap())) })
 	}
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>PipewireObject {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_OBJECT_PATH, |path| {
-			f.write_str(path)
-		}) {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_OBJECT_PATH, |path| f.write_str(path)) {
 			<span class="kw">return </span>res
 		}
 
 		f.write_str(<span class="string">&quot;pw.object&quot;</span>)<span class="question-mark">?</span>;
 
-		<span class="self">self</span>.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| {
-			<span class="macro">write!</span>(f, <span class="string">&quot;({})&quot;</span>, id)
-		}).unwrap_or(<span class="prelude-val">Ok</span>(()))
+		<span class="self">self
+			</span>.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| <span class="macro">write!</span>(f, <span class="string">&quot;({})&quot;</span>, id))
+			.unwrap_or(<span class="prelude-val">Ok</span>(()))
 	}
 }
 </code></pre></div>

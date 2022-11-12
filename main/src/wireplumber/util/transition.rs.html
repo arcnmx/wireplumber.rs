@@ -11,9 +11,7 @@
 <span id="11">11</span>
 <span id="12">12</span>
 <span id="13">13</span>
-<span id="14">14</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::util::Transition;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, util::Transition};
 
 <span class="kw">pub trait </span>TransitionExt2: <span class="lifetime">&#39;static </span>{
 	<span class="kw">fn </span>return_error(<span class="kw-2">&amp;</span><span class="self">self</span>, error: Error);

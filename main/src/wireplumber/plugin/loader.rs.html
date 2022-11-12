@@ -102,11 +102,54 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
-</pre><pre class="rust"><code><span class="kw">use </span>std::ptr;
-<span class="kw">use </span>glib::subclass::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span><span class="kw">crate</span>::plugin::{ComponentLoader, PluginImpl};
-<span class="kw">use </span><span class="kw">crate</span>::error;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		error,
+		plugin::{ComponentLoader, PluginImpl},
+		prelude::<span class="kw-2">*</span>,
+	},
+	glib::subclass::prelude::<span class="kw-2">*</span>,
+	std::ptr,
+};
 
 <span class="kw">impl </span>ComponentLoader {
 	<span class="kw">pub const </span>TYPE_LUA_SCRIPT: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;script/lua&quot;</span>;
@@ -135,7 +178,13 @@
 <span class="kw">pub trait </span>ComponentLoaderImplExt: ObjectSubclass {
 	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpComponentLoaderClass;
 	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool;
-	<span class="kw">fn </span>parent_load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: String, type_: String, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+	<span class="kw">fn </span>parent_load(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
+		component: String,
+		type_: String,
+		args: <span class="prelude-ty">Option</span>&lt;Variant&gt;,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
 }
 
 <span class="kw">impl</span>&lt;T: ComponentLoaderImpl&gt; ComponentLoaderImplExt <span class="kw">for </span>T {
@@ -149,22 +198,35 @@
 
 	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool {
 		<span class="kw">let </span>parent = ComponentLoaderImplExt::parent_class(<span class="self">self</span>);
-		<span class="kw">let </span>f = parent.supports_type.expect(<span class="string">&quot;No parent class implementation for \&quot;supports_type\&quot;&quot;</span>);
+		<span class="kw">let </span>f = parent
+			.supports_type
+			.expect(<span class="string">&quot;No parent class implementation for \&quot;supports_type\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			from_glib(
-				f(loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>, type_.to_glib_none().<span class="number">0</span>)
-			)
+			from_glib(f(
+				loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>,
+				type_.to_glib_none().<span class="number">0</span>,
+			))
 		}
 	}
 
-	<span class="kw">fn </span>parent_load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: String, type_: String, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+	<span class="kw">fn </span>parent_load(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
+		component: String,
+		type_: String,
+		args: <span class="prelude-ty">Option</span>&lt;Variant&gt;,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
 		<span class="kw">let </span>parent = ComponentLoaderImplExt::parent_class(<span class="self">self</span>);
 		<span class="kw">let </span>f = parent.load.expect(<span class="string">&quot;No parent class implementation for \&quot;load\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let </span>res = from_glib(
-				f(loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>, component.to_glib_none().<span class="number">0</span>, type_.to_glib_none().<span class="number">0</span>, args.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error)
-			);
+			<span class="kw">let </span>res = from_glib(f(
+				loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>,
+				component.to_glib_none().<span class="number">0</span>,
+				type_.to_glib_none().<span class="number">0</span>,
+				args.to_glib_none().<span class="number">0</span>,
+				<span class="kw-2">&amp;mut </span>error,
+			));
 			<span class="kw">match </span>(res, error.is_null()) {
 				(<span class="bool-val">true</span>, <span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
 				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(from_glib_full(error)),
@@ -178,27 +240,43 @@
 	<span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
 		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>supports_type&lt;T: ComponentLoaderImpl&gt;(loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader, type_: <span class="kw-2">*const </span>libc::c_char) -&gt; glib::ffi::gboolean {
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>supports_type&lt;T: ComponentLoaderImpl&gt;(
+			loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader,
+			type_: <span class="kw-2">*const </span>libc::c_char,
+		) -&gt; glib::ffi::gboolean {
 			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(loader <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
 			<span class="kw">let </span>this = this.imp();
 			<span class="kw">let </span>loader: Borrowed&lt;ComponentLoader&gt; = from_glib_borrow(loader);
 
-			this.supports_type(loader.unsafe_cast_ref(), from_glib_none(type_))
+			this
+				.supports_type(loader.unsafe_cast_ref(), from_glib_none(type_))
 				.into_glib()
 		}
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>load&lt;T: ComponentLoaderImpl&gt;(loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader, component: <span class="kw-2">*const </span>libc::c_char, type_: <span class="kw-2">*const </span>libc::c_char, args: <span class="kw-2">*mut </span>glib::ffi::GVariant, error: <span class="kw-2">*mut *mut </span>glib::ffi::GError) -&gt; glib::ffi::gboolean {
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>load&lt;T: ComponentLoaderImpl&gt;(
+			loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader,
+			component: <span class="kw-2">*const </span>libc::c_char,
+			type_: <span class="kw-2">*const </span>libc::c_char,
+			args: <span class="kw-2">*mut </span>glib::ffi::GVariant,
+			error: <span class="kw-2">*mut *mut </span>glib::ffi::GError,
+		) -&gt; glib::ffi::gboolean {
 			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(loader <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
 			<span class="kw">let </span>this = this.imp();
 			<span class="kw">let </span>loader: Borrowed&lt;ComponentLoader&gt; = from_glib_borrow(loader);
 
-			<span class="kw">match </span>this.load(loader.unsafe_cast_ref(), from_glib_none(component), from_glib_none(type_), from_glib_none(args)) {
+			<span class="kw">match </span>this.load(
+				loader.unsafe_cast_ref(),
+				from_glib_none(component),
+				from_glib_none(type_),
+				from_glib_none(args),
+			) {
 				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>,
 				<span class="prelude-val">Err</span>(e) =&gt; {
 					<span class="kw-2">*</span>error = e.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
 					<span class="bool-val">false
 				</span>},
-			}.into_glib()
+			}
+			.into_glib()
 		}
 
 		<span class="kw">let </span>klass = class.as_mut();

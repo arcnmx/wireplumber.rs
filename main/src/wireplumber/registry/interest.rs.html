@@ -520,9 +520,44 @@
 <span id="520">520</span>
 <span id="521">521</span>
 <span id="522">522</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::registry::{ObjectInterest, ConstraintVerb, ConstraintType, InterestMatchFlags, InterestMatch};
-<span class="kw">use </span><span class="kw">crate</span>::pw::{PipewireObject, Properties};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{
+	prelude::<span class="kw-2">*</span>,
+	pw::{PipewireObject, Properties},
+	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest},
+};
 
 <span class="kw">impl </span>ObjectInterest {
 	<span class="comment">/*#[doc(alias = &quot;wp_object_interest_matches&quot;)]
@@ -539,7 +574,13 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
 	</span><span class="kw">pub fn </span>matches_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span>Properties) -&gt; bool {
-		<span class="self">self</span>.matches_full(InterestMatchFlags::CHECK_ALL, Properties::static_type(), <span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span>GObject&gt;, <span class="prelude-val">Some</span>(props), <span class="prelude-val">None</span>) == InterestMatch::all()
+		<span class="self">self</span>.matches_full(
+			InterestMatchFlags::CHECK_ALL,
+			Properties::static_type(),
+			<span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span>GObject&gt;,
+			<span class="prelude-val">Some</span>(props),
+			<span class="prelude-val">None</span>,
+		) == InterestMatch::all()
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
@@ -557,9 +598,7 @@
 
 <span class="kw">impl</span>&lt;T: StaticType&gt; Interest&lt;T&gt; {
 	<span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{
-			<span class="self">Self</span>::wrap_unchecked(ObjectInterest::new_type(T::static_type()))
-		}
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::wrap_unchecked(ObjectInterest::new_type(T::static_type())) }
 	}
 
 	<span class="kw">pub unsafe fn </span>wrap_unchecked(interest: ObjectInterest) -&gt; <span class="self">Self </span>{
@@ -577,21 +616,25 @@
 		<span class="self">self</span>.interest
 	}
 
-	<span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; bool <span class="kw">where </span>T: IsA&lt;O&gt; {
+	<span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; bool
+	<span class="kw">where
+		</span>T: IsA&lt;O&gt;,
+	{
 		<span class="self">self</span>.interest.matches_object(object)
 	}
 
-	<span class="kw">pub fn </span>constrain&lt;<span class="lifetime">&#39;o</span>, O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>O) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>T&gt; <span class="kw">where </span>T: IsA&lt;O&gt; {
+	<span class="kw">pub fn </span>constrain&lt;<span class="lifetime">&#39;o</span>, O: IsA&lt;GObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>O) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>T&gt;
+	<span class="kw">where
+		</span>T: IsA&lt;O&gt;,
+	{
 		<span class="kw">if </span><span class="self">self</span>.matches_object(object) {
-			<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{
-				object.unsafe_cast_ref()
-			})
+			<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ object.unsafe_cast_ref() })
 		} <span class="kw">else </span>{
 			<span class="prelude-val">None
 		</span>}
 	}
 
-	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; ValueIterator::&lt;T&gt; {
+	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; ValueIterator&lt;T&gt; {
 		container.filter(<span class="self">self</span>)
 	}
 
@@ -617,7 +660,7 @@
 }
 
 <span class="kw">impl</span>&lt;C: Borrow&lt;Constraint&gt;, T: StaticType&gt; Extend&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
-	<span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item=C&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
+	<span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = C&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
 		<span class="kw">for </span>constraint <span class="kw">in </span>iter {
 			constraint.borrow().add_to(<span class="kw-2">&amp;</span><span class="self">self</span>)
 		}
@@ -625,7 +668,7 @@
 }
 
 <span class="kw">impl</span>&lt;C: Borrow&lt;Constraint&gt;, T: StaticType&gt; FromIterator&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
-	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item=C&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = C&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span><span class="kw-2">mut </span>interest = <span class="self">Self</span>::new();
 		interest.extend(iter);
 		interest
@@ -646,7 +689,11 @@
 		<span class="self">Self </span>{
 			type_,
 			subject: subject.into(),
-			verb: <span class="kw">if </span>present { ConstraintVerb::IsPresent } <span class="kw">else </span>{ ConstraintVerb::IsAbsent },
+			verb: <span class="kw">if </span>present {
+				ConstraintVerb::IsPresent
+			} <span class="kw">else </span>{
+				ConstraintVerb::IsAbsent
+			},
 			value: <span class="prelude-val">None</span>,
 		}
 	}
@@ -655,7 +702,11 @@
 		<span class="self">Self </span>{
 			type_,
 			subject: subject.into(),
-			verb: <span class="kw">if </span>equal { ConstraintVerb::Equals } <span class="kw">else </span>{ ConstraintVerb::NotEquals },
+			verb: <span class="kw">if </span>equal {
+				ConstraintVerb::Equals
+			} <span class="kw">else </span>{
+				ConstraintVerb::NotEquals
+			},
 			value: <span class="prelude-val">Some</span>(value.to_variant()),
 		}
 	}
@@ -678,7 +729,11 @@
 		}
 	}
 
-	<span class="kw">pub fn </span>in_list&lt;S: Into&lt;String&gt;, V: ToVariant, I: Iterator&lt;Item=V&gt;&gt;(type_: ConstraintType, subject: S, one_of: I) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>in_list&lt;S: Into&lt;String&gt;, V: ToVariant, I: Iterator&lt;Item = V&gt;&gt;(
+		type_: ConstraintType,
+		subject: S,
+		one_of: I,
+	) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span>values = one_of.map(|v| v.to_variant());
 		<span class="self">Self </span>{
 			type_,
@@ -705,7 +760,11 @@
 			<span class="string">&quot;matches&quot; </span>| <span class="string">&quot;#&quot; </span>=&gt; ConstraintVerb::Matches,
 			<span class="string">&quot;is-present&quot; </span>| <span class="string">&quot;+&quot; </span>=&gt; ConstraintVerb::IsPresent,
 			<span class="string">&quot;is-absent&quot; </span>| <span class="string">&quot;-&quot; </span>=&gt; ConstraintVerb::IsAbsent,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, s))),
+			<span class="kw">_ </span>=&gt;
+				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, s),
+				)),
 		})
 	}
 }
@@ -722,7 +781,11 @@
 			<span class="string">&#39;#&#39; </span>=&gt; ConstraintVerb::Matches,
 			<span class="string">&#39;+&#39; </span>=&gt; ConstraintVerb::IsPresent,
 			<span class="string">&#39;-&#39; </span>=&gt; ConstraintVerb::IsAbsent,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, value))),
+			<span class="kw">_ </span>=&gt;
+				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint verb {}&quot;</span>, value),
+				)),
 		})
 	}
 }
@@ -736,26 +799,21 @@
 <span class="kw">impl </span>FromVariant <span class="kw">for </span>ConstraintVerb {
 	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">match </span>variant.classify() {
-			VariantClass::String =&gt;
-				variant.get::&lt;String&gt;()
-				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).ok()),
-			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{
-				<span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>))
-			},
+			VariantClass::String =&gt; variant.get::&lt;String&gt;().and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).ok()),
+			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>)) },
 		}
 	}
 }
 
 <span class="kw">impl </span>ToVariant <span class="kw">for </span>ConstraintVerb {
 	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
-		str::from_utf8(<span class="kw-2">&amp;</span>[<span class="self">self</span>.symbol() <span class="kw">as </span>u8])
-			.unwrap()
-			.to_variant()
+		str::from_utf8(<span class="kw-2">&amp;</span>[<span class="self">self</span>.symbol() <span class="kw">as </span>u8]).unwrap().to_variant()
 	}
 }
 
 <span class="kw">impl </span>ConstraintVerb {
-	<span class="kw">pub fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
+	<span class="attr">#[rustfmt::skip]
+	</span><span class="kw">pub fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
 		<span class="kw">match </span><span class="self">self </span>{
 			ConstraintVerb::__Unknown(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown constraint verb&quot;</span>),
 			ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent =&gt; <span class="prelude-val">None</span>,
@@ -807,7 +865,11 @@
 			<span class="string">&quot;pw-global&quot; </span>=&gt; ConstraintType::PwGlobalProperty,
 			<span class="string">&quot;pw&quot; </span>=&gt; ConstraintType::PwProperty,
 			<span class="string">&quot;gobject&quot; </span>=&gt; ConstraintType::GProperty,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, s))),
+			<span class="kw">_ </span>=&gt;
+				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown constraint type {}&quot;</span>, s),
+				)),
 		})
 	}
 }
@@ -821,12 +883,8 @@
 <span class="kw">impl </span>FromVariant <span class="kw">for </span>ConstraintType {
 	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">match </span>variant.classify() {
-			VariantClass::String =&gt;
-				variant.get::&lt;String&gt;()
-				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).ok()),
-			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{
-				<span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>))
-			},
+			VariantClass::String =&gt; variant.get::&lt;String&gt;().and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).ok()),
+			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>)) },
 		}
 	}
 }
@@ -851,18 +909,21 @@
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
 </span><span class="kw">mod </span>impl_serde {
-	<span class="kw">use super</span>::{Constraint, ConstraintVerb, ConstraintType};
-	<span class="kw">use </span><span class="kw">crate</span>::lua::{LuaVariant, LuaError};
-	<span class="kw">use </span>glib::{Variant, ToVariant};
-	<span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize, Serializer, de::{<span class="self">self</span>, Error <span class="kw">as _</span>, Visitor, SeqAccess, MapAccess, Unexpected}, ser::SerializeStruct};
-	<span class="kw">use </span>std::str::FromStr;
-	<span class="kw">use </span>std::borrow::Cow;
-	<span class="kw">use </span>std::fmt;
+	<span class="kw">use </span>{
+		<span class="kw">super</span>::{Constraint, ConstraintType, ConstraintVerb},
+		<span class="kw">crate</span>::lua::{LuaError, LuaVariant},
+		glib::{ToVariant, Variant},
+		serde::{
+			de::{<span class="self">self</span>, Error <span class="kw">as _</span>, MapAccess, SeqAccess, Unexpected, Visitor},
+			ser::SerializeStruct,
+			Deserialize, Deserializer, Serialize, Serializer,
+		},
+		std::{borrow::Cow, fmt, str::FromStr},
+	};
 
 	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ConstraintVerb {
 		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
-			&lt;Cow&lt;String&gt;&gt;::deserialize(deserializer)
-				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).map_err(D::Error::custom))
+			&lt;Cow&lt;String&gt;&gt;::deserialize(deserializer).and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).map_err(D::Error::custom))
 		}
 	}
 
@@ -874,8 +935,7 @@
 
 	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ConstraintType {
 		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
-			&lt;Cow&lt;String&gt;&gt;::deserialize(deserializer)
-				.and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).map_err(D::Error::custom))
+			&lt;Cow&lt;String&gt;&gt;::deserialize(deserializer).and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>s).map_err(D::Error::custom))
 		}
 	}
 
@@ -892,15 +952,21 @@
 			state.serialize_field(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.type_)<span class="question-mark">?</span>;
 			state.serialize_field(<span class="string">&quot;subject&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.subject)<span class="question-mark">?</span>;
 			state.serialize_field(<span class="string">&quot;verb&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.verb)<span class="question-mark">?</span>;
-			state.serialize_field(<span class="string">&quot;value&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.value.as_ref()
-				.map(LuaVariant::convert_from)
-				.transpose().map_err(LuaError::serde_error_ser)<span class="question-mark">?
-			</span>)<span class="question-mark">?</span>;
+			state.serialize_field(
+				<span class="string">&quot;value&quot;</span>,
+				<span class="kw-2">&amp;</span><span class="self">self
+					</span>.value
+					.as_ref()
+					.map(LuaVariant::convert_from)
+					.transpose()
+					.map_err(LuaError::serde_error_ser)<span class="question-mark">?</span>,
+			)<span class="question-mark">?</span>;
 			state.end()
 		}
 	}
 
-	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Constraint {
+	<span class="attr">#[rustfmt::skip]
+	</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Constraint {
 		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
 			<span class="kw">enum </span>Field { Type, Subject, Verb, Value }
 
@@ -1004,25 +1070,25 @@
 						<span class="kw">match </span>key {
 							Field::Type =&gt; {
 								<span class="kw">if </span>type_.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;type&quot;</span>));
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;type&quot;</span>))
 								}
 								type_ = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 							Field::Subject =&gt; {
 								<span class="kw">if </span>subject.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;subject&quot;</span>));
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;subject&quot;</span>))
 								}
 								subject = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 							Field::Verb =&gt; {
 								<span class="kw">if </span>verb.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;verb&quot;</span>));
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;verb&quot;</span>))
 								}
 								verb = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 							Field::Value =&gt; {
 								<span class="kw">if </span>value.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;value&quot;</span>));
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;value&quot;</span>))
 								}
 								value = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},

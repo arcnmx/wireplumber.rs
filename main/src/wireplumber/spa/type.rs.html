@@ -168,26 +168,7 @@
 <span id="168">168</span>
 <span id="169">169</span>
 <span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::spa::SpaIdTable;
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, spa::SpaIdTable};
 
 <span class="macro">glib::wrapper! </span>{
 	<span class="attr">#[doc(alias = <span class="string">&quot;WpSpaType&quot;</span>)]
@@ -215,13 +196,18 @@
 	<span class="kw">pub const </span>NONE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_None) };
 	<span class="kw">pub const </span>OBJECT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Object) };
 	<span class="kw">pub const </span>OBJECT_FORMAT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Format) };
-	<span class="kw">pub const </span>OBJECT_PARAM_BUFFERS: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamBuffers) };
+	<span class="kw">pub const </span>OBJECT_PARAM_BUFFERS: <span class="self">Self </span>=
+		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamBuffers) };
 	<span class="kw">pub const </span>OBJECT_PARAM_IO: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamIO) };
-	<span class="kw">pub const </span>OBJECT_PARAM_LATENCY: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamLatency) };
+	<span class="kw">pub const </span>OBJECT_PARAM_LATENCY: <span class="self">Self </span>=
+		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamLatency) };
 	<span class="kw">pub const </span>OBJECT_PARAM_META: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamMeta) };
-	<span class="kw">pub const </span>OBJECT_PARAM_PORT_CONFIG: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamPortConfig) };
-	<span class="kw">pub const </span>OBJECT_PARAM_PROCESS_LATENCY: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProcessLatency) };
-	<span class="kw">pub const </span>OBJECT_PARAM_PROFILE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProfile) };
+	<span class="kw">pub const </span>OBJECT_PARAM_PORT_CONFIG: <span class="self">Self </span>=
+		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamPortConfig) };
+	<span class="kw">pub const </span>OBJECT_PARAM_PROCESS_LATENCY: <span class="self">Self </span>=
+		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProcessLatency) };
+	<span class="kw">pub const </span>OBJECT_PARAM_PROFILE: <span class="self">Self </span>=
+		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProfile) };
 	<span class="kw">pub const </span>OBJECT_PARAM_ROUTE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamRoute) };
 	<span class="kw">pub const </span>OBJECT_PROFILER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Profiler) };
 	<span class="kw">pub const </span>OBJECT_PROP_INFO: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_PropInfo) };
@@ -248,9 +234,7 @@
 	}
 
 	<span class="kw">pub const unsafe fn </span>from_id_unchecked(inner: ffi::WpSpaType) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{
-			inner,
-		}
+		<span class="self">Self </span>{ inner }
 	}
 
 	<span class="kw">pub fn </span>number(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ffi::WpSpaType {
@@ -258,71 +242,51 @@
 	}
 
 	<span class="attr">#[cfg(libspa_linked)]
-	</span><span class="kw">pub fn </span>root_types() -&gt; <span class="kw">impl </span>Iterator&lt;Item=<span class="self">Self</span>&gt; {
-		<span class="kw">unsafe </span>{
-			libspa_sys::spa_types.iter().map(|ty|
-				<span class="self">Self</span>::from_id_unchecked(ty.type_)
-			)
-		}
+	</span><span class="kw">pub fn </span>root_types() -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="self">Self</span>&gt; {
+		<span class="kw">unsafe </span>{ libspa_sys::spa_types.iter().map(|ty| <span class="self">Self</span>::from_id_unchecked(ty.type_)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_get_object_id_values_table&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_object_id_values_table&quot;</span>)]
 	</span><span class="kw">pub fn </span>object_id_values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_get_object_id_values_table(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_object_id_values_table(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_get_values_table&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_values_table&quot;</span>)]
 	</span><span class="kw">pub fn </span>values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_get_values_table(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_values_table(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_is_fundamental&quot;</span>)]
 	</span><span class="kw">pub fn </span>is_fundamental(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_is_fundamental(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_fundamental(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_is_id&quot;</span>)]
 	</span><span class="kw">pub fn </span>is_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_is_id(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_id(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_is_object&quot;</span>)]
 	</span><span class="kw">pub fn </span>is_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_is_object(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_object(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_name&quot;</span>)]
 	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib_none(ffi::wp_spa_type_name(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_type_name(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_parent&quot;</span>)]
 	#[must_use]
 	</span><span class="kw">pub fn </span>parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaType&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_parent(<span class="self">self</span>.into_glib()))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_parent(<span class="self">self</span>.into_glib())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_from_name&quot;</span>)]
 	</span><span class="kw">pub fn </span>from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;SpaType&gt; {
-		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_type_from_name(name.to_glib_none().<span class="number">0</span>))
-		}
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_from_name(name.to_glib_none().<span class="number">0</span>)) }
 	}
 }
 

@@ -343,17 +343,13 @@
 <span id="343">343</span>
 <span id="344">344</span>
 <span id="345">345</span>
-<span id="346">346</span>
-<span id="347">347</span>
-<span id="348">348</span>
-<span id="349">349</span>
-<span id="350">350</span>
-<span id="351">351</span>
-<span id="352">352</span>
-</pre><pre class="rust"><code><span class="kw">use </span>glib::ffi::gboolean;
-<span class="kw">use </span>glib::GString;
-<span class="kw">use </span><span class="kw">crate</span>::spa::{SpaPodBuilder, SpaPod, SpaType};
-<span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{
+		prelude::<span class="kw-2">*</span>,
+		spa::{SpaPod, SpaPodBuilder, SpaType},
+	},
+	glib::{ffi::gboolean, GString},
+};
 
 <span class="kw">pub trait </span>SpaPrimitive: SpaValue + Copy + Into&lt;&lt;<span class="self">Self </span><span class="kw">as </span>SpaValue&gt;::Owned&gt; {
 	<span class="kw">const </span>TYPE: SpaType;
@@ -402,9 +398,7 @@
 
 <span class="kw">impl </span>From&lt;SpaBool&gt; <span class="kw">for </span>bool {
 	<span class="kw">fn </span>from(v: SpaBool) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{
-			from_glib(v.<span class="number">0</span>)
-		}
+		<span class="kw">unsafe </span>{ from_glib(v.<span class="number">0</span>) }
 	}
 }
 
@@ -429,9 +423,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.boolean()
-			.map(Into::into)
-			.ok_or(GlibNoneError)
+		pod.boolean().map(Into::into).ok_or(GlibNoneError)
 	}
 }
 
@@ -439,8 +431,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.boolean()
-			.ok_or(GlibNoneError)
+		pod.boolean().ok_or(GlibNoneError)
 	}
 }
 
@@ -459,8 +450,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.int()
-			.ok_or(GlibNoneError)
+		pod.int().ok_or(GlibNoneError)
 	}
 }
 
@@ -470,9 +460,10 @@
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		i32::try_from(pod)
 			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
-			.and_then(|v| v.try_into()
-				.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
-			)
+			.and_then(|v| {
+				v.try_into()
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+			})
 	}
 }
 
@@ -491,8 +482,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.long()
-			.ok_or(GlibNoneError)
+		pod.long().ok_or(GlibNoneError)
 	}
 }
 
@@ -502,9 +492,10 @@
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		i64::try_from(pod)
 			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
-			.and_then(|v| v.try_into()
-				.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
-			)
+			.and_then(|v| {
+				v.try_into()
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+			})
 	}
 }
 
@@ -523,8 +514,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.float()
-			.ok_or(GlibNoneError)
+		pod.float().ok_or(GlibNoneError)
 	}
 }
 
@@ -543,8 +533,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.double()
-			.ok_or(GlibNoneError)
+		pod.double().ok_or(GlibNoneError)
 	}
 }
 
@@ -560,8 +549,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.string()
-			.ok_or(GlibNoneError)
+		pod.string().ok_or(GlibNoneError)
 	}
 }
 
@@ -569,8 +557,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		&lt;GString <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt;&gt;::try_from(pod)
-			.map(Into::into)
+		&lt;GString <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt;&gt;::try_from(pod).map(Into::into)
 	}
 }
 
@@ -586,9 +573,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.bytes()
-			.map(Into::into)
-			.ok_or(GlibNoneError)
+		pod.bytes().map(Into::into).ok_or(GlibNoneError)
 	}
 }
 
@@ -607,8 +592,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.spa_rectangle()
-			.ok_or(GlibNoneError)
+		pod.spa_rectangle().ok_or(GlibNoneError)
 	}
 }
 
@@ -627,8 +611,7 @@
 	<span class="kw">type </span>Error = GlibNoneError;
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		pod.spa_fraction()
-			.ok_or(GlibNoneError)
+		pod.spa_fraction().ok_or(GlibNoneError)
 	}
 }
 
@@ -648,7 +631,8 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;T: SpaPrimitive&gt; SpaValue <span class="kw">for </span>[T] <span class="kw">where
+<span class="kw">impl</span>&lt;T: SpaPrimitive&gt; SpaValue <span class="kw">for </span>[T]
+<span class="kw">where
 	</span>Vec&lt;T::Owned&gt;: <span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt;,
 {
 	<span class="kw">fn </span>add_to_builder(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>SpaPodBuilder) {
@@ -666,7 +650,8 @@
 	<span class="kw">type </span>Owned = Vec&lt;T::Owned&gt;;
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Vec&lt;T&gt; <span class="kw">where
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod&gt; <span class="kw">for </span>Vec&lt;T&gt;
+<span class="kw">where
 	for</span>&lt;<span class="lifetime">&#39;f</span>&gt; &lt;T <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;&gt;::Error: Into&lt;GlibNoneError&gt;,
 {
 	<span class="kw">type </span>Error = GlibNoneError;
@@ -676,15 +661,16 @@
 			<span class="kw">return </span><span class="prelude-val">Err</span>(GlibNoneError)
 		}
 
-		pod.iterator().map(|pod|
-			T::try_from(<span class="kw-2">&amp;</span>pod)
-				.map_err(Into::into)
-		).collect()
+		pod
+			.iterator()
+			.map(|pod| T::try_from(<span class="kw-2">&amp;</span>pod).map_err(Into::into))
+			.collect()
 	}
 }
 
 <span class="doccomment">/// Struct
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: Sized&gt; SpaValue <span class="kw">for </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>SpaValue&lt;Owned=T&gt;] <span class="kw">where
+</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: Sized&gt; SpaValue <span class="kw">for </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>SpaValue&lt;Owned = T&gt;]
+<span class="kw">where
 	</span>Vec&lt;T&gt;: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;,
 	T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;f</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>SpaPod&gt;,
 {

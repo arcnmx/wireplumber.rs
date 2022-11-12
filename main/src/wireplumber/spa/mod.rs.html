@@ -48,14 +48,6 @@
 <span id="48">48</span>
 <span id="49">49</span>
 <span id="50">50</span>
-<span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
 </pre><pre class="rust"><code><span class="doccomment">//! [Simple Plugin API](https://docs.pipewire.org/page_spa_plugins.html) [POD encoding](https://docs.pipewire.org/page_spa_pod.html)
 //!
 //! [SpaPod] wraps a [libspa_sys::spa_pod], providing high-level accessors and enabling mutation
@@ -68,51 +60,43 @@
 //! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)
 //! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)
 
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	SpaPod,
-	SpaPodParser,
-	SpaPodBuilder,
-};
-
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub use </span><span class="self">self</span>::props::SpaProps;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="kw">pub use </span><span class="self">self</span>::route::{SpaRoute, SpaRoutes};
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	SpaJson,
-	SpaJsonParser,
-	SpaJsonBuilder,
-};
-
-<span class="kw">pub use </span>libspa_sys <span class="kw">as </span>ffi;
+</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{SpaJson, SpaJsonBuilder, SpaJsonParser};
 <span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
 #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
 </span><span class="kw">pub use </span>libspa;
+<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+</span><span class="kw">pub use </span>libspa_pod::DebugValue;
+<span class="kw">pub use </span>{
+	<span class="self">self</span>::{
+		id_table::SpaIdTable,
+		id_value::SpaIdValue,
+		traits::{SpaBool, SpaPrimitive, SpaValue},
+		type_::SpaType,
+	},
+	<span class="kw">crate</span>::auto::{SpaPod, SpaPodBuilder, SpaPodParser},
+	libspa_sys <span class="kw">as </span>ffi,
+};
 
-<span class="attr">#[path = <span class="string">&quot;type.rs&quot;</span>]
-</span><span class="kw">mod </span>type_;
-<span class="kw">mod </span>pod;
-<span class="kw">mod </span>parser;
 <span class="kw">mod </span>builder;
 <span class="kw">mod </span>id_table;
 <span class="kw">mod </span>id_value;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">mod </span>json;
+<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+</span><span class="kw">mod </span>libspa_pod;
+<span class="kw">mod </span>parser;
+<span class="kw">mod </span>pod;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">mod </span>props;
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">mod </span>route;
 <span class="kw">mod </span>traits;
-<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
-</span><span class="kw">mod </span>libspa_pod;
-
-<span class="kw">pub use </span>type_::SpaType;
-<span class="kw">pub use </span>id_table::SpaIdTable;
-<span class="kw">pub use </span>id_value::SpaIdValue;
-<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
-</span><span class="kw">pub use </span>libspa_pod::DebugValue;
-
-<span class="kw">pub use </span>traits::{SpaPrimitive, SpaValue, SpaBool};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span>props::SpaProps;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span>route::{SpaRoute, SpaRoutes};
+<span class="attr">#[path = <span class="string">&quot;type.rs&quot;</span>]
+</span><span class="kw">mod </span>type_;
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>

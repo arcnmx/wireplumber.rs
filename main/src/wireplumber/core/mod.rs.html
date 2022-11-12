@@ -49,9 +49,6 @@
 <span id="49">49</span>
 <span id="50">50</span>
 <span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
 </pre><pre class="rust"><code><span class="doccomment">//! WirePlumber&#39;s [entry point](Core) and base [Object] type.
 //!
 //! # PipeWire Main Loop
@@ -90,21 +87,18 @@
 //! - [Core](https://pipewire.pages.freedesktop.org/wireplumber/c_api/core_api.html)
 //! - [Object](https://pipewire.pages.freedesktop.org/wireplumber/c_api/object_api.html)
 
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	Core, InitFlags,
-	Object,
-	FeatureActivationTransition,
-	traits::ObjectExt,
-};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_5&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_5&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::auto::Factory;
+<span class="kw">pub use </span>{
+	<span class="self">self</span>::{
+		features::ObjectFeatures,
+		subclass::{ObjectImpl, ObjectImplExt},
+	},
+	<span class="kw">crate</span>::auto::{traits::ObjectExt, Core, FeatureActivationTransition, InitFlags, Object},
+};
 
 <span class="kw">mod </span>core;
-
 <span class="kw">mod </span>features;
-<span class="kw">pub use </span>features::ObjectFeatures;
-
 <span class="kw">mod </span>subclass;
-<span class="kw">pub use </span>subclass::{ObjectImpl, ObjectImplExt};
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-nightly (42325c525 2022-11-11)" data-search-js="search-39ee4160c7dc16c9.js" data-settings-js="settings-3a0b9947ba1bd99a.js" data-settings-css="settings-a66f7524084a489a.css" ></div></body></html>
