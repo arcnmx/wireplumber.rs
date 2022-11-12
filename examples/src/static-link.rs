@@ -11,14 +11,14 @@ use {
 	serde::{Deserialize, Serialize},
 	std::{future::Future, iter, pin::Pin},
 	wireplumber::{
-		core::{Core, Object, ObjectFeatures},
-		error, info,
+		core::{Object, ObjectFeatures},
+		error,
+		log::{info, warning},
 		lua::from_variant,
 		plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
 		prelude::*,
 		pw::{self, Link, Node, Port, Properties, ProxyFeatures},
 		registry::{Constraint, ConstraintType, Interest, ObjectManager},
-		warning,
 	},
 };
 

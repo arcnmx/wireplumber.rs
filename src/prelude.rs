@@ -19,6 +19,7 @@ pub use glib_signal::ObjectSignalExt as _;
 #[doc(no_inline)]
 pub use {
 	crate::{
+		core::Core,
 		core::ObjectExt as _,
 		plugin::{AsyncPluginExt as _, PluginExt as _},
 		pw::{

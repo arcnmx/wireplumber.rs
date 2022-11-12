@@ -10,11 +10,11 @@ use {
 	clap::{ArgEnum, Parser},
 	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
 	wireplumber::{
-		info,
+		log::{info, warning},
 		lua::LuaVariant,
-		plugin::{ComponentLoader, Plugin, PluginFeatures},
+		plugin::*,
+		prelude::*,
 		pw::{self, Properties},
-		warning, Core, Log,
 	},
 };
 
@@ -131,7 +131,7 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 /// See also: [Core::run]
 fn main() -> Result<()> {
 	// info logging by default so we can see what's going on
-	Log::set_default_level("3");
+	wireplumber::Log::set_default_level("3");
 
 	// let clap build a CLI from argv for us
 	let args = Args::parse();
