@@ -1,7 +1,10 @@
-use crate::{
-	prelude::*,
-	pw::{PipewireObject, Properties},
-	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest},
+use {
+	crate::{
+		prelude::*,
+		pw::{PipewireObject, Properties},
+		registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest},
+	},
+	std::ops::RangeInclusive,
 };
 
 impl ObjectInterest {
@@ -31,6 +34,12 @@ impl ObjectInterest {
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_pw_object<O: IsA<PipewireObject>>(&self, object: &O) -> bool {
 		self.matches_props(&object.as_ref().properties().unwrap())
+	}
+}
+
+impl AsRef<ObjectInterest> for ObjectInterest {
+	fn as_ref(&self) -> &ObjectInterest {
+		self
 	}
 }
 
@@ -87,6 +96,10 @@ impl<T: StaticType> Interest<T> {
 		container.lookup(self)
 	}
 
+	pub fn add<C: InterestConstraint>(&self, c: &C) {
+		c.add_to(self)
+	}
+
 	// TODO: helpers for adding constraints that skip the `Type` arg
 	// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?
 }
@@ -104,7 +117,13 @@ impl<T: StaticType> Deref for Interest<T> {
 	}
 }
 
-impl<C: Borrow<Constraint>, T: StaticType> Extend<C> for Interest<T> {
+impl<T: StaticType> AsRef<ObjectInterest> for Interest<T> {
+	fn as_ref(&self) -> &ObjectInterest {
+		&self.interest
+	}
+}
+
+impl<C: InterestConstraint, T: StaticType> Extend<C> for Interest<T> {
 	fn extend<I: IntoIterator<Item = C>>(&mut self, iter: I) {
 		for constraint in iter {
 			constraint.borrow().add_to(&self)
@@ -112,7 +131,7 @@ impl<C: Borrow<Constraint>, T: StaticType> Extend<C> for Interest<T> {
 	}
 }
 
-impl<C: Borrow<Constraint>, T: StaticType> FromIterator<C> for Interest<T> {
+impl<C: InterestConstraint, T: StaticType> FromIterator<C> for Interest<T> {
 	fn from_iter<I: IntoIterator<Item = C>>(iter: I) -> Self {
 		let mut interest = Self::new();
 		interest.extend(iter);
@@ -120,76 +139,251 @@ impl<C: Borrow<Constraint>, T: StaticType> FromIterator<C> for Interest<T> {
 	}
 }
 
-#[must_use]
-#[derive(Clone, Debug, Variant)]
-pub struct Constraint {
-	pub type_: ConstraintType,
-	pub subject: String,
+impl ConstraintVerb {
+	pub fn has_object(&self) -> bool {
+		match self {
+			ConstraintVerb::__Unknown(v) => panic!("unknown constraint verb {v}"),
+			ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent => false,
+			_ => true,
+		}
+	}
+}
+
+pub trait NumericConstraintValue: ToVariant {}
+impl NumericConstraintValue for u32 {}
+impl NumericConstraintValue for u64 {}
+impl NumericConstraintValue for i32 {}
+impl NumericConstraintValue for i64 {}
+impl NumericConstraintValue for f64 {}
+
+pub trait Verb {
+	fn verb(&self) -> ConstraintVerb;
+}
+
+impl Verb for ConstraintVerb {
+	fn verb(&self) -> ConstraintVerb {
+		*self
+	}
+}
+
+pub trait Transitive: Verb {
+	fn constraint_object(&self) -> Variant;
+
+	fn constraint_variant(&self) -> Option<Variant> {
+		match self.verb().has_object() {
+			true => Some(self.constraint_object()),
+			false => None,
+		}
+	}
+}
+
+impl Transitive for ConstraintVerb {
+	fn constraint_object(&self) -> Variant {
+		panic!("did not expect a value for constraint {self:?}")
+	}
+}
+
+pub trait InterestConstraint {
+	fn add_constraint(&self, interest: &ObjectInterest);
+
+	fn add_to<I: AsRef<ObjectInterest>>(&self, interest: &I) {
+		self.add_to(interest.as_ref())
+	}
+}
+
+impl<C: InterestConstraint> InterestConstraint for &'_ C {
+	fn add_constraint(&self, interest: &ObjectInterest) {
+		InterestConstraint::add_constraint(*self, interest)
+	}
+}
+
+impl<V: Transitive> InterestConstraint for Constraint<V> {
+	fn add_constraint(&self, interest: &ObjectInterest) {
+		let verb = self.constraint.verb();
+		let variant = match verb.has_object() {
+			true => Some(self.constraint.constraint_object()),
+			false => None,
+		};
+		interest.add_constraint(self.type_, &self.subject, self.constraint.verb(), variant.as_ref())
+	}
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Comparison<V> {
+	pub value: V,
+	pub equal: bool,
+}
+
+impl<V: NumericConstraintValue> Transitive for Comparison<V> {
+	fn constraint_object(&self) -> Variant {
+		self.value.to_variant()
+	}
+}
+impl Transitive for Comparison<bool> {
+	fn constraint_object(&self) -> Variant {
+		self.value.to_variant()
+	}
+}
+impl Transitive for Comparison<String> {
+	fn constraint_object(&self) -> Variant {
+		self.value.to_variant()
+	}
+}
+impl Transitive for Comparison<&'_ str> {
+	fn constraint_object(&self) -> Variant {
+		self.value.to_variant()
+	}
+}
+
+impl<V> Verb for Comparison<V> {
+	fn verb(&self) -> ConstraintVerb {
+		if self.equal {
+			ConstraintVerb::Equals
+		} else {
+			ConstraintVerb::NotEquals
+		}
+	}
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct InList<V>(pub V);
+
+impl<V> Verb for InList<V> {
+	fn verb(&self) -> ConstraintVerb {
+		ConstraintVerb::InList
+	}
+}
+
+impl<V> Transitive for InList<V>
+where
+	for<'a> &'a V: IntoIterator,
+	for<'a> <&'a V as IntoIterator>::Item: NumericConstraintValue,
+{
+	fn constraint_object(&self) -> Variant {
+		Variant::tuple_from_iter(self.0.into_iter().map(|v| v.to_variant()))
+	}
+}
+
+impl<'i, V> Transitive for InList<V>
+where
+	for<'a> &'a V: IntoIterator,
+	for<'a> <&'a V as IntoIterator>::Item: AsRef<str>,
+{
+	fn constraint_object(&self) -> Variant {
+		Variant::tuple_from_iter(self.0.into_iter().map(|v| v.as_ref().to_variant()))
+	}
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+pub struct InRange<T>(pub RangeInclusive<T>);
+
+impl<V: NumericConstraintValue> Transitive for InRange<V> {
+	fn constraint_object(&self) -> Variant {
+		Variant::tuple_from_iter([self.0.start().to_variant(), self.0.end().to_variant()])
+	}
+}
+
+impl<V> Verb for InRange<V> {
+	fn verb(&self) -> ConstraintVerb {
+		ConstraintVerb::InRange
+	}
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Matches<T>(pub T);
+
+impl<V: AsRef<str>> Transitive for Matches<V> {
+	fn constraint_object(&self) -> Variant {
+		self.0.as_ref().to_variant()
+	}
+}
+
+impl<V> Verb for Matches<V> {
+	fn verb(&self) -> ConstraintVerb {
+		ConstraintVerb::Matches
+	}
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Hash)]
+pub struct VariantConstraint {
 	pub verb: ConstraintVerb,
 	pub value: Option<Variant>,
 }
 
-impl Constraint {
+impl Transitive for VariantConstraint {
+	fn constraint_object(&self) -> Variant {
+		match &self.value {
+			Some(v) => v.clone(),
+			None => panic!("did not expect value for constraint {:?}", self.verb),
+		}
+	}
+}
+
+impl Verb for VariantConstraint {
+	fn verb(&self) -> ConstraintVerb {
+		self.verb
+	}
+}
+
+#[must_use]
+#[derive(Clone, Debug)]
+pub struct Constraint<T = VariantConstraint> {
+	pub type_: ConstraintType,
+	pub subject: String,
+	pub constraint: T,
+}
+
+impl Constraint<ConstraintVerb> {
 	pub fn has<S: Into<String>>(type_: ConstraintType, subject: S, present: bool) -> Self {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: if present {
+			constraint: if present {
 				ConstraintVerb::IsPresent
 			} else {
 				ConstraintVerb::IsAbsent
 			},
-			value: None,
 		}
 	}
+}
 
-	pub fn compare<S: Into<String>, V: ToVariant>(type_: ConstraintType, subject: S, value: V, equal: bool) -> Self {
+impl<V> Constraint<Comparison<V>> {
+	pub fn compare<S: Into<String>>(type_: ConstraintType, subject: S, value: V, equal: bool) -> Self {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: if equal {
-				ConstraintVerb::Equals
-			} else {
-				ConstraintVerb::NotEquals
-			},
-			value: Some(value.to_variant()),
+			constraint: Comparison { equal, value },
 		}
 	}
+}
 
-	pub fn matches<S: Into<String>>(type_: ConstraintType, subject: S, pattern: &str) -> Self {
+impl<'a> Constraint<Matches<&'a str>> {
+	pub fn matches<S: Into<String>>(type_: ConstraintType, subject: S, pattern: &'a str) -> Self {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: ConstraintVerb::Matches,
-			value: Some(pattern.to_variant()),
+			constraint: Matches(pattern),
 		}
 	}
+}
 
-	pub fn in_range<S: Into<String>, V: ToVariant>(type_: ConstraintType, subject: S, low: V, high: V) -> Self {
+impl<V> Constraint<InRange<V>> {
+	pub fn in_range<S: Into<String>>(type_: ConstraintType, subject: S, low: V, high: V) -> Self {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: ConstraintVerb::InRange,
-			value: Some((low, high).to_variant()),
+			constraint: InRange(low..=high),
 		}
 	}
+}
 
-	pub fn in_list<S: Into<String>, V: ToVariant, I: Iterator<Item = V>>(
-		type_: ConstraintType,
-		subject: S,
-		one_of: I,
-	) -> Self {
-		let values = one_of.map(|v| v.to_variant());
+impl<I> Constraint<InList<I>> {
+	pub fn in_list<S: Into<String>>(type_: ConstraintType, subject: S, one_of: I) -> Self {
 		Self {
 			type_,
 			subject: subject.into(),
-			verb: ConstraintVerb::InRange,
-			value: Some(Variant::tuple_from_iter(values)),
+			constraint: InList(one_of),
 		}
-	}
-
-	pub fn add_to(&self, interest: &ObjectInterest) {
-		interest.add_constraint(self.type_, &self.subject, self.verb, self.value.as_ref())
 	}
 }
 
@@ -355,7 +549,7 @@ impl ConstraintType {
 #[cfg(feature = "serde")]
 mod impl_serde {
 	use {
-		super::{Constraint, ConstraintType, ConstraintVerb},
+		super::{Constraint, ConstraintType, ConstraintVerb, Transitive, VariantConstraint},
 		crate::lua::{LuaError, LuaVariant},
 		glib::{ToVariant, Variant},
 		serde::{
@@ -390,17 +584,18 @@ mod impl_serde {
 		}
 	}
 
-	impl Serialize for Constraint {
+	impl<C: Transitive> Serialize for Constraint<C> {
 		fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
 			let compact = !serializer.is_human_readable();
 			let mut state = serializer.serialize_struct("Constraint", 4)?;
 			state.serialize_field("type", &self.type_)?;
 			state.serialize_field("subject", &self.subject)?;
-			state.serialize_field("verb", &self.verb)?;
+			state.serialize_field("verb", &self.constraint.verb())?;
 			state.serialize_field(
 				"value",
 				&self
-					.value
+					.constraint
+					.constraint_variant()
 					.as_ref()
 					.map(LuaVariant::convert_from)
 					.transpose()
@@ -411,7 +606,7 @@ mod impl_serde {
 	}
 
 	#[rustfmt::skip]
-	impl<'de> Deserialize<'de> for Constraint {
+	impl<'de> Deserialize<'de> for Constraint<VariantConstraint> {
 		fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
 			enum Field { Type, Subject, Verb, Value }
 
@@ -444,7 +639,7 @@ mod impl_serde {
 			struct ConstraintVisitor;
 
 			impl<'de> Visitor<'de> for ConstraintVisitor {
-				type Value = Constraint;
+				type Value = Constraint<VariantConstraint>;
 
 				fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 					formatter.write_str("struct Constraint")
@@ -501,8 +696,10 @@ mod impl_serde {
 					Ok(Constraint {
 						type_,
 						subject,
-						verb,
-						value,
+						constraint: VariantConstraint {
+							verb,
+							value,
+						},
 					})
 				}
 
@@ -542,8 +739,10 @@ mod impl_serde {
 					Ok(Constraint {
 						type_: type_.ok_or_else(|| V::Error::missing_field("type"))?,
 						subject: subject.ok_or_else(|| V::Error::missing_field("subject"))?,
-						verb: verb.ok_or_else(|| V::Error::missing_field("verb"))?,
-						value: value.unwrap_or_default().map(Into::into),
+						constraint: VariantConstraint {
+							verb: verb.ok_or_else(|| V::Error::missing_field("verb"))?,
+							value: value.unwrap_or_default().map(Into::into),
+						},
 					})
 				}
 			}
