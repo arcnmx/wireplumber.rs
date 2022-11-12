@@ -156,12 +156,6 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-<span id="164">164</span>
 </pre><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		prelude::<span class="kw-2">*</span>,
@@ -263,13 +257,7 @@
 		<span class="self">self
 			</span>.with_pw_property_cstr(key, <span class="kw">move </span>|cstr| <span class="kw">match </span>cstr.to_str() {
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="macro">wp_warning!</span>(
-						<span class="self">self</span>: this,
-						<span class="string">&quot;pw_property {} ({:?}) was not valid UTF-8: {:?}&quot;</span>,
-						key,
-						cstr,
-						e
-					);
+					<span class="macro">wp_warning!</span>(<span class="self">self</span>: this, <span class="string">&quot;pw_property {key} ({cstr:?}) was not valid UTF-8: {e:?}&quot;</span>);
 					<span class="prelude-val">None
 				</span>},
 				<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(f(str)),
@@ -281,11 +269,11 @@
 		<span class="kw">match </span><span class="self">self</span>.with_pw_property(key, T::from_pipewire_string) {
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} not found&quot;</span>, key),
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {key} not found&quot;</span>),
 			)),
 			<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; <span class="prelude-val">Err</span>(Error::new(
 				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} failed to parse: {:?}&quot;</span>, key, e),
+				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {key} failed to parse: {e:?}&quot;</span>),
 			)),
 			<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(v)) =&gt; <span class="prelude-val">Ok</span>(v),
 		}
@@ -298,7 +286,7 @@
 			.map_err(|e| {
 				Error::new(
 					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {} failed to parse: {:?}&quot;</span>, key, e),
+					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pw_property {key} failed to parse: {e:?}&quot;</span>),
 				)
 			})
 	}
@@ -322,7 +310,7 @@
 		f.write_str(<span class="string">&quot;pw.object&quot;</span>)<span class="question-mark">?</span>;
 
 		<span class="self">self
-			</span>.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| <span class="macro">write!</span>(f, <span class="string">&quot;({})&quot;</span>, id))
+			</span>.with_pw_property(pw::PW_KEY_OBJECT_ID, |id| <span class="macro">write!</span>(f, <span class="string">&quot;({id})&quot;</span>))
 			.unwrap_or(<span class="prelude-val">Ok</span>(()))
 	}
 }

@@ -38,7 +38,7 @@ crate-type = [&quot;cdylib&quot;]</code></pre></div>
     <span class="kw">let </span>core = this.core().unwrap();
     Box::pin(<span class="kw">async move </span>{
       <span class="kw">let </span>arg = this.arg.borrow().unwrap_or_default();
-      <span class="macro">wireplumber::info!</span>(domain: DOMAIN, <span class="string">&quot;enabling on {:?} with {}...&quot;</span>, core, arg);
+      <span class="macro">wireplumber::info!</span>(domain: DOMAIN, <span class="string">&quot;enabling on {core:?} with {arg}...&quot;</span>);
       <span class="prelude-val">Ok</span>(())
     })
   }

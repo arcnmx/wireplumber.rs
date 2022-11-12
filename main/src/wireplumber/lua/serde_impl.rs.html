@@ -363,7 +363,7 @@
 					<span class="kw">let </span>len = t.array_len();
 					<span class="kw">let </span>len = len
 						.try_into()
-						.map_err(|e| ser::Error::custom(<span class="macro">format_args!</span>(<span class="string">&quot;Lua array length {} too large for usize: {}&quot;</span>, len, e)))<span class="question-mark">?</span>;
+						.map_err(|e| ser::Error::custom(<span class="macro">format_args!</span>(<span class="string">&quot;Lua array length {len} too large for usize: {e}&quot;</span>)))<span class="question-mark">?</span>;
 					<span class="kw">let </span><span class="kw-2">mut </span>ser = serializer.serialize_seq(<span class="prelude-val">Some</span>(len))<span class="question-mark">?</span>;
 					<span class="kw">for </span>v <span class="kw">in </span>t.iter_array() {
 						<span class="kw">match </span>v {

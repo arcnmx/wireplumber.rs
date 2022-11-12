@@ -125,7 +125,7 @@
 		<span class="kw">match </span>dir {
 			Direction::Input =&gt; <span class="self">Self</span>::Input,
 			Direction::Output =&gt; <span class="self">Self</span>::Output,
-			Direction::__Unknown(v) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unsupported WpDirection value: {}&quot;</span>, v),
+			Direction::__Unknown(v) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unsupported WpDirection value: {v}&quot;</span>),
 		}
 	}
 }

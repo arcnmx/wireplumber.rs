@@ -218,7 +218,7 @@
 		args: fmt::Arguments,
 	) {
 		<span class="kw">let </span><span class="kw-2">mut </span>message = GStringBuilder::default();
-		<span class="kw">let _ </span>= <span class="macro">write!</span>(message, <span class="string">&quot;{}&quot;</span>, args);
+		<span class="kw">let _ </span>= <span class="macro">write!</span>(message, <span class="string">&quot;{args}&quot;</span>);
 		<span class="self">Self</span>::log_string(log_level.into(), context.to_object(), message.into_string())
 	}
 

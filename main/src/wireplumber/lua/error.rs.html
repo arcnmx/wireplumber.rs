@@ -207,8 +207,8 @@
 			LuaError::Parse(e) =&gt; fmt::Display::fmt(e, f),
 			LuaError::Utf8(e) =&gt; fmt::Display::fmt(e, f),
 			LuaError::TypeMismatch(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::UnsupportedType(t) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;type {} is not supported by lua&quot;</span>, t),
-			LuaError::LengthMismatch { actual, expected } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;invalid length {}, expected {}&quot;</span>, actual, expected),
+			LuaError::UnsupportedType(t) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;type {t} is not supported by lua&quot;</span>),
+			LuaError::LengthMismatch { actual, expected } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;invalid length {actual}, expected {expected}&quot;</span>),
 		}
 	}
 }
@@ -232,7 +232,7 @@
 		<span class="kw">let </span>expected = expected.to_string();
 		<span class="kw">match </span>expected.parse() {
 			<span class="prelude-val">Ok</span>(expected) =&gt; LuaError::LengthMismatch { actual, expected },
-			<span class="kw">_ </span>=&gt; <span class="self">Self</span>::custom(<span class="macro">format_args!</span>(<span class="string">&quot;invalid length {}, expected {}&quot;</span>, actual, expected)),
+			<span class="kw">_ </span>=&gt; <span class="self">Self</span>::custom(<span class="macro">format_args!</span>(<span class="string">&quot;invalid length {actual}, expected {expected}&quot;</span>)),
 		}
 	}
 

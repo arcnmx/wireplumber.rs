@@ -184,7 +184,7 @@
 			<span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::parse_unknown_name(key_name),
 		};
 		<span class="prelude-val">Err</span>(raw.unwrap_or_else(|| {
-			<span class="macro">wp_warning!</span>(<span class="string">&quot;expected to find spa key {:?} of {:?}&quot;</span>, key_name, context);
+			<span class="macro">wp_warning!</span>(<span class="string">&quot;expected to find spa key {key_name:?} of {context:?}&quot;</span>);
 			ffi::WP_SPA_TYPE_INVALID
 		}))
 	}

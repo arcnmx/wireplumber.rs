@@ -371,28 +371,28 @@
 				args.module_type.loader_type(),
 				variant_args.as_ref().map(|v| v.as_variant()),
 			)
-			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load {} as a {}&quot;</span>, path, args.module_type.loader_type()))<span class="question-mark">?</span>;
+			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load {path} as a {}&quot;</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
 	}
 
 	core.connect_future().<span class="kw">await</span><span class="question-mark">?</span>;
 
 	<span class="kw">let </span>plugin_names = args.plugins();
 	<span class="kw">for </span>plugin_name <span class="kw">in </span><span class="kw-2">&amp;</span>plugin_names {
-		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">&quot;plugin {} not found&quot;</span>, plugin_name))<span class="question-mark">?</span>;
+		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">&quot;plugin {plugin_name} not found&quot;</span>))<span class="question-mark">?</span>;
 		p.activate_future(PluginFeatures::ENABLED)
 			.<span class="kw">await
-			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate {:?} plugin&quot;</span>, plugin_name))<span class="question-mark">?</span>;
+			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate {plugin_name:?} plugin&quot;</span>))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>plugin_names.is_empty() {
 		<span class="macro">info!</span>(domain: LOG_DOMAIN, <span class="string">&quot;skipped activation, no plugin specified&quot;</span>);
 	}
 	<span class="kw">if </span>args.module_type.is_lua() {
 		<span class="comment">// per-script plugins were introduced in wireplumber version 0.4.10
-		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;script:{}&quot;</span>, path)) {
+		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;script:{path}&quot;</span>)) {
 			script
 				.activate_future(PluginFeatures::ENABLED)
 				.<span class="kw">await
-				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate script:{}&quot;</span>, path))<span class="question-mark">?</span>;
+				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate script:{path}&quot;</span>))<span class="question-mark">?</span>;
 		}
 	}
 

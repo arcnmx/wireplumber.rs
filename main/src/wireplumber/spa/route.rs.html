@@ -184,7 +184,7 @@
 				(<span class="kw-2">&amp;</span>value).try_into().map(|v| (key, v)).map_err(|e| {
 					Error::new(
 						LibraryErrorEnum::InvalidArgument,
-						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;expected a string route info value, got {:?} instead: {:?}&quot;</span>, value, e),
+						<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;expected a string route info value, got {value:?} instead: {e:?}&quot;</span>),
 					)
 				})
 			})

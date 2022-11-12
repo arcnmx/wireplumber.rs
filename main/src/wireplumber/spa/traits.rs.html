@@ -459,10 +459,10 @@
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		i32::try_from(pod)
-			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>)))
 			.and_then(|v| {
 				v.try_into()
-					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>)))
 			})
 	}
 }
@@ -491,10 +491,10 @@
 
 	<span class="kw">fn </span>try_from(pod: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		i64::try_from(pod)
-			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+			.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>)))
 			.and_then(|v| {
 				v.try_into()
-					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, e)))
+					.map_err(|e| Error::new(LibraryErrorEnum::InvalidArgument, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>)))
 			})
 	}
 }
@@ -643,7 +643,7 @@
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(pod) = struct_.end() {
 			builder.add_pod(<span class="kw-2">&amp;</span>pod)
 		} <span class="kw">else </span>{
-			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {:?}&quot;</span>, struct_)
+			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {struct_:?}&quot;</span>)
 		}
 	}
 
@@ -682,7 +682,7 @@
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(pod) = struct_.end() {
 			builder.add_pod(<span class="kw-2">&amp;</span>pod)
 		} <span class="kw">else </span>{
-			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {:?}&quot;</span>, struct_)
+			<span class="macro">wp_critical!</span>(<span class="string">&quot;failed to build spa struct with {struct_:?}&quot;</span>)
 		}
 	}
 
