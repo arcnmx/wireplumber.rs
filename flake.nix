@@ -22,7 +22,8 @@
       plain = {
         mkShell, wpexec
       , wireplumber, pipewire, glib
-      , pkg-config, wireplumber-gir, wpdev-gir, wpdev-todo, wpdev-readmes
+      , pkg-config
+      , wireplumber-gir, wpdev-gir, wpdev-todo, wpdev-readmes, wpdev-commitlint
       , enableRustdoc ? false
       , enableRust ? true, cargo
       , rustTools ? [ ]
@@ -44,7 +45,10 @@
       in mkShell {
         inherit rustTools;
         buildInputs = [ wireplumber pipewire glib ];
-        nativeBuildInputs = [ pkg-config wpdev-gir wpdev-todo wpdev-readmes ] ++ nixlib.optional enableRust cargo;
+        nativeBuildInputs = [
+          pkg-config
+          wpdev-commitlint wpdev-gir wpdev-todo wpdev-readmes
+        ] ++ nixlib.optional enableRust cargo;
         RUSTDOCFLAGS = nixlib.optionals enableRustdoc RUSTDOCFLAGS;
         GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
@@ -247,6 +251,14 @@
         fi
       '';
 
+      wpdev-commitlintrc = { writeText, commitlint, nodePackages }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON
+        (self.lib.commitlint.commitlintrc // {
+          extends = [ "${nodePackages."@commitlint/config-conventional"}/lib/node_modules/@commitlint/config-conventional/." ];
+        })
+      );
+      wpdev-commitlint = { writeShellScriptBin, commitlint, wpdev-commitlintrc }: writeShellScriptBin "commitlint" ''
+        exec ${commitlint}/bin/commitlint --config ${wpdev-commitlintrc} "$@"
+      '';
       wpdev-todo = { writeShellScriptBin, wpdev-gir }: writeShellScriptBin "todo" ''
         cd ${toString ./.}
         exec ${nixlib.getExe wpdev-gir} -m not_bound
@@ -256,6 +268,7 @@
       wpdev-readmes = { writeShellScriptBin }: writeShellScriptBin "readmes" ''
         cp --no-preserve=all "$(nix build --no-link .#wpdev-readme --print-out-paths)" src/README.md &&
         cp --no-preserve=all "$(nix build --no-link .#wpdev-sys-readme --print-out-paths)" sys/src/README.md
+        cp --no-preserve=all "$(nix build --no-link .#wpdev-commitlint-help --print-out-paths)" .github/commitlint.adoc
       '';
       wpdev-readme = { runCommand, asciidoctor, pandoc }: runCommand "wireplumber-${self.lastModifiedDate or self.lib.releaseTag}-README.md" {
         nativeBuildInputs = [ asciidoctor pandoc ];
@@ -274,6 +287,7 @@
       wpdev-sys-readme = { wpdev-readme }: wpdev-readme.overrideAttrs (_: {
         src = ./sys/README.adoc;
       });
+      wpdev-commitlint-help = { writeText }: writeText "commitlint.adoc" self.lib.commitlint.help-adoc;
     } { };
     lib = with nixlib; {
       featureVersions = [
@@ -291,6 +305,98 @@
       inherit (self.lib.cargoToml.package) version;
       inherit (self.lib.cargoToml.package.metadata) branches;
       releaseTag = "v${self.lib.version}";
+
+      commitlint = {
+        help-adoc = let
+          types = mapAttrsToList (id: { help ? null }:
+            "* ${id}" + optionalString (help != null) ": ${help}"
+          ) self.lib.commitlint.types;
+          scopes = mapAttrsToList (id: { help ? toString paths, paths ? [ ] }:
+            "* ${id}: ${help}"
+          ) self.lib.commitlint.scopes;
+        in ''
+          = https://commitlint.js.org[commitlint] usage
+
+          Commit messages should follow the https://www.conventionalcommits.org[Conventional Commits] specification.
+
+          == Types
+
+          ${concatStringsSep "\n" types}
+
+          == Scopes
+
+          ${concatStringsSep "\n" scopes}
+        '';
+        scopes = {
+          examples = {
+            paths = [ "./examples/" ];
+          };
+          ffi = {
+            paths = [ "./sys/" "./Gir.toml" "./src/auto/" ];
+            help = "changes to Gir.toml, src/auto, and sys/bindings updates";
+          };
+          readme = {
+            paths = [ "./README.adoc" "./sys/README.adoc" "./Cargo.toml" "./sys/Cargo.toml" ];
+            help = "README updates";
+          };
+          ci = {
+            paths = [ "./ci.nix" "./flake.nix" ];
+            help = "changes to CI-related nix files";
+          };
+          lock = {
+            paths = [ "./flake.lock" "./Cargo.lock" ];
+            help = "cargo/flake updates";
+          };
+          pipewire = {
+            paths = [ "./src/pw/" ];
+            help = "crate::pw module";
+          };
+          prelude = {
+            paths = [ "./src/prelude.rs" ];
+            help = "crate::prelude::*";
+          };
+        } // flip genAttrs (id: {
+          paths = [ "./src/${id}/" ];
+          help = "crate::${id} module";
+        }) [
+          "core" "dbus" "local"
+          "lua" "plugin" "spa"
+          "error" "log" "util"
+          "pipewire" "registry" "session"
+        ];
+        types = {
+          build = { };
+          chore = { };
+          docs = { };
+          feat = { };
+          fix = { };
+          perf = { };
+          refactor = { };
+          revert = { };
+          style = { };
+          test = { };
+        };
+        commitlintrc = let
+          levels = {
+            error = 2;
+            warn = 1;
+            disable = 0;
+          };
+          mkRule = { level ? levels.error, applicable ? true }: value: [
+            level
+            (if applicable then "always" else "never")
+          ] ++ optional (value != null) value;
+        in {
+          extends = [ "@commitlint/config-conventional" ];
+          rules = {
+            type-enum = mkRule { } (attrNames self.lib.commitlint.types);
+            scope-enum = mkRule { } (attrNames self.lib.commitlint.scopes);
+            scope-case = mkRule { } "lower-case";
+            scope-empty = mkRule { level = levels.warn; applicable = false; } null;
+          };
+          helpUrl = "https://github.com/arcnmx/wireplumber.rs/blob/main/.github/commitlint.adoc";
+        };
+      };
     };
     config = rec {
       name = "wireplumber-rust";
