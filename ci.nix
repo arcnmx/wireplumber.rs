@@ -63,6 +63,9 @@ in {
         ci.gh-actions.name = "wpexec";
         tasks = mkForce {
           example.inputs = wpexec;
+          wpexec.inputs = checks.wpexec.override {
+            inherit wpexec;
+          };
         };
       };
       test = { config, ... }: {
