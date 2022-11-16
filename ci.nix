@@ -119,6 +119,7 @@ in {
           readme.inputs = [
             checks.readme
             checks.readme-sys
+            checks.commitlint-help
           ];
           docs.inputs = [
             (cargo config "doc" ("clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${rustChannel.hostTarget.triple}/doc"

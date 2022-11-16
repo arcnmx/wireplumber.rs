@@ -169,7 +169,7 @@
       '';
     };
     checks = {
-      rustfmt = { rustfmt, cargo, wpexec, runCommand }: runCommand "wireplumber-cargo-fmt-check" {
+      rustfmt = { rustfmt, cargo, wpexec, runCommand }: runCommand "cargo-fmt-check" {
         nativeBuildInputs = [ cargo (rustfmt.override { asNightly = true; }) ];
         inherit (wpexec) src;
         meta.name = "cargo fmt (nix run .#wpdev-fmt)";
@@ -179,7 +179,7 @@
           -p wireplumber -p wp-examples
         touch $out
       '';
-      readme = { wpdev-readme, diffutils, runCommand }: runCommand "wireplumber-readme-check" {
+      readme = { wpdev-readme, diffutils, runCommand }: runCommand "readme-check" {
         nativeBuildInputs = [ diffutils ];
         expected = wpdev-readme;
         src = ./src/README.md;
@@ -188,11 +188,20 @@
         diff --color=always -uN $src $expected
         touch $out
       '';
-      readme-sys = { wpdev-sys-readme, diffutils, runCommand }: runCommand "wireplumber-readme-sys-check" {
+      readme-sys = { wpdev-sys-readme, diffutils, runCommand }: runCommand "readme-sys-check" {
         nativeBuildInputs = [ diffutils ];
         expected = wpdev-sys-readme;
         src = ./sys/src/README.md;
         meta.name = "diff sys/src/README.md (nix run .#wpdev-readmes)";
+      } ''
+        diff --color=always -uN $src $expected
+        touch $out
+      '';
+      commitlint-help = { wpdev-commitlint-help, diffutils, runCommand }: runCommand "commitlint-help" {
+        nativeBuildInputs = [ diffutils ];
+        expected = wpdev-commitlint-help;
+        src = ./.github/commitlint.adoc;
+        meta.name = "diff .github/commitlint.adoc (nix run .#wpdev-readmes)";
       } ''
         diff --color=always -uN $src $expected
         touch $out
@@ -264,6 +273,7 @@
         exec ${nixlib.getExe wpdev-gir} -m not_bound
       '';
       wpdev-fmt = { writeShellScriptBin }: writeShellScriptBin "wpfmt" ''
+        cargo fmt -p wireplumber -p wp-examples
       '';
       wpdev-readmes = { writeShellScriptBin }: writeShellScriptBin "readmes" ''
         cp --no-preserve=all "$(nix build --no-link .#wpdev-readme --print-out-paths)" src/README.md &&
