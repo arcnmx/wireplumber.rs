@@ -10,6 +10,7 @@
     override.sources.nixpkgs = pkgs.path;
   }))));
   checks = wireplumber-rust.checks.${system};
+  legacyPackages = wireplumber-rust.legacyPackages.${system};
   wplib = wireplumber-rust.lib;
   wpexec = wireplumber-rust.packages.${system}.wpexec.override {
     buildType = "debug";
@@ -121,6 +122,18 @@ in {
             checks.readme-sys
             checks.commitlint-help
           ];
+          commitlint.inputs = ci.command rec {
+            name = "commitlint";
+            displayName = "commitlint ${baseRef}..${gitCommit}";
+            impure = true;
+            gitCommit = if env.git-commit or null != null then env.git-commit else "HEAD";
+            baseRef = if elem env.gh-event-name or null [ "pull_request" "pull_request_target" ]
+              then "origin/${env.pr-base}"
+              else "HEAD~";
+            command = ''
+              ${legacyPackages.wpdev-commitlint}/bin/commitlint --from $baseRef --to $gitCommit --verbose
+            '';
+          };
           docs.inputs = [
             (cargo config "doc" ("clean --doc && rm -rf \${CARGO_TARGET_DIR:-target}/${rustChannel.hostTarget.triple}/doc"
               # `cargo clean --doc` does nothing afaict?
