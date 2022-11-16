@@ -1,0 +1,37 @@
+= https://commitlint.js.org[commitlint] usage
+
+Commit messages should follow the https://www.conventionalcommits.org[Conventional Commits] specification.
+
+== Types
+
+* build
+* chore
+* docs
+* feat
+* fix
+* perf
+* refactor
+* revert
+* style
+* test
+
+== Scopes
+
+* ci: changes to CI-related nix files
+* core: crate::core module
+* dbus: crate::dbus module
+* error: crate::error module
+* examples: ./examples/
+* ffi: changes to Gir.toml, src/auto, and sys/bindings updates
+* local: crate::local module
+* lock: cargo/flake updates
+* log: crate::log module
+* lua: crate::lua module
+* pipewire: crate::pipewire module
+* plugin: crate::plugin module
+* prelude: crate::prelude::*
+* readme: README updates
+* registry: crate::registry module
+* session: crate::session module
+* spa: crate::spa module
+* util: crate::util module
