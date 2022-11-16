@@ -169,8 +169,20 @@
       '';
     };
     checks = {
-      rustfmt = { rust'builders, cargo, wpexec, runCommand }: rust'builders.check-rustfmt-unstable {
-        inherit (wpexec) src;
+      wpexec = { wptest, writeText, wpexec, lib }: let
+        key = placeholder "wpexec";
+        arg = builtins.toJSON [ key ];
+        script = writeText "wpexec.lua" ''
+          Debug.dump_table(...)
+          Core.quit()
+        '';
+      in wptest "wpexec" ''
+        set +o pipefail
+        timeout 5 ${wpexec}/bin/wpexec --json ${lib.escapeShellArg arg} ${script} | grep -F ${key}
+        touch $out
+      '';
+      rustfmt = { rust'builders, source }: rust'builders.check-rustfmt-unstable {
+        src = source;
         config = ./.rustfmt.toml;
         cargoFmtArgs = [
           "-p" "wireplumber"
@@ -231,6 +243,8 @@
           fi
         fi
       '';
+
+      wptest = { callPackage }: (import ./examples { inherit callPackage; }).wptest;
 
       wpdev-commitlintrc = { writeText, commitlint, nodePackages }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON
         (self.lib.commitlint.commitlintrc // {
