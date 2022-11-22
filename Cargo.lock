@@ -1001,7 +1001,7 @@ dependencies = [
 
 [[package]]
 name = "wp-examples"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap 3.2.23",
