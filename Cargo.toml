@@ -10,13 +10,13 @@ description = "WirePlumber bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
 categories = ["multimedia::audio", "api-bindings"]
 
-documentation = "http://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber/"
+documentation = "https://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber/"
 repository = "https://github.com/arcnmx/wireplumber.rs"
 readme = "src/README.md"
 license = "MIT"
 
 include = [
-	"/src",
+	"/src/**",
 	"/build.rs",
 	"/README*",
 	"/COPYING*",

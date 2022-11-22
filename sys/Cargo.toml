@@ -8,14 +8,15 @@ description = "WirePlumber FFI bindings"
 keywords = ["pipewire"]
 categories = ["external-ffi-bindings"]
 
-documentation = "http://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber_sys/"
-homepage = "http://arcnmx.github.io/wireplumber.rs/"
+documentation = "https://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber_sys/"
+homepage = "https://arcnmx.github.io/wireplumber.rs/"
 repository = "https://github.com/arcnmx/wireplumber.rs/tree/main/sys"
 readme = "src/README.md"
 license = "MIT"
 
 include = [
-	"/src",
+	"/src/**",
+	"/generate/build.rs",
 	"/generate/src/lib.rs",
 	"/build.rs",
 	"/README*",
