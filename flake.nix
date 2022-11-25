@@ -80,12 +80,7 @@
           else self.lastModifiedDate or self.lib.version;
 
         src = source;
-        cargoLock = {
-          lockFile = ./Cargo.lock;
-          outputHashes = {
-            "glib-signal-0.1.0" = "sha256-nrSGzx3S4Y1ixR3J6KhUgcGuRsLQdvHeWytafn36Vts=";
-          };
-        };
+        inherit (self.lib.crate) cargoLock;
 
         buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [ pkg-config ];
@@ -207,7 +202,7 @@
       release-branch = { rust'builders, source }: let
         inherit (self.lib) releaseTag;
         docs'rs = {
-          inherit (self.lib.cargoToml.package) name;
+          inherit (self.lib.crate.package) name;
           version = releaseTag;
           baseUrl = rust.lib.escapePattern self.lib.pagesRoot;
         };
@@ -227,7 +222,7 @@
       };
     };
     legacyPackages = { callPackageSet }: callPackageSet {
-      source = { rust'builders }: rust'builders.wrapSource self.lib.cargoToml.src;
+      source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
 
       wpdev-gir = { writeShellScriptBin, gir-rs-0_16, wireplumber-gir, gobject-introspection }: let
         gir-dirs = nixlib.concatMapStringsSep " " (dev:
@@ -261,18 +256,24 @@
       wpdev-fmt = { writeShellScriptBin }: writeShellScriptBin "wpfmt" ''
         cargo fmt -p wireplumber -p wp-examples
       '';
-      wpdev-readmes = { rust'builders, wpdev-readme, wpdev-sys-readme, wpdev-commitlint-help }: rust'builders.generateFiles {
+      wpdev-readmes = {
+        rust'builders
+      , wpdev-readme, wpdev-sys-readme
+      , wpdev-commitlint-help
+      , outputHashes
+      }: rust'builders.generateFiles {
         name = "readmes";
         paths = {
           "src/README.md" = wpdev-readme;
           "sys/src/README.md" = wpdev-sys-readme;
           ".github/commitlint.adoc" = wpdev-commitlint-help;
+          "lock.nix" = outputHashes;
         };
       };
       wpdev-readme = { rust'builders }: rust'builders.adoc2md {
         src = ./README.adoc;
         attributes = let
-          inherit (self.lib.cargoToml.package) repository;
+          inherit (self.lib.crate.package) repository;
         in rec {
           release = self.lib.releaseTag;
           relative-tree = "${repository}/tree/${release}/";
@@ -284,6 +285,9 @@
         inherit (wpdev-readme) attributes;
       };
       wpdev-commitlint-help = { writeText }: writeText "commitlint.adoc" self.lib.commitlint.help-adoc;
+      outputHashes = { rust'builders }: rust'builders.cargoOutputHashes {
+        inherit (self.lib) crate;
+      };
     } { };
     lib = with nixlib; {
       featureVersions = [
@@ -297,9 +301,12 @@
       featureForVersion = version: let
         features = self.lib.supportedVersions version;
       in if features == [ ] then null else self.lib.versionFeatureName (last features);
-      cargoToml = rust.lib.importCargo ./Cargo.toml;
-      inherit (self.lib.cargoToml.package) version;
-      inherit (self.lib.cargoToml.package.metadata) branches;
+      crate = rust.lib.importCargo {
+        path = ./Cargo.toml;
+        inherit (import ./lock.nix) outputHashes;
+      };
+      inherit (self.lib.crate.package) version;
+      inherit (self.lib.crate.package.metadata) branches;
       owner = "arcnmx";
       repo = "wireplumber.rs";
       pagesRoot = rust.lib.ghPages {
