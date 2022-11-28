@@ -28,20 +28,6 @@
       , enableRust ? true, cargo
       , rustTools ? [ ]
       }: let
-        RUSTDOCFLAGS = nixlib.concatLists (nixlib.mapAttrsToList (crate: url:
-          [ "--extern-html-root-url" "${crate}=${url}" ]
-        ) rec {
-          #glib = "https://gtk-rs.org/gtk-rs-core/stable/latest/docs/";
-          glib = "https://gtk-rs.org/gtk-rs-core/git/docs/";
-          glib_sys = glib;
-          gio = glib;
-          gio_sys = glib;
-          gobject_sys = glib;
-          pipewire = "https://pipewire.pages.freedesktop.org/pipewire-rs/";
-          pipewire_sys = pipewire;
-          libspa = pipewire;
-          libspa_sys = pipewire;
-        }) ++ [ "-Z" "unstable-options" ];
       in mkShell {
         inherit rustTools;
         buildInputs = [ wireplumber pipewire glib ];
@@ -49,7 +35,25 @@
           pkg-config
           wpdev-commitlint wpdev-gir wpdev-todo wpdev-readmes
         ] ++ nixlib.optional enableRust cargo;
-        RUSTDOCFLAGS = nixlib.optionals enableRustdoc RUSTDOCFLAGS;
+        RUSTDOCFLAGS = rust.lib.rustdocFlags {
+          inherit (self.lib) crate;
+          enableUnstableRustdoc = enableRustdoc;
+          extern = rec {
+            glib = let
+              version = nixlib.versions.majorMinor self.lib.crate.dependencies.glib.version;
+            in if self.lib.crate.dependencies.glib ? git
+              then "https://gtk-rs.org/gtk-rs-core/git/docs/"
+              else "https://gtk-rs.org/gtk-rs-core/stable/${version}/docs/";
+            glib-sys = glib;
+            gio = glib;
+            gio-sys = glib;
+            gobject-sys = glib;
+            pipewire = "https://pipewire.pages.freedesktop.org/pipewire-rs/";
+            pipewire-sys = pipewire;
+            libspa = pipewire;
+            libspa-sys = pipewire;
+          };
+        };
         GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
       };
@@ -184,6 +188,7 @@
           "-p" "wp-examples"
         ];
       };
+      docs = { docs }: docs;
       readme = { rust'builders, wpdev-readme }: rust'builders.check-generate {
         expected = wpdev-readme;
         src = ./src/README.md;
@@ -238,6 +243,26 @@
           fi
         fi
       '';
+
+      docs = { rust'builders, outputs'devShells'plain, wpexec, source }: let
+        shell = outputs'devShells'plain.override { enableRust = false; enableRustdoc = true; };
+      in rust'builders.cargoDoc {
+        inherit (self.lib) crate;
+        src = source;
+        enableUnstableRustdoc = true;
+        rustdocFlags = shell.RUSTDOCFLAGS;
+        cargoDocFlags = [ "--no-deps" "--workspace" ];
+        postBuild = ''
+          cargo doc --frozen \
+            ''${cargoDocFeaturesFlag} \
+            ''${cargoDocFlags} \
+            --examples --document-private-items
+        '';
+
+        inherit (wpexec)
+          buildInputs nativeBuildInputs
+          LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
+      };
 
       wptest = { callPackage }: (import ./examples { inherit callPackage; }).wptest;
 

@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1669080364,
-        "narHash": "sha256-IRxinnhR/wlgQ/y6JaPtZQ80tNW5sl0RGDphVWhPatc=",
+        "lastModified": 1669599017,
+        "narHash": "sha256-aS7/mTcA9zWZKjpDT7gQTa0k0849/yHSiRVsq9RJejM=",
         "owner": "arcnmx",
         "repo": "nixexprs",
-        "rev": "0e74bde246eee72acac451c5f603890de57f6d06",
+        "rev": "020b7422792e27bedd125480b94c6c16d9ab22a6",
         "type": "github"
       },
       "original": {
@@ -42,11 +42,11 @@
         "std": "std"
       },
       "locked": {
-        "lastModified": 1669334858,
-        "narHash": "sha256-5gN90/sFI+tdYA/T0ZLRoq965XGXBBdwKzXlqj03pIo=",
+        "lastModified": 1669598579,
+        "narHash": "sha256-VJ+cY/wBLmY3YL8NUV23X9WmqlQih7m2/RnYYRZpRZQ=",
         "owner": "flakelib",
         "repo": "fl",
-        "rev": "6c08aa10609f8cb2212bc6fe308f63a38d5e5300",
+        "rev": "a752df5e3d6f56d6fbf286d9558046717d46cf06",
         "type": "github"
       },
       "original": {
@@ -73,11 +73,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1669067947,
-        "narHash": "sha256-DbTlGzUSj2j+3tMJ7UwV5ExGSg1WeZ+XZq6eAGpyd40=",
+        "lastModified": 1669535121,
+        "narHash": "sha256-koZLM7oWVGrjyHnYDo7/w5qlmUn9UZUKSFNfmIjueE8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "802115d0227228b66b691f3b85b30b868976e8eb",
+        "rev": "b45ec953794bb07922f0468152ad1ebaf8a084b3",
         "type": "github"
       },
       "original": {
@@ -100,11 +100,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1669343804,
-        "narHash": "sha256-SeslOfs4s0lVa21IOHbTawvhsb6oaZXl0wl5mqVHlRE=",
+        "lastModified": 1669600344,
+        "narHash": "sha256-7xtTRsMLrDotryWvTkUkblQQAg0nRXkn7sCxjvtDQIM=",
         "owner": "arcnmx",
         "repo": "nixexprs-rust",
-        "rev": "5f8ea358abaef6d1e697bc98c6a9da8a9872d353",
+        "rev": "7651f6376f91a7ce2ab2555224811b53208a3cc1",
         "type": "github"
       },
       "original": {
@@ -118,11 +118,11 @@
         "nix-std": "nix-std"
       },
       "locked": {
-        "lastModified": 1669306566,
-        "narHash": "sha256-uMSl+GiTl5C8/INIMNhq84HF7mYBuIVaqBc9Ut1tnFo=",
+        "lastModified": 1669592722,
+        "narHash": "sha256-aUfMQ/nPkvRf7CnsgCslYWQLwrXBpAGsp9Z1K842SoU=",
         "owner": "flakelib",
         "repo": "std",
-        "rev": "5db9d4f799a07de9d1ddc4d1e23d71e05515ae89",
+        "rev": "2a220fee7a4f42b0ee72c3fb169c2fc367a1a82f",
         "type": "github"
       },
       "original": {
