@@ -1,3 +1,3 @@
 (function() {var implementors = {
-"wpexec":[["impl FromArgMatches for <a class=\"struct\" href=\"wpexec/struct.Args.html\" title=\"struct wpexec::Args\">Args</a>"]]
+"wpexec":[["impl <a class=\"trait\" href=\"https://docs.rs/clap/2.34.0/clap/derive/trait.FromArgMatches.html\" title=\"trait clap::derive::FromArgMatches\">FromArgMatches</a> for <a class=\"struct\" href=\"wpexec/struct.Args.html\" title=\"struct wpexec::Args\">Args</a>"]]
 };if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
