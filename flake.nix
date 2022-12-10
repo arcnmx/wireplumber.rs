@@ -14,7 +14,6 @@
   };
   outputs = { self, flakelib, nixpkgs, rust, ... }@inputs: let
     nixlib = nixpkgs.lib;
-    impure = builtins ? currentSystem;
   in flakelib {
     inherit inputs;
     systems = [ "x86_64-linux" "aarch64-linux" ];
@@ -57,8 +56,7 @@
         GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
       };
-      stable = { rust'stable, outputs'devShells'plain }: let
-      in outputs'devShells'plain.override {
+      stable = { rust'stable, outputs'devShells'plain }: outputs'devShells'plain.override {
         inherit (rust'stable) mkShell;
         enableRust = false;
       };
@@ -340,105 +338,14 @@
       };
       releaseTag = "v${self.lib.version}";
 
-      commitlint = {
-        help-adoc = let
-          types = mapAttrsToList (id: { help ? null }:
-            "* ${id}" + optionalString (help != null) ": ${help}"
-          ) self.lib.commitlint.types;
-          scopes = mapAttrsToList (id: { help ? toString paths, paths ? [ ] }:
-            "* ${id}: ${help}"
-          ) self.lib.commitlint.scopes;
-        in ''
-          = https://commitlint.js.org[commitlint] usage
-
-          Commit messages should follow the https://www.conventionalcommits.org[Conventional Commits] specification.
-
-          == Types
-
-          ${concatStringsSep "\n" types}
-
-          == Scopes
-
-          ${concatStringsSep "\n" scopes}
-        '';
-        scopes = {
-          examples = {
-            paths = [ "./examples/" ];
-          };
-          ffi = {
-            paths = [ "./sys/" "./Gir.toml" "./src/auto/" ];
-            help = "changes to Gir.toml, src/auto, and sys/bindings updates";
-          };
-          readme = {
-            paths = [ "./README.adoc" "./sys/README.adoc" "./Cargo.toml" "./sys/Cargo.toml" ];
-            help = "README updates";
-          };
-          ci = {
-            paths = [ "./ci.nix" "./flake.nix" ];
-            help = "changes to CI-related nix files";
-          };
-          lock = {
-            paths = [ "./flake.lock" "./Cargo.lock" ];
-            help = "cargo/flake updates";
-          };
-          pipewire = {
-            paths = [ "./src/pw/" ];
-            help = "crate::pw module";
-          };
-          prelude = {
-            paths = [ "./src/prelude.rs" ];
-            help = "crate::prelude::*";
-          };
-        } // flip genAttrs (id: {
-          paths = [ "./src/${id}/" ];
-          help = "crate::${id} module";
-        }) [
-          "core" "dbus" "local"
-          "lua" "plugin" "spa"
-          "error" "log" "util"
-          "pipewire" "registry" "session"
-        ];
-        types = {
-          build = { };
-          chore = { };
-          docs = { };
-          feat = { };
-          fix = { };
-          perf = { };
-          refactor = { };
-          revert = { };
-          style = { };
-          test = { };
-        };
-        commitlintrc = let
-          levels = {
-            error = 2;
-            warn = 1;
-            disable = 0;
-          };
-          mkRule = { level ? levels.error, applicable ? true }: value: [
-            level
-            (if applicable then "always" else "never")
-          ] ++ optional (value != null) value;
-        in {
-          extends = [ "@commitlint/config-conventional" ];
-          rules = {
-            type-enum = mkRule { } (attrNames self.lib.commitlint.types);
-            scope-enum = mkRule { } (attrNames self.lib.commitlint.scopes);
-            scope-case = mkRule { } "lower-case";
-            scope-empty = mkRule { level = levels.warn; applicable = false; } null;
-          };
-          helpUrl = "https://github.com/arcnmx/wireplumber.rs/blob/main/.github/commitlint.adoc";
-        };
+      commitlint = import ./ci/commitlint.nix {
+        inherit self;
+        lib = nixlib;
       };
     };
     config = rec {
       name = "wireplumber-rust";
       packages.namespace = [ name ];
-      inputs.arc = {
-        lib.namespace = [ "arc" ];
-        packages.namespace = [ "arc" ];
-      };
     };
   };
 }

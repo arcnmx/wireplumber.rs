@@ -1,18 +1,8 @@
 { config, channels, pkgs, env, lib, ... }: with pkgs; with lib; let
-  lockData = builtins.fromJSON (builtins.readFile ./flake.lock);
-  sourceInfo = lockData.nodes.std.locked;
-  src = fetchTarball {
-    url = "https://github.com/${sourceInfo.owner}/${sourceInfo.repo}/archive/${sourceInfo.rev}.tar.gz";
-    sha256 = sourceInfo.narHash;
-  };
-  inherit (import src) Flake;
-  wireplumber-rust = Flake.CallDir ./. (Flake.Lock.Node.inputs (Flake.Lock.root (Flake.Lock.New (lockData // {
-    override.sources.nixpkgs = pkgs.path;
-  }))));
-  checks = wireplumber-rust.checks.${system};
-  legacyPackages = wireplumber-rust.legacyPackages.${system};
+  wireplumber-rust = import ../. { inherit pkgs; };
+  inherit (wireplumber-rust) checks legacyPackages packages devShells;
   wplib = wireplumber-rust.lib;
-  wpexec = wireplumber-rust.packages.${system}.wpexec.override {
+  wpexec = packages.wpexec.override {
     buildType = "debug";
   };
   versionFeature = toString (mapNullable (f: "--features ${f}") (wplib.featureForVersion wireplumber.version));
@@ -151,7 +141,7 @@ in {
               ]
             ) {
               displayName = "cargo doc";
-              inherit (wireplumber-rust.devShells.${system}.plain.override { enableRustdoc = true; }) RUSTDOCFLAGS;
+              inherit (devShells.plain.override { enableRustdoc = true; }) RUSTDOCFLAGS;
               RELEASE_TAG = if v0 env.git-tag then env.git-tag else wplib.releaseTag;
             })
           ];
