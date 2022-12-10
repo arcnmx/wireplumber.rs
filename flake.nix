@@ -141,6 +141,7 @@
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="key"]/@transfer-ownership' -v none \
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_string"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
+          -i '///_:class[@c:type="WpMetadata"]/_:method[@name="find"]/_:return-value' -t attr -n nullable -v 1 \
           -i '///_:class[@c:type="WpFactory"]' -t attr -n version -v 0.4.5 \
           -i '///_:record[@c:type="WpFactoryClass"]' -t attr -n version -v 0.4.5 \
           -i '///_:record[@c:type="WpSpaJson"]' -t attr -n version -v 0.4.8 \

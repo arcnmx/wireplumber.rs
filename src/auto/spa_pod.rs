@@ -2,7 +2,6 @@
 // DO NOT EDIT
 
 use crate::Iterator;
-use crate::SpaType;
 use glib::translate::*;
 use std::mem;
 use std::ptr;

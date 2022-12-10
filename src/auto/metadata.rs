@@ -46,7 +46,7 @@ pub trait MetadataExt: 'static {
     fn clear(&self);
 
     #[doc(alias = "wp_metadata_find")]
-    fn find(&self, subject: u32, key: &str) -> (glib::GString, glib::GString);
+    fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, glib::GString);
 
     #[doc(alias = "wp_metadata_new_iterator")]
     fn new_iterator(&self, subject: u32) -> Option<Iterator>;
@@ -65,7 +65,7 @@ impl<O: IsA<Metadata>> MetadataExt for O {
         }
     }
 
-    fn find(&self, subject: u32, key: &str) -> (glib::GString, glib::GString) {
+    fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, glib::GString) {
         unsafe {
             let mut type_ = ptr::null();
             let ret = from_glib_none(ffi::wp_metadata_find(self.as_ref().to_glib_none().0, subject, key.to_glib_none().0, &mut type_));
