@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/glib-signal.rs-48f5e27857c95439/39c3110/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glib_signal/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/glib-signal.rs-48f5e27857c95439/19bbf8a/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9def1262ebc682c9.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-94f39d4346842c1e.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glib_signal/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -256,41 +256,51 @@
 <a href="#256" id="256">256</a>
 <a href="#257" id="257">257</a>
 <a href="#258" id="258">258</a>
-</pre><pre class="rust"><code><span class="attr">#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_notable_trait, doc_cfg))]
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+</pre><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://docs.rs/glib-signal/0.1.0/&quot;</span>)]
+#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_notable_trait, doc_cfg))]
 
-</span><span class="kw">use </span>glib::subclass::SignalId;
-<span class="kw">use </span>glib::subclass::signal::SignalBuilder;
-<span class="kw">use </span>glib::translate::{ToGlibPtr, IntoGlib};
-<span class="kw">use </span>glib::{SignalHandlerId, Quark, StaticType, Closure, BoolError};
-<span class="kw">use </span>glib::{ObjectType, ObjectExt};
-<span class="kw">use </span>glib::translate::from_glib;
-<span class="kw">use </span>glib::value::FromValue;
-<span class="kw">use </span>std::fmt::Debug;
-<span class="kw">use </span>std::marker::PhantomData;
+#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
+</span><span class="kw">pub use </span><span class="self">self</span>::signal_stream::{ConnectEof, OnceFuture, SignalStream};
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">pub use </span>glib; <span class="comment">// for macro use
+</span><span class="kw">pub use </span>{
+	<span class="self">self</span>::{
+		borrowed_object::BorrowedObject,
+		from_values::FromValues,
+		pointer::Pointer,
+		value_option::{PrimitiveValue, ToValueOption},
+	},
+	glib::SignalFlags,
+};
+<span class="kw">use </span>{
+	glib::{
+		subclass::{signal::SignalBuilder, SignalId},
+		translate::{from_glib, IntoGlib, ToGlibPtr},
+		value::FromValue,
+		BoolError, Closure, ObjectExt, ObjectType, Quark, SignalHandlerId, StaticType,
+	},
+	std::{fmt::Debug, marker::PhantomData},
+};
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
 </span><span class="kw">mod </span>signal_stream;
-<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
-</span><span class="kw">pub use </span>signal_stream::{SignalStream, OnceFuture, ConnectEof};
 
 <span class="kw">mod </span>borrowed_object;
-<span class="kw">pub use </span>borrowed_object::BorrowedObject;
 
 <span class="kw">mod </span>pointer;
-<span class="kw">pub use </span>pointer::Pointer;
 
 <span class="kw">mod </span>value_option;
-<span class="kw">pub use </span>value_option::{ToValueOption, PrimitiveValue};
 
 <span class="kw">mod </span>from_values;
-<span class="kw">pub use </span>from_values::FromValues;
 
 <span class="kw">mod </span>macros;
-
-<span class="attr">#[doc(hidden)]
-</span><span class="kw">pub use </span>glib; <span class="comment">// for macro use
-
-</span><span class="kw">pub use </span>glib::SignalFlags;
 
 <span class="kw">pub trait </span>Signal: Copy + Debug {
 	<span class="kw">type </span>Object: ObjectType;
@@ -301,8 +311,7 @@
 	<span class="kw">const </span>FLAGS: SignalFlags = SignalFlags::empty();
 
 	<span class="kw">fn </span>signal() -&gt; SignalId {
-		SignalId::lookup(<span class="self">Self</span>::NAME, &lt;<span class="self">Self</span>::Object <span class="kw">as </span>StaticType&gt;::static_type())
-			.expect(<span class="self">Self</span>::NAME)
+		SignalId::lookup(<span class="self">Self</span>::NAME, &lt;<span class="self">Self</span>::Object <span class="kw">as </span>StaticType&gt;::static_type()).expect(<span class="self">Self</span>::NAME)
 	}
 }
 
@@ -327,10 +336,10 @@
 }
 
 <span class="kw">impl</span>&lt;T: Signal&gt; DetailedSignal <span class="kw">for </span>T {
-	<span class="kw">type </span>Signal = <span class="self">Self</span>;
-	<span class="kw">type </span>Object = &lt;<span class="self">Self</span>::Signal <span class="kw">as </span>Signal&gt;::Object;
 	<span class="kw">type </span>Arguments = &lt;<span class="self">Self</span>::Signal <span class="kw">as </span>Signal&gt;::Arguments;
+	<span class="kw">type </span>Object = &lt;<span class="self">Self</span>::Signal <span class="kw">as </span>Signal&gt;::Object;
 	<span class="kw">type </span>Return = &lt;<span class="self">Self</span>::Signal <span class="kw">as </span>Signal&gt;::Return;
+	<span class="kw">type </span>Signal = <span class="self">Self</span>;
 
 	<span class="kw">const </span>DETAIL: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; = <span class="prelude-val">None</span>;
 }
@@ -339,8 +348,9 @@
 	<span class="kw">fn </span>builder&lt;F: FnOnce(SignalBuilder) -&gt; glib::subclass::Signal&gt;(f: F) -&gt; glib::subclass::Signal;
 }
 
-<span class="kw">impl</span>&lt;T: Signal&gt; BuildableSignal <span class="kw">for </span>T <span class="kw">where
-	</span>&lt;<span class="self">Self</span>::Return <span class="kw">as </span>ToValueOption&gt;::Type: StaticType
+<span class="kw">impl</span>&lt;T: Signal&gt; BuildableSignal <span class="kw">for </span>T
+<span class="kw">where
+	</span>&lt;<span class="self">Self</span>::Return <span class="kw">as </span>ToValueOption&gt;::Type: StaticType,
 {
 	<span class="kw">fn </span>builder&lt;F: FnOnce(SignalBuilder) -&gt; glib::subclass::Signal&gt;(f: F) -&gt; glib::subclass::Signal {
 		<span class="kw">let </span>builder = glib::subclass::Signal::builder(<span class="self">Self</span>::NAME)
@@ -358,8 +368,7 @@
 }
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(notable_trait))]
-</span><span class="kw">pub trait </span>Notifies&lt;T: Signal&gt;: ObjectType {
-}
+</span><span class="kw">pub trait </span>Notifies&lt;T: Signal&gt;: ObjectType {}
 
 <span class="attr">#[derive(Copy, Clone, Debug)]
 </span><span class="kw">pub struct </span>ConnectDetails&lt;S = ()&gt; {
@@ -380,9 +389,7 @@
 	}
 
 	<span class="kw">pub fn </span>normalize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ConnectDetails&lt;()&gt; {
-		<span class="kw">unsafe </span>{
-			ConnectDetails::with_parts(<span class="self">self</span>.signal(), <span class="self">self</span>.detail(), <span class="self">self</span>.run_after)
-		}
+		<span class="kw">unsafe </span>{ ConnectDetails::with_parts(<span class="self">self</span>.signal(), <span class="self">self</span>.detail(), <span class="self">self</span>.run_after) }
 	}
 
 	<span class="kw">pub fn </span>signal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; SignalId {
@@ -428,9 +435,7 @@
 <span class="kw">impl </span>ConnectDetails&lt;()&gt; {
 	<span class="kw">pub fn </span>with_name&lt;O: StaticType&gt;(signal: <span class="kw-2">&amp;</span>str, after: bool) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">let </span>(signal, detail) = SignalId::parse_name(signal, O::static_type(), <span class="bool-val">false</span>)<span class="question-mark">?</span>;
-		<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{
-			<span class="self">Self</span>::with_parts(signal, detail, after)
-		})
+		<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_parts(signal, detail, after) })
 	}
 }
 
@@ -450,21 +455,24 @@
 	<span class="kw">unsafe fn </span>handle_closure(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: <span class="kw-2">&amp;</span>ConnectDetails, callback: <span class="kw-2">&amp;</span>Closure) -&gt; <span class="prelude-ty">Result</span>&lt;SignalHandlerId, BoolError&gt;;
 	<span class="kw">fn </span>remove_handle(<span class="kw-2">&amp;</span><span class="self">self</span>, handle: SignalHandlerId);
 
-	<span class="kw">fn </span>handle&lt;S, S_, C&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_, callback: C) -&gt; SignalHandlerId <span class="kw">where
+	<span class="kw">fn </span>handle&lt;S, S_, C&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_, callback: C) -&gt; SignalHandlerId
+	<span class="kw">where
 		</span>C: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, S::Arguments) -&gt; &lt;S::Return <span class="kw">as </span>ToValueOption&gt;::Type,
 		S: DetailedSignal,
 		S_: Into&lt;ConnectDetails&lt;S&gt;&gt;,
 		<span class="self">Self</span>: Notifies&lt;S::Signal&gt;;
 
 	<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
-	</span><span class="kw">fn </span>signal_stream&lt;S, S_&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_) -&gt; SignalStream&lt;<span class="self">Self</span>, S::Arguments&gt; <span class="kw">where
+	</span><span class="kw">fn </span>signal_stream&lt;S, S_&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_) -&gt; SignalStream&lt;<span class="self">Self</span>, S::Arguments&gt;
+	<span class="kw">where
 		</span>S: DetailedSignal,
 		S_: Into&lt;ConnectDetails&lt;S&gt;&gt;,
 		<span class="self">Self</span>: Notifies&lt;S::Signal&gt;,
 		&lt;S::Return <span class="kw">as </span>ToValueOption&gt;::Type: Default;
 }
 
-<span class="kw">impl</span>&lt;O: ObjectType&gt; ObjectSignalExt <span class="kw">for </span>O <span class="kw">where
+<span class="kw">impl</span>&lt;O: ObjectType&gt; ObjectSignalExt <span class="kw">for </span>O
+<span class="kw">where
 	for</span>&lt;<span class="lifetime">&#39;a</span>&gt; BorrowedObject&lt;<span class="lifetime">&#39;a</span>, O&gt;: FromValue&lt;<span class="lifetime">&#39;a</span>&gt;,
 {
 	<span class="kw">unsafe fn </span>handle_closure(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: <span class="kw-2">&amp;</span>ConnectDetails, callback: <span class="kw-2">&amp;</span>Closure) -&gt; <span class="prelude-ty">Result</span>&lt;SignalHandlerId, BoolError&gt; {
@@ -476,12 +484,17 @@
 			signal.run_after.into_glib(),
 		);
 		<span class="kw">match </span>handle {
-			<span class="number">0 </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">glib::bool_error!</span>(<span class="string">&quot;failed to connect signal {:?} of type {:?}&quot;</span>, signal, <span class="self">Self</span>::static_type())),
+			<span class="number">0 </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">glib::bool_error!</span>(
+				<span class="string">&quot;failed to connect signal {:?} of type {:?}&quot;</span>,
+				signal,
+				<span class="self">Self</span>::static_type()
+			)),
 			handle =&gt; <span class="prelude-val">Ok</span>(from_glib(handle)),
 		}
 	}
 
-	<span class="kw">fn </span>handle&lt;S, S_, C&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_, callback: C) -&gt; SignalHandlerId <span class="kw">where
+	<span class="kw">fn </span>handle&lt;S, S_, C&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_, callback: C) -&gt; SignalHandlerId
+	<span class="kw">where
 		</span>C: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, S::Arguments) -&gt; &lt;S::Return <span class="kw">as </span>ToValueOption&gt;::Type,
 		S: DetailedSignal,
 		S_: Into&lt;ConnectDetails&lt;S&gt;&gt;,
@@ -504,7 +517,8 @@
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
-	</span><span class="kw">fn </span>signal_stream&lt;S, S_&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_) -&gt; SignalStream&lt;<span class="self">Self</span>, S::Arguments&gt; <span class="kw">where
+	</span><span class="kw">fn </span>signal_stream&lt;S, S_&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: S_) -&gt; SignalStream&lt;<span class="self">Self</span>, S::Arguments&gt;
+	<span class="kw">where
 		</span>S: DetailedSignal,
 		S_: Into&lt;ConnectDetails&lt;S&gt;&gt;,
 		<span class="self">Self</span>: Notifies&lt;S::Signal&gt;,
@@ -515,4 +529,4 @@
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (dfe3fe710 2022-12-09)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0-nightly (37d7de337 2022-12-12)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
