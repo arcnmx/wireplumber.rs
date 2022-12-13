@@ -1,5 +1,5 @@
 {
   outputHashes = {
-    "glib-signal-0.1.0" = "sha256-nrSGzx3S4Y1ixR3J6KhUgcGuRsLQdvHeWytafn36Vts=";
+    "glib-signal-0.1.0" = "sha256-L2g+t5bSd/bd4xM1tl4cjMFNk39mMCLciCgotjGl9XI=";
   };
 }

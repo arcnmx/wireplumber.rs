@@ -7,10 +7,6 @@
       url = "github:arcnmx/nixexprs-rust";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    arc = {
-      url = "github:arcnmx/nixexprs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
   outputs = { self, flakelib, nixpkgs, rust, ... }@inputs: let
     nixlib = nixpkgs.lib;
@@ -19,10 +15,10 @@
     systems = [ "x86_64-linux" "aarch64-linux" ];
     devShells = {
       plain = {
-        mkShell, wpexec
+        mkShell, writeShellScriptBin, wpexec
       , wireplumber, pipewire, glib
       , pkg-config
-      , wireplumber-gir, wpdev-gir, wpdev-todo, wpdev-readmes, wpdev-commitlint
+      , wireplumber-gir, wpdev-gir, wpdev-todo, wpdev-commitlint
       , enableRustdoc ? false
       , enableRust ? true, cargo
       , rustTools ? [ ]
@@ -32,7 +28,8 @@
         buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [
           pkg-config
-          wpdev-commitlint wpdev-gir wpdev-todo wpdev-readmes
+          wpdev-commitlint wpdev-gir wpdev-todo
+          (writeShellScriptBin "generate" "nix run .#wpdev-generate")
         ] ++ nixlib.optional enableRust cargo;
         RUSTDOCFLAGS = rust.lib.rustdocFlags {
           inherit (self.lib) crate;
@@ -60,8 +57,8 @@
         inherit (rust'stable) mkShell;
         enableRust = false;
       };
-      dev = { arc'rustPlatforms, outputs'devShells'plain }: outputs'devShells'plain.override {
-        inherit (arc'rustPlatforms.nightly.hostChannel) mkShell;
+      dev = { rust'unstable, outputs'devShells'plain }: outputs'devShells'plain.override {
+        inherit (rust'unstable) mkShell;
         enableRust = false;
         enableRustdoc = true;
         rustTools = [ "rust-analyzer" ];
@@ -191,17 +188,17 @@
       readme = { rust'builders, wpdev-readme }: rust'builders.check-generate {
         expected = wpdev-readme;
         src = ./src/README.md;
-        meta.name = "diff src/README.md (nix run .#wpdev-readmes)";
+        meta.name = "diff src/README.md (nix run .#wpdev-generate)";
       };
       readme-sys = { rust'builders, wpdev-sys-readme }: rust'builders.check-generate {
         expected = wpdev-sys-readme;
         src = ./sys/src/README.md;
-        meta.name = "diff sys/src/README.md (nix run .#wpdev-readmes)";
+        meta.name = "diff sys/src/README.md (nix run .#wpdev-generate)";
       };
       commitlint-help = { rust'builders, wpdev-commitlint-help }: rust'builders.check-generate {
         expected = wpdev-commitlint-help;
         src = ./.github/commitlint.adoc;
-        meta.name = "diff .github/commitlint.adoc (nix run .#wpdev-readmes)";
+        meta.name = "diff .github/commitlint.adoc (nix run .#wpdev-generate)";
       };
       release-branch = { rust'builders, source }: let
         inherit (self.lib) releaseTag;
@@ -280,7 +277,7 @@
       wpdev-fmt = { writeShellScriptBin }: writeShellScriptBin "wpfmt" ''
         cargo fmt -p wireplumber -p wp-examples
       '';
-      wpdev-readmes = {
+      wpdev-generate = {
         rust'builders
       , wpdev-readme, wpdev-sys-readme
       , wpdev-commitlint-help
