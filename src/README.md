@@ -22,14 +22,14 @@ $ cargo build --workspace --examples &&
 
 Projects using wireplumber.rs:
 
--   [WirePlumber Scripts](https://github.com/arcnmx/wireplumber-scripts) is a personal collection of plugins, some previously written as Lua scripts.
+- [WirePlumber Scripts](https://github.com/arcnmx/wireplumber-scripts) is a personal collection of plugins, some previously written as Lua scripts.
 
 # Use Cases
 
 This project aims to facilitate the following applications:
 
--   Enabling Rust to be a viable language for writing session management logic as an alternative to the officially supported Lua scripting engine or GObject C APIs
+- Enabling Rust to be a viable language for writing session management logic as an alternative to the officially supported Lua scripting engine or GObject C APIs
 
--   WirePlumber plugins that can augment or expose APIs for Lua configuration scripts to use
+- WirePlumber plugins that can augment or expose APIs for Lua configuration scripts to use
 
--   Stand-alone pipewire clients as an alternative to [pipewire-rs](https://gitlab.freedesktop.org/pipewire/pipewire-rs)
+- Stand-alone pipewire clients as an alternative to [pipewire-rs](https://gitlab.freedesktop.org/pipewire/pipewire-rs)
