@@ -94,7 +94,6 @@
         BINDGEN_EXTRA_CLANG_ARGS = [
           "-I${stdenv.cc.cc}/lib/gcc/${stdenv.hostPlatform.config}/${stdenv.cc.cc.version}/include"
           "-I${stdenv.cc.libc.dev}/include"
-          "-DPW_ENABLE_DEPRECATED=1" # https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/55
         ];
 
         meta = with lib; {
