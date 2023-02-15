@@ -167,7 +167,7 @@
           -i '/_:repository/_:namespace' -t elem -n package \
           "$wireplumber/$girName" > $out/$girName
         xmlstarlet ed -L \
-          -i '/_:repository/_:package' -t attr -n name -v wireplumber-0.4 \
+          -i '/_:repository/_:package[not(@name)]' -t attr -n name -v wireplumber-0.4 \
           $out/$girName
       '';
     };
