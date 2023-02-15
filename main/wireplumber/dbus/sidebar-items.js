@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["DBusState",""]],"struct":[["Dbus",""],["DbusFeatures",""]]};
+window.SIDEBAR_ITEMS = {"enum":["DBusState"],"struct":["Dbus","DbusFeatures"]};
