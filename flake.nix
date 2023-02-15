@@ -137,6 +137,14 @@
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
           -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_string"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
           -i '///_:class[@c:type="WpMetadata"]/_:method[@name="find"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:record[@c:type="WpSpaJsonParser"]/_:method[@name="get_json"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:record[@c:type="WpSpaPodParser"]/_:method[@name="get_pod"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:class[@name="SpaType"]/_:method[@name="get_values_table"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:class[@name="SpaType"]/_:method[@name="name"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:function[@name="find_file"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:function[@name="spa_id_value_from_name"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:function[@name="spa_id_value_from_number"]/_:return-value' -t attr -n nullable -v 1 \
+          -i '///_:function[@name="spa_id_value_from_short_name"]/_:return-value' -t attr -n nullable -v 1 \
           -i '///_:class[@c:type="WpFactory"]' -t attr -n version -v 0.4.5 \
           -i '///_:record[@c:type="WpFactoryClass"]' -t attr -n version -v 0.4.5 \
           -i '///_:record[@c:type="WpSpaJson"]' -t attr -n version -v 0.4.8 \
