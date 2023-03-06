@@ -129,7 +129,7 @@ unsafe impl<T: ComponentLoaderImpl + PluginImpl> IsSubclassable<T> for Component
 			) {
 				Ok(()) => true,
 				Err(e) => {
-					*error = e.to_glib_full() as *mut _;
+					*error = e.into_glib_ptr();
 					false
 				},
 			}

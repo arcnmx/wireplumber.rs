@@ -92,7 +92,7 @@ macro_rules! impl_object_features {
 				}
 
 				#[doc(alias = "wp_object_activate_closure")]
-				pub fn activate_closure<P, F: Into<$id>>(&self, features: F, cancellable: Option<&P>, closure: &glib::Closure) where
+				pub fn activate_closure<P, F: Into<$id>>(&self, features: F, cancellable: Option<&P>, closure: glib::Closure) where
 					P: IsA<gio::Cancellable>,
 				{
 					ObjectExt::activate_closure(self, features.into().into(), cancellable, closure)

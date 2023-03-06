@@ -3,7 +3,7 @@
 
 #[cfg(any(feature = "v0_4_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
-use glib::translate::*;
+use glib::{translate::*};
 
 glib::wrapper! {
     #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]

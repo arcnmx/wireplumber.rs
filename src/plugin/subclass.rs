@@ -131,7 +131,7 @@ where
 
 	fn spawn_local<F: Future<Output = ()> + 'static>(&self, f: F) {
 		let source = self.plugin_context().spawn_local(f);
-		self.imp().register_source(source);
+		self.imp().register_source(source.into_source_id().unwrap());
 	}
 }
 
@@ -151,7 +151,7 @@ where
 				Err(e) => error_handler.return_error(e),
 			}
 		});
-		self.register_source(enable_handle);
+		self.register_source(enable_handle.into_source_id().unwrap());
 		// TODO: prevent multiple calls?
 	}
 
@@ -235,7 +235,7 @@ pub trait SimplePlugin: ObjectSubclass {
 	type Args;
 
 	fn instance_ref(&self) -> BorrowedObject<Self::Type> {
-		self.instance()
+		self.obj()
 	}
 
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error>;
@@ -248,7 +248,11 @@ pub trait SimplePlugin: ObjectSubclass {
 	where
 		Self::Type: IsA<GObject>,
 	{
-		let res: Self::Type = GObject::new(&[("name", &Self::NAME), ("core", core)]);
+		let res = GObject::with_mut_values(Self::Type::static_type(), &mut [
+			("name", Self::NAME.to_value()),
+			("core", core.to_value()),
+		]);
+		let res: Self::Type = unsafe { res.unsafe_cast() };
 		res.imp().init_args(args);
 		res
 	}
@@ -353,14 +357,14 @@ macro_rules! plugin_export {
 			args: *mut $crate::lib::glib::ffi::GVariant,
 			error: std::ptr::NonNull<*mut $crate::lib::glib::ffi::GError>,
 		) -> glib::ffi::gboolean {
-			use $crate::lib::glib::translate::{IntoGlib, ToGlibPtr};
+			use $crate::lib::glib::translate::{IntoGlib, IntoGlibPtr};
 
 			let core = unsafe { glib::translate::from_glib_none(core.as_ptr()) };
 			let args = unsafe { glib::translate::from_glib_none(args) };
 			match <$desc as $crate::plugin::ModuleExport>::init(core, args) {
 				Ok(()) => true.into_glib(),
 				Err(e) => {
-					*error.as_ptr() = e.to_glib_full() as *mut _;
+					*error.as_ptr() = e.into_glib_ptr();
 					false.into_glib()
 				},
 			}

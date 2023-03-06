@@ -309,7 +309,7 @@ impl SpaPod {
 
 	#[cfg(any(feature = "experimental", feature = "dox"))]
 	#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
-	pub fn apply<O: IsA<PipewireObject>>(&self, obj: &O) -> crate::Result<()> {
+	pub fn apply<O: IsA<PipewireObject>>(self, obj: &O) -> crate::Result<()> {
 		if !self.is_object() {
 			return Err(Error::new(
 				LibraryErrorEnum::InvalidArgument,

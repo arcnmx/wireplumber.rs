@@ -7,6 +7,10 @@
       url = "github:arcnmx/nixexprs-rust";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gir-src = {
+      url = "github:gtk-rs/gir/0.17";
+      flake = false;
+    };
   };
   outputs = { self, flakelib, nixpkgs, rust, ... }@inputs: let
     nixlib = nixpkgs.lib;
@@ -107,16 +111,16 @@
       };
       gir-rs-0_16 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage rec {
         inherit (gir-rs) postPatch meta pname;
-        version = "0.16-2022-10-27";
+        version = "0.17-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
 
-        src = fetchFromGitHub {
-          owner = "gtk-rs";
-          repo = "gir";
-          rev = "f92952f3f7ea3c880558d57668129747ee1bec90";
-          sha256 = "sha256-G1h72zVpxOE6JXbZSgAp68wjI75hzU+uhDDku7437D8=";
+        src = inputs.gir-src;
+
+        cargoLock = {
+          lockFile = "${inputs.gir-src}/Cargo.lock";
+          outputHashes = {
+            "rustdoc-stripper-0.1.18" = "sha256-b+RRXJDGULEvkIZDBzU/ZchVF63pX0S9hBupeP12CkU=";
+          };
         };
-
-        cargoSha256 = "sha256-JQNtvLywnxzC4h9ATzNCxpM5erOeLVu0veRIkhLV470=";
         buildType = "debug";
         doCheck = false;
       };

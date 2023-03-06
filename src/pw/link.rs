@@ -16,7 +16,7 @@ impl Link {
 		output.write_props(&props, Direction::Output)?;
 		input.write_props(&props, Direction::Input)?;
 
-		Self::from_factory(core, "link-factory", Some(&props))
+		Self::from_factory(core, "link-factory", Some(props))
 			.ok_or_else(|| Error::new(LibraryErrorEnum::OperationFailed, "factory did not produce a link???"))
 	}
 

@@ -72,12 +72,6 @@ impl<'a> TryFrom<Variant> for LuaString<'a> {
 	}
 }
 
-impl<'v, 'a> Into<Variant> for &'v LuaString<'a> {
-	fn into(self) -> Variant {
-		self.to_variant()
-	}
-}
-
 impl<'a> Into<Variant> for LuaString<'a> {
 	fn into(self) -> Variant {
 		Into::into(&self)

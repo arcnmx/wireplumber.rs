@@ -19,7 +19,7 @@ path = "src/static-link.rs"
 futures = "0.3"
 wireplumber = { version = "0.1", features = ["futures", "glib-signal", "serde", "v0_4_3"], path = "../" }
 pipewire-sys = "0.5"
-glib = { version = "0.16" }
+glib = { version = "0.17" }
 ctrlc = { version = "3.0", features = ["termination"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

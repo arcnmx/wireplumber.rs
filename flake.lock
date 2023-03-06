@@ -35,6 +35,23 @@
         "type": "github"
       }
     },
+    "gir-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1675929312,
+        "narHash": "sha256-KdhXUx8ze/9eVVEXZsZY2YhOtwriEfKd0osoeDAVvGw=",
+        "owner": "gtk-rs",
+        "repo": "gir",
+        "rev": "43b9242f6689ea4da4f397ab8b6e668ed4a8b7e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gtk-rs",
+        "ref": "0.17",
+        "repo": "gir",
+        "type": "github"
+      }
+    },
     "nix-std": {
       "locked": {
         "lastModified": 1671170529,
@@ -67,6 +84,7 @@
     "root": {
       "inputs": {
         "flakelib": "flakelib",
+        "gir-src": "gir-src",
         "nixpkgs": "nixpkgs",
         "rust": "rust"
       }

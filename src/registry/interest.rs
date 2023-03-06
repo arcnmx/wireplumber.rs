@@ -79,11 +79,11 @@ impl<T: StaticType> Interest<T> {
 		}
 	}
 
-	pub fn filter<C: InterestContainer<T>>(&self, container: &C) -> ValueIterator<T> {
+	pub fn filter<C: InterestContainer<T>>(self, container: &C) -> ValueIterator<T> {
 		container.filter(self)
 	}
 
-	pub fn lookup<C: InterestContainer<T>>(&self, container: &C) -> Option<T> {
+	pub fn lookup<C: InterestContainer<T>>(self, container: &C) -> Option<T> {
 		container.lookup(self)
 	}
 
@@ -91,9 +91,15 @@ impl<T: StaticType> Interest<T> {
 	// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?
 }
 
+impl<T: StaticType> From<Interest<T>> for ObjectInterest {
+	fn from(i: Interest<T>) -> Self {
+		i.into_inner()
+	}
+}
+
 pub trait InterestContainer<T: StaticType> {
-	fn filter(&self, interest: &Interest<T>) -> ValueIterator<T>;
-	fn lookup(&self, interest: &Interest<T>) -> Option<T>;
+	fn filter(&self, interest: Interest<T>) -> ValueIterator<T>;
+	fn lookup(&self, interest: Interest<T>) -> Option<T>;
 }
 
 impl<T: StaticType> Deref for Interest<T> {
@@ -256,6 +262,12 @@ impl ToVariant for ConstraintVerb {
 	}
 }
 
+impl From<ConstraintVerb> for Variant {
+	fn from(v: ConstraintVerb) -> Self {
+		v.to_variant()
+	}
+}
+
 impl ConstraintVerb {
 	#[rustfmt::skip]
 	pub fn value_type(&self) -> Option<()> {
@@ -337,6 +349,12 @@ impl FromVariant for ConstraintType {
 impl ToVariant for ConstraintType {
 	fn to_variant(&self) -> Variant {
 		self.name().to_variant()
+	}
+}
+
+impl From<ConstraintType> for Variant {
+	fn from(t: ConstraintType) -> Self {
+		t.to_variant()
 	}
 }
 

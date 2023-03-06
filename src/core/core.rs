@@ -174,7 +174,7 @@ impl Core {
 		}
 	}
 
-	pub fn run<F: FnOnce(&MainContext, MainLoop, Core)>(props: Option<&Properties>, setup: F) {
+	pub fn run<F: FnOnce(&MainContext, MainLoop, Core)>(props: Option<Properties>, setup: F) {
 		let mainloop = MainLoop::new(None, false);
 		let context = mainloop.context();
 		let core = context

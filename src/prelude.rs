@@ -47,7 +47,7 @@ pub(crate) use {
 		ffi::{gconstpointer, gpointer},
 		translate::*,
 		types::{Pointee, Pointer},
-		value::FromValue,
+		value::{FromValue, ToValue},
 		Cast, FromVariant, IsA, Object as GObject, ObjectExt as GObjectExt, ObjectType, StaticType, StaticVariantType,
 		ToVariant, Type, Value, Variant, VariantClass, VariantTy,
 	},

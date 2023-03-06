@@ -39,7 +39,7 @@ impl Compiler {
         cmd.arg(out);
         let status = cmd.spawn()?.wait()?;
         if !status.success() {
-            return Err(format!("compilation command {:?} failed, {}", &cmd, status).into());
+            return Err(format!("compilation command {cmd:?} failed, {status}").into());
         }
         Ok(())
     }
@@ -55,7 +55,7 @@ fn get_var(name: &str, default: &str) -> Result<Vec<String>, Box<dyn Error>> {
     match env::var(name) {
         Ok(value) => Ok(shell_words::split(&value)?),
         Err(env::VarError::NotPresent) => Ok(shell_words::split(default)?),
-        Err(err) => Err(format!("{} {}", name, err).into()),
+        Err(err) => Err(format!("{name} {err}").into()),
     }
 }
 
@@ -70,8 +70,7 @@ fn pkg_config_cflags(packages: &[&str]) -> Result<Vec<String>, Box<dyn Error>> {
     cmd.args(packages);
     let out = cmd.output()?;
     if !out.status.success() {
-        return Err(format!("command {:?} returned {}",
-                           &cmd, out.status).into());
+        return Err(format!("command {cmd:?} returned {}", out.status).into());
     }
     let stdout = str::from_utf8(&out.stdout)?;
     Ok(shell_words::split(stdout.trim())?)
@@ -112,8 +111,6 @@ impl Results {
 }
 
 #[test]
-#[cfg(target_os = "linux")]
-#[cfg(feature = "v0_4_11")]
 fn cross_validate_constants_with_c() {
     let mut c_constants: Vec<(String, String)> = Vec::new();
 
@@ -129,15 +126,14 @@ fn cross_validate_constants_with_c() {
     {
         if rust_name != c_name {
             results.record_failed();
-            eprintln!("Name mismatch:\nRust: {:?}\nC:    {:?}", rust_name, c_name,);
+            eprintln!("Name mismatch:\nRust: {rust_name:?}\nC:    {c_name:?}");
             continue;
         }
 
         if rust_value != c_value {
             results.record_failed();
             eprintln!(
-                "Constant value mismatch for {}\nRust: {:?}\nC:    {:?}",
-                rust_name, rust_value, &c_value
+                "Constant value mismatch for {rust_name}\nRust: {rust_value:?}\nC:    {c_value:?}",
             );
             continue;
         }
@@ -149,8 +145,6 @@ fn cross_validate_constants_with_c() {
 }
 
 #[test]
-#[cfg(target_os = "linux")]
-#[cfg(feature = "v0_4_11")]
 fn cross_validate_layout_with_c() {
     let mut c_layouts = Vec::new();
 
@@ -169,15 +163,14 @@ fn cross_validate_layout_with_c() {
     {
         if rust_name != c_name {
             results.record_failed();
-            eprintln!("Name mismatch:\nRust: {:?}\nC:    {:?}", rust_name, c_name,);
+            eprintln!("Name mismatch:\nRust: {rust_name:?}\nC:    {c_name:?}");
             continue;
         }
 
         if rust_layout != c_layout {
             results.record_failed();
             eprintln!(
-                "Layout mismatch for {}\nRust: {:?}\nC:    {:?}",
-                rust_name, rust_layout, &c_layout
+                "Layout mismatch for {rust_name}\nRust: {rust_layout:?}\nC:    {c_layout:?}",
             );
             continue;
         }
@@ -199,7 +192,7 @@ fn get_c_output(name: &str) -> Result<String, Box<dyn Error>> {
     let mut abi_cmd = Command::new(exe);
     let output = abi_cmd.output()?;
     if !output.status.success() {
-        return Err(format!("command {:?} failed, {:?}", &abi_cmd, &output).into());
+        return Err(format!("command {abi_cmd:?} failed, {output:?}").into());
     }
 
     Ok(String::from_utf8(output.stdout)?)

@@ -113,7 +113,7 @@ fn link_ports<'a>(
 				true,
 			)))
 			.collect();
-		let port_outputs = move || port_output_interest.filter(output);
+		let port_outputs = move || port_output_interest.clone().filter(output);
 
 		port_inputs.flat_map(move |i| port_outputs().map(move |o| Link::new(&core, &o, &i, link_props)))
 	})
@@ -136,8 +136,8 @@ pub async fn main_loop(
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
 	link_props.insert(pw::PW_KEY_OBJECT_LINGER, arg.linger);
 	while let Some(()) = rx.next().await {
-		let inputs = input_interest.filter(&om);
-		let outputs = || output_interest.filter(&om);
+		let inputs = input_interest.clone().filter(&om);
+		let outputs = || output_interest.clone().filter(&om);
 		let pairs = inputs.flat_map(|i| outputs().map(move |o| (i.clone(), o)));
 
 		let mut links = Vec::new();
@@ -173,10 +173,10 @@ pub async fn main_async(
 	let om = ObjectManager::new();
 
 	let output_interest: Interest<Node> = arg.output.iter().collect();
-	om.add_interest_full(&output_interest);
+	om.add_interest(output_interest.clone());
 
 	let input_interest: Interest<Node> = arg.input.iter().collect();
-	om.add_interest_full(&input_interest);
+	om.add_interest(input_interest.clone());
 
 	let (link_nodes_signal, rx) = mpsc::channel(1);
 

@@ -12,13 +12,13 @@ impl Node {
 
 	#[doc(alias = "wp_node_new_ports_filtered_iterator")]
 	#[doc(alias = "wp_node_new_ports_filtered_iterator_full")]
-	pub fn ports_filtered(&self, interest: &ObjectInterest) -> ValueIterator<Port> {
+	pub fn ports_filtered(&self, interest: ObjectInterest) -> ValueIterator<Port> {
 		ValueIterator::with_inner(self.new_ports_filtered_iterator_full(interest).unwrap())
 	}
 
 	#[doc(alias = "wp_node_lookup_port")]
 	#[doc(alias = "wp_node_lookup_port_full")]
-	pub fn port(&self, interest: &ObjectInterest) -> Option<Port> {
+	pub fn port(&self, interest: ObjectInterest) -> Option<Port> {
 		self.lookup_port_full(interest)
 	}
 
@@ -62,12 +62,12 @@ impl Display for Node {
 }
 
 impl InterestContainer<Port> for Node {
-	fn filter(&self, interest: &Interest<Port>) -> ValueIterator<Port> {
-		self.ports_filtered(interest)
+	fn filter(&self, interest: Interest<Port>) -> ValueIterator<Port> {
+		self.ports_filtered(interest.into())
 	}
 
-	fn lookup(&self, interest: &Interest<Port>) -> Option<Port> {
-		self.port(interest)
+	fn lookup(&self, interest: Interest<Port>) -> Option<Port> {
+		self.port(interest.into())
 	}
 }
 

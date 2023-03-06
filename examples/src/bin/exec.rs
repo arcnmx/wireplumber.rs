@@ -154,7 +154,7 @@ fn main() -> Result<()> {
 	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
 
 	// run a (blocking) glib::MainLoop with associated core
-	Core::run(Some(&props), |context, mainloop, core| {
+	Core::run(Some(props), |context, mainloop, core| {
 		ctrlc::set_handler({
 			// exit this loop if we receive a SIGINT
 			let mainloop = mainloop.clone();
