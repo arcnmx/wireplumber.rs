@@ -85,15 +85,6 @@
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
 <a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-<a href="#96" id="96">96</a>
 </pre><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{prelude::<span class="kw-2">*</span>, PipewireObject, SpaPod},
 	glib::prelude::<span class="kw-2">*</span>,
@@ -127,10 +118,7 @@
 			</span>.params
 			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
 			.is_some()
-			|| <span class="self">self
-				</span>.params
-				.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
-				.is_some()
+			|| <span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).is_some()
 	}
 
 	<span class="kw">pub fn </span>mute(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -156,20 +144,14 @@
 	}
 
 	<span class="kw">pub fn </span>set_channel_volume(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_index: u32, volume: f32) -&gt; <span class="prelude-ty">Result</span>&lt;(), ()&gt; {
-		<span class="kw">let </span>succ = <span class="kw">match </span><span class="self">self
-			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
-		{
+		<span class="kw">let </span>succ = <span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes) {
 			<span class="prelude-val">Some</span>(pod) =&gt; {
 				<span class="kw">let </span><span class="kw-2">mut </span>data: Vec&lt;f32&gt; = pod.array_iterator().collect();
 				<span class="kw-2">*</span>data.get_mut(channel_index <span class="kw">as </span>usize).ok_or(())<span class="question-mark">? </span>= volume;
 				pod.set_pod(<span class="kw-2">&amp;</span>data.into_iter().collect())
 			},
 			<span class="prelude-val">None </span>=&gt; {
-				<span class="kw">let </span>pod = <span class="self">self
-					</span>.params
-					.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
-					.ok_or(())<span class="question-mark">?</span>;
+				<span class="kw">let </span>pod = <span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).ok_or(())<span class="question-mark">?</span>;
 				pod.set_float(volume)
 			},
 		};

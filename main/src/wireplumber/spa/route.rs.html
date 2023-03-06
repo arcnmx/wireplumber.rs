@@ -126,21 +126,6 @@
 <a href="#126" id="126">126</a>
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
 </pre><pre class="rust"><code><span class="kw">use crate</span>::{
 	prelude::<span class="kw-2">*</span>,
 	pw::PipewireObject,
@@ -171,10 +156,7 @@
 	</span>}
 
 	<span class="kw">pub fn </span>info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="kw">impl </span>Iterator&lt;Item = (String, String)&gt;&gt; {
-		<span class="kw">let </span>res = <span class="kw">match </span><span class="self">self
-			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_info)
-		{
+		<span class="kw">let </span>res = <span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_info) {
 			<span class="prelude-val">Some</span>(params) =&gt; params.struct_fields(<span class="bool-val">true</span>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(Vec::new().into_iter()),
 		}<span class="question-mark">?</span>;
@@ -193,10 +175,7 @@
 	}
 
 	<span class="kw">pub fn </span>profile_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = u32&gt; {
-		<span class="kw">match </span><span class="self">self
-			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_profiles)
-		{
+		<span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_profiles) {
 			<span class="prelude-val">Some</span>(params) =&gt; params.array_iterator::&lt;i32&gt;().map(|i| i.try_into().unwrap()).collect(),
 			<span class="prelude-val">None </span>=&gt; Vec::new(),
 		}
@@ -204,10 +183,7 @@
 	}
 
 	<span class="kw">pub fn </span>device_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = u32&gt; {
-		<span class="kw">match </span><span class="self">self
-			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_devices)
-		{
+		<span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_devices) {
 			<span class="prelude-val">Some</span>(params) =&gt; params.array_iterator::&lt;i32&gt;().map(|i| i.try_into().unwrap()).collect(),
 			<span class="prelude-val">None </span>=&gt; Vec::new(),
 		}
@@ -215,17 +191,11 @@
 	}
 
 	<span class="kw">pub fn </span>index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-		<span class="self">self
-			</span>.params
-			.spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_index)
-			.unwrap()
+		<span class="self">self</span>.params.spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_index).unwrap()
 	}
 
 	<span class="kw">pub fn </span>device_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-		<span class="self">self
-			</span>.params
-			.spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_index)
-			.unwrap()
+		<span class="self">self</span>.params.spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PARAM_ROUTE_index).unwrap()
 	}
 
 	<span class="kw">pub fn </span>has_volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
