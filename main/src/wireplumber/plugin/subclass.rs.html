@@ -624,7 +624,7 @@
 	{
 		<span class="kw">let </span>res = GObject::with_mut_values(<span class="self">Self</span>::Type::static_type(), <span class="kw-2">&amp;mut </span>[
 			(<span class="string">&quot;name&quot;</span>, <span class="self">Self</span>::NAME.to_value()),
-			(<span class="string">&quot;core&quot;</span>, core.to_value())
+			(<span class="string">&quot;core&quot;</span>, core.to_value()),
 		]);
 		<span class="kw">let </span>res: <span class="self">Self</span>::Type = <span class="kw">unsafe </span>{ res.unsafe_cast() };
 		res.imp().init_args(args);
@@ -731,14 +731,14 @@
 			args: <span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GVariant</span>,
 			error: std::ptr::NonNull&lt;<span class="kw-2">*mut </span><span class="macro-nonterminal">$crate::lib::glib::ffi::GError</span>&gt;,
 		) -&gt; glib::ffi::gboolean {
-			<span class="kw">use </span><span class="macro-nonterminal">$crate::lib::glib::translate</span>::{IntoGlib, ToGlibPtr};
+			<span class="kw">use </span><span class="macro-nonterminal">$crate::lib::glib::translate</span>::{IntoGlib, IntoGlibPtr};
 
 			<span class="kw">let </span>core = <span class="kw">unsafe </span>{ glib::translate::from_glib_none(core.as_ptr()) };
 			<span class="kw">let </span>args = <span class="kw">unsafe </span>{ glib::translate::from_glib_none(args) };
 			<span class="kw">match </span>&lt;<span class="macro-nonterminal">$desc </span><span class="kw">as </span><span class="macro-nonterminal">$crate::plugin::ModuleExport</span>&gt;::init(core, args) {
 				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>.into_glib(),
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="kw-2">*</span>error.as_ptr() = e.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+					<span class="kw-2">*</span>error.as_ptr() = e.into_glib_ptr();
 					<span class="bool-val">false</span>.into_glib()
 				},
 			}
