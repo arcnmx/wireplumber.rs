@@ -2284,9 +2284,9 @@
 <span class="kw">use </span><span class="kw">crate</span>::WpSpaType;
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">type </span>spa_json = c_void; <span class="comment">// TODO: https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/36
+</span><span class="kw">use </span>libspa::spa_json;
 
-</span><span class="kw">use </span>glib_sys <span class="kw">as </span>glib;
+<span class="kw">use </span>glib_sys <span class="kw">as </span>glib;
 <span class="kw">use </span>gobject_sys <span class="kw">as </span>gobject;
 <span class="kw">use </span>gio_sys <span class="kw">as </span>gio;
 

@@ -538,23 +538,23 @@
 		<span class="kw">let </span>flags = ChoiceFlags::empty();
 		<span class="kw">let </span>default = next_value()<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(Choice(flags, <span class="kw">match </span>choice_type.number() {
-			libspa_sys::spa_choice_type_SPA_CHOICE_None =&gt; ChoiceEnum::None(default),
-			libspa_sys::spa_choice_type_SPA_CHOICE_Range =&gt; ChoiceEnum::Range {
+			libspa_sys::SPA_CHOICE_None =&gt; ChoiceEnum::None(default),
+			libspa_sys::SPA_CHOICE_Range =&gt; ChoiceEnum::Range {
 				default,
 				min: next_value()<span class="question-mark">?</span>,
 				max: next_value()<span class="question-mark">?</span>,
 			},
-			libspa_sys::spa_choice_type_SPA_CHOICE_Step =&gt; ChoiceEnum::Step {
+			libspa_sys::SPA_CHOICE_Step =&gt; ChoiceEnum::Step {
 				default,
 				min: next_value()<span class="question-mark">?</span>,
 				max: next_value()<span class="question-mark">?</span>,
 				step: next_value()<span class="question-mark">?</span>,
 			},
-			libspa_sys::spa_choice_type_SPA_CHOICE_Enum =&gt; ChoiceEnum::Enum {
+			libspa_sys::SPA_CHOICE_Enum =&gt; ChoiceEnum::Enum {
 				default,
 				alternatives: values.collect(),
 			},
-			libspa_sys::spa_choice_type_SPA_CHOICE_Flags =&gt; ChoiceEnum::Flags {
+			libspa_sys::SPA_CHOICE_Flags =&gt; ChoiceEnum::Flags {
 				default,
 				flags: values.collect(),
 			},

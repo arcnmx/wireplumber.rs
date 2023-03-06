@@ -116,7 +116,7 @@
 	}
 
 	<span class="kw">pub fn </span>params(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="kw">impl </span>Iterator&lt;Item = (String, SpaPod)&gt;&gt; {
-		<span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_params) {
+		<span class="kw">match </span><span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_params) {
 			<span class="prelude-val">Some</span>(params) =&gt; params.struct_fields(<span class="bool-val">false</span>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(Vec::new().into_iter()),
 		}
@@ -125,18 +125,18 @@
 	<span class="kw">pub fn </span>has_volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
 		<span class="self">self
 			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_channelVolumes)
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
 			.is_some()
 			|| <span class="self">self
 				</span>.params
-				.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_volume)
+				.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
 				.is_some()
 	}
 
 	<span class="kw">pub fn </span>mute(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
 		<span class="self">self
 			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_mute)
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_mute)
 			.and_then(|pod| pod.boolean())
 			.unwrap_or_default()
 	}
@@ -144,12 +144,12 @@
 	<span class="kw">pub fn </span>channel_volume(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_index: u32) -&gt; f32 {
 		<span class="self">self
 			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_channelVolumes)
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
 			.and_then(|pod| pod.array_iterator::&lt;f32&gt;().nth(channel_index <span class="kw">as </span>usize))
 			.or_else(|| {
 				<span class="self">self
 					</span>.params
-					.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_volume)
+					.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
 					.and_then(|pod| pod.float())
 			})
 			.unwrap_or(<span class="number">1.0f32</span>)
@@ -158,7 +158,7 @@
 	<span class="kw">pub fn </span>set_channel_volume(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_index: u32, volume: f32) -&gt; <span class="prelude-ty">Result</span>&lt;(), ()&gt; {
 		<span class="kw">let </span>succ = <span class="kw">match </span><span class="self">self
 			</span>.params
-			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_channelVolumes)
+			.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
 		{
 			<span class="prelude-val">Some</span>(pod) =&gt; {
 				<span class="kw">let </span><span class="kw-2">mut </span>data: Vec&lt;f32&gt; = pod.array_iterator().collect();
@@ -168,7 +168,7 @@
 			<span class="prelude-val">None </span>=&gt; {
 				<span class="kw">let </span>pod = <span class="self">self
 					</span>.params
-					.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_volume)
+					.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
 					.ok_or(())<span class="question-mark">?</span>;
 				pod.set_float(volume)
 			},
@@ -183,7 +183,7 @@
 	<span class="kw">pub async fn </span>from_object&lt;O: IsA&lt;PipewireObject&gt;&gt;(obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">let </span>params = obj.params_future(<span class="prelude-val">Some</span>(<span class="string">&quot;Props&quot;</span>), <span class="prelude-val">None</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">for </span>item <span class="kw">in </span>params {
-			<span class="kw">if </span>item.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::spa_prop_SPA_PROP_volume).is_some() {
+			<span class="kw">if </span>item.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).is_some() {
 				<span class="kw">return </span><span class="self">Self</span>::with_params(item)
 			}
 		}
