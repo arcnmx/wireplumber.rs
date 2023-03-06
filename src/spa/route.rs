@@ -23,15 +23,12 @@ impl SpaRoute {
 	pub fn props(&self) -> Option<SpaProps> {
 		self
 			.params
-			.find_spa_property(&libspa_sys::spa_param_route_SPA_PARAM_ROUTE_props)
+			.find_spa_property(&libspa_sys::SPA_PARAM_ROUTE_props)
 			.map(|props| SpaProps::with_params(props).unwrap()) // TODO: assert this too in constructor?
 	}
 
 	pub fn info(&self) -> crate::Result<impl Iterator<Item = (String, String)>> {
-		let res = match self
-			.params
-			.find_spa_property(&libspa_sys::spa_param_route_SPA_PARAM_ROUTE_info)
-		{
+		let res = match self.params.find_spa_property(&libspa_sys::SPA_PARAM_ROUTE_info) {
 			Some(params) => params.struct_fields(true),
 			None => Ok(Vec::new().into_iter()),
 		}?;
@@ -50,10 +47,7 @@ impl SpaRoute {
 	}
 
 	pub fn profile_indices(&self) -> impl Iterator<Item = u32> {
-		match self
-			.params
-			.find_spa_property(&libspa_sys::spa_param_route_SPA_PARAM_ROUTE_profiles)
-		{
+		match self.params.find_spa_property(&libspa_sys::SPA_PARAM_ROUTE_profiles) {
 			Some(params) => params.array_iterator::<i32>().map(|i| i.try_into().unwrap()).collect(),
 			None => Vec::new(),
 		}
@@ -61,10 +55,7 @@ impl SpaRoute {
 	}
 
 	pub fn device_indices(&self) -> impl Iterator<Item = u32> {
-		match self
-			.params
-			.find_spa_property(&libspa_sys::spa_param_route_SPA_PARAM_ROUTE_devices)
-		{
+		match self.params.find_spa_property(&libspa_sys::SPA_PARAM_ROUTE_devices) {
 			Some(params) => params.array_iterator::<i32>().map(|i| i.try_into().unwrap()).collect(),
 			None => Vec::new(),
 		}
@@ -72,17 +63,11 @@ impl SpaRoute {
 	}
 
 	pub fn index(&self) -> u32 {
-		self
-			.params
-			.spa_property(&libspa_sys::spa_param_route_SPA_PARAM_ROUTE_index)
-			.unwrap()
+		self.params.spa_property(&libspa_sys::SPA_PARAM_ROUTE_index).unwrap()
 	}
 
 	pub fn device_index(&self) -> u32 {
-		self
-			.params
-			.spa_property(&libspa_sys::spa_param_route_SPA_PARAM_ROUTE_index)
-			.unwrap()
+		self.params.spa_property(&libspa_sys::SPA_PARAM_ROUTE_index).unwrap()
 	}
 
 	pub fn has_volume(&self) -> bool {

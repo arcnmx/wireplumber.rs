@@ -35,9 +35,9 @@ maintenance = { status = "actively-maintained" }
 libc = "0.2"
 glib = { version = "0.17" }
 gio = { version = "0.17" }
-pipewire-sys = { version = "0.5" }
-libspa-sys = { version = "0.5" }
-libspa = { version = "0.5", optional = true }
+pipewire-sys = { version = "0.6" }
+libspa-sys = { version = "0.6" }
+libspa = { version = "0.6", optional = true }
 serde = { version = "1.0", optional = true }
 ffi = { version = "0.1.0", path = "sys", package = "wireplumber-sys" }
 bitflags = "1.3"

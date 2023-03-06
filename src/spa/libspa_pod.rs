@@ -62,23 +62,23 @@ impl SpaPod {
 		let flags = ChoiceFlags::empty();
 		let default = next_value()?;
 		Ok(Choice(flags, match choice_type.number() {
-			libspa_sys::spa_choice_type_SPA_CHOICE_None => ChoiceEnum::None(default),
-			libspa_sys::spa_choice_type_SPA_CHOICE_Range => ChoiceEnum::Range {
+			libspa_sys::SPA_CHOICE_None => ChoiceEnum::None(default),
+			libspa_sys::SPA_CHOICE_Range => ChoiceEnum::Range {
 				default,
 				min: next_value()?,
 				max: next_value()?,
 			},
-			libspa_sys::spa_choice_type_SPA_CHOICE_Step => ChoiceEnum::Step {
+			libspa_sys::SPA_CHOICE_Step => ChoiceEnum::Step {
 				default,
 				min: next_value()?,
 				max: next_value()?,
 				step: next_value()?,
 			},
-			libspa_sys::spa_choice_type_SPA_CHOICE_Enum => ChoiceEnum::Enum {
+			libspa_sys::SPA_CHOICE_Enum => ChoiceEnum::Enum {
 				default,
 				alternatives: values.collect(),
 			},
-			libspa_sys::spa_choice_type_SPA_CHOICE_Flags => ChoiceEnum::Flags {
+			libspa_sys::SPA_CHOICE_Flags => ChoiceEnum::Flags {
 				default,
 				flags: values.collect(),
 			},

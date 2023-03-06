@@ -75,7 +75,7 @@ in {
           features.inputs = [
             (cargo config "libspa" "build -F libspa,futures" { })
             (cargo config "glib-signal-sans-futures" "build -F glib-signal" { })
-            (cargo config "experimental" "build -F experimental" {
+            (cargo config "experimental" "build -F libspa,experimental" {
               warn = true;
             })
           ];

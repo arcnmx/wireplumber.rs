@@ -9,7 +9,7 @@ use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 use crate::WpSpaType;
 
 #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-type spa_json = c_void; // TODO: https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/36
+use libspa::spa_json;
 
 use glib_sys as glib;
 use gobject_sys as gobject;
