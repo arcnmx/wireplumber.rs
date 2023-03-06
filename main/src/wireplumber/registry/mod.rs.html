@@ -89,6 +89,13 @@
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Remote object change notifications
 //!
 //! When combined with a [Core](crate::core::Core), an [ObjectManager] emits signals whenever
@@ -109,7 +116,7 @@
 //!
 //! async fn watch_nodes(core: &amp;Core) {
 //!   let om = ObjectManager::new();
-//!   om.add_interest_full(&amp;[
+//!   om.add_interest([
 //!     Constraint::compare(ConstraintType::PwProperty, &quot;media.class&quot;, &quot;Audio/Sink&quot;, true),
 //!   ].iter().collect::&lt;Interest&lt;Node&gt;&gt;());
 //!
@@ -143,6 +150,11 @@
 <span class="kw">mod </span>interest;
 
 <span class="kw">impl </span>ObjectManager {
+	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_add_interest_full&quot;</span>)]
+	</span><span class="kw">pub fn </span>add_interest&lt;I: Into&lt;ObjectInterest&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: I) {
+		<span class="self">self</span>.add_interest_full(interest.into())
+	}
+
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_new_iterator&quot;</span>)]
 	</span><span class="kw">pub fn </span>objects&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;T&gt; {
 		ValueIterator::with_inner(<span class="self">self</span>.new_iterator().unwrap())
@@ -150,14 +162,16 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_new_filtered_iterator&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_object_manager_new_filtered_iterator_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>filtered&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>ObjectInterest) -&gt; ValueIterator&lt;T&gt; {
-		ValueIterator::with_inner(<span class="self">self</span>.new_filtered_iterator_full(interest).unwrap())
+	</span><span class="kw">pub fn </span>filtered&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: ObjectInterest) -&gt; ValueIterator&lt;T&gt; {
+		ValueIterator::with_inner(<span class="self">self</span>.new_filtered_iterator_full(interest.into()).unwrap())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_lookup&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_object_manager_lookup_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>lookup&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
-		<span class="self">self</span>.lookup_full(interest).map(|obj| <span class="kw">unsafe </span>{ obj.unsafe_cast() })
+	</span><span class="kw">pub fn </span>lookup&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
+		<span class="self">self
+			</span>.lookup_full(interest.into())
+			.map(|obj| <span class="kw">unsafe </span>{ obj.unsafe_cast() })
 	}
 }
 
@@ -172,11 +186,11 @@
 }
 
 <span class="kw">impl</span>&lt;T: ObjectType&gt; InterestContainer&lt;T&gt; <span class="kw">for </span>ObjectManager {
-	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt; {
-		<span class="self">self</span>.filtered(interest)
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt; {
+		<span class="self">self</span>.filtered(interest.into())
 	}
 
-	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
+	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
 		<span class="self">Self</span>::lookup(<span class="self">self</span>, interest)
 	}
 }

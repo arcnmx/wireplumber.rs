@@ -237,7 +237,7 @@
 				}
 
 				<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_activate_closure&quot;</span>)]
-				</span><span class="kw">pub fn </span>activate_closure&lt;P, F: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: F, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;, closure: <span class="kw-2">&amp;</span>glib::Closure) <span class="kw">where
+				</span><span class="kw">pub fn </span>activate_closure&lt;P, F: Into&lt;<span class="macro-nonterminal">$id</span>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, features: F, cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;, closure: glib::Closure) <span class="kw">where
 					</span>P: IsA&lt;gio::Cancellable&gt;,
 				{
 					ObjectExt::activate_closure(<span class="self">self</span>, features.into().into(), cancellable, closure)

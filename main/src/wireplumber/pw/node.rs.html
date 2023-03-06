@@ -102,13 +102,13 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>ports_filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>ObjectInterest) -&gt; ValueIterator&lt;Port&gt; {
+	</span><span class="kw">pub fn </span>ports_filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: ObjectInterest) -&gt; ValueIterator&lt;Port&gt; {
 		ValueIterator::with_inner(<span class="self">self</span>.new_ports_filtered_iterator_full(interest).unwrap())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_lookup_port&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_node_lookup_port_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>port(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>ObjectInterest) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
+	</span><span class="kw">pub fn </span>port(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: ObjectInterest) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
 		<span class="self">self</span>.lookup_port_full(interest)
 	}
 
@@ -152,12 +152,12 @@
 }
 
 <span class="kw">impl </span>InterestContainer&lt;Port&gt; <span class="kw">for </span>Node {
-	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;Port&gt;) -&gt; ValueIterator&lt;Port&gt; {
-		<span class="self">self</span>.ports_filtered(interest)
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;Port&gt;) -&gt; ValueIterator&lt;Port&gt; {
+		<span class="self">self</span>.ports_filtered(interest.into())
 	}
 
-	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;Port&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
-		<span class="self">self</span>.port(interest)
+	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;Port&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
+		<span class="self">self</span>.port(interest.into())
 	}
 }
 

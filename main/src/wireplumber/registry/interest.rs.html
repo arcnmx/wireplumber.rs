@@ -565,6 +565,12 @@
 <a href="#565" id="565">565</a>
 <a href="#566" id="566">566</a>
 <a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+<a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
 </pre><pre class="rust"><code><span class="kw">use crate</span>::{
 	prelude::<span class="kw-2">*</span>,
 	pw::{PipewireObject, Properties},
@@ -646,11 +652,11 @@
 		</span>}
 	}
 
-	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; ValueIterator&lt;T&gt; {
+	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; ValueIterator&lt;T&gt; {
 		container.filter(<span class="self">self</span>)
 	}
 
-	<span class="kw">pub fn </span>lookup&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
+	<span class="kw">pub fn </span>lookup&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
 		container.lookup(<span class="self">self</span>)
 	}
 
@@ -658,9 +664,15 @@
 	// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?
 </span>}
 
+<span class="kw">impl</span>&lt;T: StaticType&gt; From&lt;Interest&lt;T&gt;&gt; <span class="kw">for </span>ObjectInterest {
+	<span class="kw">fn </span>from(i: Interest&lt;T&gt;) -&gt; <span class="self">Self </span>{
+		i.into_inner()
+	}
+}
+
 <span class="kw">pub trait </span>InterestContainer&lt;T: StaticType&gt; {
-	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt;;
-	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span>Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;;
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt;;
+	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;;
 }
 
 <span class="kw">impl</span>&lt;T: StaticType&gt; Deref <span class="kw">for </span>Interest&lt;T&gt; {

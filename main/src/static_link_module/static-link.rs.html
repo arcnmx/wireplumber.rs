@@ -421,7 +421,7 @@
 				<span class="bool-val">true</span>,
 			)))
 			.collect();
-		<span class="kw">let </span>port_outputs = <span class="kw">move </span>|| port_output_interest.filter(output);
+		<span class="kw">let </span>port_outputs = <span class="kw">move </span>|| port_output_interest.clone().filter(output);
 
 		port_inputs.flat_map(<span class="kw">move </span>|i| port_outputs().map(<span class="kw">move </span>|o| Link::new(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span>o, <span class="kw-2">&amp;</span>i, link_props)))
 	})
@@ -444,8 +444,8 @@
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
 	link_props.insert(pw::PW_KEY_OBJECT_LINGER, arg.linger);
 	<span class="kw">while let </span><span class="prelude-val">Some</span>(()) = rx.next().<span class="kw">await </span>{
-		<span class="kw">let </span>inputs = input_interest.filter(<span class="kw-2">&amp;</span>om);
-		<span class="kw">let </span>outputs = || output_interest.filter(<span class="kw-2">&amp;</span>om);
+		<span class="kw">let </span>inputs = input_interest.clone().filter(<span class="kw-2">&amp;</span>om);
+		<span class="kw">let </span>outputs = || output_interest.clone().filter(<span class="kw-2">&amp;</span>om);
 		<span class="kw">let </span>pairs = inputs.flat_map(|i| outputs().map(<span class="kw">move </span>|o| (i.clone(), o)));
 
 		<span class="kw">let </span><span class="kw-2">mut </span>links = Vec::new();
@@ -481,10 +481,10 @@
 	<span class="kw">let </span>om = ObjectManager::new();
 
 	<span class="kw">let </span>output_interest: Interest&lt;Node&gt; = arg.output.iter().collect();
-	om.add_interest_full(<span class="kw-2">&amp;</span>output_interest);
+	om.add_interest(output_interest.clone());
 
 	<span class="kw">let </span>input_interest: Interest&lt;Node&gt; = arg.input.iter().collect();
-	om.add_interest_full(<span class="kw-2">&amp;</span>input_interest);
+	om.add_interest(input_interest.clone());
 
 	<span class="kw">let </span>(link_nodes_signal, rx) = mpsc::channel(<span class="number">1</span>);
 

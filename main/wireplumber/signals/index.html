@@ -11,7 +11,7 @@
 
 <span class="kw">async fn </span>watch_nodes(core: <span class="kw-2">&amp;</span>Core) {
   <span class="kw">let </span>om = ObjectManager::new();
-  om.add_interest_full(<span class="kw-2">&amp;</span>Interest::&lt;Node&gt;::new());
+  om.add_interest(Interest::&lt;Node&gt;::new());
 
   <span class="comment">// register a callback for a signal...
   </span>om.handle(ObjectManager::SIGNAL_INSTALLED, |om, ()| {

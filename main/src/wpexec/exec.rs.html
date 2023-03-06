@@ -430,7 +430,7 @@
 	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
 
 	<span class="comment">// run a (blocking) glib::MainLoop with associated core
-	</span>Core::run(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>props), |context, mainloop, core| {
+	</span>Core::run(<span class="prelude-val">Some</span>(props), |context, mainloop, core| {
 		ctrlc::set_handler({
 			<span class="comment">// exit this loop if we receive a SIGINT
 			</span><span class="kw">let </span>mainloop = mainloop.clone();

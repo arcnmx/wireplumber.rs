@@ -201,7 +201,7 @@
 //!
 //! async fn watch_nodes(core: &amp;Core) {
 //!   let om = ObjectManager::new();
-//!   om.add_interest_full(&amp;Interest::&lt;Node&gt;::new());
+//!   om.add_interest(Interest::&lt;Node&gt;::new());
 //!
 //!   // register a callback for a signal...
 //!   om.handle(ObjectManager::SIGNAL_INSTALLED, |om, ()| {

@@ -656,7 +656,7 @@
 
 	<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
-	</span><span class="kw">pub fn </span>apply&lt;O: IsA&lt;PipewireObject&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;()&gt; {
+	</span><span class="kw">pub fn </span>apply&lt;O: IsA&lt;PipewireObject&gt;&gt;(<span class="self">self</span>, obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;()&gt; {
 		<span class="kw">if </span>!<span class="self">self</span>.is_object() {
 			<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
 				LibraryErrorEnum::InvalidArgument,

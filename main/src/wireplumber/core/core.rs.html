@@ -382,7 +382,7 @@
 		}
 	}
 
-	<span class="kw">pub fn </span>run&lt;F: FnOnce(<span class="kw-2">&amp;</span>MainContext, MainLoop, Core)&gt;(props: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Properties&gt;, setup: F) {
+	<span class="kw">pub fn </span>run&lt;F: FnOnce(<span class="kw-2">&amp;</span>MainContext, MainLoop, Core)&gt;(props: <span class="prelude-ty">Option</span>&lt;Properties&gt;, setup: F) {
 		<span class="kw">let </span>mainloop = MainLoop::new(<span class="prelude-val">None</span>, <span class="bool-val">false</span>);
 		<span class="kw">let </span>context = mainloop.context();
 		<span class="kw">let </span>core = context

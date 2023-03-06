@@ -42,7 +42,7 @@
 
 </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
 #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
-</span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+</span><span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>};
 
 <span class="macro">glib::wrapper! </span>{
     <span class="attr">#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
