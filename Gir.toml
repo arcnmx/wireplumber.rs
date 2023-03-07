@@ -23,7 +23,7 @@ generate = [
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
 	"Wp.Object",
-	"Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Link", "Wp.Port",
+	"Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Port",
 	"Wp.ImplEndpoint",
 	"Wp.FeatureActivationTransition",
 	"Wp.SiEndpoint", "Wp.ImplMetadata",
@@ -154,8 +154,18 @@ status = "generate"
 name = "Wp.Node"
 status = "generate"
 	[[object.function]]
+	name = "get_state"
+	manual = true
+	[[object.function]]
 	pattern = "(lookup_port|new_ports_filtered_iterator)"
 	ignore = true
+
+[[object]]
+name = "Wp.Link"
+status = "generate"
+	[[object.function]]
+	name = "get_state"
+	manual = true
 
 # enums
 

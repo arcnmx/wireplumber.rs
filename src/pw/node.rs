@@ -1,10 +1,34 @@
 use crate::{
 	prelude::*,
-	pw::{self, Node, PipewireObject, Port},
+	pw::{self, Node, NodeState, PipewireObject, Port},
 	registry::{Interest, InterestContainer, ObjectInterest},
 };
 
 impl Node {
+	#[doc(alias = "wp_node_get_state")]
+	#[doc(alias = "get_state")]
+	pub fn state(&self) -> NodeState {
+		unsafe { from_glib(ffi::wp_node_get_state(self.to_glib_none().0, ptr::null_mut())) }
+	}
+
+	#[doc(alias = "wp_node_get_state")]
+	#[doc(alias = "get_state")]
+	pub fn state_result(&self) -> Result<NodeState, Error> {
+		unsafe {
+			let mut error = ptr::null();
+			match from_glib(ffi::wp_node_get_state(self.to_glib_none().0, &mut error)) {
+				NodeState::Error => {
+					let msg: Option<&glib::GStr> = from_glib_none(error);
+					Err(Error::new(
+						LibraryErrorEnum::OperationFailed,
+						msg.map(|s| s.as_str()).unwrap_or("unspecified node state error"),
+					))
+				},
+				state => Ok(state),
+			}
+		}
+	}
+
 	#[doc(alias = "wp_node_new_ports_iterator")]
 	pub fn ports(&self) -> ValueIterator<Port> {
 		ValueIterator::with_inner(self.new_ports_iterator().unwrap())
@@ -86,5 +110,14 @@ impl IntoIterator for Node {
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.ports()
+	}
+}
+
+impl<E> From<Result<NodeState, E>> for NodeState {
+	fn from(res: Result<NodeState, E>) -> Self {
+		match res {
+			Ok(state) => state,
+			Err(_) => NodeState::Error,
+		}
 	}
 }

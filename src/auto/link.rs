@@ -12,7 +12,7 @@ use glib::{prelude::*,signal::{connect_raw, SignalHandlerId}};
 use std::{mem};
 #[cfg(any(feature = "v0_4_11", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
-use std::{boxed::Box as Box_,mem::transmute,ptr};
+use std::{boxed::Box as Box_,mem::transmute};
 
 glib::wrapper! {
     #[doc(alias = "WpLink")]
@@ -42,18 +42,6 @@ impl Link {
             let mut input_port = mem::MaybeUninit::uninit();
             ffi::wp_link_get_linked_object_ids(self.to_glib_none().0, output_node.as_mut_ptr(), output_port.as_mut_ptr(), input_node.as_mut_ptr(), input_port.as_mut_ptr());
             (output_node.assume_init(), output_port.assume_init(), input_node.assume_init(), input_port.assume_init())
-        }
-    }
-
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
-    #[doc(alias = "wp_link_get_state")]
-    #[doc(alias = "get_state")]
-    pub fn state(&self) -> (LinkState, glib::GString) {
-        unsafe {
-            let mut error = ptr::null();
-            let ret = from_glib(ffi::wp_link_get_state(self.to_glib_none().0, &mut error));
-            (ret, from_glib_none(error))
         }
     }
 

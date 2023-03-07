@@ -1,3 +1,5 @@
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+use crate::pw::LinkState;
 use crate::{
 	core::Core,
 	prelude::*,
@@ -22,6 +24,34 @@ impl Link {
 
 	pub fn error_is_exists(e: &Error) -> bool {
 		e.message().ends_with(": File exists") // TODO
+	}
+
+	#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+	#[doc(alias = "wp_link_get_state")]
+	#[doc(alias = "get_state")]
+	pub fn state(&self) -> LinkState {
+		unsafe { from_glib(ffi::wp_link_get_state(self.to_glib_none().0, ptr::null_mut())) }
+	}
+
+	#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+	#[doc(alias = "wp_link_get_state")]
+	#[doc(alias = "get_state")]
+	pub fn state_result(&self) -> Result<LinkState, Error> {
+		unsafe {
+			let mut error = ptr::null();
+			match from_glib(ffi::wp_link_get_state(self.to_glib_none().0, &mut error)) {
+				LinkState::Error => {
+					let msg: Option<&glib::GStr> = from_glib_none(error);
+					Err(Error::new(
+						LibraryErrorEnum::OperationFailed,
+						msg.map(|s| s.as_str()).unwrap_or("unspecified link state error"),
+					))
+				},
+				state => Ok(state),
+			}
+		}
 	}
 }
 
@@ -69,5 +99,15 @@ impl StaticType for LinkFeatures {
 impl StaticType for LinkFeatures {
 	fn static_type() -> Type {
 		pw::ProxyFeatures::static_type()
+	}
+}
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+impl<E> From<Result<LinkState, E>> for LinkState {
+	fn from(res: Result<LinkState, E>) -> Self {
+		match res {
+			Ok(state) => state,
+			Err(_) => LinkState::Error,
+		}
 	}
 }
