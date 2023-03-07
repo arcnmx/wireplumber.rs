@@ -101,3 +101,13 @@ impl StaticType for LinkFeatures {
 		pw::ProxyFeatures::static_type()
 	}
 }
+
+#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+impl<E> From<Result<LinkState, E>> for LinkState {
+	fn from(res: Result<LinkState, E>) -> Self {
+		match res {
+			Ok(state) => state,
+			Err(_) => LinkState::Error,
+		}
+	}
+}

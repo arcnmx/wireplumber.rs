@@ -112,3 +112,12 @@ impl IntoIterator for Node {
 		self.ports()
 	}
 }
+
+impl<E> From<Result<NodeState, E>> for NodeState {
+	fn from(res: Result<NodeState, E>) -> Self {
+		match res {
+			Ok(state) => state,
+			Err(_) => NodeState::Error,
+		}
+	}
+}
