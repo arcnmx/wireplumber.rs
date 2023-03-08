@@ -38,11 +38,11 @@
     "gir-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1675929312,
-        "narHash": "sha256-KdhXUx8ze/9eVVEXZsZY2YhOtwriEfKd0osoeDAVvGw=",
+        "lastModified": 1678296057,
+        "narHash": "sha256-ry+powLRLY4dws7Yis7DvbLxXRxsYKjbHeILOEWxvbk=",
         "owner": "gtk-rs",
         "repo": "gir",
-        "rev": "43b9242f6689ea4da4f397ab8b6e668ed4a8b7e5",
+        "rev": "bdec498fdb5123746ba4295af32725260f680576",
         "type": "github"
       },
       "original": {
