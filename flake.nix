@@ -109,7 +109,7 @@
           mainProgram = "wpexec";
         };
       };
-      gir-rs-0_16 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage rec {
+      gir-rs-0_17 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage rec {
         inherit (gir-rs) postPatch meta pname;
         version = "0.17-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
 
@@ -121,7 +121,10 @@
             "rustdoc-stripper-0.1.18" = "sha256-b+RRXJDGULEvkIZDBzU/ZchVF63pX0S9hBupeP12CkU=";
           };
         };
-        buildType = "debug";
+        buildType = let
+          # work around gir panics like: thread 'main' panicked at 'attempt to subtract with overflow', src/analysis/function_parameters.rs:243:46
+          girIsBugged = true;
+        in if girIsBugged then "release" else "debug";
         doCheck = false;
       };
       wireplumber-gir = { runCommand, xmlstarlet, wireplumber }: runCommand "wireplumber-${wireplumber.version}.gir" {
@@ -168,7 +171,6 @@
           -i '///_:function[@name="get_library_version"]' -t attr -n version -v 0.4.12 \
           -i '///_:function[@name="get_library_api_version"]' -t attr -n version -v 0.4.12 \
           -u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
-          -i '/_:repository/_:namespace' -t elem -n package \
           "$wireplumber/$girName" > $out/$girName
         xmlstarlet ed -L \
           -i '/_:repository/_:package[not(@name)]' -t attr -n name -v wireplumber-0.4 \
@@ -234,15 +236,15 @@
         src = source;
       };
     };
-    legacyPackages = { callPackageSet }: callPackageSet {
+    legacyPackages = {
       source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
 
-      wpdev-gir = { writeShellScriptBin, gir-rs-0_16, wireplumber-gir, gobject-introspection }: let
+      wpdev-gir = { writeShellScriptBin, gir-rs-0_17, wireplumber-gir, gobject-introspection }: let
         gir-dirs = nixlib.concatMapStringsSep " " (dev:
           "--girs-directories ${dev}/share/gir-1.0"
         ) [ wireplumber-gir gobject-introspection.dev ];
       in writeShellScriptBin "gir" ''
-        ${nixlib.getExe gir-rs-0_16} ${gir-dirs} "$@"
+        ${nixlib.getExe gir-rs-0_17} ${gir-dirs} "$@"
         if [[ $# -eq 0 ]]; then
           if [[ -d src/auto ]]; then
             sed -i -e '/^\/\/ from \/nix/d' src/auto/*.rs
@@ -321,7 +323,7 @@
       outputHashes = { rust'builders }: rust'builders.cargoOutputHashes {
         inherit (self.lib) crate;
       };
-    } { };
+    };
     lib = with nixlib; {
       featureVersions = [
         "0.4.3" "0.4.5"

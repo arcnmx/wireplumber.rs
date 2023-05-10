@@ -35,7 +35,7 @@ impl ImplModule {
     }
 
     pub fn set_properties(&self, properties: Option<&Properties>) {
-        glib::ObjectExt::set_property(self,"properties", &properties)
+        glib::ObjectExt::set_property(self,"properties", properties)
     }
 
     //#[doc(alias = "pw-impl-module")]
