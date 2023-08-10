@@ -51,3 +51,19 @@ This project aims to facilitate the following applications:
 * Enabling Rust to be a viable language for writing session management logic as an alternative to the officially supported Lua scripting engine or GObject C APIs
 * WirePlumber plugins that can augment or expose APIs for Lua configuration scripts to use
 * Stand-alone pipewire clients as an alternative to https://gitlab.freedesktop.org/pipewire/pipewire-rs[pipewire-rs]
+
+== Development
+
+Helper commands are available via link:./ci/bin/cargo-wp[`+cargo wp+`] to facilitate development.
+Adding link:./ci/bin[ci/bin] to your `+PATH+` is recommended - the provided https://direnv.net/[direnv shell] is set up to do this by default.
+
+.Commands:
+* `+cargo wp gir+` will update the link:./src/auto[auto-generated source] for the main crate
+* `+cargo wp sys gir+` will update the link:./sys/generate[sys bindings source]
+* `+cargo wp todo+` will display incomplete interfaces (this is just an alias for `+gir -m not_bound+`)
+* `+cargo wp fmt+` will rustfmt the codebase
+
+=== GIR Schema
+
+The WirePlumber GIR data is kept in link:./sys/generate/src/Wp-0.4.gir[Wp-0.4.gir].
+A series of fixes must be applied to the upstream XML via the link:./ci/wp-gir-filter.sh[wp-gir-filter] script.

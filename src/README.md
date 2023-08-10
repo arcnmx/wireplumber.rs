@@ -33,3 +33,19 @@ This project aims to facilitate the following applications:
 - WirePlumber plugins that can augment or expose APIs for Lua configuration scripts to use
 
 - Stand-alone pipewire clients as an alternative to [pipewire-rs](https://gitlab.freedesktop.org/pipewire/pipewire-rs)
+
+# Development
+
+Helper commands are available via [`cargo wp`](./ci/bin/cargo-wp) to facilitate development. Adding [ci/bin](./ci/bin) to your `PATH` is recommended - the provided [direnv shell](https://direnv.net/) is set up to do this by default.
+
+- `cargo wp gir` will update the [auto-generated source](./src/auto) for the main crate
+
+- `cargo wp sys gir` will update the [sys bindings source](./sys/generate)
+
+- `cargo wp todo` will display incomplete interfaces (this is just an alias for `gir -m not_bound`)
+
+- `cargo wp fmt` will rustfmt the codebase
+
+## GIR Schema
+
+The WirePlumber GIR data is kept in [Wp-0.4.gir](./sys/generate/src/Wp-0.4.gir). A series of fixes must be applied to the upstream XML via the [wp-gir-filter](./ci/wp-gir-filter.sh) script.

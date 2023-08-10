@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -eu
+
+WP_CI_BIN="$(dirname "${BASH_SOURCE[0]}")"
+WP_CI="$WP_CI_BIN/.."
+WP_ROOT="$WP_CI/.."
+
+if [[ $# -gt 0 ]]; then
+	shift
+fi
+
+run() {
+	WP_CMD="${1-}"
+	if [[ $# -gt 0 ]]; then
+		shift
+	fi
+
+	case "$WP_CMD" in
+		todo)
+			run gir -m not_bound "$@"
+			;;
+		gir)
+			exec "$WP_CI/gir.sh" "$@"
+			;;
+		commitlint)
+			WP_COMMITLINTRC="${WP_COMMITLINTRC-$(nix build --no-link --print-out-paths "${WP_ROOT}#wpdev-commitlintrc")}"
+			exec commitlint --config "$WP_COMMITLINTRC" "$@"
+			;;
+		fmt)
+			exec cargo fmt -p wireplumber -p wp-examples "$@"
+			;;
+		sys)
+			cd "$WP_ROOT/sys/generate"
+			if [[ $# -eq 0 ]]; then
+				set -- gir
+			fi
+			run "$@"
+			;;
+		*)
+			echo expected subcommand: gir, sys, todo, fmt, commitlint
+			;;
+	esac
+}
+
+run "$@"

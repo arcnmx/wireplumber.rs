@@ -8,6 +8,7 @@ split_build_rs = true
 generate_display_trait = false
 # trust_return_value_nullability = true # TODO: manually go through everything...
 single_version_file = "sys/generate/src/Gir.version"
+girs_directories = ["sys/generate/src", "gir-files"]
 
 external_libraries = ["GLib", "GObject", "Gio"]
 generate = [

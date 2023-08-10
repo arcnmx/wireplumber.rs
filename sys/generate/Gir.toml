@@ -6,6 +6,7 @@ min_cfg_version = "0.4"
 work_mode = "sys"
 split_build_rs = true
 single_version_file = "src/Gir-sys.version"
+girs_directories = ["src", "../../gir-files"]
 
 external_libraries = ["GLib", "GObject", "Gio"]
 

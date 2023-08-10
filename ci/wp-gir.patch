@@ -1,0 +1,104 @@
+diff --git a/src/auto/flags.rs b/src/auto/flags.rs
+index 42892a73..2e986023 100644
+--- a/src/auto/flags.rs
++++ b/src/auto/flags.rs
+@@ -363,8 +363,6 @@ bitflags! {
+         #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+         #[doc(alias = "WP_LINK_FEATURE_ESTABLISHED")]
+         const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as _;
+-
+-        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
+     }
+ }
+ 
+@@ -386,6 +384,13 @@ impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
+     }
+ }
+ 
++impl StaticType for LinkFeatures {
++    #[inline]
++    fn static_type() -> Type {
++        unsafe { from_glib(ffi::wp_link_features_get_type()) }
++    }
++}
++
+ impl glib::HasParamSpec for LinkFeatures {
+                 type ParamSpec = glib::ParamSpecFlags;
+                 type SetValue = Self;
+@@ -524,8 +529,6 @@ bitflags! {
+     pub struct MetadataFeatures: u32 {
+         #[doc(alias = "WP_METADATA_FEATURE_DATA")]
+         const DATA = ffi::WP_METADATA_FEATURE_DATA as _;
+-
+-        const PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
+     }
+ }
+ 
+@@ -605,8 +608,6 @@ bitflags! {
+     pub struct NodeFeatures: u32 {
+         #[doc(alias = "WP_NODE_FEATURE_PORTS")]
+         const PORTS = ffi::WP_NODE_FEATURE_PORTS as _;
+-
+-        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
+     }
+ }
+ 
+@@ -777,10 +778,6 @@ bitflags! {
+         const PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG as _;
+         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE")]
+         const PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE as _;
+-
+-        #[doc(alias = "WP_PROXY_FEATURE_CUSTOM_START")]
+-        const PROXY_FEATURE_CUSTOM_START = 1 << 16;
+-        const PROXY_FEATURE_CUSTOM = 0xff00;
+     }
+ }
+ 
+@@ -941,8 +938,6 @@ bitflags! {
+     pub struct SpaDeviceFeatures: u32 {
+         #[doc(alias = "WP_SPA_DEVICE_FEATURE_ENABLED")]
+         const ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED as _;
+-
+-        const PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
+     }
+ }
+ 
+diff --git a/src/auto/metadata.rs b/src/auto/metadata.rs
+index a1cf6516..6d4592c0 100644
+--- a/src/auto/metadata.rs
++++ b/src/auto/metadata.rs
+@@ -57,7 +57,7 @@ impl<O: IsA<Metadata>> MetadataExt for O {
+ 
+     fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, glib::GString) {
+         unsafe {
+-            let mut type_ = ptr::null();
++            let mut type_ = ptr::null_mut();
+             let ret = from_glib_none(ffi::wp_metadata_find(self.as_ref().to_glib_none().0, subject, key.to_glib_none().0, &mut type_));
+             (ret, from_glib_full(type_))
+         }
+diff --git a/src/auto/si_adapter.rs b/src/auto/si_adapter.rs
+index eba3ab76..aecf9355 100644
+--- a/src/auto/si_adapter.rs
++++ b/src/auto/si_adapter.rs
+@@ -48,7 +48,7 @@ pub trait SiAdapterExt: 'static {
+ impl<O: IsA<SiAdapter>> SiAdapterExt for O {
+     fn ports_format(&self) -> (SpaPod, Option<glib::GString>) {
+         unsafe {
+-            let mut mode = ptr::null();
++            let mut mode = ptr::null_mut();
+             let ret = from_glib_full(ffi::wp_si_adapter_get_ports_format(self.as_ref().to_glib_none().0, &mut mode));
+             (ret, from_glib_full(mode))
+         }
+diff --git a/src/auto/spa_pod_parser.rs b/src/auto/spa_pod_parser.rs
+index 42347fb0..590ce6ad 100644
+--- a/src/auto/spa_pod_parser.rs
++++ b/src/auto/spa_pod_parser.rs
+@@ -135,7 +135,7 @@ impl SpaPodParser {
+     #[doc(alias = "get_string")]
+     pub fn string(&self) -> Option<glib::GString> {
+         unsafe {
+-            let mut value = ptr::null();
++            let mut value = ptr::null_mut();
+             let ret = from_glib(ffi::wp_spa_pod_parser_get_string(self.to_glib_none().0, &mut value));
+             if ret { Some(from_glib_full(value)) } else { None }
+         }

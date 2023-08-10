@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -eu
+
+WP_CI_BIN="$(dirname "${BASH_SOURCE[0]}")"
+WP_ROOT="$WP_CI_BIN/../.."
+
+CARGO_RUN_ARGS=${CARGO_RUN_ARGS-"--quiet"}
+
+cargo run $CARGO_RUN_ARGS --manifest-path "$WP_ROOT/Cargo.toml" -p wp-examples --bin wpexec -- "$@"

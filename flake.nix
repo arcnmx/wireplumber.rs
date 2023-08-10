@@ -22,17 +22,19 @@
         mkShell, writeShellScriptBin, wpexec
       , wireplumber, pipewire, glib
       , pkg-config
-      , wireplumber-gir, wpdev-gir, wpdev-todo, wpdev-commitlint
+      , wireplumber-gir, gobject-introspection, gir-rs-0_17
+      , commitlint
       , enableRustdoc ? false
       , enableRust ? true, cargo
       , rustTools ? [ ]
-      }: let
-      in mkShell {
+      }: mkShell {
         inherit rustTools;
+        strictDeps = true;
         buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [
           pkg-config
-          wpdev-commitlint wpdev-gir wpdev-todo
+          gir-rs-0_17
+          commitlint
           (writeShellScriptBin "generate" "nix run .#wpdev-generate")
         ] ++ nixlib.optional enableRust cargo;
         RUSTDOCFLAGS = rust.lib.rustdocFlags {
@@ -54,7 +56,10 @@
             libspa-sys = pipewire;
           };
         };
-        GIR_FILE = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
+        WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
+        GIRSPATH = nixlib.makeSearchPathOutput "dev" "share/gir-1.0" [
+          wireplumber-gir gobject-introspection
+        ];
         inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
       };
       stable = { rust'stable, outputs'devShells'plain }: outputs'devShells'plain.override {
@@ -127,67 +132,21 @@
         in if girIsBugged then "release" else "debug";
         doCheck = false;
       };
-      wireplumber-gir = { runCommand, xmlstarlet, wireplumber }: runCommand "wireplumber-${wireplumber.version}.gir" {
+      wireplumber-gir = { runCommand, runtimeShell, xmlstarlet, wireplumber }: runCommand "wireplumber-${wireplumber.version}.gir" {
         girName = "share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber.version}.gir";
         wireplumber = wireplumber.dev;
         nativeBuildInputs = [ xmlstarlet ];
-        # note: a pw_permission is actually 2x uint32
       } ''
         mkdir -p $out/$(dirname $girName)
-        xmlstarlet ed \
-          -i '///_:type[not(@name) and @c:type="pw_permission"]' -t attr -n name -v guint64 \
-          -u '///_:constant[@c:type="WP_LOG_LEVEL_TRACE"]/@value' -v $((1<<8)) \
-          -u '///_:constant[@c:type="WP_PIPEWIRE_OBJECT_FEATURES_ALL"]/@value' -v $((992|17)) \
-          -i '///_:record[@c:type="WpIteratorMethods"]' -t attr -n glib:get-type -v wp_iterator_methods_get_type \
-          -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_control"]//_:parameter[@name="ctl_type"]/@transfer-ownership' -v none \
-          -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="key"]/@transfer-ownership' -v none \
-          -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_property"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
-          -u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_string"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
-          -i '///_:class[@c:type="WpMetadata"]/_:method[@name="find"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:record[@c:type="WpSpaJsonParser"]/_:method[@name="get_json"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:record[@c:type="WpSpaPodParser"]/_:method[@name="get_pod"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:class[@name="SpaType"]/_:method[@name="get_values_table"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:class[@name="SpaType"]/_:method[@name="name"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:function[@name="find_file"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:function[@name="spa_id_value_from_name"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:function[@name="spa_id_value_from_number"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:function[@name="spa_id_value_from_short_name"]/_:return-value' -t attr -n nullable -v 1 \
-          -i '///_:class[@c:type="WpFactory"]' -t attr -n version -v 0.4.5 \
-          -i '///_:record[@c:type="WpFactoryClass"]' -t attr -n version -v 0.4.5 \
-          -i '///_:record[@c:type="WpSpaJson"]' -t attr -n version -v 0.4.8 \
-          -i '///_:record[@c:type="WpSpaJsonParser"]' -t attr -n version -v 0.4.8 \
-          -i '///_:record[@c:type="WpSpaJsonBuilder"]' -t attr -n version -v 0.4.8 \
-          -i '///_:record[@c:type="WpSpaJson"]/_:constructor[@name="new_from_stringn"]' -t attr -n version -v 0.4.10 \
-          -i '///_:enumeration[@c:type="WpSiAdapterPortsState"]' -t attr -n version -v 0.4.10 \
-          -i '///_:interface[@c:type="WpSiAdapter"]/glib:signal[@name="adapter-ports-state-changed"]' -t attr -n version -v 0.4.10 \
-          -i '///_:class[@c:type="WpDbus"]' -t attr -n version -v 0.4.11 \
-          -i '///_:enumeration[@c:type="WpLinkState"]' -t attr -n version -v 0.4.11 \
-          -i '///_:enumeration[@c:type="WpDBusState"]' -t attr -n version -v 0.4.11 \
-          -i '///_:bitfield[@c:type="WpDbusFeatures"]' -t attr -n version -v 0.4.11 \
-          -i '///_:bitfield[@c:type="WpLinkFeatures"]' -t attr -n version -v 0.4.11 \
-          -i '///_:class[@c:type="WpCore"]/_:method[@name="get_vm_type"]' -t attr -n version -v 0.4.11 \
-          -i '///_:class[@c:type="WpLink"]/_:property[@name="state"]' -t attr -n version -v 0.4.11 \
-          -i '///_:class[@c:type="WpLink"]/glib:signal[@name="state-changed"]' -t attr -n version -v 0.4.11 \
-          -i '///_:function[@name="get_library_version"]' -t attr -n version -v 0.4.12 \
-          -i '///_:function[@name="get_library_api_version"]' -t attr -n version -v 0.4.12 \
-          -u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
-          "$wireplumber/$girName" > $out/$girName
-        xmlstarlet ed -L \
-          -i '/_:repository/_:package[not(@name)]' -t attr -n name -v wireplumber-0.4 \
-          $out/$girName
+        ${runtimeShell} ${./ci/wp-gir-filter.sh} < "$wireplumber/$girName" > $out/$girName
       '';
     };
     checks = {
-      wpexec = { wptest, writeText, wpexec, lib }: let
+      wpexec = { wptest, runtimeShell, wpexec, lib }: let
         key = placeholder "wpexec";
-        arg = builtins.toJSON [ key ];
-        script = writeText "wpexec.lua" ''
-          Debug.dump_table(...)
-          Core.quit()
-        '';
       in wptest "wpexec" ''
-        set +o pipefail
-        timeout 5 ${wpexec}/bin/wpexec --json ${lib.escapeShellArg arg} ${script} | grep -F ${key}
+        export PATH="$PATH:${lib.makeBinPath [ wpexec ]}"
+        ${runtimeShell} ${./ci/test-wpexec.sh} ${./ci/test-wpexec.lua} ${lib.escapeShellArg key} &&
         touch $out
       '';
       rustfmt = { rust'builders, source }: rust'builders.check-rustfmt-unstable {
@@ -239,21 +198,6 @@
     legacyPackages = {
       source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
 
-      wpdev-gir = { writeShellScriptBin, gir-rs-0_17, wireplumber-gir, gobject-introspection }: let
-        gir-dirs = nixlib.concatMapStringsSep " " (dev:
-          "--girs-directories ${dev}/share/gir-1.0"
-        ) [ wireplumber-gir gobject-introspection.dev ];
-      in writeShellScriptBin "gir" ''
-        ${nixlib.getExe gir-rs-0_17} ${gir-dirs} "$@"
-        if [[ $# -eq 0 ]]; then
-          if [[ -d src/auto ]]; then
-            sed -i -e '/^\/\/ from \/nix/d' src/auto/*.rs
-          elif [[ -f tests/abi.rs ]]; then
-            sed -i -e '/^\/\/ from \/nix/d' build{,_version}.rs {src,tests}/*.rs tests/*.{h,c}
-          fi
-        fi
-      '';
-
       docs = { rust'builders, outputs'devShells'plain, wpexec, source }: let
         shell = outputs'devShells'plain.override { enableRust = false; enableRustdoc = true; };
       in rust'builders.cargoDoc {
@@ -283,13 +227,6 @@
       );
       wpdev-commitlint = { writeShellScriptBin, commitlint, wpdev-commitlintrc }: writeShellScriptBin "commitlint" ''
         exec ${commitlint}/bin/commitlint --config ${wpdev-commitlintrc} "$@"
-      '';
-      wpdev-todo = { writeShellScriptBin, wpdev-gir }: writeShellScriptBin "todo" ''
-        cd ${toString ./.}
-        exec ${nixlib.getExe wpdev-gir} -m not_bound
-      '';
-      wpdev-fmt = { writeShellScriptBin }: writeShellScriptBin "wpfmt" ''
-        cargo fmt -p wireplumber -p wp-examples
       '';
       wpdev-generate = {
         rust'builders

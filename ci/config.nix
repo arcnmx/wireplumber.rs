@@ -28,6 +28,9 @@ in {
     ci.gh-actions = {
       enable = true;
       emit = true;
+      checkoutOptions = {
+        submodules = false;
+      };
     };
     cache.cachix = {
       ci.signingKey = "";
