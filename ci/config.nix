@@ -1,12 +1,12 @@
-{ config, channels, pkgs, env, lib, ... }: with pkgs; with lib; let
-  wireplumber-rust = import ../. { inherit pkgs; };
-  inherit (wireplumber-rust) checks legacyPackages packages devShells;
+{ config, pkgs, env, lib, ... }: with pkgs; with lib; let
+  wireplumber-rust = import ../. { };
+  inherit (wireplumber-rust) inputs checks legacyPackages packages devShells;
   wplib = wireplumber-rust.lib;
   wpexec = packages.wpexec.override {
     buildType = "debug";
   };
   versionFeature = toString (mapNullable (f: "--features ${f}") (wplib.featureForVersion wireplumber.version));
-  cargo-bin = config: "${if config.enableNightly then rustChannel.buildChannel.cargo else pkgs.cargo}/bin/cargo";
+  cargo-bin = config: "${if config.enableNightly then rustChannel.buildChannel.cargo else inputs.nixpkgs.legacyPackages.${builtins.currentSystem}.cargo}/bin/cargo";
   cargo = config: name: command: args: ci.command ({
     name = "cargo-${name}";
     displayName = "cargo " + command;
@@ -18,13 +18,13 @@
     PKG_CONFIG_PATH = makeSearchPath "lib/pkgconfig" wpexec.buildInputs;
     "AR_${replaceStrings [ "-" ] [ "_" ] hostPlatform.config}" = "${stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}ar";
   } // args);
-  rustChannel = channels.rust.nightly;
+  rustChannel = inputs.rust.legacyPackages.${builtins.currentSystem}.unstable;
   v0' = builtins.match ''^(v)?[0-9].*$'';
   v0 = v: v != null && v0' v != null;
 in {
   config = {
     name = "wireplumber.rs";
-    ci.version = "nix2.4-broken"; # for checkout@v2
+    ci.version = "v0.6";
     ci.gh-actions = {
       enable = true;
       emit = true;
@@ -34,8 +34,7 @@ in {
       arc.enable = true;
     };
     channels = {
-      nixpkgs = mkIf (env.platform != "impure") "22.11";
-      rust = "master";
+      nixpkgs = mkIf (env.platform != "impure") "23.05";
     };
     environment = {
       test = {
