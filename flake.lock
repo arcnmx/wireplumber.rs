@@ -38,11 +38,11 @@
     "gir-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1678790141,
-        "narHash": "sha256-WpTyT62bykq/uwzBFQXeJ1HxR1a2vKmtid8YAzk7J+Q=",
+        "lastModified": 1688369521,
+        "narHash": "sha256-aA3Fwsyx4OUxbsMtwtFwAzfp+EzqTxrWQAq9X6fb0Zo=",
         "owner": "gtk-rs",
         "repo": "gir",
-        "rev": "c0ef822cedcae0ed40e155c27fdc7e52560f4d3e",
+        "rev": "d1b319f6d8fb38f917041bc3562189f3bf6cafb2",
         "type": "github"
       },
       "original": {
@@ -69,11 +69,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1683690814,
-        "narHash": "sha256-O/yQ1iOy8IWtY1PBGuGdAmsAv3VzDFQ/f7wjZfpM+Is=",
+        "lastModified": 1691558362,
+        "narHash": "sha256-DlSTqHb+/HL0q9bp/+03/vpLZZAqPYem7oh5OyZdSbw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7caa1b575c10a47ce979ca672aeea59ed21f97e8",
+        "rev": "e74fa540bbc7e5518bbf5cf5c0ab7034033deeaa",
         "type": "github"
       },
       "original": {

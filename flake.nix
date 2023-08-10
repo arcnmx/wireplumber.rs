@@ -114,7 +114,7 @@
           mainProgram = "wpexec";
         };
       };
-      gir-rs-0_17 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage rec {
+      gir-rs-0_17 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage {
         inherit (gir-rs) postPatch meta pname;
         version = "0.17-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
 
@@ -123,7 +123,7 @@
         cargoLock = {
           lockFile = "${inputs.gir-src}/Cargo.lock";
           outputHashes = {
-            "rustdoc-stripper-0.1.18" = "sha256-b+RRXJDGULEvkIZDBzU/ZchVF63pX0S9hBupeP12CkU=";
+            "rustdoc-stripper-0.1.19" = "sha256-QPqDiU8Y1yfoLi5fRvI9Q7YMsAOZ7oywkzAgH8sjCM0=";
           };
         };
         buildType = let
