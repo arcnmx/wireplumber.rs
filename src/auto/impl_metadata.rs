@@ -21,8 +21,8 @@ impl ImplMetadata {
         }
     }
 
-    #[cfg(any(feature = "v0_4_3", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_3")))]
+    #[cfg(feature = "v0_4_3")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_3")))]
     #[doc(alias = "wp_impl_metadata_new_full")]
     pub fn new_full(core: &Core, name: Option<&str>, properties: Option<Properties>) -> ImplMetadata {
         unsafe {
@@ -31,10 +31,10 @@ impl ImplMetadata {
     }
 
     pub fn name(&self) -> Option<glib::GString> {
-        glib::ObjectExt::property(self, "name")
+        ObjectExt::property(self, "name")
     }
 
     pub fn properties(&self) -> Option<Properties> {
-        glib::ObjectExt::property(self, "properties")
+        ObjectExt::property(self, "properties")
     }
 }

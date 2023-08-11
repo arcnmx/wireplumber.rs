@@ -3,7 +3,7 @@ use {
 	glib::prelude::*,
 };
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 #[derive(Debug)]
 pub struct SpaProps {
 	params: SpaPod,

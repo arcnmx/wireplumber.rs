@@ -19,15 +19,18 @@ impl SiAcquisition {
     
 }
 
-pub trait SiAcquisitionExt: 'static {
-    #[doc(alias = "wp_si_acquisition_release")]
-    fn release(&self, acquisitor: &impl IsA<SiLink>, item: &impl IsA<SiLinkable>);
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::SiAcquisition>> Sealed for T {}
 }
 
-impl<O: IsA<SiAcquisition>> SiAcquisitionExt for O {
+pub trait SiAcquisitionExt: IsA<SiAcquisition> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_si_acquisition_release")]
     fn release(&self, acquisitor: &impl IsA<SiLink>, item: &impl IsA<SiLinkable>) {
         unsafe {
             ffi::wp_si_acquisition_release(self.as_ref().to_glib_none().0, acquisitor.as_ref().to_glib_none().0, item.as_ref().to_glib_none().0);
         }
     }
 }
+
+impl<O: IsA<SiAcquisition>> SiAcquisitionExt for O {}

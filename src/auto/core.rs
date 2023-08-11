@@ -100,8 +100,8 @@ impl Core {
         }
     }
 
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "wp_core_get_vm_type")]
     #[doc(alias = "get_vm_type")]
     pub fn vm_type(&self) -> Option<glib::GString> {
@@ -205,8 +205,8 @@ impl Core {
         }))
     }
 
-    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    #[cfg(feature = "v0_4_6")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     #[doc(alias = "wp_core_sync_closure")]
     pub fn sync_closure(&self, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: &glib::Closure) -> bool {
         unsafe {

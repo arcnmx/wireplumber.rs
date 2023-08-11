@@ -2,16 +2,16 @@
 // DO NOT EDIT
 
 use crate::{Core,GlobalProxy,Object,PipewireObject,Properties,Proxy};
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 use crate::{LinkState};
 use glib::{translate::*};
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId}};
 use std::{mem};
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 use std::{boxed::Box as Box_,mem::transmute};
 
 glib::wrapper! {
@@ -45,8 +45,8 @@ impl Link {
         }
     }
 
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "state-changed")]
     pub fn connect_state_changed<F: Fn(&Self, LinkState, LinkState) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn state_changed_trampoline<F: Fn(&Link, LinkState, LinkState) + 'static>(this: *mut ffi::WpLink, object: ffi::WpLinkState, p0: ffi::WpLinkState, f: glib::ffi::gpointer) {
@@ -60,8 +60,8 @@ impl Link {
         }
     }
 
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "state")]
     pub fn connect_state_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_state_trampoline<F: Fn(&Link) + 'static>(this: *mut ffi::WpLink, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {

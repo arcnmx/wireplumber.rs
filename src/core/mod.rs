@@ -36,7 +36,7 @@
 //! - [Core](https://pipewire.pages.freedesktop.org/wireplumber/c_api/core_api.html)
 //! - [Object](https://pipewire.pages.freedesktop.org/wireplumber/c_api/object_api.html)
 
-#[cfg(any(feature = "v0_4_5", feature = "dox"))]
+#[cfg(feature = "v0_4_5")]
 pub use crate::auto::Factory;
 pub use {
 	self::{

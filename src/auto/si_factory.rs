@@ -39,25 +39,26 @@ impl SiFactory {
     }
 }
 
-pub trait SiFactoryExt: 'static {
-    #[doc(alias = "wp_si_factory_construct")]
-    fn construct(&self, core: &Core) -> Option<SessionItem>;
-
-    #[doc(alias = "wp_si_factory_get_name")]
-    #[doc(alias = "get_name")]
-    fn name(&self) -> Option<glib::GString>;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::SiFactory>> Sealed for T {}
 }
 
-impl<O: IsA<SiFactory>> SiFactoryExt for O {
+pub trait SiFactoryExt: IsA<SiFactory> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_si_factory_construct")]
     fn construct(&self, core: &Core) -> Option<SessionItem> {
         unsafe {
             from_glib_full(ffi::wp_si_factory_construct(self.as_ref().to_glib_none().0, core.to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_si_factory_get_name")]
+    #[doc(alias = "get_name")]
     fn name(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::wp_si_factory_get_name(self.as_ref().to_glib_none().0))
         }
     }
 }
+
+impl<O: IsA<SiFactory>> SiFactoryExt for O {}

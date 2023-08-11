@@ -14,22 +14,22 @@ use {
 };
 
 impl SpaPod {
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 	pub fn spa_id(&self) -> Option<Id> {
 		self.id().map(Id)
 	}
 
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 	pub fn spa_fd(&self) -> Option<Fd> {
 		self.fd().map(Fd)
 	}
 
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 	pub fn deserialize<'de, P: PodDeserialize<'de>>(&'de self) -> Result<P, DeserializeError<&'de [u8]>> {
 		unsafe { PodDeserializer::deserialize_ptr(NonNull::new_unchecked(self.spa_pod_raw() as *const _ as *mut _)) }
 	}
 
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 	pub fn serialize<P: PodSerialize>(value: &P) -> Result<Self, GenError> {
 		use std::io::Cursor;
 
@@ -43,7 +43,7 @@ impl SpaPod {
 	}
 
 	#[cfg(none)]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 	pub fn to_pod_value(&self) -> Result<Value, DeserializeError<&[u8]>> {
 		// TODO: broken due to https://gitlab.freedesktop.org/pipewire/pipewire-rs/-/issues/31
 		self.deserialize()
@@ -90,7 +90,7 @@ impl SpaPod {
 		}))
 	}
 
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 	pub fn to_pod_value(&self) -> Result<Value, Error> {
 		Ok(match () {
 			_ if self.is_none() => Value::None,
@@ -207,7 +207,7 @@ impl SpaPod {
 	}
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl TryInto<Value> for SpaPod {
 	type Error = Error;
 
@@ -247,7 +247,7 @@ impl<'a> DebugProperty<'a> {
 	}
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 pub struct DebugValue<'v, 'o> {
 	container: Option<DebugProperty<'o>>,
 	value: Cow<'v, Value>,
@@ -413,11 +413,11 @@ impl<'v, 'o> Debug for DebugValue<'v, 'o> {
 	}
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl SpaPrimitive for Id {
 	const TYPE: SpaType = SpaType::ID;
 }
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl SpaValue for Id {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_id(self.0)
@@ -426,7 +426,7 @@ impl SpaValue for Id {
 	type Owned = Self;
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl<'a> TryFrom<&'a SpaPod> for Id {
 	type Error = GlibNoneError;
 
@@ -435,11 +435,11 @@ impl<'a> TryFrom<&'a SpaPod> for Id {
 	}
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl SpaPrimitive for Fd {
 	const TYPE: SpaType = SpaType::FD;
 }
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl SpaValue for Fd {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_fd(self.0)
@@ -448,7 +448,7 @@ impl SpaValue for Fd {
 	type Owned = Self;
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl<'a> TryFrom<&'a SpaPod> for Fd {
 	type Error = GlibNoneError;
 
@@ -457,7 +457,7 @@ impl<'a> TryFrom<&'a SpaPod> for Fd {
 	}
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl SpaValue for Value {
 	fn add_to_builder(&self, builder: &SpaPodBuilder) {
 		builder.add_pod(todo!())
@@ -466,7 +466,7 @@ impl SpaValue for Value {
 	type Owned = Self;
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl<'a> TryFrom<&'a SpaPod> for Value {
 	type Error = Error;
 

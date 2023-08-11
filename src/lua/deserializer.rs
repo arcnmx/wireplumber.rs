@@ -5,12 +5,12 @@ use {
 	std::borrow::Cow,
 };
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 pub fn from_variant<'de, D: de::Deserialize<'de>, V: AsRef<Variant>>(v: V) -> Result<D, LuaError> {
 	LuaVariant::convert_from(v.as_ref()).and_then(|v| D::deserialize(v.into_deserializer()))
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 #[derive(Debug, Clone)]
 pub struct Deserializer<'a> {
 	variant: LuaVariant<'a>,

@@ -1,5 +1,5 @@
 #![doc(html_root_url = "https://arcnmx.github.io/wireplumber.rs/v0.1.0/")]
-#![cfg_attr(feature = "dox", feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 //! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
 //!
@@ -63,8 +63,8 @@ pub mod lib {
 }
 
 pub mod core;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 pub mod dbus;
 pub mod error;
 pub mod local;
@@ -76,18 +76,18 @@ pub mod pw;
 pub mod registry;
 pub mod session;
 #[cfg(feature = "glib-signal")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "glib-signal")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "glib-signal")))]
 pub mod signals;
 pub mod spa;
 pub mod util;
 
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
+#[cfg(feature = "v0_4_2")]
 pub(crate) use self::pw::PropertiesItem;
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg(feature = "v0_4_10")]
 pub(crate) use self::session::SiAdapterPortsState;
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg(feature = "v0_4_8")]
 pub(crate) use self::spa::SpaJson;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 pub(crate) use self::{dbus::DBusState, pw::LinkState};
 /// gir needs to know where to find these
 pub(crate) use crate::{

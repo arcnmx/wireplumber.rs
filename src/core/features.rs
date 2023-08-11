@@ -1,4 +1,4 @@
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 use crate::dbus::{Dbus, DbusFeatures};
 use crate::{
 	core::ObjectExt,
@@ -139,7 +139,7 @@ impl_object_features! {
 	SpaDeviceFeatures:SpaDevice(ProxyFeatures),
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 impl_object_features! {
 	DbusFeatures:Dbus(),
 }

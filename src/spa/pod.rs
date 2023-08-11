@@ -1,4 +1,4 @@
-#[cfg(any(feature = "experimental", feature = "dox"))]
+#[cfg(feature = "experimental")]
 use crate::pw::PipewireObject;
 use {
 	crate::{
@@ -177,8 +177,8 @@ impl SpaPod {
 		self.fraction().map(|(num, denom)| spa_fraction { num, denom })
 	}
 
-	#[cfg(any(feature = "experimental", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+	#[cfg(feature = "experimental")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 	pub fn struct_fields(&self, length_prefix: bool) -> crate::Result<std::vec::IntoIter<(String, SpaPod)>> {
 		let mut params = self.iterator();
 
@@ -307,8 +307,8 @@ impl SpaPod {
 		}
 	}
 
-	#[cfg(any(feature = "experimental", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+	#[cfg(feature = "experimental")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 	pub fn apply<O: IsA<PipewireObject>>(self, obj: &O) -> crate::Result<()> {
 		if !self.is_object() {
 			return Err(Error::new(

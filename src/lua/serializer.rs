@@ -7,12 +7,12 @@ use {
 	serde::{ser, Serialize},
 };
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 pub fn to_variant<S: ser::Serialize>(v: S) -> Result<LuaVariant<'static>, LuaError> {
 	v.serialize(Serializer::new())
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "serde")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 #[derive(Debug, Copy, Clone)]
 pub struct Serializer {
 	humanize: bool,

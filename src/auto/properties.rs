@@ -69,8 +69,8 @@ impl Properties {
         }
     }
 
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     #[doc(alias = "wp_properties_get_count")]
     #[doc(alias = "get_count")]
     pub fn count(&self) -> u32 {

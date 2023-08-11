@@ -7,7 +7,7 @@
 //! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_factory_api.html)
 //! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/c_api/session_item_api.html)
 //! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_interfaces_api.html)
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg(feature = "v0_4_10")]
 pub use crate::auto::SiAdapterPortsState;
 pub use crate::auto::{
 	traits::{SessionItemExt, SiAcquisitionExt, SiAdapterExt, SiEndpointExt, SiFactoryExt, SiLinkExt, SiLinkableExt},

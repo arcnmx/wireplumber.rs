@@ -9,11 +9,11 @@ use {
 
 impl ProxyFeatures {
 	#[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_ALL")]
-	pub const ALL: Self = unsafe { Self::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL as u32) };
+	pub const ALL: Self = Self::from_bits_retain(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL as u32);
 
 	/// ProxyFeatures::PROXY_FEATURE_BOUND | ProxyFeatures::PIPEWIRE_OBJECT_FEATURE_INFO
 	#[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL")]
-	pub const MINIMAL: Self = unsafe { Self::from_bits_unchecked(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL as u32) };
+	pub const MINIMAL: Self = Self::from_bits_retain(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL as u32);
 }
 
 pub trait ProxyExt2: 'static {

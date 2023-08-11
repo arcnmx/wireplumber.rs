@@ -135,9 +135,9 @@ def_signal! {
 	}
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 def_signal! {
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 	impl Notifies<"state-changed" as LinkStateChanged> for crate::pw::Link {
 		impl {const SIGNAL_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
@@ -176,9 +176,9 @@ def_signal! {
 	}
 }
 
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
+#[cfg(feature = "v0_4_10")]
 def_signal! {
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 	impl Notifies<"adapter-ports-state-changed" as AdapterPortsStateChanged> for crate::session::SiAdapter {
 		impl {const SIGNAL_ADAPTER_PORTS_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;

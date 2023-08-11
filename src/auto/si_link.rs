@@ -19,52 +19,45 @@ impl SiLink {
     
 }
 
-pub trait SiLinkExt: 'static {
-    #[doc(alias = "wp_si_link_get_in_item")]
-    #[doc(alias = "get_in_item")]
-    fn in_item(&self) -> Option<SiLinkable>;
-
-    #[doc(alias = "wp_si_link_get_out_item")]
-    #[doc(alias = "get_out_item")]
-    fn out_item(&self) -> Option<SiLinkable>;
-
-    #[doc(alias = "wp_si_link_get_properties")]
-    #[doc(alias = "get_properties")]
-    fn properties(&self) -> Option<Properties>;
-
-    #[doc(alias = "wp_si_link_get_registration_info")]
-    #[doc(alias = "get_registration_info")]
-    fn registration_info(&self) -> Option<glib::Variant>;
-
-    #[doc(alias = "link-properties-changed")]
-    fn connect_link_properties_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::SiLink>> Sealed for T {}
 }
 
-impl<O: IsA<SiLink>> SiLinkExt for O {
+pub trait SiLinkExt: IsA<SiLink> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_si_link_get_in_item")]
+    #[doc(alias = "get_in_item")]
     fn in_item(&self) -> Option<SiLinkable> {
         unsafe {
             from_glib_none(ffi::wp_si_link_get_in_item(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_si_link_get_out_item")]
+    #[doc(alias = "get_out_item")]
     fn out_item(&self) -> Option<SiLinkable> {
         unsafe {
             from_glib_none(ffi::wp_si_link_get_out_item(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_si_link_get_properties")]
+    #[doc(alias = "get_properties")]
     fn properties(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_si_link_get_properties(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_si_link_get_registration_info")]
+    #[doc(alias = "get_registration_info")]
     fn registration_info(&self) -> Option<glib::Variant> {
         unsafe {
             from_glib_full(ffi::wp_si_link_get_registration_info(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "link-properties-changed")]
     fn connect_link_properties_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn link_properties_changed_trampoline<P: IsA<SiLink>, F: Fn(&P) + 'static>(this: *mut ffi::WpSiLink, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -77,3 +70,5 @@ impl<O: IsA<SiLink>> SiLinkExt for O {
         }
     }
 }
+
+impl<O: IsA<SiLink>> SiLinkExt for O {}

@@ -25,25 +25,26 @@ impl Plugin {
     }
 }
 
-pub trait PluginExt: 'static {
-    #[doc(alias = "wp_plugin_get_name")]
-    #[doc(alias = "get_name")]
-    fn name(&self) -> Option<glib::GString>;
-
-    #[doc(alias = "wp_plugin_register")]
-    fn register(self);
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::Plugin>> Sealed for T {}
 }
 
-impl<O: IsA<Plugin>> PluginExt for O {
+pub trait PluginExt: IsA<Plugin> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_plugin_get_name")]
+    #[doc(alias = "get_name")]
     fn name(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::wp_plugin_get_name(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_plugin_register")]
     fn register(self) {
         unsafe {
             ffi::wp_plugin_register(self.upcast().into_glib_ptr());
         }
     }
 }
+
+impl<O: IsA<Plugin>> PluginExt for O {}

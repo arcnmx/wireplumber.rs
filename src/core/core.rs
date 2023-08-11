@@ -17,15 +17,15 @@ impl Core {
 		Self::init_with_flags(InitFlags::ALL)
 	}
 
-	#[cfg(any(feature = "v0_4_12", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+	#[cfg(feature = "v0_4_12")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_12")))]
 	#[doc(alias = "wp_get_library_version")]
 	pub fn library_version() -> String {
 		unsafe { from_glib_full(ffi::wp_get_library_version()) }
 	}
 
-	#[cfg(any(feature = "v0_4_12", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+	#[cfg(feature = "v0_4_12")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_12")))]
 	#[doc(alias = "wp_get_library_api_version")]
 	pub fn library_api_version() -> String {
 		unsafe { from_glib_full(ffi::wp_get_library_api_version()) }
@@ -48,8 +48,8 @@ impl Core {
 		unsafe { from_glib_full(ffi::wp_get_data_dir()) }
 	}
 
-	#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+	#[cfg(feature = "v0_4_2")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 	#[doc(alias = "wp_find_file")]
 	pub fn find_file(dirs: LookupDirs, filename: &str, subdir: Option<&str>) -> Option<String> {
 		unsafe {
@@ -61,8 +61,8 @@ impl Core {
 		}
 	}
 
-	#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+	#[cfg(feature = "v0_4_2")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 	#[doc(alias = "wp_new_files_iterator")]
 	pub fn find_files(dirs: LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> ValueIterator<String> {
 		unsafe {
@@ -112,7 +112,7 @@ impl Core {
 	}
 
 	#[cfg(feature = "futures")]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "futures")))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "futures")))]
 	pub fn connect_future(&self) -> impl Future<Output = Result<(), Error>> {
 		let connect = match () {
 			#[cfg(feature = "glib-signal")]

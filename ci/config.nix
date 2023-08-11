@@ -1,5 +1,5 @@
 { config, pkgs, env, lib, ... }: with pkgs; with lib; let
-  wireplumber-rust = import ../. { };
+  wireplumber-rust = import ../. { pkgs = null; };
   inherit (wireplumber-rust) inputs checks legacyPackages packages devShells;
   wplib = wireplumber-rust.lib;
   wpexec = packages.wpexec.override {

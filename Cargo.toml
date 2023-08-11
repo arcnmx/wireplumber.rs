@@ -4,7 +4,7 @@ version = "0.1.0" # keep in sync with documentation and html_root_url
 authors = ["arcnmx"]
 build = "build.rs"
 edition = "2021"
-rust-version = "1.60"
+rust-version = "1.70"
 
 description = "WirePlumber bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
@@ -26,23 +26,25 @@ include = [
 branches = ["main", "dev"]
 
 [package.metadata.docs.rs]
-features = ["dox", "v0_4_12", "experimental", "glib-signal", "libspa", "futures", "serde"]
+features = ["v0_4_12", "experimental", "glib-signal", "libspa", "futures", "serde"]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
 [badges]
 maintenance = { status = "actively-maintained" }
 
 [dependencies]
 libc = "0.2"
-glib = { version = "0.17" }
-gio = { version = "0.17" }
+glib = { version = "0.18" }
+gio = { version = "0.18" }
 pipewire-sys = { version = "0.6" }
 libspa-sys = { version = "0.6" }
 libspa = { version = "0.6", optional = true }
 serde = { version = "1.0", optional = true }
 ffi = { version = "0.1.0", path = "sys", package = "wireplumber-sys" }
-bitflags = "1.3"
+bitflags = "2"
 futures-channel = { version = "0.3", optional = true }
-glib-signal = { version = "0.2", optional = true }
+glib-signal = { version = "0.3", optional = true }
 
 [dev-dependencies]
 futures-util = { version = "0.3" }
@@ -66,7 +68,6 @@ v0_4_8 = ["ffi/v0_4_8", "v0_4_6"]
 v0_4_10 = ["ffi/v0_4_10", "v0_4_8"]
 v0_4_11 = ["ffi/v0_4_11", "v0_4_10"]
 v0_4_12 = ["ffi/v0_4_12", "v0_4_11"]
-dox = ["ffi/dox", "glib-signal?/dox"]
 
 [workspace]
 members = ["sys", "examples"]

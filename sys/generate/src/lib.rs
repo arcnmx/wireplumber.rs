@@ -8,7 +8,7 @@ use pipewire::{pw_core, pw_context, pw_permission, pw_proxy, pw_properties, pw_i
 use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 use crate::WpSpaType;
 
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg(feature = "v0_4_8")]
 use libspa::spa_json;
 
 use glib_sys as glib;
@@ -1305,8 +1305,8 @@ extern "C" {
     //=========================================================================
     // WpDBusState
     //=========================================================================
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_state_get_type() -> GType;
 
     //=========================================================================
@@ -1322,8 +1322,8 @@ extern "C" {
     //=========================================================================
     // WpLinkState
     //=========================================================================
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_link_state_get_type() -> GType;
 
     //=========================================================================
@@ -1334,8 +1334,8 @@ extern "C" {
     //=========================================================================
     // WpSiAdapterPortsState
     //=========================================================================
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_si_adapter_ports_state_get_type() -> GType;
 
     //=========================================================================
@@ -1346,8 +1346,8 @@ extern "C" {
     //=========================================================================
     // WpDbusFeatures
     //=========================================================================
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_features_get_type() -> GType;
 
     //=========================================================================
@@ -1368,8 +1368,8 @@ extern "C" {
     //=========================================================================
     // WpLinkFeatures
     //=========================================================================
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_link_features_get_type() -> GType;
 
     //=========================================================================
@@ -1460,8 +1460,8 @@ extern "C" {
     pub fn wp_properties_copy(other: *mut WpProperties) -> *mut WpProperties;
     pub fn wp_properties_ensure_unique_owner(self_: *mut WpProperties) -> *mut WpProperties;
     pub fn wp_properties_get(self_: *mut WpProperties, key: *const c_char) -> *const c_char;
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_properties_get_count(self_: *mut WpProperties) -> c_uint;
     pub fn wp_properties_matches(self_: *mut WpProperties, other: *mut WpProperties) -> gboolean;
     pub fn wp_properties_new_iterator(self_: *mut WpProperties) -> *mut WpIterator;
@@ -1486,236 +1486,236 @@ extern "C" {
     // WpPropertiesItem
     //=========================================================================
     pub fn wp_properties_item_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_get_key(self_: *mut WpPropertiesItem) -> *const c_char;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_get_value(self_: *mut WpPropertiesItem) -> *const c_char;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_ref(self_: *mut WpPropertiesItem) -> *mut WpPropertiesItem;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_unref(self_: *mut WpPropertiesItem);
 
     //=========================================================================
     // WpSpaJson
     //=========================================================================
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_array(format: *const c_char, ...) -> *mut WpSpaJson;
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_new_array_valist(format: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_boolean(value: gboolean) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_float(value: c_float) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_from_string(json_str: *const c_char) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_spa_json_new_from_stringn(json_str: *const c_char, len: size_t) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_int(value: c_int) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_null() -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_object(key: *const c_char, format: *const c_char, ...) -> *mut WpSpaJson;
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_new_object_valist(key: *const c_char, format: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_string(value: *const c_char) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_wrap(json: *mut spa_json) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_copy(other: *mut WpSpaJson) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_ensure_unique_owner(self_: *mut WpSpaJson) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_data(self_: *const WpSpaJson) -> *const c_char;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_size(self_: *const WpSpaJson) -> size_t;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_spa_json(self_: *const WpSpaJson) -> *const spa_json;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_array(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_boolean(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_float(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_int(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_null(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_object(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_string(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_unique_owner(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_iterator(self_: *mut WpSpaJson) -> *mut WpIterator;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_object_get(self_: *mut WpSpaJson, ...) -> gboolean;
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_object_get_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_array(self_: *mut WpSpaJson, ...) -> gboolean;
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_parse_array_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_boolean(self_: *mut WpSpaJson, value: *mut gboolean) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_float(self_: *mut WpSpaJson, value: *mut c_float) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_int(self_: *mut WpSpaJson, value: *mut c_int) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_object(self_: *mut WpSpaJson, ...) -> gboolean;
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_parse_object_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_string(self_: *mut WpSpaJson) -> *mut c_char;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_ref(self_: *mut WpSpaJson) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_spa_json_to_string(self_: *const WpSpaJson) -> *mut c_char;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_unref(self_: *mut WpSpaJson);
 
     //=========================================================================
     // WpSpaJsonBuilder
     //=========================================================================
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_new_array() -> *mut WpSpaJsonBuilder;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_new_object() -> *mut WpSpaJsonBuilder;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add(self_: *mut WpSpaJsonBuilder, ...);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_boolean(self_: *mut WpSpaJsonBuilder, value: gboolean);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_float(self_: *mut WpSpaJsonBuilder, value: c_float);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_int(self_: *mut WpSpaJsonBuilder, value: c_int);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_json(self_: *mut WpSpaJsonBuilder, json: *mut WpSpaJson);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_null(self_: *mut WpSpaJsonBuilder);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_property(self_: *mut WpSpaJsonBuilder, key: *const c_char);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_string(self_: *mut WpSpaJsonBuilder, value: *const c_char);
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_builder_add_valist(self_: *mut WpSpaJsonBuilder, args: /*Unimplemented*/va_list);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_end(self_: *mut WpSpaJsonBuilder) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_ref(self_: *mut WpSpaJsonBuilder) -> *mut WpSpaJsonBuilder;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_unref(self_: *mut WpSpaJsonBuilder);
 
     //=========================================================================
     // WpSpaJsonParser
     //=========================================================================
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_new_array(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_new_object(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_end(self_: *mut WpSpaJsonParser);
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get(self_: *mut WpSpaJsonParser, ...) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_boolean(self_: *mut WpSpaJsonParser, value: *mut gboolean) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_float(self_: *mut WpSpaJsonParser, value: *mut c_float) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_int(self_: *mut WpSpaJsonParser, value: *mut c_int) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_json(self_: *mut WpSpaJsonParser) -> *mut WpSpaJson;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_null(self_: *mut WpSpaJsonParser) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_string(self_: *mut WpSpaJsonParser) -> *mut c_char;
-    //#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    //#[cfg(feature = "v0_4_8")]
+    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_parser_get_valist(self_: *mut WpSpaJsonParser, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_ref(self_: *mut WpSpaJsonParser) -> *mut WpSpaJsonParser;
-    #[cfg(any(feature = "v0_4_8", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+    #[cfg(feature = "v0_4_8")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_unref(self_: *mut WpSpaJsonParser);
 
     //=========================================================================
@@ -1895,8 +1895,8 @@ extern "C" {
     pub fn wp_core_get_remote_properties(self_: *mut WpCore) -> *mut WpProperties;
     pub fn wp_core_get_remote_user_name(self_: *mut WpCore) -> *const c_char;
     pub fn wp_core_get_remote_version(self_: *mut WpCore) -> *const c_char;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_core_get_vm_type(self_: *mut WpCore) -> *mut c_char;
     pub fn wp_core_idle_add(self_: *mut WpCore, source: *mut *mut glib::GSource, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     pub fn wp_core_idle_add_closure(self_: *mut WpCore, source: *mut *mut glib::GSource, closure: *mut gobject::GClosure);
@@ -1904,8 +1904,8 @@ extern "C" {
     pub fn wp_core_is_connected(self_: *mut WpCore) -> gboolean;
     pub fn wp_core_load_component(self_: *mut WpCore, component: *const c_char, type_: *const c_char, args: *mut glib::GVariant, error: *mut *mut glib::GError) -> gboolean;
     pub fn wp_core_sync(self_: *mut WpCore, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer) -> gboolean;
-    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    #[cfg(feature = "v0_4_6")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     pub fn wp_core_sync_closure(self_: *mut WpCore, cancellable: *mut gio::GCancellable, closure: *mut gobject::GClosure) -> gboolean;
     pub fn wp_core_sync_finish(self_: *mut WpCore, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
     pub fn wp_core_timeout_add(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
@@ -1915,20 +1915,20 @@ extern "C" {
     //=========================================================================
     // WpDbus
     //=========================================================================
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_get_instance(core: *mut WpCore, bus_type: gio::GBusType) -> *mut WpDbus;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_get_bus_type(self_: *mut WpDbus) -> gio::GBusType;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_get_connection(self_: *mut WpDbus) -> *mut gio::GDBusConnection;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_dbus_get_state(self_: *mut WpDbus) -> WpDBusState;
 
     //=========================================================================
@@ -1948,8 +1948,8 @@ extern "C" {
     //=========================================================================
     // WpFactory
     //=========================================================================
-    #[cfg(any(feature = "v0_4_5", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_5")))]
+    #[cfg(feature = "v0_4_5")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_5")))]
     pub fn wp_factory_get_type() -> GType;
 
     //=========================================================================
@@ -1978,16 +1978,16 @@ extern "C" {
     //=========================================================================
     pub fn wp_impl_metadata_get_type() -> GType;
     pub fn wp_impl_metadata_new(core: *mut WpCore) -> *mut WpImplMetadata;
-    #[cfg(any(feature = "v0_4_3", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_3")))]
+    #[cfg(feature = "v0_4_3")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_3")))]
     pub fn wp_impl_metadata_new_full(core: *mut WpCore, name: *const c_char, properties: *mut WpProperties) -> *mut WpImplMetadata;
 
     //=========================================================================
     // WpImplModule
     //=========================================================================
     pub fn wp_impl_module_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_impl_module_load(core: *mut WpCore, name: *const c_char, arguments: *const c_char, properties: *mut WpProperties) -> *mut WpImplModule;
 
     //=========================================================================
@@ -2003,8 +2003,8 @@ extern "C" {
     pub fn wp_link_get_type() -> GType;
     pub fn wp_link_new_from_factory(core: *mut WpCore, factory_name: *const c_char, properties: *mut WpProperties) -> *mut WpLink;
     pub fn wp_link_get_linked_object_ids(self_: *mut WpLink, output_node: *mut u32, output_port: *mut u32, input_node: *mut u32, input_port: *mut u32);
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_link_get_state(self_: *mut WpLink, error: *mut *const c_char) -> WpLinkState;
 
     //=========================================================================
@@ -2037,8 +2037,8 @@ extern "C" {
     // WpObject
     //=========================================================================
     pub fn wp_object_get_type() -> GType;
-    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+    #[cfg(feature = "v0_4_6")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     pub fn wp_object_abort_activation(self_: *mut WpObject, msg: *const c_char);
     pub fn wp_object_activate(self_: *mut WpObject, features: WpObjectFeatures, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
     pub fn wp_object_activate_closure(self_: *mut WpObject, features: WpObjectFeatures, cancellable: *mut gio::GCancellable, closure: *mut gobject::GClosure);
@@ -2124,8 +2124,8 @@ extern "C" {
     pub fn wp_spa_device_new_wrap(core: *mut WpCore, spa_device_handle: gpointer, properties: *mut WpProperties) -> *mut WpSpaDevice;
     pub fn wp_spa_device_get_managed_object(self_: *mut WpSpaDevice, id: c_uint) -> *mut gobject::GObject;
     pub fn wp_spa_device_get_properties(self_: *mut WpSpaDevice) -> *mut WpProperties;
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_spa_device_new_managed_object_iterator(self_: *mut WpSpaDevice) -> *mut WpIterator;
     pub fn wp_spa_device_store_managed_object(self_: *mut WpSpaDevice, id: c_uint, object: *mut gobject::GObject);
 
@@ -2198,8 +2198,8 @@ extern "C" {
     //=========================================================================
     pub fn wp_si_adapter_get_type() -> GType;
     pub fn wp_si_adapter_get_ports_format(self_: *mut WpSiAdapter, mode: *mut *const c_char) -> *mut WpSpaPod;
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_si_adapter_get_ports_state(self_: *mut WpSiAdapter) -> WpSiAdapterPortsState;
     pub fn wp_si_adapter_set_ports_format(self_: *mut WpSiAdapter, format: *mut WpSpaPod, mode: *const c_char, callback: gio::GAsyncReadyCallback, data: gpointer);
     pub fn wp_si_adapter_set_ports_format_finish(self_: *mut WpSiAdapter, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
@@ -2231,16 +2231,16 @@ extern "C" {
     // Other functions
     //=========================================================================
     pub fn wp_domain_library_quark() -> glib::GQuark;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_find_file(dirs: WpLookupDirs, filename: *const c_char, subdir: *const c_char) -> *mut c_char;
     pub fn wp_get_config_dir() -> *const c_char;
     pub fn wp_get_data_dir() -> *const c_char;
-    #[cfg(any(feature = "v0_4_12", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+    #[cfg(feature = "v0_4_12")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_12")))]
     pub fn wp_get_library_api_version() -> *const c_char;
-    #[cfg(any(feature = "v0_4_12", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_12")))]
+    #[cfg(feature = "v0_4_12")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_12")))]
     pub fn wp_get_library_version() -> *const c_char;
     pub fn wp_get_module_dir() -> *const c_char;
     pub fn wp_init(flags: WpInitFlags);
@@ -2248,8 +2248,8 @@ extern "C" {
     pub fn wp_log_set_level(level_str: *const c_char);
     pub fn wp_log_structured_standard(log_domain: *const c_char, log_level: glib::GLogLevelFlags, file: *const c_char, line: *const c_char, func: *const c_char, object_type: GType, object: gconstpointer, message_format: *const c_char, ...);
     pub fn wp_log_writer_default(log_level: glib::GLogLevelFlags, fields: *const glib::GLogField, n_fields: size_t, user_data: gpointer) -> glib::GLogWriterOutput;
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_new_files_iterator(dirs: WpLookupDirs, subdir: *const c_char, suffix: *const c_char) -> *mut WpIterator;
     pub fn wp_spa_dynamic_id_table_register(name: *const c_char, values: *const spa_type_info) -> WpSpaIdTable;
     pub fn wp_spa_dynamic_type_deinit();

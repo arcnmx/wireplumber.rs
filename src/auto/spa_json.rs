@@ -4,8 +4,8 @@
 use crate::{Iterator};
 use glib::{translate::*};
 use std::{mem};
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 use std::{fmt};
 
 glib::wrapper! {
@@ -42,8 +42,8 @@ impl SpaJson {
         }
     }
 
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     #[doc(alias = "wp_spa_json_new_from_stringn")]
     #[doc(alias = "new_from_stringn")]
     pub fn from_stringn(json_str: &str) -> SpaJson {
@@ -209,8 +209,8 @@ impl SpaJson {
         }
     }
 
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "wp_spa_json_to_string")]
     #[doc(alias = "to_string")]
     pub fn to_str(&self) -> glib::GString {
@@ -220,8 +220,8 @@ impl SpaJson {
     }
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl fmt::Display for SpaJson {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

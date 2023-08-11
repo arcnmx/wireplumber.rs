@@ -19,32 +19,29 @@ impl SiEndpoint {
     
 }
 
-pub trait SiEndpointExt: 'static {
-    #[doc(alias = "wp_si_endpoint_get_properties")]
-    #[doc(alias = "get_properties")]
-    fn properties(&self) -> Option<Properties>;
-
-    #[doc(alias = "wp_si_endpoint_get_registration_info")]
-    #[doc(alias = "get_registration_info")]
-    fn registration_info(&self) -> Option<glib::Variant>;
-
-    #[doc(alias = "endpoint-properties-changed")]
-    fn connect_endpoint_properties_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::SiEndpoint>> Sealed for T {}
 }
 
-impl<O: IsA<SiEndpoint>> SiEndpointExt for O {
+pub trait SiEndpointExt: IsA<SiEndpoint> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_si_endpoint_get_properties")]
+    #[doc(alias = "get_properties")]
     fn properties(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_si_endpoint_get_properties(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_si_endpoint_get_registration_info")]
+    #[doc(alias = "get_registration_info")]
     fn registration_info(&self) -> Option<glib::Variant> {
         unsafe {
             from_glib_full(ffi::wp_si_endpoint_get_registration_info(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "endpoint-properties-changed")]
     fn connect_endpoint_properties_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn endpoint_properties_changed_trampoline<P: IsA<SiEndpoint>, F: Fn(&P) + 'static>(this: *mut ffi::WpSiEndpoint, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -57,3 +54,5 @@ impl<O: IsA<SiEndpoint>> SiEndpointExt for O {
         }
     }
 }
+
+impl<O: IsA<SiEndpoint>> SiEndpointExt for O {}

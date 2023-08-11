@@ -10,14 +10,14 @@
 //! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)
 //! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)
 
-#[cfg(any(feature = "experimental", feature = "dox"))]
+#[cfg(feature = "experimental")]
 pub use self::props::SpaProps;
-#[cfg(any(feature = "experimental", feature = "dox"))]
+#[cfg(feature = "experimental")]
 pub use self::route::{SpaRoute, SpaRoutes};
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg(feature = "v0_4_8")]
 pub use crate::auto::{SpaJson, SpaJsonBuilder, SpaJsonParser};
 #[cfg(feature = "libspa")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 pub use libspa;
 #[cfg(feature = "libspa")]
 pub use libspa_pod::DebugValue;
@@ -35,15 +35,15 @@ pub use {
 mod builder;
 mod id_table;
 mod id_value;
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
+#[cfg(feature = "v0_4_8")]
 mod json;
 #[cfg(feature = "libspa")]
 mod libspa_pod;
 mod parser;
 mod pod;
-#[cfg(any(feature = "experimental", feature = "dox"))]
+#[cfg(feature = "experimental")]
 mod props;
-#[cfg(any(feature = "experimental", feature = "dox"))]
+#[cfg(feature = "experimental")]
 mod route;
 mod traits;
 #[path = "type.rs"]

@@ -1,4 +1,4 @@
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 use crate::pw::LinkState;
 use crate::{
 	core::Core,
@@ -26,16 +26,16 @@ impl Link {
 		e.message().ends_with(": File exists") // TODO
 	}
 
-	#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+	#[cfg(feature = "v0_4_11")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 	#[doc(alias = "wp_link_get_state")]
 	#[doc(alias = "get_state")]
 	pub fn state(&self) -> LinkState {
 		unsafe { from_glib(ffi::wp_link_get_state(self.to_glib_none().0, ptr::null_mut())) }
 	}
 
-	#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-	#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+	#[cfg(feature = "v0_4_11")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 	#[doc(alias = "wp_link_get_state")]
 	#[doc(alias = "get_state")]
 	pub fn state_result(&self) -> Result<LinkState, Error> {
@@ -102,7 +102,7 @@ impl StaticType for LinkFeatures {
 	}
 }
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 impl<E> From<Result<LinkState, E>> for LinkState {
 	fn from(res: Result<LinkState, E>) -> Self {
 		match res {

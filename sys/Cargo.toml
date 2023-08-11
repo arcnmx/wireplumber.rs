@@ -17,6 +17,7 @@ license = "MIT"
 include = [
 	"/src/**",
 	"/generate/build.rs",
+	"/generate/build_version.rs",
 	"/generate/src/lib.rs",
 	"/build.rs",
 	"/README*",
@@ -51,13 +52,15 @@ version = "0.4.11"
 version = "0.4.12"
 
 [package.metadata.docs.rs]
-features = ["dox", "v0_4_12"]
+features = ["v0_4_12"]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
 [dependencies]
 libc = "0.2"
-glib-sys = { version = "0.17" }
-gobject-sys = { version = "0.17" }
-gio-sys = { version = "0.17" }
+glib-sys = { version = "0.18" }
+gobject-sys = { version = "0.18" }
+gio-sys = { version = "0.18" }
 pipewire = { version = "0.6", package = "pipewire-sys" }
 libspa = { version = "0.6", package = "libspa-sys" }
 
@@ -77,4 +80,3 @@ v0_4_8 = ["v0_4_6"]
 v0_4_10 = ["v0_4_8"]
 v0_4_11 = ["v0_4_10"]
 v0_4_12 = ["v0_4_11"]
-dox = []

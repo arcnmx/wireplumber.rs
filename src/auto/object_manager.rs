@@ -73,7 +73,7 @@ impl ObjectManager {
     }
 
     pub fn core(&self) -> Option<Core> {
-        glib::ObjectExt::property(self, "core")
+        ObjectExt::property(self, "core")
     }
 
     #[doc(alias = "installed")]

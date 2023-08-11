@@ -2,8 +2,8 @@
 // DO NOT EDIT
 
 use crate::{Core,Object,Properties,Proxy};
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 use crate::{Iterator};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
 use std::{boxed::Box as Box_,mem::transmute};
@@ -42,8 +42,8 @@ impl SpaDevice {
         }
     }
 
-    #[cfg(any(feature = "v0_4_11", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+    #[cfg(feature = "v0_4_11")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "wp_spa_device_new_managed_object_iterator")]
     pub fn new_managed_object_iterator(&self) -> Option<Iterator> {
         unsafe {
@@ -60,7 +60,7 @@ impl SpaDevice {
 
     //#[doc(alias = "spa-device-handle")]
     //pub fn spa_device_handle(&self) -> /*Unimplemented*/Basic: Pointer {
-    //    glib::ObjectExt::property(self, "spa-device-handle")
+    //    ObjectExt::property(self, "spa-device-handle")
     //}
 
     #[doc(alias = "create-object")]

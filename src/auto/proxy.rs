@@ -19,48 +19,22 @@ impl Proxy {
     
 }
 
-pub trait ProxyExt: 'static {
-    #[doc(alias = "wp_proxy_get_bound_id")]
-    #[doc(alias = "get_bound_id")]
-    fn bound_id(&self) -> u32;
-
-    #[doc(alias = "wp_proxy_get_interface_type")]
-    #[doc(alias = "get_interface_type")]
-    fn interface_type(&self) -> (glib::GString, u32);
-
-    //#[doc(alias = "wp_proxy_get_pw_proxy")]
-    //#[doc(alias = "get_pw_proxy")]
-    //fn pw_proxy(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
-
-    //#[doc(alias = "wp_proxy_set_pw_proxy")]
-    //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Basic: Pointer>);
-
-    #[doc(alias = "bound")]
-    fn connect_bound<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "error")]
-    fn connect_error<F: Fn(&Self, i32, i32, &str) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    //#[doc(alias = "pw-proxy-created")]
-    //fn connect_pw_proxy_created<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "pw-proxy-destroyed")]
-    fn connect_pw_proxy_destroyed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "bound-id")]
-    fn connect_bound_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "pw-proxy")]
-    fn connect_pw_proxy_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::Proxy>> Sealed for T {}
 }
 
-impl<O: IsA<Proxy>> ProxyExt for O {
+pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_proxy_get_bound_id")]
+    #[doc(alias = "get_bound_id")]
     fn bound_id(&self) -> u32 {
         unsafe {
             ffi::wp_proxy_get_bound_id(self.as_ref().to_glib_none().0)
         }
     }
 
+    #[doc(alias = "wp_proxy_get_interface_type")]
+    #[doc(alias = "get_interface_type")]
     fn interface_type(&self) -> (glib::GString, u32) {
         unsafe {
             let mut version = mem::MaybeUninit::uninit();
@@ -69,14 +43,18 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         }
     }
 
+    //#[doc(alias = "wp_proxy_get_pw_proxy")]
+    //#[doc(alias = "get_pw_proxy")]
     //fn pw_proxy(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_proxy_get_pw_proxy() }
     //}
 
+    //#[doc(alias = "wp_proxy_set_pw_proxy")]
     //fn set_pw_proxy(&self, proxy: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_proxy_set_pw_proxy() }
     //}
 
+    #[doc(alias = "bound")]
     fn connect_bound<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn bound_trampoline<P: IsA<Proxy>, F: Fn(&P, u32) + 'static>(this: *mut ffi::WpProxy, object: libc::c_uint, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -89,6 +67,7 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         }
     }
 
+    #[doc(alias = "error")]
     fn connect_error<F: Fn(&Self, i32, i32, &str) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn error_trampoline<P: IsA<Proxy>, F: Fn(&P, i32, i32, &str) + 'static>(this: *mut ffi::WpProxy, object: libc::c_int, p0: libc::c_int, p1: *mut libc::c_char, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -101,10 +80,12 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         }
     }
 
+    //#[doc(alias = "pw-proxy-created")]
     //fn connect_pw_proxy_created<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
     //    Unimplemented object: *.Pointer
     //}
 
+    #[doc(alias = "pw-proxy-destroyed")]
     fn connect_pw_proxy_destroyed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn pw_proxy_destroyed_trampoline<P: IsA<Proxy>, F: Fn(&P) + 'static>(this: *mut ffi::WpProxy, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -117,6 +98,7 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         }
     }
 
+    #[doc(alias = "bound-id")]
     fn connect_bound_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_bound_id_trampoline<P: IsA<Proxy>, F: Fn(&P) + 'static>(this: *mut ffi::WpProxy, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -129,6 +111,7 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         }
     }
 
+    #[doc(alias = "pw-proxy")]
     fn connect_pw_proxy_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_pw_proxy_trampoline<P: IsA<Proxy>, F: Fn(&P) + 'static>(this: *mut ffi::WpProxy, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -141,3 +124,5 @@ impl<O: IsA<Proxy>> ProxyExt for O {
         }
     }
 }
+
+impl<O: IsA<Proxy>> ProxyExt for O {}

@@ -2,16 +2,16 @@
 // DO NOT EDIT
 
 use crate::{Object,SessionItem,SpaPod};
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[cfg(feature = "v0_4_10")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 use crate::{SiAdapterPortsState};
 use glib::{prelude::*,translate::*};
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[cfg(feature = "v0_4_10")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 use glib::{signal::{connect_raw, SignalHandlerId}};
 use std::{ptr};
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[cfg(feature = "v0_4_10")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 use std::{boxed::Box as Box_,mem::transmute};
 
 glib::wrapper! {
@@ -28,24 +28,14 @@ impl SiAdapter {
     
 }
 
-pub trait SiAdapterExt: 'static {
-    #[doc(alias = "wp_si_adapter_get_ports_format")]
-    #[doc(alias = "get_ports_format")]
-    fn ports_format(&self) -> (SpaPod, Option<glib::GString>);
-
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
-    #[doc(alias = "wp_si_adapter_get_ports_state")]
-    #[doc(alias = "get_ports_state")]
-    fn ports_state(&self) -> SiAdapterPortsState;
-
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
-    #[doc(alias = "adapter-ports-state-changed")]
-    fn connect_adapter_ports_state_changed<F: Fn(&Self, SiAdapterPortsState, SiAdapterPortsState) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::SiAdapter>> Sealed for T {}
 }
 
-impl<O: IsA<SiAdapter>> SiAdapterExt for O {
+pub trait SiAdapterExt: IsA<SiAdapter> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_si_adapter_get_ports_format")]
+    #[doc(alias = "get_ports_format")]
     fn ports_format(&self) -> (SpaPod, Option<glib::GString>) {
         unsafe {
             let mut mode = ptr::null();
@@ -54,16 +44,19 @@ impl<O: IsA<SiAdapter>> SiAdapterExt for O {
         }
     }
 
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
+    #[doc(alias = "wp_si_adapter_get_ports_state")]
+    #[doc(alias = "get_ports_state")]
     fn ports_state(&self) -> SiAdapterPortsState {
         unsafe {
             from_glib(ffi::wp_si_adapter_get_ports_state(self.as_ref().to_glib_none().0))
         }
     }
 
-    #[cfg(any(feature = "v0_4_10", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+    #[cfg(feature = "v0_4_10")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
+    #[doc(alias = "adapter-ports-state-changed")]
     fn connect_adapter_ports_state_changed<F: Fn(&Self, SiAdapterPortsState, SiAdapterPortsState) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn adapter_ports_state_changed_trampoline<P: IsA<SiAdapter>, F: Fn(&P, SiAdapterPortsState, SiAdapterPortsState) + 'static>(this: *mut ffi::WpSiAdapter, object: ffi::WpSiAdapterPortsState, p0: ffi::WpSiAdapterPortsState, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -76,3 +69,5 @@ impl<O: IsA<SiAdapter>> SiAdapterExt for O {
         }
     }
 }
+
+impl<O: IsA<SiAdapter>> SiAdapterExt for O {}

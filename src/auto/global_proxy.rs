@@ -19,50 +19,43 @@ impl GlobalProxy {
     
 }
 
-pub trait GlobalProxyExt: 'static {
-    #[doc(alias = "wp_global_proxy_bind")]
-    fn bind(&self) -> bool;
-
-    #[doc(alias = "wp_global_proxy_get_global_properties")]
-    #[doc(alias = "get_global_properties")]
-    fn global_properties(&self) -> Option<Properties>;
-
-    #[doc(alias = "wp_global_proxy_get_permissions")]
-    #[doc(alias = "get_permissions")]
-    fn permissions(&self) -> u32;
-
-    #[doc(alias = "wp_global_proxy_request_destroy")]
-    fn request_destroy(&self);
-
-    #[doc(alias = "permissions")]
-    fn connect_permissions_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::GlobalProxy>> Sealed for T {}
 }
 
-impl<O: IsA<GlobalProxy>> GlobalProxyExt for O {
+pub trait GlobalProxyExt: IsA<GlobalProxy> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_global_proxy_bind")]
     fn bind(&self) -> bool {
         unsafe {
             from_glib(ffi::wp_global_proxy_bind(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_global_proxy_get_global_properties")]
+    #[doc(alias = "get_global_properties")]
     fn global_properties(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_global_proxy_get_global_properties(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_global_proxy_get_permissions")]
+    #[doc(alias = "get_permissions")]
     fn permissions(&self) -> u32 {
         unsafe {
             ffi::wp_global_proxy_get_permissions(self.as_ref().to_glib_none().0)
         }
     }
 
+    #[doc(alias = "wp_global_proxy_request_destroy")]
     fn request_destroy(&self) {
         unsafe {
             ffi::wp_global_proxy_request_destroy(self.as_ref().to_glib_none().0);
         }
     }
 
+    #[doc(alias = "permissions")]
     fn connect_permissions_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_permissions_trampoline<P: IsA<GlobalProxy>, F: Fn(&P) + 'static>(this: *mut ffi::WpGlobalProxy, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -75,3 +68,5 @@ impl<O: IsA<GlobalProxy>> GlobalProxyExt for O {
         }
     }
 }
+
+impl<O: IsA<GlobalProxy>> GlobalProxyExt for O {}

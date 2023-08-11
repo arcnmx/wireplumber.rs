@@ -4,7 +4,7 @@ use crate::{
 	spa::{SpaPod, SpaProps},
 };
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 #[derive(Debug, Clone)]
 pub struct SpaRoute {
 	params: SpaPod,
@@ -79,7 +79,7 @@ impl SpaRoute {
 	}
 }
 
-#[cfg_attr(feature = "dox", doc(cfg(feature = "experimental")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 #[derive(Debug)]
 pub struct SpaRoutes {
 	routes: Vec<SpaRoute>,

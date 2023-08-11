@@ -82,12 +82,12 @@ impl Node {
 
     #[doc(alias = "max-input-ports")]
     pub fn max_input_ports(&self) -> u32 {
-        glib::ObjectExt::property(self, "max-input-ports")
+        ObjectExt::property(self, "max-input-ports")
     }
 
     #[doc(alias = "max-output-ports")]
     pub fn max_output_ports(&self) -> u32 {
-        glib::ObjectExt::property(self, "max-output-ports")
+        ObjectExt::property(self, "max-output-ports")
     }
 
     #[doc(alias = "ports-changed")]

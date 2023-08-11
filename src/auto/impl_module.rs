@@ -2,8 +2,8 @@
 // DO NOT EDIT
 
 use crate::{Properties};
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 use crate::{Core};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
 use std::{boxed::Box as Box_,mem::transmute};
@@ -19,32 +19,32 @@ glib::wrapper! {
 
 impl ImplModule {
     pub fn arguments(&self) -> Option<glib::GString> {
-        glib::ObjectExt::property(self, "arguments")
+        ObjectExt::property(self, "arguments")
     }
 
     //pub fn core(&self) -> /*Unimplemented*/Basic: Pointer {
-    //    glib::ObjectExt::property(self, "core")
+    //    ObjectExt::property(self, "core")
     //}
 
     pub fn name(&self) -> Option<glib::GString> {
-        glib::ObjectExt::property(self, "name")
+        ObjectExt::property(self, "name")
     }
 
     pub fn properties(&self) -> Option<Properties> {
-        glib::ObjectExt::property(self, "properties")
+        ObjectExt::property(self, "properties")
     }
 
     pub fn set_properties(&self, properties: Option<&Properties>) {
-        glib::ObjectExt::set_property(self,"properties", properties)
+        ObjectExt::set_property(self,"properties", properties)
     }
 
     //#[doc(alias = "pw-impl-module")]
     //pub fn pw_impl_module(&self) -> /*Unimplemented*/Basic: Pointer {
-    //    glib::ObjectExt::property(self, "pw-impl-module")
+    //    ObjectExt::property(self, "pw-impl-module")
     //}
 
-    #[cfg(any(feature = "v0_4_2", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     #[doc(alias = "wp_impl_module_load")]
     pub fn load(core: &Core, name: &str, arguments: Option<&str>, properties: Option<&Properties>) -> Option<ImplModule> {
         unsafe {

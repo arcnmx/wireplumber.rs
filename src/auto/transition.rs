@@ -35,87 +35,70 @@ impl Transition {
     }
 }
 
-pub trait TransitionExt: 'static {
-    #[doc(alias = "wp_transition_advance")]
-    fn advance(&self);
-
-    #[doc(alias = "wp_transition_get_completed")]
-    #[doc(alias = "get_completed")]
-    fn is_completed(&self) -> bool;
-
-    //#[doc(alias = "wp_transition_get_data")]
-    //#[doc(alias = "get_data")]
-    //fn data(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
-
-    #[doc(alias = "wp_transition_get_source_object")]
-    #[doc(alias = "get_source_object")]
-    fn source_object(&self) -> Option<glib::Object>;
-
-    //#[doc(alias = "wp_transition_get_source_tag")]
-    //#[doc(alias = "get_source_tag")]
-    //fn source_tag(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
-
-    #[doc(alias = "wp_transition_had_error")]
-    fn had_error(&self) -> bool;
-
-    //#[doc(alias = "wp_transition_is_tagged")]
-    //fn is_tagged(&self, tag: /*Unimplemented*/Option<Basic: Pointer>) -> bool;
-
-    //#[doc(alias = "wp_transition_set_data")]
-    //fn set_data(&self, data: /*Unimplemented*/Option<Basic: Pointer>);
-
-    //#[doc(alias = "wp_transition_set_source_tag")]
-    //fn set_source_tag(&self, tag: /*Unimplemented*/Option<Basic: Pointer>);
-
-    #[doc(alias = "completed")]
-    fn connect_completed_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::Transition>> Sealed for T {}
 }
 
-impl<O: IsA<Transition>> TransitionExt for O {
+pub trait TransitionExt: IsA<Transition> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_transition_advance")]
     fn advance(&self) {
         unsafe {
             ffi::wp_transition_advance(self.as_ref().to_glib_none().0);
         }
     }
 
+    #[doc(alias = "wp_transition_get_completed")]
+    #[doc(alias = "get_completed")]
     fn is_completed(&self) -> bool {
         unsafe {
             from_glib(ffi::wp_transition_get_completed(self.as_ref().to_glib_none().0))
         }
     }
 
+    //#[doc(alias = "wp_transition_get_data")]
+    //#[doc(alias = "get_data")]
     //fn data(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_transition_get_data() }
     //}
 
+    #[doc(alias = "wp_transition_get_source_object")]
+    #[doc(alias = "get_source_object")]
     fn source_object(&self) -> Option<glib::Object> {
         unsafe {
             from_glib_none(ffi::wp_transition_get_source_object(self.as_ref().to_glib_none().0))
         }
     }
 
+    //#[doc(alias = "wp_transition_get_source_tag")]
+    //#[doc(alias = "get_source_tag")]
     //fn source_tag(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_transition_get_source_tag() }
     //}
 
+    #[doc(alias = "wp_transition_had_error")]
     fn had_error(&self) -> bool {
         unsafe {
             from_glib(ffi::wp_transition_had_error(self.as_ref().to_glib_none().0))
         }
     }
 
+    //#[doc(alias = "wp_transition_is_tagged")]
     //fn is_tagged(&self, tag: /*Unimplemented*/Option<Basic: Pointer>) -> bool {
     //    unsafe { TODO: call ffi:wp_transition_is_tagged() }
     //}
 
+    //#[doc(alias = "wp_transition_set_data")]
     //fn set_data(&self, data: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_transition_set_data() }
     //}
 
+    //#[doc(alias = "wp_transition_set_source_tag")]
     //fn set_source_tag(&self, tag: /*Unimplemented*/Option<Basic: Pointer>) {
     //    unsafe { TODO: call ffi:wp_transition_set_source_tag() }
     //}
 
+    #[doc(alias = "completed")]
     fn connect_completed_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_completed_trampoline<P: IsA<Transition>, F: Fn(&P) + 'static>(this: *mut ffi::WpTransition, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -128,3 +111,5 @@ impl<O: IsA<Transition>> TransitionExt for O {
         }
     }
 }
+
+impl<O: IsA<Transition>> TransitionExt for O {}

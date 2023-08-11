@@ -19,55 +19,22 @@ impl Object {
     
 }
 
-pub trait ObjectExt: 'static {
-    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
-    #[doc(alias = "wp_object_abort_activation")]
-    fn abort_activation(&self, msg: &str);
-
-    #[doc(alias = "wp_object_activate")]
-    fn activate<P: FnOnce(Result<(), glib::Error>) + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
-
-    
-    fn activate_future(&self, features: ObjectFeatures) -> Pin<Box_<dyn std::future::Future<Output = Result<(), glib::Error>> + 'static>>;
-
-    #[doc(alias = "wp_object_activate_closure")]
-    fn activate_closure(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: glib::Closure);
-
-    #[doc(alias = "wp_object_deactivate")]
-    fn deactivate(&self, features: ObjectFeatures);
-
-    #[doc(alias = "wp_object_get_active_features")]
-    #[doc(alias = "get_active_features")]
-    fn active_features(&self) -> ObjectFeatures;
-
-    #[doc(alias = "wp_object_get_core")]
-    #[doc(alias = "get_core")]
-    fn core(&self) -> Option<Core>;
-
-    #[doc(alias = "wp_object_get_supported_features")]
-    #[doc(alias = "get_supported_features")]
-    fn supported_features(&self) -> ObjectFeatures;
-
-    #[doc(alias = "wp_object_update_features")]
-    fn update_features(&self, activated: ObjectFeatures, deactivated: ObjectFeatures);
-
-    #[doc(alias = "active-features")]
-    fn connect_active_features_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "supported-features")]
-    fn connect_supported_features_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::Object>> Sealed for T {}
 }
 
-impl<O: IsA<Object>> ObjectExt for O {
-    #[cfg(any(feature = "v0_4_6", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_6")))]
+pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
+    #[cfg(feature = "v0_4_6")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
+    #[doc(alias = "wp_object_abort_activation")]
     fn abort_activation(&self, msg: &str) {
         unsafe {
             ffi::wp_object_abort_activation(self.as_ref().to_glib_none().0, msg.to_glib_none().0);
         }
     }
 
+    #[doc(alias = "wp_object_activate")]
     fn activate<P: FnOnce(Result<(), glib::Error>) + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
         
                 let main_context = glib::MainContext::ref_thread_default();
@@ -109,42 +76,52 @@ impl<O: IsA<Object>> ObjectExt for O {
         }))
     }
 
+    #[doc(alias = "wp_object_activate_closure")]
     fn activate_closure(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: glib::Closure) {
         unsafe {
             ffi::wp_object_activate_closure(self.as_ref().to_glib_none().0, features.into_glib(), cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.into_glib_ptr());
         }
     }
 
+    #[doc(alias = "wp_object_deactivate")]
     fn deactivate(&self, features: ObjectFeatures) {
         unsafe {
             ffi::wp_object_deactivate(self.as_ref().to_glib_none().0, features.into_glib());
         }
     }
 
+    #[doc(alias = "wp_object_get_active_features")]
+    #[doc(alias = "get_active_features")]
     fn active_features(&self) -> ObjectFeatures {
         unsafe {
             from_glib(ffi::wp_object_get_active_features(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_object_get_core")]
+    #[doc(alias = "get_core")]
     fn core(&self) -> Option<Core> {
         unsafe {
             from_glib_full(ffi::wp_object_get_core(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_object_get_supported_features")]
+    #[doc(alias = "get_supported_features")]
     fn supported_features(&self) -> ObjectFeatures {
         unsafe {
             from_glib(ffi::wp_object_get_supported_features(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_object_update_features")]
     fn update_features(&self, activated: ObjectFeatures, deactivated: ObjectFeatures) {
         unsafe {
             ffi::wp_object_update_features(self.as_ref().to_glib_none().0, activated.into_glib(), deactivated.into_glib());
         }
     }
 
+    #[doc(alias = "active-features")]
     fn connect_active_features_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_active_features_trampoline<P: IsA<Object>, F: Fn(&P) + 'static>(this: *mut ffi::WpObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -157,6 +134,7 @@ impl<O: IsA<Object>> ObjectExt for O {
         }
     }
 
+    #[doc(alias = "supported-features")]
     fn connect_supported_features_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_supported_features_trampoline<P: IsA<Object>, F: Fn(&P) + 'static>(this: *mut ffi::WpObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -169,3 +147,5 @@ impl<O: IsA<Object>> ObjectExt for O {
         }
     }
 }
+
+impl<O: IsA<Object>> ObjectExt for O {}

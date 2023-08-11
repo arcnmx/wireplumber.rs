@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     gir-src = {
-      url = "github:gtk-rs/gir/0.17";
+      url = "github:gtk-rs/gir/0.18";
       flake = false;
     };
   };
@@ -22,7 +22,7 @@
         mkShell, writeShellScriptBin, wpexec
       , wireplumber, pipewire, glib
       , pkg-config
-      , wireplumber-gir, gobject-introspection, gir-rs-0_17
+      , wireplumber-gir, gobject-introspection, gir-rs-0_18
       , commitlint
       , enableRustdoc ? false
       , enableRust ? true, cargo
@@ -33,7 +33,7 @@
         buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [
           pkg-config
-          gir-rs-0_17
+          gir-rs-0_18
           commitlint
           (writeShellScriptBin "generate" "nix run .#wpdev-generate")
         ] ++ nixlib.optional enableRust cargo;
@@ -55,7 +55,7 @@
             libspa = pipewire;
             libspa-sys = pipewire;
           };
-        };
+        } ++ nixlib.optionals enableRustdoc self.lib.crate.package.metadata.docs.rs.rustdoc-args;
         WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         GIRSPATH = nixlib.makeSearchPathOutput "dev" "share/gir-1.0" [
           wireplumber-gir gobject-introspection
@@ -114,9 +114,9 @@
           mainProgram = "wpexec";
         };
       };
-      gir-rs-0_17 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage {
+      gir-rs-0_18 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage {
         inherit (gir-rs) postPatch meta pname;
-        version = "0.17-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
+        version = "0.18-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
 
         src = inputs.gir-src;
 
@@ -128,7 +128,7 @@
         };
         buildType = let
           # work around gir panics like: thread 'main' panicked at 'attempt to subtract with overflow', src/analysis/function_parameters.rs:243:46
-          girIsBugged = true;
+          girIsBugged = false;
         in if girIsBugged then "release" else "debug";
         doCheck = false;
       };

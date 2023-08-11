@@ -22,10 +22,10 @@
 //! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/c_api/metadata_api.html)
 //! - [Endpoint](https://pipewire.pages.freedesktop.org/wireplumber/c_api/endpoint_api.html)
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
+#[cfg(feature = "v0_4_11")]
 pub use crate::auto::LinkState;
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 pub use crate::auto::PropertiesItem;
 pub use {
 	self::{
@@ -49,7 +49,7 @@ mod properties;
 mod proxy;
 
 #[cfg(feature = "libspa")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl From<Direction> for libspa::Direction {
 	fn from(dir: Direction) -> Self {
 		match dir {
@@ -61,7 +61,7 @@ impl From<Direction> for libspa::Direction {
 }
 
 #[cfg(feature = "libspa")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "libspa")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
 impl From<libspa::Direction> for Direction {
 	fn from(dir: libspa::Direction) -> Self {
 		match dir {

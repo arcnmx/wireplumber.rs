@@ -18,26 +18,27 @@ impl SiLinkable {
     
 }
 
-pub trait SiLinkableExt: 'static {
-    #[doc(alias = "wp_si_linkable_get_acquisition")]
-    #[doc(alias = "get_acquisition")]
-    fn acquisition(&self) -> Option<SiAcquisition>;
-
-    #[doc(alias = "wp_si_linkable_get_ports")]
-    #[doc(alias = "get_ports")]
-    fn ports(&self, context: Option<&str>) -> Option<glib::Variant>;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::SiLinkable>> Sealed for T {}
 }
 
-impl<O: IsA<SiLinkable>> SiLinkableExt for O {
+pub trait SiLinkableExt: IsA<SiLinkable> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_si_linkable_get_acquisition")]
+    #[doc(alias = "get_acquisition")]
     fn acquisition(&self) -> Option<SiAcquisition> {
         unsafe {
             from_glib_none(ffi::wp_si_linkable_get_acquisition(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_si_linkable_get_ports")]
+    #[doc(alias = "get_ports")]
     fn ports(&self, context: Option<&str>) -> Option<glib::Variant> {
         unsafe {
             from_glib_full(ffi::wp_si_linkable_get_ports(self.as_ref().to_glib_none().0, context.to_glib_none().0))
         }
     }
 }
+
+impl<O: IsA<SiLinkable>> SiLinkableExt for O {}

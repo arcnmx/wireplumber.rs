@@ -31,30 +31,20 @@ impl Metadata {
     }
 }
 
-pub trait MetadataExt: 'static {
-    #[doc(alias = "wp_metadata_clear")]
-    fn clear(&self);
-
-    #[doc(alias = "wp_metadata_find")]
-    fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, Option<glib::GString>);
-
-    #[doc(alias = "wp_metadata_new_iterator")]
-    fn new_iterator(&self, subject: u32) -> Option<Iterator>;
-
-    #[doc(alias = "wp_metadata_set")]
-    fn set(&self, subject: u32, key: Option<&str>, type_: Option<&str>, value: Option<&str>);
-
-    #[doc(alias = "changed")]
-    fn connect_changed<F: Fn(&Self, u32, &str, &str, &str) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::Metadata>> Sealed for T {}
 }
 
-impl<O: IsA<Metadata>> MetadataExt for O {
+pub trait MetadataExt: IsA<Metadata> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_metadata_clear")]
     fn clear(&self) {
         unsafe {
             ffi::wp_metadata_clear(self.as_ref().to_glib_none().0);
         }
     }
 
+    #[doc(alias = "wp_metadata_find")]
     fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, Option<glib::GString>) {
         unsafe {
             let mut type_ = ptr::null();
@@ -63,18 +53,21 @@ impl<O: IsA<Metadata>> MetadataExt for O {
         }
     }
 
+    #[doc(alias = "wp_metadata_new_iterator")]
     fn new_iterator(&self, subject: u32) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_metadata_new_iterator(self.as_ref().to_glib_none().0, subject))
         }
     }
 
+    #[doc(alias = "wp_metadata_set")]
     fn set(&self, subject: u32, key: Option<&str>, type_: Option<&str>, value: Option<&str>) {
         unsafe {
             ffi::wp_metadata_set(self.as_ref().to_glib_none().0, subject, key.to_glib_none().0, type_.to_glib_none().0, value.to_glib_none().0);
         }
     }
 
+    #[doc(alias = "changed")]
     fn connect_changed<F: Fn(&Self, u32, &str, &str, &str) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn changed_trampoline<P: IsA<Metadata>, F: Fn(&P, u32, &str, &str, &str) + 'static>(this: *mut ffi::WpMetadata, object: libc::c_uint, p0: *mut libc::c_char, p1: *mut libc::c_char, p2: *mut libc::c_char, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -87,3 +80,5 @@ impl<O: IsA<Metadata>> MetadataExt for O {
         }
     }
 }
+
+impl<O: IsA<Metadata>> MetadataExt for O {}

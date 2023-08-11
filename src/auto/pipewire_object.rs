@@ -19,48 +19,13 @@ impl PipewireObject {
     
 }
 
-pub trait PipewireObjectExt: 'static {
-    #[doc(alias = "wp_pipewire_object_enum_params")]
-    fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P);
-
-    
-    fn enum_params_future(&self, id: Option<&str>, filter: Option<&SpaPod>) -> Pin<Box_<dyn std::future::Future<Output = Result<Option<Iterator>, glib::Error>> + 'static>>;
-
-    #[doc(alias = "wp_pipewire_object_enum_params_sync")]
-    fn enum_params_sync(&self, id: &str, filter: Option<&SpaPod>) -> Option<Iterator>;
-
-    //#[doc(alias = "wp_pipewire_object_get_native_info")]
-    //#[doc(alias = "get_native_info")]
-    //fn native_info(&self) -> /*Unimplemented*/Option<Basic: Pointer>;
-
-    #[doc(alias = "wp_pipewire_object_get_param_info")]
-    #[doc(alias = "get_param_info")]
-    fn param_info(&self) -> Option<glib::Variant>;
-
-    #[doc(alias = "wp_pipewire_object_get_properties")]
-    #[doc(alias = "get_properties")]
-    fn properties(&self) -> Option<Properties>;
-
-    #[doc(alias = "wp_pipewire_object_new_properties_iterator")]
-    fn new_properties_iterator(&self) -> Option<Iterator>;
-
-    #[doc(alias = "wp_pipewire_object_set_param")]
-    fn set_param(&self, id: &str, flags: u32, param: SpaPod) -> bool;
-
-    #[doc(alias = "params-changed")]
-    fn connect_params_changed<F: Fn(&Self, &str) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "native-info")]
-    fn connect_native_info_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "param-info")]
-    fn connect_param_info_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "properties")]
-    fn connect_properties_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::PipewireObject>> Sealed for T {}
 }
 
-impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
+pub trait PipewireObjectExt: IsA<PipewireObject> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_pipewire_object_enum_params")]
     fn enum_params<P: FnOnce(Result<Option<Iterator>, glib::Error>) + 'static>(&self, id: Option<&str>, filter: Option<&SpaPod>, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
         
                 let main_context = glib::MainContext::ref_thread_default();
@@ -105,40 +70,50 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }))
     }
 
+    #[doc(alias = "wp_pipewire_object_enum_params_sync")]
     fn enum_params_sync(&self, id: &str, filter: Option<&SpaPod>) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_pipewire_object_enum_params_sync(self.as_ref().to_glib_none().0, id.to_glib_none().0, filter.to_glib_none().0))
         }
     }
 
+    //#[doc(alias = "wp_pipewire_object_get_native_info")]
+    //#[doc(alias = "get_native_info")]
     //fn native_info(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
     //    unsafe { TODO: call ffi:wp_pipewire_object_get_native_info() }
     //}
 
+    #[doc(alias = "wp_pipewire_object_get_param_info")]
+    #[doc(alias = "get_param_info")]
     fn param_info(&self) -> Option<glib::Variant> {
         unsafe {
             from_glib_full(ffi::wp_pipewire_object_get_param_info(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_pipewire_object_get_properties")]
+    #[doc(alias = "get_properties")]
     fn properties(&self) -> Option<Properties> {
         unsafe {
             from_glib_full(ffi::wp_pipewire_object_get_properties(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_pipewire_object_new_properties_iterator")]
     fn new_properties_iterator(&self) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_pipewire_object_new_properties_iterator(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_pipewire_object_set_param")]
     fn set_param(&self, id: &str, flags: u32, param: SpaPod) -> bool {
         unsafe {
             from_glib(ffi::wp_pipewire_object_set_param(self.as_ref().to_glib_none().0, id.to_glib_none().0, flags, param.into_glib_ptr()))
         }
     }
 
+    #[doc(alias = "params-changed")]
     fn connect_params_changed<F: Fn(&Self, &str) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn params_changed_trampoline<P: IsA<PipewireObject>, F: Fn(&P, &str) + 'static>(this: *mut ffi::WpPipewireObject, object: *mut libc::c_char, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -151,6 +126,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }
     }
 
+    #[doc(alias = "native-info")]
     fn connect_native_info_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_native_info_trampoline<P: IsA<PipewireObject>, F: Fn(&P) + 'static>(this: *mut ffi::WpPipewireObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -163,6 +139,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }
     }
 
+    #[doc(alias = "param-info")]
     fn connect_param_info_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_param_info_trampoline<P: IsA<PipewireObject>, F: Fn(&P) + 'static>(this: *mut ffi::WpPipewireObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -175,6 +152,7 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }
     }
 
+    #[doc(alias = "properties")]
     fn connect_properties_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_properties_trampoline<P: IsA<PipewireObject>, F: Fn(&P) + 'static>(this: *mut ffi::WpPipewireObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -187,3 +165,5 @@ impl<O: IsA<PipewireObject>> PipewireObjectExt for O {
         }
     }
 }
+
+impl<O: IsA<PipewireObject>> PipewireObjectExt for O {}

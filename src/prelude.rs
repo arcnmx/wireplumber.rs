@@ -13,7 +13,7 @@
 //! ```
 
 #[cfg(feature = "glib-signal")]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "glib-signal")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "glib-signal")))]
 #[doc(no_inline)]
 pub use glib_signal::ObjectSignalExt as _;
 #[doc(no_inline)]

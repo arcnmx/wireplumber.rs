@@ -22,6 +22,6 @@ impl ImplEndpoint {
     }
 
     pub fn item(&self) -> Option<SiEndpoint> {
-        glib::ObjectExt::property(self, "item")
+        ObjectExt::property(self, "item")
     }
 }

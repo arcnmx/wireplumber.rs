@@ -41,11 +41,11 @@ impl Dbus {
 
     #[doc(alias = "bus-type")]
     pub fn get_property_bus_type(&self) -> gio::BusType {
-        glib::ObjectExt::property(self, "bus-type")
+        ObjectExt::property(self, "bus-type")
     }
 
     pub fn get_property_state(&self) -> DBusState {
-        glib::ObjectExt::property(self, "state")
+        ObjectExt::property(self, "state")
     }
 
     #[doc(alias = "wp_dbus_get_instance")]

@@ -29,6 +29,6 @@ impl ImplNode {
 
     //#[doc(alias = "pw-impl-node")]
     //pub fn pw_impl_node(&self) -> /*Unimplemented*/Basic: Pointer {
-    //    glib::ObjectExt::property(self, "pw-impl-node")
+    //    ObjectExt::property(self, "pw-impl-node")
     //}
 }

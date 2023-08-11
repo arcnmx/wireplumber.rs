@@ -10,11 +10,11 @@ pub use self::component_loader::ComponentLoader;
 mod core;
 pub use self::core::Core;
 
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 mod dbus;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 pub use self::dbus::Dbus;
 
 mod device;
@@ -23,11 +23,11 @@ pub use self::device::Device;
 mod endpoint;
 pub use self::endpoint::Endpoint;
 
-#[cfg(any(feature = "v0_4_5", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_5")))]
+#[cfg(feature = "v0_4_5")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_5")))]
 mod factory;
-#[cfg(any(feature = "v0_4_5", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_5")))]
+#[cfg(feature = "v0_4_5")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_5")))]
 pub use self::factory::Factory;
 
 mod feature_activation_transition;
@@ -114,32 +114,32 @@ pub use self::object_interest::ObjectInterest;
 mod properties;
 pub use self::properties::Properties;
 
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 mod properties_item;
-#[cfg(any(feature = "v0_4_2", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_2")))]
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 pub use self::properties_item::PropertiesItem;
 
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+#[cfg(feature = "v0_4_8")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 mod spa_json;
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+#[cfg(feature = "v0_4_8")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 pub use self::spa_json::SpaJson;
 
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+#[cfg(feature = "v0_4_8")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 mod spa_json_builder;
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+#[cfg(feature = "v0_4_8")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 pub use self::spa_json_builder::SpaJsonBuilder;
 
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+#[cfg(feature = "v0_4_8")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 mod spa_json_parser;
-#[cfg(any(feature = "v0_4_8", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_8")))]
+#[cfg(feature = "v0_4_8")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 pub use self::spa_json_parser::SpaJsonParser;
 
 mod spa_pod;
@@ -154,23 +154,23 @@ pub use self::spa_pod_parser::SpaPodParser;
 mod enums;
 pub use self::enums::ConstraintType;
 pub use self::enums::ConstraintVerb;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 pub use self::enums::DBusState;
 pub use self::enums::Direction;
 pub use self::enums::LibraryErrorEnum;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 pub use self::enums::LinkState;
 pub use self::enums::NodeState;
-#[cfg(any(feature = "v0_4_10", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_10")))]
+#[cfg(feature = "v0_4_10")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 pub use self::enums::SiAdapterPortsState;
 pub use self::enums::TransitionStep;
 
 mod flags;
-#[cfg(any(feature = "v0_4_11", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4_11")))]
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 pub use self::flags::DbusFeatures;
 pub use self::flags::InitFlags;
 pub use self::flags::InterestMatch;

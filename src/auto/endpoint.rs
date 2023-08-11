@@ -19,48 +19,37 @@ impl Endpoint {
     
 }
 
-pub trait EndpointExt: 'static {
-    #[doc(alias = "wp_endpoint_get_direction")]
-    #[doc(alias = "get_direction")]
-    fn direction(&self) -> Direction;
-
-    #[doc(alias = "wp_endpoint_get_media_class")]
-    #[doc(alias = "get_media_class")]
-    fn media_class(&self) -> Option<glib::GString>;
-
-    #[doc(alias = "wp_endpoint_get_name")]
-    #[doc(alias = "get_name")]
-    fn name(&self) -> Option<glib::GString>;
-
-    #[doc(alias = "direction")]
-    fn connect_direction_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "media-class")]
-    fn connect_media_class_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "name")]
-    fn connect_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::Endpoint>> Sealed for T {}
 }
 
-impl<O: IsA<Endpoint>> EndpointExt for O {
+pub trait EndpointExt: IsA<Endpoint> + sealed::Sealed + 'static {
+    #[doc(alias = "wp_endpoint_get_direction")]
+    #[doc(alias = "get_direction")]
     fn direction(&self) -> Direction {
         unsafe {
             from_glib(ffi::wp_endpoint_get_direction(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_endpoint_get_media_class")]
+    #[doc(alias = "get_media_class")]
     fn media_class(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::wp_endpoint_get_media_class(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_endpoint_get_name")]
+    #[doc(alias = "get_name")]
     fn name(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::wp_endpoint_get_name(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "direction")]
     fn connect_direction_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_direction_trampoline<P: IsA<Endpoint>, F: Fn(&P) + 'static>(this: *mut ffi::WpEndpoint, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -73,6 +62,7 @@ impl<O: IsA<Endpoint>> EndpointExt for O {
         }
     }
 
+    #[doc(alias = "media-class")]
     fn connect_media_class_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_media_class_trampoline<P: IsA<Endpoint>, F: Fn(&P) + 'static>(this: *mut ffi::WpEndpoint, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -85,6 +75,7 @@ impl<O: IsA<Endpoint>> EndpointExt for O {
         }
     }
 
+    #[doc(alias = "name")]
     fn connect_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_name_trampoline<P: IsA<Endpoint>, F: Fn(&P) + 'static>(this: *mut ffi::WpEndpoint, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
@@ -97,3 +88,5 @@ impl<O: IsA<Endpoint>> EndpointExt for O {
         }
     }
 }
+
+impl<O: IsA<Endpoint>> EndpointExt for O {}
