@@ -7,4 +7,7 @@ WP_KEY="${2-placeholder/wpexec}"
 
 WP_JSON="[\"$WP_KEY\"]"
 
+if [[ $# -eq 0 ]]; then
+	wpexec --version > /dev/null
+fi
 timeout 5 wpexec --json "$WP_JSON" "$WP_SCRIPT" | grep -F "$WP_KEY"
