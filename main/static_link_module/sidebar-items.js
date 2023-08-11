@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["LOG_DOMAIN"],"fn":["link_ports","main_async","main_loop","wireplumber__module_init"],"static":["DATA","ONCE","TYP"],"struct":["PortMapping","StaticLink","StaticLinkArgs"]};
+window.SIDEBAR_ITEMS = {"constant":["LOG_DOMAIN"],"fn":["link_ports","main_async","main_loop","wireplumber__module_init"],"struct":["PortMapping","StaticLink","StaticLinkArgs"]};

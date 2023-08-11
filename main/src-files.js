@@ -1,4 +1,4 @@
-var sourcesIndex = JSON.parse('{\
+var srcIndex = JSON.parse('{\
 "build":["",[],["build.rs"]],\
 "glib_signal":["",[],["borrowed_object.rs","from_values.rs","lib.rs","macros.rs","pointer.rs","signal_stream.rs","value_option.rs"]],\
 "static_link_module":["",[],["static-link.rs"]],\
@@ -6,4 +6,4 @@ var sourcesIndex = JSON.parse('{\
 "wireplumber_sys":["",[["generate",[["src",[],["lib.rs"]]]]],["lib.rs"]],\
 "wpexec":["",[],["exec.rs"]]\
 }');
-createSourceSidebar();
+createSrcSidebar();
