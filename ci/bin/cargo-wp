@@ -36,8 +36,28 @@ run() {
 			fi
 			run "$@"
 			;;
+		install)
+			WP_INSTALL="${1-}"
+			if [[ $# -gt 0 ]]; then
+				shift
+			fi
+
+			case "$WP_INSTALL" in
+				gir)
+					cargo install gir --root "$WP_CI" --git https://github.com/gtk-rs/gir --branch "$(jq -r '.nodes."gir-src".original.ref' flake.lock)" --rev "$(jq -r '.nodes."gir-src".locked.rev' flake.lock)" "$@"
+					;;
+				gir-files)
+					git submodule update --init "$WP_ROOT/gir-files" "$@"
+					;;
+				*)
+					echo expected install target: gir, gir-files
+					exit 1
+					;;
+			esac
+			;;
 		*)
-			echo expected subcommand: gir, sys, todo, fmt, commitlint
+			echo expected subcommand: install, gir, sys, todo, fmt, commitlint
+			exit 1
 			;;
 	esac
 }

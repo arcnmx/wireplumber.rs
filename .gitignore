@@ -1,1 +1,2 @@
 /sys/generate/Cargo.*
+/ci/bin/gir

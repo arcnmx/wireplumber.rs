@@ -38,6 +38,10 @@ This project aims to facilitate the following applications:
 
 Helper commands are available via [`cargo wp`](./ci/bin/cargo-wp) to facilitate development. Adding [ci/bin](./ci/bin) to your `PATH` is recommended - the provided [direnv shell](https://direnv.net/) is set up to do this by default.
 
+- `cargo wp install gir` will install the pinned [GIR](https://github.com/gtk-rs/gir) version into ci/bin
+
+  - `cargo wp install gir-files` for the associated data required by GIR
+
 - `cargo wp gir` will update the [auto-generated source](./src/auto) for the main crate
 
 - `cargo wp sys gir` will update the [sys bindings source](./sys/generate)
