@@ -1,2 +1,4 @@
 /sys/generate/Cargo.*
 /ci/bin/gir
+/ci/.crates.toml
+/ci/.crates2.json
