@@ -35,7 +35,7 @@ pub use {
 	},
 	crate::auto::{
 		traits::{EndpointExt, GlobalProxyExt, MetadataExt, PipewireObjectExt, ProxyExt},
-		Device, Direction, Endpoint, GlobalProxy, Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures,
+		Client, Device, Direction, Endpoint, GlobalProxy, Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures,
 		NodeState, PipewireObject, Port, Properties, Proxy, ProxyFeatures,
 	},
 };
