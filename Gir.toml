@@ -101,6 +101,15 @@ status = "generate"
 	[[object.function]]
 	pattern = "(new_copy|new_copy_dict|new_take|new_wrap|new_wrap_dict|add_from_dict|peek_dict|to_pw_properties|unref_and_take_pw_properties|update_from_dict)"
 	manual = true
+	[[object.function]]
+	name = "new_empty"
+	rename = "new"
+	[[object.function]]
+	name = "add_keys_array"
+	rename = "add_keys"
+	[[object.function]]
+	name = "update_keys_array"
+	rename = "update_keys"
 
 [[object]]
 name = "Wp.PropertiesItem"
@@ -126,11 +135,11 @@ status = "generate"
 name = "Wp.ObjectInterest"
 status = "generate"
 	[[object.function]]
-	pattern = "(new|matches)"
-	manual = true
-	[[object.function]]
-	name = "new_valist"
+	pattern = "(new|matches|new_valist)"
 	ignore = true
+	[[object.function]]
+	name = "new_type"
+	rename = "new"
 
 [[object]]
 name = "Wp.ObjectFeatures"
@@ -150,6 +159,9 @@ status = "generate"
 	[[object.function]]
 	name = "update_permissions"
 	ignore = true
+	[[object.function]]
+	name = "update_permissions_array"
+	rename = "update_permissions"
 
 [[object]]
 name = "Wp.Node"
@@ -160,6 +172,9 @@ status = "generate"
 	[[object.function]]
 	pattern = "(lookup_port|new_ports_filtered_iterator)"
 	ignore = true
+	[[object.function]]
+	name = "lookup_port_full"
+	rename = "lookup_port"
 
 [[object]]
 name = "Wp.Link"

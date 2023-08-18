@@ -126,7 +126,7 @@ mod properties_item {
 
 impl FromIterator<(String, String)> for Properties {
 	fn from_iter<T: IntoIterator<Item = (String, String)>>(iter: T) -> Self {
-		let mut props = Self::new_empty();
+		let mut props = Self::new();
 		props.extend(iter);
 		props
 	}
@@ -184,6 +184,6 @@ impl Debug for Properties {
 
 impl Default for Properties {
 	fn default() -> Self {
-		Self::new_empty()
+		Self::new()
 	}
 }

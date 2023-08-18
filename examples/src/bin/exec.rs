@@ -150,7 +150,7 @@ fn main() -> Result<()> {
 	let main_res = Rc::new(RefCell::new(None));
 
 	// tell the pipewire daemon a little bit about ourselves
-	let props = Properties::new_empty();
+	let props = Properties::new();
 	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
 
 	// run a (blocking) glib::MainLoop with associated core

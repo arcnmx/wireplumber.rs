@@ -40,12 +40,6 @@ impl Node {
 		ValueIterator::with_inner(self.new_ports_filtered_iterator_full(interest).unwrap())
 	}
 
-	#[doc(alias = "wp_node_lookup_port")]
-	#[doc(alias = "wp_node_lookup_port_full")]
-	pub fn port(&self, interest: ObjectInterest) -> Option<Port> {
-		self.lookup_port_full(interest)
-	}
-
 	pub fn device_index(&self) -> Result<Option<u32>, Error> {
 		self.pw_property_optional("card.profile.device")
 	}
@@ -91,7 +85,7 @@ impl InterestContainer<Port> for Node {
 	}
 
 	fn lookup(&self, interest: Interest<Port>) -> Option<Port> {
-		self.port(interest.into())
+		self.lookup_port(interest.into())
 	}
 }
 
