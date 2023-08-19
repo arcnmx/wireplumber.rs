@@ -20,13 +20,17 @@ if [[ $GIR_FLAG_COUNT -eq 0 ]]; then
 	if [[ -d src/auto ]]; then
 		sed -i -e '/^\/\/ from [^ ]\+/d' \
 			src/auto/*.rs
-		patch -p1 --reverse < $WP_CI/wp-gir.patch
+		patch \
+			--no-backup-if-mismatch  \
+			-p1 --reverse < $WP_CI/wp-gir.patch
 	elif [[ -f tests/abi.rs ]]; then
 		sed -i -e '/^\/\/ from [^ ]\+$/d' \
 			build{,_version}.rs \
 			{src,tests}/*.rs \
 			tests/*.{h,c}
-		patch -p3 --reverse < $WP_CI/wp-gir-sys.patch
+		patch \
+			--no-backup-if-mismatch  \
+			-p3 --reverse < $WP_CI/wp-gir-sys.patch
 		if [[ -n "${WP_GIR-}" ]]; then
 			cp -f "$WP_GIR" src/Wp-0.4.gir
 		fi
