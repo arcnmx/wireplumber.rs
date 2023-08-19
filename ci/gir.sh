@@ -18,7 +18,7 @@ gir "$@"
 
 if [[ $GIR_FLAG_COUNT -eq 0 ]]; then
 	if [[ -d src/auto ]]; then
-		sed -i -e '/^\/\/ from [^ ]\+$/d' \
+		sed -i -e '/^\/\/ from [^ ]\+/d' \
 			src/auto/*.rs
 		patch -p1 --reverse < $WP_CI/wp-gir.patch
 	elif [[ -f tests/abi.rs ]]; then
