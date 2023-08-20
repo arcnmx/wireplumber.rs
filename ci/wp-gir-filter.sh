@@ -38,5 +38,4 @@ exec xmlstarlet ed \
 	-i '///_:class[@c:type="WpLink"]/glib:signal[@name="state-changed"]' -t attr -n version -v 0.4.11 \
 	-i '///_:function[@name="get_library_version"]' -t attr -n version -v 0.4.12 \
 	-i '///_:function[@name="get_library_api_version"]' -t attr -n version -v 0.4.12 \
-	-u '//_:namespace[@name="Wp"]/@shared-library' -v wireplumber-0.4.so.0 \
-	-i '/_:repository/_:package[not(@name)]' -t attr -n name -v wireplumber-0.4
+	-u '//_:namespace[@name="Wp"]/@shared-library' -v libwireplumber-0.4.so.0
