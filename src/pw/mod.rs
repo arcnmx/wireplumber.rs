@@ -40,6 +40,7 @@ pub use {
 	},
 };
 
+mod client;
 mod keys;
 mod link;
 mod node;

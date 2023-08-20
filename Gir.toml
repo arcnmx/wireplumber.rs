@@ -162,6 +162,7 @@ status = "generate"
 	[[object.function]]
 	name = "update_permissions_array"
 	rename = "update_permissions"
+	manual = true
 
 [[object]]
 name = "Wp.Node"

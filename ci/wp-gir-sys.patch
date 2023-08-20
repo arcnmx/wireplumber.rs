@@ -8,7 +8,7 @@ index 94b8c3a4..642e1d33 100644
  #![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
 +#![cfg_attr(feature = "dox", feature(doc_cfg))]
  
--use pipewire::{pw_core, pw_context, pw_proxy, pw_properties, pw_impl_node};
+-use pipewire::{pw_core, pw_context, pw_permission, pw_proxy, pw_properties, pw_impl_node};
 -use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 -use crate::WpSpaType;
 -

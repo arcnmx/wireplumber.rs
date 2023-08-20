@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# note: a pw_permission is actually 2x uint32
 exec xmlstarlet ed \
-	-i '///_:type[not(@name) and @c:type="pw_permission"]' -t attr -n name -v guint64 \
+	-i '///_:type[not(@name) and @c:type="pw_permission"]' -t attr -n name -v 'gpointer' \
 	-u '///_:constant[@c:type="WP_LOG_LEVEL_TRACE"]/@value' -v $((1<<8)) \
 	-u '///_:constant[@c:type="WP_PIPEWIRE_OBJECT_FEATURES_ALL"]/@value' -v $((992|17)) \
 	-i '///_:record[@c:type="WpIteratorMethods"]' -t attr -n glib:get-type -v wp_iterator_methods_get_type \

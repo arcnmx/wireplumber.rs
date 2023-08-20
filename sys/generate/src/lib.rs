@@ -4,7 +4,7 @@
 #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
 #![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
 
-use pipewire::{pw_core, pw_context, pw_proxy, pw_properties, pw_impl_node};
+use pipewire::{pw_core, pw_context, pw_permission, pw_proxy, pw_properties, pw_impl_node};
 use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 use crate::WpSpaType;
 
@@ -1870,7 +1870,7 @@ extern "C" {
     pub fn wp_client_get_type() -> GType;
     pub fn wp_client_send_error(self_: *mut WpClient, id: u32, res: c_int, message: *const c_char);
     pub fn wp_client_update_permissions(self_: *mut WpClient, n_perm: c_uint, ...);
-    pub fn wp_client_update_permissions_array(self_: *mut WpClient, n_perm: c_uint, permissions: *const u64);
+    pub fn wp_client_update_permissions_array(self_: *mut WpClient, n_perm: c_uint, permissions: *const pw_permission);
 
     //=========================================================================
     // WpComponentLoader

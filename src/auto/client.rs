@@ -20,13 +20,4 @@ impl Client {
             ffi::wp_client_send_error(self.to_glib_none().0, id, res, message.to_glib_none().0);
         }
     }
-
-    #[doc(alias = "wp_client_update_permissions_array")]
-    #[doc(alias = "update_permissions_array")]
-    pub fn update_permissions(&self, permissions: &[u64]) {
-        let n_perm = permissions.len() as _;
-        unsafe {
-            ffi::wp_client_update_permissions_array(self.to_glib_none().0, n_perm, permissions.to_glib_none().0);
-        }
-    }
 }

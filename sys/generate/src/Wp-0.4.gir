@@ -94,7 +94,7 @@ An object id of -1 can be used to set the default object permissions for this cl
           <parameter name="permissions" transfer-ownership="none">
             <doc xml:space="preserve" filename="docs/wp-gtkdoc.h" line="66">an array of permissions per object id</doc>
             <array length="0" zero-terminated="0" c:type="const pw_permission*">
-              <type c:type="pw_permission" name="guint64"/>
+              <type c:type="pw_permission" name="gpointer"/>
             </array>
           </parameter>
         </parameters>
