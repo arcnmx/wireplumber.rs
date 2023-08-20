@@ -17,7 +17,8 @@ glib::wrapper! {
 
 impl Properties {
     #[doc(alias = "wp_properties_new_empty")]
-    pub fn new_empty() -> Properties {
+    #[doc(alias = "new_empty")]
+    pub fn new() -> Properties {
         unsafe {
             from_glib_full(ffi::wp_properties_new_empty())
         }
@@ -38,7 +39,8 @@ impl Properties {
     }
 
     #[doc(alias = "wp_properties_add_keys_array")]
-    pub fn add_keys_array(&self, props: &Properties, keys: &[&str]) -> i32 {
+    #[doc(alias = "add_keys_array")]
+    pub fn add_keys(&self, props: &Properties, keys: &[&str]) -> i32 {
         unsafe {
             ffi::wp_properties_add_keys_array(self.to_glib_none().0, props.to_glib_none().0, keys.to_glib_none().0)
         }
@@ -113,7 +115,8 @@ impl Properties {
     }
 
     #[doc(alias = "wp_properties_update_keys_array")]
-    pub fn update_keys_array(&self, props: &Properties, keys: &[&str]) -> i32 {
+    #[doc(alias = "update_keys_array")]
+    pub fn update_keys(&self, props: &Properties, keys: &[&str]) -> i32 {
         unsafe {
             ffi::wp_properties_update_keys_array(self.to_glib_none().0, props.to_glib_none().0, keys.to_glib_none().0)
         }

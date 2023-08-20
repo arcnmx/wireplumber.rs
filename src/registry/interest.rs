@@ -43,7 +43,7 @@ pub struct Interest<T: StaticType> {
 
 impl<T: StaticType> Interest<T> {
 	pub fn new() -> Self {
-		unsafe { Self::wrap_unchecked(ObjectInterest::new_type(T::static_type())) }
+		unsafe { Self::wrap_unchecked(ObjectInterest::new(T::static_type())) }
 	}
 
 	pub unsafe fn wrap_unchecked(interest: ObjectInterest) -> Self {

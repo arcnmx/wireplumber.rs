@@ -132,7 +132,7 @@ pub async fn main_loop(
 	output_interest: Interest<Node>,
 	mut rx: mpsc::Receiver<()>,
 ) {
-	let link_props = Properties::new_empty();
+	let link_props = Properties::new();
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
 	link_props.insert(pw::PW_KEY_OBJECT_LINGER, arg.linger);
 	while let Some(()) = rx.next().await {

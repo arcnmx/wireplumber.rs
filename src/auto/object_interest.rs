@@ -18,7 +18,8 @@ glib::wrapper! {
 
 impl ObjectInterest {
     #[doc(alias = "wp_object_interest_new_type")]
-    pub fn new_type(gtype: glib::types::Type) -> ObjectInterest {
+    #[doc(alias = "new_type")]
+    pub fn new(gtype: glib::types::Type) -> ObjectInterest {
         unsafe {
             from_glib_full(ffi::wp_object_interest_new_type(gtype.into_glib()))
         }
