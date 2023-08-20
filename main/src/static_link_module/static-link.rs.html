@@ -440,7 +440,7 @@
 	output_interest: Interest&lt;Node&gt;,
 	<span class="kw-2">mut </span>rx: mpsc::Receiver&lt;()&gt;,
 ) {
-	<span class="kw">let </span>link_props = Properties::new_empty();
+	<span class="kw">let </span>link_props = Properties::new();
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
 	link_props.insert(pw::PW_KEY_OBJECT_LINGER, arg.linger);
 	<span class="kw">while let </span><span class="prelude-val">Some</span>(()) = rx.next().<span class="kw">await </span>{

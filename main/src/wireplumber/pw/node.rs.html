@@ -115,12 +115,6 @@
 <a href="#115" id="115">115</a>
 <a href="#116" id="116">116</a>
 <a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	prelude::<span class="kw-2">*</span>,
 	pw::{<span class="self">self</span>, Node, NodeState, PipewireObject, Port},
@@ -161,12 +155,6 @@
 	#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator_full&quot;</span>)]
 	</span><span class="kw">pub fn </span>ports_filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: ObjectInterest) -&gt; ValueIterator&lt;Port&gt; {
 		ValueIterator::with_inner(<span class="self">self</span>.new_ports_filtered_iterator_full(interest).unwrap())
-	}
-
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_lookup_port&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;wp_node_lookup_port_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>port(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: ObjectInterest) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
-		<span class="self">self</span>.lookup_port_full(interest)
 	}
 
 	<span class="kw">pub fn </span>device_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;u32&gt;, Error&gt; {
@@ -214,7 +202,7 @@
 	}
 
 	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;Port&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Port&gt; {
-		<span class="self">self</span>.port(interest.into())
+		<span class="self">self</span>.lookup_port(interest.into())
 	}
 }
 

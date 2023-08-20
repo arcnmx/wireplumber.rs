@@ -426,7 +426,7 @@
 	</span><span class="kw">let </span>main_res = Rc::new(RefCell::new(<span class="prelude-val">None</span>));
 
 	<span class="comment">// tell the pipewire daemon a little bit about ourselves
-	</span><span class="kw">let </span>props = Properties::new_empty();
+	</span><span class="kw">let </span>props = Properties::new();
 	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
 
 	<span class="comment">// run a (blocking) glib::MainLoop with associated core

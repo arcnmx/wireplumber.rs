@@ -125,7 +125,7 @@
     </span><span class="kw">fn </span>clear(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
     <span class="attr">#[doc(alias = <span class="string">&quot;wp_metadata_find&quot;</span>)]
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, subject: u32, key: <span class="kw-2">&amp;</span>str) -&gt; (<span class="prelude-ty">Option</span>&lt;glib::GString&gt;, glib::GString);
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, subject: u32, key: <span class="kw-2">&amp;</span>str) -&gt; (<span class="prelude-ty">Option</span>&lt;glib::GString&gt;, <span class="prelude-ty">Option</span>&lt;glib::GString&gt;);
 
     <span class="attr">#[doc(alias = <span class="string">&quot;wp_metadata_new_iterator&quot;</span>)]
     </span><span class="kw">fn </span>new_iterator(<span class="kw-2">&amp;</span><span class="self">self</span>, subject: u32) -&gt; <span class="prelude-ty">Option</span>&lt;Iterator&gt;;
@@ -144,7 +144,7 @@
         }
     }
 
-    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, subject: u32, key: <span class="kw-2">&amp;</span>str) -&gt; (<span class="prelude-ty">Option</span>&lt;glib::GString&gt;, glib::GString) {
+    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, subject: u32, key: <span class="kw-2">&amp;</span>str) -&gt; (<span class="prelude-ty">Option</span>&lt;glib::GString&gt;, <span class="prelude-ty">Option</span>&lt;glib::GString&gt;) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>type_ = ptr::null();
             <span class="kw">let </span>ret = from_glib_none(ffi::wp_metadata_find(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, subject, key.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>type_));

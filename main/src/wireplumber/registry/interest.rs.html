@@ -616,7 +616,7 @@
 
 <span class="kw">impl</span>&lt;T: StaticType&gt; Interest&lt;T&gt; {
 	<span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::wrap_unchecked(ObjectInterest::new_type(T::static_type())) }
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::wrap_unchecked(ObjectInterest::new(T::static_type())) }
 	}
 
 	<span class="kw">pub unsafe fn </span>wrap_unchecked(interest: ObjectInterest) -&gt; <span class="self">Self </span>{
