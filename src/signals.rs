@@ -24,7 +24,7 @@
 //!   # #[cfg(feature = "futures")]
 //!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
 //!
-//!   om.request_object_features(Object::static_type(), ObjectFeatures::ALL);
+//!   om.request_object_features(Node::static_type(), ObjectFeatures::ALL);
 //!   core.install_object_manager(&om);
 //!
 //!   # #[cfg(feature = "futures")]

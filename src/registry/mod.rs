@@ -75,6 +75,39 @@ impl ObjectManager {
 			.lookup_full(interest.into())
 			.map(|obj| unsafe { obj.unsafe_cast() })
 	}
+
+	/// Wait until the ObjectManager [has been installed](Self::is_installed).
+	///
+	/// Note that the future does not take ownership over `self`, and will produce
+	/// an error in cases where there are no more references keeping it alive.
+	#[cfg(all(feature = "glib-signal", feature = "futures"))] // TODO: change this to only require `feature = "futures"`
+	#[cfg_attr(docsrs, doc(all(feature = "glib-signal", feature = "futures")))]
+	pub fn installed_future(&self) -> impl Future<Output = Result<(), Error>> {
+		let signal_installed = if self.is_installed() {
+			None
+		} else {
+			let signal_installed = self.signal_stream(Self::SIGNAL_INSTALLED);
+			if !self.is_installed() {
+				Some(signal_installed)
+			} else {
+				None
+			}
+		};
+
+		async move {
+			if let Some(signal_installed) = signal_installed {
+				let res = signal_installed.once().await;
+				if res.is_err() {
+					return Err(Error::new(
+						LibraryErrorEnum::OperationFailed,
+						"ObjectManager will never be installed",
+					))
+				}
+			}
+
+			Ok(())
+		}
+	}
 }
 
 impl<'a> IntoIterator for &'a ObjectManager {
