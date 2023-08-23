@@ -68,10 +68,10 @@ pub trait MetadataExt: IsA<Metadata> + sealed::Sealed + 'static {
     }
 
     #[doc(alias = "changed")]
-    fn connect_changed<F: Fn(&Self, u32, &str, &str, &str) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn changed_trampoline<P: IsA<Metadata>, F: Fn(&P, u32, &str, &str, &str) + 'static>(this: *mut ffi::WpMetadata, object: libc::c_uint, p0: *mut libc::c_char, p1: *mut libc::c_char, p2: *mut libc::c_char, f: glib::ffi::gpointer) {
+    fn connect_changed<F: Fn(&Self, u32, &str, Option<&str>, Option<&str>) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn changed_trampoline<P: IsA<Metadata>, F: Fn(&P, u32, &str, Option<&str>, Option<&str>) + 'static>(this: *mut ffi::WpMetadata, object: libc::c_uint, p0: *mut libc::c_char, p1: *mut libc::c_char, p2: *mut libc::c_char, f: glib::ffi::gpointer) {
             let f: &F = &*(f as *const F);
-            f(Metadata::from_glib_borrow(this).unsafe_cast_ref(), object, &glib::GString::from_glib_borrow(p0), &glib::GString::from_glib_borrow(p1), &glib::GString::from_glib_borrow(p2))
+            f(Metadata::from_glib_borrow(this).unsafe_cast_ref(), object, &glib::GString::from_glib_borrow(p0), Option::<glib::GString>::from_glib_borrow(p1).as_ref().as_ref().map(|s| s.as_str()), Option::<glib::GString>::from_glib_borrow(p2).as_ref().as_ref().map(|s| s.as_str()))
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
