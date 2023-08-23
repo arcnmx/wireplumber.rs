@@ -31,6 +31,7 @@ if [[ $GIR_FLAG_COUNT -eq 0 ]]; then
 		patch \
 			--no-backup-if-mismatch  \
 			-p3 --reverse < $WP_CI/wp-gir-sys.patch
+		mv Cargo.toml Cargo.template.toml
 		if [[ -n "${WP_GIR-}" ]]; then
 			cp -f "$WP_GIR" src/Wp-0.4.gir
 		fi
