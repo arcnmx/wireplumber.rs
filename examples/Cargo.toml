@@ -18,7 +18,7 @@ path = "src/static-link.rs"
 [dependencies]
 futures = "0.3"
 wireplumber = { version = "0.1", features = ["futures", "glib-signal", "serde", "v0_4_3"], path = "../" }
-pipewire-sys = "0.6"
+pipewire-sys = "0.7"
 glib = { version = "0.18" }
 ctrlc = { version = "3.0", features = ["termination"] }
 serde = { version = "1.0", features = ["derive"] }

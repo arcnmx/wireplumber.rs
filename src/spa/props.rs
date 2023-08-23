@@ -1,7 +1,4 @@
-use {
-	crate::{prelude::*, PipewireObject, SpaPod},
-	glib::prelude::*,
-};
+use crate::{prelude::*, PipewireObject, SpaPod};
 
 #[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 #[derive(Debug)]

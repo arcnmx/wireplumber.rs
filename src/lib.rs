@@ -96,7 +96,7 @@ pub(crate) use crate::{
 	pw::{Direction, Endpoint, GlobalProxy, Metadata, NodeState, PipewireObject, Port, Properties, Proxy},
 	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
 	session::{SessionItem, SiAcquisition, SiEndpoint, SiLink, SiLinkable},
-	spa::{SpaPod, SpaType},
+	spa::SpaPod,
 	util::{Transition, WpIterator as Iterator},
 };
 #[doc(no_inline)]

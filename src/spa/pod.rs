@@ -1,10 +1,12 @@
 #[cfg(feature = "experimental")]
 use crate::pw::PipewireObject;
+#[cfg(feature = "libspa")]
+use crate::spa::SpaPodParser;
 use {
 	crate::{
 		prelude::*,
 		pw::SpaPropertyKey,
-		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPodParser, SpaPrimitive, SpaType, SpaValue},
+		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPrimitive, SpaType, SpaValue},
 	},
 	libspa_sys::{spa_fraction, spa_pod, spa_rectangle},
 };
@@ -46,6 +48,7 @@ impl SpaPod {
 		unsafe { Self::with_copy(&Self::with_pod_unchecked(bytes)) }
 	}
 
+	#[cfg(feature = "libspa")]
 	fn parse_<R, F: FnOnce(&SpaPodParser, Option<&str>) -> R>(&self, f: F) -> Result<R, Error> {
 		let (parser, id_name) = match () {
 			_ if self.is_object() => Ok(SpaPodParser::new_object(self)),
@@ -60,10 +63,12 @@ impl SpaPod {
 		Ok(res)
 	}
 
+	#[cfg(feature = "libspa")]
 	pub(crate) fn parse_struct<R, F: FnOnce(&SpaPodParser) -> R>(&self, f: F) -> R {
 		self.parse_(|parser, _| f(parser)).unwrap()
 	}
 
+	#[cfg(feature = "libspa")]
 	pub(crate) fn parse_object<R, F: FnOnce(&SpaPodParser, Option<&str>) -> R>(&self, f: F) -> R {
 		self.parse_(|parser, id_name| f(parser, id_name)).unwrap()
 	}
