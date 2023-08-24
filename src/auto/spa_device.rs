@@ -45,7 +45,8 @@ impl SpaDevice {
     #[cfg(feature = "v0_4_11")]
     #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[doc(alias = "wp_spa_device_new_managed_object_iterator")]
-    pub fn new_managed_object_iterator(&self) -> Option<Iterator> {
+    #[doc(alias = "new_managed_object_iterator")]
+    pub fn managed_object_iterator(&self) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_spa_device_new_managed_object_iterator(self.to_glib_none().0))
         }

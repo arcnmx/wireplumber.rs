@@ -14,12 +14,12 @@ impl ObjectInterest {
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_object<O: IsA<GObject>>(&self, object: &O) -> bool {
 		let object = object.as_ref();
-		self.matches_full(InterestMatchFlags::CHECK_ALL, object.type_(), Some(object), None, None) == InterestMatch::all()
+		self.matches(InterestMatchFlags::CHECK_ALL, object.type_(), Some(object), None, None) == InterestMatch::all()
 	}
 
 	#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches_props(&self, props: &Properties) -> bool {
-		self.matches_full(
+		self.matches(
 			InterestMatchFlags::CHECK_ALL,
 			Properties::static_type(),
 			None::<&GObject>,

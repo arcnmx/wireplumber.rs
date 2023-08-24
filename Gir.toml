@@ -27,7 +27,7 @@ generate = [
 	"Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Port",
 	"Wp.ImplEndpoint",
 	"Wp.FeatureActivationTransition",
-	"Wp.SiEndpoint", "Wp.ImplMetadata",
+	"Wp.SiEndpoint",
 	"Wp.ImplModule", "Wp.ImplNode",
 	"Wp.InitFlags", "Wp.InterestMatch", "Wp.InterestMatchFlags",
 	"Wp.LookupDirs",
@@ -82,6 +82,9 @@ status = "generate"
 	[[object.function]]
 	pattern = "(new_wrap|spa_device_handle)"
 	manual = true
+	[[object.function]]
+	name = "new_managed_object_iterator"
+	rename = "managed_object_iterator"
 
 [[object]]
 name = "Wp.SpaPodParser"
@@ -89,6 +92,14 @@ status = "generate"
 	[[object.function]]
 	name = "new_object"
 	ignore = true
+
+[[object]]
+name = "Wp.ImplMetadata"
+status = "generate"
+	[[object.function]]
+	name = "new_full"
+	constructor = true
+	rename = "with_properties"
 
 [[object]]
 name = "Wp.Properties"
@@ -104,6 +115,9 @@ status = "generate"
 	[[object.function]]
 	name = "new_empty"
 	rename = "new"
+	[[object.function]]
+	name = "new_iterator"
+	rename = "items_iterator"
 	[[object.function]]
 	name = "add_keys_array"
 	rename = "add_keys"
@@ -130,6 +144,18 @@ status = "generate"
 	[[object.function]]
 	pattern = "(add_interest|lookup|new_filtered_iterator)"
 	ignore = true
+	[[object.function]]
+	name = "new_iterator"
+	rename = "objects_iterator"
+	[[object.function]]
+	name = "new_filtered_iterator_full"
+	rename = "filtered_iterator"
+	[[object.function]]
+	name = "lookup_full"
+	rename = "lookup_object"
+	[[object.function]]
+	name = "add_interest_full"
+	visibility = "crate"
 
 [[object]]
 name = "Wp.ObjectInterest"
@@ -140,6 +166,9 @@ status = "generate"
 	[[object.function]]
 	name = "new_type"
 	rename = "new"
+	[[object.function]]
+	name = "matches_full"
+	rename = "matches"
 
 [[object]]
 name = "Wp.ObjectFeatures"
@@ -176,6 +205,12 @@ status = "generate"
 	[[object.function]]
 	name = "lookup_port_full"
 	rename = "lookup_port"
+	[[object.function]]
+	name = "new_ports_iterator"
+	rename = "ports_iterator"
+	[[object.function]]
+	name = "new_ports_filtered_iterator_full"
+	rename = "ports_filtered_iterator"
 
 [[object]]
 name = "Wp.Link"

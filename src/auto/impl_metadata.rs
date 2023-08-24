@@ -24,7 +24,8 @@ impl ImplMetadata {
     #[cfg(feature = "v0_4_3")]
     #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_3")))]
     #[doc(alias = "wp_impl_metadata_new_full")]
-    pub fn new_full(core: &Core, name: Option<&str>, properties: Option<Properties>) -> ImplMetadata {
+    #[doc(alias = "new_full")]
+    pub fn with_properties(core: &Core, name: Option<&str>, properties: Option<Properties>) -> ImplMetadata {
         unsafe {
             from_glib_full(ffi::wp_impl_metadata_new_full(core.to_glib_none().0, name.to_glib_none().0, properties.into_glib_ptr()))
         }

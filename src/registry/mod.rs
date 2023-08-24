@@ -53,26 +53,31 @@ mod interest;
 
 impl ObjectManager {
 	#[doc(alias = "wp_object_manager_add_interest_full")]
+	#[doc(alias = "add_interest_full")]
 	pub fn add_interest<I: Into<ObjectInterest>>(&self, interest: I) {
 		self.add_interest_full(interest.into())
 	}
 
 	#[doc(alias = "wp_object_manager_new_iterator")]
+	#[doc(alias = "new_iterator")]
 	pub fn objects<T: ObjectType>(&self) -> ValueIterator<T> {
-		ValueIterator::with_inner(self.new_iterator().unwrap())
+		ValueIterator::with_inner(self.objects_iterator().unwrap())
 	}
 
 	#[doc(alias = "wp_object_manager_new_filtered_iterator")]
 	#[doc(alias = "wp_object_manager_new_filtered_iterator_full")]
+	#[doc(alias = "new_filtered_iterator")]
+	#[doc(alias = "new_filtered_iterator_full")]
 	pub fn filtered<T: ObjectType>(&self, interest: ObjectInterest) -> ValueIterator<T> {
-		ValueIterator::with_inner(self.new_filtered_iterator_full(interest.into()).unwrap())
+		ValueIterator::with_inner(self.filtered_iterator(interest.into()).unwrap())
 	}
 
 	#[doc(alias = "wp_object_manager_lookup")]
 	#[doc(alias = "wp_object_manager_lookup_full")]
+	#[doc(alias = "lookup_full")]
 	pub fn lookup<T: ObjectType>(&self, interest: Interest<T>) -> Option<T> {
 		self
-			.lookup_full(interest.into())
+			.lookup_object(interest.into())
 			.map(|obj| unsafe { obj.unsafe_cast() })
 	}
 

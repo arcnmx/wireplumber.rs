@@ -79,7 +79,7 @@ impl Properties {
 
 	#[cfg(feature = "v0_4_2")]
 	pub fn items(&self) -> ValueIterator<PropertiesItem> {
-		ValueIterator::with_inner(self.new_iterator().unwrap())
+		ValueIterator::with_inner(self.items_iterator().unwrap())
 	}
 
 	#[cfg(feature = "v0_4_2")]

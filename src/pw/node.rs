@@ -30,14 +30,17 @@ impl Node {
 	}
 
 	#[doc(alias = "wp_node_new_ports_iterator")]
+	#[doc(alias = "new_ports_iterator")]
 	pub fn ports(&self) -> ValueIterator<Port> {
-		ValueIterator::with_inner(self.new_ports_iterator().unwrap())
+		ValueIterator::with_inner(self.ports_iterator().unwrap())
 	}
 
 	#[doc(alias = "wp_node_new_ports_filtered_iterator")]
 	#[doc(alias = "wp_node_new_ports_filtered_iterator_full")]
+	#[doc(alias = "new_ports_filtered_iterator")]
+	#[doc(alias = "new_ports_filtered_iterator_full")]
 	pub fn ports_filtered(&self, interest: ObjectInterest) -> ValueIterator<Port> {
-		ValueIterator::with_inner(self.new_ports_filtered_iterator_full(interest).unwrap())
+		ValueIterator::with_inner(self.ports_filtered_iterator(interest).unwrap())
 	}
 
 	pub fn device_index(&self) -> Result<Option<u32>, Error> {
