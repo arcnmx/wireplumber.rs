@@ -11,6 +11,7 @@ exec xmlstarlet ed \
 	-u '///_:record[@c:type="WpSpaPod"]/_:method[@c:identifier="wp_spa_pod_get_string"]//_:parameter[@name="value"]/@transfer-ownership' -v none \
 	-i '///_:class[@c:type="WpMetadata"]/_:method[@name="find"]/_:return-value' -t attr -n nullable -v 1 \
 	-i '///_:class[@c:type="WpMetadata"]/_:method[@name="find"]//_:parameter[@name="type"]' -t attr -n nullable -v 1 \
+	-i '///_:class[@c:type="WpMetadata"]/glib:signal[@name="changed"]//_:parameter[@name="p0"]' -t attr -n nullable -v 1 \
 	-i '///_:class[@c:type="WpMetadata"]/glib:signal[@name="changed"]//_:parameter[@name="p1"]' -t attr -n nullable -v 1 \
 	-i '///_:class[@c:type="WpMetadata"]/glib:signal[@name="changed"]//_:parameter[@name="p2"]' -t attr -n nullable -v 1 \
 	-i '///_:record[@c:type="WpSpaJsonParser"]/_:method[@name="get_json"]/_:return-value' -t attr -n nullable -v 1 \

@@ -149,7 +149,7 @@ def_signal! {
 	impl Notifies<"changed" as MetadataChanged> for crate::pw::Metadata {
 		impl {const SIGNAL_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		fn(&self, u32, String, Option<String>, Option<String>)
+		fn(&self, u32, Option<String>, Option<String>, Option<String>)
 	}
 }
 
