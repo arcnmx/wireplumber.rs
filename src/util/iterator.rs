@@ -32,8 +32,8 @@ impl WpIterator {
 impl<T: ObjectType> FromIterator<T> for WpIterator {
 	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
 		unsafe {
-			let free: unsafe extern "C" fn(gpointer) = transmute(glib::gobject_ffi::g_object_unref as gpointer);
-			let array = glib::ffi::g_ptr_array_new_with_free_func(Some(free));
+			let free = glib::gobject_ffi::g_object_unref as gpointer;
+			let array = glib::ffi::g_ptr_array_new_with_free_func(transmute(free));
 			for item in iter {
 				glib::ffi::g_ptr_array_add(array, item.to_glib_full() as gpointer);
 			}
@@ -136,6 +136,12 @@ fn object_iterator() {
 
 	let value = ObjectManager::new();
 	let iter = ValueIterator::new(iter::once(value.clone()));
+	assert_eq!(value.ref_count(), 2);
+
 	let values: Vec<_> = iter.collect();
-	assert_eq!(vec![value], values);
+	assert_eq!(vec![value.clone()], values);
+
+	// now check that the iterator handles ownership transfer properly
+	drop(values);
+	assert_eq!(value.ref_count(), 1);
 }
