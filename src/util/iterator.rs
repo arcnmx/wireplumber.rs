@@ -1,4 +1,8 @@
-use crate::{prelude::*, util::WpIterator};
+use {
+	crate::{prelude::*, util::WpIterator},
+	glib::ffi::GPtrArray,
+	std::mem::transmute,
+};
 
 impl WpIterator {
 	#[doc(alias = "wp_iterator_new")]
@@ -7,16 +11,15 @@ impl WpIterator {
 	}
 
 	#[doc(alias = "wp_iterator_new_ptr_array")]
-	pub unsafe fn with_pointers<I: IntoIterator<Item = gpointer>>(items: I, type_: Type) -> Self {
-		let array = glib::ffi::g_ptr_array_new();
-		for item in items {
-			glib::ffi::g_ptr_array_add(array, item);
-		}
+	pub unsafe fn with_ptr_array(array: *mut GPtrArray, type_: Type) -> Self {
 		from_glib_full(ffi::wp_iterator_new_ptr_array(array, type_.into_glib()))
 	}
 
 	pub fn empty(type_: Type) -> Self {
-		unsafe { Self::with_pointers(iter::empty(), type_) }
+		unsafe {
+			let empty = glib::ffi::g_ptr_array_new();
+			Self::with_ptr_array(empty, type_)
+		}
 	}
 
 	#[doc(alias = "wp_iterator_get_user_data")]
@@ -28,7 +31,14 @@ impl WpIterator {
 
 impl<T: ObjectType> FromIterator<T> for WpIterator {
 	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
-		unsafe { Self::with_pointers(iter.into_iter().map(|o| o.to_glib_full() as *mut _), T::static_type()) }
+		unsafe {
+			let free: unsafe extern "C" fn(gpointer) = transmute(glib::gobject_ffi::g_object_unref as gpointer);
+			let array = glib::ffi::g_ptr_array_new_with_free_func(Some(free));
+			for item in iter {
+				glib::ffi::g_ptr_array_add(array, item.to_glib_full() as gpointer);
+			}
+			Self::with_ptr_array(array, T::static_type())
+		}
 	}
 }
 
