@@ -134,127 +134,127 @@
 //!
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/log_api.html)
 
-</span><span class="kw">mod </span>macros;
+</span><span class="kw">mod </span><a href="macros.rs.html#1-113">macros</a>;
 
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">pub use </span><span class="self">self</span>::macros::_log_inner;
-<span class="kw">pub use </span><span class="self">self</span>::macros::{critical, debug, info, log, message, trace, warning};
+</span><span class="kw">pub use </span><a href="macros.rs.html#70-88"><span class="self">self</span>::macros::_log_inner</a>;
+<span class="kw">pub use </span><span class="self">self</span>::macros::{<a href="macros.rs.html#42-49">critical</a>, <a href="macros.rs.html#42-49">debug</a>, <a href="macros.rs.html#42-49">info</a>, <a href="macros.rs.html#52-65">log</a>, <a href="macros.rs.html#42-49">message</a>, <a href="macros.rs.html#42-49">trace</a>, <a href="macros.rs.html#42-49">warning</a>};
 <span class="attr">#[allow(unused_imports)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::macros::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning};
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::macros::{<a href="macros.rs.html#42-49">wp_critical</a>, <a href="macros.rs.html#42-49">wp_debug</a>, <a href="macros.rs.html#42-49">wp_info</a>, <a href="macros.rs.html#42-49">wp_message</a>, <a href="macros.rs.html#42-49">wp_trace</a>, <a href="macros.rs.html#42-49">wp_warning</a>};
 <span class="kw">use </span>{
-	<span class="kw">crate</span>::prelude::<span class="kw-2">*</span>,
-	glib::{GString, GStringBuilder, LogLevelFlags},
-	libspa_sys::spa_log,
-	std::env,
+	<a href="../lib.rs.html#74"><span class="kw">crate</span>::prelude</a>::<span class="kw-2">*</span>,
+	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring/struct.GString.html">GString</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring_builder/struct.GStringBuilder.html">GStringBuilder</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/flags/struct.LogLevelFlags.html">LogLevelFlags</a>},
+	<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_log.html">libspa_sys::spa_log</a>,
+	<a href="https://doc.rust-lang.org/nightly/core/macro.env.html">std::env</a>,
 };
 
-<span class="kw">pub struct </span>Log(());
+<span class="kw">pub struct </span><a href="../../../wireplumber/log/struct.Log.html">Log</a>(());
 
-<span class="kw">impl </span>Log {
+<span class="kw">impl </span><a href="#21">Log</a> {
 	<span class="attr">#[doc(alias = <span class="string">&quot;WP_LOG_LEVEL_TRACE&quot;</span>)]
-	</span><span class="kw">pub const </span>LEVEL_TRACE: LogLevelFlags = LogLevelFlags::from_bits_truncate(ffi::WP_LOG_LEVEL_TRACE <span class="kw">as _</span>);
+	</span><span class="kw">pub const </span>LEVEL_TRACE: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/flags/struct.LogLevelFlags.html">LogLevelFlags</a> = LogLevelFlags::from_bits_truncate(ffi::WP_LOG_LEVEL_TRACE <span class="kw">as _</span>);
 
 	<span class="comment">/*#[doc(alias = &quot;WP_OBJECT_FORMAT&quot;)]
 	pub const OBJECT_FORMAT: CStr = ffi::WP_OBJECT_FORMAT;*/
 
-	</span><span class="kw">pub fn </span>domain() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+	</span><span class="kw">pub fn </span>domain() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
 		LibraryErrorEnum::domain().as_str()
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_level_is_enabled&quot;</span>)]
-	</span><span class="kw">pub fn </span>level_is_enabled&lt;L: Into&lt;LogLevelFlags&gt;&gt;(flags: L) -&gt; bool {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib())) }
+	</span><span class="kw">pub fn </span>level_is_enabled&lt;L: Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/flags/struct.LogLevelFlags.html">LogLevelFlags</a>&gt;&gt;(flags: L) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_log_level_is_enabled(<a href="#35">flags</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_set_level&quot;</span>)]
-	</span><span class="kw">pub fn </span>set_level(level: <span class="kw-2">&amp;</span>str) {
-		env::set_var(<span class="string">&quot;WIREPLUMBER_DEBUG&quot;</span>, level); <span class="comment">// XXX: this doesn&#39;t seem to work properly otherwise?
-		</span><span class="kw">unsafe </span>{ ffi::wp_log_set_level(level.to_glib_none().<span class="number">0</span>) }
+	</span><span class="kw">pub fn </span>set_level(level: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
+		env::set_var(<span class="string">&quot;WIREPLUMBER_DEBUG&quot;</span>, <a href="#40">level</a>); <span class="comment">// XXX: this doesn&#39;t seem to work properly otherwise?
+		</span><span class="kw">unsafe </span>{ ffi::wp_log_set_level(<a href="#40">level</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
 	}
 
-	<span class="kw">pub fn </span>set_default_level(level: <span class="kw-2">&amp;</span>str) {
+	<span class="kw">pub fn </span>set_default_level(level: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
 		<span class="kw">if </span>env::var_os(<span class="string">&quot;WIREPLUMBER_DEBUG&quot;</span>).is_none() {
-			<span class="self">Self</span>::set_level(level)
+			<span class="self">Self</span>::set_level(<a href="#45">level</a>)
 		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_log_get_instance&quot;</span>)]
-	</span><span class="kw">pub fn </span>spa_log() -&gt; <span class="kw-2">*mut </span>spa_log {
+	</span><span class="kw">pub fn </span>spa_log() -&gt; <span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_log.html">spa_log</a> {
 		<span class="kw">unsafe </span>{ ffi::wp_spa_log_get_instance() }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_structured_standard&quot;</span>)]
-	</span><span class="kw">pub fn </span>log_string&lt;M: Into&lt;GString&gt;, L: Into&lt;LogLevelFlags&gt;&gt;(log_level: L, context: StructuredLogContext, message: M) {
+	</span><span class="kw">pub fn </span>log_string&lt;M: Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring/struct.GString.html">GString</a>&gt;, L: Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/flags/struct.LogLevelFlags.html">LogLevelFlags</a>&gt;&gt;(log_level: L, context: <a href="#107-114">StructuredLogContext</a>, message: M) {
 		<span class="kw">unsafe </span>{
 			<span class="comment">// XXX: so much allocation, it burns...
-			</span><span class="kw">let </span>domain = context.domain.unwrap_or_default().to_glib_none();
-			<span class="kw">let </span>file = context.file.unwrap_or_default().to_glib_none();
-			<span class="kw">let </span>line = context.line.as_ref().map(ToString::to_string);
-			<span class="kw">let </span>line = line.as_ref().map(|l| <span class="kw-2">&amp;</span>l[..]).unwrap_or_default().to_glib_none();
-			<span class="kw">let </span>function = context.function.unwrap_or_default().to_glib_none();
-			<span class="kw">let </span>obj_type = context.object_type.unwrap_or(<span class="kw">match </span>context.object {
-				<span class="prelude-val">Some</span>(obj) =&gt; obj.type_(),
+			</span><span class="kw">let </span>domain = <a href="#57">context</a>.domain.unwrap_or_default().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>();
+			<span class="kw">let </span>file = <a href="#57">context</a>.file.unwrap_or_default().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>();
+			<span class="kw">let </span>line = <a href="#57">context</a>.line.as_ref().map(<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">ToString::to_string</a>);
+			<span class="kw">let </span>line = <a href="#62">line</a>.as_ref().map(|l| <span class="kw-2">&amp;</span><a href="#63">l</a>[..]).unwrap_or_default().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>();
+			<span class="kw">let </span>function = <a href="#57">context</a>.function.unwrap_or_default().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>();
+			<span class="kw">let </span>obj_type = <a href="#57">context</a>.object_type.unwrap_or(<span class="kw">match </span><a href="#57">context</a>.object {
+				<span class="prelude-val">Some</span>(obj) =&gt; <a href="#66">obj</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectExt.html">type_</a>(),
 				<span class="prelude-val">None </span>=&gt; Type::INVALID,
 			});
-			<span class="kw">let </span>obj = context.object.as_ref().map(|obj| (<span class="kw-2">*</span>obj).to_glib_none());
-			<span class="kw">let </span>message = message.into();
+			<span class="kw">let </span>obj = <a href="#57">context</a>.object.as_ref().map(|obj| (<span class="kw-2">*</span><a href="#69">obj</a>).<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>());
+			<span class="kw">let </span>message = <a href="#57">message</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>();
 			ffi::wp_log_structured_standard(
-				domain.<span class="number">0</span>,
-				log_level.into().into_glib(),
-				file.<span class="number">0</span>,
-				line.<span class="number">0</span>,
-				function.<span class="number">0</span>,
-				obj_type.into_glib(),
-				obj.as_ref().map(|o| o.<span class="number">0</span>).unwrap_or(ptr::null()) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+				<a href="#60">domain</a>.<span class="number">0</span>,
+				<a href="#57">log_level</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+				<a href="#61">file</a>.<span class="number">0</span>,
+				<a href="#63">line</a>.<span class="number">0</span>,
+				<a href="#64">function</a>.<span class="number">0</span>,
+				<a href="#65">obj_type</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+				<a href="#69">obj</a>.as_ref().map(|o| <a href="#78">o</a>.<span class="number">0</span>).unwrap_or(ptr::null()) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
 				<span class="string">b&quot;%s\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-				message.as_ptr(),
+				<a href="#70">message</a>.as_ptr(),
 			)
 		}
 	}
 
-	<span class="kw">pub fn </span>log_args&lt;O: AsRef&lt;GObject&gt;, L: Into&lt;LogLevelFlags&gt;&gt;(
+	<span class="kw">pub fn </span>log_args&lt;O: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;, L: Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/flags/struct.LogLevelFlags.html">LogLevelFlags</a>&gt;&gt;(
 		log_level: L,
 		context: StructuredLogContext&lt;O&gt;,
-		args: fmt::Arguments,
+		args: <a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Arguments.html">fmt::Arguments</a>,
 	) {
 		<span class="kw">let </span><span class="kw-2">mut </span>message = GStringBuilder::default();
-		<span class="kw">let _ </span>= <span class="macro">write!</span>(message, <span class="string">&quot;{args}&quot;</span>);
-		<span class="self">Self</span>::log_string(log_level.into(), context.to_object(), message.into_string())
+		<span class="kw">let _ </span>= <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#90">message</a>, <span class="string">&quot;{args}&quot;</span>);
+		<span class="self">Self</span>::log_string(<a href="#86">log_level</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(), <a href="#87">context</a>.<a href="#117-129">to_object</a>(), <a href="#90">message</a>.into_string())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_log_writer_default&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>writer_default&lt;L: Into&lt;LogLevelFlags&gt;&gt;(
+	</span><span class="kw">pub unsafe fn </span>writer_default&lt;L: Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/flags/struct.LogLevelFlags.html">LogLevelFlags</a>&gt;&gt;(
 		log_levels: L,
-		fields: <span class="kw-2">&amp;</span>[glib::ffi::GLogField],
-		user_data: gpointer,
-	) -&gt; glib::ffi::GLogWriterOutput {
-		ffi::wp_log_writer_default(log_levels.into().into_glib(), fields.as_ptr(), fields.len(), user_data)
+		fields: <span class="kw-2">&amp;</span>[<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/struct.GLogField.html">glib::ffi::GLogField</a>],
+		user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>,
+	) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.GLogWriterOutput.html">glib::ffi::GLogWriterOutput</a> {
+		ffi::wp_log_writer_default(<a href="#97">log_levels</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(), <a href="#98">fields</a>.as_ptr(), <a href="#98">fields</a>.len(), <a href="#99">user_data</a>)
 	}
 	<span class="comment">// TODO: wp_log_writer_default, wp_log_structured_standard
 </span>}
 
 <span class="attr">#[derive(Debug, Clone, Default)]
-</span><span class="kw">pub struct </span>StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, O = GObject&gt; {
-	<span class="kw">pub </span>domain: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
-	<span class="kw">pub </span>file: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
-	<span class="kw">pub </span>line: <span class="prelude-ty">Option</span>&lt;u32&gt;,
-	<span class="kw">pub </span>function: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/log/struct.StructuredLogContext.html">StructuredLogContext</a>&lt;<span class="lifetime">&#39;a</span>, O = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt; {
+	<span class="kw">pub </span>domain: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
+	<span class="kw">pub </span>file: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
+	<span class="kw">pub </span>line: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;,
+	<span class="kw">pub </span>function: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
 	<span class="kw">pub </span>object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>O&gt;,
-	<span class="kw">pub </span>object_type: <span class="prelude-ty">Option</span>&lt;Type&gt;,
+	<span class="kw">pub </span>object_type: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/struct.Type.html">Type</a>&gt;,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, O&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, O&gt; {
-	<span class="kw">fn </span>to_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, GObject&gt;
+	<span class="kw">fn </span>to_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StructuredLogContext&lt;<span class="lifetime">&#39;a</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;
 	<span class="kw">where
-		</span>O: AsRef&lt;GObject&gt;,
+		</span>O: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;,
 	{
-		StructuredLogContext {
-			domain: <span class="self">self</span>.domain,
-			file: <span class="self">self</span>.file,
-			line: <span class="self">self</span>.line,
-			function: <span class="self">self</span>.function,
-			object: <span class="self">self</span>.object.map(|o| o.as_ref()),
-			object_type: <span class="self">self</span>.object_type,
+		<a href="#107-114">StructuredLogContext</a> {
+			domain: <a class="self" href="#117">self</a>.domain,
+			file: <a class="self" href="#117">self</a>.file,
+			line: <a class="self" href="#117">self</a>.line,
+			function: <a class="self" href="#117">self</a>.function,
+			object: <a class="self" href="#117">self</a>.object.map(|o| <a href="#126">o</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>()),
+			object_type: <a class="self" href="#117">self</a>.object_type,
 		}
 	}
 }

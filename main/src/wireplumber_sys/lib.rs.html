@@ -8,12 +8,12 @@
 <a href="#8" id="8">8</a>
 <a href="#9" id="9">9</a>
 </pre></div><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/v0.1.0/&quot;</span>)]
-#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[path = <span class="string">&quot;../generate/src/lib.rs&quot;</span>]
-</span><span class="kw">mod </span>sys;
+</span><span class="kw">mod </span><a href="generate/src/lib.rs.html#4-2275">sys</a>;
 
-<span class="kw">pub use </span>sys::<span class="kw-2">*</span>;
+<span class="kw">pub use </span><a href="#5">sys</a>::<span class="kw-2">*</span>;
 
-<span class="kw">pub type </span>WpSpaType = libc::c_uint;
+<span class="kw">pub type </span><a href="../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> = <a href="https://docs.rs/libc/0.2.147/libc/unix/type.c_uint.html">libc::c_uint</a>;
 </code></pre></div></section></main></body></html>

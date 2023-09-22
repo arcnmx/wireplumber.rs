@@ -96,6 +96,44 @@
 <a href="#96" id="96">96</a>
 <a href="#97" id="97">97</a>
 <a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Remote object change notifications
 //!
 //! When combined with a [Core](crate::core::Core), an [ObjectManager] emits signals whenever
@@ -141,57 +179,95 @@
 //!
 //! - [ObjectManager](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_manager_api.html)
 //! - [Interest](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_interest_api.html)
-</span><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="../lib.rs.html#74"><span class="kw">crate</span>::prelude</a>::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>{
-	<span class="self">self</span>::interest::{Constraint, Interest, InterestContainer},
-	<span class="kw">crate</span>::auto::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
+	<span class="self">self</span>::interest::{<a href="interest.rs.html#131-136">Constraint</a>, <a href="interest.rs.html#39-42">Interest</a>, <a href="interest.rs.html#100-103">InterestContainer</a>},
+	<span class="kw">crate</span>::auto::{<a href="../auto/enums.rs.html#11-22">ConstraintType</a>, <a href="../auto/enums.rs.html#124-141">ConstraintVerb</a>, <a href="../auto/flags.rs.html#192-207">InterestMatch</a>, <a href="../auto/flags.rs.html#280-289">InterestMatchFlags</a>, <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>, <a href="../auto/object_manager.rs.html#8-15">ObjectManager</a>},
 };
 
-<span class="kw">mod </span>interest;
+<span class="kw">mod </span><a href="interest.rs.html#1-573">interest</a>;
 
-<span class="kw">impl </span>ObjectManager {
+<span class="kw">impl </span><a href="../auto/object_manager.rs.html#8-15">ObjectManager</a> {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_add_interest_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>add_interest&lt;I: Into&lt;ObjectInterest&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: I) {
-		<span class="self">self</span>.add_interest_full(interest.into())
+	#[doc(alias = <span class="string">&quot;add_interest_full&quot;</span>)]
+	</span><span class="kw">pub fn </span>add_interest&lt;I: Into&lt;<a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: I) {
+		<a class="self" href="#57">self</a>.<a href="../auto/object_manager.rs.html#26-30">add_interest_full</a>(<a href="#57">interest</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_new_iterator&quot;</span>)]
-	</span><span class="kw">pub fn </span>objects&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;T&gt; {
-		ValueIterator::with_inner(<span class="self">self</span>.new_iterator().unwrap())
+	#[doc(alias = <span class="string">&quot;new_iterator&quot;</span>)]
+	</span><span class="kw">pub fn </span>objects&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;T&gt; {
+		ValueIterator::with_inner(<a class="self" href="#63">self</a>.<a href="../auto/object_manager.rs.html#65-69">objects_iterator</a>().unwrap())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_new_filtered_iterator&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_object_manager_new_filtered_iterator_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>filtered&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: ObjectInterest) -&gt; ValueIterator&lt;T&gt; {
-		ValueIterator::with_inner(<span class="self">self</span>.new_filtered_iterator_full(interest.into()).unwrap())
+	#[doc(alias = <span class="string">&quot;new_filtered_iterator&quot;</span>)]
+	#[doc(alias = <span class="string">&quot;new_filtered_iterator_full&quot;</span>)]
+	</span><span class="kw">pub fn </span>filtered&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>) -&gt; ValueIterator&lt;T&gt; {
+		ValueIterator::with_inner(<a class="self" href="#71">self</a>.<a href="../auto/object_manager.rs.html#57-61">filtered_iterator</a>(<a href="#71">interest</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()).unwrap())
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_manager_lookup&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_object_manager_lookup_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>lookup&lt;T: ObjectType&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
-		<span class="self">self
-			</span>.lookup_full(interest.into())
-			.map(|obj| <span class="kw">unsafe </span>{ obj.unsafe_cast() })
+	#[doc(alias = <span class="string">&quot;lookup_full&quot;</span>)]
+	</span><span class="kw">pub fn </span>lookup&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
+		<span class="self"><a href="#78">self</a>
+			</span>.<a href="../auto/object_manager.rs.html#49-53">lookup_object</a>(<a href="#78">interest</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
+			.map(|obj| <span class="kw">unsafe </span>{ <a href="#81">obj</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast</a>() })
+	}
+
+	<span class="doccomment">/// Wait until the ObjectManager [has been installed](Self::is_installed).
+	///
+	/// Note that the future does not take ownership over `self`, and will produce
+	/// an error in cases where there are no more references keeping it alive.
+	</span><span class="attr">#[cfg(all(feature = <span class="string">&quot;glib-signal&quot;</span>, feature = <span class="string">&quot;futures&quot;</span>))] </span><span class="comment">// TODO: change this to only require `feature = &quot;futures&quot;`
+	</span><span class="attr">#[cfg_attr(docsrs, doc(all(feature = <span class="string">&quot;glib-signal&quot;</span>, feature = <span class="string">&quot;futures&quot;</span>)))]
+	</span><span class="kw">pub fn </span>installed_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; {
+		<span class="kw">let </span>signal_installed = <span class="kw">if </span><span class="self">self</span>.is_installed() {
+			<span class="prelude-val">None
+		</span>} <span class="kw">else </span>{
+			<span class="kw">let </span>signal_installed = <a class="self" href="#90">self</a>.<a href="../../../glib_signal/trait.ObjectSignalExt.html">signal_stream</a>(<span class="self">Self</span>::SIGNAL_INSTALLED);
+			<span class="kw">if </span>!<span class="self">self</span>.is_installed() {
+				<span class="prelude-val">Some</span>(<a href="#94">signal_installed</a>)
+			} <span class="kw">else </span>{
+				<span class="prelude-val">None
+			</span>}
+		};
+
+		<span class="kw">async move </span>{
+			<span class="kw">if let </span><span class="prelude-val">Some</span>(signal_installed) = <a href="#91">signal_installed</a> {
+				<span class="kw">let </span>res = signal_installed.once().<span class="kw">await</span>;
+				<span class="kw">if </span>res.is_err() {
+					<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+						<a href="../auto/enums.rs.html#489">LibraryErrorEnum::OperationFailed</a>,
+						<span class="string">&quot;ObjectManager will never be installed&quot;</span>,
+					))
+				}
+			}
+
+			<span class="prelude-val">Ok</span>(())
+		}
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; IntoIterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ObjectManager {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">IntoIterator</a> <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="../auto/object_manager.rs.html#8-15">ObjectManager</a> {
 	<span class="comment">// TODO: crate::Object instead? or do factories not impl it?
-	</span><span class="kw">type </span>Item = GObject;
-	<span class="kw">type </span>IntoIter = ValueIterator&lt;GObject&gt;;
+	</span><span class="kw">type </span>Item = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>;
+	<span class="kw">type </span>IntoIter = ValueIterator&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;;
 
 	<span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
-		<span class="self">self</span>.objects()
+		<a class="self" href="#123">self</a>.<a href="#63-65">objects</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;T: ObjectType&gt; InterestContainer&lt;T&gt; <span class="kw">for </span>ObjectManager {
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt; InterestContainer&lt;T&gt; <span class="kw">for </span><a href="../auto/object_manager.rs.html#8-15">ObjectManager</a> {
 	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt; {
-		<span class="self">self</span>.filtered(interest.into())
+		<a class="self" href="#129">self</a>.<a href="#71-73">filtered</a>(<a href="#129">interest</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
 	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
-		<span class="self">Self</span>::lookup(<span class="self">self</span>, interest)
+		<span class="self">Self</span>::lookup(<a class="self" href="#133">self</a>, <a href="#133">interest</a>)
 	}
 }
 </code></pre></div></section></main></body></html>

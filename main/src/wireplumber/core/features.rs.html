@@ -143,58 +143,58 @@
 <a href="#143" id="143">143</a>
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">use </span><span class="kw">crate</span>::dbus::{Dbus, DbusFeatures};
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><span class="kw">use </span><span class="kw">crate</span>::dbus::{<a href="../auto/dbus.rs.html#8-15">Dbus</a>, <a href="../auto/flags.rs.html#7-15">DbusFeatures</a>};
 <span class="kw">use crate</span>::{
-	core::ObjectExt,
-	local::{SpaDevice, SpaDeviceFeatures},
-	plugin::{Plugin, PluginFeatures},
-	prelude::<span class="kw-2">*</span>,
-	pw::{Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures, Proxy, ProxyFeatures},
-	session::{SessionItem, SessionItemFeatures},
+	<a href="../auto/object.rs.html#27-149">core::ObjectExt</a>,
+	local::{<a href="../auto/spa_device.rs.html#11-18">SpaDevice</a>, <a href="../auto/flags.rs.html#949-958">SpaDeviceFeatures</a>},
+	plugin::{<a href="../auto/plugin.rs.html#7-14">Plugin</a>, <a href="../auto/flags.rs.html#691-698">PluginFeatures</a>},
+	<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+	pw::{<a href="../auto/link.rs.html#17-24">Link</a>, <a href="../auto/flags.rs.html#362-373">LinkFeatures</a>, <a href="../auto/metadata.rs.html#8-15">Metadata</a>, <a href="../auto/flags.rs.html#527-536">MetadataFeatures</a>, <a href="../auto/node.rs.html#8-15">Node</a>, <a href="../auto/flags.rs.html#609-618">NodeFeatures</a>, <a href="../auto/proxy.rs.html#8-15">Proxy</a>, <a href="../auto/flags.rs.html#771-794">ProxyFeatures</a>},
+	session::{<a href="../auto/session_item.rs.html#8-15">SessionItem</a>, <a href="../auto/flags.rs.html#867-876">SessionItemFeatures</a>},
 };
 
 <span class="comment">// TODO: consider keeping this as u32, and just keep the inherent impls
 // (requires no changes to `auto`)
 </span><span class="attr">#[derive(Debug, Copy, Clone, Default, PartialOrd, Ord, PartialEq, Eq, Hash)]
-</span><span class="kw">pub struct </span>ObjectFeatures(<span class="kw">pub </span>u32);
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/core/struct.ObjectFeatures.html">ObjectFeatures</a>(<span class="kw">pub </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>);
 
-<span class="kw">impl </span>FromGlib&lt;u32&gt; <span class="kw">for </span>ObjectFeatures {
-	<span class="kw">unsafe fn </span>from_glib(features: u32) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_bits(features)
+<span class="kw">impl </span>FromGlib&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt; <span class="kw">for </span><a href="#15">ObjectFeatures</a> {
+	<span class="kw">unsafe fn </span>from_glib(features: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::with_bits(<a href="#18">features</a>)
 	}
 }
 
-<span class="kw">impl </span>IntoGlib <span class="kw">for </span>ObjectFeatures {
-	<span class="kw">type </span>GlibType = u32;
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">IntoGlib</a> <span class="kw">for </span><a href="#15">ObjectFeatures</a> {
+	<span class="kw">type </span>GlibType = <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>;
 
 	<span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; <span class="self">Self</span>::GlibType {
-		<span class="self">self</span>.bits()
+		<a class="self" href="#26">self</a>.<a href="#51-53">bits</a>()
 	}
 }
 
-<span class="kw">impl </span>Into&lt;u32&gt; <span class="kw">for </span>ObjectFeatures {
-	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; u32 {
-		<span class="self">self</span>.bits()
+<span class="kw">impl </span>Into&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt; <span class="kw">for </span><a href="#15">ObjectFeatures</a> {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+		<a class="self" href="#32">self</a>.<a href="#51-53">bits</a>()
 	}
 }
 
-<span class="kw">impl </span>From&lt;u32&gt; <span class="kw">for </span>ObjectFeatures {
-	<span class="kw">fn </span>from(features: u32) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_bits(features)
+<span class="kw">impl </span>From&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt; <span class="kw">for </span><a href="#15">ObjectFeatures</a> {
+	<span class="kw">fn </span>from(features: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::with_bits(<a href="#38">features</a>)
 	}
 }
 
-<span class="kw">impl </span>ObjectFeatures {
+<span class="kw">impl </span><a href="#15">ObjectFeatures</a> {
 	<span class="kw">pub const </span>NONE: <span class="self">Self </span>= <span class="self">Self</span>(<span class="number">0</span>);
 	<span class="kw">pub const </span>ALL: <span class="self">Self </span>= <span class="self">Self</span>(ffi::WP_OBJECT_FEATURES_ALL);
 
-	<span class="kw">pub fn </span>with_bits(bits: u32) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>(bits)
+	<span class="kw">pub fn </span>with_bits(bits: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>(<a href="#47">bits</a>)
 	}
 
-	<span class="kw">pub fn </span>bits(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-		<span class="self">self</span>.<span class="number">0
+	<span class="kw">pub fn </span>bits(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+		<a class="self" href="#51">self</a>.<span class="number">0
 	</span>}
 }
 
@@ -274,7 +274,7 @@
 	};
 }
 
-<span class="macro">impl_object_features! </span>{
+<a class="macro" href="#56-130">impl_object_features! </a>{
 	MetadataFeatures:Metadata(ProxyFeatures),
 	NodeFeatures:Node(ProxyFeatures),
 	LinkFeatures:Link(ProxyFeatures),
@@ -284,8 +284,8 @@
 	SpaDeviceFeatures:SpaDevice(ProxyFeatures),
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="macro">impl_object_features! </span>{
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><a class="macro" href="#56-130">impl_object_features! </a>{
 	DbusFeatures:Dbus(),
 }
 </code></pre></div></section></main></body></html>

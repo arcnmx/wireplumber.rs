@@ -143,68 +143,68 @@
 <a href="#143" id="143">143</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		error,
-		plugin::{ComponentLoader, PluginImpl},
-		prelude::<span class="kw-2">*</span>,
+		<a href="../lib.rs.html#69">error</a>,
+		plugin::{<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>, <a href="subclass.rs.html#16-24">PluginImpl</a>},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
 	},
-	glib::subclass::prelude::<span class="kw-2">*</span>,
-	std::ptr,
+	<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/prelude/index.html">glib::subclass::prelude</a>::<span class="kw-2">*</span>,
+	<a href="https://doc.rust-lang.org/nightly/core/ptr/index.html">std::ptr</a>,
 };
 
-<span class="kw">impl </span>ComponentLoader {
-	<span class="kw">pub const </span>TYPE_LUA_SCRIPT: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;script/lua&quot;</span>;
-	<span class="kw">pub const </span>TYPE_LUA_CONFIG: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;config/lua&quot;</span>;
-	<span class="kw">pub const </span>TYPE_WIREPLUMBER_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;module&quot;</span>;
-	<span class="kw">pub const </span>TYPE_PIPEWIRE_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;pw_module&quot;</span>;
+<span class="kw">impl </span><a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a> {
+	<span class="kw">pub const </span>TYPE_LUA_SCRIPT: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;script/lua&quot;</span>;
+	<span class="kw">pub const </span>TYPE_LUA_CONFIG: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;config/lua&quot;</span>;
+	<span class="kw">pub const </span>TYPE_WIREPLUMBER_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;module&quot;</span>;
+	<span class="kw">pub const </span>TYPE_PIPEWIRE_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;pw_module&quot;</span>;
 
-	<span class="kw">pub const </span>DIR_WIREPLUMBER_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;WIREPLUMBER_MODULE_DIR&quot;</span>;
-	<span class="kw">pub const </span>DIR_PIPEWIRE_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;PIPEWIRE_MODULE_DIR&quot;</span>;
+	<span class="kw">pub const </span>DIR_WIREPLUMBER_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;WIREPLUMBER_MODULE_DIR&quot;</span>;
+	<span class="kw">pub const </span>DIR_PIPEWIRE_MODULE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;PIPEWIRE_MODULE_DIR&quot;</span>;
 
-	<span class="kw">pub const </span>MODULE_LOADER_LUA: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;libwireplumber-module-lua-scripting&quot;</span>;
+	<span class="kw">pub const </span>MODULE_LOADER_LUA: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;libwireplumber-module-lua-scripting&quot;</span>;
 
-	<span class="kw">pub const </span>PLUGIN_LOADER_LUA: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;lua-scripting&quot;</span>;
+	<span class="kw">pub const </span>PLUGIN_LOADER_LUA: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;lua-scripting&quot;</span>;
 }
 
-<span class="kw">pub trait </span>ComponentLoaderImpl: ObjectImpl + ComponentLoaderImplExt {
-	<span class="kw">fn </span>supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool {
-		<span class="self">self</span>.parent_supports_type(loader, type_)
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.ComponentLoaderImpl.html">ComponentLoaderImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> + <a href="#35-45">ComponentLoaderImplExt</a> {
+	<span class="kw">fn </span>supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="self" href="#26">self</a>.<a href="#37">parent_supports_type</a>(<a href="#26">loader</a>, <a href="#26">type_</a>)
 	}
 
-	<span class="kw">fn </span>load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: String, type_: String, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-		<span class="self">self</span>.parent_load(loader, component, type_, args)
+	<span class="kw">fn </span>load(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, component: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, type_: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<a class="self" href="#30">self</a>.<a href="#38-44">parent_load</a>(<a href="#30">loader</a>, <a href="#30">component</a>, <a href="#30">type_</a>, <a href="#30">args</a>)
 	}
 }
 
-<span class="kw">pub trait </span>ComponentLoaderImplExt: ObjectSubclass {
-	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpComponentLoaderClass;
-	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool;
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.ComponentLoaderImplExt.html">ComponentLoaderImplExt</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoaderClass.html">ffi::WpComponentLoaderClass</a>;
+	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
 	<span class="kw">fn </span>parent_load(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		component: String,
-		type_: String,
-		args: <span class="prelude-ty">Option</span>&lt;Variant&gt;,
-	) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+		component: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>,
+		type_: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>,
+		args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;;
 }
 
-<span class="kw">impl</span>&lt;T: ComponentLoaderImpl&gt; ComponentLoaderImplExt <span class="kw">for </span>T {
-	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpComponentLoaderClass {
+<span class="kw">impl</span>&lt;T: <a href="#25-33">ComponentLoaderImpl</a>&gt; <a href="#35-45">ComponentLoaderImplExt</a> <span class="kw">for </span>T {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoaderClass.html">ffi::WpComponentLoaderClass</a> {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span>data = T::type_data();
-			<span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
-			<span class="kw-2">&amp;*</span>parent_class
+			<span class="kw">let </span>parent_class = <a href="#50">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+			<span class="kw-2">&amp;*</span><a href="#51">parent_class</a>
 		}
 	}
 
-	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: String) -&gt; bool {
-		<span class="kw">let </span>parent = ComponentLoaderImplExt::parent_class(<span class="self">self</span>);
-		<span class="kw">let </span>f = parent
+	<span class="kw">fn </span>parent_supports_type(<span class="kw-2">&amp;</span><span class="self">self</span>, loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, type_: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<span class="kw">let </span>parent = <a href="#36">ComponentLoaderImplExt::parent_class</a>(<a class="self" href="#56">self</a>);
+		<span class="kw">let </span>f = <a href="#57">parent</a>
 			.supports_type
 			.expect(<span class="string">&quot;No parent class implementation for \&quot;supports_type\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			from_glib(f(
-				loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>,
-				type_.to_glib_none().<span class="number">0</span>,
+			from_glib(<a href="#58">f</a>(
+				<a href="#56">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#56">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
 			))
 		}
 	}
@@ -212,76 +212,76 @@
 	<span class="kw">fn </span>parent_load(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		loader: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		component: String,
-		type_: String,
-		args: <span class="prelude-ty">Option</span>&lt;Variant&gt;,
-	) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-		<span class="kw">let </span>parent = ComponentLoaderImplExt::parent_class(<span class="self">self</span>);
-		<span class="kw">let </span>f = parent.load.expect(<span class="string">&quot;No parent class implementation for \&quot;load\&quot;&quot;</span>);
+		component: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>,
+		type_: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>,
+		args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<span class="kw">let </span>parent = <a href="#36">ComponentLoaderImplExt::parent_class</a>(<a class="self" href="#70">self</a>);
+		<span class="kw">let </span>f = <a href="#76">parent</a>.load.expect(<span class="string">&quot;No parent class implementation for \&quot;load\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let </span>res = from_glib(f(
-				loader.unsafe_cast_ref::&lt;ComponentLoader&gt;().to_glib_none().<span class="number">0</span>,
-				component.to_glib_none().<span class="number">0</span>,
-				type_.to_glib_none().<span class="number">0</span>,
-				args.to_glib_none().<span class="number">0</span>,
-				<span class="kw-2">&amp;mut </span>error,
+			<span class="kw">let </span>res = from_glib(<a href="#77">f</a>(
+				<a href="#71">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#72">component</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#73">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#74">args</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<span class="kw-2">&amp;mut </span><a href="#79">error</a>,
 			));
-			<span class="kw">match </span>(res, error.is_null()) {
+			<span class="kw">match </span>(<a href="#80">res</a>, <a href="#79">error</a>.is_null()) {
 				(<span class="bool-val">true</span>, <span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
-				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(from_glib_full(error)),
-				(<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Err</span>(error::invariant(<span class="string">&quot;GError NULL&quot;</span>)),
+				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(from_glib_full(<a href="#79">error</a>)),
+				(<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Err</span>(<a href="../error/mod.rs.html#53-60">error::invariant</a>(<span class="string">&quot;GError NULL&quot;</span>)),
 			}
 		}
 	}
 }
 
-<span class="kw">unsafe impl</span>&lt;T: ComponentLoaderImpl + PluginImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>ComponentLoader {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#25-33">ComponentLoaderImpl</a> + <a href="subclass.rs.html#16-24">PluginImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a> {
 	<span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
+		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#97">class</a>);
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>supports_type&lt;T: ComponentLoaderImpl&gt;(
-			loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader,
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>supports_type&lt;T: <a href="#25-33">ComponentLoaderImpl</a>&gt;(
+			loader: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoader.html">ffi::WpComponentLoader</a>,
 			type_: <span class="kw-2">*const </span>libc::c_char,
-		) -&gt; glib::ffi::gboolean {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(loader <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>loader: Borrowed&lt;ComponentLoader&gt; = from_glib_borrow(loader);
+		) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gboolean.html">glib::ffi::gboolean</a> {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#101">loader</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#104">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>loader: Borrowed&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt; = from_glib_borrow(<a href="#101">loader</a>);
 
-			this
-				.supports_type(loader.unsafe_cast_ref(), from_glib_none(type_))
-				.into_glib()
+			<a href="#105">this</a>
+				.<a href="#26-28">supports_type</a>(<a href="#106">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(), from_glib_none(<a href="#102">type_</a>))
+				.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 		}
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>load&lt;T: ComponentLoaderImpl&gt;(
-			loader: <span class="kw-2">*mut </span>ffi::WpComponentLoader,
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>load&lt;T: <a href="#25-33">ComponentLoaderImpl</a>&gt;(
+			loader: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoader.html">ffi::WpComponentLoader</a>,
 			component: <span class="kw-2">*const </span>libc::c_char,
 			type_: <span class="kw-2">*const </span>libc::c_char,
-			args: <span class="kw-2">*mut </span>glib::ffi::GVariant,
-			error: <span class="kw-2">*mut *mut </span>glib::ffi::GError,
-		) -&gt; glib::ffi::gboolean {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(loader <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>loader: Borrowed&lt;ComponentLoader&gt; = from_glib_borrow(loader);
+			args: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/struct.GVariant.html">glib::ffi::GVariant</a>,
+			error: <span class="kw-2">*mut *mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/struct.GError.html">glib::ffi::GError</a>,
+		) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gboolean.html">glib::ffi::gboolean</a> {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#114">loader</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#120">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>loader: Borrowed&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt; = from_glib_borrow(<a href="#114">loader</a>);
 
-			<span class="kw">match </span>this.load(
-				loader.unsafe_cast_ref(),
-				from_glib_none(component),
-				from_glib_none(type_),
-				from_glib_none(args),
+			<span class="kw">match </span><a href="#121">this</a>.<a href="#30-32">load</a>(
+				<a href="#122">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(),
+				from_glib_none(<a href="#115">component</a>),
+				from_glib_none(<a href="#116">type_</a>),
+				from_glib_none(<a href="#117">args</a>),
 			) {
 				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>,
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="kw-2">*</span>error = e.into_glib_ptr();
+					<span class="kw-2">*</span><a href="#118">error</a> = <a href="#131">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
 					<span class="bool-val">false
 				</span>},
 			}
-			.into_glib()
+			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 		}
 
-		<span class="kw">let </span>klass = class.as_mut();
-		klass.supports_type = <span class="prelude-val">Some</span>(supports_type::&lt;T&gt;);
-		klass.load = <span class="prelude-val">Some</span>(load::&lt;T&gt;);
+		<span class="kw">let </span>klass = <a href="#97">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+		<a href="#139">klass</a>.supports_type = <span class="prelude-val">Some</span>(supports_type::&lt;T&gt;);
+		<a href="#139">klass</a>.load = <span class="prelude-val">Some</span>(load::&lt;T&gt;);
 	}
 }
 </code></pre></div></section></main></body></html>

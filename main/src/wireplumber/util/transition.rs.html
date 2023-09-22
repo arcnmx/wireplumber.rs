@@ -11,16 +11,16 @@
 <a href="#11" id="11">11</a>
 <a href="#12" id="12">12</a>
 <a href="#13" id="13">13</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, util::Transition};
+</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/transition.rs.html#7-14">util::Transition</a>};
 
-<span class="kw">pub trait </span>TransitionExt2: <span class="lifetime">&#39;static </span>{
-	<span class="kw">fn </span>return_error(<span class="kw-2">&amp;</span><span class="self">self</span>, error: Error);
+<span class="kw">pub trait </span><a href="../../../wireplumber/util/trait.TransitionExt2.html">TransitionExt2</a>: <span class="lifetime">&#39;static </span>{
+	<span class="kw">fn </span>return_error(<span class="kw-2">&amp;</span><span class="self">self</span>, error: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>);
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;Transition&gt;&gt; TransitionExt2 <span class="kw">for </span>O {
-	<span class="kw">fn </span>return_error(<span class="kw-2">&amp;</span><span class="self">self</span>, error: Error) {
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/transition.rs.html#7-14">Transition</a>&gt;&gt; <a href="#3-5">TransitionExt2</a> <span class="kw">for </span>O {
+	<span class="kw">fn </span>return_error(<span class="kw-2">&amp;</span><span class="self">self</span>, error: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>) {
 		<span class="kw">unsafe </span>{
-			ffi::wp_transition_return_error(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, error.into_glib_ptr());
+			ffi::wp_transition_return_error(<a class="self" href="#8">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#8">error</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>());
 		}
 	}
 }

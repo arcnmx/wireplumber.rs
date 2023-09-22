@@ -59,37 +59,37 @@
 <a href="#59" id="59">59</a>
 <a href="#60" id="60">60</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
-	prelude::<span class="kw-2">*</span>,
-	spa::{SpaPod, SpaPodParser},
+	<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+	spa::{<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>, <a href="../auto/spa_pod_parser.rs.html#8-17">SpaPodParser</a>},
 };
 
-<span class="kw">impl </span>SpaPodParser {
+<span class="kw">impl </span><a href="../auto/spa_pod_parser.rs.html#8-17">SpaPodParser</a> {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_new_object&quot;</span>)]
-	</span><span class="kw">pub fn </span>new_object(pod: <span class="kw-2">&amp;</span>SpaPod) -&gt; (<span class="self">Self</span>, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;) {
+	</span><span class="kw">pub fn </span>new_object(pod: <span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>) -&gt; (<span class="self">Self</span>, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) {
 		<span class="kw">unsafe </span>{
 			<span class="comment">// TODO: this needs a lifetime to attach the parser&#39;s lifetime to `pod`
 			// TODO: this can return back `wp_spa_id_value_short_name(wp_spa_id_table_find_value (table, id))`
 			// via second parameter
 			</span><span class="kw">let </span><span class="kw-2">mut </span>id_name = ptr::null();
-			<span class="kw">let </span>res = from_glib_full(ffi::wp_spa_pod_parser_new_object(pod.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>id_name));
-			<span class="kw">let </span>id_name = <span class="kw">match </span>id_name {
-				id_name <span class="kw">if </span>id_name.is_null() =&gt; <span class="prelude-val">None</span>,
-				id_name =&gt; <span class="prelude-val">Some</span>(CStr::from_ptr(id_name)),
+			<span class="kw">let </span>res = from_glib_full(ffi::wp_spa_pod_parser_new_object(<a href="#8">pod</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <span class="kw-2">&amp;mut </span><a href="#13">id_name</a>));
+			<span class="kw">let </span>id_name = <span class="kw">match </span><a href="#13">id_name</a> {
+				id_name <span class="kw">if </span><a href="#16">id_name</a>.is_null() =&gt; <span class="prelude-val">None</span>,
+				id_name =&gt; <span class="prelude-val">Some</span>(CStr::from_ptr(<a href="#17">id_name</a>)),
 			};
-			<span class="kw">let </span>id_name = id_name.and_then(|id_name| <span class="kw">match </span>id_name.to_str() {
-				<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(str),
+			<span class="kw">let </span>id_name = <a href="#15">id_name</a>.and_then(|id_name| <span class="kw">match </span><a href="#19">id_name</a>.to_str() {
+				<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(<a href="#20">str</a>),
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to parse spa pod ID name as UTF-8: {id_name:?}&quot;</span>);
+					<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="string">&quot;failed to parse spa pod ID name as UTF-8: {id_name:?}&quot;</span>);
 					<span class="prelude-val">None
 				</span>},
 			});
-			(res, id_name)
+			(<a href="#14">res</a>, <a href="#19">id_name</a>)
 		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_bytes&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_bytes&quot;</span>)]
-	</span><span class="kw">pub fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[u8]&gt; {
+	</span><span class="kw">pub fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]&gt; {
 		<span class="kw">let </span><span class="kw-2">mut </span>data = ptr::null();
 		<span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
 		<span class="kw">unsafe </span>{
@@ -98,7 +98,7 @@
 				<span class="kw-2">&amp;mut </span>data,
 				<span class="kw-2">&amp;mut </span>len,
 			)) {
-				<span class="prelude-val">Some</span>(slice::from_raw_parts(data <span class="kw">as </span><span class="kw-2">*const </span>u8, len <span class="kw">as </span>usize))
+				<span class="prelude-val">Some</span>(<a href="https://doc.rust-lang.org/nightly/core/slice/raw/fn.from_raw_parts.html">slice::from_raw_parts</a>(<a href="#33">data</a> <span class="kw">as </span><span class="kw-2">*const </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a href="#34">len</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>))
 			} <span class="kw">else </span>{
 				<span class="prelude-val">None
 			</span>}
@@ -107,11 +107,11 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_parser_get_pointer&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_pointer&quot;</span>)]
-	</span><span class="kw">pub fn </span>pointer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gconstpointer&gt; {
+	</span><span class="kw">pub fn </span>pointer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>&gt; {
 		<span class="kw">let </span><span class="kw-2">mut </span>data = ptr::null();
 		<span class="kw">unsafe </span>{
 			<span class="kw">if </span>from_glib(ffi::wp_spa_pod_parser_get_pointer(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>data)) {
-				<span class="prelude-val">Some</span>(data)
+				<span class="prelude-val">Some</span>(<a href="#51">data</a>)
 			} <span class="kw">else </span>{
 				<span class="prelude-val">None
 			</span>}

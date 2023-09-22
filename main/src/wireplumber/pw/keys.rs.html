@@ -299,99 +299,99 @@
 <a href="#299" id="299">299</a>
 <a href="#300" id="300">300</a>
 <a href="#301" id="301">301</a>
-</pre></div><pre class="rust"><code><span class="kw">pub use </span>pipewire_sys <span class="kw">as </span>ffi;
+</pre></div><pre class="rust"><code><span class="kw">pub use </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/index.html">pipewire_sys</a> <span class="kw">as </span>ffi;
 <span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		prelude::<span class="kw-2">*</span>,
-		spa::{SpaIdTable, SpaIdValue},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+		spa::{<a href="../spa/id_table.rs.html#5-7">SpaIdTable</a>, <a href="../spa/id_value.rs.html#11-13">SpaIdValue</a>},
 	},
-	::ffi::WpSpaType,
+	<a href="../../../wireplumber_sys/type.WpSpaType.html">::ffi::WpSpaType</a>,
 };
 
 <span class="attr">#[derive(Copy, Clone)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span>PipewireKey(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[u8]);
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/pw/struct.PipewireKey.html">PipewireKey</a>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]);
 
-<span class="kw">impl </span>PipewireKey {
+<span class="kw">impl </span><a href="#12">PipewireKey</a> {
 	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>as_cstr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>CStr {
-		<span class="kw">unsafe </span>{ CStr::from_bytes_with_nul_unchecked(<span class="self">self</span>.<span class="number">0</span>) }
+	</span><span class="kw">pub fn </span>as_cstr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/core/ffi/c_str/struct.CStr.html">CStr</a> {
+		<span class="kw">unsafe </span>{ CStr::from_bytes_with_nul_unchecked(<a class="self" href="#16">self</a>.<span class="number">0</span>) }
 	}
 
 	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>as_str&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
-		<span class="kw">unsafe </span>{ str::from_utf8_unchecked(<span class="self">self</span>.as_cstr().to_bytes()) }
+	</span><span class="kw">pub fn </span>as_str&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+		<span class="kw">unsafe </span>{ str::from_utf8_unchecked(<a class="self" href="#21">self</a>.<a href="#16-18">as_cstr</a>().to_bytes()) }
 	}
 }
 
-<span class="kw">impl </span>Deref <span class="kw">for </span>PipewireKey {
-	<span class="kw">type </span>Target = str;
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">Deref</a> <span class="kw">for </span><a href="#12">PipewireKey</a> {
+	<span class="kw">type </span>Target = <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;
 
 	<span class="attr">#[inline]
 	</span><span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-		<span class="self">self</span>.as_str()
+		<a class="self" href="#30">self</a>.<a href="#21-23">as_str</a>()
 	}
 }
 
-<span class="kw">impl </span>AsRef&lt;str&gt; <span class="kw">for </span>PipewireKey {
-	<span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-		<span class="self">self</span>.as_str()
+<span class="kw">impl </span>AsRef&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; <span class="kw">for </span><a href="#12">PipewireKey</a> {
+	<span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+		<a class="self" href="#36">self</a>.<a href="#21-23">as_str</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Into&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span>PipewireKey {
-	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
-		<span class="self">self</span>.as_str()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Into&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; <span class="kw">for </span><a href="#12">PipewireKey</a> {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+		<a class="self" href="#42">self</a>.<a href="#21-23">as_str</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Into&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span>PipewireKey {
-	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
-		<span class="self">self</span>.as_str()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Into&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><a href="#12">PipewireKey</a> {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+		<a class="self" href="#48">self</a>.<a href="#21-23">as_str</a>()
 	}
 }
 
-<span class="kw">impl </span>Into&lt;String&gt; <span class="kw">for </span>PipewireKey {
-	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.as_str().into()
+<span class="kw">impl </span>Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; <span class="kw">for </span><a href="#12">PipewireKey</a> {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a> {
+		<a class="self" href="#54">self</a>.<a href="#21-23">as_str</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Into&lt;String&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PipewireKey {
-	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.as_str().into()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="#12">PipewireKey</a> {
+	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a> {
+		<a class="self" href="#60">self</a>.<a href="#21-23">as_str</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">pub trait </span>FromPipewirePropertyString: Sized {
-	<span class="kw">type </span>Error: Debug;
+<span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.FromPipewirePropertyString.html">FromPipewirePropertyString</a>: <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a> {
+	<span class="kw">type </span>Error: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a>;
 
-	<span class="kw">fn </span>from_pipewire_string(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt;;
+	<span class="kw">fn </span>from_pipewire_string(value: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt;;
 }
 
-<span class="kw">pub trait </span>ToPipewirePropertyString {
-	<span class="kw">type </span>Output: AsRef&lt;str&gt;;
+<span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.ToPipewirePropertyString.html">ToPipewirePropertyString</a> {
+	<span class="kw">type </span>Output: AsRef&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output;
 }
 
-<span class="kw">pub struct </span>PipewirePropertyStringIter&lt;T&gt;(<span class="kw">pub </span>T);
+<span class="kw">pub struct </span><a href="../../../wireplumber/pw/struct.PipewirePropertyStringIter.html">PipewirePropertyStringIter</a>&lt;T&gt;(<span class="kw">pub </span>T);
 
-<span class="kw">pub trait </span>PipewirePropertyStringIterExt: Sized {
+<span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.PipewirePropertyStringIterExt.html">PipewirePropertyStringIterExt</a>: <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a> {
 	<span class="kw">fn </span>pipewire_string_iter(<span class="self">self</span>) -&gt; PipewirePropertyStringIter&lt;<span class="self">Self</span>&gt; {
-		PipewirePropertyStringIter(<span class="self">self</span>)
+		<a href="#77">PipewirePropertyStringIter</a>(<a class="self" href="#80">self</a>)
 	}
 }
 
-<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item = I&gt;, I: ToPipewirePropertyString&gt; PipewirePropertyStringIterExt
+<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item = I&gt;, I: <a href="#71-75">ToPipewirePropertyString</a>&gt; <a href="#79-83">PipewirePropertyStringIterExt</a>
 	<span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt;
 {
 }
 
-<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item = I&gt;, I: ToPipewirePropertyString&gt; ToPipewirePropertyString
+<span class="kw">impl</span>&lt;T: IntoIterator&lt;Item = I&gt;, I: <a href="#71-75">ToPipewirePropertyString</a>&gt; <a href="#71-75">ToPipewirePropertyString</a>
 	<span class="kw">for </span>PipewirePropertyStringIter&lt;T&gt;
 {
-	<span class="kw">type </span>Output = String;
+	<span class="kw">type </span>Output = <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
 		<span class="kw">let </span><span class="kw-2">mut </span>out = String::new();
@@ -400,42 +400,42 @@
 			<span class="kw">let </span>item = v.pipewire_string();
 			<span class="kw">let _ </span>= <span class="macro">write!</span>(<span class="kw-2">&amp;mut </span>out, <span class="string">&quot;{prefix}{}&quot;</span>, item.as_ref());
 		}
-		out
+		<a href="#96">out</a>
 	}
 }
 
-<span class="kw">impl</span>&lt;T: ToPipewirePropertyString&gt; ToPipewirePropertyString <span class="kw">for </span>Vec&lt;T&gt; {
-	<span class="kw">type </span>Output = String;
+<span class="kw">impl</span>&lt;T: <a href="#71-75">ToPipewirePropertyString</a>&gt; <a href="#71-75">ToPipewirePropertyString</a> <span class="kw">for </span>Vec&lt;T&gt; {
+	<span class="kw">type </span>Output = <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
-		PipewirePropertyStringIter(<span class="self">self</span>).pipewire_string()
+		<a href="#77">PipewirePropertyStringIter</a>(<a class="self" href="#109">self</a>).<a href="#74">pipewire_string</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Vec&lt;T&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; <a href="#71-75">ToPipewirePropertyString</a> <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Vec&lt;T&gt;
 <span class="kw">where
-	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: ToPipewirePropertyString,
+	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: <a href="#71-75">ToPipewirePropertyString</a>,
 {
-	<span class="kw">type </span>Output = String;
+	<span class="kw">type </span>Output = <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
-		PipewirePropertyStringIter(<span class="self">self</span>.iter()).pipewire_string()
+		<a href="#77">PipewirePropertyStringIter</a>(<a class="self" href="#120">self</a>.iter()).<a href="#74">pipewire_string</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToPipewirePropertyString <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T]
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; <a href="#71-75">ToPipewirePropertyString</a> <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[T]
 <span class="kw">where
-	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: ToPipewirePropertyString,
+	</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: <a href="#71-75">ToPipewirePropertyString</a>,
 {
-	<span class="kw">type </span>Output = String;
+	<span class="kw">type </span>Output = <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
-		PipewirePropertyStringIter(<span class="self">self</span>).pipewire_string()
+		<a href="#77">PipewirePropertyStringIter</a>(<a class="self" href="#131">self</a>).<a href="#74">pipewire_string</a>()
 	}
 }
 
-<span class="kw">impl </span>ToPipewirePropertyString <span class="kw">for </span>bool {
-	<span class="kw">type </span>Output = <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
+<span class="kw">impl </span><a href="#71-75">ToPipewirePropertyString</a> <span class="kw">for </span><a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+	<span class="kw">type </span>Output = <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;
 
 	<span class="kw">fn </span>pipewire_string(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
 		<span class="kw">if </span><span class="self">self </span>{
@@ -496,19 +496,19 @@
 	};
 }
 
-<span class="macro">pipewire_primitives! </span>{
-	u8, i8,
-	u16, i16,
-	u32, i32,
-	u64, i64,
-	f32, f64,
-	usize, isize,
+<a class="macro" href="#148-196">pipewire_primitives! </a>{
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i8.html">i8</a>,
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>,
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>,
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a>,
 }
-<span class="macro">pipewire_primitives! </span>{ @AsRef
-	String, glib::GString,
+<a class="macro" href="#148-196">pipewire_primitives! </a>{ @AsRef
+	<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring/struct.GString.html">glib::GString</a>,
 }
-<span class="macro">pipewire_primitives! </span>{ @<span class="kw-2">&amp;</span>AsRef
-	str,
+<a class="macro" href="#148-196">pipewire_primitives! </a>{ @<span class="kw-2">&amp;</span>AsRef
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 }
 
 <span class="macro">macro_rules! </span>pipewire_keys {
@@ -522,82 +522,82 @@
 	};
 }
 
-<span class="macro">pipewire_keys! </span>{
-	PW_KEY_PROTOCOL,
-	PW_KEY_ACCESS,
-	PW_KEY_CLIENT_ACCESS,
-	PW_KEY_SEC_PID, PW_KEY_SEC_UID, PW_KEY_SEC_GID, PW_KEY_SEC_LABEL,
-	PW_KEY_LIBRARY_NAME_SYSTEM, PW_KEY_LIBRARY_NAME_LOOP, PW_KEY_LIBRARY_NAME_DBUS,
-	PW_KEY_OBJECT_PATH, PW_KEY_OBJECT_ID, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.41&quot;</span>)] </span>PW_KEY_OBJECT_SERIAL, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span>PW_KEY_OBJECT_LINGER, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span>PW_KEY_OBJECT_REGISTER,
-	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span>PW_KEY_CONFIG_PREFIX, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span>PW_KEY_CONFIG_NAME,
-	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)]</span>PW_KEY_CONTEXT_PROFILE_MODULES,
-	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_USER_NAME,
-	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_HOST_NAME,
-	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_CORE_NAME, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_CORE_VERSION, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span>PW_KEY_CORE_DAEMON, PW_KEY_CORE_ID, PW_KEY_CORE_MONITORS,
-	PW_KEY_CPU_MAX_ALIGN, PW_KEY_CPU_CORES,
-	PW_KEY_PRIORITY_SESSION, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.10&quot;</span>)] </span>PW_KEY_PRIORITY_DRIVER, PW_KEY_REMOTE_NAME, PW_KEY_REMOTE_INTENTION,
-	PW_KEY_APP_NAME, PW_KEY_APP_ID, PW_KEY_APP_VERSION, PW_KEY_APP_ICON, PW_KEY_APP_ICON_NAME, PW_KEY_APP_LANGUAGE, PW_KEY_APP_PROCESS_ID, PW_KEY_APP_PROCESS_BINARY, PW_KEY_APP_PROCESS_USER, PW_KEY_APP_PROCESS_HOST, PW_KEY_APP_PROCESS_MACHINE_ID, PW_KEY_APP_PROCESS_SESSION_ID,
-	PW_KEY_WINDOW_X11_DISPLAY,
-	PW_KEY_CLIENT_ID, PW_KEY_CLIENT_NAME, PW_KEY_CLIENT_API,
-	PW_KEY_NODE_ID, PW_KEY_NODE_NAME, PW_KEY_NODE_NICK, PW_KEY_NODE_DESCRIPTION, PW_KEY_NODE_PLUGGED, PW_KEY_NODE_SESSION, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.10&quot;</span>)] </span>PW_KEY_NODE_GROUP, PW_KEY_NODE_EXCLUSIVE, PW_KEY_NODE_AUTOCONNECT, PW_KEY_NODE_LATENCY, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.23&quot;</span>)] </span>PW_KEY_NODE_MAX_LATENCY, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_LOCK_QUANTUM, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_RATE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_LOCK_RATE, PW_KEY_NODE_DONT_RECONNECT, PW_KEY_NODE_ALWAYS_PROCESS, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span>PW_KEY_NODE_WANT_DRIVER, PW_KEY_NODE_PAUSE_ON_IDLE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span>PW_KEY_NODE_CACHE_PARAMS, PW_KEY_NODE_DRIVER, PW_KEY_NODE_STREAM, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.26&quot;</span>)] </span>PW_KEY_NODE_VIRTUAL, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.27&quot;</span>)] </span>PW_KEY_NODE_PASSIVE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span>PW_KEY_NODE_LINK_GROUP, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.39&quot;</span>)] </span>PW_KEY_NODE_NETWORK, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.41&quot;</span>)] </span>PW_KEY_NODE_TRIGGER,
-	PW_KEY_PORT_ID, PW_KEY_PORT_NAME, PW_KEY_PORT_DIRECTION, PW_KEY_PORT_ALIAS, PW_KEY_PORT_PHYSICAL, PW_KEY_PORT_TERMINAL, PW_KEY_PORT_CONTROL, PW_KEY_PORT_MONITOR, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span>PW_KEY_PORT_CACHE_PARAMS, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span>PW_KEY_PORT_EXTRA,
-	PW_KEY_LINK_ID, PW_KEY_LINK_INPUT_NODE, PW_KEY_LINK_INPUT_PORT, PW_KEY_LINK_OUTPUT_NODE, PW_KEY_LINK_OUTPUT_PORT, PW_KEY_LINK_PASSIVE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.19&quot;</span>)] </span>PW_KEY_LINK_FEEDBACK,
-	PW_KEY_DEVICE_ID, PW_KEY_DEVICE_NAME, PW_KEY_DEVICE_PLUGGED, PW_KEY_DEVICE_NICK, PW_KEY_DEVICE_STRING, PW_KEY_DEVICE_API, PW_KEY_DEVICE_DESCRIPTION, PW_KEY_DEVICE_BUS_PATH, PW_KEY_DEVICE_SERIAL, PW_KEY_DEVICE_VENDOR_ID, PW_KEY_DEVICE_VENDOR_NAME, PW_KEY_DEVICE_PRODUCT_ID, PW_KEY_DEVICE_PRODUCT_NAME, PW_KEY_DEVICE_CLASS, PW_KEY_DEVICE_FORM_FACTOR, PW_KEY_DEVICE_BUS, PW_KEY_DEVICE_SUBSYSTEM, PW_KEY_DEVICE_ICON, PW_KEY_DEVICE_ICON_NAME, PW_KEY_DEVICE_INTENDED_ROLES, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span>PW_KEY_DEVICE_CACHE_PARAMS,
-	PW_KEY_MODULE_ID, PW_KEY_MODULE_NAME, PW_KEY_MODULE_AUTHOR, PW_KEY_MODULE_DESCRIPTION, PW_KEY_MODULE_USAGE, PW_KEY_MODULE_VERSION,
-	PW_KEY_FACTORY_ID, PW_KEY_FACTORY_NAME, PW_KEY_FACTORY_USAGE, PW_KEY_FACTORY_TYPE_NAME, PW_KEY_FACTORY_TYPE_VERSION,
-	PW_KEY_STREAM_IS_LIVE, PW_KEY_STREAM_LATENCY_MIN, PW_KEY_STREAM_LATENCY_MAX, PW_KEY_STREAM_MONITOR, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.8&quot;</span>)] </span>PW_KEY_STREAM_DONT_REMIX, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_STREAM_CAPTURE_SINK,
-	PW_KEY_MEDIA_TYPE, PW_KEY_MEDIA_CATEGORY, PW_KEY_MEDIA_ROLE, PW_KEY_MEDIA_CLASS, PW_KEY_MEDIA_NAME, PW_KEY_MEDIA_TITLE, PW_KEY_MEDIA_ARTIST, PW_KEY_MEDIA_COPYRIGHT, PW_KEY_MEDIA_SOFTWARE, PW_KEY_MEDIA_LANGUAGE, PW_KEY_MEDIA_FILENAME, PW_KEY_MEDIA_ICON, PW_KEY_MEDIA_ICON_NAME, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_MEDIA_COMMENT, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_MEDIA_DATE, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span>PW_KEY_MEDIA_FORMAT,
-	PW_KEY_FORMAT_DSP,
-	PW_KEY_AUDIO_CHANNEL, PW_KEY_AUDIO_RATE, PW_KEY_AUDIO_CHANNELS, PW_KEY_AUDIO_FORMAT,
-	PW_KEY_VIDEO_RATE, PW_KEY_VIDEO_FORMAT, PW_KEY_VIDEO_SIZE,
+<a class="macro" href="#213-222">pipewire_keys! </a>{
+	<a href="../../../wireplumber/pw/constant.PW_KEY_PROTOCOL.html">PW_KEY_PROTOCOL</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_ACCESS.html">PW_KEY_ACCESS</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_CLIENT_ACCESS.html">PW_KEY_CLIENT_ACCESS</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_SEC_PID.html">PW_KEY_SEC_PID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_SEC_UID.html">PW_KEY_SEC_UID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_SEC_GID.html">PW_KEY_SEC_GID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_SEC_LABEL.html">PW_KEY_SEC_LABEL</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_LIBRARY_NAME_SYSTEM.html">PW_KEY_LIBRARY_NAME_SYSTEM</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LIBRARY_NAME_LOOP.html">PW_KEY_LIBRARY_NAME_LOOP</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LIBRARY_NAME_DBUS.html">PW_KEY_LIBRARY_NAME_DBUS</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_OBJECT_PATH.html">PW_KEY_OBJECT_PATH</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_OBJECT_ID.html">PW_KEY_OBJECT_ID</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.41&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_OBJECT_SERIAL.html">PW_KEY_OBJECT_SERIAL</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_OBJECT_LINGER.html">PW_KEY_OBJECT_LINGER</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_OBJECT_REGISTER.html">PW_KEY_OBJECT_REGISTER</a>,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_CONFIG_PREFIX.html">PW_KEY_CONFIG_PREFIX</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_CONFIG_NAME.html">PW_KEY_CONFIG_NAME</a>,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)]</span><a href="../../../wireplumber/pw/constant.PW_KEY_CONTEXT_PROFILE_MODULES.html">PW_KEY_CONTEXT_PROFILE_MODULES</a>,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_USER_NAME.html">PW_KEY_USER_NAME</a>,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_HOST_NAME.html">PW_KEY_HOST_NAME</a>,
+	<span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_CORE_NAME.html">PW_KEY_CORE_NAME</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_CORE_VERSION.html">PW_KEY_CORE_VERSION</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.7&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_CORE_DAEMON.html">PW_KEY_CORE_DAEMON</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_CORE_ID.html">PW_KEY_CORE_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_CORE_MONITORS.html">PW_KEY_CORE_MONITORS</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_CPU_MAX_ALIGN.html">PW_KEY_CPU_MAX_ALIGN</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_CPU_CORES.html">PW_KEY_CPU_CORES</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_PRIORITY_SESSION.html">PW_KEY_PRIORITY_SESSION</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.10&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_PRIORITY_DRIVER.html">PW_KEY_PRIORITY_DRIVER</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_REMOTE_NAME.html">PW_KEY_REMOTE_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_REMOTE_INTENTION.html">PW_KEY_REMOTE_INTENTION</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_APP_NAME.html">PW_KEY_APP_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_ID.html">PW_KEY_APP_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_VERSION.html">PW_KEY_APP_VERSION</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_ICON.html">PW_KEY_APP_ICON</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_ICON_NAME.html">PW_KEY_APP_ICON_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_LANGUAGE.html">PW_KEY_APP_LANGUAGE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_PROCESS_ID.html">PW_KEY_APP_PROCESS_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_PROCESS_BINARY.html">PW_KEY_APP_PROCESS_BINARY</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_PROCESS_USER.html">PW_KEY_APP_PROCESS_USER</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_PROCESS_HOST.html">PW_KEY_APP_PROCESS_HOST</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_PROCESS_MACHINE_ID.html">PW_KEY_APP_PROCESS_MACHINE_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_APP_PROCESS_SESSION_ID.html">PW_KEY_APP_PROCESS_SESSION_ID</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_WINDOW_X11_DISPLAY.html">PW_KEY_WINDOW_X11_DISPLAY</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_CLIENT_ID.html">PW_KEY_CLIENT_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_CLIENT_NAME.html">PW_KEY_CLIENT_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_CLIENT_API.html">PW_KEY_CLIENT_API</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_NODE_ID.html">PW_KEY_NODE_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_NAME.html">PW_KEY_NODE_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_NICK.html">PW_KEY_NODE_NICK</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_DESCRIPTION.html">PW_KEY_NODE_DESCRIPTION</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_PLUGGED.html">PW_KEY_NODE_PLUGGED</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_SESSION.html">PW_KEY_NODE_SESSION</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.10&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_GROUP.html">PW_KEY_NODE_GROUP</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_EXCLUSIVE.html">PW_KEY_NODE_EXCLUSIVE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_AUTOCONNECT.html">PW_KEY_NODE_AUTOCONNECT</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_LATENCY.html">PW_KEY_NODE_LATENCY</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.23&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_MAX_LATENCY.html">PW_KEY_NODE_MAX_LATENCY</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_LOCK_QUANTUM.html">PW_KEY_NODE_LOCK_QUANTUM</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_RATE.html">PW_KEY_NODE_RATE</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_LOCK_RATE.html">PW_KEY_NODE_LOCK_RATE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_DONT_RECONNECT.html">PW_KEY_NODE_DONT_RECONNECT</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_ALWAYS_PROCESS.html">PW_KEY_NODE_ALWAYS_PROCESS</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.33&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_WANT_DRIVER.html">PW_KEY_NODE_WANT_DRIVER</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_PAUSE_ON_IDLE.html">PW_KEY_NODE_PAUSE_ON_IDLE</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_CACHE_PARAMS.html">PW_KEY_NODE_CACHE_PARAMS</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_DRIVER.html">PW_KEY_NODE_DRIVER</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_NODE_STREAM.html">PW_KEY_NODE_STREAM</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.26&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_VIRTUAL.html">PW_KEY_NODE_VIRTUAL</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.27&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_PASSIVE.html">PW_KEY_NODE_PASSIVE</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.32&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_LINK_GROUP.html">PW_KEY_NODE_LINK_GROUP</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.39&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_NETWORK.html">PW_KEY_NODE_NETWORK</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.41&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_NODE_TRIGGER.html">PW_KEY_NODE_TRIGGER</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_PORT_ID.html">PW_KEY_PORT_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_NAME.html">PW_KEY_PORT_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_DIRECTION.html">PW_KEY_PORT_DIRECTION</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_ALIAS.html">PW_KEY_PORT_ALIAS</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_PHYSICAL.html">PW_KEY_PORT_PHYSICAL</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_TERMINAL.html">PW_KEY_PORT_TERMINAL</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_CONTROL.html">PW_KEY_PORT_CONTROL</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_PORT_MONITOR.html">PW_KEY_PORT_MONITOR</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_PORT_CACHE_PARAMS.html">PW_KEY_PORT_CACHE_PARAMS</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.22&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_PORT_EXTRA.html">PW_KEY_PORT_EXTRA</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_LINK_ID.html">PW_KEY_LINK_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LINK_INPUT_NODE.html">PW_KEY_LINK_INPUT_NODE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LINK_INPUT_PORT.html">PW_KEY_LINK_INPUT_PORT</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LINK_OUTPUT_NODE.html">PW_KEY_LINK_OUTPUT_NODE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LINK_OUTPUT_PORT.html">PW_KEY_LINK_OUTPUT_PORT</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_LINK_PASSIVE.html">PW_KEY_LINK_PASSIVE</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.19&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_LINK_FEEDBACK.html">PW_KEY_LINK_FEEDBACK</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_ID.html">PW_KEY_DEVICE_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_NAME.html">PW_KEY_DEVICE_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_PLUGGED.html">PW_KEY_DEVICE_PLUGGED</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_NICK.html">PW_KEY_DEVICE_NICK</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_STRING.html">PW_KEY_DEVICE_STRING</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_API.html">PW_KEY_DEVICE_API</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_DESCRIPTION.html">PW_KEY_DEVICE_DESCRIPTION</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_BUS_PATH.html">PW_KEY_DEVICE_BUS_PATH</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_SERIAL.html">PW_KEY_DEVICE_SERIAL</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_VENDOR_ID.html">PW_KEY_DEVICE_VENDOR_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_VENDOR_NAME.html">PW_KEY_DEVICE_VENDOR_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_PRODUCT_ID.html">PW_KEY_DEVICE_PRODUCT_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_PRODUCT_NAME.html">PW_KEY_DEVICE_PRODUCT_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_CLASS.html">PW_KEY_DEVICE_CLASS</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_FORM_FACTOR.html">PW_KEY_DEVICE_FORM_FACTOR</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_BUS.html">PW_KEY_DEVICE_BUS</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_SUBSYSTEM.html">PW_KEY_DEVICE_SUBSYSTEM</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_ICON.html">PW_KEY_DEVICE_ICON</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_ICON_NAME.html">PW_KEY_DEVICE_ICON_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_INTENDED_ROLES.html">PW_KEY_DEVICE_INTENDED_ROLES</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.18&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_DEVICE_CACHE_PARAMS.html">PW_KEY_DEVICE_CACHE_PARAMS</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_MODULE_ID.html">PW_KEY_MODULE_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MODULE_NAME.html">PW_KEY_MODULE_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MODULE_AUTHOR.html">PW_KEY_MODULE_AUTHOR</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MODULE_DESCRIPTION.html">PW_KEY_MODULE_DESCRIPTION</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MODULE_USAGE.html">PW_KEY_MODULE_USAGE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MODULE_VERSION.html">PW_KEY_MODULE_VERSION</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_FACTORY_ID.html">PW_KEY_FACTORY_ID</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_FACTORY_NAME.html">PW_KEY_FACTORY_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_FACTORY_USAGE.html">PW_KEY_FACTORY_USAGE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_FACTORY_TYPE_NAME.html">PW_KEY_FACTORY_TYPE_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_FACTORY_TYPE_VERSION.html">PW_KEY_FACTORY_TYPE_VERSION</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_STREAM_IS_LIVE.html">PW_KEY_STREAM_IS_LIVE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_STREAM_LATENCY_MIN.html">PW_KEY_STREAM_LATENCY_MIN</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_STREAM_LATENCY_MAX.html">PW_KEY_STREAM_LATENCY_MAX</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_STREAM_MONITOR.html">PW_KEY_STREAM_MONITOR</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.8&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_STREAM_DONT_REMIX.html">PW_KEY_STREAM_DONT_REMIX</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_STREAM_CAPTURE_SINK.html">PW_KEY_STREAM_CAPTURE_SINK</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_TYPE.html">PW_KEY_MEDIA_TYPE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_CATEGORY.html">PW_KEY_MEDIA_CATEGORY</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_ROLE.html">PW_KEY_MEDIA_ROLE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_CLASS.html">PW_KEY_MEDIA_CLASS</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_NAME.html">PW_KEY_MEDIA_NAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_TITLE.html">PW_KEY_MEDIA_TITLE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_ARTIST.html">PW_KEY_MEDIA_ARTIST</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_COPYRIGHT.html">PW_KEY_MEDIA_COPYRIGHT</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_SOFTWARE.html">PW_KEY_MEDIA_SOFTWARE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_LANGUAGE.html">PW_KEY_MEDIA_LANGUAGE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_FILENAME.html">PW_KEY_MEDIA_FILENAME</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_ICON.html">PW_KEY_MEDIA_ICON</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_ICON_NAME.html">PW_KEY_MEDIA_ICON_NAME</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_COMMENT.html">PW_KEY_MEDIA_COMMENT</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_DATE.html">PW_KEY_MEDIA_DATE</a>, <span class="attr">#[cfg(pw = <span class="string">&quot;0.3.14&quot;</span>)] </span><a href="../../../wireplumber/pw/constant.PW_KEY_MEDIA_FORMAT.html">PW_KEY_MEDIA_FORMAT</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_FORMAT_DSP.html">PW_KEY_FORMAT_DSP</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_AUDIO_CHANNEL.html">PW_KEY_AUDIO_CHANNEL</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_AUDIO_RATE.html">PW_KEY_AUDIO_RATE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_AUDIO_CHANNELS.html">PW_KEY_AUDIO_CHANNELS</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_AUDIO_FORMAT.html">PW_KEY_AUDIO_FORMAT</a>,
+	<a href="../../../wireplumber/pw/constant.PW_KEY_VIDEO_RATE.html">PW_KEY_VIDEO_RATE</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_VIDEO_FORMAT.html">PW_KEY_VIDEO_FORMAT</a>, <a href="../../../wireplumber/pw/constant.PW_KEY_VIDEO_SIZE.html">PW_KEY_VIDEO_SIZE</a>,
 }
 
-<span class="kw">pub trait </span>SpaPropertyKey: Debug {
-	<span class="kw">type </span>Error: Debug;
+<span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.SpaPropertyKey.html">SpaPropertyKey</a>: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a> {
+	<span class="kw">type </span>Error: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a>;
 
-	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt;;
+	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;<a href="../spa/id_table.rs.html#5-7">SpaIdTable</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>, <span class="self">Self</span>::Error&gt;;
 }
 
-<span class="kw">pub trait </span>SpaPropertyKeyId: SpaPropertyKey&lt;Error = Infallible&gt; {
-	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType;
+<span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.SpaPropertyKeyId.html">SpaPropertyKeyId</a>: SpaPropertyKey&lt;Error = <a href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html">Infallible</a>&gt; {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>;
 }
 
-<span class="kw">impl</span>&lt;T: SpaPropertyKeyId&gt; SpaPropertyKey <span class="kw">for </span>T {
-	<span class="kw">type </span>Error = Infallible;
+<span class="kw">impl</span>&lt;T: <a href="#260-262">SpaPropertyKeyId</a>&gt; <a href="#254-258">SpaPropertyKey</a> <span class="kw">for </span>T {
+	<span class="kw">type </span>Error = <a href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html">Infallible</a>;
 
-	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, _table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">self</span>.spa_property_key())
+	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, _table: <span class="prelude-ty">Option</span>&lt;<a href="../spa/id_table.rs.html#5-7">SpaIdTable</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(<a class="self" href="#267">self</a>.<a href="#261">spa_property_key</a>())
 	}
 }
 
-<span class="kw">impl </span>SpaPropertyKeyId <span class="kw">for </span>WpSpaType {
-	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
-		<span class="kw-2">*</span><span class="self">self
+<span class="kw">impl </span><a href="#260-262">SpaPropertyKeyId</a> <span class="kw">for </span><a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> {
+		<span class="kw-2">*</span><span class="self"><a href="#273">self</a>
 	</span>}
 }
 
-<span class="kw">impl </span>SpaPropertyKeyId <span class="kw">for </span>SpaIdValue {
-	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
-		<span class="self">self</span>.number()
+<span class="kw">impl </span><a href="#260-262">SpaPropertyKeyId</a> <span class="kw">for </span><a href="../spa/id_value.rs.html#11-13">SpaIdValue</a> {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> {
+		<a class="self" href="#279">self</a>.<a href="../spa/id_value.rs.html#16-18">number</a>()
 	}
 }
 
-<span class="kw">impl </span>SpaPropertyKey <span class="kw">for </span>str {
+<span class="kw">impl </span><a href="#254-258">SpaPropertyKey</a> <span class="kw">for </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
 	<span class="comment">// TODO
 	</span><span class="kw">type </span>Error = ();
 
-	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;WpSpaType, <span class="self">Self</span>::Error&gt; {
-		table
-			.and_then(|table| table.find_value_from_short_name(<span class="self">self</span>))
-			.map(|v| v.number())
-			.or_else(|| SpaIdValue::parse_unknown_name(<span class="self">self</span>))
+	<span class="kw">fn </span>spa_property_key_with_table(<span class="kw-2">&amp;</span><span class="self">self</span>, table: <span class="prelude-ty">Option</span>&lt;<a href="../spa/id_table.rs.html#5-7">SpaIdTable</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>, <span class="self">Self</span>::Error&gt; {
+		<a href="#288">table</a>
+			.and_then(|table| <a href="#290">table</a>.<a href="../spa/id_table.rs.html#35-42">find_value_from_short_name</a>(<a class="self" href="#288">self</a>))
+			.map(|v| <a href="#291">v</a>.<a href="../spa/id_value.rs.html#16-18">number</a>())
+			.or_else(|| SpaIdValue::parse_unknown_name(<a class="self" href="#288">self</a>))
 			.ok_or(())
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: SpaPropertyKeyId&gt; SpaPropertyKeyId <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T {
-	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
-		T::spa_property_key(<span class="kw-2">*</span><span class="self">self</span>)
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: <a href="#260-262">SpaPropertyKeyId</a>&gt; <a href="#260-262">SpaPropertyKeyId</a> <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T {
+	<span class="kw">fn </span>spa_property_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> {
+		T::spa_property_key(<span class="kw-2">*</span><a class="self" href="#298">self</a>)
 	}
 }
 </code></pre></div></section></main></body></html>

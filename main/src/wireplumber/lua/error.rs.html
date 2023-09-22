@@ -129,133 +129,133 @@
 <a href="#129" id="129">129</a>
 <a href="#130" id="130">130</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
-	<span class="kw">crate</span>::{error, prelude::<span class="kw-2">*</span>},
-	glib::variant::VariantTypeMismatchError,
+	<span class="kw">crate</span>::{<a href="../lib.rs.html#69">error</a>, <a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>},
+	<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.VariantTypeMismatchError.html">glib::variant::VariantTypeMismatchError</a>,
 	std::{
-		convert::Infallible,
-		error::Error <span class="kw">as </span>StdError,
-		fmt,
-		num::{ParseIntError, TryFromIntError},
-		str::Utf8Error,
+		<a href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html">convert::Infallible</a>,
+		<a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">error::Error</a> <span class="kw">as </span>StdError,
+		<a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>,
+		num::{<a href="https://doc.rust-lang.org/nightly/core/num/error/struct.ParseIntError.html">ParseIntError</a>, <a href="https://doc.rust-lang.org/nightly/core/num/error/struct.TryFromIntError.html">TryFromIntError</a>},
+		<a href="https://doc.rust-lang.org/nightly/core/str/error/struct.Utf8Error.html">str::Utf8Error</a>,
 	},
 };
 
 <span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">pub enum </span>LuaError {
-	Custom(String),
-	Glib(Error),
-	Conversion(TryFromIntError),
-	Parse(ParseIntError),
-	Utf8(Utf8Error),
-	TypeMismatch(VariantTypeMismatchError),
-	UnsupportedType(Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt;),
-	LengthMismatch { actual: usize, expected: usize },
+</span><span class="kw">pub enum </span><a href="../../../wireplumber/lua/enum.LuaError.html">LuaError</a> {
+	Custom(<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>),
+	Glib(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>),
+	Conversion(<a href="https://doc.rust-lang.org/nightly/core/num/error/struct.TryFromIntError.html">TryFromIntError</a>),
+	Parse(<a href="https://doc.rust-lang.org/nightly/core/num/error/struct.ParseIntError.html">ParseIntError</a>),
+	Utf8(<a href="https://doc.rust-lang.org/nightly/core/str/error/struct.Utf8Error.html">Utf8Error</a>),
+	TypeMismatch(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.VariantTypeMismatchError.html">VariantTypeMismatchError</a>),
+	UnsupportedType(Cow&lt;<span class="lifetime">&#39;static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt;),
+	LengthMismatch { actual: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, expected: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> },
 }
 
-<span class="kw">impl </span>From&lt;TryFromIntError&gt; <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>from(e: TryFromIntError) -&gt; <span class="self">Self </span>{
-		LuaError::Conversion(e)
+<span class="kw">impl </span>From&lt;<a href="https://doc.rust-lang.org/nightly/core/num/error/struct.TryFromIntError.html">TryFromIntError</a>&gt; <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>from(e: <a href="https://doc.rust-lang.org/nightly/core/num/error/struct.TryFromIntError.html">TryFromIntError</a>) -&gt; <span class="self">Self </span>{
+		<a href="#17">LuaError::Conversion</a>(<a href="#26">e</a>)
 	}
 }
 
-<span class="kw">impl </span>From&lt;ParseIntError&gt; <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>from(e: ParseIntError) -&gt; <span class="self">Self </span>{
-		LuaError::Parse(e)
+<span class="kw">impl </span>From&lt;<a href="https://doc.rust-lang.org/nightly/core/num/error/struct.ParseIntError.html">ParseIntError</a>&gt; <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>from(e: <a href="https://doc.rust-lang.org/nightly/core/num/error/struct.ParseIntError.html">ParseIntError</a>) -&gt; <span class="self">Self </span>{
+		<a href="#18">LuaError::Parse</a>(<a href="#32">e</a>)
 	}
 }
 
-<span class="kw">impl </span>From&lt;Utf8Error&gt; <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>from(e: Utf8Error) -&gt; <span class="self">Self </span>{
-		LuaError::Utf8(e)
+<span class="kw">impl </span>From&lt;<a href="https://doc.rust-lang.org/nightly/core/str/error/struct.Utf8Error.html">Utf8Error</a>&gt; <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>from(e: <a href="https://doc.rust-lang.org/nightly/core/str/error/struct.Utf8Error.html">Utf8Error</a>) -&gt; <span class="self">Self </span>{
+		<a href="#19">LuaError::Utf8</a>(<a href="#38">e</a>)
 	}
 }
 
-<span class="kw">impl </span>From&lt;VariantTypeMismatchError&gt; <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>from(e: VariantTypeMismatchError) -&gt; <span class="self">Self </span>{
-		LuaError::TypeMismatch(e)
+<span class="kw">impl </span>From&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.VariantTypeMismatchError.html">VariantTypeMismatchError</a>&gt; <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>from(e: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.VariantTypeMismatchError.html">VariantTypeMismatchError</a>) -&gt; <span class="self">Self </span>{
+		<a href="#20">LuaError::TypeMismatch</a>(<a href="#44">e</a>)
 	}
 }
 
-<span class="kw">impl </span>From&lt;Error&gt; <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>from(e: Error) -&gt; <span class="self">Self </span>{
-		LuaError::Glib(e)
+<span class="kw">impl </span>From&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>from(e: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>) -&gt; <span class="self">Self </span>{
+		<a href="#16">LuaError::Glib</a>(<a href="#50">e</a>)
 	}
 }
 
-<span class="kw">impl </span>From&lt;Infallible&gt; <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>from(v: Infallible) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span>v {}
+<span class="kw">impl </span>From&lt;<a href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html">Infallible</a>&gt; <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>from(v: <a href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html">Infallible</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><a href="#56">v</a> {}
 	}
 }
 
-<span class="kw">impl </span>From&lt;LuaError&gt; <span class="kw">for </span>Error {
-	<span class="kw">fn </span>from(e: LuaError) -&gt; Error {
-		<span class="kw">match </span>e {
-			LuaError::Glib(e) =&gt; e,
-			LuaError::Custom(e) =&gt; error::operation_failed(e),
-			e =&gt; error::invalid_argument(e),
+<span class="kw">impl </span>From&lt;<a href="#14-23">LuaError</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a> {
+	<span class="kw">fn </span>from(e: <a href="#14-23">LuaError</a>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a> {
+		<span class="kw">match </span><a href="#62">e</a> {
+			<a href="#16">LuaError::Glib</a>(e) =&gt; <a href="#64">e</a>,
+			<a href="#15">LuaError::Custom</a>(e) =&gt; <a href="../error/mod.rs.html#53-60">error::operation_failed</a>(<a href="#65">e</a>),
+			e =&gt; <a href="../error/mod.rs.html#53-60">error::invalid_argument</a>(<a href="#66">e</a>),
 		}
 	}
 }
 
-<span class="kw">impl </span>fmt::Display <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">match </span><span class="self">self </span>{
-			LuaError::Custom(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::Glib(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::Conversion(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::Parse(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::Utf8(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::TypeMismatch(e) =&gt; fmt::Display::fmt(e, f),
-			LuaError::UnsupportedType(t) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;type {t} is not supported by lua&quot;</span>),
-			LuaError::LengthMismatch { actual, expected } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;invalid length {actual}, expected {expected}&quot;</span>),
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<span class="kw">match </span><span class="self"><a href="#72">self</a> </span>{
+			<a href="#15">LuaError::Custom</a>(e) =&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<a href="#74">e</a>, <a href="#72">f</a>),
+			<a href="#16">LuaError::Glib</a>(e) =&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<a href="#75">e</a>, <a href="#72">f</a>),
+			<a href="#17">LuaError::Conversion</a>(e) =&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<a href="#76">e</a>, <a href="#72">f</a>),
+			<a href="#18">LuaError::Parse</a>(e) =&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<a href="#77">e</a>, <a href="#72">f</a>),
+			<a href="#19">LuaError::Utf8</a>(e) =&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<a href="#78">e</a>, <a href="#72">f</a>),
+			<a href="#20">LuaError::TypeMismatch</a>(e) =&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<a href="#79">e</a>, <a href="#72">f</a>),
+			<a href="#21">LuaError::UnsupportedType</a>(t) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#72">f</a>, <span class="string">&quot;type {t} is not supported by lua&quot;</span>),
+			<a href="#22">LuaError::LengthMismatch</a> { actual, expected } =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#72">f</a>, <span class="string">&quot;invalid length {actual}, expected {expected}&quot;</span>),
 		}
 	}
 }
 
-<span class="kw">impl </span>StdError <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>)&gt; {
-		<span class="kw">match </span><span class="self">self </span>{
-			LuaError::Glib(e) =&gt; <span class="prelude-val">Some</span>(e),
-			LuaError::Conversion(e) =&gt; <span class="prelude-val">Some</span>(e),
-			LuaError::Parse(e) =&gt; <span class="prelude-val">Some</span>(e),
-			LuaError::Utf8(e) =&gt; <span class="prelude-val">Some</span>(e),
-			LuaError::TypeMismatch(e) =&gt; <span class="prelude-val">Some</span>(e),
-			LuaError::Custom(..) | LuaError::UnsupportedType(..) | LuaError::LengthMismatch { .. } =&gt; <span class="prelude-val">None</span>,
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">StdError</a> <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">StdError</a> + <span class="lifetime">&#39;static</span>)&gt; {
+		<span class="kw">match </span><span class="self"><a href="#87">self</a> </span>{
+			<a href="#16">LuaError::Glib</a>(e) =&gt; <span class="prelude-val">Some</span>(<a href="#89">e</a>),
+			<a href="#17">LuaError::Conversion</a>(e) =&gt; <span class="prelude-val">Some</span>(<a href="#90">e</a>),
+			<a href="#18">LuaError::Parse</a>(e) =&gt; <span class="prelude-val">Some</span>(<a href="#91">e</a>),
+			<a href="#19">LuaError::Utf8</a>(e) =&gt; <span class="prelude-val">Some</span>(<a href="#92">e</a>),
+			<a href="#20">LuaError::TypeMismatch</a>(e) =&gt; <span class="prelude-val">Some</span>(<a href="#93">e</a>),
+			<a href="#15">LuaError::Custom</a>(..) | <a href="#21">LuaError::UnsupportedType</a>(..) | <a href="#22">LuaError::LengthMismatch</a> { .. } =&gt; <span class="prelude-val">None</span>,
 		}
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">impl </span>serde::de::Error <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>invalid_length(actual: usize, expected: <span class="kw-2">&amp;</span><span class="kw">dyn </span>serde::de::Expected) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>expected = expected.to_string();
-		<span class="kw">match </span>expected.parse() {
-			<span class="prelude-val">Ok</span>(expected) =&gt; LuaError::LengthMismatch { actual, expected },
-			<span class="kw">_ </span>=&gt; <span class="self">Self</span>::custom(<span class="macro">format_args!</span>(<span class="string">&quot;invalid length {actual}, expected {expected}&quot;</span>)),
+</span><span class="kw">impl </span><a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">serde::de::Error</a> <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>invalid_length(actual: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, expected: <span class="kw-2">&amp;</span><span class="kw">dyn </span><a href="https://docs.rs/serde/1.0.185/serde/de/trait.Expected.html">serde::de::Expected</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span>expected = <a href="#101">expected</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>();
+		<span class="kw">match </span><a href="#102">expected</a>.parse() {
+			<span class="prelude-val">Ok</span>(expected) =&gt; <a href="#22">LuaError::LengthMismatch</a> { <a href="#101">actual</a>, <a href="#104">expected</a> },
+			<span class="kw">_ </span>=&gt; <span class="self">Self</span>::custom(<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.format_args.html">format_args!</a>(<span class="string">&quot;invalid length {actual}, expected {expected}&quot;</span>)),
 		}
 	}
 
-	<span class="kw">fn </span>custom&lt;T: Display&gt;(msg: T) -&gt; <span class="self">Self </span>{
-		LuaError::Custom(msg.to_string())
+	<span class="kw">fn </span>custom&lt;T: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">Display</a>&gt;(msg: T) -&gt; <span class="self">Self </span>{
+		<a href="#15">LuaError::Custom</a>(<a href="#109">msg</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>())
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">impl </span>serde::ser::Error <span class="kw">for </span>LuaError {
-	<span class="kw">fn </span>custom&lt;T: Display&gt;(msg: T) -&gt; <span class="self">Self </span>{
-		LuaError::Custom(msg.to_string())
+</span><span class="kw">impl </span><a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Error.html">serde::ser::Error</a> <span class="kw">for </span><a href="#14-23">LuaError</a> {
+	<span class="kw">fn </span>custom&lt;T: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">Display</a>&gt;(msg: T) -&gt; <span class="self">Self </span>{
+		<a href="#15">LuaError::Custom</a>(<a href="#116">msg</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>())
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">impl </span>LuaError {
-	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serde_error&lt;E: serde::de::Error&gt;(<span class="self">self</span>) -&gt; E {
-		E::custom(<span class="self">self</span>)
+</span><span class="kw">impl </span><a href="#14-23">LuaError</a> {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serde_error&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">serde::de::Error</a>&gt;(<span class="self">self</span>) -&gt; E {
+		E::custom(<a class="self" href="#123">self</a>)
 	}
 
-	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serde_error_ser&lt;E: serde::ser::Error&gt;(<span class="self">self</span>) -&gt; E {
-		E::custom(<span class="self">self</span>)
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serde_error_ser&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Error.html">serde::ser::Error</a>&gt;(<span class="self">self</span>) -&gt; E {
+		E::custom(<a class="self" href="#127">self</a>)
 	}
 }
 </code></pre></div></section></main></body></html>

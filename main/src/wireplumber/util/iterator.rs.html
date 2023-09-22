@@ -129,127 +129,147 @@
 <a href="#129" id="129">129</a>
 <a href="#130" id="130">130</a>
 <a href="#131" id="131">131</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, util::WpIterator};
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>{
+	<span class="kw">crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/iterator.rs.html#6-15">util::WpIterator</a>},
+	<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/struct.GPtrArray.html">glib::ffi::GPtrArray</a>,
+	<a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">std::mem::transmute</a>,
+};
 
-<span class="kw">impl </span>WpIterator {
+<span class="kw">impl </span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_iterator_new&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>with_impl_raw(methods: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>ffi::WpIteratorMethods, userdata_size: usize) -&gt; <span class="self">Self </span>{
-		from_glib_full(ffi::wp_iterator_new(methods, userdata_size))
+	</span><span class="kw">pub unsafe fn </span>with_impl_raw(methods: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="../../../wireplumber_sys/sys/struct.WpIteratorMethods.html">ffi::WpIteratorMethods</a>, userdata_size: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="self">Self </span>{
+		from_glib_full(ffi::wp_iterator_new(<a href="#9">methods</a>, <a href="#9">userdata_size</a>))
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_iterator_new_ptr_array&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>with_pointers&lt;I: IntoIterator&lt;Item = gpointer&gt;&gt;(items: I, type_: Type) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>array = glib::ffi::g_ptr_array_new();
-		<span class="kw">for </span>item <span class="kw">in </span>items {
-			glib::ffi::g_ptr_array_add(array, item);
-		}
-		from_glib_full(ffi::wp_iterator_new_ptr_array(array, type_.into_glib()))
+	</span><span class="kw">pub unsafe fn </span>with_ptr_array(array: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/struct.GPtrArray.html">GPtrArray</a>, type_: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/struct.Type.html">Type</a>) -&gt; <span class="self">Self </span>{
+		from_glib_full(ffi::wp_iterator_new_ptr_array(<a href="#14">array</a>, <a href="#14">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()))
 	}
 
-	<span class="kw">pub fn </span>empty(type_: Type) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_pointers(iter::empty(), type_) }
+	<span class="kw">pub fn </span>empty(type_: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/struct.Type.html">Type</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{
+			<span class="kw">let </span>empty = glib::ffi::g_ptr_array_new();
+			<span class="self">Self</span>::with_ptr_array(<a href="#20">empty</a>, <a href="#18">type_</a>)
+		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_iterator_get_user_data&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_user_data&quot;</span>)]
-	</span><span class="kw">pub fn </span>user_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gpointer {
-		<span class="kw">unsafe </span>{ ffi::wp_iterator_get_user_data(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+	</span><span class="kw">pub fn </span>user_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a> {
+		<span class="kw">unsafe </span>{ ffi::wp_iterator_get_user_data(<a class="self" href="#27">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
 	}
 }
 
-<span class="kw">impl</span>&lt;T: ObjectType&gt; FromIterator&lt;T&gt; <span class="kw">for </span>WpIterator {
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt; FromIterator&lt;T&gt; <span class="kw">for </span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_pointers(iter.into_iter().map(|o| o.to_glib_full() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>), T::static_type()) }
+		<span class="kw">unsafe </span>{
+			<span class="kw">let </span>free: <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>) = <a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">transmute</a>(glib::gobject_ffi::g_object_unref <span class="kw">as </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>);
+			<span class="kw">let </span>array = glib::ffi::g_ptr_array_new_with_free_func(<span class="prelude-val">Some</span>(<a href="#35">free</a>));
+			<span class="kw">for </span>item <span class="kw">in </span>iter {
+				glib::ffi::g_ptr_array_add(array, item.to_glib_full() <span class="kw">as </span>gpointer);
+			}
+			<span class="self">Self</span>::with_ptr_array(<a href="#36">array</a>, T::static_type())
+		}
 	}
 }
 
-<span class="kw">impl </span>Iterator <span class="kw">for </span>WpIterator {
-	<span class="kw">type </span>Item = Value;
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">Iterator</a> <span class="kw">for </span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
+	<span class="kw">type </span>Item = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/struct.Value.html">Value</a>;
 
 	<span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
-		<span class="self">Self</span>::next(<span class="self">self</span>)
+		<span class="self">Self</span>::next(<a class="self" href="#48">self</a>)
 	}
 }
 
-<span class="kw">impl </span>iter::FusedIterator <span class="kw">for </span>WpIterator {}
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/iter/traits/marker/trait.FusedIterator.html">iter::FusedIterator</a> <span class="kw">for </span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {}
 
 <span class="attr">#[repr(transparent)]
-</span><span class="kw">pub struct </span>ValueIterator&lt;T&gt; {
-	iter: WpIterator,
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/util/struct.ValueIterator.html">ValueIterator</a>&lt;T&gt; {
+	iter: <a href="../auto/iterator.rs.html#6-15">WpIterator</a>,
 	_data: PhantomData&lt;<span class="kw">fn</span>() -&gt; T&gt;,
 }
 
 <span class="kw">impl</span>&lt;T&gt; ValueIterator&lt;T&gt; {
-	<span class="kw">pub fn </span>new&lt;I: IntoIterator&gt;(iter: I) -&gt; <span class="self">Self
+	<span class="kw">pub fn </span>new&lt;I: <a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">IntoIterator</a>&gt;(iter: I) -&gt; <span class="self">Self
 	</span><span class="kw">where
 		</span><span class="self">Self</span>: FromIterator&lt;I::Item&gt;,
 	{
-		FromIterator::from_iter(iter)
+		<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html">FromIterator::from_iter</a>(<a href="#62">iter</a>)
 	}
 
-	<span class="kw">pub fn </span>with_inner(iter: WpIterator) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>with_inner(iter: <a href="../auto/iterator.rs.html#6-15">WpIterator</a>) -&gt; <span class="self">Self </span>{
 		<span class="comment">// XXX: work around wireplumber bug where iterators do not start in a usable state
 		// known affected methods: wp_new_files_iterator
-		</span>iter.reset();
+		</span><a href="#69">iter</a>.<a href="../auto/iterator.rs.html#28-32">reset</a>();
 
 		<span class="self">Self </span>{
-			iter,
+			<a href="#69">iter</a>,
 			_data: PhantomData,
 		}
 	}
 
 	<span class="kw">pub fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-		<span class="self">self</span>.iter.reset()
+		<a class="self" href="#80">self</a>.iter.<a href="../auto/iterator.rs.html#28-32">reset</a>()
 	}
 
-	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; WpIterator {
-		<span class="self">self</span>.iter
+	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
+		<a class="self" href="#84">self</a>.iter
 	}
 
-	<span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>WpIterator {
-		<span class="kw-2">&amp;</span><span class="self">self</span>.iter
+	<span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
+		<span class="kw-2">&amp;</span><a class="self" href="#88">self</a>.iter
 	}
 }
 
-<span class="kw">impl</span>&lt;T: StaticType&gt; Default <span class="kw">for </span>ValueIterator&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::with_inner(WpIterator::empty(T::static_type()))
 	}
 }
 
-<span class="kw">impl</span>&lt;T: StaticType&gt; fmt::Debug <span class="kw">for </span>ValueIterator&lt;T&gt; {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">let </span>name = <span class="macro">format!</span>(<span class="string">&quot;ValueIterator&lt;{}&gt;&quot;</span>, T::static_type().name());
-		f.debug_tuple(<span class="kw-2">&amp;</span>name).field(<span class="kw-2">&amp;</span><span class="self">self</span>.iter).finish()
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span>ValueIterator&lt;T&gt; {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<span class="kw">let </span>name = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;ValueIterator&lt;{}&gt;&quot;</span>, T::static_type().name());
+		<a href="#100">f</a>.debug_tuple(<span class="kw-2">&amp;</span><a href="#101">name</a>).field(<span class="kw-2">&amp;</span><a class="self" href="#100">self</a>.iter).finish()
 	}
 }
 
-<span class="kw">impl</span>&lt;T: ObjectType&gt; FromIterator&lt;T&gt; <span class="kw">for </span>ValueIterator&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt; FromIterator&lt;T&gt; <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_inner(FromIterator::from_iter(iter))
+		<span class="self">Self</span>::with_inner(<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html">FromIterator::from_iter</a>(<a href="#107">iter</a>))
 	}
 }
 
 <span class="kw">impl</span>&lt;T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;v</span>&gt; FromValue&lt;<span class="lifetime">&#39;v</span>&gt;&gt; ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>with_next&lt;R, F: FnOnce(T) -&gt; R&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Option</span>&lt;R&gt; {
 		<span class="kw">let </span>value = <span class="self">self</span>.iter.next()<span class="question-mark">?</span>;
-		<span class="kw">let </span>value = <span class="kw">match </span>value.get() {
-			<span class="prelude-val">Ok</span>(value) =&gt; value,
-			<span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;iterator contained unexpected value type {e}&quot;</span>),
+		<span class="kw">let </span>value = <span class="kw">match </span><a href="#114">value</a>.get() {
+			<span class="prelude-val">Ok</span>(value) =&gt; <a href="#116">value</a>,
+			<span class="prelude-val">Err</span>(e) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;iterator contained unexpected value type {e}&quot;</span>),
 		};
-		<span class="prelude-val">Some</span>(f(value))
+		<span class="prelude-val">Some</span>(<a href="#113">f</a>(<a href="#115">value</a>))
 	}
 }
 
-<span class="kw">impl</span>&lt;T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;v</span>&gt; FromValue&lt;<span class="lifetime">&#39;v</span>&gt;&gt; Iterator <span class="kw">for </span>ValueIterator&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;v</span>&gt; FromValue&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">Iterator</a> <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">type </span>Item = T;
 
 	<span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
-		<span class="self">self</span>.with_next(|value| value)
+		<a class="self" href="#126">self</a>.<a href="#113-120">with_next</a>(|value| <a href="#127">value</a>)
 	}
 }
 
-<span class="kw">impl</span>&lt;T&gt; iter::FusedIterator <span class="kw">for </span>ValueIterator&lt;T&gt; <span class="kw">where </span><span class="self">Self</span>: Iterator {}
+<span class="kw">impl</span>&lt;T&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/traits/marker/trait.FusedIterator.html">iter::FusedIterator</a> <span class="kw">for </span>ValueIterator&lt;T&gt; <span class="kw">where </span><span class="self">Self</span>: <a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">Iterator</a> {}
 
 <span class="attr">#[test]
 </span><span class="kw">fn </span>object_iterator() {

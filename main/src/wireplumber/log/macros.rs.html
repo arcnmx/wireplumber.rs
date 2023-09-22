@@ -152,17 +152,17 @@
 	};
 }
 
-<span class="macro">define_log_variant! </span>{ {$}
-	critical(wp_critical) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_CRITICAL</span>),
-	warning(wp_warning) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_WARNING</span>),
-	message(wp_message) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_MESSAGE</span>),
-	info(wp_info) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_INFO</span>),
-	debug(wp_debug) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_DEBUG</span>),
-	trace(wp_trace) = (<span class="macro-nonterminal">$crate::Log::LEVEL_TRACE</span>),
+<a class="macro" href="#1-40">define_log_variant! </a>{ {$}
+	<a href="../../../wireplumber/log/macro.critical.html">critical</a>(wp_critical) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_CRITICAL</span>),
+	<a href="../../../wireplumber/log/macro.warning.html">warning</a>(wp_warning) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_WARNING</span>),
+	<a href="../../../wireplumber/log/macro.message.html">message</a>(wp_message) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_MESSAGE</span>),
+	<a href="../../../wireplumber/log/macro.info.html">info</a>(wp_info) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_INFO</span>),
+	<a href="../../../wireplumber/log/macro.debug.html">debug</a>(wp_debug) = (<span class="macro-nonterminal">$crate::lib::glib::LogLevelFlags::LEVEL_DEBUG</span>),
+	<a href="../../../wireplumber/log/macro.trace.html">trace</a>(wp_trace) = (<span class="macro-nonterminal">$crate::Log::LEVEL_TRACE</span>),
 }
 
 <span class="attr">#[macro_export]
-</span><span class="macro">macro_rules! </span>log {
+</span><span class="macro">macro_rules! </span><a href="../../../wireplumber/log/macro.log.html">log</a> {
 	(<span class="self">self</span>: <span class="macro-nonterminal">$self</span>:expr, domain: <span class="macro-nonterminal">$log_domain</span>:expr, <span class="macro-nonterminal">$log_level</span>:expr, <span class="macro-nonterminal">$format</span>:literal $(<span class="macro-nonterminal">$args</span>:tt)<span class="kw-2">*</span>) =&gt; {
 		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner! </span>{ <span class="macro-nonterminal">$log_domain</span>.into(), <span class="macro-nonterminal">$log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$self</span>), <span class="macro-nonterminal">$format</span>; $(<span class="macro-nonterminal">$args</span>)* }
 	};
@@ -176,7 +176,7 @@
 		<span class="macro-nonterminal">$</span><span class="macro">crate::log::_log_inner! </span>{ <span class="prelude-val">None</span>, <span class="macro-nonterminal">$log_level</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span><span class="macro-nonterminal">$crate::lib::glib::Object</span>&gt;, <span class="macro-nonterminal">$format</span>; $(<span class="macro-nonterminal">$args</span>)* }
 	};
 }
-<span class="kw">pub use </span>log;
+<span class="kw">pub use </span><a href="#52-65">log</a>;
 
 <span class="attr">#[doc(hidden)]
 #[macro_export]
@@ -199,7 +199,7 @@
 		}
 	};
 }
-<span class="kw">pub use </span>_log_inner;
+<span class="kw">pub use </span><a href="#70-88">_log_inner</a>;
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {

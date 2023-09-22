@@ -196,154 +196,154 @@
 <a href="#196" id="196">196</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		core::{FeatureActivationTransition, Object, ObjectFeatures},
-		prelude::<span class="kw-2">*</span>,
+		core::{<a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>, <a href="../auto/object.rs.html#8-15">Object</a>, <a href="features.rs.html#15">ObjectFeatures</a>},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
 	},
-	glib::subclass::prelude::{ObjectImpl <span class="kw">as </span>GObjectImpl, <span class="kw-2">*</span>},
+	glib::subclass::prelude::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> <span class="kw">as </span>GObjectImpl, <span class="kw-2">*</span>},
 };
 
-<span class="kw">pub trait </span>ObjectImpl: GObjectImpl + ObjectImplExt {
-	<span class="kw">fn </span>supported_features(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) -&gt; ObjectFeatures {
-		<span class="self">self</span>.parent_supported_features(object)
+<span class="kw">pub trait </span><a href="../../../wireplumber/core/trait.ObjectImpl.html">ObjectImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/object/trait.ObjectImpl.html">GObjectImpl</a> + <a href="#39-57">ObjectImplExt</a> {
+	<span class="kw">fn </span>supported_features(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) -&gt; <a href="features.rs.html#15">ObjectFeatures</a> {
+		<a class="self" href="#10">self</a>.<a href="#41">parent_supported_features</a>(<a href="#10">object</a>)
 	}
 
 	<span class="kw">fn </span>activate_get_next_step(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		transition: FeatureActivationTransition,
-		step: u32,
-		features: ObjectFeatures,
-	) -&gt; u32 {
-		<span class="self">self</span>.parent_activate_get_next_step(object, transition, step, features)
+		transition: <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>,
+		step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+		features: <a href="features.rs.html#15">ObjectFeatures</a>,
+	) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+		<a class="self" href="#15">self</a>.<a href="#43-49">parent_activate_get_next_step</a>(<a href="#16">object</a>, <a href="#17">transition</a>, <a href="#18">step</a>, <a href="#19">features</a>)
 	}
 
 	<span class="kw">fn </span>activate_execute_step(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		transition: FeatureActivationTransition,
-		step: u32,
-		features: ObjectFeatures,
+		transition: <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>,
+		step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+		features: <a href="features.rs.html#15">ObjectFeatures</a>,
 	) {
-		<span class="self">self</span>.parent_activate_execute_step(object, transition, step, features)
+		<a class="self" href="#25">self</a>.<a href="#50-56">parent_activate_execute_step</a>(<a href="#26">object</a>, <a href="#27">transition</a>, <a href="#28">step</a>, <a href="#29">features</a>)
 	}
 
-	<span class="kw">fn </span>deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, features: ObjectFeatures) {
-		<span class="self">self</span>.parent_deactivate(object, features)
+	<span class="kw">fn </span>deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, features: <a href="features.rs.html#15">ObjectFeatures</a>) {
+		<a class="self" href="#34">self</a>.<a href="#42">parent_deactivate</a>(<a href="#34">object</a>, <a href="#34">features</a>)
 	}
 }
 
-<span class="kw">pub trait </span>ObjectImplExt: ObjectSubclass {
-	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpObjectClass;
-	<span class="kw">fn </span>parent_supported_features(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) -&gt; ObjectFeatures;
-	<span class="kw">fn </span>parent_deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, features: ObjectFeatures);
+<span class="kw">pub trait </span><a href="../../../wireplumber/core/trait.ObjectImplExt.html">ObjectImplExt</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpObjectClass.html">ffi::WpObjectClass</a>;
+	<span class="kw">fn </span>parent_supported_features(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) -&gt; <a href="features.rs.html#15">ObjectFeatures</a>;
+	<span class="kw">fn </span>parent_deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, features: <a href="features.rs.html#15">ObjectFeatures</a>);
 	<span class="kw">fn </span>parent_activate_get_next_step(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		transition: FeatureActivationTransition,
-		step: u32,
-		features: ObjectFeatures,
-	) -&gt; u32;
+		transition: <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>,
+		step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+		features: <a href="features.rs.html#15">ObjectFeatures</a>,
+	) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>;
 	<span class="kw">fn </span>parent_activate_execute_step(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		transition: FeatureActivationTransition,
-		step: u32,
-		features: ObjectFeatures,
+		transition: <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>,
+		step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+		features: <a href="features.rs.html#15">ObjectFeatures</a>,
 	);
 }
 
-<span class="kw">unsafe impl</span>&lt;T: ObjectImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>Object {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#9-37">ObjectImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/object.rs.html#8-15">Object</a> {
 	<span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
+		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#60">class</a>);
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>get_supported_features&lt;T: ObjectImpl&gt;(object: <span class="kw-2">*mut </span>ffi::WpObject) -&gt; ffi::WpObjectFeatures {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(object <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>object: Borrowed&lt;Object&gt; = from_glib_borrow(object);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>get_supported_features&lt;T: <a href="#9-37">ObjectImpl</a>&gt;(object: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpObject.html">ffi::WpObject</a>) -&gt; ffi::WpObjectFeatures {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#63">object</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#64">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>object: Borrowed&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt; = from_glib_borrow(<a href="#63">object</a>);
 
-			this.supported_features(object.unsafe_cast_ref()).into_glib()
+			<a href="#65">this</a>.<a href="#10-12">supported_features</a>(<a href="#66">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>()).<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 		}
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>deactivate&lt;T: ObjectImpl&gt;(object: <span class="kw-2">*mut </span>ffi::WpObject, features: ffi::WpObjectFeatures) {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(object <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>object: Borrowed&lt;Object&gt; = from_glib_borrow(object);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>deactivate&lt;T: <a href="#9-37">ObjectImpl</a>&gt;(object: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpObject.html">ffi::WpObject</a>, features: ffi::WpObjectFeatures) {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#71">object</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#72">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>object: Borrowed&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt; = from_glib_borrow(<a href="#71">object</a>);
 
-			this.deactivate(object.unsafe_cast_ref(), from_glib(features))
+			<a href="#73">this</a>.<a href="#34-36">deactivate</a>(<a href="#74">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(), from_glib(<a href="#71">features</a>))
 		}
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_get_next_step&lt;T: ObjectImpl&gt;(
-			object: <span class="kw-2">*mut </span>ffi::WpObject,
-			transition: <span class="kw-2">*mut </span>ffi::WpFeatureActivationTransition,
-			step: u32,
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_get_next_step&lt;T: <a href="#9-37">ObjectImpl</a>&gt;(
+			object: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpObject.html">ffi::WpObject</a>,
+			transition: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpFeatureActivationTransition.html">ffi::WpFeatureActivationTransition</a>,
+			step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
 			features: ffi::WpObjectFeatures,
-		) -&gt; u32 {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(object <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>object: Borrowed&lt;Object&gt; = from_glib_borrow(object);
+		) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#80">object</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#85">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>object: Borrowed&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt; = from_glib_borrow(<a href="#80">object</a>);
 
 			<span class="comment">// TODO: check ownership of transition
-			</span>this.activate_get_next_step(
-				object.unsafe_cast_ref(),
-				from_glib_none(transition),
-				step,
-				from_glib(features),
+			</span><a href="#86">this</a>.<a href="#14-22">activate_get_next_step</a>(
+				<a href="#87">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(),
+				from_glib_none(<a href="#81">transition</a>),
+				<a href="#82">step</a>,
+				from_glib(<a href="#83">features</a>),
 			)
 		}
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_execute_step&lt;T: ObjectImpl&gt;(
-			object: <span class="kw-2">*mut </span>ffi::WpObject,
-			transition: <span class="kw-2">*mut </span>ffi::WpFeatureActivationTransition,
-			step: u32,
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_execute_step&lt;T: <a href="#9-37">ObjectImpl</a>&gt;(
+			object: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpObject.html">ffi::WpObject</a>,
+			transition: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpFeatureActivationTransition.html">ffi::WpFeatureActivationTransition</a>,
+			step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
 			features: ffi::WpObjectFeatures,
 		) {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(object <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>object: Borrowed&lt;Object&gt; = from_glib_borrow(object);
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#99">object</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#104">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>object: Borrowed&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt; = from_glib_borrow(<a href="#99">object</a>);
 
 			<span class="comment">// TODO: check ownership of transition
-			</span>this.activate_execute_step(
-				object.unsafe_cast_ref(),
-				from_glib_none(transition),
-				step,
-				from_glib(features),
+			</span><a href="#105">this</a>.<a href="#24-32">activate_execute_step</a>(
+				<a href="#106">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(),
+				from_glib_none(<a href="#100">transition</a>),
+				<a href="#101">step</a>,
+				from_glib(<a href="#102">features</a>),
 			)
 		}
 
-		<span class="kw">let </span>klass = class.as_mut();
-		klass.get_supported_features = <span class="prelude-val">Some</span>(get_supported_features::&lt;T&gt;);
-		klass.activate_get_next_step = <span class="prelude-val">Some</span>(activate_get_next_step::&lt;T&gt;);
-		klass.activate_execute_step = <span class="prelude-val">Some</span>(activate_execute_step::&lt;T&gt;);
-		klass.deactivate = <span class="prelude-val">Some</span>(deactivate::&lt;T&gt;);
+		<span class="kw">let </span>klass = <a href="#60">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+		<a href="#117">klass</a>.get_supported_features = <span class="prelude-val">Some</span>(get_supported_features::&lt;T&gt;);
+		<a href="#117">klass</a>.activate_get_next_step = <span class="prelude-val">Some</span>(activate_get_next_step::&lt;T&gt;);
+		<a href="#117">klass</a>.activate_execute_step = <span class="prelude-val">Some</span>(activate_execute_step::&lt;T&gt;);
+		<a href="#117">klass</a>.deactivate = <span class="prelude-val">Some</span>(deactivate::&lt;T&gt;);
 	}
 }
 
-<span class="kw">impl</span>&lt;T: ObjectImpl&gt; ObjectImplExt <span class="kw">for </span>T {
-	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpObjectClass {
+<span class="kw">impl</span>&lt;T: <a href="#9-37">ObjectImpl</a>&gt; <a href="#39-57">ObjectImplExt</a> <span class="kw">for </span>T {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpObjectClass.html">ffi::WpObjectClass</a> {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span>data = T::type_data();
-			<span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
-			<span class="kw-2">&amp;*</span>parent_class
+			<span class="kw">let </span>parent_class = <a href="#128">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+			<span class="kw-2">&amp;*</span><a href="#129">parent_class</a>
 		}
 	}
 
-	<span class="kw">fn </span>parent_supported_features(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) -&gt; ObjectFeatures {
-		<span class="kw">let </span>parent = <span class="self">self</span>.parent_class();
-		<span class="kw">let </span>f = parent
+	<span class="kw">fn </span>parent_supported_features(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) -&gt; <a href="features.rs.html#15">ObjectFeatures</a> {
+		<span class="kw">let </span>parent = <a class="self" href="#134">self</a>.<a href="#40">parent_class</a>();
+		<span class="kw">let </span>f = <a href="#135">parent</a>
 			.get_supported_features
 			.expect(<span class="string">&quot;No parent class implementation for \&quot;get_supported_features\&quot;&quot;</span>);
-		<span class="kw">unsafe </span>{ from_glib(f(object.unsafe_cast_ref::&lt;Object&gt;().to_glib_none().<span class="number">0</span>)) }
+		<span class="kw">unsafe </span>{ from_glib(<a href="#136">f</a>(<a href="#134">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 
-	<span class="kw">fn </span>parent_deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, features: ObjectFeatures) {
-		<span class="kw">let </span>parent = <span class="self">self</span>.parent_class();
-		<span class="kw">let </span>f = parent
+	<span class="kw">fn </span>parent_deactivate(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, features: <a href="features.rs.html#15">ObjectFeatures</a>) {
+		<span class="kw">let </span>parent = <a class="self" href="#142">self</a>.<a href="#40">parent_class</a>();
+		<span class="kw">let </span>f = <a href="#143">parent</a>
 			.deactivate
 			.expect(<span class="string">&quot;No parent class implementation for \&quot;deactivate\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			f(
-				object.unsafe_cast_ref::&lt;Object&gt;().to_glib_none().<span class="number">0</span>,
-				features.into_glib(),
+			<a href="#144">f</a>(
+				<a href="#142">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#142">features</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
 			)
 		}
 	}
@@ -351,20 +351,20 @@
 	<span class="kw">fn </span>parent_activate_get_next_step(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		transition: FeatureActivationTransition,
-		step: u32,
-		features: ObjectFeatures,
-	) -&gt; u32 {
-		<span class="kw">let </span>parent = <span class="self">self</span>.parent_class();
-		<span class="kw">let </span>f = parent
+		transition: <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>,
+		step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+		features: <a href="features.rs.html#15">ObjectFeatures</a>,
+	) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+		<span class="kw">let </span>parent = <a class="self" href="#156">self</a>.<a href="#40">parent_class</a>();
+		<span class="kw">let </span>f = <a href="#162">parent</a>
 			.activate_get_next_step
 			.expect(<span class="string">&quot;No parent class implementation for \&quot;activate_get_next_step\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			f(
-				object.unsafe_cast_ref::&lt;Object&gt;().to_glib_none().<span class="number">0</span>,
-				transition.to_glib_none().<span class="number">0</span>,
-				step,
-				features.into_glib(),
+			<a href="#163">f</a>(
+				<a href="#157">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#158">transition</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#159">step</a>,
+				<a href="#160">features</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
 			)
 		}
 	}
@@ -372,20 +372,20 @@
 	<span class="kw">fn </span>parent_activate_execute_step(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		object: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type,
-		transition: FeatureActivationTransition,
-		step: u32,
-		features: ObjectFeatures,
+		transition: <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>,
+		step: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+		features: <a href="features.rs.html#15">ObjectFeatures</a>,
 	) {
-		<span class="kw">let </span>parent = <span class="self">self</span>.parent_class();
-		<span class="kw">let </span>f = parent
+		<span class="kw">let </span>parent = <a class="self" href="#177">self</a>.<a href="#40">parent_class</a>();
+		<span class="kw">let </span>f = <a href="#183">parent</a>
 			.activate_execute_step
 			.expect(<span class="string">&quot;No parent class implementation for \&quot;activate_execute_step\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			f(
-				object.unsafe_cast_ref::&lt;Object&gt;().to_glib_none().<span class="number">0</span>,
-				transition.to_glib_none().<span class="number">0</span>,
-				step,
-				features.into_glib(),
+			<a href="#184">f</a>(
+				<a href="#178">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#179">transition</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#180">step</a>,
+				<a href="#181">features</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
 			)
 		}
 	}

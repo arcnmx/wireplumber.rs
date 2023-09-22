@@ -69,6 +69,8 @@
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! PipeWire proxy objects
 //!
 //! All types derived from [Proxy] describe an [object](PipewireObject) on the remote service, with
@@ -93,50 +95,52 @@
 //! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/c_api/metadata_api.html)
 //! - [Endpoint](https://pipewire.pages.freedesktop.org/wireplumber/c_api/endpoint_api.html)
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::LinkState;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::PropertiesItem;
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><span class="kw">pub use </span><a href="../auto/enums.rs.html#593-610"><span class="kw">crate</span>::auto::LinkState</a>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)))]
+</span><span class="kw">pub use </span><a href="../auto/properties_item.rs.html#8-17"><span class="kw">crate</span>::auto::PropertiesItem</a>;
 <span class="kw">pub use </span>{
 	<span class="self">self</span>::{
-		keys::<span class="kw-2">*</span>,
-		link::LinkTarget,
-		proxy::{PipewireObjectExt2, ProxyExt2},
+		<a href="#44">keys</a>::<span class="kw-2">*</span>,
+		<a href="link.rs.html#58-60">link::LinkTarget</a>,
+		proxy::{<a href="proxy.rs.html#40-66">PipewireObjectExt2</a>, <a href="proxy.rs.html#19-28">ProxyExt2</a>},
 	},
 	<span class="kw">crate</span>::auto::{
-		traits::{EndpointExt, GlobalProxyExt, MetadataExt, PipewireObjectExt, ProxyExt},
-		Client, Device, Direction, Endpoint, GlobalProxy, Link, LinkFeatures, Metadata, MetadataFeatures, Node,
-		NodeFeatures, NodeState, PipewireObject, Port, Properties, Proxy, ProxyFeatures,
+		traits::{<a href="../auto/endpoint.rs.html#27-90">EndpointExt</a>, <a href="../auto/global_proxy.rs.html#27-70">GlobalProxyExt</a>, <a href="../auto/metadata.rs.html#39-82">MetadataExt</a>, <a href="../auto/pipewire_object.rs.html#27-167">PipewireObjectExt</a>, <a href="../auto/proxy.rs.html#27-126">ProxyExt</a>},
+		<a href="../auto/client.rs.html#7-14">Client</a>, <a href="../auto/device.rs.html#7-14">Device</a>, <a href="../auto/enums.rs.html#380-387">Direction</a>, <a href="../auto/endpoint.rs.html#8-15">Endpoint</a>, <a href="../auto/global_proxy.rs.html#8-15">GlobalProxy</a>, <a href="../auto/link.rs.html#17-24">Link</a>, <a href="../auto/flags.rs.html#362-373">LinkFeatures</a>, <a href="../auto/metadata.rs.html#8-15">Metadata</a>, <a href="../auto/flags.rs.html#527-536">MetadataFeatures</a>, <a href="../auto/node.rs.html#8-15">Node</a>,
+		<a href="../auto/flags.rs.html#609-618">NodeFeatures</a>, <a href="../auto/enums.rs.html#739-752">NodeState</a>, <a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/port.rs.html#7-14">Port</a>, <a href="../auto/properties.rs.html#7-16">Properties</a>, <a href="../auto/proxy.rs.html#8-15">Proxy</a>, <a href="../auto/flags.rs.html#771-794">ProxyFeatures</a>,
 	},
 };
 
-<span class="kw">mod </span>keys;
-<span class="kw">mod </span>link;
-<span class="kw">mod </span>node;
-<span class="kw">mod </span>port;
-<span class="kw">mod </span>properties;
-<span class="kw">mod </span>proxy;
+<span class="kw">mod </span><a href="client.rs.html#1-14">client</a>;
+<span class="kw">mod </span><a href="keys.rs.html#1-301">keys</a>;
+<span class="kw">mod </span><a href="link.rs.html#1-113">link</a>;
+<span class="kw">mod </span><a href="node.rs.html#1-120">node</a>;
+<span class="kw">mod </span><a href="port.rs.html#1-36">port</a>;
+<span class="kw">mod </span><a href="properties.rs.html#1-189">properties</a>;
+<span class="kw">mod </span><a href="proxy.rs.html#1-158">proxy</a>;
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-</span><span class="kw">impl </span>From&lt;Direction&gt; <span class="kw">for </span>libspa::Direction {
-	<span class="kw">fn </span>from(dir: Direction) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span>dir {
-			Direction::Input =&gt; <span class="self">Self</span>::Input,
-			Direction::Output =&gt; <span class="self">Self</span>::Output,
-			Direction::__Unknown(v) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unsupported WpDirection value: {v}&quot;</span>),
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+</span><span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#380-387">Direction</a>&gt; <span class="kw">for </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html">libspa::Direction</a> {
+	<span class="kw">fn </span>from(dir: <a href="../auto/enums.rs.html#380-387">Direction</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><a href="#54">dir</a> {
+			<a href="../auto/enums.rs.html#382">Direction::Input</a> =&gt; <span class="self">Self</span>::Input,
+			<a href="../auto/enums.rs.html#384">Direction::Output</a> =&gt; <span class="self">Self</span>::Output,
+			<a href="../auto/enums.rs.html#386">Direction::__Unknown</a>(v) =&gt; <span class="self">Self</span>::from_raw(<a href="#58">v</a> <span class="kw">as </span>libspa_sys::spa_direction),
 		}
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
-</span><span class="kw">impl </span>From&lt;libspa::Direction&gt; <span class="kw">for </span>Direction {
-	<span class="kw">fn </span>from(dir: libspa::Direction) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span>dir {
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;libspa&quot;</span>)))]
+</span><span class="kw">impl </span>From&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html">libspa::Direction</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#380-387">Direction</a> {
+	<span class="kw">fn </span>from(dir: <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html">libspa::Direction</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><a href="#66">dir</a> {
 			libspa::Direction::Input =&gt; <span class="self">Self</span>::Input,
 			libspa::Direction::Output =&gt; <span class="self">Self</span>::Output,
+			dir =&gt; <span class="self">Self</span>::__Unknown(<a href="#70">dir</a>.as_raw() <span class="kw">as </span><a href="../../../wireplumber_sys/sys/type.WpDirection.html"><span class="kw">crate</span>::ffi::WpDirection</a>),
 		}
 	}
 }

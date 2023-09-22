@@ -211,7 +211,7 @@
 //!   # #[cfg(feature = &quot;futures&quot;)]
 //!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
 //!
-//!   om.request_object_features(Object::static_type(), ObjectFeatures::ALL);
+//!   om.request_object_features(Node::static_type(), ObjectFeatures::ALL);
 //!   core.install_object_manager(&amp;om);
 //!
 //!   # #[cfg(feature = &quot;futures&quot;)]
@@ -224,152 +224,152 @@
 //! ```
 
 </span><span class="kw">use </span>{
-	<span class="kw">crate</span>::prelude::<span class="kw-2">*</span>,
-	glib_signal::{def_signal, Pointer, SignalFlags},
+	<a href="lib.rs.html#74"><span class="kw">crate</span>::prelude</a>::<span class="kw-2">*</span>,
+	glib_signal::{<a href="../../glib_signal/macro.def_signal.html">def_signal</a>, Pointer, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gobject/auto/flags/struct.SignalFlags.html">SignalFlags</a>},
 };
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;connected&quot; </span><span class="kw">as </span>Connected&gt; <span class="kw">for </span><span class="kw">crate</span>::core::Core {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;connected&quot; </span><span class="kw">as </span><a href="#44-49">Connected</a>&gt; <span class="kw">for </span><a href="auto/core.rs.html#8-15"><span class="kw">crate</span>::core::Core</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CONNECTED};
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;disconnected&quot; </span><span class="kw">as </span>Disconnected&gt; <span class="kw">for </span><span class="kw">crate</span>::core::Core {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;disconnected&quot; </span><span class="kw">as </span><a href="#50-55">Disconnected</a>&gt; <span class="kw">for </span><a href="auto/core.rs.html#8-15"><span class="kw">crate</span>::core::Core</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_DISCONNECTED};
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;installed&quot; </span><span class="kw">as </span>ManagerInstalled&gt; <span class="kw">for </span><span class="kw">crate</span>::registry::ObjectManager {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;installed&quot; </span><span class="kw">as </span><a href="#57-63">ManagerInstalled</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_INSTALLED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;objects-changed&quot; </span><span class="kw">as </span>ObjectsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::registry::ObjectManager {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;objects-changed&quot; </span><span class="kw">as </span><a href="#64-70">ObjectsChanged</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECTS_CHANGED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-added&quot; </span><span class="kw">as </span>ObjectAdded&gt; <span class="kw">for </span><span class="kw">crate</span>::registry::ObjectManager {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-added&quot; </span><span class="kw">as </span><a href="#71-77">ObjectAdded</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECT_ADDED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, GObject)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-removed&quot; </span><span class="kw">as </span>ObjectRemoved&gt; <span class="kw">for </span><span class="kw">crate</span>::registry::ObjectManager {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-removed&quot; </span><span class="kw">as </span><a href="#78-84">ObjectRemoved</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECT_REMOVED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, GObject)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;bound&quot; </span><span class="kw">as </span>PwProxyBound&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;bound&quot; </span><span class="kw">as </span><a href="#86-92">PwProxyBound</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_BOUND};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, u32)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-created&quot; </span><span class="kw">as </span>PwProxyCreated&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-created&quot; </span><span class="kw">as </span><a href="#93-99">PwProxyCreated</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PW_PROXY_CREATED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;pipewire_sys::pw_proxy&gt;)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_proxy.html">pipewire_sys::pw_proxy</a>&gt;)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-destroyed&quot; </span><span class="kw">as </span>PwProxyDestroyed&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-destroyed&quot; </span><span class="kw">as </span><a href="#100-106">PwProxyDestroyed</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PW_PROXY_DESTROYED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;pipewire_sys::pw_proxy&gt;)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_proxy.html">pipewire_sys::pw_proxy</a>&gt;)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;error&quot; </span><span class="kw">as </span>PwProxyError&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Proxy {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;error&quot; </span><span class="kw">as </span><a href="#107-113">PwProxyError</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ERROR};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, i32, i32, String)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;params-changed&quot; </span><span class="kw">as </span>PwObjectParamsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::PipewireObject {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;params-changed&quot; </span><span class="kw">as </span><a href="#115-121">PwObjectParamsChanged</a>&gt; <span class="kw">for </span><a href="auto/pipewire_object.rs.html#8-15"><span class="kw">crate</span>::pw::PipewireObject</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PARAMS_CHANGED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, String)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;ports-changed&quot; </span><span class="kw">as </span>NodePortsChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Node {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;ports-changed&quot; </span><span class="kw">as </span><a href="#123-129">NodePortsChanged</a>&gt; <span class="kw">for </span><a href="auto/node.rs.html#8-15"><span class="kw">crate</span>::pw::Node</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PORTS_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;state-changed&quot; </span><span class="kw">as </span>NodeStateChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Node {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;state-changed&quot; </span><span class="kw">as </span><a href="#130-136">NodeStateChanged</a>&gt; <span class="kw">for </span><a href="auto/node.rs.html#8-15"><span class="kw">crate</span>::pw::Node</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">crate</span>::pw::NodeState, <span class="kw">crate</span>::pw::NodeState)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#739-752"><span class="kw">crate</span>::pw::NodeState</a>, <a href="auto/enums.rs.html#739-752"><span class="kw">crate</span>::pw::NodeState</a>)
 	}
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="macro">def_signal! </span>{
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
-	</span><span class="kw">impl </span>Notifies&lt;<span class="string">&quot;state-changed&quot; </span><span class="kw">as </span>LinkStateChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Link {
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+	</span><span class="kw">impl </span>Notifies&lt;<span class="string">&quot;state-changed&quot; </span><span class="kw">as </span><a href="#139-146">LinkStateChanged</a>&gt; <span class="kw">for </span><a href="auto/link.rs.html#17-24"><span class="kw">crate</span>::pw::Link</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">crate</span>::pw::LinkState, <span class="kw">crate</span>::pw::LinkState)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#593-610"><span class="kw">crate</span>::pw::LinkState</a>, <a href="auto/enums.rs.html#593-610"><span class="kw">crate</span>::pw::LinkState</a>)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;changed&quot; </span><span class="kw">as </span>MetadataChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::pw::Metadata {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;changed&quot; </span><span class="kw">as </span><a href="#148-154">MetadataChanged</a>&gt; <span class="kw">for </span><a href="auto/metadata.rs.html#8-15"><span class="kw">crate</span>::pw::Metadata</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, u32, String, String, String)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;create-object&quot; </span><span class="kw">as </span>CreateObject&gt; <span class="kw">for </span><span class="kw">crate</span>::local::SpaDevice {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;create-object&quot; </span><span class="kw">as </span><a href="#156-162">CreateObject</a>&gt; <span class="kw">for </span><a href="auto/spa_device.rs.html#11-18"><span class="kw">crate</span>::local::SpaDevice</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CREATE_OBJECT};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, u32, String, String, <span class="kw">crate</span>::pw::Properties)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="auto/properties.rs.html#7-16"><span class="kw">crate</span>::pw::Properties</a>)
 	}
 }
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-removed&quot; </span><span class="kw">as </span>SpaObjectRemoved&gt; <span class="kw">for </span><span class="kw">crate</span>::local::SpaDevice {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-removed&quot; </span><span class="kw">as </span><a href="#163-169">SpaObjectRemoved</a>&gt; <span class="kw">for </span><a href="auto/spa_device.rs.html#11-18"><span class="kw">crate</span>::local::SpaDevice</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECT_REMOVED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, u32)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)
 	}
 }
 
-<span class="macro">def_signal! </span>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;endpoint-properties-changed&quot; </span><span class="kw">as </span>EndpointPropertiesChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::session::SiEndpoint {
+<a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;endpoint-properties-changed&quot; </span><span class="kw">as </span><a href="#171-177">EndpointPropertiesChanged</a>&gt; <span class="kw">for </span><a href="auto/si_endpoint.rs.html#8-15"><span class="kw">crate</span>::session::SiEndpoint</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ENDPOINT_PROPERTIES_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="macro">def_signal! </span>{
-	<span class="attr">#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
-	</span><span class="kw">impl </span>Notifies&lt;<span class="string">&quot;adapter-ports-state-changed&quot; </span><span class="kw">as </span>AdapterPortsStateChanged&gt; <span class="kw">for </span><span class="kw">crate</span>::session::SiAdapter {
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)]
+</span><a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
+	<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
+	</span><span class="kw">impl </span>Notifies&lt;<span class="string">&quot;adapter-ports-state-changed&quot; </span><span class="kw">as </span><a href="#180-187">AdapterPortsStateChanged</a>&gt; <span class="kw">for </span><a href="auto/si_adapter.rs.html#17-24"><span class="kw">crate</span>::session::SiAdapter</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ADAPTER_PORTS_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">crate</span>::session::SiAdapterPortsState, <span class="kw">crate</span>::session::SiAdapterPortsState)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#859-868"><span class="kw">crate</span>::session::SiAdapterPortsState</a>, <a href="auto/enums.rs.html#859-868"><span class="kw">crate</span>::session::SiAdapterPortsState</a>)
 	}
 }
 </code></pre></div></section></main></body></html>

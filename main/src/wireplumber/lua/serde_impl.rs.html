@@ -210,85 +210,85 @@
 <a href="#210" id="210">210</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		lua::{Deserializer, LuaError, LuaTable, LuaValue, LuaVariant},
-		prelude::<span class="kw-2">*</span>,
+		lua::{<a href="deserializer.rs.html#15-18">Deserializer</a>, <a href="error.rs.html#14-23">LuaError</a>, <a href="variant.rs.html#317-321">LuaTable</a>, <a href="variant.rs.html#106-113">LuaValue</a>, <a href="variant.rs.html#13-20">LuaVariant</a>},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
 	},
-	glib::VariantDict,
+	<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_dict/struct.VariantDict.html">glib::VariantDict</a>,
 	serde::{
-		de,
-		ser::{<span class="self">self</span>, SerializeMap, SerializeSeq},
-		Deserialize, Serialize,
+		<a href="https://docs.rs/serde/1.0.185/serde/de/index.html">de</a>,
+		ser::{<a class="self" href="https://docs.rs/serde/1.0.185/serde/ser/index.html">self</a>, <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.SerializeMap.html">SerializeMap</a>, <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.SerializeSeq.html">SerializeSeq</a>},
+		<a href="https://docs.rs/serde_derive/1.0.185/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde_derive/1.0.185/serde_derive/derive.Serialize.html">Serialize</a>,
 	},
-	std::fmt,
+	<a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">std::fmt</a>,
 };
 
 <span class="kw">struct </span>Visitor;
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Visitor {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="#15">Visitor</a> {
 	<span class="kw">type </span>Value = LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
 
-	<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-		f.write_str(<span class="string">&quot;LuaVariant&quot;</span>)
+	<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<a href="#20">f</a>.write_str(<span class="string">&quot;LuaVariant&quot;</span>)
 	}
 
-	<span class="kw">fn </span>visit_unit&lt;E: de::Error&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(().into())
+	<span class="kw">fn </span>visit_unit&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_bool&lt;E: de::Error&gt;(<span class="self">self</span>, v: bool) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_bool&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#28">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_i8&lt;E: de::Error&gt;(<span class="self">self</span>, v: i8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="self">self</span>.visit_i16(v.into())
+	<span class="kw">fn </span>visit_i8&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i8.html">i8</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<a class="self" href="#32">self</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Visitor.html">visit_i16</a>(<a href="#32">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_i16&lt;E: de::Error&gt;(<span class="self">self</span>, v: i16) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_i16&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#36">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_i32&lt;E: de::Error&gt;(<span class="self">self</span>, v: i32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_i32&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#40">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_i64&lt;E: de::Error&gt;(<span class="self">self</span>, v: i64) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_i64&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#44">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_u8&lt;E: de::Error&gt;(<span class="self">self</span>, v: u8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="self">self</span>.visit_u16(v.into())
+	<span class="kw">fn </span>visit_u8&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<a class="self" href="#48">self</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Visitor.html">visit_u16</a>(<a href="#48">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_u16&lt;E: de::Error&gt;(<span class="self">self</span>, v: u16) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_u16&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#52">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_u32&lt;E: de::Error&gt;(<span class="self">self</span>, v: u32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_u32&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#56">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_u64&lt;E: de::Error&gt;(<span class="self">self</span>, v: u64) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_u64&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#60">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_f32&lt;E: de::Error&gt;(<span class="self">self</span>, v: f32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="self">self</span>.visit_f64(v.into())
+	<span class="kw">fn </span>visit_f32&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<a class="self" href="#64">self</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Visitor.html">visit_f64</a>(<a href="#64">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_f64&lt;E: de::Error&gt;(<span class="self">self</span>, v: f64) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_f64&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#68">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
-	<span class="kw">fn </span>visit_str&lt;E: de::Error&gt;(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(v.into())
+	<span class="kw">fn </span>visit_str&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(<a href="#72">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
 	<span class="kw">fn </span>visit_seq&lt;A: de::SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>var: Vec&lt;LuaVariant&gt; = Vec::with_capacity(seq.size_hint().unwrap_or(<span class="number">0</span>));
+		<span class="kw">let </span><span class="kw-2">mut </span>var: Vec&lt;<a href="variant.rs.html#13-20">LuaVariant</a>&gt; = Vec::with_capacity(<a href="#76">seq</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.SeqAccess.html">size_hint</a>().unwrap_or(<span class="number">0</span>));
 		<span class="kw">while let </span><span class="prelude-val">Some</span>(v) = seq.next_element()<span class="question-mark">? </span>{
 			var.push(v);
 		}
-		<span class="prelude-val">Ok</span>(LuaVariant::from_iter(var))
+		<span class="prelude-val">Ok</span>(LuaVariant::from_iter(<a href="#77">var</a>))
 	}
 
 	<span class="kw">fn </span>visit_map&lt;A: de::MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>map: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
@@ -297,70 +297,70 @@
 			dict.insert_value(<span class="kw-2">&amp;</span>key, LuaVariant::as_variant(<span class="kw-2">&amp;</span>value));
 		}
 
-		dict.end().try_into().map_err(LuaError::serde_error)
+		<a href="#85">dict</a>.end().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(LuaError::serde_error)
 	}
 
-	<span class="kw">fn </span>visit_none&lt;E: de::Error&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="self">self</span>.visit_unit()
+	<span class="kw">fn </span>visit_none&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<a class="self" href="#93">self</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Visitor.html">visit_unit</a>()
 	}
 
 	<span class="kw">fn </span>visit_some&lt;D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt; {
-		deserializer.deserialize_any(<span class="self">self</span>)
+		<a href="#97">deserializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Deserializer.html">deserialize_any</a>(<a class="self" href="#97">self</a>)
 	}
 
 	<span class="kw">fn </span>visit_enum&lt;A: de::EnumAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, _data: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
-		<span class="prelude-val">Err</span>(LuaError::Custom(<span class="string">&quot;unimplemented: wireplumber::lua::Visitor::visit_enum&quot;</span>.into()).serde_error())
+		<span class="prelude-val">Err</span>(<a href="error.rs.html#15">LuaError::Custom</a>(<span class="string">&quot;unimplemented: wireplumber::lua::Visitor::visit_enum&quot;</span>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()).<a href="error.rs.html#123-125">serde_error</a>())
 	}
 
-	<span class="kw">fn </span>visit_bytes&lt;E: de::Error&gt;(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
-		<span class="prelude-val">Ok</span>(LuaVariant::with_bytes(v))
+	<span class="kw">fn </span>visit_bytes&lt;E: <a href="https://docs.rs/serde/1.0.185/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt; {
+		<span class="prelude-val">Ok</span>(LuaVariant::with_bytes(<a href="#105">v</a>))
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">fn </span>deserialize&lt;D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
-		deserializer.deserialize_any(Visitor)
+		<a href="#111">deserializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Deserializer.html">deserialize_any</a>(<a href="#15">Visitor</a>)
 	}
 }
 
 <span class="kw">struct </span>TableVisitor;
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>TableVisitor {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="#116">TableVisitor</a> {
 	<span class="kw">type </span>Value = LuaTable&lt;<span class="lifetime">&#39;static</span>&gt;;
 
-	<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-		f.write_str(<span class="string">&quot;LuaTable&quot;</span>)
+	<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<a href="#121">f</a>.write_str(<span class="string">&quot;LuaTable&quot;</span>)
 	}
 
 	<span class="kw">fn </span>visit_map&lt;A: de::MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, map: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
-		Visitor.visit_map(map).map(|v| <span class="kw">unsafe </span>{ UnsafeFrom::unsafe_from(v) })
+		<a href="#15">Visitor</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Visitor.html">visit_map</a>(<a href="#125">map</a>).map(|v| <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.UnsafeFrom.html">UnsafeFrom::unsafe_from</a>(<a href="#126">v</a>) })
 	}
 
 	<span class="kw">fn </span>visit_seq&lt;A: de::SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, seq: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt; {
-		Visitor.visit_seq(seq).map(|v| <span class="kw">unsafe </span>{ UnsafeFrom::unsafe_from(v) })
+		<a href="#15">Visitor</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Visitor.html">visit_seq</a>(<a href="#129">seq</a>).map(|v| <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.UnsafeFrom.html">UnsafeFrom::unsafe_from</a>(<a href="#130">v</a>) })
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">fn </span>deserialize&lt;D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
-		deserializer.deserialize_any(TableVisitor)
+		<a href="#135">deserializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/de/trait.Deserializer.html">deserialize_any</a>(<a href="#116">TableVisitor</a>)
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Serialize <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
-	<span class="kw">fn </span>serialize&lt;S: ser::Serializer&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-		<span class="kw">match </span><span class="self">self</span>.lua_value() {
-			LuaValue::Nil =&gt; serializer.serialize_unit(),
-			LuaValue::Boolean(v) =&gt; serializer.serialize_bool(v),
-			LuaValue::Float(v) =&gt; serializer.serialize_f64(v),
-			LuaValue::Integer(v) =&gt; serializer.serialize_i64(v),
-			LuaValue::String(v) =&gt; <span class="kw">match </span>v.as_str() {
-				<span class="prelude-val">Ok</span>(s) =&gt; serializer.serialize_str(s),
-				<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; serializer.serialize_bytes(<span class="kw-2">&amp;</span>v),
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">ser::Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+		<span class="kw">match </span><a class="self" href="#141">self</a>.<a href="variant.rs.html#204-214">lua_value</a>() {
+			<a href="variant.rs.html#107">LuaValue::Nil</a> =&gt; <a href="#141">serializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">serialize_unit</a>(),
+			<a href="variant.rs.html#108">LuaValue::Boolean</a>(v) =&gt; <a href="#141">serializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">serialize_bool</a>(<a href="#144">v</a>),
+			<a href="variant.rs.html#110">LuaValue::Float</a>(v) =&gt; <a href="#141">serializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">serialize_f64</a>(<a href="#145">v</a>),
+			<a href="variant.rs.html#109">LuaValue::Integer</a>(v) =&gt; <a href="#141">serializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">serialize_i64</a>(<a href="#146">v</a>),
+			<a href="variant.rs.html#111">LuaValue::String</a>(v) =&gt; <span class="kw">match </span><a href="#147">v</a>.<a href="string.rs.html#13-15">as_str</a>() {
+				<span class="prelude-val">Ok</span>(s) =&gt; <a href="#141">serializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">serialize_str</a>(<a href="#148">s</a>),
+				<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <a href="#141">serializer</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">serialize_bytes</a>(<span class="kw-2">&amp;</span><a href="#147">v</a>),
 			},
-			LuaValue::Table(t) =&gt; <span class="kw">match </span>t.is_array() {
+			<a href="variant.rs.html#112">LuaValue::Table</a>(t) =&gt; <span class="kw">match </span><a href="#151">t</a>.<a href="variant.rs.html#455-464">is_array</a>() {
 				<span class="prelude-val">Some</span>(<span class="bool-val">true</span>) | <span class="prelude-val">None </span>=&gt; {
-					<span class="kw">let </span>len = t.array_len();
+					<span class="kw">let </span>len = <a href="#151">t</a>.<a href="variant.rs.html#422-427">array_len</a>();
 					<span class="kw">let </span>len = len
 						.try_into()
 						.map_err(|e| ser::Error::custom(<span class="macro">format_args!</span>(<span class="string">&quot;Lua array length {len} too large for usize: {e}&quot;</span>)))<span class="question-mark">?</span>;
@@ -371,51 +371,51 @@
 							<span class="prelude-val">None </span>=&gt; ser.serialize_element(<span class="kw-2">&amp;</span>()),
 						}<span class="question-mark">?
 					</span>}
-					ser.end()
+					<a href="#157">ser</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.SerializeSeq.html">end</a>()
 				},
 				<span class="kw">_ </span>=&gt; {
 					<span class="kw">let </span><span class="kw-2">mut </span>ser = serializer.serialize_map(<span class="prelude-val">Some</span>(t.entry_len()))<span class="question-mark">?</span>;
 					<span class="kw">for </span>v <span class="kw">in </span>t.iter_dict_entries() {
 						ser.serialize_entry(v.key(), v.value())<span class="question-mark">?</span>;
 					}
-					ser.end()
+					<a href="#167">ser</a>.<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.SerializeMap.html">end</a>()
 				},
 			},
 		}
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Serialize <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
-	<span class="kw">fn </span>serialize&lt;S: ser::Serializer&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-		<span class="self">self</span>.lua_variant().serialize(serializer)
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
+	<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serializer.html">ser::Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+		<a class="self" href="#179">self</a>.<a href="variant.rs.html#339-341">lua_variant</a>().<a href="https://docs.rs/serde/1.0.185/serde/ser/trait.Serialize.html">serialize</a>(<a href="#179">serializer</a>)
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, LuaError&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Deserializer = Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;;
 	<span class="kw">fn </span>into_deserializer(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Deserializer {
-		<span class="self">self</span>.into()
+		<a class="self" href="#186">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, LuaError&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Deserializer = Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;;
 	<span class="kw">fn </span>into_deserializer(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Deserializer {
-		<span class="self">self</span>.clone().into()
+		<a class="self" href="#193">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, LuaError&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Deserializer = Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;;
 	<span class="kw">fn </span>into_deserializer(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Deserializer {
-		<span class="self">self</span>.into()
+		<a class="self" href="#200">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, LuaError&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;v</span>&gt; de::IntoDeserializer&lt;<span class="lifetime">&#39;de</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">type </span>Deserializer = Deserializer&lt;<span class="lifetime">&#39;v</span>&gt;;
 	<span class="kw">fn </span>into_deserializer(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Deserializer {
-		<span class="self">self</span>.clone().into()
+		<a class="self" href="#207">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 </code></pre></div></section></main></body></html>

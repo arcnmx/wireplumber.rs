@@ -149,136 +149,136 @@
 //! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_factory_api.html)
 //! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/c_api/session_item_api.html)
 //! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_interfaces_api.html)
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::SiAdapterPortsState;
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)]
+</span><span class="kw">pub use </span><a href="../auto/enums.rs.html#859-868"><span class="kw">crate</span>::auto::SiAdapterPortsState</a>;
 <span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	traits::{SessionItemExt, SiAcquisitionExt, SiAdapterExt, SiEndpointExt, SiFactoryExt, SiLinkExt, SiLinkableExt},
-	SessionItem, SessionItemFeatures, SiAcquisition, SiAdapter, SiEndpoint, SiFactory, SiLink, SiLinkable,
+	traits::{<a href="../auto/session_item.rs.html#41-149">SessionItemExt</a>, <a href="../auto/si_acquisition.rs.html#27-34">SiAcquisitionExt</a>, <a href="../auto/si_adapter.rs.html#36-71">SiAdapterExt</a>, <a href="../auto/si_endpoint.rs.html#27-56">SiEndpointExt</a>, <a href="../auto/si_factory.rs.html#47-62">SiFactoryExt</a>, <a href="../auto/si_link.rs.html#27-72">SiLinkExt</a>, <a href="../auto/si_linkable.rs.html#26-42">SiLinkableExt</a>},
+	<a href="../auto/session_item.rs.html#8-15">SessionItem</a>, <a href="../auto/flags.rs.html#867-876">SessionItemFeatures</a>, <a href="../auto/si_acquisition.rs.html#8-15">SiAcquisition</a>, <a href="../auto/si_adapter.rs.html#17-24">SiAdapter</a>, <a href="../auto/si_endpoint.rs.html#8-15">SiEndpoint</a>, <a href="../auto/si_factory.rs.html#7-14">SiFactory</a>, <a href="../auto/si_link.rs.html#8-15">SiLink</a>, <a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>,
 };
-<span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, spa::SpaPod};
+<span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/spa_pod.rs.html#8-17">spa::SpaPod</a>};
 
-<span class="kw">pub trait </span>SiAdapterExt2: <span class="lifetime">&#39;static </span>{
+<span class="kw">pub trait </span><a href="../../../wireplumber/session/trait.SiAdapterExt2.html">SiAdapterExt2</a>: <span class="lifetime">&#39;static </span>{
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_si_adapter_set_ports_format&quot;</span>)]
-	</span><span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+	</span><span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;,
-		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
 		callback: P,
 	);
 
 	<span class="kw">fn </span>set_ports_format_future(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;SpaPod&gt;,
-		mode: <span class="prelude-ty">Option</span>&lt;String&gt;,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;SiAdapter&gt;&gt; SiAdapterExt2 <span class="kw">for </span>O {
-	<span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/si_adapter.rs.html#17-24">SiAdapter</a>&gt;&gt; <a href="#18-32">SiAdapterExt2</a> <span class="kw">for </span>O {
+	<span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>SpaPod&gt;,
-		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
 		callback: P,
 	) {
-		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>;
-		<span class="kw">let </span>callback = Box::new(callback) <span class="kw">as </span>Box&lt;DynCallback&gt;;
-		<span class="kw">let </span>userdata = Box::into_raw(Box::new(callback));
+		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>;
+		<span class="kw">let </span>callback = Box::new(<a href="#39">callback</a>) <span class="kw">as </span>Box&lt;<a href="#41">DynCallback</a>&gt;;
+		<span class="kw">let </span>userdata = Box::into_raw(Box::new(<a href="#42">callback</a>));
 		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>set_ports_format_trampoline(
-			_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
-			res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
-			user_data: gpointer,
+			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
+			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
+			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>,
 		) {
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let _ </span>= ffi::wp_si_adapter_set_ports_format_finish(_source_object <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, res, <span class="kw-2">&amp;mut </span>error);
+			<span class="kw">let _ </span>= ffi::wp_si_adapter_set_ports_format_finish(<a href="#45">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#46">res</a>, <span class="kw-2">&amp;mut </span><a href="#49">error</a>);
 			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
 				<span class="prelude-val">Ok</span>(())
 			} <span class="kw">else </span>{
-				<span class="prelude-val">Err</span>(from_glib_full(error))
+				<span class="prelude-val">Err</span>(from_glib_full(<a href="#49">error</a>))
 			};
-			<span class="kw">let </span>callback = Box::from_raw(user_data <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;DynCallback&gt;);
-			callback(result)
+			<span class="kw">let </span>callback = Box::from_raw(<a href="#47">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;<a href="#41">DynCallback</a>&gt;);
+			<a href="#56">callback</a>(<a href="#51">result</a>)
 		}
 		<span class="kw">unsafe </span>{
 			ffi::wp_si_adapter_set_ports_format(
-				<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-				format.to_glib_full(),
-				mode.to_glib_none().<span class="number">0</span>,
-				<span class="prelude-val">Some</span>(set_ports_format_trampoline),
-				userdata <span class="kw">as </span><span class="kw-2">*mut </span>libc::c_void,
+				<a class="self" href="#36">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#37">format</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_full</a>(),
+				<a href="#38">mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<span class="prelude-val">Some</span>(<a href="#44-58">set_ports_format_trampoline</a>),
+				<a href="#43">userdata</a> <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>,
 			)
 		}
 	}
 
 	<span class="kw">fn </span>set_ports_format_future(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;SpaPod&gt;,
-		mode: <span class="prelude-ty">Option</span>&lt;String&gt;,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
-		Box::pin(gio::GioFuture::new(<span class="self">self</span>, <span class="kw">move </span>|obj, _cancellable, send| {
-			obj.set_ports_format(format.as_ref(), mode.as_ref().map(|s| s.as_str()), <span class="kw">move </span>|res| {
-				send.resolve(res)
+		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		mode: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+		Box::pin(gio::GioFuture::new(<a class="self" href="#71">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
+			<a href="#75">obj</a>.<a href="#20-25">set_ports_format</a>(<a href="#72">format</a>.as_ref(), <a href="#73">mode</a>.as_ref().map(|s| <a href="#76">s</a>.as_str()), <span class="kw">move </span>|res| {
+				<a href="#75">send</a>.resolve(<a href="#76">res</a>)
 			})
 		}))
 	}
 }
 
-<span class="kw">pub trait </span>SiAcquisitionExt2: <span class="lifetime">&#39;static </span>{
-	<span class="kw">fn </span>acquire&lt;P: IsA&lt;SiLink&gt;, Q: IsA&lt;SiLinkable&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">pub trait </span><a href="../../../wireplumber/session/trait.SiAcquisitionExt2.html">SiAcquisitionExt2</a>: <span class="lifetime">&#39;static </span>{
+	<span class="kw">fn </span>acquire&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: <span class="kw-2">&amp;</span>P,
 		item: <span class="kw-2">&amp;</span>Q,
 		callback: R,
 	);
-	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;SiLink&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;SiLinkable&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
+	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: P,
 		item: Q,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;SiAcquisition&gt;&gt; SiAcquisitionExt2 <span class="kw">for </span>O {
-	<span class="kw">fn </span>acquire&lt;P: IsA&lt;SiLink&gt;, Q: IsA&lt;SiLinkable&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/si_acquisition.rs.html#8-15">SiAcquisition</a>&gt;&gt; <a href="#83-95">SiAcquisitionExt2</a> <span class="kw">for </span>O {
+	<span class="kw">fn </span>acquire&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: <span class="kw-2">&amp;</span>P,
 		item: <span class="kw-2">&amp;</span>Q,
 		callback: R,
 	) {
-		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), Error&gt;) + Send + <span class="lifetime">&#39;static</span>;
-		<span class="kw">let </span>callback = Box::new(callback) <span class="kw">as </span>Box&lt;DynCallback&gt;;
-		<span class="kw">let </span>userdata = Box::into_raw(Box::new(callback));
+		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>;
+		<span class="kw">let </span>callback = Box::new(<a href="#102">callback</a>) <span class="kw">as </span>Box&lt;<a href="#104">DynCallback</a>&gt;;
+		<span class="kw">let </span>userdata = Box::into_raw(Box::new(<a href="#105">callback</a>));
 		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>acquire_trampoline(
-			_source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
-			res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
-			user_data: gpointer,
+			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
+			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
+			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>,
 		) {
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let _ </span>= ffi::wp_si_acquisition_acquire_finish(_source_object <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, res, <span class="kw-2">&amp;mut </span>error);
+			<span class="kw">let _ </span>= ffi::wp_si_acquisition_acquire_finish(<a href="#108">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#109">res</a>, <span class="kw-2">&amp;mut </span><a href="#112">error</a>);
 			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
 				<span class="prelude-val">Ok</span>(())
 			} <span class="kw">else </span>{
-				<span class="prelude-val">Err</span>(from_glib_full(error))
+				<span class="prelude-val">Err</span>(from_glib_full(<a href="#112">error</a>))
 			};
-			<span class="kw">let </span>callback = Box::from_raw(user_data <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;DynCallback&gt;);
-			callback(result)
+			<span class="kw">let </span>callback = Box::from_raw(<a href="#110">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;<a href="#104">DynCallback</a>&gt;);
+			<a href="#119">callback</a>(<a href="#114">result</a>)
 		}
 		<span class="kw">unsafe </span>{
 			ffi::wp_si_acquisition_acquire(
-				<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-				acquisitor.as_ref().to_glib_none().<span class="number">0</span>,
-				item.as_ref().to_glib_none().<span class="number">0</span>,
-				<span class="prelude-val">Some</span>(acquire_trampoline),
-				userdata <span class="kw">as </span><span class="kw-2">*mut </span>libc::c_void,
+				<a class="self" href="#99">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#100">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#101">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<span class="prelude-val">Some</span>(<a href="#107-121">acquire_trampoline</a>),
+				<a href="#106">userdata</a> <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>,
 			)
 		}
 	}
 
-	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;SiLink&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;SiLinkable&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
+	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: P,
 		item: Q,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
-		Box::pin(gio::GioFuture::new(<span class="self">self</span>, <span class="kw">move </span>|obj, _cancellable, send| {
-			obj.acquire(acquisitor.as_ref(), item.as_ref(), <span class="kw">move </span>|res| send.resolve(res))
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+		Box::pin(gio::GioFuture::new(<a class="self" href="#134">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
+			<a href="#138">obj</a>.<a href="#84-89">acquire</a>(<a href="#135">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <a href="#136">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="kw">move </span>|res| <a href="#138">send</a>.resolve(<a href="#139">res</a>))
 		}))
 	}
 }

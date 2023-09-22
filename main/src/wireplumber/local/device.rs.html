@@ -33,36 +33,36 @@
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
-	<span class="kw">crate</span>::{local::SpaDevice, prelude::<span class="kw-2">*</span>, pw::Properties, Core},
-	libspa_sys::spa_device,
+	<span class="kw">crate</span>::{<a href="../auto/spa_device.rs.html#11-18">local::SpaDevice</a>, <a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/properties.rs.html#7-16">pw::Properties</a>, <a href="../auto/core.rs.html#8-15">Core</a>},
+	<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_device.html">libspa_sys::spa_device</a>,
 };
 
-<span class="kw">impl </span>SpaDevice {
+<span class="kw">impl </span><a href="../auto/spa_device.rs.html#11-18">SpaDevice</a> {
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_device_new_wrap&quot;</span>)]
-	</span><span class="kw">pub fn </span>new_wrap(core: <span class="kw-2">&amp;</span>Core, spa_device_handle: NonNull&lt;spa_device&gt;, properties: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Properties&gt;) -&gt; SpaDevice {
+	</span><span class="kw">pub fn </span>new_wrap(core: <span class="kw-2">&amp;</span><a href="../auto/core.rs.html#8-15">Core</a>, spa_device_handle: NonNull&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_device.html">spa_device</a>&gt;, properties: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/properties.rs.html#7-16">Properties</a>&gt;) -&gt; <a href="../auto/spa_device.rs.html#11-18">SpaDevice</a> {
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span>properties = properties.map(|p| p.to_glib_none().<span class="number">0</span>).unwrap_or(ptr::null_mut());
+			<span class="kw">let </span>properties = <a href="#8">properties</a>.map(|p| <a href="#10">p</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>).unwrap_or(ptr::null_mut());
 			from_glib_full(ffi::wp_spa_device_new_wrap(
-				core.to_glib_none().<span class="number">0</span>,
-				spa_device_handle.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-				properties,
+				<a href="#8">core</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#8">spa_device_handle</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+				<a href="#10">properties</a>,
 			))
 		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;spa-device-handle&quot;</span>)]
-	</span><span class="kw">pub fn </span>spa_device_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;spa_device&gt;&gt; {
+	</span><span class="kw">pub fn </span>spa_device_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_device.html">spa_device</a>&gt;&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(Type::POINTER);
 			glib::gobject_ffi::g_object_get_property(
-				<span class="self">self</span>.upcast_ref::&lt;GObject&gt;().to_glib_none().<span class="number">0</span>,
+				<a class="self" href="#20">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">upcast_ref</a>::&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
 				<span class="string">b&quot;spa-device-handle\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-				value.to_glib_none_mut().<span class="number">0</span>,
+				<a href="#22">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
 			);
-			value
-				.get::&lt;<span class="prelude-ty">Option</span>&lt;NonNull&lt;Pointee&gt;&gt;&gt;()
+			<a href="#22">value</a>
+				.get::&lt;<span class="prelude-ty">Option</span>&lt;NonNull&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/type.Pointee.html">Pointee</a>&gt;&gt;&gt;()
 				.expect(<span class="string">&quot;spa-device-handle property&quot;</span>)
-				.map(|p| p.cast())
+				.map(|p| <a href="#31">p</a>.cast())
 		}
 	}
 }

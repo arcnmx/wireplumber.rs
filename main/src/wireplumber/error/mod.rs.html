@@ -64,33 +64,33 @@
 //!
 //! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
 
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::LibraryErrorEnum;
+</span><span class="kw">pub use </span><a href="../auto/enums.rs.html#483-492"><span class="kw">crate</span>::auto::LibraryErrorEnum</a>;
 <span class="attr">#[doc(no_inline)]
-</span><span class="kw">pub use </span>glib::Error;
+</span><span class="kw">pub use </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">glib::Error</a>;
 <span class="kw">use </span>{
-	<span class="kw">crate</span>::prelude::<span class="kw-2">*</span>,
-	glib::{error::ErrorDomain, Quark},
-	std::fmt::Display,
+	<a href="../lib.rs.html#74"><span class="kw">crate</span>::prelude</a>::<span class="kw-2">*</span>,
+	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/trait.ErrorDomain.html">error::ErrorDomain</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/quark/struct.Quark.html">Quark</a>},
+	<a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">std::fmt::Display</a>,
 };
 
-<span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
+<span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;;
 
-<span class="kw">impl </span>ErrorDomain <span class="kw">for </span>LibraryErrorEnum {
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/trait.ErrorDomain.html">ErrorDomain</a> <span class="kw">for </span><a href="../auto/enums.rs.html#483-492">LibraryErrorEnum</a> {
 	<span class="attr">#[doc(alias = <span class="string">&quot;WP_DOMAIN_LIBRARY&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;wp_domain_library_quark&quot;</span>)]
-	</span><span class="kw">fn </span>domain() -&gt; Quark {
+	</span><span class="kw">fn </span>domain() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/quark/struct.Quark.html">Quark</a> {
 		<span class="kw">unsafe </span>{ from_glib(ffi::wp_domain_library_quark()) }
 	}
 
-	<span class="kw">fn </span>code(<span class="self">self</span>) -&gt; i32 {
-		<span class="self">self</span>.into_glib()
+	<span class="kw">fn </span>code(<span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
+		<a class="self" href="#25">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 	}
 
-	<span class="kw">fn </span>from(code: i32) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">match </span>code {
+	<span class="kw">fn </span>from(code: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="kw">match </span><a href="#29">code</a> {
 			ffi::WP_LIBRARY_ERROR_INVARIANT
 			| ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT
-			| ffi::WP_LIBRARY_ERROR_OPERATION_FAILED =&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(code)) },
+			| ffi::WP_LIBRARY_ERROR_OPERATION_FAILED =&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(<a href="#29">code</a>)) },
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
@@ -110,12 +110,12 @@
 	};
 }
 
-<span class="macro">error_constructors! </span>{
+<a class="macro" href="#39-51">error_constructors! </a>{
 	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::InvalidArgument] domain
-	</span>invalid_argument =&gt; InvalidArgument,
+	</span><a href="../../../wireplumber/error/fn.invalid_argument.html">invalid_argument</a> =&gt; InvalidArgument,
 	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::OperationFailed] domain
-	</span>operation_failed =&gt; OperationFailed,
+	</span><a href="../../../wireplumber/error/fn.operation_failed.html">operation_failed</a> =&gt; OperationFailed,
 	<span class="doccomment">/// Wrap a new [Error] under the [LibraryErrorEnum::Invariant] domain
-	</span>invariant =&gt; Invariant,
+	</span><a href="../../../wireplumber/error/fn.invariant.html">invariant</a> =&gt; Invariant,
 }
 </code></pre></div></section></main></body></html>

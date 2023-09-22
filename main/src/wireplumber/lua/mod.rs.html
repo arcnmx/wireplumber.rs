@@ -45,27 +45,27 @@
 
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::{
-	deserializer::{from_variant, Deserializer},
-	serializer::{to_variant, Serializer},
+	deserializer::{<a href="deserializer.rs.html#9-11">from_variant</a>, <a href="deserializer.rs.html#15-18">Deserializer</a>},
+	serializer::{<a href="serializer.rs.html#11-13">to_variant</a>, <a href="serializer.rs.html#17-19">Serializer</a>},
 };
 <span class="kw">pub use </span><span class="self">self</span>::{
-	error::LuaError,
-	string::LuaString,
-	traits::ToLuaTable,
-	variant::{LuaTable, LuaType, LuaValue, LuaVariant},
+	<a href="error.rs.html#14-23">error::LuaError</a>,
+	<a href="string.rs.html#7-10">string::LuaString</a>,
+	<a href="traits.rs.html#6-8">traits::ToLuaTable</a>,
+	variant::{<a href="variant.rs.html#317-321">LuaTable</a>, <a href="variant.rs.html#23-30">LuaType</a>, <a href="variant.rs.html#106-113">LuaValue</a>, <a href="variant.rs.html#13-20">LuaVariant</a>},
 };
 
 <span class="attr">#[macro_use]
-</span><span class="kw">mod </span>macros;
-<span class="kw">mod </span>error;
-<span class="kw">mod </span>string;
-<span class="kw">mod </span>traits;
-<span class="kw">mod </span>variant;
+</span><span class="kw">mod </span><a href="macros.rs.html#1-199">macros</a>;
+<span class="kw">mod </span><a href="error.rs.html#1-130">error</a>;
+<span class="kw">mod </span><a href="string.rs.html#1-100">string</a>;
+<span class="kw">mod </span><a href="traits.rs.html#1-48">traits</a>;
+<span class="kw">mod </span><a href="variant.rs.html#1-592">variant</a>;
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">mod </span>deserializer;
+</span><span class="kw">mod </span><a href="deserializer.rs.html#1-458">deserializer</a>;
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">mod </span>serde_impl;
+</span><span class="kw">mod </span><a href="serde_impl.rs.html#1-210">serde_impl</a>;
 <span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-</span><span class="kw">mod </span>serializer;
+</span><span class="kw">mod </span><a href="serializer.rs.html#1-488">serializer</a>;
 </code></pre></div></section></main></body></html>

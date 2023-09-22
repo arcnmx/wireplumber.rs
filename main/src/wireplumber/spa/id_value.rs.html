@@ -129,131 +129,131 @@
 <a href="#129" id="129">129</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		prelude::<span class="kw-2">*</span>,
-		spa::{SpaIdTable, SpaType},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+		spa::{<a href="id_table.rs.html#5-7">SpaIdTable</a>, <a href="type.rs.html#3-11">SpaType</a>},
 	},
-	ffi::WpSpaType,
+	<a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>,
 };
 
 <span class="attr">#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span>SpaIdValue {
-	inner: NonNull&lt;libc::c_void&gt;,
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/spa/struct.SpaIdValue.html">SpaIdValue</a> {
+	inner: NonNull&lt;<a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>&gt;,
 }
 
-<span class="kw">impl </span>SpaIdValue {
-	<span class="kw">pub fn </span>number(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WpSpaType {
-		<span class="kw">unsafe </span>{ ffi::wp_spa_id_value_number(<span class="self">self</span>.into_glib()) }
+<span class="kw">impl </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">pub fn </span>number(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> {
+		<span class="kw">unsafe </span>{ ffi::wp_spa_id_value_number(<a class="self" href="#16">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()) }
 	}
 
-	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
-		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_id_value_name(<span class="self">self</span>.into_glib())) }
+	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; {
+		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_id_value_name(<a class="self" href="#20">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="kw">pub fn </span>short_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
-		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_id_value_short_name(<span class="self">self</span>.into_glib())) }
+	<span class="kw">pub fn </span>short_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; {
+		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_id_value_short_name(<a class="self" href="#24">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="kw">pub fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="prelude-ty">Option</span>&lt;SpaType&gt;, <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) {
+	<span class="kw">pub fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="prelude-ty">Option</span>&lt;<a href="type.rs.html#3-11">SpaType</a>&gt;, <span class="prelude-ty">Option</span>&lt;<a href="id_table.rs.html#5-7">SpaIdTable</a>&gt;) {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>table = ptr::null();
-			<span class="kw">let </span>res = ffi::wp_spa_id_value_get_value_type(<span class="self">self</span>.into_glib(), <span class="kw-2">&amp;mut </span>table);
-			(from_glib(res), from_glib(table))
+			<span class="kw">let </span>res = ffi::wp_spa_id_value_get_value_type(<a class="self" href="#28">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(), <span class="kw-2">&amp;mut </span><a href="#30">table</a>);
+			(from_glib(<a href="#31">res</a>), from_glib(<a href="#30">table</a>))
 		}
 	}
 
-	<span class="kw">pub fn </span>array_item_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="prelude-ty">Option</span>&lt;SpaType&gt;, <span class="prelude-ty">Option</span>&lt;SpaIdTable&gt;) {
+	<span class="kw">pub fn </span>array_item_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="prelude-ty">Option</span>&lt;<a href="type.rs.html#3-11">SpaType</a>&gt;, <span class="prelude-ty">Option</span>&lt;<a href="id_table.rs.html#5-7">SpaIdTable</a>&gt;) {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>table = ptr::null();
-			<span class="kw">let </span>res = ffi::wp_spa_id_value_array_get_item_type(<span class="self">self</span>.into_glib(), <span class="kw-2">&amp;mut </span>table);
-			(from_glib(res), from_glib(table))
+			<span class="kw">let </span>res = ffi::wp_spa_id_value_array_get_item_type(<a class="self" href="#36">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(), <span class="kw-2">&amp;mut </span><a href="#38">table</a>);
+			(from_glib(<a href="#39">res</a>), from_glib(<a href="#38">table</a>))
 		}
 	}
 
-	<span class="kw">pub fn </span>parse_unknown_name(id_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;WpSpaType&gt; {
+	<span class="kw">pub fn </span>parse_unknown_name(id_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>&gt; {
 		<span class="kw">if </span>id_name.starts_with(<span class="string">&quot;id-&quot;</span>) {
-			&lt;WpSpaType&gt;::from_str_radix(<span class="kw-2">&amp;</span>id_name[<span class="number">2</span>..], <span class="number">16</span>).ok()
+			&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>&gt;::from_str_radix(<span class="kw-2">&amp;</span><a href="#44">id_name</a>[<span class="number">2</span>..], <span class="number">16</span>).ok()
 		} <span class="kw">else </span>{
 			<span class="prelude-val">None
 		</span>}
 	}
 
-	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>value_or_name&lt;C: Debug&gt;(context: <span class="kw-2">&amp;</span>C, key_name: <span class="kw-2">&amp;</span>str, v: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, WpSpaType&gt; {
-		<span class="kw">let </span>raw = <span class="kw">match </span>v {
-			<span class="prelude-val">Some</span>(v) =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(v),
-			<span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::parse_unknown_name(key_name),
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>value_or_name&lt;C: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a>&gt;(context: <span class="kw-2">&amp;</span>C, key_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, v: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>&gt; {
+		<span class="kw">let </span>raw = <span class="kw">match </span><a href="#52">v</a> {
+			<span class="prelude-val">Some</span>(v) =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<a href="#54">v</a>),
+			<span class="prelude-val">None </span>=&gt; <span class="self">Self</span>::parse_unknown_name(<a href="#52">key_name</a>),
 		};
-		<span class="prelude-val">Err</span>(raw.unwrap_or_else(|| {
-			<span class="macro">wp_warning!</span>(<span class="string">&quot;expected to find spa key {key_name:?} of {context:?}&quot;</span>);
+		<span class="prelude-val">Err</span>(<a href="#53">raw</a>.unwrap_or_else(|| {
+			<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="string">&quot;expected to find spa key {key_name:?} of {context:?}&quot;</span>);
 			ffi::WP_SPA_TYPE_INVALID
 		}))
 	}
 
-	<span class="kw">pub fn </span>result_number(res: <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, WpSpaType&gt;) -&gt; WpSpaType {
-		res.map(|v| v.number()).unwrap_or_else(|e| e)
+	<span class="kw">pub fn </span>result_number(res: <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a>&gt;) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">WpSpaType</a> {
+		<a href="#63">res</a>.map(|v| <a href="#64">v</a>.<a href="#16-18">number</a>()).unwrap_or_else(|e| <a href="#64">e</a>)
 	}
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>SpaIdValue {
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValue&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
 	<span class="kw">type </span>Checker = glib::value::GenericValueTypeOrNoneChecker&lt;<span class="self">Self</span>&gt;;
 
-	<span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Value) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>optional: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib(value.get::&lt;Pointer&gt;().unwrap() <span class="kw">as </span>ffi::WpSpaIdValue);
-		optional.unwrap() <span class="comment">// TODO
+	<span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/struct.Value.html">Value</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span>optional: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib(<a href="#71">value</a>.get::&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/type.Pointer.html">Pointer</a>&gt;().unwrap() <span class="kw">as </span><a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a>);
+		<a href="#72">optional</a>.unwrap() <span class="comment">// TODO
 	</span>}
 }
 
-<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>SpaIdValue {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">let </span><span class="kw-2">mut </span>f = f.debug_struct(<span class="string">&quot;SpaIdValue&quot;</span>);
-		f.field(<span class="string">&quot;raw&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.into_glib());
-		f.field(<span class="string">&quot;number&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.number());
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <span class="self">self</span>.name() {
-			f.field(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span>name);
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<span class="kw">let </span><span class="kw-2">mut </span>f = <a href="#78">f</a>.debug_struct(<span class="string">&quot;SpaIdValue&quot;</span>);
+		<a href="#79">f</a>.field(<span class="string">&quot;raw&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#78">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+		<a href="#79">f</a>.field(<span class="string">&quot;number&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#78">self</a>.<a href="#16-18">number</a>());
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <a class="self" href="#78">self</a>.<a href="#20-22">name</a>() {
+			<a href="#79">f</a>.field(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><a href="#82">name</a>);
 		}
-		f.finish()
+		<a href="#79">f</a>.finish()
 	}
 }
 
-<span class="kw">impl </span>StaticType <span class="kw">for </span>SpaIdValue {
-	<span class="kw">fn </span>static_type() -&gt; Type {
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a> <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/struct.Type.html">Type</a> {
 		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_id_value_get_type()) }
 	}
 }
 
-<span class="kw">impl </span>UnsafeFrom&lt;NonNull&lt;libc::c_void&gt;&gt; <span class="kw">for </span>SpaIdValue {
-	<span class="kw">unsafe fn </span>unsafe_from(inner: NonNull&lt;libc::c_void&gt;) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{ inner }
+<span class="kw">impl </span>UnsafeFrom&lt;NonNull&lt;<a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>&gt;&gt; <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">unsafe fn </span>unsafe_from(inner: NonNull&lt;<a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{ <a href="#96">inner</a> }
 	}
 }
 
-<span class="kw">impl </span>UnsafeFrom&lt;ffi::WpSpaIdValue&gt; <span class="kw">for </span>SpaIdValue {
-	<span class="kw">unsafe fn </span>unsafe_from(inner: ffi::WpSpaIdValue) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span>UnsafeFrom&lt;<a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a>&gt; <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">unsafe fn </span>unsafe_from(inner: <a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			inner: NonNull::new_unchecked(inner <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>),
+			inner: NonNull::new_unchecked(<a href="#102">inner</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>),
 		}
 	}
 }
 
-<span class="kw">impl </span>TryFromGlib&lt;ffi::WpSpaIdValue&gt; <span class="kw">for </span>SpaIdValue {
-	<span class="kw">type </span>Error = GlibNoneError;
+<span class="kw">impl </span>TryFromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a>&gt; <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
 
-	<span class="kw">unsafe fn </span>try_from_glib(val: ffi::WpSpaIdValue) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		NonNull::new(val <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>)
-			.map(|ptr| <span class="self">Self</span>::unsafe_from(ptr))
+	<span class="kw">unsafe fn </span>try_from_glib(val: <a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		NonNull::new(<a href="#112">val</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>)
+			.map(|ptr| <span class="self">Self</span>::unsafe_from(<a href="#114">ptr</a>))
 			.ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl </span>IntoGlib <span class="kw">for </span>SpaIdValue {
-	<span class="kw">type </span>GlibType = ffi::WpSpaIdValue;
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">IntoGlib</a> <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">type </span>GlibType = <a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a>;
 
 	<span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; <span class="self">Self</span>::GlibType {
-		<span class="self">self</span>.inner.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_
+		<a class="self" href="#122">self</a>.inner.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_
 	</span>}
 }
 
-<span class="kw">impl </span>OptionIntoGlib <span class="kw">for </span>SpaIdValue {
-	<span class="kw">const </span>GLIB_NONE: ffi::WpSpaIdValue = ptr::null();
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.OptionIntoGlib.html">OptionIntoGlib</a> <span class="kw">for </span><a href="#11-13">SpaIdValue</a> {
+	<span class="kw">const </span>GLIB_NONE: <a href="../../../wireplumber_sys/sys/type.WpSpaIdValue.html">ffi::WpSpaIdValue</a> = ptr::null();
 }
 </code></pre></div></section></main></body></html>

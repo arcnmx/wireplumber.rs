@@ -35,39 +35,39 @@
 <a href="#35" id="35">35</a>
 <a href="#36" id="36">36</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
-	prelude::<span class="kw-2">*</span>,
-	pw::{<span class="self">self</span>, PipewireObject, Port},
+	<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+	pw::{<a class="self" href="../lib.rs.html#75">self</a>, <a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/port.rs.html#7-14">Port</a>},
 };
 
-<span class="kw">impl </span>Port {
-	<span class="kw">pub fn </span>node_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
-		<span class="self">self</span>.pw_property(pw::PW_KEY_NODE_ID)
+<span class="kw">impl </span><a href="../auto/port.rs.html#7-14">Port</a> {
+	<span class="kw">pub fn </span>node_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<a class="self" href="#7">self</a>.<a href="proxy.rs.html#57">pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_NODE_ID</a>)
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;port_id&quot;</span>)]
-	</span><span class="kw">pub fn </span>port_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;u32, Error&gt; {
-		<span class="self">self</span>.pw_property(pw::PW_KEY_PORT_ID)
+	</span><span class="kw">pub fn </span>port_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<a class="self" href="#12">self</a>.<a href="proxy.rs.html#57">pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_PORT_ID</a>)
 	}
 }
 
-<span class="kw">impl </span>Display <span class="kw">for </span>Port {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_PORT_ALIAS, |name| f.write_str(name)) {
-			<span class="kw">return </span>res
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">Display</a> <span class="kw">for </span><a href="../auto/port.rs.html#7-14">Port</a> {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <a class="self" href="#18">self</a>.<a href="proxy.rs.html#53">with_pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_PORT_ALIAS</a>, |name| <a href="#18">f</a>.write_str(<a href="#19">name</a>)) {
+			<span class="kw">return </span><a href="#19">res</a>
 		}
 
-		<span class="kw">if let </span><span class="prelude-val">Ok</span>(node) = <span class="self">self</span>.node_id() {
+		<span class="kw">if let </span><span class="prelude-val">Ok</span>(node) = <a class="self" href="#18">self</a>.<a href="#7-9">node_id</a>() {
 			<span class="macro">write!</span>(f, <span class="string">&quot;{node}&quot;</span>)<span class="question-mark">?</span>;
 		}
-		<span class="kw">if let </span><span class="prelude-val">Ok</span>(index) = <span class="self">self</span>.port_index() {
+		<span class="kw">if let </span><span class="prelude-val">Ok</span>(index) = <a class="self" href="#18">self</a>.<a href="#12-14">port_index</a>() {
 			<span class="macro">write!</span>(f, <span class="string">&quot;.{index}&quot;</span>)<span class="question-mark">?</span>;
 		}
 
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <span class="self">self</span>.with_pw_property(pw::PW_KEY_PORT_NAME, |name| <span class="macro">write!</span>(f, <span class="string">&quot;:{name}&quot;</span>)) {
-			<span class="kw">return </span>res
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <a class="self" href="#18">self</a>.<a href="proxy.rs.html#53">with_pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_PORT_NAME</a>, |name| <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#18">f</a>, <span class="string">&quot;:{name}&quot;</span>)) {
+			<span class="kw">return </span><a href="#30">res</a>
 		}
 
-		<span class="macro">write!</span>(f, <span class="string">&quot;pw.port({})&quot;</span>, AsRef::&lt;PipewireObject&gt;::as_ref(<span class="self">self</span>))
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#18">f</a>, <span class="string">&quot;pw.port({})&quot;</span>, AsRef::&lt;PipewireObject&gt;::as_ref(<span class="self">self</span>))
 	}
 }
 </code></pre></div></section></main></body></html>

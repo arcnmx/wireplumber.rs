@@ -374,182 +374,182 @@
 <a href="#374" id="374">374</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		core::{Core, Object, ObjectImpl},
-		plugin::{Plugin, PluginFeatures},
-		prelude::<span class="kw-2">*</span>,
-		util::Transition,
+		core::{<a href="../auto/core.rs.html#8-15">Core</a>, <a href="../auto/object.rs.html#8-15">Object</a>, <a href="../core/subclass.rs.html#9-37">ObjectImpl</a>},
+		plugin::{<a href="../auto/plugin.rs.html#7-14">Plugin</a>, <a href="../auto/flags.rs.html#691-698">PluginFeatures</a>},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+		<a href="../auto/transition.rs.html#7-14">util::Transition</a>,
 	},
 	glib::{
-		object::{BorrowedObject, ObjectSubclassIs},
-		subclass::prelude::<span class="kw-2">*</span>,
-		MainContext, SourceId,
+		object::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.BorrowedObject.html">BorrowedObject</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectSubclassIs.html">ObjectSubclassIs</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/prelude/index.html">subclass::prelude</a>::<span class="kw-2">*</span>,
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/source/struct.SourceId.html">SourceId</a>,
 	},
-	std::{cell::RefCell, panic::catch_unwind},
+	std::{<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html">cell::RefCell</a>, <a href="https://doc.rust-lang.org/nightly/std/panic/fn.catch_unwind.html">panic::catch_unwind</a>},
 };
 
-<span class="kw">pub trait </span>PluginImpl: ObjectImpl + PluginImplExt {
-	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
-		<span class="self">self</span>.parent_enable(plugin, error_handler)
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.PluginImpl.html">PluginImpl</a>: <a href="../core/subclass.rs.html#9-37">ObjectImpl</a> + <a href="#26-30">PluginImplExt</a> {
+	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: <a href="../auto/transition.rs.html#7-14">Transition</a>) {
+		<a class="self" href="#17">self</a>.<a href="#28">parent_enable</a>(<a href="#17">plugin</a>, <a href="#17">error_handler</a>)
 	}
 
 	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
-		<span class="self">self</span>.parent_disable(plugin)
+		<a class="self" href="#21">self</a>.<a href="#29">parent_disable</a>(<a href="#21">plugin</a>)
 	}
 }
 
-<span class="kw">pub trait </span>PluginImplExt: ObjectSubclass {
-	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpPluginClass;
-	<span class="kw">fn </span>parent_enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition);
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.PluginImplExt.html">PluginImplExt</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpPluginClass.html">ffi::WpPluginClass</a>;
+	<span class="kw">fn </span>parent_enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: <a href="../auto/transition.rs.html#7-14">Transition</a>);
 	<span class="kw">fn </span>parent_disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type);
 }
 
-<span class="kw">impl</span>&lt;T: PluginImpl&gt; PluginImplExt <span class="kw">for </span>T {
-	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::WpPluginClass {
+<span class="kw">impl</span>&lt;T: <a href="#16-24">PluginImpl</a>&gt; <a href="#26-30">PluginImplExt</a> <span class="kw">for </span>T {
+	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpPluginClass.html">ffi::WpPluginClass</a> {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span>data = T::type_data();
-			<span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
-			<span class="kw-2">&amp;*</span>parent_class
+			<span class="kw">let </span>parent_class = <a href="#35">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+			<span class="kw-2">&amp;*</span><a href="#36">parent_class</a>
 		}
 	}
 
-	<span class="kw">fn </span>parent_enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
-		<span class="kw">let </span>parent = PluginImplExt::parent_class(<span class="self">self</span>);
-		<span class="kw">let </span>f = parent.enable.expect(<span class="string">&quot;No parent class implementation for \&quot;enable\&quot;&quot;</span>);
+	<span class="kw">fn </span>parent_enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: <a href="../auto/transition.rs.html#7-14">Transition</a>) {
+		<span class="kw">let </span>parent = <a href="#27">PluginImplExt::parent_class</a>(<a class="self" href="#41">self</a>);
+		<span class="kw">let </span>f = <a href="#42">parent</a>.enable.expect(<span class="string">&quot;No parent class implementation for \&quot;enable\&quot;&quot;</span>);
 		<span class="kw">unsafe </span>{
-			f(
-				plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>,
-				error_handler.to_glib_none().<span class="number">0</span>,
+			<a href="#43">f</a>(
+				<a href="#41">plugin</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#41">error_handler</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
 			)
 		}
 	}
 
 	<span class="kw">fn </span>parent_disable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
-		<span class="kw">let </span>parent = PluginImplExt::parent_class(<span class="self">self</span>);
-		<span class="kw">let </span>f = parent.disable.expect(<span class="string">&quot;No parent class implementation for \&quot;disable\&quot;&quot;</span>);
-		<span class="kw">unsafe </span>{ f(plugin.unsafe_cast_ref::&lt;Plugin&gt;().to_glib_none().<span class="number">0</span>) }
+		<span class="kw">let </span>parent = <a href="#27">PluginImplExt::parent_class</a>(<a class="self" href="#52">self</a>);
+		<span class="kw">let </span>f = <a href="#53">parent</a>.disable.expect(<span class="string">&quot;No parent class implementation for \&quot;disable\&quot;&quot;</span>);
+		<span class="kw">unsafe </span>{ <a href="#54">f</a>(<a href="#52">plugin</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
 	}
 }
 
-<span class="kw">unsafe impl</span>&lt;T: PluginImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>Plugin {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#16-24">PluginImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/plugin.rs.html#7-14">Plugin</a> {
 	<span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
+		<span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#60">class</a>);
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>enable&lt;T: PluginImpl&gt;(plugin: <span class="kw-2">*mut </span>ffi::WpPlugin, error_handler: <span class="kw-2">*mut </span>ffi::WpTransition) {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(plugin <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>plugin: Borrowed&lt;Plugin&gt; = from_glib_borrow(plugin);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>enable&lt;T: <a href="#16-24">PluginImpl</a>&gt;(plugin: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpPlugin.html">ffi::WpPlugin</a>, error_handler: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpTransition.html">ffi::WpTransition</a>) {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#63">plugin</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#64">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>plugin: Borrowed&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt; = from_glib_borrow(<a href="#63">plugin</a>);
 
 			<span class="comment">// TODO: transition ownership
-			</span>this.enable(plugin.unsafe_cast_ref(), from_glib_none(error_handler))
+			</span><a href="#65">this</a>.<a href="#17-19">enable</a>(<a href="#66">plugin</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(), from_glib_none(<a href="#63">error_handler</a>))
 		}
 
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>disable&lt;T: PluginImpl&gt;(plugin: <span class="kw-2">*mut </span>ffi::WpPlugin) {
-			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(plugin <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = this.imp();
-			<span class="kw">let </span>plugin: Borrowed&lt;Plugin&gt; = from_glib_borrow(plugin);
+		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>disable&lt;T: <a href="#16-24">PluginImpl</a>&gt;(plugin: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpPlugin.html">ffi::WpPlugin</a>) {
+			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#72">plugin</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+			<span class="kw">let </span>this = <a href="#73">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+			<span class="kw">let </span>plugin: Borrowed&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt; = from_glib_borrow(<a href="#72">plugin</a>);
 
-			this.disable(plugin.unsafe_cast_ref())
+			<a href="#74">this</a>.<a href="#21-23">disable</a>(<a href="#75">plugin</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
 		}
 
-		<span class="kw">let </span>klass = class.as_mut();
-		klass.enable = <span class="prelude-val">Some</span>(enable::&lt;T&gt;);
-		klass.disable = <span class="prelude-val">Some</span>(disable::&lt;T&gt;);
+		<span class="kw">let </span>klass = <a href="#60">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+		<a href="#80">klass</a>.enable = <span class="prelude-val">Some</span>(enable::&lt;T&gt;);
+		<a href="#80">klass</a>.disable = <span class="prelude-val">Some</span>(disable::&lt;T&gt;);
 	}
 }
 
-<span class="kw">pub trait </span>AsyncPluginImpl: ObjectSubclass {
-	<span class="kw">type </span>EnableFuture: Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), Error&gt;&gt;;
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.AsyncPluginImpl.html">AsyncPluginImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+	<span class="kw">type </span>EnableFuture: Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt;;
 	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, plugin: <span class="self">Self</span>::Type) -&gt; <span class="self">Self</span>::EnableFuture;
 
 	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
 
-	<span class="kw">fn </span>register_source(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) {
-		<span class="kw">let _ </span>= source;
+	<span class="kw">fn </span>register_source(<span class="kw-2">&amp;</span><span class="self">self</span>, source: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/source/struct.SourceId.html">SourceId</a>) {
+		<span class="kw">let _ </span>= <a href="#92">source</a>;
 	}
 }
 
-<span class="kw">pub trait </span>AsyncPluginExt: IsA&lt;Plugin&gt; {
-	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Plugin;
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.AsyncPluginExt.html">AsyncPluginExt</a>: IsA&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt; {
+	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../auto/plugin.rs.html#7-14">Plugin</a>;
 
-	<span class="kw">fn </span>plugin_core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core;
+	<span class="kw">fn </span>plugin_core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/core.rs.html#8-15">Core</a>;
 
-	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext;
+	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>;
 
 	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output = ()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F);
 }
 
-<span class="kw">impl </span>Plugin {
-	<span class="kw">pub fn </span>core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core {
-		<span class="self">self
-			</span>.upcast_ref::&lt;Object&gt;()
-			.core()
+<span class="kw">impl </span><a href="../auto/plugin.rs.html#7-14">Plugin</a> {
+	<span class="kw">pub fn </span>core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/core.rs.html#8-15">Core</a> {
+		<span class="self"><a href="#108">self</a>
+			</span>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">upcast_ref</a>::&lt;<a href="../auto/object.rs.html#8-15">Object</a>&gt;()
+			.<a href="../auto/object.rs.html#103-107">core</a>()
 			.expect(<span class="string">&quot;plugin requires an active Core&quot;</span>)
 	}
 }
 
-<span class="kw">impl</span>&lt;T: IsA&lt;Plugin&gt; + ObjectSubclassIsExt&gt; AsyncPluginExt <span class="kw">for </span>T
+<span class="kw">impl</span>&lt;T: IsA&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt; + <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclassIsExt.html">ObjectSubclassIsExt</a>&gt; <a href="#97-105">AsyncPluginExt</a> <span class="kw">for </span>T
 <span class="kw">where
-	</span>&lt;T <span class="kw">as </span>ObjectSubclassIs&gt;::Subclass: AsyncPluginImpl,
+	</span>&lt;T <span class="kw">as </span>ObjectSubclassIs&gt;::Subclass: <a href="#86-95">AsyncPluginImpl</a>,
 {
-	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Plugin {
-		<span class="self">self</span>.upcast_ref()
+	<span class="kw">fn </span>as_plugin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../auto/plugin.rs.html#7-14">Plugin</a> {
+		<a class="self" href="#120">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">upcast_ref</a>()
 	}
 
-	<span class="kw">fn </span>plugin_core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Core {
-		<span class="self">self</span>.as_plugin().core()
+	<span class="kw">fn </span>plugin_core(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/core.rs.html#8-15">Core</a> {
+		<a class="self" href="#124">self</a>.<a href="#98">as_plugin</a>().<a href="#108-113">core</a>()
 	}
 
-	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MainContext {
-		<span class="self">self</span>.plugin_core().default_context()
+	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a> {
+		<a class="self" href="#128">self</a>.<a href="#100">plugin_core</a>().<a href="../core/core.rs.html#84-88">default_context</a>()
 	}
 
 	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output = ()&gt; + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) {
-		<span class="kw">let </span>source = <span class="self">self</span>.plugin_context().spawn_local(f);
-		<span class="self">self</span>.imp().register_source(source.into_source_id().unwrap());
+		<span class="kw">let </span>source = <a class="self" href="#132">self</a>.<a href="#102">plugin_context</a>().spawn_local(<a href="#132">f</a>);
+		<a class="self" href="#132">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclassIsExt.html">imp</a>().<a href="#92-94">register_source</a>(<a href="#133">source</a>.into_source_id().unwrap());
 	}
 }
 
-<span class="kw">impl</span>&lt;T: AsyncPluginImpl + ObjectImpl&gt; PluginImpl <span class="kw">for </span>T
+<span class="kw">impl</span>&lt;T: <a href="#86-95">AsyncPluginImpl</a> + <a href="../core/subclass.rs.html#9-37">ObjectImpl</a>&gt; <a href="#16-24">PluginImpl</a> <span class="kw">for </span>T
 <span class="kw">where
-	</span>&lt;T <span class="kw">as </span>ObjectSubclass&gt;::Type: AsyncPluginExt,
+	</span>&lt;T <span class="kw">as </span>ObjectSubclass&gt;::Type: <a href="#97-105">AsyncPluginExt</a>,
 {
-	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, this: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: Transition) {
-		<span class="kw">let </span>plugin = this.clone();
-		<span class="kw">let </span>enable = <span class="self">self</span>.enable(plugin.clone());
+	<span class="kw">fn </span>enable(<span class="kw-2">&amp;</span><span class="self">self</span>, this: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type, error_handler: <a href="../auto/transition.rs.html#7-14">Transition</a>) {
+		<span class="kw">let </span>plugin = <a href="#142">this</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
+		<span class="kw">let </span>enable = <a class="self" href="#142">self</a>.<a href="#88">enable</a>(<a href="#143">plugin</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>());
 
-		<span class="kw">let </span>enable_handle = this.plugin_context().spawn_local(<span class="kw">async move </span>{
+		<span class="kw">let </span>enable_handle = <a href="#142">this</a>.<a href="#102">plugin_context</a>().spawn_local(<span class="kw">async move </span>{
 			<span class="kw">match </span>enable.<span class="kw">await </span>{
-				<span class="prelude-val">Ok</span>(()) =&gt; plugin
-					.as_plugin()
-					.update_features(PluginFeatures::ENABLED, PluginFeatures::empty()),
-				<span class="prelude-val">Err</span>(e) =&gt; error_handler.return_error(e),
+				<span class="prelude-val">Ok</span>(()) =&gt; <a href="#143">plugin</a>
+					.<a href="#98">as_plugin</a>()
+					.<a href="../core/features.rs.html#132-140">update_features</a>(PluginFeatures::ENABLED, PluginFeatures::empty()),
+				<span class="prelude-val">Err</span>(e) =&gt; <a href="#142">error_handler</a>.<a href="../util/transition.rs.html#4">return_error</a>(<a href="#151">e</a>),
 			}
 		});
-		<span class="self">self</span>.register_source(enable_handle.into_source_id().unwrap());
+		<a class="self" href="#142">self</a>.<a href="#92-94">register_source</a>(<a href="#146">enable_handle</a>.into_source_id().unwrap());
 		<span class="comment">// TODO: prevent multiple calls?
 	</span>}
 
 	<span class="kw">fn </span>disable(<span class="kw-2">&amp;</span><span class="self">self</span>, _plugin: <span class="kw-2">&amp;</span><span class="self">Self</span>::Type) {
-		<span class="self">self</span>.disable();
+		<a class="self" href="#158">self</a>.<a href="#90">disable</a>();
 	}
 }
 
 <span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>SourceHandles {
-	context: MainContext,
-	handles: Vec&lt;SourceId&gt;,
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/plugin/struct.SourceHandles.html">SourceHandles</a> {
+	context: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>,
+	handles: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/source/struct.SourceId.html">SourceId</a>&gt;,
 }
 
-<span class="kw">impl </span>SourceHandles {
-	<span class="kw">pub fn </span>new(context: MainContext) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span><a href="#164-167">SourceHandles</a> {
+	<span class="kw">pub fn </span>new(context: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			context,
+			<a href="#170">context</a>,
 			handles: Vec::new(),
 		}
 	}
 
-	<span class="kw">pub fn </span>push(<span class="kw-2">&amp;mut </span><span class="self">self</span>, source: SourceId) {
-		<span class="self">self</span>.handles.push(source);
+	<span class="kw">pub fn </span>push(<span class="kw-2">&amp;mut </span><span class="self">self</span>, source: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/source/struct.SourceId.html">SourceId</a>) {
+		<a class="self" href="#177">self</a>.handles.push(<a href="#177">source</a>);
 	}
 
 	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
@@ -565,85 +565,85 @@
 }
 
 <span class="attr">#[derive(Default, Debug)]
-</span><span class="kw">pub struct </span>SourceHandlesCell(RefCell&lt;<span class="prelude-ty">Option</span>&lt;SourceHandles&gt;&gt;);
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/plugin/struct.SourceHandlesCell.html">SourceHandlesCell</a>(RefCell&lt;<span class="prelude-ty">Option</span>&lt;<a href="#164-167">SourceHandles</a>&gt;&gt;);
 
-<span class="kw">impl </span>SourceHandlesCell {
-	<span class="kw">pub fn </span>init(<span class="kw-2">&amp;</span><span class="self">self</span>, context: MainContext) {
-		<span class="kw-2">*</span><span class="self">self</span>.cell().borrow_mut() = <span class="prelude-val">Some</span>(SourceHandles::new(context));
+<span class="kw">impl </span><a href="#194">SourceHandlesCell</a> {
+	<span class="kw">pub fn </span>init(<span class="kw-2">&amp;</span><span class="self">self</span>, context: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>) {
+		<span class="kw-2">*</span><a class="self" href="#197">self</a>.<a href="#222-224">cell</a>().borrow_mut() = <span class="prelude-val">Some</span>(SourceHandles::new(<a href="#197">context</a>));
 	}
 
-	<span class="kw">pub fn </span>try_init(<span class="kw-2">&amp;</span><span class="self">self</span>, context: MainContext) -&gt; <span class="prelude-ty">Result</span>&lt;(), MainContext&gt; {
-		<span class="kw">match </span><span class="kw-2">&amp;mut *</span><span class="self">self</span>.cell().borrow_mut() {
-			<span class="kw-2">&amp;mut </span><span class="prelude-val">Some</span>(..) =&gt; <span class="prelude-val">Err</span>(context),
+	<span class="kw">pub fn </span>try_init(<span class="kw-2">&amp;</span><span class="self">self</span>, context: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>&gt; {
+		<span class="kw">match </span><span class="kw-2">&amp;mut *</span><a class="self" href="#201">self</a>.<a href="#222-224">cell</a>().borrow_mut() {
+			<span class="kw-2">&amp;mut </span><span class="prelude-val">Some</span>(..) =&gt; <span class="prelude-val">Err</span>(<a href="#201">context</a>),
 			opt @ <span class="prelude-val">None </span>=&gt; {
-				<span class="kw-2">*</span>opt = <span class="prelude-val">Some</span>(SourceHandles::new(context));
+				<span class="kw-2">*</span><a href="#204">opt</a> = <span class="prelude-val">Some</span>(SourceHandles::new(<a href="#201">context</a>));
 				<span class="prelude-val">Ok</span>(())
 			},
 		}
 	}
 
-	<span class="kw">pub fn </span>push(<span class="kw-2">&amp;</span><span class="self">self</span>, source: SourceId) {
-		<span class="self">self</span>.borrow_mut(|handles| handles.push(source))
+	<span class="kw">pub fn </span>push(<span class="kw-2">&amp;</span><span class="self">self</span>, source: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/source/struct.SourceId.html">SourceId</a>) {
+		<a class="self" href="#211">self</a>.<a href="#226-231">borrow_mut</a>(|handles| <a href="#212">handles</a>.<a href="#177-179">push</a>(<a href="#211">source</a>))
 	}
 
 	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-		<span class="kw">let </span>res = <span class="self">self</span>.borrow_mut(|handles| handles.clear());
-		<span class="self">self</span>.cell().replace(<span class="prelude-val">None</span>);
-		res
+		<span class="kw">let </span>res = <a class="self" href="#215">self</a>.<a href="#226-231">borrow_mut</a>(|handles| <a href="#216">handles</a>.<a href="#181-190">clear</a>());
+		<a class="self" href="#215">self</a>.<a href="#222-224">cell</a>().replace(<span class="prelude-val">None</span>);
+		<a href="#216">res</a>
 	}
 
 	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>cell(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>RefCell&lt;<span class="prelude-ty">Option</span>&lt;SourceHandles&gt;&gt; {
-		<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+	</span><span class="kw">pub fn </span>cell(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>RefCell&lt;<span class="prelude-ty">Option</span>&lt;<a href="#164-167">SourceHandles</a>&gt;&gt; {
+		<span class="kw-2">&amp;</span><a class="self" href="#222">self</a>.<span class="number">0
 	</span>}
 
-	<span class="kw">pub fn </span>borrow_mut&lt;R, F: FnOnce(<span class="kw-2">&amp;mut </span>SourceHandles) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
-		<span class="kw">match </span><span class="kw-2">*</span><span class="self">self</span>.cell().borrow_mut() {
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>handles) =&gt; f(handles),
-			<span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;SourceHandles cell uninitialized&quot;</span>),
+	<span class="kw">pub fn </span>borrow_mut&lt;R, F: FnOnce(<span class="kw-2">&amp;mut </span><a href="#164-167">SourceHandles</a>) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
+		<span class="kw">match </span><span class="kw-2">*</span><a class="self" href="#226">self</a>.<a href="#222-224">cell</a>().borrow_mut() {
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>handles) =&gt; <a href="#226">f</a>(<a href="#228">handles</a>),
+			<span class="prelude-val">None </span>=&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;SourceHandles cell uninitialized&quot;</span>),
 		}
 	}
 }
 
-<span class="kw">pub trait </span>SimplePlugin: ObjectSubclass {
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.SimplePlugin.html">SimplePlugin</a>: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
 	<span class="kw">type </span>Args;
 
 	<span class="kw">fn </span>instance_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedObject&lt;<span class="self">Self</span>::Type&gt; {
-		<span class="self">self</span>.obj()
+		<a class="self" href="#237">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
 	}
 
-	<span class="kw">fn </span>decode_args(args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Args, Error&gt;;
+	<span class="kw">fn </span>decode_args(args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Args, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;;
 
 	<span class="kw">fn </span>init_args(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="self">Self</span>::Args) {
-		<span class="kw">let _ </span>= args;
-		<span class="macro">unimplemented!</span>()
+		<span class="kw">let _ </span>= <a href="#243">args</a>;
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unimplemented.html">unimplemented!</a>()
 	}
-	<span class="kw">fn </span>new_plugin(core: <span class="kw-2">&amp;</span>Core, args: <span class="self">Self</span>::Args) -&gt; <span class="self">Self</span>::Type
+	<span class="kw">fn </span>new_plugin(core: <span class="kw-2">&amp;</span><a href="../auto/core.rs.html#8-15">Core</a>, args: <span class="self">Self</span>::Args) -&gt; <span class="self">Self</span>::Type
 	<span class="kw">where
-		</span><span class="self">Self</span>::Type: IsA&lt;GObject&gt;,
+		</span><span class="self">Self</span>::Type: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;,
 	{
 		<span class="kw">let </span>res = GObject::with_mut_values(<span class="self">Self</span>::Type::static_type(), <span class="kw-2">&amp;mut </span>[
-			(<span class="string">&quot;name&quot;</span>, <span class="self">Self</span>::NAME.to_value()),
-			(<span class="string">&quot;core&quot;</span>, core.to_value()),
+			(<span class="string">&quot;name&quot;</span>, <span class="self">Self</span>::NAME.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/trait.ToValue.html">to_value</a>()),
+			(<span class="string">&quot;core&quot;</span>, <a href="#247">core</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/trait.ToValue.html">to_value</a>()),
 		]);
-		<span class="kw">let </span>res: <span class="self">Self</span>::Type = <span class="kw">unsafe </span>{ res.unsafe_cast() };
-		res.imp().init_args(args);
-		res
+		<span class="kw">let </span>res: <span class="self">Self</span>::Type = <span class="kw">unsafe </span>{ <a href="#251">res</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast</a>() };
+		<a href="#255">res</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclassIsExt.html">imp</a>().<a href="#243-246">init_args</a>(<a href="#247">args</a>);
+		<a href="#255">res</a>
 	}
 }
 
-<span class="macro">glib::wrapper! </span>{
-	<span class="kw">pub struct </span>SimplePluginObject&lt;T: SimplePlugin&gt;(ObjectSubclass&lt;T&gt;) @extends Plugin, Object;
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
+	<span class="kw">pub struct </span><a href="../../../wireplumber/plugin/struct.SimplePluginObject.html">SimplePluginObject</a>&lt;T: <a href="#234-259">SimplePlugin</a>&gt;(ObjectSubclass&lt;T&gt;) @extends <a href="../auto/plugin.rs.html#7-14">Plugin</a>, <a href="../auto/object.rs.html#8-15">Object</a>;
 }
 
-<span class="kw">impl</span>&lt;T&gt; Deref <span class="kw">for </span>SimplePluginObject&lt;T&gt;
+<span class="kw">impl</span>&lt;T&gt; <a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">Deref</a> <span class="kw">for </span>SimplePluginObject&lt;T&gt;
 <span class="kw">where
-	</span>T: SimplePlugin + ObjectSubclass&lt;Type = <span class="self">Self</span>&gt;,
+	</span>T: <a href="#234-259">SimplePlugin</a> + ObjectSubclass&lt;Type = <span class="self">Self</span>&gt;,
 {
 	<span class="kw">type </span>Target = T;
 
 	<span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-		<span class="self">self</span>.imp()
+		<a class="self" href="#271">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/subclass/types/trait.ObjectSubclassIsExt.html">imp</a>()
 	}
 }
 
@@ -655,7 +655,7 @@
 /// [`SimplePluginObject&lt;T&gt;`](SimplePluginObject). See the
 /// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.
 </span><span class="attr">#[macro_export]
-</span><span class="macro">macro_rules! </span>simple_plugin_subclass {
+</span><span class="macro">macro_rules! </span><a href="../../../wireplumber/plugin/macro.simple_plugin_subclass.html">simple_plugin_subclass</a> {
 	(<span class="kw">impl </span>ObjectSubclass <span class="kw">for </span><span class="macro-nonterminal">$name</span>:tt <span class="kw">as </span><span class="macro-nonterminal">$ty</span>:ty { $(<span class="macro-nonterminal">$subclass</span>:tt)* }) =&gt; {
 		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::simple_plugin_subclass! </span>{
 			<span class="kw">impl </span><span class="macro-nonterminal">ObjectSubclass</span>&lt;<span class="macro-nonterminal">$crate::plugin::Plugin</span>&gt; <span class="kw">for </span><span class="macro-nonterminal">$name </span><span class="kw">as </span><span class="macro-nonterminal">$ty </span>{ $(<span class="macro-nonterminal">$subclass</span>)* }
@@ -674,43 +674,43 @@
 		<span class="kw">impl </span><span class="macro-nonterminal">$crate::core::ObjectImpl </span><span class="kw">for </span><span class="macro-nonterminal">$ty </span>{ }
 	};
 }
-<span class="kw">pub use </span>simple_plugin_subclass;
+<span class="kw">pub use </span><a href="#284-302">simple_plugin_subclass</a>;
 
-<span class="kw">pub trait </span>ModuleExport {
-	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+<span class="kw">pub trait </span><a href="../../../wireplumber/plugin/trait.ModuleExport.html">ModuleExport</a> {
+	<span class="kw">fn </span>init(core: <a href="../auto/core.rs.html#8-15">Core</a>, args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;;
 }
 
 <span class="doccomment">/// Catches panics from a [ModuleExport] initializer
-</span><span class="kw">pub struct </span>ModuleWrapper&lt;T&gt;(PhantomData&lt;T&gt;);
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/plugin/struct.ModuleWrapper.html">ModuleWrapper</a>&lt;T&gt;(PhantomData&lt;T&gt;);
 
-<span class="kw">impl</span>&lt;T: ModuleExport&gt; ModuleExport <span class="kw">for </span>ModuleWrapper&lt;T&gt; {
-	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-		<span class="kw">let </span>res = catch_unwind(|| T::init(core, args));
-		<span class="kw">match </span>res {
-			<span class="prelude-val">Ok</span>(res) =&gt; res,
+<span class="kw">impl</span>&lt;T: <a href="#305-307">ModuleExport</a>&gt; <a href="#305-307">ModuleExport</a> <span class="kw">for </span>ModuleWrapper&lt;T&gt; {
+	<span class="kw">fn </span>init(core: <a href="../auto/core.rs.html#8-15">Core</a>, args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<span class="kw">let </span>res = <a href="https://doc.rust-lang.org/nightly/std/panic/fn.catch_unwind.html">catch_unwind</a>(|| T::init(<a href="#313">core</a>, <a href="#313">args</a>));
+		<span class="kw">match </span><a href="#314">res</a> {
+			<span class="prelude-val">Ok</span>(res) =&gt; <a href="#316">res</a>,
 			<span class="prelude-val">Err</span>(panic) =&gt; <span class="prelude-val">Err</span>({
-				<span class="kw">let </span>op = LibraryErrorEnum::OperationFailed;
-				<span class="kw">if let </span><span class="prelude-val">Some</span>(panic) = panic.downcast_ref::&lt;String&gt;() {
-					Error::new(op, panic)
-				} <span class="kw">else if let </span><span class="prelude-val">Some</span>(panic) = panic.downcast_ref::&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;() {
-					Error::new(op, <span class="kw-2">*</span>panic)
+				<span class="kw">let </span>op = <a href="../auto/enums.rs.html#489">LibraryErrorEnum::OperationFailed</a>;
+				<span class="kw">if let </span><span class="prelude-val">Some</span>(panic) = <a href="#317">panic</a>.downcast_ref::&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;() {
+					Error::new(<a href="#318">op</a>, <a href="#319">panic</a>)
+				} <span class="kw">else if let </span><span class="prelude-val">Some</span>(panic) = <a href="#317">panic</a>.downcast_ref::&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;() {
+					Error::new(<a href="#318">op</a>, <span class="kw-2">*</span><a href="#321">panic</a>)
 				} <span class="kw">else </span>{
-					Error::new(op, <span class="string">&quot;ModuleExport::init panicked&quot;</span>)
+					Error::new(<a href="#318">op</a>, <span class="string">&quot;ModuleExport::init panicked&quot;</span>)
 				}
 			}),
 		}
 	}
 }
 
-<span class="kw">impl</span>&lt;T: SimplePlugin&gt; ModuleExport <span class="kw">for </span>T
+<span class="kw">impl</span>&lt;T: <a href="#234-259">SimplePlugin</a>&gt; <a href="#305-307">ModuleExport</a> <span class="kw">for </span>T
 <span class="kw">where
-	</span>T::Type: IsA&lt;GObject&gt; + IsA&lt;Plugin&gt;,
+	</span>T::Type: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt; + IsA&lt;<a href="../auto/plugin.rs.html#7-14">Plugin</a>&gt;,
 {
-	<span class="kw">fn </span>init(core: Core, args: <span class="prelude-ty">Option</span>&lt;Variant&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+	<span class="kw">fn </span>init(core: <a href="../auto/core.rs.html#8-15">Core</a>, args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="comment">// TODO: support optional args? annoying to do this properly though...
 		</span><span class="kw">let </span>args = T::decode_args(args)<span class="question-mark">?</span>;
-		<span class="kw">let </span>plugin = T::new_plugin(<span class="kw-2">&amp;</span>core, args);
-		plugin.register();
+		<span class="kw">let </span>plugin = T::new_plugin(<span class="kw-2">&amp;</span><a href="#335">core</a>, <a href="#337">args</a>);
+		<a href="#338">plugin</a>.<a href="../auto/plugin.rs.html#43-47">register</a>();
 		<span class="prelude-val">Ok</span>(())
 	}
 }
@@ -720,7 +720,7 @@
 /// Using this properly requires that your crate be built as a `cdylib`. See the
 /// [module documentation](super#implementing-and-exporting-a-plugin) for a full example.
 </span><span class="attr">#[macro_export]
-</span><span class="macro">macro_rules! </span>plugin_export {
+</span><span class="macro">macro_rules! </span><a href="../../../wireplumber/plugin/macro.plugin_export.html">plugin_export</a> {
 	(<span class="macro-nonterminal">$desc</span>:ty) =&gt; {
 		<span class="macro-nonterminal">$</span><span class="macro">crate::plugin::plugin_export! </span>{ @<span class="macro-nonterminal">nowrap $crate::plugin::ModuleWrapper</span>::&lt;<span class="macro-nonterminal">$desc</span>&gt; }
 	};
@@ -745,5 +745,5 @@
 		}
 	};
 }
-<span class="kw">pub use </span>plugin_export;
+<span class="kw">pub use </span><a href="#349-373">plugin_export</a>;
 </code></pre></div></section></main></body></html>

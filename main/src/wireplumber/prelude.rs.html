@@ -82,58 +82,58 @@
 //! ```
 
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)))]
 #[doc(no_inline)]
-</span><span class="kw">pub use </span>glib_signal::ObjectSignalExt <span class="kw">as _</span>;
+</span><span class="kw">pub use </span><a href="../../glib_signal/trait.ObjectSignalExt.html">glib_signal::ObjectSignalExt</a> <span class="kw">as _</span>;
 <span class="attr">#[doc(no_inline)]
 </span><span class="kw">pub use </span>{
 	<span class="kw">crate</span>::{
-		core::Core,
-		core::ObjectExt <span class="kw">as _</span>,
-		plugin::{AsyncPluginExt <span class="kw">as _</span>, PluginExt <span class="kw">as _</span>},
+		<a href="auto/core.rs.html#8-15">core::Core</a>,
+		<a href="auto/object.rs.html#27-149">core::ObjectExt</a> <span class="kw">as _</span>,
+		plugin::{<a href="plugin/subclass.rs.html#97-105">AsyncPluginExt</a> <span class="kw">as _</span>, <a href="auto/plugin.rs.html#33-48">PluginExt</a> <span class="kw">as _</span>},
 		pw::{
-			EndpointExt <span class="kw">as _</span>, GlobalProxyExt <span class="kw">as _</span>, MetadataExt <span class="kw">as _</span>, PipewireObjectExt <span class="kw">as _</span>, PipewireObjectExt2 <span class="kw">as _</span>,
-			PipewirePropertyStringIterExt <span class="kw">as _</span>, ProxyExt <span class="kw">as _</span>, ProxyExt2 <span class="kw">as _</span>,
+			<a href="auto/endpoint.rs.html#27-90">EndpointExt</a> <span class="kw">as _</span>, <a href="auto/global_proxy.rs.html#27-70">GlobalProxyExt</a> <span class="kw">as _</span>, <a href="auto/metadata.rs.html#39-82">MetadataExt</a> <span class="kw">as _</span>, <a href="auto/pipewire_object.rs.html#27-167">PipewireObjectExt</a> <span class="kw">as _</span>, <a href="pw/proxy.rs.html#40-66">PipewireObjectExt2</a> <span class="kw">as _</span>,
+			<a href="pw/keys.rs.html#79-83">PipewirePropertyStringIterExt</a> <span class="kw">as _</span>, <a href="auto/proxy.rs.html#27-126">ProxyExt</a> <span class="kw">as _</span>, <a href="pw/proxy.rs.html#19-28">ProxyExt2</a> <span class="kw">as _</span>,
 		},
 		session::{
-			SessionItemExt <span class="kw">as _</span>, SiAcquisitionExt <span class="kw">as _</span>, SiAcquisitionExt2 <span class="kw">as _</span>, SiAdapterExt <span class="kw">as _</span>, SiAdapterExt2 <span class="kw">as _</span>,
-			SiEndpointExt <span class="kw">as _</span>, SiFactoryExt <span class="kw">as _</span>, SiLinkExt <span class="kw">as _</span>, SiLinkableExt <span class="kw">as _</span>,
+			<a href="auto/session_item.rs.html#41-149">SessionItemExt</a> <span class="kw">as _</span>, <a href="auto/si_acquisition.rs.html#27-34">SiAcquisitionExt</a> <span class="kw">as _</span>, <a href="session/mod.rs.html#83-95">SiAcquisitionExt2</a> <span class="kw">as _</span>, <a href="auto/si_adapter.rs.html#36-71">SiAdapterExt</a> <span class="kw">as _</span>, <a href="session/mod.rs.html#18-32">SiAdapterExt2</a> <span class="kw">as _</span>,
+			<a href="auto/si_endpoint.rs.html#27-56">SiEndpointExt</a> <span class="kw">as _</span>, <a href="auto/si_factory.rs.html#47-62">SiFactoryExt</a> <span class="kw">as _</span>, <a href="auto/si_link.rs.html#27-72">SiLinkExt</a> <span class="kw">as _</span>, <a href="auto/si_linkable.rs.html#26-42">SiLinkableExt</a> <span class="kw">as _</span>,
 		},
-		util::{TransitionExt <span class="kw">as _</span>, TransitionExt2 <span class="kw">as _</span>},
+		util::{<a href="auto/transition.rs.html#43-113">TransitionExt</a> <span class="kw">as _</span>, <a href="util/transition.rs.html#3-5">TransitionExt2</a> <span class="kw">as _</span>},
 	},
-	glib::{Cast <span class="kw">as _</span>, IsA <span class="kw">as _</span>, StaticType <span class="kw">as _</span>},
+	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">Cast</a> <span class="kw">as _</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.IsA.html">IsA</a> <span class="kw">as _</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a> <span class="kw">as _</span>},
 };
 <span class="doccomment">/// this crate uses the prelude too!
 </span><span class="attr">#[allow(unused_imports)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		error::{Error, LibraryErrorEnum},
-		log::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning},
-		util::{ValueIterator, WpIterator},
+		error::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>, <a href="auto/enums.rs.html#483-492">LibraryErrorEnum</a>},
+		log::{<a href="log/macros.rs.html#42-49">wp_critical</a>, <a href="log/macros.rs.html#42-49">wp_debug</a>, <a href="log/macros.rs.html#42-49">wp_info</a>, <a href="log/macros.rs.html#42-49">wp_message</a>, <a href="log/macros.rs.html#42-49">wp_trace</a>, <a href="log/macros.rs.html#42-49">wp_warning</a>},
+		util::{<a href="util/iterator.rs.html#56-59">ValueIterator</a>, <a href="auto/iterator.rs.html#6-15">WpIterator</a>},
 	},
 	glib::{
-		error::ErrorDomain,
-		ffi::{gconstpointer, gpointer},
-		translate::<span class="kw-2">*</span>,
-		types::{Pointee, Pointer},
-		value::{FromValue, ToValue},
-		Cast, FromVariant, IsA, Object <span class="kw">as </span>GObject, ObjectExt <span class="kw">as </span>GObjectExt, ObjectType, StaticType, StaticVariantType,
-		ToVariant, Type, Value, Variant, VariantClass, VariantTy,
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/trait.ErrorDomain.html">error::ErrorDomain</a>,
+		ffi::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>,
+		types::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/type.Pointee.html">Pointee</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/type.Pointer.html">Pointer</a>},
+		value::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/trait.FromValue.html">FromValue</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/trait.ToValue.html">ToValue</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">Cast</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.FromVariant.html">FromVariant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.IsA.html">IsA</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">Object</a> <span class="kw">as </span>GObject, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectExt.html">ObjectExt</a> <span class="kw">as </span>GObjectExt, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a>,
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/struct.Type.html">Type</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/struct.Value.html">Value</a>, <a href="https://docs.rs/glib-macros/0.18.0/glib_macros/derive.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/enums/enum.VariantClass.html">VariantClass</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>,
 	},
 	std::{
-		borrow::{Borrow, Cow},
-		convert::{Infallible, TryFrom, TryInto},
-		ffi::{CStr, CString},
-		fmt::{<span class="self">self</span>, Debug, Display, Write <span class="kw">as _</span>},
-		future::Future,
-		iter::{<span class="self">self</span>, FromIterator},
+		borrow::{<a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html">Borrow</a>, <a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">Cow</a>},
+		convert::{<a href="https://doc.rust-lang.org/nightly/core/convert/enum.Infallible.html">Infallible</a>, <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html">TryFrom</a>, <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">TryInto</a>},
+		ffi::{<a href="https://doc.rust-lang.org/nightly/core/ffi/c_str/struct.CStr.html">CStr</a>, <a href="https://doc.rust-lang.org/nightly/alloc/ffi/c_str/struct.CString.html">CString</a>},
+		fmt::{<a class="self" href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">self</a>, <a href="https://doc.rust-lang.org/nightly/core/fmt/macros/derive.Debug.html">Debug</a>, <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">Display</a>, <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Write.html">Write</a> <span class="kw">as _</span>},
+		<a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html">future::Future</a>,
+		iter::{<a class="self" href="https://doc.rust-lang.org/nightly/core/iter/index.html">self</a>, <a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html">FromIterator</a>},
 		marker::PhantomData,
-		mem,
-		ops::Deref,
-		pin::Pin,
-		ptr::{<span class="self">self</span>, NonNull},
-		slice,
-		str::{<span class="self">self</span>, FromStr},
+		<a href="https://doc.rust-lang.org/nightly/core/mem/index.html">mem</a>,
+		<a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">ops::Deref</a>,
+		<a href="https://doc.rust-lang.org/nightly/core/pin/struct.Pin.html">pin::Pin</a>,
+		ptr::{<a class="self" href="https://doc.rust-lang.org/nightly/core/ptr/index.html">self</a>, <a href="https://doc.rust-lang.org/nightly/core/ptr/non_null/struct.NonNull.html">NonNull</a>},
+		<a href="https://doc.rust-lang.org/nightly/alloc/slice/index.html">slice</a>,
+		str::{<a class="self" href="https://doc.rust-lang.org/nightly/alloc/str/index.html">self</a>, <a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">FromStr</a>},
 	},
 };
 </code></pre></div></section></main></body></html>

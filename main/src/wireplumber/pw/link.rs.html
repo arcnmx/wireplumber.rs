@@ -111,99 +111,99 @@
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">use </span><span class="kw">crate</span>::pw::LinkState;
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><span class="kw">use </span><a href="../auto/enums.rs.html#593-610"><span class="kw">crate</span>::pw::LinkState</a>;
 <span class="kw">use crate</span>::{
-	core::Core,
-	prelude::<span class="kw-2">*</span>,
-	pw::{<span class="self">self</span>, Direction, Link, LinkFeatures, Node, Port, Properties},
+	<a href="../auto/core.rs.html#8-15">core::Core</a>,
+	<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+	pw::{<a class="self" href="../lib.rs.html#75">self</a>, <a href="../auto/enums.rs.html#380-387">Direction</a>, <a href="../auto/link.rs.html#17-24">Link</a>, <a href="../auto/flags.rs.html#362-373">LinkFeatures</a>, <a href="../auto/node.rs.html#8-15">Node</a>, <a href="../auto/port.rs.html#7-14">Port</a>, <a href="../auto/properties.rs.html#7-16">Properties</a>},
 };
 
-<span class="kw">impl </span>Link {
+<span class="kw">impl </span><a href="../auto/link.rs.html#17-24">Link</a> {
 	<span class="attr">#[doc(alias(<span class="string">&quot;wp_link_new_from_factory&quot;</span>))]
-	</span><span class="kw">pub fn </span>new&lt;O: LinkTarget + Debug, I: LinkTarget + Debug&gt;(
-		core: <span class="kw-2">&amp;</span>Core,
+	</span><span class="kw">pub fn </span>new&lt;O: <a href="#58-60">LinkTarget</a> + <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a>, I: <a href="#58-60">LinkTarget</a> + <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a>&gt;(
+		core: <span class="kw-2">&amp;</span><a href="../auto/core.rs.html#8-15">Core</a>,
 		output: <span class="kw-2">&amp;</span>O,
 		input: <span class="kw-2">&amp;</span>I,
-		props: <span class="kw-2">&amp;</span>Properties,
-	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
-		<span class="kw">let </span>props = Properties::new_clone(props);
+		props: <span class="kw-2">&amp;</span><a href="../auto/properties.rs.html#7-16">Properties</a>,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<span class="kw">let </span>props = Properties::new_clone(<a href="#15">props</a>);
 		output.write_props(<span class="kw-2">&amp;</span>props, Direction::Output)<span class="question-mark">?</span>;
 		input.write_props(<span class="kw-2">&amp;</span>props, Direction::Input)<span class="question-mark">?</span>;
 
-		<span class="self">Self</span>::from_factory(core, <span class="string">&quot;link-factory&quot;</span>, <span class="prelude-val">Some</span>(props))
-			.ok_or_else(|| Error::new(LibraryErrorEnum::OperationFailed, <span class="string">&quot;factory did not produce a link???&quot;</span>))
+		<span class="self">Self</span>::from_factory(<a href="#12">core</a>, <span class="string">&quot;link-factory&quot;</span>, <span class="prelude-val">Some</span>(<a href="#17">props</a>))
+			.ok_or_else(|| Error::new(<a href="../auto/enums.rs.html#489">LibraryErrorEnum::OperationFailed</a>, <span class="string">&quot;factory did not produce a link???&quot;</span>))
 	}
 
-	<span class="kw">pub fn </span>error_is_exists(e: <span class="kw-2">&amp;</span>Error) -&gt; bool {
-		e.message().ends_with(<span class="string">&quot;: File exists&quot;</span>) <span class="comment">// TODO
+	<span class="kw">pub fn </span>error_is_exists(e: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a href="#25">e</a>.message().ends_with(<span class="string">&quot;: File exists&quot;</span>) <span class="comment">// TODO
 	</span>}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+	<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
 	#[doc(alias = <span class="string">&quot;wp_link_get_state&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
-	</span><span class="kw">pub fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LinkState {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_link_get_state(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, ptr::null_mut())) }
+	</span><span class="kw">pub fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/enums.rs.html#593-610">LinkState</a> {
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_link_get_state(<a class="self" href="#33">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, ptr::null_mut())) }
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+	<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
 	#[doc(alias = <span class="string">&quot;wp_link_get_state&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
-	</span><span class="kw">pub fn </span>state_result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LinkState, Error&gt; {
+	</span><span class="kw">pub fn </span>state_result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#593-610">LinkState</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null();
-			<span class="kw">match </span>from_glib(ffi::wp_link_get_state(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error)) {
-				LinkState::Error =&gt; {
-					<span class="kw">let </span>msg: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>glib::GStr&gt; = from_glib_none(error);
+			<span class="kw">match </span>from_glib(ffi::wp_link_get_state(<a class="self" href="#41">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <span class="kw-2">&amp;mut </span><a href="#43">error</a>)) {
+				<a href="../auto/enums.rs.html#595">LinkState::Error</a> =&gt; {
+					<span class="kw">let </span>msg: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring/struct.GStr.html">glib::GStr</a>&gt; = from_glib_none(<a href="#43">error</a>);
 					<span class="prelude-val">Err</span>(Error::new(
-						LibraryErrorEnum::OperationFailed,
-						msg.map(|s| s.as_str()).unwrap_or(<span class="string">&quot;unspecified link state error&quot;</span>),
+						<a href="../auto/enums.rs.html#489">LibraryErrorEnum::OperationFailed</a>,
+						<a href="#46">msg</a>.map(|s| <a href="#49">s</a>.as_str()).unwrap_or(<span class="string">&quot;unspecified link state error&quot;</span>),
 					))
 				},
-				state =&gt; <span class="prelude-val">Ok</span>(state),
+				state =&gt; <span class="prelude-val">Ok</span>(<a href="#52">state</a>),
 			}
 		}
 	}
 }
 
-<span class="kw">pub trait </span>LinkTarget {
-	<span class="kw">fn </span>write_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span>Properties, dir: Direction) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+<span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.LinkTarget.html">LinkTarget</a> {
+	<span class="kw">fn </span>write_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span><a href="../auto/properties.rs.html#7-16">Properties</a>, dir: <a href="../auto/enums.rs.html#380-387">Direction</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;;
 }
 
-<span class="kw">impl </span>LinkTarget <span class="kw">for </span>Node {
-	<span class="kw">fn </span>write_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span>Properties, dir: Direction) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-		<span class="kw">match </span>dir {
-			Direction::Output =&gt; props.insert(pw::PW_KEY_LINK_OUTPUT_NODE, <span class="self">self</span>.bound_id()),
-			Direction::Input =&gt; props.insert(pw::PW_KEY_LINK_INPUT_NODE, <span class="self">self</span>.bound_id()),
-			<span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+<span class="kw">impl </span><a href="#58-60">LinkTarget</a> <span class="kw">for </span><a href="../auto/node.rs.html#8-15">Node</a> {
+	<span class="kw">fn </span>write_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span><a href="../auto/properties.rs.html#7-16">Properties</a>, dir: <a href="../auto/enums.rs.html#380-387">Direction</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<span class="kw">match </span><a href="#63">dir</a> {
+			<a href="../auto/enums.rs.html#384">Direction::Output</a> =&gt; <a href="#63">props</a>.<a href="properties.rs.html#71-73">insert</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_LINK_OUTPUT_NODE</a>, <a class="self" href="#63">self</a>.<a href="../auto/proxy.rs.html#30-34">bound_id</a>()),
+			<a href="../auto/enums.rs.html#382">Direction::Input</a> =&gt; <a href="#63">props</a>.<a href="properties.rs.html#71-73">insert</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_LINK_INPUT_NODE</a>, <a class="self" href="#63">self</a>.<a href="../auto/proxy.rs.html#30-34">bound_id</a>()),
+			<span class="kw">_ </span>=&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unreachable.html">unreachable!</a>(),
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
 }
 
-<span class="kw">impl </span>LinkTarget <span class="kw">for </span>Port {
-	<span class="kw">fn </span>write_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span>Properties, dir: Direction) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+<span class="kw">impl </span><a href="#58-60">LinkTarget</a> <span class="kw">for </span><a href="../auto/port.rs.html#7-14">Port</a> {
+	<span class="kw">fn </span>write_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span><a href="../auto/properties.rs.html#7-16">Properties</a>, dir: <a href="../auto/enums.rs.html#380-387">Direction</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">let </span>node_id = <span class="self">self</span>.node_id()<span class="question-mark">?</span>;
-		<span class="kw">match </span>dir {
-			Direction::Output =&gt; {
-				props.insert(pw::PW_KEY_LINK_OUTPUT_PORT, <span class="self">self</span>.port_index()<span class="question-mark">?</span>);
-				props.insert(pw::PW_KEY_LINK_OUTPUT_NODE, node_id);
+		<span class="kw">match </span><a href="#74">dir</a> {
+			<a href="../auto/enums.rs.html#384">Direction::Output</a> =&gt; {
+				<a href="#74">props</a>.<a href="properties.rs.html#71-73">insert</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_LINK_OUTPUT_PORT</a>, <span class="self">self</span>.port_index()<span class="question-mark">?</span>);
+				<a href="#74">props</a>.<a href="properties.rs.html#71-73">insert</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_LINK_OUTPUT_NODE</a>, <a href="#75">node_id</a>);
 			},
-			Direction::Input =&gt; {
-				props.insert(pw::PW_KEY_LINK_INPUT_PORT, <span class="self">self</span>.port_index()<span class="question-mark">?</span>);
-				props.insert(pw::PW_KEY_LINK_INPUT_NODE, node_id);
+			<a href="../auto/enums.rs.html#382">Direction::Input</a> =&gt; {
+				<a href="#74">props</a>.<a href="properties.rs.html#71-73">insert</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_LINK_INPUT_PORT</a>, <span class="self">self</span>.port_index()<span class="question-mark">?</span>);
+				<a href="#74">props</a>.<a href="properties.rs.html#71-73">insert</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_LINK_INPUT_NODE</a>, <a href="#75">node_id</a>);
 			},
-			<span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+			<span class="kw">_ </span>=&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unreachable.html">unreachable!</a>(),
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
-</span><span class="kw">impl </span>StaticType <span class="kw">for </span>LinkFeatures {
-	<span class="kw">fn </span>static_type() -&gt; Type {
+</span><span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a> <span class="kw">for </span><a href="../auto/flags.rs.html#362-373">LinkFeatures</a> {
+	<span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/struct.Type.html">Type</a> {
 		<span class="kw">unsafe </span>{ from_glib(ffi::wp_link_features_get_type()) }
 	}
 }
@@ -215,12 +215,12 @@
 	}
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">impl</span>&lt;E&gt; From&lt;<span class="prelude-ty">Result</span>&lt;LinkState, E&gt;&gt; <span class="kw">for </span>LinkState {
-	<span class="kw">fn </span>from(res: <span class="prelude-ty">Result</span>&lt;LinkState, E&gt;) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span>res {
-			<span class="prelude-val">Ok</span>(state) =&gt; state,
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; LinkState::Error,
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><span class="kw">impl</span>&lt;E&gt; From&lt;<span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#593-610">LinkState</a>, E&gt;&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#593-610">LinkState</a> {
+	<span class="kw">fn </span>from(res: <span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#593-610">LinkState</a>, E&gt;) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><a href="#107">res</a> {
+			<span class="prelude-val">Ok</span>(state) =&gt; <a href="#109">state</a>,
+			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <a href="../auto/enums.rs.html#595">LinkState::Error</a>,
 		}
 	}
 }

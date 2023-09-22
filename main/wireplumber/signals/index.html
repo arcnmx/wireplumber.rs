@@ -20,7 +20,7 @@
   <span class="comment">// ... or receive events as an async Stream:
   </span><span class="kw">let </span><span class="kw-2">mut </span>objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
 
-  om.request_object_features(Object::static_type(), ObjectFeatures::ALL);
+  om.request_object_features(Node::static_type(), ObjectFeatures::ALL);
   core.install_object_manager(<span class="kw-2">&amp;</span>om);
 
   <span class="kw">while let </span><span class="prelude-val">Some</span>((obj,)) = objects.next().<span class="kw">await </span>{

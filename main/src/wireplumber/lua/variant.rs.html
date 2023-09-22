@@ -592,27 +592,27 @@
 <a href="#592" id="592">592</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		lua::{LuaError, LuaString},
-		prelude::<span class="kw-2">*</span>,
+		lua::{<a href="error.rs.html#14-23">LuaError</a>, <a href="string.rs.html#7-10">LuaString</a>},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
 	},
 	glib::{
-		variant::{DictEntry, VariantTypeMismatchError},
-		VariantType,
+		variant::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.DictEntry.html">DictEntry</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.VariantTypeMismatchError.html">VariantTypeMismatchError</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantType.html">VariantType</a>,
 	},
-	std::borrow::Cow,
+	<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">std::borrow::Cow</a>,
 };
 
-<span class="macro">newtype_wrapper! </span>{
+<a class="macro" href="macros.rs.html#2-199">newtype_wrapper! </a>{
 	<span class="doccomment">/// A [Variant](struct@Variant) that can be passed to a Lua script.
 	///
 	/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules
 	/// and their configuration data.
 	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
-	</span><span class="kw">pub struct </span>LuaVariant(Variant ;<span class="question-mark">? </span>LuaError);
+	</span><span class="kw">pub struct </span><a href="../../../wireplumber/lua/struct.LuaVariant.html">LuaVariant</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> ;<span class="question-mark">? </span><a href="error.rs.html#14-23">LuaError</a>);
 }
 
 <span class="attr">#[derive(Copy, Clone, Debug, PartialOrd, Ord, PartialEq, Eq, Hash)]
-</span><span class="kw">pub enum </span>LuaType {
+</span><span class="kw">pub enum </span><a href="../../../wireplumber/lua/enum.LuaType.html">LuaType</a> {
 	Nil,
 	Boolean,
 	Integer,
@@ -621,130 +621,130 @@
 	Table,
 }
 
-<span class="kw">impl </span>LuaType {
-	<span class="kw">pub fn </span>with_variant_type(ty: <span class="kw-2">&amp;</span>VariantTy) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-		<span class="prelude-val">Some</span>(<span class="kw">match </span>ty {
-			ty <span class="kw">if </span>ty == VariantTy::UNIT =&gt; LuaType::Nil,
-			ty <span class="kw">if </span>ty == VariantTy::BOOLEAN =&gt; LuaType::Boolean,
-			ty <span class="kw">if </span>ty == VariantTy::INT64 || ty == VariantTy::INT32 || ty == VariantTy::INT16
-				|| ty == VariantTy::UINT32 || ty == VariantTy::UINT16
-				=&gt; LuaType::Integer,
-			ty <span class="kw">if </span>ty == VariantTy::DOUBLE =&gt; LuaType::Float,
-			ty <span class="kw">if </span>ty == VariantTy::STRING <span class="comment">/*|| ty == VariantTy::BYTE_STRING*/ </span>=&gt; LuaType::String,
-			ty <span class="kw">if </span>ty.is_subtype_of(VariantTy::DICTIONARY) =&gt; <span class="kw">match </span>ty.element() {
-				ty <span class="kw">if </span><span class="self">Self</span>::with_variant_type(ty.key()).is_some() &amp;&amp; <span class="self">Self</span>::with_variant_type(ty.value()).is_some() =&gt; LuaType::Table,
+<span class="kw">impl </span><a href="#23-30">LuaType</a> {
+	<span class="kw">pub fn </span>with_variant_type(ty: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><a href="#33">ty</a> {
+			ty <span class="kw">if </span><a href="#35">ty</a> == VariantTy::UNIT =&gt; <a href="#24">LuaType::Nil</a>,
+			ty <span class="kw">if </span><a href="#36">ty</a> == VariantTy::BOOLEAN =&gt; <a href="#25">LuaType::Boolean</a>,
+			ty <span class="kw">if </span><a href="#37">ty</a> == VariantTy::INT64 || <a href="#37">ty</a> == VariantTy::INT32 || <a href="#37">ty</a> == VariantTy::INT16
+				|| <a href="#37">ty</a> == VariantTy::UINT32 || <a href="#37">ty</a> == VariantTy::UINT16
+				=&gt; <a href="#26">LuaType::Integer</a>,
+			ty <span class="kw">if </span><a href="#40">ty</a> == VariantTy::DOUBLE =&gt; <a href="#27">LuaType::Float</a>,
+			ty <span class="kw">if </span><a href="#41">ty</a> == VariantTy::STRING <span class="comment">/*|| ty == VariantTy::BYTE_STRING*/ </span>=&gt; <a href="#28">LuaType::String</a>,
+			ty <span class="kw">if </span><a href="#42">ty</a>.is_subtype_of(VariantTy::DICTIONARY) =&gt; <span class="kw">match </span><a href="#42">ty</a>.element() {
+				ty <span class="kw">if </span><span class="self">Self</span>::with_variant_type(<a href="#43">ty</a>.key()).is_some() &amp;&amp; <span class="self">Self</span>::with_variant_type(<a href="#43">ty</a>.value()).is_some() =&gt; <a href="#29">LuaType::Table</a>,
 				<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 			},
-			ty <span class="kw">if </span>ty.is_array() &amp;&amp; <span class="self">Self</span>::with_variant_type(ty.element()).is_some() =&gt; LuaType::Table,
+			ty <span class="kw">if </span><a href="#46">ty</a>.is_array() &amp;&amp; <span class="self">Self</span>::with_variant_type(<a href="#46">ty</a>.element()).is_some() =&gt; <a href="#29">LuaType::Table</a>,
 			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 
-	<span class="kw">pub fn </span>with_lua_variant(var: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="self">Self </span>{
-		<span class="kw">const </span>MAX_SAFE_INTEGER: u64 = i64::MAX <span class="kw">as </span>u64;
-		<span class="kw">match </span><span class="self">Self</span>::with_variant_type(var.as_variant().type_()) {
-			<span class="prelude-val">Some</span>(ty) =&gt; ty,
-			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span>var.as_variant().classify() {
-				VariantClass::Uint64 =&gt; <span class="kw">match </span>var.as_variant().get::&lt;u64&gt;() {
-					<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
-					<span class="kw">_ </span>=&gt; LuaType::Float,
+	<span class="kw">pub fn </span>with_lua_variant(var: <span class="kw-2">&amp;</span><a href="#13-20">LuaVariant</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">const </span>MAX_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> = i64::MAX <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+		<span class="kw">match </span><span class="self">Self</span>::with_variant_type(<a href="#51">var</a>.<a href="#13-20">as_variant</a>().type_()) {
+			<span class="prelude-val">Some</span>(ty) =&gt; <a href="#54">ty</a>,
+			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><a href="#51">var</a>.<a href="#13-20">as_variant</a>().classify() {
+				VariantClass::Uint64 =&gt; <span class="kw">match </span><a href="#51">var</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;() {
+					<span class="prelude-val">Some</span>(<span class="number">0</span>..=<a href="#52">MAX_SAFE_INTEGER</a>) =&gt; <a href="#26">LuaType::Integer</a>,
+					<span class="kw">_ </span>=&gt; <a href="#27">LuaType::Float</a>,
 				},
-				VariantClass::Variant =&gt; <span class="self">Self</span>::with_lua_variant(<span class="kw-2">&amp;</span>var.flattened()),
-				<span class="kw">_ </span>=&gt; LuaType::Table,
+				VariantClass::Variant =&gt; <span class="self">Self</span>::with_lua_variant(<span class="kw-2">&amp;</span><a href="#51">var</a>.<a href="#216-222">flattened</a>()),
+				<span class="kw">_ </span>=&gt; <a href="#29">LuaType::Table</a>,
 			},
 		}
 	}
 
-	<span class="kw">pub fn </span>with_variant(var: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
-		<span class="kw">const </span>MAX_SAFE_INTEGER: u64 = i64::MAX <span class="kw">as </span>u64;
+	<span class="kw">pub fn </span>with_variant(var: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
+		<span class="kw">const </span>MAX_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> = i64::MAX <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
 
-		<span class="kw">let </span>ty = var.type_();
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = <span class="self">Self</span>::with_variant_type(ty) {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(ty)
+		<span class="kw">let </span>ty = <a href="#66">var</a>.type_();
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = <span class="self">Self</span>::with_variant_type(<a href="#69">ty</a>) {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<a href="#70">ty</a>)
 		}
 
-		<span class="prelude-val">Ok</span>(<span class="kw">match </span>var.classify() {
-			VariantClass::Uint64 =&gt; <span class="kw">match </span>var.get::&lt;u64&gt;() {
-				<span class="prelude-val">Some</span>(<span class="number">0</span>..=MAX_SAFE_INTEGER) =&gt; LuaType::Integer,
-				<span class="kw">_ </span>=&gt; LuaType::Float,
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#66">var</a>.classify() {
+			VariantClass::Uint64 =&gt; <span class="kw">match </span><a href="#66">var</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;() {
+				<span class="prelude-val">Some</span>(<span class="number">0</span>..=<a href="#67">MAX_SAFE_INTEGER</a>) =&gt; <a href="#26">LuaType::Integer</a>,
+				<span class="kw">_ </span>=&gt; <a href="#27">LuaType::Float</a>,
 			},
 			VariantClass::Variant =&gt; <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>var.as_variant().expect(<span class="string">&quot;VariantTy&quot;</span>))<span class="question-mark">?</span>,
-			VariantClass::Array <span class="kw">if </span>ty.element().is_dict_entry() =&gt; <span class="kw">match </span>var
+			VariantClass::Array <span class="kw">if </span><a href="#69">ty</a>.element().is_dict_entry() =&gt; <span class="kw">match </span><a href="#66">var</a>
 				.iter()
-				.map(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>)).and_then(|<span class="kw">_</span>| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(drop)))
-				.collect()
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span><a href="#82">v</a>.child_value(<span class="number">0</span>)).and_then(|<span class="kw">_</span>| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span><a href="#82">v</a>.child_value(<span class="number">1</span>)).map(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)))
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>()
 			{
-				<span class="prelude-val">Ok</span>(()) =&gt; LuaType::Table,
-				<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
+				<span class="prelude-val">Ok</span>(()) =&gt; <a href="#29">LuaType::Table</a>,
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="#86">e</a>),
 			},
-			VariantClass::Array <span class="kw">if </span>var.iter().all(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>v).is_ok()) =&gt; LuaType::Table,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(LuaError::UnsupportedType(Cow::Owned(ty.to_owned()))),
+			VariantClass::Array <span class="kw">if </span><a href="#66">var</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">all</a>(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span><a href="#88">v</a>).is_ok()) =&gt; <a href="#29">LuaType::Table</a>,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#21">LuaError::UnsupportedType</a>(Cow::Owned(<a href="#69">ty</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>()))),
 		})
 	}
 
-	<span class="kw">pub fn </span>is_numeric(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Integer | LuaType::Float)
+	<span class="kw">pub fn </span>is_numeric(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.matches.html">matches!</a>(<span class="self">self</span>, LuaType::Integer | LuaType::Float)
 	}
 
-	<span class="kw">pub fn </span>is_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Table)
+	<span class="kw">pub fn </span>is_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.matches.html">matches!</a>(<span class="self">self</span>, LuaType::Table)
 	}
 
-	<span class="kw">pub fn </span>is_nil(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="macro">matches!</span>(<span class="self">self</span>, LuaType::Nil)
+	<span class="kw">pub fn </span>is_nil(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.matches.html">matches!</a>(<span class="self">self</span>, LuaType::Nil)
 	}
 }
 
-<span class="kw">pub enum </span>LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">pub enum </span><a href="../../../wireplumber/lua/enum.LuaValue.html">LuaValue</a>&lt;<span class="lifetime">&#39;a</span>&gt; {
 	Nil,
-	Boolean(bool),
-	Integer(i64),
-	Float(f64),
+	Boolean(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+	Integer(<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>),
+	Float(<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
 	String(LuaString&lt;<span class="lifetime">&#39;a</span>&gt;),
 	Table(LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;),
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; LuaValue&lt;<span class="lifetime">&#39;a</span>&gt; {
-	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
-		<span class="kw">match </span><span class="self">self </span>{
-			LuaValue::Nil =&gt; LuaType::Nil,
-			LuaValue::Boolean(..) =&gt; LuaType::Boolean,
-			LuaValue::Integer(..) =&gt; LuaType::Integer,
-			LuaValue::Float(..) =&gt; LuaType::Float,
-			LuaValue::String(..) =&gt; LuaType::String,
-			LuaValue::Table(..) =&gt; LuaType::Table,
+	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#23-30">LuaType</a> {
+		<span class="kw">match </span><span class="self"><a href="#116">self</a> </span>{
+			<a href="#107">LuaValue::Nil</a> =&gt; <a href="#24">LuaType::Nil</a>,
+			<a href="#108">LuaValue::Boolean</a>(..) =&gt; <a href="#25">LuaType::Boolean</a>,
+			<a href="#109">LuaValue::Integer</a>(..) =&gt; <a href="#26">LuaType::Integer</a>,
+			<a href="#110">LuaValue::Float</a>(..) =&gt; <a href="#27">LuaType::Float</a>,
+			<a href="#111">LuaValue::String</a>(..) =&gt; <a href="#28">LuaType::String</a>,
+			<a href="#112">LuaValue::Table</a>(..) =&gt; <a href="#29">LuaType::Table</a>,
 		}
 	}
 
-	<span class="kw">pub fn </span>to_lua_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaString, LuaError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self">self </span>{
-			LuaValue::Nil =&gt; <span class="string">b&quot;nil&quot;</span>[..].into(),
-			LuaValue::Boolean(v) =&gt; v.to_string().into(),
-			LuaValue::Integer(v) =&gt; v.to_string().into(),
-			LuaValue::Float(v) =&gt; v.to_string().into(),
-			LuaValue::String(v) =&gt; v.borrowed(),
-			LuaValue::Table(<span class="kw">_</span>) =&gt;
-				<span class="kw">return </span><span class="prelude-val">Err</span>(LuaError::TypeMismatch(VariantTypeMismatchError::new(
-					VariantTy::VARDICT.to_owned(),
-					VariantTy::STRING.to_owned(),
+	<span class="kw">pub fn </span>to_lua_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="string.rs.html#7-10">LuaString</a>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self"><a href="#127">self</a> </span>{
+			<a href="#107">LuaValue::Nil</a> =&gt; <span class="string">b&quot;nil&quot;</span>[..].<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
+			<a href="#108">LuaValue::Boolean</a>(v) =&gt; <a href="#130">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
+			<a href="#109">LuaValue::Integer</a>(v) =&gt; <a href="#131">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
+			<a href="#110">LuaValue::Float</a>(v) =&gt; <a href="#132">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
+			<a href="#111">LuaValue::String</a>(v) =&gt; <a href="#133">v</a>.<a href="string.rs.html#7-10">borrowed</a>(),
+			<a href="#112">LuaValue::Table</a>(<span class="kw">_</span>) =&gt;
+				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
+					VariantTy::VARDICT.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+					VariantTy::STRING.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
 				))),
 		})
 	}
 
-	<span class="kw">pub fn </span>to_integer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;i64, LuaError&gt; {
-		<span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-			LuaValue::Integer(v) =&gt; <span class="prelude-val">Ok</span>(v),
-			LuaValue::Float(v) =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>i64),
-			LuaValue::String(<span class="kw-2">ref </span>s) =&gt; s.parse(),
-			<span class="kw-2">ref </span>v =&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(VariantTypeMismatchError::new(
-				<span class="kw">match </span>v {
-					LuaValue::Nil =&gt; VariantTy::UNIT,
-					LuaValue::Boolean(..) =&gt; VariantTy::BOOLEAN,
-					LuaValue::Table(t) <span class="kw">if </span>t.is_array().unwrap_or(<span class="bool-val">false</span>) =&gt; VariantTy::ARRAY,
+	<span class="kw">pub fn </span>to_integer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
+		<span class="kw">match </span><span class="kw-2">*</span><span class="self"><a href="#142">self</a> </span>{
+			<a href="#109">LuaValue::Integer</a>(v) =&gt; <span class="prelude-val">Ok</span>(<a href="#144">v</a>),
+			<a href="#110">LuaValue::Float</a>(v) =&gt; <span class="prelude-val">Ok</span>(<a href="#145">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>),
+			<a href="#111">LuaValue::String</a>(<span class="kw-2">ref </span>s) =&gt; <a href="#146">s</a>.<a href="string.rs.html#31-39">parse</a>(),
+			<span class="kw-2">ref </span>v =&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
+				<span class="kw">match </span><a href="#147">v</a> {
+					<a href="#107">LuaValue::Nil</a> =&gt; VariantTy::UNIT,
+					<a href="#108">LuaValue::Boolean</a>(..) =&gt; VariantTy::BOOLEAN,
+					<a href="#112">LuaValue::Table</a>(t) <span class="kw">if </span><a href="#151">t</a>.<a href="#455-464">is_array</a>().unwrap_or(<span class="bool-val">false</span>) =&gt; VariantTy::ARRAY,
 					<span class="kw">_ </span>=&gt; VariantTy::VARDICT,
 				}
-				.to_owned(),
-				VariantTy::INT64.to_owned(),
+				.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+				VariantTy::INT64.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
 			))),
 		}
 	}
@@ -752,401 +752,401 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">pub fn </span>nil() -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(().to_variant()) }
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()) }
 	}
 
-	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
+	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="comment">// used by Self::wrap and Self::borrow
-		</span>LuaType::with_variant(v).map(drop)
+		</span>LuaType::with_variant(<a href="#166">v</a>).map(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)
 	}
 
-	<span class="kw">pub fn </span>convert_from(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+	<span class="kw">pub fn </span>convert_from(v: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="kw">if </span><span class="self">Self</span>::check(<span class="kw-2">&amp;</span>v).is_ok() {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(v.clone()) })
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(<a href="#171">v</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>()) })
 		}
 
-		<span class="kw">match </span>v.classify() {
-			VariantClass::Variant =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)),
-			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(v.get::&lt;u8&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>) <span class="kw">as </span>u16)),
-			VariantClass::Maybe =&gt; <span class="kw">match </span>v.as_maybe() {
-				<span class="prelude-val">Some</span>(v) =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span>v),
-				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().into()),
+		<span class="kw">match </span><a href="#171">v</a>.classify() {
+			VariantClass::Variant =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#171">v</a>.as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)),
+			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(<a href="#171">v</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>) <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)),
+			VariantClass::Maybe =&gt; <span class="kw">match </span><a href="#171">v</a>.as_maybe() {
+				<span class="prelude-val">Some</span>(v) =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#180">v</a>),
+				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
 			},
-			VariantClass::Array <span class="kw">if </span>v.type_().element().is_dict_entry() =&gt; v
+			VariantClass::Array <span class="kw">if </span><a href="#171">v</a>.type_().element().is_dict_entry() =&gt; <a href="#171">v</a>
 				.iter()
-				.map(|v| {
-					LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.child_value(<span class="number">0</span>))
-						.and_then(|k| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v.child_value(<span class="number">1</span>)).map(|v| (k, v)))
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| {
+					LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#185">v</a>.child_value(<span class="number">0</span>))
+						.and_then(|k| LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#185">v</a>.child_value(<span class="number">1</span>)).map(|v| (<a href="#187">k</a>, <a href="#187">v</a>)))
 				})
-				.collect(),
-			VariantClass::Array | VariantClass::Tuple =&gt; v.iter().map(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span>v)).collect(),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::UnsupportedType(Cow::Owned(v.type_().to_owned()))),
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
+			VariantClass::Array | VariantClass::Tuple =&gt; <a href="#171">v</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#190">v</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#21">LuaError::UnsupportedType</a>(Cow::Owned(<a href="#171">v</a>.type_().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>()))),
 		}
 	}
 
-	<span class="kw">pub fn </span>with_bytes&lt;B: AsRef&lt;[u8]&gt;&gt;(bytes: B) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>with_bytes&lt;B: AsRef&lt;[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]&gt;&gt;(bytes: B) -&gt; <span class="self">Self </span>{
 		<span class="comment">// TODO: LuaString::from(bytes.as_ref()).into() if BYTE_STRINGs are ever supported upstream
-		</span>bytes.as_ref().iter().map(|<span class="kw-2">&amp;</span>v| LuaVariant::from(v <span class="kw">as </span>u16)).collect()
+		</span><a href="#195">bytes</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|<span class="kw-2">&amp;</span>v| LuaVariant::from(<a href="#197">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>()
 	}
 
-	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaType {
-		LuaType::with_lua_variant(<span class="self">self</span>)
+	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#23-30">LuaType</a> {
+		LuaType::with_lua_variant(<a class="self" href="#200">self</a>)
 	}
 
-	<span class="kw">pub fn </span>lua_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaValue {
-		<span class="kw">match </span><span class="self">self</span>.lua_type() {
-			LuaType::Nil =&gt; <span class="prelude-val">Some</span>(LuaValue::Nil),
-			LuaType::Boolean =&gt; <span class="self">self</span>.get_bool().map(LuaValue::Boolean),
-			LuaType::Integer =&gt; <span class="self">self</span>.get_integer().and_then(|i| i.ok()).map(LuaValue::Integer),
-			LuaType::Float =&gt; <span class="self">self</span>.get_float().and_then(|f| f.ok()).map(LuaValue::Float),
-			LuaType::String =&gt; <span class="self">self</span>.get_string().map(LuaValue::String),
-			LuaType::Table =&gt; LuaTable::borrow(<span class="self">self</span>.as_variant()).ok().map(LuaValue::Table),
+	<span class="kw">pub fn </span>lua_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#106-113">LuaValue</a> {
+		<span class="kw">match </span><a class="self" href="#204">self</a>.<a href="#200-202">lua_type</a>() {
+			<a href="#24">LuaType::Nil</a> =&gt; <span class="prelude-val">Some</span>(<a href="#107">LuaValue::Nil</a>),
+			<a href="#25">LuaType::Boolean</a> =&gt; <a class="self" href="#204">self</a>.<a href="#232-238">get_bool</a>().map(<a href="#108">LuaValue::Boolean</a>),
+			<a href="#26">LuaType::Integer</a> =&gt; <a class="self" href="#204">self</a>.<a href="#279-302">get_integer</a>().and_then(|i| <a href="#208">i</a>.ok()).map(<a href="#109">LuaValue::Integer</a>),
+			<a href="#27">LuaType::Float</a> =&gt; <a class="self" href="#204">self</a>.<a href="#251-276">get_float</a>().and_then(|f| <a href="#209">f</a>.ok()).map(<a href="#110">LuaValue::Float</a>),
+			<a href="#28">LuaType::String</a> =&gt; <a class="self" href="#204">self</a>.<a href="#247-249">get_string</a>().map(<a href="#111">LuaValue::String</a>),
+			<a href="#29">LuaType::Table</a> =&gt; LuaTable::borrow(<a class="self" href="#204">self</a>.<a href="#13-20">as_variant</a>()).ok().map(<a href="#112">LuaValue::Table</a>),
 		}
 		.expect(<span class="string">&quot;LuaType&quot;</span>)
 	}
 
 	<span class="kw">pub fn </span>flattened(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
+		<span class="kw">match </span><a class="self" href="#216">self</a>.<a href="#13-20">as_variant</a>().classify() {
 			VariantClass::Variant =&gt;
-				<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="self">self</span>.as_variant().as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)) }.flattened(),
-			<span class="kw">_ </span>=&gt; <span class="self">self</span>.clone(),
+				<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a class="self" href="#216">self</a>.<a href="#13-20">as_variant</a>().as_variant().expect(<span class="string">&quot;VariantClass&quot;</span>)) }.<a href="#216-222">flattened</a>(),
+			<span class="kw">_ </span>=&gt; <a class="self" href="#216">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>(),
 		}
 	}
 
 	<span class="kw">pub fn </span>get_nil&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
-		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
-			VariantClass::Tuple =&gt; <span class="self">self</span>.as_variant().get(),
-			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_nil(),
+		<span class="kw">match </span><a class="self" href="#224">self</a>.<a href="#13-20">as_variant</a>().classify() {
+			VariantClass::Tuple =&gt; <a class="self" href="#224">self</a>.<a href="#13-20">as_variant</a>().get(),
+			VariantClass::Variant =&gt; <a class="self" href="#224">self</a>.<a href="#216-222">flattened</a>().<a href="#224-230">get_nil</a>(),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
-		<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
-			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get(),
-			VariantClass::Variant =&gt; <span class="self">self</span>.flattened().get_bool(),
+	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt; {
+		<span class="kw">match </span><a class="self" href="#232">self</a>.<a href="#13-20">as_variant</a>().classify() {
+			VariantClass::Boolean =&gt; <a class="self" href="#232">self</a>.<a href="#13-20">as_variant</a>().get(),
+			VariantClass::Variant =&gt; <a class="self" href="#232">self</a>.<a href="#216-222">flattened</a>().<a href="#232-238">get_bool</a>(),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
 	<span class="kw">pub fn </span>get_table&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-		<span class="kw">match </span><span class="self">self</span>.lua_type() {
-			LuaType::Table =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ LuaTable::unsafe_from(<span class="self">self</span>.flattened().into_inner()) }),
+		<span class="kw">match </span><a class="self" href="#240">self</a>.<a href="#200-202">lua_type</a>() {
+			<a href="#29">LuaType::Table</a> =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ LuaTable::unsafe_from(<a class="self" href="#240">self</a>.<a href="#216-222">flattened</a>().<a href="#13-20">into_inner</a>()) }),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub fn </span>get_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaString&gt; {
-		LuaString::try_from(<span class="self">self</span>.as_variant()).ok()
+	<span class="kw">pub fn </span>get_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="string.rs.html#7-10">LuaString</a>&gt; {
+		LuaString::try_from(<a class="self" href="#247">self</a>.<a href="#13-20">as_variant</a>()).ok()
 	}
 
-	<span class="kw">pub fn </span>get_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;f64, LuaError&gt;&gt; {
-		<span class="kw">const </span>MAX_SAFE_INTEGER: i64 = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
-		<span class="kw">const </span>MAX_SAFE_INTEGER_UNSIGNED: u64 = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
-		<span class="kw">const </span>MIN_SAFE_INTEGER: i64 = -(<span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>);
-		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
-			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>.as_variant().get::&lt;f64&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>)),
-			VariantClass::Boolean =&gt; u8::from(<span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap())
-				.try_into()
-				.map_err(Into::into),
-			VariantClass::Byte =&gt; <span class="self">self</span>.as_variant().get::&lt;u8&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Uint16 =&gt; <span class="self">self</span>.as_variant().get::&lt;u16&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Uint32 =&gt; <span class="self">self</span>.as_variant().get::&lt;u32&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Uint64 =&gt; <span class="kw">match </span><span class="self">self</span>.as_variant().get::&lt;u64&gt;().unwrap() {
-				v @ <span class="number">0</span>..=MAX_SAFE_INTEGER_UNSIGNED =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>f64),
-				v =&gt; <span class="prelude-val">Err</span>(i32::try_from(v).unwrap_err().into()),
+	<span class="kw">pub fn </span>get_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="error.rs.html#14-23">LuaError</a>&gt;&gt; {
+		<span class="kw">const </span>MAX_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
+		<span class="kw">const </span>MAX_SAFE_INTEGER_UNSIGNED: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
+		<span class="kw">const </span>MIN_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> = -(<span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>);
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().classify() {
+			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt;().expect(<span class="string">&quot;VariantClass&quot;</span>)),
+			VariantClass::Boolean =&gt; u8::from(<a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;().unwrap())
+				.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+				.map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Byte =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Uint16 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Uint32 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Uint64 =&gt; <span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;().unwrap() {
+				v @ <span class="number">0</span>..=<a href="#253">MAX_SAFE_INTEGER_UNSIGNED</a> =&gt; <span class="prelude-val">Ok</span>(<a href="#264">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
+				v =&gt; <span class="prelude-val">Err</span>(i32::try_from(<a href="#265">v</a>).unwrap_err().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
 			},
-			VariantClass::Int16 =&gt; <span class="self">self</span>.as_variant().get::&lt;i16&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Int32 =&gt; <span class="self">self</span>.as_variant().get::&lt;i32&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Int64 =&gt; <span class="kw">match </span><span class="self">self</span>.as_variant().get::&lt;i64&gt;().unwrap() {
-				v @ MIN_SAFE_INTEGER..=MAX_SAFE_INTEGER =&gt; <span class="prelude-val">Ok</span>(v <span class="kw">as </span>f64),
-				v =&gt; <span class="prelude-val">Err</span>(u32::try_from(v).unwrap_err().into()),
+			VariantClass::Int16 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Int32 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Int64 =&gt; <span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;().unwrap() {
+				v @ <a href="#254">MIN_SAFE_INTEGER</a>..=<a href="#252">MAX_SAFE_INTEGER</a> =&gt; <span class="prelude-val">Ok</span>(<a href="#270">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
+				v =&gt; <span class="prelude-val">Err</span>(u32::try_from(<a href="#271">v</a>).unwrap_err().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
 			},
-			VariantClass::Variant =&gt; <span class="kw">return </span><span class="self">self</span>.flattened().get_float(),
+			VariantClass::Variant =&gt; <span class="kw">return </span><a class="self" href="#251">self</a>.<a href="#216-222">flattened</a>().<a href="#251-276">get_float</a>(),
 			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 
 	<span class="attr">#[rustfmt::skip]
-	</span><span class="kw">pub fn </span>get_integer&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;T, LuaError&gt;&gt;
+	</span><span class="kw">pub fn </span>get_integer&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;T, <a href="error.rs.html#14-23">LuaError</a>&gt;&gt;
 	<span class="kw">where
-		</span>T: TryFrom&lt;bool&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;bool&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;u8&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u8&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;u16&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u16&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;u32&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u32&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;u64&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;u64&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;i16&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i16&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;i32&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i32&gt;&gt;::Error: Into&lt;LuaError&gt;,
-		T: TryFrom&lt;i64&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;i64&gt;&gt;::Error: Into&lt;LuaError&gt;,
+		</span>T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
+		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
 	{
-		<span class="prelude-val">Some</span>(<span class="kw">match </span><span class="self">self</span>.as_variant().classify() {
-			VariantClass::Boolean =&gt; <span class="self">self</span>.as_variant().get::&lt;bool&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Byte =&gt; <span class="self">self</span>.as_variant().get::&lt;u8&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Uint16 =&gt; <span class="self">self</span>.as_variant().get::&lt;u16&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Uint32 =&gt; <span class="self">self</span>.as_variant().get::&lt;u32&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Uint64 =&gt; <span class="self">self</span>.as_variant().get::&lt;u64&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Int16 =&gt; <span class="self">self</span>.as_variant().get::&lt;i16&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Int32 =&gt; <span class="self">self</span>.as_variant().get::&lt;i32&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Int64 =&gt; <span class="self">self</span>.as_variant().get::&lt;i64&gt;().unwrap().try_into().map_err(Into::into),
-			VariantClass::Variant =&gt; <span class="kw">return </span><span class="self">self</span>.flattened().get_integer::&lt;T&gt;(),
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().classify() {
+			VariantClass::Boolean =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Byte =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Uint16 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Uint32 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Uint64 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Int16 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Int32 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Int64 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+			VariantClass::Variant =&gt; <span class="kw">return </span><a class="self" href="#279">self</a>.<a href="#216-222">flattened</a>().<a href="#279-302">get_integer</a>::&lt;T&gt;(),
 			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; StaticVariantType <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
-	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
-		VariantTy::VARIANT.into()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
+		VariantTy::VARIANT.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
-	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
-		Variant::from_variant(<span class="self">self</span>.as_variant())
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> {
+		Variant::from_variant(<a class="self" href="#312">self</a>.<a href="#13-20">as_variant</a>())
 	}
 }
 
-<span class="macro">newtype_wrapper! </span>{
+<a class="macro" href="macros.rs.html#2-199">newtype_wrapper! </a>{
 	<span class="doccomment">/// A specialized [LuaVariant] that is both an array and dictionary.
 	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
-	</span><span class="kw">pub struct </span>LuaTable(Variant ;<span class="question-mark">? </span>LuaError);
+	</span><span class="kw">pub struct </span><a href="../../../wireplumber/lua/struct.LuaTable.html">LuaTable</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> ;<span class="question-mark">? </span><a href="error.rs.html#14-23">LuaError</a>);
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; LuaTable&lt;<span class="lifetime">&#39;v</span>&gt; {
-	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span>Variant) -&gt; <span class="prelude-ty">Result</span>&lt;(), LuaError&gt; {
+	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="comment">// used by Self::wrap and Self::borrow
-		</span>LuaType::with_variant(v).and_then(|ty| <span class="kw">match </span>ty {
-			LuaType::Table =&gt; <span class="prelude-val">Ok</span>(()),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(LuaError::TypeMismatch(VariantTypeMismatchError::new(
-				v.type_().to_owned(),
-				VariantTy::ARRAY.to_owned(),
+		</span>LuaType::with_variant(<a href="#324">v</a>).and_then(|ty| <span class="kw">match </span><a href="#326">ty</a> {
+			<a href="#29">LuaType::Table</a> =&gt; <span class="prelude-val">Ok</span>(()),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
+				<a href="#324">v</a>.type_().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+				VariantTy::ARRAY.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
 			))),
 		})
 	}
 
 	<span class="kw">pub fn </span>into_lua_variant(<span class="self">self</span>) -&gt; LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
-		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="self">self</span>.into_inner()) }
+		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a class="self" href="#335">self</a>.<a href="#317-321">into_inner</a>()) }
 	}
 
-	<span class="kw">pub fn </span>lua_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LuaVariant {
-		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<span class="self">self</span>.as_variant()) }
+	<span class="kw">pub fn </span>lua_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#13-20">LuaVariant</a> {
+		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a class="self" href="#339">self</a>.<a href="#317-321">as_variant</a>()) }
 	}
 
-	<span class="kw">pub fn </span>entry_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-		<span class="self">self</span>.as_variant().n_children()
+	<span class="kw">pub fn </span>entry_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
+		<a class="self" href="#343">self</a>.<a href="#317-321">as_variant</a>().n_children()
 	}
 
-	<span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="self">self</span>.entry_len() == <span class="number">0
+	<span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="self" href="#347">self</a>.<a href="#343-345">entry_len</a>() == <span class="number">0
 	</span>}
 
 	<span class="doccomment">/// Lua&#39;s `n` field, if it exists
-	</span><span class="kw">pub fn </span>table_getn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u64&gt; {
-		<span class="self">self
-			</span>.by_key(<span class="kw-2">&amp;</span><span class="string">&quot;n&quot;</span>.into())
-			.and_then(|v| v.get_integer())
-			.and_then(|v| v.ok())
+	</span><span class="kw">pub fn </span>table_getn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt; {
+		<span class="self"><a href="#352">self</a>
+			</span>.<a href="#448-453">by_key</a>(<span class="kw-2">&amp;</span><span class="string">&quot;n&quot;</span>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
+			.and_then(|v| <a href="#355">v</a>.<a href="#279-302">get_integer</a>())
+			.and_then(|v| <a href="#356">v</a>.ok())
 	}
 
-	<span class="kw">pub fn </span>variant_is_dict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="self">self</span>.as_variant().type_().is_subtype_of(VariantTy::DICTIONARY)
+	<span class="kw">pub fn </span>variant_is_dict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="self" href="#359">self</a>.<a href="#317-321">as_variant</a>().type_().is_subtype_of(VariantTy::DICTIONARY)
 	}
 
 	<span class="kw">pub fn </span>iter_dict_entries&lt;<span class="lifetime">&#39;a</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
 	) -&gt; <span class="kw">impl </span>Iterator&lt;Item = DictEntry&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
-		<span class="self">self</span>.as_variant().iter().enumerate().map(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{
-			<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
+		<a class="self" href="#364">self</a>.<a href="#317-321">as_variant</a>().iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">enumerate</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{
+			<span class="kw">match </span><a class="self" href="#364">self</a>.<a href="#359-361">variant_is_dict</a>() {
 				<span class="bool-val">true </span>=&gt; DictEntry::new(
-					LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)),
-					LuaVariant::unsafe_from(v.child_value(<span class="number">1</span>)),
+					LuaVariant::unsafe_from(<a href="#366">v</a>.child_value(<span class="number">0</span>)),
+					LuaVariant::unsafe_from(<a href="#366">v</a>.child_value(<span class="number">1</span>)),
 				),
-				<span class="bool-val">false </span>=&gt; DictEntry::new((i <span class="kw">as </span>u64 + <span class="number">1</span>).into(), LuaVariant::unsafe_from(v)),
+				<span class="bool-val">false </span>=&gt; DictEntry::new((<a href="#366">i</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> + <span class="number">1</span>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(), LuaVariant::unsafe_from(<a href="#366">v</a>)),
 			}
 		})
 	}
 
-	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;u64&gt;&gt; + <span class="lifetime">&#39;a </span>{
-		<span class="self">self
-			</span>.as_variant()
+	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self"><a href="#377">self</a>
+			</span>.<a href="#317-321">as_variant</a>()
 			.iter()
-			.enumerate()
-			.map(<span class="kw">move </span>|(i, v)| <span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
-				<span class="bool-val">true </span>=&gt; <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)) }
-					.lua_value()
-					.to_integer()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">enumerate</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(i, v)| <span class="kw">match </span><a class="self" href="#377">self</a>.<a href="#359-361">variant_is_dict</a>() {
+				<span class="bool-val">true </span>=&gt; <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a href="#382">v</a>.child_value(<span class="number">0</span>)) }
+					.<a href="#204-214">lua_value</a>()
+					.<a href="#142-158">to_integer</a>()
 					.ok()
-					.and_then(|i| i.try_into().ok())
-					.and_then(|idx: u64| idx.checked_sub(<span class="number">1</span>)),
-				<span class="bool-val">false </span>=&gt; <span class="prelude-val">Some</span>(i <span class="kw">as </span>u64),
+					.and_then(|i| <a href="#387">i</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().ok())
+					.and_then(|idx: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>| <a href="#388">idx</a>.checked_sub(<span class="number">1</span>)),
+				<span class="bool-val">false </span>=&gt; <span class="prelude-val">Some</span>(<a href="#382">i</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>),
 			})
 	}
 
-	<span class="kw">pub fn </span>array_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(usize, u64)&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>indices: Vec&lt;<span class="kw">_</span>&gt; = <span class="self">self
-			</span>.iter_array_indices()
-			.enumerate()
-			.filter_map(|(i, idx)| idx.map(|idx| (i, idx)))
-			.collect();
-		indices.sort_by_key(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx);
-		indices
+	<span class="kw">pub fn </span>array_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>)&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>indices: Vec&lt;<span class="kw">_</span>&gt; = <span class="self"><a href="#393">self</a>
+			</span>.<a href="#377-391">iter_array_indices</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">enumerate</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">filter_map</a>(|(i, idx)| <a href="#397">idx</a>.map(|idx| (<a href="#397">i</a>, <a href="#397">idx</a>)))
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>();
+		<a href="#394">indices</a>.sort_by_key(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#399">idx</a>);
+		<a href="#394">indices</a>
 	}
 
-	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (u64, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;)&gt; + <span class="lifetime">&#39;a </span>{
-		<span class="self">self
-			</span>.array_indices()
-			.into_iter()
-			.map(<span class="kw">move </span>|(i, idx)| (idx, <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>)))
+	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>, LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;)&gt; + <span class="lifetime">&#39;a </span>{
+		<span class="self"><a href="#403">self</a>
+			</span>.<a href="#393-401">array_indices</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(i, idx)| (<a href="#407">idx</a>, <a class="self" href="#403">self</a>.<a href="#439-446">value_at</a>(<a href="#407">i</a>).expect(<span class="string">&quot;array_indices&quot;</span>)))
 	}
 
 	<span class="kw">pub fn </span>iter_array&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; + <span class="lifetime">&#39;a </span>{
-		<span class="kw">let </span>indices = <span class="self">self</span>.array_indices();
-		<span class="kw">let </span>last = <span class="self">self</span>.table_getn().or_else(|| indices.last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx));
+		<span class="kw">let </span>indices = <a class="self" href="#410">self</a>.<a href="#393-401">array_indices</a>();
+		<span class="kw">let </span>last = <a class="self" href="#410">self</a>.<a href="#352-357">table_getn</a>().or_else(|| <a href="#411">indices</a>.last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#412">idx</a>));
 
-		<span class="kw">let </span><span class="kw-2">mut </span>indices = indices.into_iter().peekable();
-		(<span class="number">0</span>..=last.unwrap_or(<span class="number">0</span>)).map(<span class="kw">move </span>|idx| <span class="kw">match </span>indices.peek() {
-			<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span>idx == next =&gt; indices.next().map(|(i, <span class="kw">_</span>)| <span class="self">self</span>.value_at(i).expect(<span class="string">&quot;array_indices&quot;</span>)),
+		<span class="kw">let </span><span class="kw-2">mut </span>indices = <a href="#411">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">peekable</a>();
+		(<span class="number">0</span>..=<a href="#412">last</a>.unwrap_or(<span class="number">0</span>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|idx| <span class="kw">match </span><a href="#414">indices</a>.peek() {
+			<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span><a href="#415">idx</a> == <a href="#416">next</a> =&gt; <a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">next</a>().map(|(i, <span class="kw">_</span>)| <a class="self" href="#410">self</a>.<a href="#439-446">value_at</a>(<a href="#416">i</a>).expect(<span class="string">&quot;array_indices&quot;</span>)),
 			<span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-			<span class="prelude-val">None </span>=&gt; indices.next().map(|<span class="kw">_</span>| <span class="macro">unreachable!</span>(<span class="string">&quot;array_indices&quot;</span>)),
+			<span class="prelude-val">None </span>=&gt; <a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">next</a>().map(|<span class="kw">_</span>| <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unreachable.html">unreachable!</a>(<span class="string">&quot;array_indices&quot;</span>)),
 		})
 	}
 
-	<span class="kw">pub fn </span>array_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
-		<span class="self">self
-			</span>.table_getn()
-			.or_else(|| <span class="self">self</span>.array_indices().last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| idx))
+	<span class="kw">pub fn </span>array_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> {
+		<span class="self"><a href="#422">self</a>
+			</span>.<a href="#352-357">table_getn</a>()
+			.or_else(|| <a class="self" href="#422">self</a>.<a href="#393-401">array_indices</a>().last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#425">idx</a>))
 			.unwrap_or(<span class="number">0</span>)
 	}
 
-	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
-		<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
-			<span class="bool-val">true </span>=&gt; <span class="self">self
-				</span>.as_variant()
-				.try_child_value(index)
-				.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.child_value(<span class="number">0</span>)) }),
+	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="kw">match </span><a class="self" href="#429">self</a>.<a href="#359-361">variant_is_dict</a>() {
+			<span class="bool-val">true </span>=&gt; <span class="self"><a href="#429">self</a>
+				</span>.<a href="#317-321">as_variant</a>()
+				.try_child_value(<a href="#429">index</a>)
+				.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a href="#434">v</a>.child_value(<span class="number">0</span>)) }),
 			<span class="bool-val">false </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
-		<span class="self">self</span>.as_variant().try_child_value(index).map(|v| <span class="kw">unsafe </span>{
-			LuaVariant::unsafe_from(<span class="kw">match </span><span class="self">self</span>.variant_is_dict() {
-				<span class="bool-val">true </span>=&gt; v.child_value(<span class="number">1</span>),
-				<span class="bool-val">false </span>=&gt; v,
+	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<a class="self" href="#439">self</a>.<a href="#317-321">as_variant</a>().try_child_value(<a href="#439">index</a>).map(|v| <span class="kw">unsafe </span>{
+			LuaVariant::unsafe_from(<span class="kw">match </span><a class="self" href="#439">self</a>.<a href="#359-361">variant_is_dict</a>() {
+				<span class="bool-val">true </span>=&gt; <a href="#440">v</a>.child_value(<span class="number">1</span>),
+				<span class="bool-val">false </span>=&gt; <a href="#440">v</a>,
 			})
 		})
 	}
 
-	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>LuaVariant) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
-		<span class="self">self
-			</span>.iter_dict_entries()
-			.find(|e| e.key() == key)
-			.map(|e| e.value().owned())
+	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="#13-20">LuaVariant</a>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+		<span class="self"><a href="#448">self</a>
+			</span>.<a href="#363-375">iter_dict_entries</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">find</a>(|e| <a href="#451">e</a>.key() == <a href="#448">key</a>)
+			.map(|e| <a href="#452">e</a>.value().<a href="#13-20">owned</a>())
 	}
 
-	<span class="kw">pub fn </span>is_array(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
+	<span class="kw">pub fn </span>is_array(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt; {
 		<span class="kw">if </span><span class="self">self</span>.table_getn().is_some() {
 			<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
 		}
 
-		<span class="kw">match </span><span class="self">self</span>.iter_array_indices().all(|i| i.is_some()) {
-			<span class="bool-val">true </span><span class="kw">if </span><span class="self">self</span>.is_empty() =&gt; <span class="prelude-val">None</span>,
-			v =&gt; <span class="prelude-val">Some</span>(v),
+		<span class="kw">match </span><a class="self" href="#455">self</a>.<a href="#377-391">iter_array_indices</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">all</a>(|i| <a href="#460">i</a>.is_some()) {
+			<span class="bool-val">true </span><span class="kw">if </span><a class="self" href="#455">self</a>.<a href="#347-349">is_empty</a>() =&gt; <span class="prelude-val">None</span>,
+			v =&gt; <span class="prelude-val">Some</span>(<a href="#462">v</a>),
 		}
 	}
 
-	<span class="kw">pub fn </span>is_vardict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-		<span class="self">self</span>.as_variant().type_() == VariantTy::VARDICT
+	<span class="kw">pub fn </span>is_vardict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+		<a class="self" href="#466">self</a>.<a href="#317-321">as_variant</a>().type_() == VariantTy::VARDICT
 	}
 
-	<span class="kw">pub fn </span>into_vardict(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, LuaError&gt; {
+	<span class="kw">pub fn </span>into_vardict(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="kw">if </span><span class="self">self</span>.is_vardict() {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self</span>)
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<a class="self" href="#470">self</a>)
 		}
 
-		<span class="self">self
-			</span>.iter_dict_entries()
-			.map(|e| {
-				e.key()
-					.lua_value()
-					.to_lua_string()
-					.and_then(|s| s.into_string().map_err(Into::into))
-					.map(|s| (s, e.value().owned()))
+		<span class="self"><a href="#470">self</a>
+			</span>.<a href="#363-375">iter_dict_entries</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|e| {
+				<a href="#477">e</a>.key()
+					.<a href="#204-214">lua_value</a>()
+					.<a href="#127-140">to_lua_string</a>()
+					.and_then(|s| <a href="#481">s</a>.<a href="string.rs.html#17-22">into_string</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>))
+					.map(|s| (<a href="#482">s</a>, <a href="#477">e</a>.value().<a href="#13-20">owned</a>()))
 			})
-			.collect()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>()
 	}
 }
 
-<span class="kw">impl </span>StaticVariantType <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;_</span>&gt; {
-	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, VariantTy&gt; {
-		VariantTy::VARDICT.into()
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
+		VariantTy::VARDICT.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = V&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{
-			UnsafeFrom::unsafe_from(Variant::array_from_iter_with_type(
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.UnsafeFrom.html">UnsafeFrom::unsafe_from</a>(Variant::array_from_iter_with_type(
 				<span class="kw-2">&amp;</span>V::static_variant_type(),
-				iter.into_iter().map(|v| v.into().to_variant()),
+				<a href="#495">iter</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <a href="#499">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
 			))
 		}
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;
 	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;
 {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = (K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span>entry_type = VariantType::new_dict_entry(<span class="kw-2">&amp;</span>K::static_variant_type(), <span class="kw-2">&amp;</span>V::static_variant_type());
-		<span class="kw">let </span>entries = iter
-			.into_iter()
-			.map(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span>k.into().into_variant(), <span class="kw-2">&amp;</span>v.into().into_variant()));
-		<span class="kw">unsafe </span>{ UnsafeFrom::unsafe_from(Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span>entry_type, entries)) }
+		<span class="kw">let </span>entries = <a href="#508">iter</a>
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span><a href="#512">k</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="#13-20">into_variant</a>(), <span class="kw-2">&amp;</span><a href="#512">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="#13-20">into_variant</a>()));
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.UnsafeFrom.html">UnsafeFrom::unsafe_from</a>(Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span><a href="#509">entry_type</a>, <a href="#510">entries</a>)) }
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>&gt; FromIterator&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
-		LuaTable::from_iter(iter).into_lua_variant()
+		LuaTable::from_iter(<a href="#518">iter</a>).<a href="#335-337">into_lua_variant</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: StaticVariantType + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, K: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt;&gt;&gt;
 	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;
 {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = (K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		LuaTable::from_iter(iter).into_lua_variant()
+		LuaTable::from_iter(<a href="#526">iter</a>).<a href="#335-337">into_lua_variant</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToVariant <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
-	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Variant {
-		<span class="self">self
-			</span>.clone()
-			.into_vardict()
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> {
+		<span class="self"><a href="#532">self</a>
+			</span>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>()
+			.<a href="#470-485">into_vardict</a>()
 			.expect(<span class="string">&quot;VarDict requires UTF8 keys&quot;</span>)
-			.into_variant()
+			.<a href="#317-321">into_variant</a>()
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(v.into_inner()) }
+		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a href="#542">v</a>.<a href="#317-321">into_inner</a>()) }
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UnsafeFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
 	<span class="kw">unsafe fn </span>unsafe_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::unsafe_from(v.into_inner())
+		<span class="self">Self</span>::unsafe_from(<a href="#548">v</a>.<a href="#13-20">into_inner</a>())
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">&#39;a</span>&gt; {
-	<span class="kw">type </span>Error = LuaError;
+	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
 	<span class="kw">fn </span>try_from(v: LuaVariant&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="self">Self</span>::try_from(v.into_inner())
+		<span class="self">Self</span>::try_from(<a href="#556">v</a>.<a href="#13-20">into_inner</a>())
 	}
 }
 
@@ -1164,9 +1164,9 @@
 	};
 }
 
-<span class="macro">lua_primitives! </span>{
-	i16, u16, i32, u32, i64, u64,
-	bool, f64, (),
+<a class="macro" href="#561-573">lua_primitives! </a>{
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
+	<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, (),
 }
 
 <span class="comment">/*impl&lt;&#39;a, &#39;v&gt; From&lt;&amp;&#39;a str&gt; for LuaVariant&lt;&#39;v&gt; {
@@ -1179,7 +1179,7 @@
 
 </span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, <span class="lifetime">&#39;s</span>, S: Into&lt;LuaString&lt;<span class="lifetime">&#39;s</span>&gt;&gt;&gt; From&lt;S&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">&#39;v</span>&gt; {
 	<span class="kw">fn </span>from(s: S) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(s.into().to_variant()) }
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(<a href="#589">s</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="string.rs.html#24-29">to_variant</a>()) }
 	}
 }
 </code></pre></div></section></main></body></html>

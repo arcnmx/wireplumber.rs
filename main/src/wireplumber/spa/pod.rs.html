@@ -345,55 +345,63 @@
 <a href="#345" id="345">345</a>
 <a href="#346" id="346">346</a>
 <a href="#347" id="347">347</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">use </span><span class="kw">crate</span>::pw::PipewireObject;
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;experimental&quot;</span>)]
+</span><span class="kw">use </span><a href="../auto/pipewire_object.rs.html#8-15"><span class="kw">crate</span>::pw::PipewireObject</a>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+</span><span class="kw">use </span><a href="../auto/spa_pod_parser.rs.html#8-17"><span class="kw">crate</span>::spa::SpaPodParser</a>;
 <span class="kw">use </span>{
 	<span class="kw">crate</span>::{
-		prelude::<span class="kw-2">*</span>,
-		pw::SpaPropertyKey,
-		spa::{SpaIdValue, SpaPod, SpaPodBuilder, SpaPodParser, SpaPrimitive, SpaType, SpaValue},
+		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+		<a href="../pw/keys.rs.html#254-258">pw::SpaPropertyKey</a>,
+		spa::{<a href="id_value.rs.html#11-13">SpaIdValue</a>, <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>, <a href="../auto/spa_pod_builder.rs.html#7-16">SpaPodBuilder</a>, <a href="traits.rs.html#9-11">SpaPrimitive</a>, <a href="type.rs.html#3-11">SpaType</a>, <a href="traits.rs.html#13-17">SpaValue</a>},
 	},
-	libspa_sys::{spa_fraction, spa_pod, spa_rectangle},
+	libspa_sys::{<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_fraction.html">spa_fraction</a>, <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>, <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_rectangle.html">spa_rectangle</a>},
 };
 
-<span class="kw">impl </span>SpaPod {
+<span class="kw">impl </span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
 	<span class="doccomment">/// # Safety
 	///
 	/// Does not tie lifetime of `bytes` to Self, so requires caller guarantee
-	</span><span class="kw">pub unsafe fn </span>with_pod_unchecked(bytes: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-		<span class="macro">assert!</span>(bytes.len() &gt;= mem::size_of::&lt;spa_pod&gt;());
-		<span class="kw">let </span>pod = bytes.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>spa_pod;
+	</span><span class="kw">pub unsafe fn </span>with_pod_unchecked(bytes: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="self">Self </span>{
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= mem::size_of::&lt;spa_pod&gt;());
+		<span class="kw">let </span>pod = <a href="#18">bytes</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>;
 
 		<span class="comment">// TODO: complicated, are unaligned pointers that bad if it gets copied anyway..?
-		</span><span class="macro">assert_eq!</span>(pod <span class="kw">as </span>usize % mem::align_of::&lt;spa_pod&gt;(), <span class="number">0</span>);
-		<span class="macro">assert!</span>(bytes.len() &gt;= (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize);
+		</span><a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_eq.html">assert_eq!</a>(pod <span class="kw">as </span>usize % mem::align_of::&lt;spa_pod&gt;(), <span class="number">0</span>);
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize);
 
-		<span class="self">Self</span>::new_wrap_raw_const(pod)
+		<span class="self">Self</span>::new_wrap_raw_const(<a href="#20">pod</a>)
 	}
 
 	<span class="doccomment">/// # Safety
 	///
 	/// Does not tie lifetime of `bytes` to Self, so requires caller guarantee
-	</span><span class="kw">pub unsafe fn </span>with_pod_mut_unchecked(bytes: <span class="kw-2">&amp;mut </span>[u8]) -&gt; <span class="self">Self </span>{
-		<span class="macro">assert!</span>(bytes.len() &gt;= mem::size_of::&lt;spa_pod&gt;());
-		<span class="kw">let </span>pod = bytes.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>spa_pod;
+	</span><span class="kw">pub unsafe fn </span>with_pod_mut_unchecked(bytes: <span class="kw-2">&amp;mut </span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="self">Self </span>{
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= mem::size_of::&lt;spa_pod&gt;());
+		<span class="kw">let </span>pod = <a href="#32">bytes</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>;
 
 		<span class="comment">// TODO: complicated, are unaligned pointers that bad if it gets copied anyway..?
-		</span><span class="macro">assert_eq!</span>(pod <span class="kw">as </span>usize % mem::align_of::&lt;spa_pod&gt;(), <span class="number">0</span>);
-		<span class="macro">assert!</span>(bytes.len() &gt;= (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize);
+		</span><a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_eq.html">assert_eq!</a>(pod <span class="kw">as </span>usize % mem::align_of::&lt;spa_pod&gt;(), <span class="number">0</span>);
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize);
 
-		<span class="self">Self</span>::new_wrap_raw_mut(pod)
+		<span class="self">Self</span>::new_wrap_raw_mut(<a href="#34">pod</a>)
 	}
 
-	<span class="kw">pub fn </span>with_copy(pod: <span class="kw-2">&amp;</span>SpaPod) -&gt; <span class="self">Self </span>{
-		pod.copy().unwrap()
+	<span class="kw">pub fn </span>with_copy(pod: <span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>) -&gt; <span class="self">Self </span>{
+		<a href="#43">pod</a>.<a href="../auto/spa_pod.rs.html#99-103">copy</a>().unwrap()
 	}
 
-	<span class="kw">pub fn </span>with_pod(bytes: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_copy(<span class="kw-2">&amp;</span><span class="self">Self</span>::with_pod_unchecked(bytes)) }
+	<span class="kw">pub fn </span>with_pod(bytes: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="self">Self </span>{
+		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_copy(<span class="kw-2">&amp;</span><span class="self">Self</span>::with_pod_unchecked(<a href="#47">bytes</a>)) }
 	}
 
-	<span class="kw">fn </span>parse_&lt;R, F: FnOnce(<span class="kw-2">&amp;</span>SpaPodParser, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;R, Error&gt; {
+	<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+	</span><span class="kw">fn </span>parse_&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="../auto/spa_pod_parser.rs.html#8-17">SpaPodParser</a>, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;R, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">let </span>(parser, id_name) = <span class="kw">match </span>() {
 			<span class="kw">_ if </span><span class="self">self</span>.is_object() =&gt; <span class="prelude-val">Ok</span>(SpaPodParser::new_object(<span class="self">self</span>)),
 			<span class="kw">_ if </span><span class="self">self</span>.is_struct() =&gt; <span class="prelude-val">Ok</span>((SpaPodParser::new_struct(<span class="self">self</span>), <span class="prelude-val">None</span>)),
@@ -402,65 +410,67 @@
 				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unsupported SPA type {:?}&quot;</span>, <span class="self">self</span>.spa_type()),
 			)),
 		}<span class="question-mark">?</span>;
-		<span class="kw">let </span>res = f(<span class="kw-2">&amp;</span>parser, id_name);
-		parser.end();
-		<span class="prelude-val">Ok</span>(res)
+		<span class="kw">let </span>res = <a href="#52">f</a>(<span class="kw-2">&amp;</span><a href="#53">parser</a>, <a href="#53">id_name</a>);
+		<a href="#53">parser</a>.<a href="../auto/spa_pod_parser.rs.html#28-32">end</a>();
+		<span class="prelude-val">Ok</span>(<a href="#61">res</a>)
 	}
 
-	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>parse_struct&lt;R, F: FnOnce(<span class="kw-2">&amp;</span>SpaPodParser) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
-		<span class="self">self</span>.parse_(|parser, <span class="kw">_</span>| f(parser)).unwrap()
+	<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+	</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>parse_struct&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="../auto/spa_pod_parser.rs.html#8-17">SpaPodParser</a>) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
+		<a class="self" href="#67">self</a>.<a href="#52-64">parse_</a>(|parser, <span class="kw">_</span>| <a href="#67">f</a>(<a href="#68">parser</a>)).unwrap()
 	}
 
-	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>parse_object&lt;R, F: FnOnce(<span class="kw-2">&amp;</span>SpaPodParser, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
-		<span class="self">self</span>.parse_(|parser, id_name| f(parser, id_name)).unwrap()
+	<span class="attr">#[cfg(feature = <span class="string">&quot;libspa&quot;</span>)]
+	</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>parse_object&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="../auto/spa_pod_parser.rs.html#8-17">SpaPodParser</a>, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
+		<a class="self" href="#72">self</a>.<a href="#52-64">parse_</a>(|parser, id_name| <a href="#72">f</a>(<a href="#73">parser</a>, <a href="#73">id_name</a>)).unwrap()
 	}
 
-	<span class="kw">pub unsafe fn </span>as_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
+	<span class="kw">pub unsafe fn </span>as_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>] {
 		<span class="comment">// TODO: this is unsafe because we cannot check if this is a FLAG_CONSTANT pod or not
-		</span><span class="kw">let </span>pod = <span class="self">self</span>.spa_pod_raw();
-		slice::from_raw_parts(pod <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*const </span>u8, (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize)
+		</span><span class="kw">let </span>pod = <a class="self" href="#76">self</a>.<a href="#173-175">spa_pod_raw</a>();
+		<a href="https://doc.rust-lang.org/nightly/core/slice/raw/fn.from_raw_parts.html">slice::from_raw_parts</a>(<a href="#78">pod</a> <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*const </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, (<span class="kw-2">*</span><a href="#78">pod</a>).size <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)
 	}
 
-	<span class="kw">pub fn </span>to_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-		<span class="kw">unsafe </span>{ <span class="self">self</span>.as_bytes().into() }
+	<span class="kw">pub fn </span>to_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt; {
+		<span class="kw">unsafe </span>{ <a class="self" href="#82">self</a>.<a href="#76-80">as_bytes</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>() }
 	}
 
 	<span class="doccomment">/// borrows pod for the lifetime of the returned object
 	</span><span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_new_wrap&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>new_wrap_raw_mut(pod: <span class="kw-2">*mut </span>spa_pod) -&gt; SpaPod {
-		from_glib_full(ffi::wp_spa_pod_new_wrap(pod))
+	</span><span class="kw">pub unsafe fn </span>new_wrap_raw_mut(pod: <span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>) -&gt; <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
+		from_glib_full(ffi::wp_spa_pod_new_wrap(<a href="#88">pod</a>))
 	}
 
 	<span class="doccomment">/// borrows pod for the lifetime of the returned object
 	</span><span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_new_wrap_const&quot;</span>)]
-	</span><span class="kw">pub unsafe fn </span>new_wrap_raw_const(pod: <span class="kw-2">*const </span>spa_pod) -&gt; SpaPod {
-		from_glib_full(ffi::wp_spa_pod_new_wrap_const(pod))
+	</span><span class="kw">pub unsafe fn </span>new_wrap_raw_const(pod: <span class="kw-2">*const </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>) -&gt; <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
+		from_glib_full(ffi::wp_spa_pod_new_wrap_const(<a href="#94">pod</a>))
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_new_bytes&quot;</span>)]
-	</span><span class="kw">pub fn </span>new_bytes(value: <span class="kw-2">&amp;</span>[u8]) -&gt; SpaPod {
-		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_bytes(value.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, value.len() <span class="kw">as _</span>)) }
+	</span><span class="kw">pub fn </span>new_bytes(value: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_bytes(<a href="#99">value</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, <a href="#99">value</a>.len() <span class="kw">as _</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_new_pointer&quot;</span>)]
-	</span><span class="kw">pub fn </span>new_pointer(type_name: <span class="kw-2">&amp;</span>str, value: gconstpointer) -&gt; SpaPod {
-		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_pointer(type_name.to_glib_none().<span class="number">0</span>, value)) }
+	</span><span class="kw">pub fn </span>new_pointer(type_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>) -&gt; <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
+		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_pointer(<a href="#104">type_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#104">value</a>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_spa_type&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_spa_type&quot;</span>)]
-	</span><span class="kw">pub fn </span>spa_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaType&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_spa_type(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
+	</span><span class="kw">pub fn </span>spa_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="type.rs.html#3-11">SpaType</a>&gt; {
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_spa_type(<a class="self" href="#110">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_bytes&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_bytes&quot;</span>)]
-	</span><span class="kw">pub fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[u8]&gt; {
+	</span><span class="kw">pub fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]&gt; {
 		<span class="kw">let </span><span class="kw-2">mut </span>value = ptr::null();
 		<span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
 		<span class="kw">unsafe </span>{
 			<span class="kw">if </span>from_glib(ffi::wp_spa_pod_get_bytes(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>value, <span class="kw-2">&amp;mut </span>len)) {
-				<span class="prelude-val">Some</span>(slice::from_raw_parts(value <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, len <span class="kw">as </span>usize))
+				<span class="prelude-val">Some</span>(<a href="https://doc.rust-lang.org/nightly/core/slice/raw/fn.from_raw_parts.html">slice::from_raw_parts</a>(<a href="#117">value</a> <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, <a href="#118">len</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>))
 			} <span class="kw">else </span>{
 				<span class="prelude-val">None
 			</span>}
@@ -469,17 +479,17 @@
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_choice_type&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_choice_type&quot;</span>)]
-	</span><span class="kw">pub fn </span>choice_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;SpaIdValue&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_choice_type(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
+	</span><span class="kw">pub fn </span>choice_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="id_value.rs.html#11-13">SpaIdValue</a>&gt; {
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_choice_type(<a class="self" href="#130">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_pointer&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_pointer&quot;</span>)]
-	</span><span class="kw">pub fn </span>pointer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gconstpointer&gt; {
+	</span><span class="kw">pub fn </span>pointer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>&gt; {
 		<span class="kw">let </span><span class="kw-2">mut </span>res = ptr::null();
 		<span class="kw">unsafe </span>{
 			<span class="kw">if </span>from_glib(ffi::wp_spa_pod_get_pointer(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>res)) {
-				<span class="prelude-val">Some</span>(res)
+				<span class="prelude-val">Some</span>(<a href="#137">res</a>)
 			} <span class="kw">else </span>{
 				<span class="prelude-val">None
 			</span>}
@@ -487,49 +497,49 @@
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_set_pointer&quot;</span>)]
-	</span><span class="kw">pub fn </span>set_pointer(<span class="kw-2">&amp;</span><span class="self">self</span>, type_name: <span class="kw-2">&amp;</span>str, value: gconstpointer) -&gt; bool {
+	</span><span class="kw">pub fn </span>set_pointer(<span class="kw-2">&amp;</span><span class="self">self</span>, type_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<span class="kw">unsafe </span>{
 			from_glib(ffi::wp_spa_pod_set_pointer(
-				<span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-				type_name.to_glib_none().<span class="number">0</span>,
-				value,
+				<a class="self" href="#148">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#148">type_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#148">value</a>,
 			))
 		}
 	}
 
-	<span class="kw">pub fn </span>iterator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;SpaPod&gt; {
-		ValueIterator::with_inner(<span class="self">self</span>.new_iterator().unwrap())
+	<span class="kw">pub fn </span>iterator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt; {
+		ValueIterator::with_inner(<a class="self" href="#158">self</a>.<a href="../auto/spa_pod.rs.html#426-430">new_iterator</a>().unwrap())
 	}
 
-	<span class="kw">pub fn </span>array_pointers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = Pointer&gt; {
-		<span class="self">self</span>.new_iterator().unwrap().map(|v| v.get().unwrap())
+	<span class="kw">pub fn </span>array_pointers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/type.Pointer.html">Pointer</a>&gt; {
+		<a class="self" href="#162">self</a>.<a href="../auto/spa_pod.rs.html#426-430">new_iterator</a>().unwrap().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <a href="#163">v</a>.get().unwrap())
 	}
 
-	<span class="kw">pub fn </span>array_iterator&lt;T: SpaPrimitive&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = T&gt; {
+	<span class="kw">pub fn </span>array_iterator&lt;T: <a href="traits.rs.html#9-11">SpaPrimitive</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = T&gt; {
 		<span class="comment">// TODO: assert type via T!!!
-		</span><span class="self">self</span>.array_pointers().map(|p| <span class="kw">unsafe </span>{ <span class="kw-2">*</span>(p <span class="kw">as </span><span class="kw-2">*const </span>T) })
+		</span><a class="self" href="#166">self</a>.<a href="#162-164">array_pointers</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|p| <span class="kw">unsafe </span>{ <span class="kw-2">*</span>(<a href="#168">p</a> <span class="kw">as </span><span class="kw-2">*const </span>T) })
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_pod_get_spa_pod&quot;</span>)]
 	#[doc(alias = <span class="string">&quot;get_spa_pod&quot;</span>)]
-	</span><span class="kw">pub fn </span>spa_pod_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>spa_pod {
-		<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>ffi::wp_spa_pod_get_spa_pod(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+	</span><span class="kw">pub fn </span>spa_pod_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a> {
+		<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>ffi::wp_spa_pod_get_spa_pod(<a class="self" href="#173">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
 	}
 
-	<span class="kw">pub fn </span>spa_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;spa_rectangle&gt; {
-		<span class="self">self</span>.rectangle().map(|(width, height)| spa_rectangle { width, height })
+	<span class="kw">pub fn </span>spa_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_rectangle.html">spa_rectangle</a>&gt; {
+		<a class="self" href="#177">self</a>.<a href="../auto/spa_pod.rs.html#259-266">rectangle</a>().map(|(width, height)| <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_rectangle.html">spa_rectangle</a> { <a href="#178">width</a>, <a href="#178">height</a> })
 	}
 
-	<span class="kw">pub fn </span>spa_fraction(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;spa_fraction&gt; {
-		<span class="self">self</span>.fraction().map(|(num, denom)| spa_fraction { num, denom })
+	<span class="kw">pub fn </span>spa_fraction(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_fraction.html">spa_fraction</a>&gt; {
+		<a class="self" href="#181">self</a>.<a href="../auto/spa_pod.rs.html#207-214">fraction</a>().map(|(num, denom)| <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_fraction.html">spa_fraction</a> { <a href="#182">num</a>, <a href="#182">denom</a> })
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
-	</span><span class="kw">pub fn </span>struct_fields(<span class="kw-2">&amp;</span><span class="self">self</span>, length_prefix: bool) -&gt; <span class="kw">crate</span>::Result&lt;std::vec::IntoIter&lt;(String, SpaPod)&gt;&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>params = <span class="self">self</span>.iterator();
+	<span class="attr">#[cfg(feature = <span class="string">&quot;experimental&quot;</span>)]
+	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
+	</span><span class="kw">pub fn </span>struct_fields(<span class="kw-2">&amp;</span><span class="self">self</span>, length_prefix: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="kw">crate</span>::Result&lt;std::vec::IntoIter&lt;(<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>)&gt;&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>params = <a class="self" href="#187">self</a>.<a href="#158-160">iterator</a>();
 
-		<span class="kw">let </span>length: <span class="prelude-ty">Option</span>&lt;i32&gt; = <span class="kw">if </span>length_prefix {
+		<span class="kw">let </span>length: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt; = <span class="kw">if </span>length_prefix {
 			<span class="prelude-val">Some</span>(
 				params
 					.next()
@@ -551,16 +561,16 @@
 		} <span class="kw">else </span>{
 			<span class="prelude-val">None
 		</span>};
-		<span class="kw">let </span>length = <span class="kw">match </span>length {
-			<span class="prelude-val">Some</span>(len) <span class="kw">if </span>len &lt; <span class="number">0 </span>=&gt;
+		<span class="kw">let </span>length = <span class="kw">match </span><a href="#190">length</a> {
+			<span class="prelude-val">Some</span>(len) <span class="kw">if </span><a href="#213">len</a> &lt; <span class="number">0 </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;pod struct {self:?} has invalid length {len}&quot;</span>),
+					<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
+					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;pod struct {self:?} has invalid length {len}&quot;</span>),
 				)),
-			<span class="prelude-val">Some</span>(len) =&gt; <span class="prelude-val">Some</span>(len <span class="kw">as </span>usize),
+			<span class="prelude-val">Some</span>(len) =&gt; <span class="prelude-val">Some</span>(<a href="#218">len</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
 		};
-		<span class="kw">let </span><span class="kw-2">mut </span>values = Vec::with_capacity(length.unwrap_or_default());
+		<span class="kw">let </span><span class="kw-2">mut </span>values = Vec::with_capacity(<a href="#212">length</a>.unwrap_or_default());
 
 		<span class="comment">// TODO: use a proper chunks(2) iterator here?
 		</span><span class="kw">while let </span><span class="prelude-val">Some</span>(key) = params.next() {
@@ -589,107 +599,107 @@
 			};
 			values.push((key, value));
 		}
-		<span class="prelude-val">Ok</span>(values.into_iter())
+		<span class="prelude-val">Ok</span>(<a href="#221">values</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>())
 	}
 
-	<span class="kw">pub fn </span>spa_properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<span class="prelude-ty">Result</span>&lt;SpaIdValue, ffi::WpSpaType&gt;, SpaPod)&gt; {
-		<span class="kw">let </span>type_ = <span class="self">self</span>.spa_type();
-		<span class="kw">let </span>values = type_.and_then(|ty| ty.values_table());
-		<span class="self">self
-			</span>.iterator()
-			.map(<span class="kw">move </span>|pod| pod.property().unwrap())
-			.map(<span class="kw">move </span>|(key_name, pod)| {
+	<span class="kw">pub fn </span>spa_properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<span class="prelude-ty">Result</span>&lt;<a href="id_value.rs.html#11-13">SpaIdValue</a>, <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>&gt;, <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>)&gt; {
+		<span class="kw">let </span>type_ = <a class="self" href="#253">self</a>.<a href="#110-112">spa_type</a>();
+		<span class="kw">let </span>values = <a href="#254">type_</a>.and_then(|ty| <a href="#255">ty</a>.<a href="type.rs.html#87-89">values_table</a>());
+		<span class="self"><a href="#253">self</a>
+			</span>.<a href="#158-160">iterator</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|pod| <a href="#258">pod</a>.<a href="../auto/spa_pod.rs.html#248-255">property</a>().unwrap())
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(key_name, pod)| {
 				(
 					SpaIdValue::value_or_name(
-						<span class="kw-2">&amp;</span>type_,
-						<span class="kw-2">&amp;</span>key_name,
-						values.and_then(|values| values.find_value_from_short_name(<span class="kw-2">&amp;</span>key_name)),
+						<span class="kw-2">&amp;</span><a href="#254">type_</a>,
+						<span class="kw-2">&amp;</span><a href="#259">key_name</a>,
+						<a href="#255">values</a>.and_then(|values| <a href="#264">values</a>.<a href="id_table.rs.html#35-42">find_value_from_short_name</a>(<span class="kw-2">&amp;</span><a href="#259">key_name</a>)),
 					),
-					pod,
+					<a href="#259">pod</a>,
 				)
 			})
 	}
 
-	<span class="kw">pub fn </span>find_spa_property&lt;K: SpaPropertyKey&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;SpaPod&gt; {
-		<span class="kw">let </span>values = <span class="self">self</span>.spa_type().and_then(|ty| ty.values_table());
-		<span class="kw">let </span>find_id = <span class="kw">match </span>key.spa_property_key_with_table(values) {
-			<span class="prelude-val">Ok</span>(id) =&gt; id,
+	<span class="kw">pub fn </span>find_spa_property&lt;K: <a href="../pw/keys.rs.html#254-258">SpaPropertyKey</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt; {
+		<span class="kw">let </span>values = <a class="self" href="#271">self</a>.<a href="#110-112">spa_type</a>().and_then(|ty| <a href="#272">ty</a>.<a href="type.rs.html#87-89">values_table</a>());
+		<span class="kw">let </span>find_id = <span class="kw">match </span><a href="#271">key</a>.<a href="../pw/keys.rs.html#257">spa_property_key_with_table</a>(<a href="#272">values</a>) {
+			<span class="prelude-val">Ok</span>(id) =&gt; <a href="#274">id</a>,
 			<span class="prelude-val">Err</span>(e) =&gt; {
-				<span class="macro">wp_warning!</span>(<span class="string">&quot;unknown spa key {key:?} for {self:?}: {e:?}&quot;</span>);
+				<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="string">&quot;unknown spa key {key:?} for {self:?}: {e:?}&quot;</span>);
 				<span class="kw">return </span><span class="prelude-val">None
 			</span>},
 		};
-		<span class="self">self
-			</span>.spa_properties()
-			.find(|<span class="kw-2">&amp;</span>(id, ..)| SpaIdValue::result_number(id) == find_id)
-			.map(|(<span class="kw">_</span>, pod)| pod)
+		<span class="self"><a href="#271">self</a>
+			</span>.<a href="#253-269">spa_properties</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">find</a>(|<span class="kw-2">&amp;</span>(id, ..)| SpaIdValue::result_number(<a href="#282">id</a>) == <a href="#273">find_id</a>)
+			.map(|(<span class="kw">_</span>, pod)| <a href="#283">pod</a>)
 	}
 
-	<span class="kw">pub fn </span>spa_property&lt;T, K: SpaPropertyKey&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
+	<span class="kw">pub fn </span>spa_property&lt;T, K: <a href="../pw/keys.rs.html#254-258">SpaPropertyKey</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
 	<span class="kw">where
-		for</span>&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod: TryInto&lt;T&gt;,
-		<span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; &lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SpaPod <span class="kw">as </span>TryInto&lt;T&gt;&gt;::Error: Debug,
+		for</span>&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>: TryInto&lt;T&gt;,
+		<span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; &lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> <span class="kw">as </span>TryInto&lt;T&gt;&gt;::Error: <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">Debug</a>,
 	{
-		<span class="self">self
-			</span>.find_spa_property(key)
-			.and_then(|pod| <span class="kw">match </span>TryInto::try_into(<span class="kw-2">&amp;</span>pod) {
-				<span class="prelude-val">Ok</span>(v) =&gt; <span class="prelude-val">Some</span>(v),
+		<span class="self"><a href="#286">self</a>
+			</span>.<a href="#271-284">find_spa_property</a>(<a href="#286">key</a>)
+			.and_then(|pod| <span class="kw">match </span><a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">TryInto::try_into</a>(<span class="kw-2">&amp;</span><a href="#293">pod</a>) {
+				<span class="prelude-val">Ok</span>(v) =&gt; <span class="prelude-val">Some</span>(<a href="#294">v</a>),
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to convert spa key {key:?} for {self:?}: {e:?}&quot;</span>);
+					<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="string">&quot;failed to convert spa key {key:?} for {self:?}: {e:?}&quot;</span>);
 					<span class="prelude-val">None
 				</span>},
 			})
 	}
 
-	<span class="kw">pub fn </span>set_spa_property&lt;K: SpaPropertyKey&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K, value: <span class="kw-2">&amp;</span>SpaPod) -&gt; <span class="prelude-ty">Option</span>&lt;SpaPod&gt; {
-		<span class="kw">let </span>pod = <span class="kw">match </span><span class="self">self</span>.find_spa_property(key) {
-			<span class="prelude-val">Some</span>(pod) =&gt; pod,
-			<span class="prelude-val">None </span>=&gt; <span class="macro">todo!</span>(),
+	<span class="kw">pub fn </span>set_spa_property&lt;K: <a href="../pw/keys.rs.html#254-258">SpaPropertyKey</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K, value: <span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt; {
+		<span class="kw">let </span>pod = <span class="kw">match </span><a class="self" href="#302">self</a>.<a href="#271-284">find_spa_property</a>(<a href="#302">key</a>) {
+			<span class="prelude-val">Some</span>(pod) =&gt; <a href="#304">pod</a>,
+			<span class="prelude-val">None </span>=&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>(),
 		};
 		<span class="kw">if </span>pod.set_pod(value) {
-			<span class="prelude-val">Some</span>(pod)
+			<span class="prelude-val">Some</span>(<a href="#303">pod</a>)
 		} <span class="kw">else </span>{
-			<span class="macro">wp_warning!</span>(<span class="string">&quot;failed to set spa key {key:?} of type {pod:?} to {value:?}&quot;</span>);
+			<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="string">&quot;failed to set spa key {key:?} of type {pod:?} to {value:?}&quot;</span>);
 			<span class="prelude-val">None
 		</span>}
 	}
 
-	<span class="attr">#[cfg(any(feature = <span class="string">&quot;experimental&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-	#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
-	</span><span class="kw">pub fn </span>apply&lt;O: IsA&lt;PipewireObject&gt;&gt;(<span class="self">self</span>, obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;()&gt; {
+	<span class="attr">#[cfg(feature = <span class="string">&quot;experimental&quot;</span>)]
+	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
+	</span><span class="kw">pub fn </span>apply&lt;O: IsA&lt;<a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>&gt;&gt;(<span class="self">self</span>, obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;()&gt; {
 		<span class="kw">if </span>!<span class="self">self</span>.is_object() {
 			<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to apply spa pod to {obj:?}: {self:?} is not an object&quot;</span>),
+				<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
+				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;failed to apply spa pod to {obj:?}: {self:?} is not an object&quot;</span>),
 			))
 		}
 
-		<span class="kw">let </span>type_ = <span class="self">self</span>.spa_type().unwrap();
-		<span class="kw">let </span>name = <span class="kw">match </span>type_.number() {
+		<span class="kw">let </span>type_ = <a class="self" href="#317">self</a>.<a href="#110-112">spa_type</a>().unwrap();
+		<span class="kw">let </span>name = <span class="kw">match </span><a href="#325">type_</a>.<a href="type.rs.html#70-72">number</a>() {
 			libspa_sys::SPA_TYPE_OBJECT_Props =&gt; <span class="string">&quot;Props&quot;</span>,
 			libspa_sys::SPA_TYPE_OBJECT_ParamRoute =&gt; <span class="string">&quot;Route&quot;</span>,
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-					LibraryErrorEnum::InvalidArgument,
-					<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;could not apply unknown spa type {type_:?} to {obj:?}&quot;</span>),
+					<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
+					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;could not apply unknown spa type {type_:?} to {obj:?}&quot;</span>),
 				)),
 		};
 
-		<span class="kw">let </span>flags = Default::default();
+		<span class="kw">let </span>flags = <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default::default</a>();
 		<span class="kw">if </span>obj.set_param(name, flags, <span class="self">self</span>) {
 			<span class="prelude-val">Ok</span>(())
 		} <span class="kw">else </span>{
 			<span class="prelude-val">Err</span>(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to apply param {name} to {obj:?}&quot;</span>),
+				<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
+				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;failed to apply param {name} to {obj:?}&quot;</span>),
 			))
 		}
 	}
 }
 
-<span class="kw">impl</span>&lt;T: SpaValue&gt; FromIterator&lt;T&gt; <span class="kw">for </span>SpaPod {
+<span class="kw">impl</span>&lt;T: <a href="traits.rs.html#13-17">SpaValue</a>&gt; FromIterator&lt;T&gt; <span class="kw">for </span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		SpaPodBuilder::from_iter(iter).end().unwrap()
+		SpaPodBuilder::from_iter(<a href="#349">iter</a>).<a href="../auto/spa_pod_builder.rs.html#160-164">end</a>().unwrap()
 	}
 }
 </code></pre></div></section></main></body></html>

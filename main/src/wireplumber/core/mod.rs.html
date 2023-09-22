@@ -87,17 +87,17 @@
 //! - [Core](https://pipewire.pages.freedesktop.org/wireplumber/c_api/core_api.html)
 //! - [Object](https://pipewire.pages.freedesktop.org/wireplumber/c_api/object_api.html)
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_5&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub use </span><span class="kw">crate</span>::auto::Factory;
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_5&quot;</span>)]
+</span><span class="kw">pub use </span><a href="../auto/factory.rs.html#6-13"><span class="kw">crate</span>::auto::Factory</a>;
 <span class="kw">pub use </span>{
 	<span class="self">self</span>::{
-		features::ObjectFeatures,
-		subclass::{ObjectImpl, ObjectImplExt},
+		<a href="features.rs.html#15">features::ObjectFeatures</a>,
+		subclass::{<a href="subclass.rs.html#9-37">ObjectImpl</a>, <a href="subclass.rs.html#39-57">ObjectImplExt</a>},
 	},
-	<span class="kw">crate</span>::auto::{traits::ObjectExt, Core, FeatureActivationTransition, InitFlags, Object},
+	<span class="kw">crate</span>::auto::{<a href="../auto/object.rs.html#27-149">traits::ObjectExt</a>, <a href="../auto/core.rs.html#8-15">Core</a>, <a href="../auto/feature_activation_transition.rs.html#7-14">FeatureActivationTransition</a>, <a href="../auto/flags.rs.html#104-119">InitFlags</a>, <a href="../auto/object.rs.html#8-15">Object</a>},
 };
 
-<span class="kw">mod </span>core;
-<span class="kw">mod </span>features;
-<span class="kw">mod </span>subclass;
+<span class="kw">mod </span><a href="core.rs.html#1-208">core</a>;
+<span class="kw">mod </span><a href="features.rs.html#1-145">features</a>;
+<span class="kw">mod </span><a href="subclass.rs.html#1-196">subclass</a>;
 </code></pre></div></section></main></body></html>

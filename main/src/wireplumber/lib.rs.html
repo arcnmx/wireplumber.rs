@@ -109,7 +109,7 @@
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
 </pre></div><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/v0.1.0/&quot;</span>)]
-#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 </span><span class="doccomment">//! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
 //!
@@ -164,58 +164,58 @@
 
 </span><span class="attr">#[allow(unused_imports)]
 #[rustfmt::skip]
-</span><span class="kw">mod </span>auto;
+</span><span class="kw">mod </span><a href="auto/mod.rs.html#4-204">auto</a>;
 
 <span class="doccomment">/// Export dependencies for use from macros
 </span><span class="attr">#[doc(hidden)]
 </span><span class="kw">pub mod </span>lib {
-	<span class="kw">pub use </span>{gio, glib};
+	<span class="kw">pub use </span>{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gio/index.html">gio</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/index.html">glib</a>};
 }
 
-<span class="kw">pub mod </span>core;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
-</span><span class="kw">pub mod </span>dbus;
-<span class="kw">pub mod </span>error;
-<span class="kw">pub mod </span>local;
-<span class="kw">pub mod </span>log;
-<span class="kw">pub mod </span>lua;
-<span class="kw">pub mod </span>plugin;
-<span class="kw">pub mod </span>prelude;
-<span class="kw">pub mod </span>pw;
-<span class="kw">pub mod </span>registry;
-<span class="kw">pub mod </span>session;
+<span class="kw">pub mod </span><a href="core/mod.rs.html#1-51">core</a>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+</span><span class="kw">pub mod </span><a href="dbus/mod.rs.html#1">dbus</a>;
+<span class="kw">pub mod </span><a href="error/mod.rs.html#1-60">error</a>;
+<span class="kw">pub mod </span><a href="local/mod.rs.html#1-14">local</a>;
+<span class="kw">pub mod </span><a href="log/mod.rs.html#1-130">log</a>;
+<span class="kw">pub mod </span><a href="lua/mod.rs.html#1-35">lua</a>;
+<span class="kw">pub mod </span><a href="plugin/mod.rs.html#1-114">plugin</a>;
+<span class="kw">pub mod </span><a href="prelude.rs.html#1-69">prelude</a>;
+<span class="kw">pub mod </span><a href="pw/mod.rs.html#1-73">pw</a>;
+<span class="kw">pub mod </span><a href="registry/mod.rs.html#1-136">registry</a>;
+<span class="kw">pub mod </span><a href="session/mod.rs.html#1-142">session</a>;
 <span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)))]
-</span><span class="kw">pub mod </span>signals;
-<span class="kw">pub mod </span>spa;
-<span class="kw">pub mod </span>util;
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)))]
+</span><span class="kw">pub mod </span><a href="signals.rs.html#1-187">signals</a>;
+<span class="kw">pub mod </span><a href="spa/mod.rs.html#1-50">spa</a>;
+<span class="kw">pub mod </span><a href="util/mod.rs.html#1-17">util</a>;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::pw::PropertiesItem;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::session::SiAdapterPortsState;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::spa::SpaJson;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_11&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::{dbus::DBusState, pw::LinkState};
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/properties_item.rs.html#8-17"><span class="self">self</span>::pw::PropertiesItem</a>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/enums.rs.html#859-868"><span class="self">self</span>::session::SiAdapterPortsState</a>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/spa_json.rs.html#11-20"><span class="self">self</span>::spa::SpaJson</a>;
+<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::{<a href="auto/enums.rs.html#254-263">dbus::DBusState</a>, <a href="auto/enums.rs.html#593-610">pw::LinkState</a>};
 <span class="doccomment">/// gir needs to know where to find these
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use crate</span>::{
-	core::{Object, ObjectFeatures},
-	plugin::Plugin,
-	pw::{Direction, Endpoint, GlobalProxy, Metadata, NodeState, PipewireObject, Port, Properties, Proxy},
-	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
-	session::{SessionItem, SiAcquisition, SiEndpoint, SiLink, SiLinkable},
-	spa::{SpaPod, SpaType},
-	util::{Transition, WpIterator <span class="kw">as </span>Iterator},
+	core::{<a href="auto/object.rs.html#8-15">Object</a>, <a href="core/features.rs.html#15">ObjectFeatures</a>},
+	<a href="auto/plugin.rs.html#7-14">plugin::Plugin</a>,
+	pw::{<a href="auto/enums.rs.html#380-387">Direction</a>, <a href="auto/endpoint.rs.html#8-15">Endpoint</a>, <a href="auto/global_proxy.rs.html#8-15">GlobalProxy</a>, <a href="auto/metadata.rs.html#8-15">Metadata</a>, <a href="auto/enums.rs.html#739-752">NodeState</a>, <a href="auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="auto/port.rs.html#7-14">Port</a>, <a href="auto/properties.rs.html#7-16">Properties</a>, <a href="auto/proxy.rs.html#8-15">Proxy</a>},
+	registry::{<a href="auto/enums.rs.html#11-22">ConstraintType</a>, <a href="auto/enums.rs.html#124-141">ConstraintVerb</a>, <a href="auto/flags.rs.html#192-207">InterestMatch</a>, <a href="auto/flags.rs.html#280-289">InterestMatchFlags</a>, <a href="auto/object_interest.rs.html#8-17">ObjectInterest</a>, <a href="auto/object_manager.rs.html#8-15">ObjectManager</a>},
+	session::{<a href="auto/session_item.rs.html#8-15">SessionItem</a>, <a href="auto/si_acquisition.rs.html#8-15">SiAcquisition</a>, <a href="auto/si_endpoint.rs.html#8-15">SiEndpoint</a>, <a href="auto/si_link.rs.html#8-15">SiLink</a>, <a href="auto/si_linkable.rs.html#7-14">SiLinkable</a>},
+	<a href="auto/spa_pod.rs.html#8-17">spa::SpaPod</a>,
+	util::{<a href="auto/transition.rs.html#7-14">Transition</a>, <a href="auto/iterator.rs.html#6-15">WpIterator</a> <span class="kw">as </span>Iterator},
 };
 <span class="attr">#[doc(no_inline)]
 </span><span class="kw">pub use </span>{
 	<span class="self">self</span>::{
-		core::{Core, InitFlags},
-		error::{Error, <span class="prelude-ty">Result</span>},
-		log::Log,
+		core::{<a href="auto/core.rs.html#8-15">Core</a>, <a href="auto/flags.rs.html#104-119">InitFlags</a>},
+		error::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>, <span class="prelude-ty">Result</span>},
+		<a href="log/mod.rs.html#21">log::Log</a>,
 	},
-	ffi,
+	<a href="../../wireplumber_sys/index.html">ffi</a>,
 };
 </code></pre></div></section></main></body></html>
