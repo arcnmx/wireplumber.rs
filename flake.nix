@@ -23,7 +23,6 @@
       , wireplumber, pipewire, glib
       , pkg-config
       , wireplumber-gir, gobject-introspection, gir-rs-0_18
-      , commitlint
       , enableRustdoc ? false
       , enableRust ? true, cargo
       , rustTools ? [ ]
@@ -34,8 +33,8 @@
         nativeBuildInputs = [
           pkg-config
           gir-rs-0_18
-          commitlint
-          (writeShellScriptBin "generate" "nix run .#wpdev-generate")
+          (writeShellScriptBin "commitlint" ''nix run ''${FLAKE_OPTS-} .#wpdev-commitlint -- "$@"'')
+          (writeShellScriptBin "generate" ''nix run ''${FLAKE_OPTS-} .#wpdev-generate -- "$@"'')
         ] ++ nixlib.optional enableRust cargo;
         RUSTDOCFLAGS = rust.lib.rustdocFlags {
           inherit (self.lib) crate;
