@@ -11,6 +11,10 @@
       url = "github:gtk-rs/gir/0.18";
       flake = false;
     };
+    gir-files = {
+      url = "github:gtk-rs/gir-files/0.18";
+      flake = false;
+    };
   };
   outputs = { self, flakelib, nixpkgs, rust, ... }@inputs: let
     nixlib = nixpkgs.lib;
@@ -22,7 +26,7 @@
         mkShell, writeShellScriptBin, wpexec
       , wireplumber, pipewire, glib
       , pkg-config
-      , wireplumber-gir, gobject-introspection, gir-rs-0_18
+      , wireplumber-gir, gir-files, gir-rs-0_18
       , enableRustdoc ? false
       , enableRust ? true, cargo
       , rustTools ? [ ]
@@ -57,7 +61,7 @@
         } ++ nixlib.optionals enableRustdoc self.lib.crate.package.metadata.docs.rs.rustdoc-args;
         WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
         GIRSPATH = nixlib.makeSearchPathOutput "dev" "share/gir-1.0" [
-          wireplumber-gir gobject-introspection
+          wireplumber-gir gir-files
         ];
         inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
       };
@@ -196,6 +200,13 @@
     };
     legacyPackages = {
       source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
+
+      gir-files = { linkFarm }: linkFarm "gir-files-0.18-${builtins.substring 0 8 inputs.gir-files.lastModifiedDate}" [
+        {
+          name = "share/gir-1.0";
+          path = inputs.gir-files;
+        }
+      ];
 
       docs = { rust'builders, outputs'devShells'plain, wpexec, source }: let
         shell = outputs'devShells'plain.override { enableRust = false; enableRustdoc = true; };

@@ -1862,7 +1862,7 @@ Note that this method works on cached metadata. When you change metadata with wp
           <parameter name="object" transfer-ownership="none">
             <type name="guint" c:type="guint"/>
           </parameter>
-          <parameter name="p0" transfer-ownership="none">
+          <parameter name="p0" transfer-ownership="none" nullable="1">
             <type name="utf8" c:type="gchar*"/>
           </parameter>
           <parameter name="p1" transfer-ownership="none" nullable="1">

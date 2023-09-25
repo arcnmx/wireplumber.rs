@@ -35,6 +35,23 @@
         "type": "github"
       }
     },
+    "gir-files": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1695457989,
+        "narHash": "sha256-DIu0aQOmb75bC09opqnwTf26mApIQ3mP1xDFXWIvNZ0=",
+        "owner": "gtk-rs",
+        "repo": "gir-files",
+        "rev": "6415239ef4354633334410cfae108e64ae7ff708",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gtk-rs",
+        "ref": "0.18",
+        "repo": "gir-files",
+        "type": "github"
+      }
+    },
     "gir-src": {
       "flake": false,
       "locked": {
@@ -84,6 +101,7 @@
     "root": {
       "inputs": {
         "flakelib": "flakelib",
+        "gir-files": "gir-files",
         "gir-src": "gir-src",
         "nixpkgs": "nixpkgs",
         "rust": "rust"

@@ -47,17 +47,45 @@ run() {
 					cargo install gir --root "$WP_CI" --git https://github.com/gtk-rs/gir --branch "$(jq -r '.nodes."gir-src".original.ref' flake.lock)" --rev "$(jq -r '.nodes."gir-src".locked.rev' flake.lock)" "$@"
 					;;
 				gir-files)
-					git submodule update --init "$WP_ROOT/gir-files" "$@"
+					GIR_FILES_CMD="${1-checkout}"
+					if [[ $# -gt 0 ]]; then
+						shift
+					fi
+					case "$GIR_FILES_CMD" in
+						clone)
+							git clone https://github.com/gtk-rs/gir-files "$WP_ROOT/gir-files" --branch "$(jq -r '.nodes."gir-files".original.ref' flake.lock)" "$@"
+							;;
+						checkout)
+							GIR_FILES_NEEDS_CLONE=
+							if [[ ! -e "$WP_ROOT/gir-files" ]] || rmdir "$WP_ROOT/gir-files" 2>/dev/null; then
+								GIR_FILES_NEEDS_CLONE=1
+							fi
+							if [[ -n $GIR_FILES_NEEDS_CLONE ]]; then
+								run install gir-files clone
+							else
+								git -C "$WP_ROOT/gir-files" fetch
+							fi
+							git -C "$WP_ROOT/gir-files" checkout --detach "$(jq -r '.nodes."gir-files".locked.rev' flake.lock)" "$@"
+							;;
+						pull)
+							git -C "$WP_ROOT/gir-files" checkout "$(jq -r '.nodes."gir-files".original.ref' flake.lock)"
+							git -C "$WP_ROOT/gir-files" pull "$@"
+							;;
+						*)
+							echo expected gir-files subcommand: clone, checkout, pull
+							return 1
+							;;
+					esac
 					;;
 				*)
 					echo expected install target: gir, gir-files
-					exit 1
+					return 1
 					;;
 			esac
 			;;
 		*)
 			echo expected subcommand: install, gir, sys, todo, fmt, commitlint
-			exit 1
+			return 1
 			;;
 	esac
 }

@@ -1,4 +1,0 @@
-[submodule "gir-files"]
-	path = gir-files
-	url = https://github.com/gtk-rs/gir-files
-	branch = 0.18
