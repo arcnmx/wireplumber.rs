@@ -171,41 +171,6 @@
 <a href="#171" id="171">171</a>
 <a href="#172" id="172">172</a>
 <a href="#173" id="173">173</a>
-<a href="#174" id="174">174</a>
-<a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
-<a href="#181" id="181">181</a>
-<a href="#182" id="182">182</a>
-<a href="#183" id="183">183</a>
-<a href="#184" id="184">184</a>
-<a href="#185" id="185">185</a>
-<a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a>
-<a href="#200" id="200">200</a>
-<a href="#201" id="201">201</a>
-<a href="#202" id="202">202</a>
-<a href="#203" id="203">203</a>
-<a href="#204" id="204">204</a>
-<a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">&quot;v0_4_2&quot;</span>))]
 </span><span class="kw">use </span><a href="../auto/flags.rs.html#439-454"><span class="kw">crate</span>::plugin::LookupDirs</a>;
 <span class="kw">use </span>{
@@ -322,49 +287,17 @@
 	<span class="attr">#[cfg(feature = <span class="string">&quot;futures&quot;</span>)]
 	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;futures&quot;</span>)))]
 	</span><span class="kw">pub fn </span>connect_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; {
-		<span class="kw">let </span>connect = <span class="kw">match </span>() {
+		<span class="kw">use </span><a href="../util/futures.rs.html#44-48"><span class="kw">crate</span>::util::futures::signal_once</a>;
+
+		<span class="kw">let </span>connect = <a href="../util/futures.rs.html#44-48">signal_once</a>(<span class="kw">match </span>() {
 			<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
 			</span>() =&gt; <a class="self" href="#116">self</a>.<a href="../../../glib_signal/trait.ObjectSignalExt.html">signal_stream</a>(<span class="self">Self</span>::SIGNAL_CONNECTED),
 			<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
-			</span>() =&gt; {
-				<span class="kw">use </span>std::{
-					cell::RefCell,
-					sync::{
-						atomic::{AtomicU64, Ordering},
-						Arc,
-					},
-				};
-
-				<span class="kw">let </span>(tx, rx) = futures_channel::oneshot::channel();
-
-				<span class="kw">let </span>tx = RefCell::new(<span class="prelude-val">Some</span>(tx));
-
-				<span class="kw">let </span>signal_id = Arc::new(AtomicU64::default());
-				<span class="kw">let </span>signal = <span class="self">self</span>.connect_connected({
-					<span class="kw">let </span>signal_id = signal_id.clone();
-					<span class="kw">move </span>|core| {
-						<span class="kw">if let </span><span class="prelude-val">Some</span>(tx) = tx.borrow_mut().take() {
-							<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = tx.send(()) {
-								<span class="macro">wp_info!</span>(<span class="string">&quot;connection future ignored: {:?}&quot;</span>, e);
-							}
-						}
-						<span class="kw">match </span>signal_id.fetch_and(<span class="number">0</span>, Ordering::SeqCst) {
-							<span class="number">0 </span>=&gt; (),
-							signal =&gt; glib::signal::signal_handler_disconnect(core, <span class="kw">unsafe </span>{ from_glib(signal) }),
-						}
-					}
-				});
-				signal_id.store(<span class="kw">unsafe </span>{ signal.as_raw() <span class="kw">as </span>u64 }, Ordering::SeqCst);
-
-				rx
-			},
-		};
+			</span>() =&gt; |handler| <span class="self">self</span>.connect_connected(handler),
+		});
 
 		<span class="kw">let </span>res = <span class="kw">match </span><a class="self" href="#116">self</a>.<a href="../auto/core.rs.html#26-30">connect</a>() {
-			<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
-			</span><span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#117">connect</a>.once()),
-			<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
-			</span><span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(connect),
+			<span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#119">connect</a>),
 			<span class="bool-val">false </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
 				<a href="../auto/enums.rs.html#489">LibraryErrorEnum::OperationFailed</a>,
 				<span class="string">&quot;failed to connect to pipewire&quot;</span>,
@@ -372,36 +305,33 @@
 		};
 
 		<span class="kw">async move </span>{
-			<span class="kw">match </span><a href="#155">res</a> {
-				<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
-				</span><span class="prelude-val">Ok</span>(connect) =&gt; connect.<span class="kw">await</span>.map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>).map(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>),
-				<span class="attr">#[cfg(not(feature = <span class="string">&quot;glib-signal&quot;</span>))]
-				</span><span class="prelude-val">Ok</span>(connect) =&gt; connect.<span class="kw">await</span>.map_err(|e| <span class="kw">crate</span>::error::invariant(e)),
-				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<a href="#172">e</a>),
+			<span class="kw">match </span><a href="#126">res</a> {
+				<span class="prelude-val">Ok</span>(connect) =&gt; connect.<span class="kw">await</span>,
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<a href="#137">e</a>),
 			}
 		}
 	}
 
 	<span class="kw">pub fn </span>run&lt;F: FnOnce(<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/auto/main_loop/struct.MainLoop.html">MainLoop</a>, <a href="../auto/core.rs.html#8-15">Core</a>)&gt;(props: <span class="prelude-ty">Option</span>&lt;<a href="../auto/properties.rs.html#7-16">Properties</a>&gt;, setup: F) {
 		<span class="kw">let </span>mainloop = MainLoop::new(<span class="prelude-val">None</span>, <span class="bool-val">false</span>);
-		<span class="kw">let </span>context = <a href="#178">mainloop</a>.context();
-		<span class="kw">let </span>core = <a href="#179">context</a>
+		<span class="kw">let </span>context = <a href="#143">mainloop</a>.context();
+		<span class="kw">let </span>core = <a href="#144">context</a>
 			.with_thread_default(|| {
-				<span class="kw">let </span>core = Core::new(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><a href="#179">context</a>), <a href="#177">props</a>);
-				<span class="kw">let </span>_disconnect_handler = <a href="#182">core</a>.<a href="../auto/core.rs.html#268-278">connect_disconnected</a>({
-					<span class="kw">let </span>mainloop = <a href="#178">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
-					<span class="kw">move </span>|_core| <a href="#184">mainloop</a>.quit()
+				<span class="kw">let </span>core = Core::new(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><a href="#144">context</a>), <a href="#142">props</a>);
+				<span class="kw">let </span>_disconnect_handler = <a href="#147">core</a>.<a href="../auto/core.rs.html#268-278">connect_disconnected</a>({
+					<span class="kw">let </span>mainloop = <a href="#143">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
+					<span class="kw">move </span>|_core| <a href="#149">mainloop</a>.quit()
 				});
 
-				<a href="#177">setup</a>(<span class="kw-2">&amp;</span><a href="#179">context</a>, <a href="#178">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>(), <a href="#182">core</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>());
+				<a href="#142">setup</a>(<span class="kw-2">&amp;</span><a href="#144">context</a>, <a href="#143">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>(), <a href="#147">core</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>());
 
-				<a href="#178">mainloop</a>.run();
+				<a href="#143">mainloop</a>.run();
 
-				<a href="#182">core</a>
+				<a href="#147">core</a>
 			})
 			.unwrap();
 
-		<a href="#180">core</a>.<a href="../auto/core.rs.html#33-37">disconnect</a>();
+		<a href="#145">core</a>.<a href="../auto/core.rs.html#33-37">disconnect</a>();
 	}
 }
 
