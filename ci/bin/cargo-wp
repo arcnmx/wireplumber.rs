@@ -22,10 +22,6 @@ run() {
 		gir)
 			exec "$WP_CI/gir.sh" "$@"
 			;;
-		commitlint)
-			WP_COMMITLINTRC="${WP_COMMITLINTRC-$(nix build --no-link --print-out-paths "${WP_ROOT}#wpdev-commitlintrc")}"
-			exec commitlint --config "$WP_COMMITLINTRC" "$@"
-			;;
 		fmt)
 			exec cargo fmt -p wireplumber -p wp-examples "$@"
 			;;
@@ -36,6 +32,10 @@ run() {
 			fi
 			run "$@"
 			;;
+		gen|generate)
+			cd "$WP_ROOT"
+			exec nix run ${FLAKE_OPTS-} .#wpdev-generate -- "$@"
+			;;
 		install)
 			WP_INSTALL="${1-}"
 			if [[ $# -gt 0 ]]; then
@@ -44,7 +44,7 @@ run() {
 
 			case "$WP_INSTALL" in
 				gir)
-					cargo install gir --root "$WP_CI" --git https://github.com/gtk-rs/gir --branch "$(jq -r '.nodes."gir-src".original.ref' flake.lock)" --rev "$(jq -r '.nodes."gir-src".locked.rev' flake.lock)" "$@"
+					exec cargo install gir --root "$WP_CI" --git https://github.com/gtk-rs/gir --branch "$(jq -r '.nodes."gir-src".original.ref' flake.lock)" --rev "$(jq -r '.nodes."gir-src".locked.rev' flake.lock)" "$@"
 					;;
 				gir-files)
 					GIR_FILES_CMD="${1-checkout}"
@@ -53,7 +53,7 @@ run() {
 					fi
 					case "$GIR_FILES_CMD" in
 						clone)
-							git clone https://github.com/gtk-rs/gir-files "$WP_ROOT/gir-files" --branch "$(jq -r '.nodes."gir-files".original.ref' flake.lock)" "$@"
+							exec git clone https://github.com/gtk-rs/gir-files "$WP_ROOT/gir-files" --branch "$(jq -r '.nodes."gir-files".original.ref' flake.lock)" "$@"
 							;;
 						checkout)
 							GIR_FILES_NEEDS_CLONE=
@@ -61,15 +61,15 @@ run() {
 								GIR_FILES_NEEDS_CLONE=1
 							fi
 							if [[ -n $GIR_FILES_NEEDS_CLONE ]]; then
-								run install gir-files clone
+								cargo wp install gir-files clone
 							else
 								git -C "$WP_ROOT/gir-files" fetch
 							fi
-							git -C "$WP_ROOT/gir-files" checkout --detach "$(jq -r '.nodes."gir-files".locked.rev' flake.lock)" "$@"
+							exec git -C "$WP_ROOT/gir-files" checkout --detach "$(jq -r '.nodes."gir-files".locked.rev' flake.lock)" "$@"
 							;;
 						pull)
 							git -C "$WP_ROOT/gir-files" checkout "$(jq -r '.nodes."gir-files".original.ref' flake.lock)"
-							git -C "$WP_ROOT/gir-files" pull "$@"
+							exec git -C "$WP_ROOT/gir-files" pull "$@"
 							;;
 						*)
 							echo expected gir-files subcommand: clone, checkout, pull

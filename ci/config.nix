@@ -117,9 +117,12 @@ in {
             })
           ];
           readme.inputs = [
-            checks.readme
-            checks.readme-sys
+            checks.readme-github
+            checks.readme-sys-github
+            checks.readme-package
+            checks.readme-sys-package
             checks.commitlint-help
+            checks.commitlintrc
           ];
           commitlint.inputs = ci.command rec {
             name = "commitlint";

@@ -1,10 +1,10 @@
-= WirePlumber FFI Bindings
-:crate: wireplumber-sys
-:relative-blob: ../
+= WirePlumber Rust Bindings
+:crate: wireplumber
 :relative-tree: ../
+:relative-blob: ../
 :readme-inc: ../ci/readme/
 include::{readme-inc}attrs.adoc[]
 
 include::{readme-inc}header.adoc[]
 
-include::{readme-inc}sys.adoc[]
+include::{readme-inc}content.adoc[]

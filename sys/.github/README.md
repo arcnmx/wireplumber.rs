@@ -1,0 +1,3 @@
+[![latest release](https://img.shields.io/crates/v/wireplumber-sys.svg?style=flat-square)](https://crates.io/crates/wireplumber-sys) [![docs](https://img.shields.io/badge/API-docs-blue.svg?style=flat-square)](https://arcnmx.github.io/wireplumber.rs/main/wireplumber-sys/) [![MIT](https://img.shields.io/badge/license-MIT-ff69b4.svg?style=flat-square)](../../COPYING)
+
+This crate provides low-level FFI bindings to [libwireplumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html). In most cases, the higher-level [`wireplumber` crate](https://crates.io/crates/wireplumber) is a more appropriate choice over this crate.

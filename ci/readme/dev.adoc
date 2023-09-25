@@ -1,0 +1,17 @@
+== Development
+
+Helper commands are available via link:{relative-blob}ci/bin/cargo-wp[`+cargo wp+`] to facilitate development.
+Adding link:{relative-tree}ci/bin[ci/bin] to your `+PATH+` is recommended - the provided https://direnv.net/[direnv shell] is set up to do this by default.
+
+.Commands:
+* `+cargo wp install gir+` will install the pinned https://github.com/gtk-rs/gir[GIR] version into ci/bin
+** `+cargo wp install gir-files+` for the associated data required by GIR
+* `+cargo wp gir+` will update the link:./src/auto[auto-generated source] for the main crate
+* `+cargo wp sys gir+` will update the link:./sys/generate[sys bindings source]
+* `+cargo wp todo+` will display incomplete interfaces (this is just an alias for `+gir -m not_bound+`)
+* `+cargo wp fmt+` will rustfmt the codebase
+
+=== GIR Schema
+
+The WirePlumber GIR data is kept in link:{relative-blob}sys/generate/src/Wp-0.4.gir[Wp-0.4.gir].
+A series of fixes must be applied to the upstream XML via the link:{relative-blob}ci/wp-gir-filter.sh[wp-gir-filter] script.

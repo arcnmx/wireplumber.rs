@@ -1,8 +1,8 @@
 = WirePlumber FFI Bindings
 :crate: wireplumber-sys
-:relative-blob: ../
-:relative-tree: ../
-:readme-inc: ../ci/readme/
+:relative-blob: ../../
+:relative-tree: ../../
+:readme-inc: ../../ci/readme/
 include::{readme-inc}attrs.adoc[]
 
 include::{readme-inc}header.adoc[]

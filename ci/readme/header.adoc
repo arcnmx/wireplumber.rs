@@ -1,0 +1,3 @@
+link:{url-crates}[image:{badge-crates}["latest release",title="crates.io"]]
+link:{url-docs}[image:{badge-docs}["docs",title="API documentation"]]
+link:{relative-blob}COPYING[image:{badge-license}["MIT",title="License"]]

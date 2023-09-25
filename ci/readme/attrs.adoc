@@ -1,0 +1,11 @@
+:source-highlighter: highlight.js
+:release: main
+:url-pw: https://pipewire.org/
+:url-pw-api: https://docs.pipewire.org/page_api.html
+:url-wp: https://pipewire.pages.freedesktop.org/wireplumber/index.html
+:url-docs: https://arcnmx.github.io/wireplumber.rs/{release}/{crate}/
+:url-docs-modules: {url-docs}#modules
+:url-crates: https://crates.io/crates/{crate}
+:badge-crates: https://img.shields.io/crates/v/{crate}.svg?style=flat-square
+:badge-docs: https://img.shields.io/badge/API-docs-blue.svg?style=flat-square
+:badge-license: https://img.shields.io/badge/license-MIT-ff69b4.svg?style=flat-square

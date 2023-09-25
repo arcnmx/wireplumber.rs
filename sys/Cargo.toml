@@ -20,7 +20,6 @@ include = [
 	"/generate/build_version.rs",
 	"/generate/src/lib.rs",
 	"/build.rs",
-	"/README*",
 ]
 
 [package.metadata.system-deps.wireplumber_0_4]

@@ -1,71 +1,12 @@
 = WirePlumber Rust Bindings
-:source-highlighter: highlight.js
 :crate: wireplumber
-:release: main
-:relative-tree:
-:relative-blob:
-:url-pw: https://pipewire.org/
-:url-pw-api: https://docs.pipewire.org/page_api.html
-:url-wp: https://pipewire.pages.freedesktop.org/wireplumber/index.html
-:url-docs: https://arcnmx.github.io/wireplumber.rs/{release}/{crate}/
-:url-docs-modules: {url-docs}#modules
-:url-crates: https://crates.io/crates/{crate}
-:badge-crates: https://img.shields.io/crates/v/{crate}.svg?style=flat-square
-:badge-docs: https://img.shields.io/badge/API-docs-blue.svg?style=flat-square
-:badge-license: https://img.shields.io/badge/license-MIT-ff69b4.svg?style=flat-square
+:relative-tree: ./
+:relative-blob: ./
+:readme-inc: ./ci/readme/
+include::{readme-inc}attrs.adoc[]
 
-link:{url-crates}[image:{badge-crates}["latest release",title="crates.io"]]
-link:{url-docs}[image:{badge-docs}["docs",title="API documentation"]]
-link:{relative-blob}COPYING[image:{badge-license}["MIT",title="License"]]
+include::{readme-inc}header.adoc[]
 
-This crate provides a high-level interface to {url-pw}[PipeWire]'s {url-pw-api}[API] via {url-wp}[libwireplumber].
-Explore the {url-docs}[crate documentation] and the various {url-docs-modules}[modules] for information on how to start using WirePlumber with Rust.
+include::{readme-inc}content.adoc[]
 
-== Examples
-
-Some link:{relative-tree}examples/[examples] are provided that can be built and run via Cargo:
-
-[source,bash]
-----
-$ cargo run -p wp-examples --bin wpexec -- --help
-... snip ...
-
-# try out the default lua example:
-$ cargo run -p wp-examples --bin wpexec
-
-# or load the example plugin module:
-$ cargo build --workspace --examples &&
-  cargo run -p wp-examples --bin wpexec -- --type wireplumber
-----
-
-=== External
-
-Projects using wireplumber.rs:
-
-* https://github.com/arcnmx/wireplumber-scripts[WirePlumber Scripts] is a personal collection of plugins, some previously written as Lua scripts.
-
-== Use Cases
-
-This project aims to facilitate the following applications:
-
-* Enabling Rust to be a viable language for writing session management logic as an alternative to the officially supported Lua scripting engine or GObject C APIs
-* WirePlumber plugins that can augment or expose APIs for Lua configuration scripts to use
-* Stand-alone pipewire clients as an alternative to https://gitlab.freedesktop.org/pipewire/pipewire-rs[pipewire-rs]
-
-== Development
-
-Helper commands are available via link:./ci/bin/cargo-wp[`+cargo wp+`] to facilitate development.
-Adding link:./ci/bin[ci/bin] to your `+PATH+` is recommended - the provided https://direnv.net/[direnv shell] is set up to do this by default.
-
-.Commands:
-* `+cargo wp install gir+` will install the pinned https://github.com/gtk-rs/gir[GIR] version into ci/bin
-** `+cargo wp install gir-files+` for the associated data required by GIR
-* `+cargo wp gir+` will update the link:./src/auto[auto-generated source] for the main crate
-* `+cargo wp sys gir+` will update the link:./sys/generate[sys bindings source]
-* `+cargo wp todo+` will display incomplete interfaces (this is just an alias for `+gir -m not_bound+`)
-* `+cargo wp fmt+` will rustfmt the codebase
-
-=== GIR Schema
-
-The WirePlumber GIR data is kept in link:./sys/generate/src/Wp-0.4.gir[Wp-0.4.gir].
-A series of fixes must be applied to the upstream XML via the link:./ci/wp-gir-filter.sh[wp-gir-filter] script.
+include::{readme-inc}dev.adoc[]

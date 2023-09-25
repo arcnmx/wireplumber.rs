@@ -38,7 +38,6 @@
           pkg-config
           gir-rs-0_18
           (writeShellScriptBin "commitlint" ''nix run ''${FLAKE_OPTS-} .#wpdev-commitlint -- "$@"'')
-          (writeShellScriptBin "generate" ''nix run ''${FLAKE_OPTS-} .#wpdev-generate -- "$@"'')
         ] ++ nixlib.optional enableRust cargo;
         RUSTDOCFLAGS = rust.lib.rustdocFlags {
           inherit (self.lib) crate;
@@ -161,20 +160,35 @@
         ];
       };
       docs = { docs }: docs;
-      readme = { rust'builders, wpdev-readme }: rust'builders.check-generate {
-        expected = wpdev-readme;
-        src = ./src/README.md;
-        meta.name = "diff src/README.md (nix run .#wpdev-generate)";
+      readme-github = { rust'builders, wpdev-readme-github }: rust'builders.check-generate {
+        expected = wpdev-readme-github;
+        src = ./.github/README.md;
+        meta.name = "diff .github/README.md (cargo wp generate)";
       };
-      readme-sys = { rust'builders, wpdev-sys-readme }: rust'builders.check-generate {
-        expected = wpdev-sys-readme;
+      readme-sys-github = { rust'builders, wpdev-readme-sys-github }: rust'builders.check-generate {
+        expected = wpdev-readme-sys-github;
+        src = ./sys/.github/README.md;
+        meta.name = "diff sys/README.md (cargo wp generate)";
+      };
+      readme-package = { rust'builders, wpdev-readme-package }: rust'builders.check-generate {
+        expected = wpdev-readme-package;
+        src = ./src/README.md;
+        meta.name = "diff src/README.md (cargo wp generate)";
+      };
+      readme-sys-package = { rust'builders, wpdev-readme-sys-package }: rust'builders.check-generate {
+        expected = wpdev-readme-sys-package;
         src = ./sys/src/README.md;
-        meta.name = "diff sys/src/README.md (nix run .#wpdev-generate)";
+        meta.name = "diff sys/src/README.md (cargo wp generate)";
       };
       commitlint-help = { rust'builders, wpdev-commitlint-help }: rust'builders.check-generate {
         expected = wpdev-commitlint-help;
         src = ./.github/commitlint.adoc;
-        meta.name = "diff .github/commitlint.adoc (nix run .#wpdev-generate)";
+        meta.name = "diff .github/commitlint.adoc (cargo wp generate)";
+      };
+      commitlintrc = { rust'builders, wpdev-commitlintrc-generate }: rust'builders.check-generate {
+        expected = wpdev-commitlintrc-generate;
+        src = ./.commitlintrc.json;
+        meta.name = "diff .commitlintrc.json (cargo wp generate)";
       };
       release-branch = { rust'builders, source }: let
         inherit (self.lib) releaseTag;
@@ -200,6 +214,8 @@
     };
     legacyPackages = {
       source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
+      source-package = { rust'builders }: rust'builders.wrapSource self.lib.crate.pkgSrc;
+      source-package-sys = { rust'builders }: rust'builders.wrapSource self.lib.crate.members.sys.pkgSrc;
 
       gir-files = { linkFarm }: linkFarm "gir-files-0.18-${builtins.substring 0 8 inputs.gir-files.lastModifiedDate}" [
         {
@@ -230,41 +246,88 @@
 
       wptest = { callPackage }: (import ./examples { inherit callPackage; }).wptest;
 
-      wpdev-commitlintrc = { writeText, commitlint, nodePackages }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON
+      wpdev-commitlintrc = { writeText, nodePackages }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON
         (self.lib.commitlint.commitlintrc // {
           extends = [ "${nodePackages."@commitlint/config-conventional"}/lib/node_modules/@commitlint/config-conventional/." ];
         })
+      );
+      wpdev-commitlintrc-generate = { writeText }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON
+        self.lib.commitlint.commitlintrc
       );
       wpdev-commitlint = { writeShellScriptBin, commitlint, wpdev-commitlintrc }: writeShellScriptBin "commitlint" ''
         exec ${commitlint}/bin/commitlint --config ${wpdev-commitlintrc} "$@"
       '';
       wpdev-generate = {
         rust'builders
-      , wpdev-readme, wpdev-sys-readme
-      , wpdev-commitlint-help
+      , wpdev-readme-github, wpdev-readme-package, wpdev-readme-sys-github, wpdev-readme-sys-package
+      , wpdev-commitlint-help, wpdev-commitlintrc-generate
       , outputHashes
       }: rust'builders.generateFiles {
         name = "readmes";
         paths = {
-          "src/README.md" = wpdev-readme;
-          "sys/src/README.md" = wpdev-sys-readme;
+          ".github/README.md" = wpdev-readme-github;
+          "sys/.github/README.md" = wpdev-readme-sys-github;
+          "src/README.md" = wpdev-readme-package;
+          "sys/src/README.md" = wpdev-readme-sys-package;
           ".github/commitlint.adoc" = wpdev-commitlint-help;
+          ".commitlintrc.json" = wpdev-commitlintrc-generate;
           "lock.nix" = outputHashes;
         };
       };
-      wpdev-readme = { rust'builders }: rust'builders.adoc2md {
-        src = ./README.adoc;
+      wpdev-readme-src = { linkFarm }: linkFarm "wireplumber-rust-readme" [
+        {
+          name = "ci/readme";
+          path = ./ci/readme;
+        }
+        {
+          name = "README.adoc";
+          path = ./README.adoc;
+        }
+        {
+          name = "src/README.adoc";
+          path = ./src/README.adoc;
+        }
+        {
+          name = "sys/README.adoc";
+          path = ./sys/README.adoc;
+        }
+        {
+          name = "sys/src/README.adoc";
+          path = ./sys/src/README.adoc;
+        }
+      ];
+      wpdev-readme-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
+        src = "${wpdev-readme-src}/README.adoc";
+        attributes = rec {
+          readme-inc = "${wpdev-readme-src}/ci/readme/";
+          # this file ends up in `.github/README.md`, so its relative links must be adjusted to compensate
+          relative-blob = "../";
+          relative-tree = relative-blob;
+        };
+      };
+      wpdev-readme-sys-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
+        src = "${wpdev-readme-src}/sys/README.adoc";
+        attributes = rec {
+          readme-inc = "${wpdev-readme-src}/ci/readme/";
+          # this file ends up in `sys/.github/README.md`, so its relative links must be adjusted to compensate
+          relative-blob = "../../";
+          relative-tree = relative-blob;
+        };
+      };
+      wpdev-readme-package = { rust'builders, wpdev-readme, wpdev-readme-src }: rust'builders.adoc2md {
+        src = "${wpdev-readme-src}/src/README.adoc";
         attributes = let
           inherit (self.lib.crate.package) repository;
         in rec {
+          readme-inc = "${wpdev-readme-src}/ci/readme/";
           release = self.lib.releaseTag;
           relative-tree = "${repository}/tree/${release}/";
           relative-blob = "${repository}/blob/${release}/";
         };
       };
-      wpdev-sys-readme = { rust'builders, wpdev-readme }: rust'builders.adoc2md {
-        src = ./sys/README.adoc;
-        inherit (wpdev-readme) attributes;
+      wpdev-readme-sys-package = { rust'builders, wpdev-readme-package, wpdev-readme-src }: rust'builders.adoc2md {
+        src = "${wpdev-readme-src}/sys/src/README.adoc";
+        inherit (wpdev-readme-package) attributes;
       };
       wpdev-commitlint-help = { writeText }: writeText "commitlint.adoc" self.lib.commitlint.help-adoc;
       outputHashes = { rust'builders }: rust'builders.cargoOutputHashes {

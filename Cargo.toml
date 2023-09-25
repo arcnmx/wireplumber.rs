@@ -18,7 +18,6 @@ license = "MIT"
 include = [
 	"/src/**",
 	"/build.rs",
-	"/README*",
 	"/COPYING*",
 ]
 
