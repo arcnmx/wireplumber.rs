@@ -13,5 +13,7 @@ pub use {
 	crate::auto::{traits::TransitionExt, Iterator as WpIterator, State, Transition, TransitionStep},
 };
 
+#[cfg(feature = "futures")]
+pub(crate) mod futures;
 mod iterator;
 mod transition;

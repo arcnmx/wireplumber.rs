@@ -114,48 +114,16 @@ impl Core {
 	#[cfg(feature = "futures")]
 	#[cfg_attr(docsrs, doc(cfg(feature = "futures")))]
 	pub fn connect_future(&self) -> impl Future<Output = Result<(), Error>> {
-		let connect = match () {
+		use crate::util::futures::signal_once;
+
+		let connect = signal_once(match () {
 			#[cfg(feature = "glib-signal")]
 			() => self.signal_stream(Self::SIGNAL_CONNECTED),
 			#[cfg(not(feature = "glib-signal"))]
-			() => {
-				use std::{
-					cell::RefCell,
-					sync::{
-						atomic::{AtomicU64, Ordering},
-						Arc,
-					},
-				};
-
-				let (tx, rx) = futures_channel::oneshot::channel();
-
-				let tx = RefCell::new(Some(tx));
-
-				let signal_id = Arc::new(AtomicU64::default());
-				let signal = self.connect_connected({
-					let signal_id = signal_id.clone();
-					move |core| {
-						if let Some(tx) = tx.borrow_mut().take() {
-							if let Err(e) = tx.send(()) {
-								wp_info!("connection future ignored: {:?}", e);
-							}
-						}
-						match signal_id.fetch_and(0, Ordering::SeqCst) {
-							0 => (),
-							signal => glib::signal::signal_handler_disconnect(core, unsafe { from_glib(signal) }),
-						}
-					}
-				});
-				signal_id.store(unsafe { signal.as_raw() as u64 }, Ordering::SeqCst);
-
-				rx
-			},
-		};
+			() => |handler| self.connect_connected(handler),
+		});
 
 		let res = match self.connect() {
-			#[cfg(feature = "glib-signal")]
-			true => Ok(connect.once()),
-			#[cfg(not(feature = "glib-signal"))]
 			true => Ok(connect),
 			false => Err(Error::new(
 				LibraryErrorEnum::OperationFailed,
@@ -165,10 +133,7 @@ impl Core {
 
 		async move {
 			match res {
-				#[cfg(feature = "glib-signal")]
-				Ok(connect) => connect.await.map_err(Into::into).map(drop),
-				#[cfg(not(feature = "glib-signal"))]
-				Ok(connect) => connect.await.map_err(|e| crate::error::invariant(e)),
+				Ok(connect) => connect.await,
 				Err(e) => Err(e),
 			}
 		}

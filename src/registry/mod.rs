@@ -85,13 +85,20 @@ impl ObjectManager {
 	///
 	/// Note that the future does not take ownership over `self`, and will produce
 	/// an error in cases where there are no more references keeping it alive.
-	#[cfg(all(feature = "glib-signal", feature = "futures"))] // TODO: change this to only require `feature = "futures"`
-	#[cfg_attr(docsrs, doc(all(feature = "glib-signal", feature = "futures")))]
+	#[cfg(feature = "futures")]
+	#[cfg_attr(docsrs, doc(feature = "futures"))]
 	pub fn installed_future(&self) -> impl Future<Output = Result<(), Error>> {
+		use crate::util::futures::signal_once;
+
 		let signal_installed = if self.is_installed() {
 			None
 		} else {
-			let signal_installed = self.signal_stream(Self::SIGNAL_INSTALLED);
+			let signal_installed = signal_once(match () {
+				#[cfg(feature = "glib-signal")]
+				() => self.signal_stream(Self::SIGNAL_INSTALLED),
+				#[cfg(not(feature = "glib-signal"))]
+				() => |handler| self.connect_installed(handler),
+			});
 			if !self.is_installed() {
 				Some(signal_installed)
 			} else {
@@ -101,7 +108,7 @@ impl ObjectManager {
 
 		async move {
 			if let Some(signal_installed) = signal_installed {
-				let res = signal_installed.once().await;
+				let res = signal_installed.await;
 				if res.is_err() {
 					return Err(Error::new(
 						LibraryErrorEnum::OperationFailed,
