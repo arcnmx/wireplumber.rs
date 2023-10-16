@@ -4,6 +4,7 @@
 :badge-license: https://img.shields.io/badge/license-MIT-ff69b4.svg?style=flat-square
 :relative-tree: {relative-blob}
 :release: main
+:repository: https://github.com/arcnmx/wireplumber.rs
 :source-highlighter: highlight.js
 :url-crates: https://crates.io/crates/{crate}
 :url-docs: https://arcnmx.github.io/wireplumber.rs/{release}/{crate}/
@@ -11,3 +12,5 @@
 :url-pw: https://pipewire.org/
 :url-pw-api: https://docs.pipewire.org/page_api.html
 :url-wp: https://pipewire.pages.freedesktop.org/wireplumber/index.html
+:wprs-versionfeature: v0_4_12
+:wprs-versionreq: 0.1

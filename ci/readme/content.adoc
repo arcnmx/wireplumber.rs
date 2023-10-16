@@ -1,6 +1,21 @@
 This crate provides a high-level interface to {url-pw}[PipeWire]'s {url-pw-api}[API] via {url-wp}[libwireplumber].
 Explore the {url-docs}[crate documentation] and the various {url-docs-modules}[modules] for information on how to start using WirePlumber with Rust.
 
+ifeval::["{profile}" != "github"]
+[source,toml,subs=attributes+]
+----
+[dependencies]
+wireplumber = { version = "{wprs-versionreq}", features = ["{wprs-versionfeature}"] }
+----
+endif::[]
+ifeval::["{profile}" == "github"]
+[source,toml,subs=attributes+]
+----
+[dependencies]
+wireplumber = { version = "{wprs-versionreq}", features = ["{wprs-versionfeature}"], git = "{repository}" }
+----
+endif::[]
+
 == Examples
 
 Some link:{relative-tree}examples/[examples] are provided that can be built and run via Cargo:

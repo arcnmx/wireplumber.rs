@@ -2,6 +2,11 @@
 
 This crate provides a high-level interface to [PipeWire](https://pipewire.org/)'s [API](https://docs.pipewire.org/page_api.html) via [libwireplumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html). Explore the [crate documentation](https://arcnmx.github.io/wireplumber.rs/main/wireplumber/) and the various [modules](https://arcnmx.github.io/wireplumber.rs/main/wireplumber/#modules) for information on how to start using WirePlumber with Rust.
 
+``` toml
+[dependencies]
+wireplumber = { version = "0.1", features = ["v0_4_12"], git = "https://github.com/arcnmx/wireplumber.rs" }
+```
+
 # Examples
 
 Some [examples](../examples/) are provided that can be built and run via Cargo:

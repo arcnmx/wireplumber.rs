@@ -330,6 +330,7 @@
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           # this file ends up in `.github/README.md`, so its relative links must be adjusted to compensate
           relative-blob = "../";
+          profile = "github";
         };
       };
       wpdev-readme-sys-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
@@ -338,6 +339,7 @@
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           # this file ends up in `sys/.github/README.md`, so its relative links must be adjusted to compensate
           relative-blob = "../../";
+          profile = "github";
         };
       };
       wpdev-readme-examples-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
@@ -346,13 +348,15 @@
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           # this file ends up in `examples/.github/README.md`, so its relative links must be adjusted to compensate
           relative-blob = "../../";
+          profile = "github";
         };
       };
       wpdev-readme-package = { rust'builders, wpdev-readme, wpdev-readme-src }: rust'builders.adoc2md {
         src = "${wpdev-readme-src}/src/README.adoc";
         attributes = let
-          inherit (self.lib.crate.package) repository;
+          inherit (self.lib.asciidocAttributes) repository;
         in rec {
+          profile = "package";
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           release = self.lib.releaseTag;
           relative-tree = "${repository}/tree/${release}/";
@@ -383,6 +387,9 @@
         "0.4.11" "0.4.12"
       ];
       asciidocAttributes = {
+        inherit (self.lib.crate.package) repository;
+        wprs-versionreq = (if versions.major self.lib.version == "0" then versions.majorMinor else versions.major) self.lib.version;
+        wprs-versionfeature = self.lib.versionFeatureName (last self.lib.featureVersions);
         source-highlighter = "highlight.js";
         release = "main";
         relative-tree = "{relative-blob}";
