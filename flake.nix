@@ -170,6 +170,11 @@
         src = ./sys/.github/README.md;
         meta.name = "diff sys/README.md (cargo wp generate)";
       };
+      readme-examples-github = { rust'builders, wpdev-readme-examples-github }: rust'builders.check-generate {
+        expected = wpdev-readme-examples-github;
+        src = ./examples/.github/README.md;
+        meta.name = "diff examples/README.md (cargo wp generate)";
+      };
       readme-package = { rust'builders, wpdev-readme-package }: rust'builders.check-generate {
         expected = wpdev-readme-package;
         src = ./src/README.md;
@@ -264,7 +269,7 @@
       '';
       wpdev-generate = {
         rust'builders
-      , wpdev-readme-github, wpdev-readme-package, wpdev-readme-sys-github, wpdev-readme-sys-package
+      , wpdev-readme-github, wpdev-readme-package, wpdev-readme-sys-github, wpdev-readme-examples-github, wpdev-readme-sys-package
       , wpdev-readme-attrs
       , wpdev-commitlint-help, wpdev-commitlintrc-generate
       , outputHashes
@@ -273,6 +278,7 @@
         paths = {
           ".github/README.md" = wpdev-readme-github;
           "sys/.github/README.md" = wpdev-readme-sys-github;
+          "examples/.github/README.md" = wpdev-readme-examples-github;
           "src/README.md" = wpdev-readme-package;
           "sys/src/README.md" = wpdev-readme-sys-package;
           "ci/readme/attrs.adoc" = wpdev-readme-attrs;
@@ -296,6 +302,8 @@
           "/sys/README.adoc"
           "/sys/src"
           "/sys/src/README.adoc"
+          "/examples"
+          "/examples/README.adoc"
         ];
         readme-src = builtins.path {
           path = ./.;
@@ -329,6 +337,14 @@
         attributes = {
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           # this file ends up in `sys/.github/README.md`, so its relative links must be adjusted to compensate
+          relative-blob = "../../";
+        };
+      };
+      wpdev-readme-examples-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
+        src = "${wpdev-readme-src}/examples/README.adoc";
+        attributes = {
+          readme-inc = "${wpdev-readme-src}/ci/readme/";
+          # this file ends up in `examples/.github/README.md`, so its relative links must be adjusted to compensate
           relative-blob = "../../";
         };
       };

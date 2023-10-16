@@ -119,6 +119,7 @@ in {
           readme.inputs = [
             checks.readme-github
             checks.readme-sys-github
+            checks.readme-examples-github
             checks.readme-package
             checks.readme-sys-package
             checks.readme-attrs

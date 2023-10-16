@@ -1,7 +1,9 @@
 = WirePlumber.rs Examples
-:source-highlighter: highlight.js
+:relative-blob: ../
+:readme-inc: ../ci/readme/
+include::{readme-inc}attrs.adoc[]
 
-Aside from those found in the https://arcnmx.github.io/wireplumber.rs/wireplumber/[crate documentation], these stand-alone examples can be built and run via Cargo:
+Aside from those found in the https://arcnmx.github.io/wireplumber.rs/{release}/wireplumber/[crate documentation], these stand-alone examples can be built and run via Cargo:
 
 [source,bash]
 ----
@@ -18,5 +20,5 @@ $ cargo build --workspace --examples &&
 
 It's recommended to poke around their source code in a local checkout, but you can also view their generated documentation and source code online:
 
-* https://arcnmx.github.io/wireplumber.rs/wpexec/index.html[wpexec]
-* https://arcnmx.github.io/wireplumber.rs/static_link_module/index.html[static-link module]
+* https://arcnmx.github.io/wireplumber.rs/{release}/wpexec/[wpexec]
+* https://arcnmx.github.io/wireplumber.rs/{release}/static_link_module/[static-link module]
