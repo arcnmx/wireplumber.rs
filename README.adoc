@@ -1,6 +1,5 @@
 = WirePlumber Rust Bindings
 :crate: wireplumber
-:relative-tree: ./
 :relative-blob: ./
 :readme-inc: ./ci/readme/
 include::{readme-inc}attrs.adoc[]

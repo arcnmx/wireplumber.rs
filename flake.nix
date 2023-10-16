@@ -180,6 +180,11 @@
         src = ./sys/src/README.md;
         meta.name = "diff sys/src/README.md (cargo wp generate)";
       };
+      readme-attrs = { rust'builders, wpdev-readme-attrs }: rust'builders.check-generate {
+        expected = wpdev-readme-attrs;
+        src = ./ci/readme/attrs.adoc;
+        meta.name = "diff ci/readme/attrs.adoc (cargo wp generate)";
+      };
       commitlint-help = { rust'builders, wpdev-commitlint-help }: rust'builders.check-generate {
         expected = wpdev-commitlint-help;
         src = ./.github/commitlint.adoc;
@@ -260,6 +265,7 @@
       wpdev-generate = {
         rust'builders
       , wpdev-readme-github, wpdev-readme-package, wpdev-readme-sys-github, wpdev-readme-sys-package
+      , wpdev-readme-attrs
       , wpdev-commitlint-help, wpdev-commitlintrc-generate
       , outputHashes
       }: rust'builders.generateFiles {
@@ -269,49 +275,61 @@
           "sys/.github/README.md" = wpdev-readme-sys-github;
           "src/README.md" = wpdev-readme-package;
           "sys/src/README.md" = wpdev-readme-sys-package;
+          "ci/readme/attrs.adoc" = wpdev-readme-attrs;
           ".github/commitlint.adoc" = wpdev-commitlint-help;
           ".commitlintrc.json" = wpdev-commitlintrc-generate;
           "lock.nix" = outputHashes;
         };
       };
-      wpdev-readme-src = { linkFarm }: linkFarm "wireplumber-rust-readme" [
-        {
-          name = "ci/readme";
-          path = ./ci/readme;
-        }
-        {
-          name = "README.adoc";
-          path = ./README.adoc;
-        }
-        {
-          name = "src/README.adoc";
-          path = ./src/README.adoc;
-        }
-        {
-          name = "sys/README.adoc";
-          path = ./sys/README.adoc;
-        }
-        {
-          name = "sys/src/README.adoc";
-          path = ./sys/src/README.adoc;
-        }
-      ];
+      wpdev-readme-src = { symlinkJoin, linkFarm, wpdev-readme-attrs }: let
+        whitelist = [
+          "/ci"
+          "/ci/readme"
+          "/ci/readme/content.adoc"
+          "/ci/readme/dev.adoc"
+          "/ci/readme/header.adoc"
+          "/ci/readme/sys.adoc"
+          "/README.adoc"
+          "/src"
+          "/src/README.adoc"
+          "/sys"
+          "/sys/README.adoc"
+          "/sys/src"
+          "/sys/src/README.adoc"
+        ];
+        readme-src = builtins.path {
+          path = ./.;
+          filter = path: type: let
+            path' = nixlib.removePrefix (toString ./.) (toString path);
+          in builtins.elem path' whitelist;
+        };
+        readme-attrs = linkFarm "wireplumber-rust-readme-attrs" [
+          {
+            name = "ci/readme/attrs.adoc";
+            path = wpdev-readme-attrs;
+          }
+        ];
+      in symlinkJoin {
+        name = "wireplumber-rust-readme-src";
+        paths = [
+          readme-src
+          readme-attrs
+        ];
+      };
       wpdev-readme-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
         src = "${wpdev-readme-src}/README.adoc";
-        attributes = rec {
+        attributes = {
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           # this file ends up in `.github/README.md`, so its relative links must be adjusted to compensate
           relative-blob = "../";
-          relative-tree = relative-blob;
         };
       };
       wpdev-readme-sys-github = { rust'builders, wpdev-readme-src }: rust'builders.adoc2md {
         src = "${wpdev-readme-src}/sys/README.adoc";
-        attributes = rec {
+        attributes = {
           readme-inc = "${wpdev-readme-src}/ci/readme/";
           # this file ends up in `sys/.github/README.md`, so its relative links must be adjusted to compensate
           relative-blob = "../../";
-          relative-tree = relative-blob;
         };
       };
       wpdev-readme-package = { rust'builders, wpdev-readme, wpdev-readme-src }: rust'builders.adoc2md {
@@ -329,6 +347,13 @@
         src = "${wpdev-readme-src}/sys/src/README.adoc";
         inherit (wpdev-readme-package) attributes;
       };
+      wpdev-readme-attrs = { writeText }: let
+        adocAttr = key: value: ":${key}:" + nixlib.optionalString (value != "") " ${value}";
+        attrs = nixlib.mapAttrsToList adocAttr self.lib.asciidocAttributes;
+      in writeText "wireplumber-attrs.adoc" ''
+        // This file is automatically @generated from flake.nix
+        ${nixlib.concatStringsSep "\n" attrs}
+      '';
       wpdev-commitlint-help = { writeText }: writeText "commitlint.adoc" self.lib.commitlint.help-adoc;
       outputHashes = { rust'builders }: rust'builders.cargoOutputHashes {
         inherit (self.lib) crate;
@@ -341,6 +366,20 @@
         "0.4.8" "0.4.10"
         "0.4.11" "0.4.12"
       ];
+      asciidocAttributes = {
+        source-highlighter = "highlight.js";
+        release = "main";
+        relative-tree = "{relative-blob}";
+        url-pw = "https://pipewire.org/";
+        url-pw-api = "https://docs.pipewire.org/page_api.html";
+        url-wp = "https://pipewire.pages.freedesktop.org/wireplumber/index.html";
+        url-docs = "https://arcnmx.github.io/wireplumber.rs/{release}/{crate}/";
+        url-docs-modules = "{url-docs}#modules";
+        url-crates = "https://crates.io/crates/{crate}";
+        badge-crates = "https://img.shields.io/crates/v/{crate}.svg?style=flat-square";
+        badge-docs = "https://img.shields.io/badge/API-docs-blue.svg?style=flat-square";
+        badge-license = "https://img.shields.io/badge/license-MIT-ff69b4.svg?style=flat-square";
+      };
       supportedVersions = version: filter (versionAtLeast version) self.lib.featureVersions;
       versionFeatureName = version: "v" + replaceStrings [ "." ] [ "_" ] version;
       featureForVersion = version: let

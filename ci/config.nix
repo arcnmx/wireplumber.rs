@@ -121,6 +121,7 @@ in {
             checks.readme-sys-github
             checks.readme-package
             checks.readme-sys-package
+            checks.readme-attrs
             checks.commitlint-help
             checks.commitlintrc
           ];
