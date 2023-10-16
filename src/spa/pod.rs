@@ -155,17 +155,17 @@ impl SpaPod {
 		}
 	}
 
-	pub fn iterator(&self) -> ValueIterator<SpaPod> {
-		ValueIterator::with_inner(self.new_iterator().unwrap())
+	pub fn iterator(&self) -> IntoValueIterator<SpaPod> {
+		IntoValueIterator::with_inner(self.new_iterator().unwrap())
 	}
 
-	pub fn array_pointers(&self) -> impl Iterator<Item = Pointer> {
-		self.new_iterator().unwrap().map(|v| v.get().unwrap())
+	pub fn array_pointers(&self) -> IntoValueIterator<Pointer> {
+		IntoValueIterator::with_inner(self.new_iterator().unwrap())
 	}
 
 	pub fn array_iterator<T: SpaPrimitive>(&self) -> impl Iterator<Item = T> {
 		// TODO: assert type via T!!!
-		self.array_pointers().map(|p| unsafe { *(p as *const T) })
+		self.array_pointers().into_iter().map(|p| unsafe { *(p as *const T) })
 	}
 
 	#[doc(alias = "wp_spa_pod_get_spa_pod")]
@@ -185,7 +185,7 @@ impl SpaPod {
 	#[cfg(feature = "experimental")]
 	#[cfg_attr(docsrs, doc(cfg(feature = "experimental")))]
 	pub fn struct_fields(&self, length_prefix: bool) -> crate::Result<std::vec::IntoIter<(String, SpaPod)>> {
-		let mut params = self.iterator();
+		let mut params = self.iterator().into_iter();
 
 		let length: Option<i32> = if length_prefix {
 			Some(
@@ -255,6 +255,7 @@ impl SpaPod {
 		let values = type_.and_then(|ty| ty.values_table());
 		self
 			.iterator()
+			.into_iter()
 			.map(move |pod| pod.property().unwrap())
 			.map(move |(key_name, pod)| {
 				(

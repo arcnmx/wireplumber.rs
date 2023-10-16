@@ -118,6 +118,7 @@ status = "generate"
 	[[object.function]]
 	name = "new_iterator"
 	rename = "items_iterator"
+	visibility = "crate"
 	[[object.function]]
 	name = "add_keys_array"
 	rename = "add_keys"
@@ -147,9 +148,11 @@ status = "generate"
 	[[object.function]]
 	name = "new_iterator"
 	rename = "objects_iterator"
+	visibility = "crate"
 	[[object.function]]
 	name = "new_filtered_iterator_full"
 	rename = "filtered_iterator"
+	visibility = "crate"
 	[[object.function]]
 	name = "lookup_full"
 	rename = "lookup_object"
@@ -208,9 +211,11 @@ status = "generate"
 	[[object.function]]
 	name = "new_ports_iterator"
 	rename = "ports_iterator"
+	visibility = "crate"
 	[[object.function]]
 	name = "new_ports_filtered_iterator_full"
 	rename = "ports_filtered_iterator"
+	visibility = "crate"
 
 [[object]]
 name = "Wp.Link"
@@ -312,6 +317,9 @@ status = "generate"
 	[[object.function]]
 	pattern = "(new_bytes|new_pointer|new_wrap|new_wrap_const|get_bytes|get_choice_type|get_pointer|get_spa_type|get_spa_pod|set_pointer)"
 	manual = true
+	[[object.function]]
+	name = "new_iterator"
+	visibility = "crate"
 
 [[object]]
 name = "Wp.SpaPodParser"

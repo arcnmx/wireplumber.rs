@@ -64,9 +64,9 @@ impl Core {
 	#[cfg(feature = "v0_4_2")]
 	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 	#[doc(alias = "wp_new_files_iterator")]
-	pub fn find_files(dirs: LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> ValueIterator<String> {
+	pub fn find_files(dirs: LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> IntoValueIterator<String> {
 		unsafe {
-			ValueIterator::with_inner(from_glib_full(ffi::wp_new_files_iterator(
+			IntoValueIterator::with_inner(from_glib_full(ffi::wp_new_files_iterator(
 				dirs.into_glib(),
 				subdir.to_glib_none().0,
 				suffix.to_glib_none().0,
@@ -168,6 +168,6 @@ fn wp_new_files_iterator() {
 	let file = Core::find_file(LookupDirs::PREFIX_SHARE, "create-item.lua", Some("scripts"));
 	assert!(file.is_some());
 
-	let files = Core::find_files(LookupDirs::PREFIX_SHARE, None, Some(".conf"));
+	let files = Core::find_files(LookupDirs::PREFIX_SHARE, None, Some(".conf")).into_iter();
 	assert_ne!(0, files.count());
 }

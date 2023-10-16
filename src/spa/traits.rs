@@ -318,6 +318,7 @@ where
 
 		pod
 			.iterator()
+			.into_iter()
 			.map(|pod| T::try_from(&pod).map_err(Into::into))
 			.collect()
 	}

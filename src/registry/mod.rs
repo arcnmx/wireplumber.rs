@@ -60,16 +60,16 @@ impl ObjectManager {
 
 	#[doc(alias = "wp_object_manager_new_iterator")]
 	#[doc(alias = "new_iterator")]
-	pub fn objects<T: ObjectType>(&self) -> ValueIterator<T> {
-		ValueIterator::with_inner(self.objects_iterator().unwrap())
+	pub fn objects<T: ObjectType>(&self) -> IntoValueIterator<T> {
+		IntoValueIterator::with_inner(self.objects_iterator().unwrap())
 	}
 
 	#[doc(alias = "wp_object_manager_new_filtered_iterator")]
 	#[doc(alias = "wp_object_manager_new_filtered_iterator_full")]
 	#[doc(alias = "new_filtered_iterator")]
 	#[doc(alias = "new_filtered_iterator_full")]
-	pub fn filtered<T: ObjectType>(&self, interest: ObjectInterest) -> ValueIterator<T> {
-		ValueIterator::with_inner(self.filtered_iterator(interest.into()).unwrap())
+	pub fn filtered<T: ObjectType>(&self, interest: ObjectInterest) -> IntoValueIterator<T> {
+		IntoValueIterator::with_inner(self.filtered_iterator(interest.into()).unwrap())
 	}
 
 	#[doc(alias = "wp_object_manager_lookup")]
@@ -128,12 +128,12 @@ impl<'a> IntoIterator for &'a ObjectManager {
 	type IntoIter = ValueIterator<GObject>;
 
 	fn into_iter(self) -> Self::IntoIter {
-		self.objects()
+		self.objects().into_iter()
 	}
 }
 
 impl<T: ObjectType> InterestContainer<T> for ObjectManager {
-	fn filter(&self, interest: Interest<T>) -> ValueIterator<T> {
+	fn filter(&self, interest: Interest<T>) -> IntoValueIterator<T> {
 		self.filtered(interest.into())
 	}
 

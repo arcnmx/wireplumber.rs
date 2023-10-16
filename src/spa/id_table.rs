@@ -11,12 +11,12 @@ impl SpaIdTable {
 		unsafe { from_glib(ffi::wp_spa_id_table_from_name(name.to_glib_none().0)) }
 	}
 
-	pub fn new_iterator(&self) -> crate::Iterator {
+	pub(crate) fn new_iterator(&self) -> crate::Iterator {
 		unsafe { from_glib_full(ffi::wp_spa_id_table_new_iterator(self.into_glib())) }
 	}
 
-	pub fn values(&self) -> ValueIterator<SpaIdValue> {
-		ValueIterator::with_inner(self.new_iterator())
+	pub fn values(&self) -> IntoValueIterator<SpaIdValue> {
+		IntoValueIterator::with_inner(self.new_iterator())
 	}
 
 	pub fn find_value(&self, value: u32) -> Option<SpaIdValue> {
@@ -106,6 +106,6 @@ fn id_table_values() {
 
 	let ty = SpaType::OBJECT_PROP_INFO;
 	let table = ty.values_table().unwrap();
-	let values = table.values();
+	let values = table.values().into_iter();
 	assert!(values.count() > 0);
 }

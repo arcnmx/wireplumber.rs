@@ -101,7 +101,7 @@ fn link_ports<'a>(
 				true,
 			)))
 			.collect();
-		let port_inputs = port_input_interest.filter(input);
+		let port_inputs = port_input_interest.filter(input).into_iter();
 
 		let port_output_interest: Interest<Port> = mapping
 			.output
@@ -113,7 +113,7 @@ fn link_ports<'a>(
 				true,
 			)))
 			.collect();
-		let port_outputs = move || port_output_interest.clone().filter(output);
+		let port_outputs = move || port_output_interest.clone().filter(output).into_iter();
 
 		port_inputs.flat_map(move |i| port_outputs().map(move |o| Link::new(&core, &o, &i, link_props)))
 	})
@@ -136,8 +136,8 @@ pub async fn main_loop(
 	link_props.insert(pw::PW_KEY_LINK_PASSIVE, arg.passive);
 	link_props.insert(pw::PW_KEY_OBJECT_LINGER, arg.linger);
 	while let Some(()) = rx.next().await {
-		let inputs = input_interest.clone().filter(&om);
-		let outputs = || output_interest.clone().filter(&om);
+		let inputs = input_interest.clone().filter(&om).into_iter();
+		let outputs = || output_interest.clone().filter(&om).into_iter();
 		let pairs = inputs.flat_map(|i| outputs().map(move |o| (i.clone(), o)));
 
 		let mut links = Vec::new();

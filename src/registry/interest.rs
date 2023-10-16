@@ -79,7 +79,7 @@ impl<T: StaticType> Interest<T> {
 		}
 	}
 
-	pub fn filter<C: InterestContainer<T>>(self, container: &C) -> ValueIterator<T> {
+	pub fn filter<C: InterestContainer<T>>(self, container: &C) -> IntoValueIterator<T> {
 		container.filter(self)
 	}
 
@@ -98,7 +98,7 @@ impl<T: StaticType> From<Interest<T>> for ObjectInterest {
 }
 
 pub trait InterestContainer<T: StaticType> {
-	fn filter(&self, interest: Interest<T>) -> ValueIterator<T>;
+	fn filter(&self, interest: Interest<T>) -> IntoValueIterator<T>;
 	fn lookup(&self, interest: Interest<T>) -> Option<T>;
 }
 

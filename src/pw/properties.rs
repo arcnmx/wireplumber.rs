@@ -74,22 +74,22 @@ impl Properties {
 
 	#[cfg(feature = "v0_4_2")]
 	pub fn iter(&self) -> iter::Map<ValueIterator<PropertiesItem>, fn(PropertiesItem) -> (String, String)> {
-		self.items().map(PropertiesItem::into)
+		self.items().into_iter().map(PropertiesItem::into)
 	}
 
 	#[cfg(feature = "v0_4_2")]
-	pub fn items(&self) -> ValueIterator<PropertiesItem> {
-		ValueIterator::with_inner(self.items_iterator().unwrap())
+	pub fn items(&self) -> IntoValueIterator<PropertiesItem> {
+		IntoValueIterator::with_inner(self.items_iterator().unwrap())
 	}
 
 	#[cfg(feature = "v0_4_2")]
 	pub fn keys(&self) -> impl Iterator<Item = String> {
-		self.items().map(|kv| kv.key_string())
+		self.items().into_iter().map(|kv| kv.key_string())
 	}
 
 	#[cfg(feature = "v0_4_2")]
 	pub fn values(&self) -> impl Iterator<Item = String> {
-		self.items().map(|kv| kv.value_string())
+		self.items().into_iter().map(|kv| kv.value_string())
 	}
 }
 

@@ -40,7 +40,7 @@ pub(crate) use {
 	crate::{
 		error::{Error, LibraryErrorEnum},
 		log::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning},
-		util::{ValueIterator, WpIterator},
+		util::{IntoValueIterator, ValueIterator, WpIterator},
 	},
 	glib::{
 		error::ErrorDomain,

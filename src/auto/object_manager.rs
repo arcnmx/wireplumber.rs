@@ -54,7 +54,7 @@ impl ObjectManager {
 
     #[doc(alias = "wp_object_manager_new_filtered_iterator_full")]
     #[doc(alias = "new_filtered_iterator_full")]
-    pub fn filtered_iterator(&self, interest: ObjectInterest) -> Option<Iterator> {
+#[allow(dead_code)]    pub(crate) fn filtered_iterator(&self, interest: ObjectInterest) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_object_manager_new_filtered_iterator_full(self.to_glib_none().0, interest.into_glib_ptr()))
         }
@@ -62,7 +62,7 @@ impl ObjectManager {
 
     #[doc(alias = "wp_object_manager_new_iterator")]
     #[doc(alias = "new_iterator")]
-    pub fn objects_iterator(&self) -> Option<Iterator> {
+#[allow(dead_code)]    pub(crate) fn objects_iterator(&self) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_object_manager_new_iterator(self.to_glib_none().0))
         }

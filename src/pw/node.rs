@@ -39,8 +39,8 @@ impl Node {
 	#[doc(alias = "wp_node_new_ports_filtered_iterator_full")]
 	#[doc(alias = "new_ports_filtered_iterator")]
 	#[doc(alias = "new_ports_filtered_iterator_full")]
-	pub fn ports_filtered(&self, interest: ObjectInterest) -> ValueIterator<Port> {
-		ValueIterator::with_inner(self.ports_filtered_iterator(interest).unwrap())
+	pub fn ports_filtered(&self, interest: ObjectInterest) -> IntoValueIterator<Port> {
+		IntoValueIterator::with_inner(self.ports_filtered_iterator(interest).unwrap())
 	}
 
 	pub fn device_index(&self) -> Result<Option<u32>, Error> {
@@ -83,7 +83,7 @@ impl Display for Node {
 }
 
 impl InterestContainer<Port> for Node {
-	fn filter(&self, interest: Interest<Port>) -> ValueIterator<Port> {
+	fn filter(&self, interest: Interest<Port>) -> IntoValueIterator<Port> {
 		self.ports_filtered(interest.into())
 	}
 
@@ -97,7 +97,7 @@ impl<'a> IntoIterator for &'a Node {
 	type IntoIter = ValueIterator<Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
-		self.ports()
+		self.ports().into_iter()
 	}
 }
 
@@ -106,7 +106,7 @@ impl IntoIterator for Node {
 	type IntoIter = ValueIterator<Self::Item>;
 
 	fn into_iter(self) -> Self::IntoIter {
-		self.ports()
+		self.ports().into_iter()
 	}
 }
 

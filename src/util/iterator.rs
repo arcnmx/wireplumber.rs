@@ -52,6 +52,74 @@ impl Iterator for WpIterator {
 
 impl iter::FusedIterator for WpIterator {}
 
+#[derive(PartialOrd, Ord, PartialEq, Eq, Hash)]
+#[repr(transparent)]
+pub struct IntoValueIterator<T> {
+	iter: WpIterator,
+	_data: PhantomData<fn() -> T>,
+}
+
+impl<T> IntoValueIterator<T> {
+	pub fn with_inner(iter: WpIterator) -> Self {
+		Self {
+			iter,
+			_data: PhantomData,
+		}
+	}
+
+	pub fn into_value_iterator(self) -> ValueIterator<T> {
+		// XXX: work around wireplumber bug where iterators do not start in a usable state
+		// known affected methods: wp_new_files_iterator
+		self.iter.reset();
+
+		ValueIterator::with_inner(self.iter)
+	}
+
+	pub fn upcast<U: ObjectType>(self) -> IntoValueIterator<U>
+	where
+		T: IsA<U>,
+	{
+		IntoValueIterator::with_inner(self.iter)
+	}
+
+	pub fn into_inner(self) -> WpIterator {
+		self.iter
+	}
+
+	pub fn inner(&self) -> &WpIterator {
+		&self.iter
+	}
+}
+
+impl<T: for<'v> FromValue<'v>> IntoIterator for IntoValueIterator<T> {
+	type IntoIter = ValueIterator<T>;
+	type Item = T;
+
+	fn into_iter(self) -> Self::IntoIter {
+		self.into_value_iterator()
+	}
+}
+
+impl<T> From<IntoValueIterator<T>> for ValueIterator<T> {
+	fn from(iter: IntoValueIterator<T>) -> ValueIterator<T> {
+		iter.into_value_iterator()
+	}
+}
+
+impl<T: StaticType> Default for IntoValueIterator<T> {
+	fn default() -> Self {
+		Self::with_inner(WpIterator::empty(T::static_type()))
+	}
+}
+
+impl<T: StaticType> fmt::Debug for IntoValueIterator<T> {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		let name = format!("IntoValueIterator<{}>", T::static_type().name());
+		f.debug_tuple(&name).field(&self.iter).finish()
+	}
+}
+
+#[derive(PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[repr(transparent)]
 pub struct ValueIterator<T> {
 	iter: WpIterator,
@@ -67,10 +135,6 @@ impl<T> ValueIterator<T> {
 	}
 
 	pub fn with_inner(iter: WpIterator) -> Self {
-		// XXX: work around wireplumber bug where iterators do not start in a usable state
-		// known affected methods: wp_new_files_iterator
-		iter.reset();
-
 		Self {
 			iter,
 			_data: PhantomData,
@@ -79,6 +143,13 @@ impl<T> ValueIterator<T> {
 
 	pub fn reset(&mut self) {
 		self.iter.reset()
+	}
+
+	pub fn upcast<U: ObjectType>(self) -> ValueIterator<U>
+	where
+		T: IsA<U>,
+	{
+		ValueIterator::with_inner(self.iter)
 	}
 
 	pub fn into_inner(self) -> WpIterator {

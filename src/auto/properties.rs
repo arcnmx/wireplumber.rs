@@ -88,7 +88,7 @@ impl Properties {
 
     #[doc(alias = "wp_properties_new_iterator")]
     #[doc(alias = "new_iterator")]
-    pub fn items_iterator(&self) -> Option<Iterator> {
+#[allow(dead_code)]    pub(crate) fn items_iterator(&self) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_properties_new_iterator(self.to_glib_none().0))
         }

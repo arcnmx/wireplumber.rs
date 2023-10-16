@@ -109,6 +109,7 @@ impl SpaPod {
 			_ if self.is_struct() => self.parse_struct(|parser| {
 				self
 					.iterator()
+					.into_iter()
 					.map(|pod| pod.to_pod_value())
 					.collect::<Result<_, Error>>()
 					.map(Value::Struct)
@@ -140,6 +141,7 @@ impl SpaPod {
 				Value::Struct(
 					self
 						.iterator()
+						.into_iter()
 						.map(|pod| pod.control().unwrap())
 						.map(|(offset, type_name, value)| {
 							wp_warning!("discarding sequence context ({offset}, {type_name}) for {value:?}");
@@ -152,7 +154,7 @@ impl SpaPod {
 				let child = self.array_child().unwrap();
 				let type_ = child.spa_type().unwrap();
 				Value::ValueArray(match type_ {
-					_ if child.is_none() => ValueArray::None(self.array_pointers().map(drop).collect()),
+					_ if child.is_none() => ValueArray::None(self.array_pointers().into_iter().map(drop).collect()),
 					_ if child.is_boolean() => ValueArray::Bool(self.array_iterator::<SpaBool>().map(Into::into).collect()),
 					_ if child.is_int() => ValueArray::Int(self.array_iterator().collect()),
 					_ if child.is_long() => ValueArray::Long(self.array_iterator().collect()),

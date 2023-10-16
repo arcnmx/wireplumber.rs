@@ -423,7 +423,7 @@ impl SpaPod {
     }
 
     #[doc(alias = "wp_spa_pod_new_iterator")]
-    pub fn new_iterator(&self) -> Option<Iterator> {
+#[allow(dead_code)]    pub(crate) fn new_iterator(&self) -> Option<Iterator> {
         unsafe {
             from_glib_full(ffi::wp_spa_pod_new_iterator(self.to_glib_none().0))
         }
