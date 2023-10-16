@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["build","glib_signal","static_link_module","wireplumber","wireplumber_sys","wpexec"];
+window.ALL_CRATES = ["build","static_link_module","wireplumber","wireplumber_sys","wpexec"];
