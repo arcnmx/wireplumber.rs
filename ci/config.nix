@@ -1,4 +1,5 @@
 { config, pkgs, env, lib, ... }: with pkgs; with lib; let
+  pkgs = inputs.nixpkgs.legacyPackages.${builtins.currentSystem};
   wireplumber-rust = import ../. { pkgs = null; };
   inherit (wireplumber-rust) inputs checks legacyPackages packages devShells;
   wplib = wireplumber-rust.lib;
@@ -16,7 +17,7 @@
     ${if config.enableNightly && hasPrefix "fmt" command then "RUSTFMT" else null} = "${rustChannel.buildChannel.rustfmt}/bin/rustfmt";
     inherit (wpexec) LIBCLANG_PATH BINDGEN_EXTRA_CLANG_ARGS;
     PKG_CONFIG_PATH = makeSearchPath "lib/pkgconfig" wpexec.buildInputs;
-    "AR_${replaceStrings [ "-" ] [ "_" ] hostPlatform.config}" = "${stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}ar";
+    "AR_${replaceStrings [ "-" ] [ "_" ] hostPlatform.config}" = "${pkgs.stdenv.cc.bintools.bintools}/bin/${pkgs.stdenv.cc.targetPrefix}ar";
   } // args);
   rustChannel = inputs.rust.legacyPackages.${builtins.currentSystem}.unstable;
   v0' = builtins.match ''^(v)?[0-9].*$'';
@@ -42,7 +43,7 @@ in {
     environment = {
       test = {
         inherit (pkgs) pkg-config;
-        inherit (stdenv) cc;
+        inherit (pkgs.stdenv) cc;
       };
     };
     tasks = {
