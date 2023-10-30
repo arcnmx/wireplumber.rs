@@ -34,7 +34,7 @@ impl Link {
 
     #[doc(alias = "wp_link_get_linked_object_ids")]
     #[doc(alias = "get_linked_object_ids")]
-    pub fn linked_object_ids(&self) -> (u32, u32, u32, u32) {
+#[allow(dead_code)]    pub(crate) fn linked_object_ids(&self) -> (u32, u32, u32, u32) {
         unsafe {
             let mut output_node = mem::MaybeUninit::uninit();
             let mut output_port = mem::MaybeUninit::uninit();

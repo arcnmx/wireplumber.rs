@@ -223,6 +223,9 @@ status = "generate"
 	[[object.function]]
 	name = "get_state"
 	manual = true
+	[[object.function]]
+	name = "get_linked_object_ids"
+	visibility = "crate"
 
 # enums
 

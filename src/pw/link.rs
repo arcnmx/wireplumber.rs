@@ -53,6 +53,18 @@ impl Link {
 			}
 		}
 	}
+
+	#[doc(alias = "wp_link_get_linked_object_ids")]
+	#[doc(alias = "get_linked_object_ids")]
+	pub fn linked_objects(&self) -> LinkObjects {
+		let (output_node, output_port, input_node, input_port) = self.linked_object_ids();
+		LinkObjects {
+			output_node,
+			output_port,
+			input_node,
+			input_port,
+		}
+	}
 }
 
 pub trait LinkTarget {
@@ -110,4 +122,12 @@ impl<E> From<Result<LinkState, E>> for LinkState {
 			Err(_) => LinkState::Error,
 		}
 	}
+}
+
+#[derive(Debug, Copy, Clone, PartialOrd, Ord, PartialEq, Eq, Hash)]
+pub struct LinkObjects {
+	pub output_node: u32,
+	pub output_port: u32,
+	pub input_node: u32,
+	pub input_port: u32,
 }

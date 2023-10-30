@@ -30,7 +30,7 @@ pub use crate::auto::PropertiesItem;
 pub use {
 	self::{
 		keys::*,
-		link::LinkTarget,
+		link::{LinkObjects, LinkTarget},
 		proxy::{PipewireObjectExt2, ProxyExt2},
 	},
 	crate::auto::{
