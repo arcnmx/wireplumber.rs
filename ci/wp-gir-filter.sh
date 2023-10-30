@@ -22,22 +22,22 @@ exec xmlstarlet ed \
 	-i '///_:function[@name="spa_id_value_from_name"]/_:return-value' -t attr -n nullable -v 1 \
 	-i '///_:function[@name="spa_id_value_from_number"]/_:return-value' -t attr -n nullable -v 1 \
 	-i '///_:function[@name="spa_id_value_from_short_name"]/_:return-value' -t attr -n nullable -v 1 \
-	-i '///_:class[@c:type="WpFactory"]' -t attr -n version -v 0.4.5 \
-	-i '///_:record[@c:type="WpFactoryClass"]' -t attr -n version -v 0.4.5 \
-	-i '///_:record[@c:type="WpSpaJson"]' -t attr -n version -v 0.4.8 \
-	-i '///_:record[@c:type="WpSpaJsonParser"]' -t attr -n version -v 0.4.8 \
-	-i '///_:record[@c:type="WpSpaJsonBuilder"]' -t attr -n version -v 0.4.8 \
-	-i '///_:record[@c:type="WpSpaJson"]/_:constructor[@name="new_from_stringn"]' -t attr -n version -v 0.4.10 \
-	-i '///_:enumeration[@c:type="WpSiAdapterPortsState"]' -t attr -n version -v 0.4.10 \
-	-i '///_:interface[@c:type="WpSiAdapter"]/glib:signal[@name="adapter-ports-state-changed"]' -t attr -n version -v 0.4.10 \
-	-i '///_:class[@c:type="WpDbus"]' -t attr -n version -v 0.4.11 \
-	-i '///_:enumeration[@c:type="WpLinkState"]' -t attr -n version -v 0.4.11 \
-	-i '///_:enumeration[@c:type="WpDBusState"]' -t attr -n version -v 0.4.11 \
-	-i '///_:bitfield[@c:type="WpDbusFeatures"]' -t attr -n version -v 0.4.11 \
-	-i '///_:bitfield[@c:type="WpLinkFeatures"]' -t attr -n version -v 0.4.11 \
-	-i '///_:class[@c:type="WpCore"]/_:method[@name="get_vm_type"]' -t attr -n version -v 0.4.11 \
-	-i '///_:class[@c:type="WpLink"]/_:property[@name="state"]' -t attr -n version -v 0.4.11 \
-	-i '///_:class[@c:type="WpLink"]/glib:signal[@name="state-changed"]' -t attr -n version -v 0.4.11 \
-	-i '///_:function[@name="get_library_version"]' -t attr -n version -v 0.4.12 \
-	-i '///_:function[@name="get_library_api_version"]' -t attr -n version -v 0.4.12 \
+	-i '///_:class[@c:type="WpFactory" and not(@version)]' -t attr -n version -v 0.4.5 \
+	-i '///_:record[@c:type="WpFactoryClass" and not(@version)]' -t attr -n version -v 0.4.5 \
+	-i '///_:record[@c:type="WpSpaJson" and not(@version)]' -t attr -n version -v 0.4.8 \
+	-i '///_:record[@c:type="WpSpaJsonParser" and not(@version)]' -t attr -n version -v 0.4.8 \
+	-i '///_:record[@c:type="WpSpaJsonBuilder" and not(@version)]' -t attr -n version -v 0.4.8 \
+	-i '///_:record[@c:type="WpSpaJson"]/_:constructor[@name="new_from_stringn" and not(@version)]' -t attr -n version -v 0.4.10 \
+	-i '///_:enumeration[@c:type="WpSiAdapterPortsState" and not(@version)]' -t attr -n version -v 0.4.10 \
+	-i '///_:interface[@c:type="WpSiAdapter"]/glib:signal[@name="adapter-ports-state-changed" and not(@version)]' -t attr -n version -v 0.4.10 \
+	-i '///_:class[@c:type="WpDbus" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:enumeration[@c:type="WpLinkState" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:enumeration[@c:type="WpDBusState" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:bitfield[@c:type="WpDbusFeatures" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:bitfield[@c:type="WpLinkFeatures" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:class[@c:type="WpCore"]/_:method[@name="get_vm_type" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:class[@c:type="WpLink"]/_:property[@name="state" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:class[@c:type="WpLink"]/glib:signal[@name="state-changed" and not(@version)]' -t attr -n version -v 0.4.11 \
+	-i '///_:function[@name="get_library_version" and not(@version)]' -t attr -n version -v 0.4.12 \
+	-i '///_:function[@name="get_library_api_version" and not(@version)]' -t attr -n version -v 0.4.12 \
 	-u '//_:namespace[@name="Wp"]/@shared-library' -v libwireplumber-0.4.so.0

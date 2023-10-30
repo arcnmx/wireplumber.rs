@@ -8,7 +8,10 @@
 //! - [ImplModule](https://pipewire.pages.freedesktop.org/wireplumber/c_api/impl_module_api.html)
 //! - [SpaDevice](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_device_api.html)
 
-pub use crate::auto::{ImplEndpoint, ImplMetadata, ImplModule, ImplNode, SpaDevice, SpaDeviceFeatures};
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
+pub use crate::auto::ImplModule;
+pub use crate::auto::{ImplEndpoint, ImplMetadata, ImplNode, SpaDevice, SpaDeviceFeatures};
 
 mod device;
 mod node;

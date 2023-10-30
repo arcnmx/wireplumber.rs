@@ -50,6 +50,9 @@ version = "0.4.11"
 [package.metadata.system-deps.wireplumber_0_4.v0_4_12]
 version = "0.4.12"
 
+[package.metadata.system-deps.wireplumber_0_4.v0_4_15]
+version = "0.4.15"
+
 [package.metadata.docs.rs]
 features = ["v0_4_12"]
 rustc-args = ["--cfg", "docsrs"]
@@ -79,3 +82,4 @@ v0_4_8 = ["v0_4_6"]
 v0_4_10 = ["v0_4_8"]
 v0_4_11 = ["v0_4_10"]
 v0_4_12 = ["v0_4_11"]
+v0_4_15 = ["v0_4_12"]

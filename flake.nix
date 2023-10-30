@@ -385,6 +385,7 @@
         "0.4.6"
         "0.4.8" "0.4.10"
         "0.4.11" "0.4.12"
+        "0.4.15"
       ];
       asciidocAttributes = {
         inherit (self.lib.crate.package) repository;

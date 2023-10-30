@@ -4,7 +4,7 @@ This crate provides a high-level interface to [PipeWire](https://pipewire.org/)'
 
 ``` toml
 [dependencies]
-wireplumber = { version = "0.1", features = ["v0_4_12"], git = "https://github.com/arcnmx/wireplumber.rs" }
+wireplumber = { version = "0.1", features = ["v0_4_15"], git = "https://github.com/arcnmx/wireplumber.rs" }
 ```
 
 # Examples

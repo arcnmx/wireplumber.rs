@@ -42,7 +42,11 @@ pub use self::impl_endpoint::ImplEndpoint;
 mod impl_metadata;
 pub use self::impl_metadata::ImplMetadata;
 
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 mod impl_module;
+#[cfg(feature = "v0_4_2")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 pub use self::impl_module::ImplModule;
 
 mod impl_node;

@@ -1985,10 +1985,15 @@ extern "C" {
     //=========================================================================
     // WpImplModule
     //=========================================================================
+    #[cfg(feature = "v0_4_2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_impl_module_get_type() -> GType;
     #[cfg(feature = "v0_4_2")]
     #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_impl_module_load(core: *mut WpCore, name: *const c_char, arguments: *const c_char, properties: *mut WpProperties) -> *mut WpImplModule;
+    #[cfg(feature = "v0_4_15")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_15")))]
+    pub fn wp_impl_module_load_file(core: *mut WpCore, name: *const c_char, filename: *const c_char, properties: *mut WpProperties) -> *mut WpImplModule;
 
     //=========================================================================
     // WpImplNode
