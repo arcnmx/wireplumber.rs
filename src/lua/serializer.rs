@@ -3,7 +3,10 @@ use {
 		lua::{LuaError, LuaVariant},
 		prelude::*,
 	},
-	glib::{variant::VariantTypeMismatchError, ToVariant, Variant, VariantTy, VariantType},
+	glib::{
+		variant::{ToVariant, Variant, VariantTypeMismatchError},
+		VariantTy, VariantType,
+	},
 	serde::{ser, Serialize},
 };
 

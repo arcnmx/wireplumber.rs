@@ -32,7 +32,10 @@ pub use {
 		},
 		util::{TransitionExt as _, TransitionExt2 as _},
 	},
-	glib::{Cast as _, IsA as _, StaticType as _},
+	glib::{
+		object::{Cast as _, IsA as _},
+		types::StaticType as _,
+	},
 };
 /// this crate uses the prelude too!
 #[allow(unused_imports)]
@@ -45,11 +48,12 @@ pub(crate) use {
 	glib::{
 		error::ErrorDomain,
 		ffi::{gconstpointer, gpointer},
+		object::{Cast, IsA, Object as GObject, ObjectExt as GObjectExt, ObjectType},
 		translate::*,
-		types::{Pointee, Pointer},
+		types::{Pointee, Pointer, StaticType},
 		value::{FromValue, ToValue},
-		Cast, FromVariant, IsA, Object as GObject, ObjectExt as GObjectExt, ObjectType, StaticType, StaticVariantType,
-		ToVariant, Type, Value, Variant, VariantClass, VariantTy,
+		variant::{FromVariant, StaticVariantType, ToVariant},
+		Type, Value, Variant, VariantClass, VariantTy,
 	},
 	std::{
 		borrow::{Borrow, Cow},

@@ -375,7 +375,7 @@ mod impl_serde {
 	use {
 		super::{Constraint, ConstraintType, ConstraintVerb},
 		crate::lua::{LuaError, LuaVariant},
-		glib::{ToVariant, Variant},
+		glib::variant::{ToVariant, Variant},
 		serde::{
 			de::{self, Error as _, MapAccess, SeqAccess, Unexpected, Visitor},
 			ser::SerializeStruct,

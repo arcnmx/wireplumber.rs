@@ -7,7 +7,8 @@
 
 use {
 	futures::{channel::mpsc, future, FutureExt, StreamExt},
-	glib::{once_cell::unsync::OnceCell, prelude::*, Error, SourceId, Variant},
+	glib::{prelude::*, Error, SourceId, Variant},
+	once_cell::unsync::OnceCell,
 	serde::{Deserialize, Serialize},
 	std::{future::Future, iter, pin::Pin},
 	wireplumber::{
