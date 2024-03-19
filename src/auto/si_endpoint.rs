@@ -3,7 +3,7 @@
 
 use crate::{Object,Properties,SessionItem};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpSiEndpoint")]
@@ -50,7 +50,7 @@ pub trait SiEndpointExt: IsA<SiEndpoint> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"endpoint-properties-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(endpoint_properties_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(endpoint_properties_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

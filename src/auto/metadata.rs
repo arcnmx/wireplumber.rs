@@ -3,7 +3,7 @@
 
 use crate::{GlobalProxy,Iterator,Object,Proxy};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem,mem::transmute,ptr};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpMetadata")]
@@ -21,10 +21,10 @@ impl Metadata {
     #[doc(alias = "wp_metadata_iterator_item_extract")]
     pub fn iterator_item_extract(item: &glib::Value) -> (u32, glib::GString, glib::GString, glib::GString) {
         unsafe {
-            let mut subject = mem::MaybeUninit::uninit();
-            let mut key = ptr::null();
-            let mut type_ = ptr::null();
-            let mut value = ptr::null();
+            let mut subject = std::mem::MaybeUninit::uninit();
+            let mut key = std::ptr::null();
+            let mut type_ = std::ptr::null();
+            let mut value = std::ptr::null();
             ffi::wp_metadata_iterator_item_extract(item.to_glib_none().0, subject.as_mut_ptr(), &mut key, &mut type_, &mut value);
             (subject.assume_init(), from_glib_none(key), from_glib_none(type_), from_glib_none(value))
         }
@@ -47,7 +47,7 @@ pub trait MetadataExt: IsA<Metadata> + sealed::Sealed + 'static {
     #[doc(alias = "wp_metadata_find")]
     fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, Option<glib::GString>) {
         unsafe {
-            let mut type_ = ptr::null();
+            let mut type_ = std::ptr::null();
             let ret = from_glib_none(ffi::wp_metadata_find(self.as_ref().to_glib_none().0, subject, key.to_glib_none().0, &mut type_));
             (ret, from_glib_full(type_))
         }
@@ -76,7 +76,7 @@ pub trait MetadataExt: IsA<Metadata> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

@@ -2,7 +2,6 @@
 // DO NOT EDIT
 
 use glib::{prelude::*,translate::*};
-use std::{fmt};
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
@@ -19,18 +18,6 @@ pub enum ConstraintType {
     GProperty,
 #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for ConstraintType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ConstraintType::{}", match *self {
-            Self::None => "None",
-            Self::PwGlobalProperty => "PwGlobalProperty",
-            Self::PwProperty => "PwProperty",
-            Self::GProperty => "GProperty",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[doc(hidden)]
@@ -141,21 +128,6 @@ pub enum ConstraintVerb {
     __Unknown(i32),
 }
 
-impl fmt::Display for ConstraintVerb {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ConstraintVerb::{}", match *self {
-            Self::Equals => "Equals",
-            Self::NotEquals => "NotEquals",
-            Self::InList => "InList",
-            Self::InRange => "InRange",
-            Self::Matches => "Matches",
-            Self::IsPresent => "IsPresent",
-            Self::IsAbsent => "IsAbsent",
-            _ => "Unknown",
-        })
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for ConstraintVerb {
     type GlibType = ffi::WpConstraintVerb;
@@ -262,19 +234,6 @@ pub enum DBusState {
     Connected,
 #[doc(hidden)]
     __Unknown(i32),
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl fmt::Display for DBusState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DBusState::{}", match *self {
-            Self::Closed => "Closed",
-            Self::Connecting => "Connecting",
-            Self::Connected => "Connected",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[cfg(feature = "v0_4_11")]
@@ -389,16 +348,6 @@ pub enum Direction {
     __Unknown(i32),
 }
 
-impl fmt::Display for Direction {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Direction::{}", match *self {
-            Self::Input => "Input",
-            Self::Output => "Output",
-            _ => "Unknown",
-        })
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for Direction {
     type GlibType = ffi::WpDirection;
@@ -493,17 +442,6 @@ pub enum LibraryErrorEnum {
     OperationFailed,
 #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for LibraryErrorEnum {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "LibraryErrorEnum::{}", match *self {
-            Self::Invariant => "Invariant",
-            Self::InvalidArgument => "InvalidArgument",
-            Self::OperationFailed => "OperationFailed",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[doc(hidden)]
@@ -612,23 +550,6 @@ pub enum LinkState {
     Active,
 #[doc(hidden)]
     __Unknown(i32),
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl fmt::Display for LinkState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "LinkState::{}", match *self {
-            Self::Error => "Error",
-            Self::Unlinked => "Unlinked",
-            Self::Init => "Init",
-            Self::Negotiating => "Negotiating",
-            Self::Allocating => "Allocating",
-            Self::Paused => "Paused",
-            Self::Active => "Active",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[cfg(feature = "v0_4_11")]
@@ -757,19 +678,6 @@ pub enum NodeState {
     __Unknown(i32),
 }
 
-impl fmt::Display for NodeState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "NodeState::{}", match *self {
-            Self::Error => "Error",
-            Self::Creating => "Creating",
-            Self::Suspended => "Suspended",
-            Self::Idle => "Idle",
-            Self::Running => "Running",
-            _ => "Unknown",
-        })
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for NodeState {
     type GlibType = ffi::WpNodeState;
@@ -872,19 +780,6 @@ pub enum SiAdapterPortsState {
     Configured,
 #[doc(hidden)]
     __Unknown(i32),
-}
-
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
-impl fmt::Display for SiAdapterPortsState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SiAdapterPortsState::{}", match *self {
-            Self::None => "None",
-            Self::Configuring => "Configuring",
-            Self::Configured => "Configured",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[cfg(feature = "v0_4_10")]
@@ -999,17 +894,6 @@ pub enum TransitionStep {
     CustomStart,
 #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for TransitionStep {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "TransitionStep::{}", match *self {
-            Self::None => "None",
-            Self::Error => "Error",
-            Self::CustomStart => "CustomStart",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[doc(hidden)]

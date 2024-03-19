@@ -3,7 +3,7 @@
 
 use crate::{Core,DBusState,Object};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpDbus")]
@@ -65,7 +65,7 @@ impl Dbus {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::state\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 }

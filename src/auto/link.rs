@@ -9,10 +9,9 @@ use glib::{translate::*};
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId}};
-use std::{mem};
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpLink")]
@@ -36,10 +35,10 @@ impl Link {
     #[doc(alias = "get_linked_object_ids")]
     pub fn linked_object_ids(&self) -> (u32, u32, u32, u32) {
         unsafe {
-            let mut output_node = mem::MaybeUninit::uninit();
-            let mut output_port = mem::MaybeUninit::uninit();
-            let mut input_node = mem::MaybeUninit::uninit();
-            let mut input_port = mem::MaybeUninit::uninit();
+            let mut output_node = std::mem::MaybeUninit::uninit();
+            let mut output_port = std::mem::MaybeUninit::uninit();
+            let mut input_node = std::mem::MaybeUninit::uninit();
+            let mut input_port = std::mem::MaybeUninit::uninit();
             ffi::wp_link_get_linked_object_ids(self.to_glib_none().0, output_node.as_mut_ptr(), output_port.as_mut_ptr(), input_node.as_mut_ptr(), input_port.as_mut_ptr());
             (output_node.assume_init(), output_port.assume_init(), input_node.assume_init(), input_port.assume_init())
         }
@@ -56,7 +55,7 @@ impl Link {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"state-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(state_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(state_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -71,7 +70,7 @@ impl Link {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::state\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 }

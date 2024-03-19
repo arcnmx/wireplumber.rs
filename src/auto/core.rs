@@ -3,7 +3,7 @@
 
 use crate::{ObjectManager,Properties};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute,pin::Pin,ptr};
+use std::{boxed::Box as Box_,pin::Pin};
 
 glib::wrapper! {
     #[doc(alias = "WpCore")]
@@ -124,18 +124,18 @@ impl Core {
     pub fn idle_add<P: Fn() -> bool + 'static>(&self, function: P) -> glib::Source {
         let function_data: Box_<P> = Box_::new(function);
         unsafe extern "C" fn function_func<P: Fn() -> bool + 'static>(user_data: glib::ffi::gpointer) -> glib::ffi::gboolean {
-            let callback: &P = &*(user_data as *mut _);
+            let callback = &*(user_data as *mut P);
             (*callback)()
             .into_glib()
         }
         let function = Some(function_func::<P> as _);
         unsafe extern "C" fn destroy_func<P: Fn() -> bool + 'static>(data: glib::ffi::gpointer) {
-            let _callback: Box_<P> = Box_::from_raw(data as *mut _);
+            let _callback = Box_::from_raw(data as *mut P);
         }
         let destroy_call4 = Some(destroy_func::<P> as _);
         let super_callback0: Box_<P> = function_data;
         unsafe {
-            let mut source = ptr::null_mut();
+            let mut source = std::ptr::null_mut();
             ffi::wp_core_idle_add(self.to_glib_none().0, &mut source, function, Box_::into_raw(super_callback0) as *mut _, destroy_call4);
             from_glib_full(source)
         }
@@ -144,7 +144,7 @@ impl Core {
     #[doc(alias = "wp_core_idle_add_closure")]
     pub fn idle_add_closure(&self, closure: &glib::Closure) -> glib::Source {
         unsafe {
-            let mut source = ptr::null_mut();
+            let mut source = std::ptr::null_mut();
             ffi::wp_core_idle_add_closure(self.to_glib_none().0, &mut source, closure.to_glib_none().0);
             from_glib_full(source)
         }
@@ -167,7 +167,7 @@ impl Core {
     #[doc(alias = "wp_core_load_component")]
     pub fn load_component(&self, component: &str, type_: &str, args: Option<&glib::Variant>) -> Result<(), glib::Error> {
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::wp_core_load_component(self.to_glib_none().0, component.to_glib_none().0, type_.to_glib_none().0, args.to_glib_none().0, &mut error);
             debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
@@ -189,7 +189,7 @@ impl Core {
         
         let user_data: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::new(glib::thread_guard::ThreadGuard::new(callback));
         unsafe extern "C" fn sync_trampoline<P: FnOnce(Result<(), glib::Error>) + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let _ = ffi::wp_core_sync_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) };
             let callback: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::from_raw(user_data as *mut _);
@@ -228,18 +228,18 @@ impl Core {
     pub fn timeout_add<P: Fn() -> bool + 'static>(&self, timeout_ms: u32, function: P) -> glib::Source {
         let function_data: Box_<P> = Box_::new(function);
         unsafe extern "C" fn function_func<P: Fn() -> bool + 'static>(user_data: glib::ffi::gpointer) -> glib::ffi::gboolean {
-            let callback: &P = &*(user_data as *mut _);
+            let callback = &*(user_data as *mut P);
             (*callback)()
             .into_glib()
         }
         let function = Some(function_func::<P> as _);
         unsafe extern "C" fn destroy_func<P: Fn() -> bool + 'static>(data: glib::ffi::gpointer) {
-            let _callback: Box_<P> = Box_::from_raw(data as *mut _);
+            let _callback = Box_::from_raw(data as *mut P);
         }
         let destroy_call5 = Some(destroy_func::<P> as _);
         let super_callback0: Box_<P> = function_data;
         unsafe {
-            let mut source = ptr::null_mut();
+            let mut source = std::ptr::null_mut();
             ffi::wp_core_timeout_add(self.to_glib_none().0, &mut source, timeout_ms, function, Box_::into_raw(super_callback0) as *mut _, destroy_call5);
             from_glib_full(source)
         }
@@ -248,7 +248,7 @@ impl Core {
     #[doc(alias = "wp_core_timeout_add_closure")]
     pub fn timeout_add_closure(&self, timeout_ms: u32, closure: &glib::Closure) -> glib::Source {
         unsafe {
-            let mut source = ptr::null_mut();
+            let mut source = std::ptr::null_mut();
             ffi::wp_core_timeout_add_closure(self.to_glib_none().0, &mut source, timeout_ms, closure.to_glib_none().0);
             from_glib_full(source)
         }
@@ -270,7 +270,7 @@ impl Core {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"connected\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(connected_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(connected_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -283,7 +283,7 @@ impl Core {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"disconnected\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(disconnected_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(disconnected_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -296,7 +296,7 @@ impl Core {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::pw-core\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_pw_core_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_pw_core_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 }

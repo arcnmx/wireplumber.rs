@@ -308,6 +308,16 @@ impl Into<char> for ConstraintVerb {
 	}
 }
 
+impl fmt::Display for ConstraintVerb {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		if f.alternate() {
+			fmt::Display::fmt(&self.nickname(), f)
+		} else {
+			fmt::Display::fmt(&self.symbol(), f)
+		}
+	}
+}
+
 impl Default for ConstraintType {
 	fn default() -> Self {
 		ConstraintType::PwProperty

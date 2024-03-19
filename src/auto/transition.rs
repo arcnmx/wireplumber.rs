@@ -2,7 +2,7 @@
 // DO NOT EDIT
 
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute,ptr};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpTransition")]
@@ -27,7 +27,7 @@ impl Transition {
     #[doc(alias = "wp_transition_finish")]
     pub fn finish(res: &impl IsA<gio::AsyncResult>) -> Result<(), glib::Error> {
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::wp_transition_finish(res.as_ref().to_glib_none().0, &mut error);
             debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
@@ -107,7 +107,7 @@ pub trait TransitionExt: IsA<Transition> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::completed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_completed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_completed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

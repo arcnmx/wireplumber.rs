@@ -188,8 +188,7 @@ pub use self::flags::ProxyFeatures;
 pub use self::flags::SessionItemFeatures;
 pub use self::flags::SpaDeviceFeatures;
 
-#[doc(hidden)]
-pub mod traits {
+pub(crate) mod traits {
     pub use super::endpoint::EndpointExt;
     pub use super::global_proxy::GlobalProxyExt;
     pub use super::metadata::MetadataExt;

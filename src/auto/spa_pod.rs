@@ -3,7 +3,6 @@
 
 use crate::{Iterator};
 use glib::{translate::*};
-use std::{mem,ptr};
 
 glib::wrapper! {
     #[derive(Debug, PartialOrd, Ord, Hash)]
@@ -145,7 +144,7 @@ impl SpaPod {
     #[doc(alias = "get_boolean")]
     pub fn boolean(&self) -> Option<bool> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_boolean(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(from_glib(value.assume_init())) } else { None }
         }
@@ -164,9 +163,9 @@ impl SpaPod {
     #[doc(alias = "get_control")]
     pub fn control(&self) -> Option<(u32, glib::GString, SpaPod)> {
         unsafe {
-            let mut offset = mem::MaybeUninit::uninit();
-            let mut ctl_type = ptr::null();
-            let mut value = ptr::null_mut();
+            let mut offset = std::mem::MaybeUninit::uninit();
+            let mut ctl_type = std::ptr::null();
+            let mut value = std::ptr::null_mut();
             let ret = from_glib(ffi::wp_spa_pod_get_control(self.to_glib_none().0, offset.as_mut_ptr(), &mut ctl_type, &mut value));
             if ret { Some((offset.assume_init(), from_glib_none(ctl_type), from_glib_full(value))) } else { None }
         }
@@ -176,7 +175,7 @@ impl SpaPod {
     #[doc(alias = "get_double")]
     pub fn double(&self) -> Option<f64> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_double(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -186,7 +185,7 @@ impl SpaPod {
     #[doc(alias = "get_fd")]
     pub fn fd(&self) -> Option<i64> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_fd(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -196,7 +195,7 @@ impl SpaPod {
     #[doc(alias = "get_float")]
     pub fn float(&self) -> Option<f32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_float(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -206,8 +205,8 @@ impl SpaPod {
     #[doc(alias = "get_fraction")]
     pub fn fraction(&self) -> Option<(u32, u32)> {
         unsafe {
-            let mut num = mem::MaybeUninit::uninit();
-            let mut denom = mem::MaybeUninit::uninit();
+            let mut num = std::mem::MaybeUninit::uninit();
+            let mut denom = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_fraction(self.to_glib_none().0, num.as_mut_ptr(), denom.as_mut_ptr()));
             if ret { Some((num.assume_init(), denom.assume_init())) } else { None }
         }
@@ -217,7 +216,7 @@ impl SpaPod {
     #[doc(alias = "get_id")]
     pub fn id(&self) -> Option<u32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_id(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -227,7 +226,7 @@ impl SpaPod {
     #[doc(alias = "get_int")]
     pub fn int(&self) -> Option<i32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_int(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -237,7 +236,7 @@ impl SpaPod {
     #[doc(alias = "get_long")]
     pub fn long(&self) -> Option<i64> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_long(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -247,8 +246,8 @@ impl SpaPod {
     #[doc(alias = "get_property")]
     pub fn property(&self) -> Option<(glib::GString, SpaPod)> {
         unsafe {
-            let mut key = ptr::null();
-            let mut value = ptr::null_mut();
+            let mut key = std::ptr::null();
+            let mut value = std::ptr::null_mut();
             let ret = from_glib(ffi::wp_spa_pod_get_property(self.to_glib_none().0, &mut key, &mut value));
             if ret { Some((from_glib_none(key), from_glib_none(value))) } else { None }
         }
@@ -258,8 +257,8 @@ impl SpaPod {
     #[doc(alias = "get_rectangle")]
     pub fn rectangle(&self) -> Option<(u32, u32)> {
         unsafe {
-            let mut width = mem::MaybeUninit::uninit();
-            let mut height = mem::MaybeUninit::uninit();
+            let mut width = std::mem::MaybeUninit::uninit();
+            let mut height = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_pod_get_rectangle(self.to_glib_none().0, width.as_mut_ptr(), height.as_mut_ptr()));
             if ret { Some((width.assume_init(), height.assume_init())) } else { None }
         }
@@ -269,7 +268,7 @@ impl SpaPod {
     #[doc(alias = "get_string")]
     pub fn string(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = ptr::null();
+            let mut value = std::ptr::null();
             let ret = from_glib(ffi::wp_spa_pod_get_string(self.to_glib_none().0, &mut value));
             if ret { Some(from_glib_none(value)) } else { None }
         }

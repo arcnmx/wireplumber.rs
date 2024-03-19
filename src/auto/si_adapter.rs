@@ -9,10 +9,9 @@ use glib::{prelude::*,translate::*};
 #[cfg(feature = "v0_4_10")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 use glib::{signal::{connect_raw, SignalHandlerId}};
-use std::{ptr};
 #[cfg(feature = "v0_4_10")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpSiAdapter")]
@@ -38,7 +37,7 @@ pub trait SiAdapterExt: IsA<SiAdapter> + sealed::Sealed + 'static {
     #[doc(alias = "get_ports_format")]
     fn ports_format(&self) -> (SpaPod, Option<glib::GString>) {
         unsafe {
-            let mut mode = ptr::null();
+            let mut mode = std::ptr::null();
             let ret = from_glib_full(ffi::wp_si_adapter_get_ports_format(self.as_ref().to_glib_none().0, &mut mode));
             (ret, from_glib_full(mode))
         }
@@ -65,7 +64,7 @@ pub trait SiAdapterExt: IsA<SiAdapter> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"adapter-ports-state-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(adapter_ports_state_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(adapter_ports_state_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

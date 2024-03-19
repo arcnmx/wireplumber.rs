@@ -3,7 +3,6 @@
 
 use crate::{Object,SessionItem,SiLink,SiLinkable};
 use glib::{prelude::*,translate::*};
-use std::{ptr};
 
 glib::wrapper! {
     #[doc(alias = "WpSiAcquisition")]

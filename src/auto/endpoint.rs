@@ -3,7 +3,7 @@
 
 use crate::{Direction,GlobalProxy,Object,PipewireObject,Proxy};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpEndpoint")]
@@ -58,7 +58,7 @@ pub trait EndpointExt: IsA<Endpoint> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::direction\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_direction_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_direction_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -71,7 +71,7 @@ pub trait EndpointExt: IsA<Endpoint> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::media-class\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_media_class_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_media_class_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -84,7 +84,7 @@ pub trait EndpointExt: IsA<Endpoint> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::name\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_name_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_name_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

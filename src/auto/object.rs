@@ -3,7 +3,7 @@
 
 use crate::{Core,ObjectFeatures};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute,pin::Pin,ptr};
+use std::{boxed::Box as Box_,pin::Pin};
 
 glib::wrapper! {
     #[doc(alias = "WpObject")]
@@ -49,7 +49,7 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
         
         let user_data: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::new(glib::thread_guard::ThreadGuard::new(callback));
         unsafe extern "C" fn activate_trampoline<P: FnOnce(Result<(), glib::Error>) + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let _ = ffi::wp_object_activate_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) };
             let callback: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::from_raw(user_data as *mut _);
@@ -130,7 +130,7 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::active-features\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_active_features_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_active_features_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -143,7 +143,7 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::supported-features\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_supported_features_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_supported_features_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

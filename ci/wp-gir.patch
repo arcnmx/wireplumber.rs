@@ -64,8 +64,8 @@ index d42e4126..dc95659a 100644
      #[doc(alias = "wp_metadata_find")]
      fn find(&self, subject: u32, key: &str) -> (Option<glib::GString>, glib::GString) {
          unsafe {
--            let mut type_ = ptr::null();
-+            let mut type_ = ptr::null_mut();
+-            let mut type_ = std::ptr::null();
++            let mut type_ = std::ptr::null_mut();
              let ret = from_glib_none(ffi::wp_metadata_find(self.as_ref().to_glib_none().0, subject, key.to_glib_none().0, &mut type_));
              (ret, from_glib_full(type_))
          }
@@ -77,8 +77,8 @@ index 7f557d18..b0c60cb1 100644
      #[doc(alias = "get_ports_format")]
      fn ports_format(&self) -> (SpaPod, Option<glib::GString>) {
          unsafe {
--            let mut mode = ptr::null();
-+            let mut mode = ptr::null_mut();
+-            let mut mode = std::ptr::null();
++            let mut mode = std::ptr::null_mut();
              let ret = from_glib_full(ffi::wp_si_adapter_get_ports_format(self.as_ref().to_glib_none().0, &mut mode));
              (ret, from_glib_full(mode))
          }
@@ -90,8 +90,8 @@ index 42347fb0..590ce6ad 100644
      #[doc(alias = "get_string")]
      pub fn string(&self) -> Option<glib::GString> {
          unsafe {
--            let mut value = ptr::null();
-+            let mut value = ptr::null_mut();
+-            let mut value = std::ptr::null();
++            let mut value = std::ptr::null_mut();
              let ret = from_glib(ffi::wp_spa_pod_parser_get_string(self.to_glib_none().0, &mut value));
              if ret { Some(from_glib_full(value)) } else { None }
          }

@@ -3,7 +3,7 @@
 
 use crate::{Core,Iterator,ObjectFeatures,ObjectInterest};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpObjectManager")]
@@ -88,7 +88,7 @@ impl ObjectManager {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"installed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(installed_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(installed_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -101,7 +101,7 @@ impl ObjectManager {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"object-added\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(object_added_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(object_added_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -114,7 +114,7 @@ impl ObjectManager {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"object-removed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(object_removed_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(object_removed_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -127,7 +127,7 @@ impl ObjectManager {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"objects-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(objects_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(objects_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -140,7 +140,7 @@ impl ObjectManager {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::core\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_core_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_core_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 }

@@ -3,10 +3,6 @@
 
 use crate::{Iterator};
 use glib::{translate::*};
-use std::{mem};
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-use std::{fmt};
 
 glib::wrapper! {
     #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -178,7 +174,7 @@ impl SpaJson {
     #[doc(alias = "wp_spa_json_parse_boolean")]
     pub fn parse_boolean(&self) -> Option<bool> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parse_boolean(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(from_glib(value.assume_init())) } else { None }
         }
@@ -187,7 +183,7 @@ impl SpaJson {
     #[doc(alias = "wp_spa_json_parse_float")]
     pub fn parse_float(&self) -> Option<f32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parse_float(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -196,7 +192,7 @@ impl SpaJson {
     #[doc(alias = "wp_spa_json_parse_int")]
     pub fn parse_int(&self) -> Option<i32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parse_int(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -222,9 +218,9 @@ impl SpaJson {
 
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl fmt::Display for SpaJson {
+impl std::fmt::Display for SpaJson {
     #[inline]
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         f.write_str(&self.to_str())
     }
 }

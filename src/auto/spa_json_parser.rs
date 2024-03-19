@@ -3,7 +3,6 @@
 
 use crate::{SpaJson};
 use glib::{translate::*};
-use std::{mem};
 
 glib::wrapper! {
     #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -42,7 +41,7 @@ impl SpaJsonParser {
     #[doc(alias = "get_boolean")]
     pub fn boolean(&self) -> Option<bool> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parser_get_boolean(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(from_glib(value.assume_init())) } else { None }
         }
@@ -52,7 +51,7 @@ impl SpaJsonParser {
     #[doc(alias = "get_float")]
     pub fn float(&self) -> Option<f32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parser_get_float(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }
@@ -62,7 +61,7 @@ impl SpaJsonParser {
     #[doc(alias = "get_int")]
     pub fn int(&self) -> Option<i32> {
         unsafe {
-            let mut value = mem::MaybeUninit::uninit();
+            let mut value = std::mem::MaybeUninit::uninit();
             let ret = from_glib(ffi::wp_spa_json_parser_get_int(self.to_glib_none().0, value.as_mut_ptr()));
             if ret { Some(value.assume_init()) } else { None }
         }

@@ -15,6 +15,18 @@ use {
 
 pub type Result<T> = std::result::Result<T, Error>;
 
+impl fmt::Display for LibraryErrorEnum {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		let name = match self {
+			LibraryErrorEnum::Invariant => "invariant check failed",
+			LibraryErrorEnum::InvalidArgument => "invalid argument",
+			LibraryErrorEnum::OperationFailed => "operation failed",
+			LibraryErrorEnum::__Unknown(error) => return write!(f, "error {error}"),
+		};
+		f.write_str(name)
+	}
+}
+
 impl ErrorDomain for LibraryErrorEnum {
 	#[doc(alias = "WP_DOMAIN_LIBRARY")]
 	#[doc(alias = "wp_domain_library_quark")]

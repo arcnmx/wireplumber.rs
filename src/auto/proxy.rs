@@ -3,7 +3,7 @@
 
 use crate::{Object};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpProxy")]
@@ -37,7 +37,7 @@ pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
     #[doc(alias = "get_interface_type")]
     fn interface_type(&self) -> (glib::GString, u32) {
         unsafe {
-            let mut version = mem::MaybeUninit::uninit();
+            let mut version = std::mem::MaybeUninit::uninit();
             let ret = from_glib_none(ffi::wp_proxy_get_interface_type(self.as_ref().to_glib_none().0, version.as_mut_ptr()));
             (ret, version.assume_init())
         }
@@ -63,7 +63,7 @@ pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"bound\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(bound_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(bound_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -76,7 +76,7 @@ pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"error\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(error_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(error_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -94,7 +94,7 @@ pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"pw-proxy-destroyed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(pw_proxy_destroyed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(pw_proxy_destroyed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -107,7 +107,7 @@ pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::bound-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_bound_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_bound_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -120,7 +120,7 @@ pub trait ProxyExt: IsA<Proxy> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::pw-proxy\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_pw_proxy_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_pw_proxy_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

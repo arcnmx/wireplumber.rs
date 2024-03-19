@@ -104,3 +104,14 @@ impl<E> From<Result<LinkState, E>> for LinkState {
 		}
 	}
 }
+
+impl fmt::Display for Direction {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		let name = match self {
+			Direction::Input => "input",
+			Direction::Output => "output",
+			Direction::__Unknown(direction) => panic!("unknown WP_DIRECTION {direction}"),
+		};
+		f.write_str(name)
+	}
+}

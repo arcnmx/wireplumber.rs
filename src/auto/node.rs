@@ -3,7 +3,7 @@
 
 use crate::{Core,GlobalProxy,Iterator,NodeState,Object,ObjectInterest,PipewireObject,Port,Properties,Proxy};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpNode")]
@@ -27,7 +27,7 @@ impl Node {
     #[doc(alias = "get_n_input_ports")]
     pub fn n_input_ports(&self) -> (u32, u32) {
         unsafe {
-            let mut max = mem::MaybeUninit::uninit();
+            let mut max = std::mem::MaybeUninit::uninit();
             let ret = ffi::wp_node_get_n_input_ports(self.to_glib_none().0, max.as_mut_ptr());
             (ret, max.assume_init())
         }
@@ -37,7 +37,7 @@ impl Node {
     #[doc(alias = "get_n_output_ports")]
     pub fn n_output_ports(&self) -> (u32, u32) {
         unsafe {
-            let mut max = mem::MaybeUninit::uninit();
+            let mut max = std::mem::MaybeUninit::uninit();
             let ret = ffi::wp_node_get_n_output_ports(self.to_glib_none().0, max.as_mut_ptr());
             (ret, max.assume_init())
         }
@@ -101,7 +101,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"ports-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(ports_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(ports_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -114,7 +114,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"state-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(state_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(state_changed_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -127,7 +127,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::max-input-ports\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_max_input_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_max_input_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -140,7 +140,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::max-output-ports\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_max_output_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_max_output_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -153,7 +153,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::n-input-ports\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_n_input_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_n_input_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -166,7 +166,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::n-output-ports\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_n_output_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_n_output_ports_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -179,7 +179,7 @@ impl Node {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::state\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_state_trampoline::<F> as *const ())), Box_::into_raw(f))
         }
     }
 }

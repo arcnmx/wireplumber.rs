@@ -3,7 +3,7 @@
 
 use crate::{Object,Properties,SessionItem,SiLinkable};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem::transmute};
+use std::{boxed::Box as Box_};
 
 glib::wrapper! {
     #[doc(alias = "WpSiLink")]
@@ -66,7 +66,7 @@ pub trait SiLinkExt: IsA<SiLink> + sealed::Sealed + 'static {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"link-properties-changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(link_properties_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(link_properties_changed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

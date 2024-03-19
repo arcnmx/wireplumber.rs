@@ -38,16 +38,16 @@
     "gir-files": {
       "flake": false,
       "locked": {
-        "lastModified": 1695457989,
-        "narHash": "sha256-DIu0aQOmb75bC09opqnwTf26mApIQ3mP1xDFXWIvNZ0=",
+        "lastModified": 1707031342,
+        "narHash": "sha256-XxyIpxjK5FKbOPsMvFM8TPzmUVO+EGklAyF3kmdqhcc=",
         "owner": "gtk-rs",
         "repo": "gir-files",
-        "rev": "6415239ef4354633334410cfae108e64ae7ff708",
+        "rev": "cfc0305f903bcce1c9fb5b5055d3ae8a30912750",
         "type": "github"
       },
       "original": {
         "owner": "gtk-rs",
-        "ref": "0.18",
+        "ref": "0.19",
         "repo": "gir-files",
         "type": "github"
       }
@@ -55,16 +55,16 @@
     "gir-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1698930209,
-        "narHash": "sha256-E64htp+TlDiLGlF/WbEJsBRexZ1KSfnXK9jkzIQxieY=",
+        "lastModified": 1706819080,
+        "narHash": "sha256-GAAK4ej16e5/sjnPOVWs4ul1H9sqa+tDE8ky9tbB9No=",
         "owner": "gtk-rs",
         "repo": "gir",
-        "rev": "23d7c100187cb4767ef77e0e4b3a511cbfadf035",
+        "rev": "0e476ab5c1dec04355e4f516ebcce4edaa940c9e",
         "type": "github"
       },
       "original": {
         "owner": "gtk-rs",
-        "ref": "0.18",
+        "ref": "0.19",
         "repo": "gir",
         "type": "github"
       }
