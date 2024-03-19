@@ -9,7 +9,7 @@ macro_rules! newtype_wrapper {
 			$vis struct $id($ty | $ty ;? $err) as_variant into_variant;
 		}
 
-		impl<'a> glib::FromVariant for $id<'a> {
+		impl<'a> glib::variant::FromVariant for $id<'a> {
 			fn from_variant(variant: &glib::Variant) -> Option<Self> {
 				Self::try_from(variant.clone()).ok()
 			}

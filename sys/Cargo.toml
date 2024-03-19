@@ -63,9 +63,9 @@ rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
 [dependencies]
 libc = "0.2"
-glib-sys = { version = "0.18" }
-gobject-sys = { version = "0.18" }
-gio-sys = { version = "0.18" }
+glib-sys = { version = "0.19" }
+gobject-sys = { version = "0.19" }
+gio-sys = { version = "0.19" }
 pipewire = { version = "0.7", package = "pipewire-sys" }
 libspa = { version = "0.7", package = "libspa-sys" }
 
