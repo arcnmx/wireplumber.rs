@@ -5,6 +5,8 @@
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
+#[cfg(feature = "spa-json")]
+use wireplumber::spa::json::SpaJson;
 use {
 	anyhow::{format_err, Context, Result},
 	clap::{Parser, ValueEnum},
@@ -270,6 +272,9 @@ impl Args {
 	fn variant(&self) -> Result<Option<LuaVariant>> {
 		match self.json_arg {
 			None => Ok(None),
+			#[cfg(feature = "spa-json")]
+			Some(ref json) => SpaJson::deserialize_from_string(json).map_err(Into::into).map(Some),
+			#[cfg(all(feature = "serde_json", not(feature = "spa-json")))]
 			Some(ref json) => serde_json::from_str(json).map_err(Into::into).map(Some),
 		}
 	}

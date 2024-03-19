@@ -51,8 +51,10 @@ impl SpaJsonBuilder {
         }
     }
 
+    #[doc(hidden)]
     #[doc(alias = "wp_spa_json_builder_add_json")]
-    pub fn add_json(&self, json: &SpaJson) {
+    #[doc(alias = "add_json")]
+    pub fn add_spa_json(&self, json: &SpaJson) {
         unsafe {
             ffi::wp_spa_json_builder_add_json(self.to_glib_none().0, json.to_glib_none().0);
         }
@@ -80,7 +82,7 @@ impl SpaJsonBuilder {
     }
 
     #[doc(alias = "wp_spa_json_builder_end")]
-    pub fn end(&self) -> Option<SpaJson> {
+    pub fn end(&self) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_builder_end(self.to_glib_none().0))
         }

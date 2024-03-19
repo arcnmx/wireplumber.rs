@@ -48,12 +48,13 @@ pub(crate) use {
 	glib::{
 		error::ErrorDomain,
 		ffi::{gconstpointer, gpointer},
+		gstr,
 		object::{Cast, IsA, Object as GObject, ObjectExt as GObjectExt, ObjectType},
 		translate::*,
 		types::{Pointee, Pointer, StaticType},
 		value::{FromValue, ToValue},
 		variant::{FromVariant, StaticVariantType, ToVariant},
-		Type, Value, Variant, VariantClass, VariantTy,
+		GStr, GString, Type, Value, Variant, VariantClass, VariantTy,
 	},
 	std::{
 		borrow::{Borrow, Cow},
@@ -64,7 +65,7 @@ pub(crate) use {
 		iter::{self, FromIterator},
 		marker::PhantomData,
 		mem,
-		ops::Deref,
+		ops::{Deref, DerefMut},
 		pin::Pin,
 		ptr::{self, NonNull},
 		slice,

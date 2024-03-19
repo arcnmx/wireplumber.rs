@@ -5,7 +5,7 @@ use crate::{Iterator};
 use glib::{translate::*};
 
 glib::wrapper! {
-    #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    #[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SpaJson(Shared<ffi::WpSpaJson>);
 
     match fn {
@@ -27,25 +27,6 @@ impl SpaJson {
     pub fn new_float(value: f32) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_new_float(value))
-        }
-    }
-
-    #[doc(alias = "wp_spa_json_new_from_string")]
-    #[doc(alias = "new_from_string")]
-    pub fn from_string(json_str: &str) -> SpaJson {
-        unsafe {
-            from_glib_full(ffi::wp_spa_json_new_from_string(json_str.to_glib_none().0))
-        }
-    }
-
-    #[cfg(feature = "v0_4_10")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
-    #[doc(alias = "wp_spa_json_new_from_stringn")]
-    #[doc(alias = "new_from_stringn")]
-    pub fn from_stringn(json_str: &str) -> SpaJson {
-        let len = json_str.len() as _;
-        unsafe {
-            from_glib_full(ffi::wp_spa_json_new_from_stringn(json_str.to_glib_none().0, len))
         }
     }
 
@@ -72,7 +53,7 @@ impl SpaJson {
 
     #[doc(alias = "wp_spa_json_copy")]
 #[must_use]
-    pub fn copy(&self) -> Option<SpaJson> {
+    pub fn copy(&self) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_copy(self.to_glib_none().0))
         }
@@ -80,17 +61,9 @@ impl SpaJson {
 
     #[doc(alias = "wp_spa_json_ensure_unique_owner")]
 #[must_use]
-    pub fn ensure_unique_owner(self) -> Option<SpaJson> {
+    pub fn ensure_unique_owner(self) -> SpaJson {
         unsafe {
             from_glib_full(ffi::wp_spa_json_ensure_unique_owner(self.into_glib_ptr()))
-        }
-    }
-
-    #[doc(alias = "wp_spa_json_get_data")]
-    #[doc(alias = "get_data")]
-    pub fn data(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::wp_spa_json_get_data(self.to_glib_none().0))
         }
     }
 
@@ -101,12 +74,6 @@ impl SpaJson {
             ffi::wp_spa_json_get_size(self.to_glib_none().0)
         }
     }
-
-    //#[doc(alias = "wp_spa_json_get_spa_json")]
-    //#[doc(alias = "get_spa_json")]
-    //pub fn spa_json(&self) -> /*Unimplemented*/Option<Basic: Pointer> {
-    //    unsafe { TODO: call ffi:wp_spa_json_get_spa_json() }
-    //}
 
     #[doc(alias = "wp_spa_json_is_array")]
     pub fn is_array(&self) -> bool {
@@ -165,7 +132,7 @@ impl SpaJson {
     }
 
     #[doc(alias = "wp_spa_json_new_iterator")]
-    pub fn new_iterator(&self) -> Option<Iterator> {
+    pub fn new_iterator(&self) -> Iterator {
         unsafe {
             from_glib_full(ffi::wp_spa_json_new_iterator(self.to_glib_none().0))
         }
@@ -199,28 +166,9 @@ impl SpaJson {
     }
 
     #[doc(alias = "wp_spa_json_parse_string")]
-    pub fn parse_string(&self) -> Option<glib::GString> {
+    pub fn parse_string(&self) -> glib::GString {
         unsafe {
             from_glib_full(ffi::wp_spa_json_parse_string(self.to_glib_none().0))
         }
-    }
-
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    #[doc(alias = "wp_spa_json_to_string")]
-    #[doc(alias = "to_string")]
-    pub fn to_str(&self) -> glib::GString {
-        unsafe {
-            from_glib_full(ffi::wp_spa_json_to_string(self.to_glib_none().0))
-        }
-    }
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl std::fmt::Display for SpaJson {
-    #[inline]
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        f.write_str(&self.to_str())
     }
 }
