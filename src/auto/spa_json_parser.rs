@@ -28,6 +28,12 @@ impl SpaJsonParser {
         from_glib_full(ffi::wp_spa_json_parser_new_object(json.to_glib_none().0))
     }
 
+    #[doc(alias = "wp_spa_json_parser_new_undefined")]
+    #[doc(alias = "new_undefined")]
+    pub unsafe fn new_undefined_unchecked(json: &SpaJson) -> SpaJsonParser {
+        from_glib_full(ffi::wp_spa_json_parser_new_undefined(json.to_glib_none().0))
+    }
+
     #[doc(alias = "wp_spa_json_parser_end")]
     pub fn end(&self) {
         unsafe {

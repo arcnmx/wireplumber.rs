@@ -14,13 +14,8 @@ pub struct SpaJsonRef<'j> {
 }
 
 impl<'j> SpaJsonRef<'j> {
-	#[cfg(feature = "v0_4_10")]
 	pub fn with_str(json: &'j str) -> Self {
 		unsafe { Self::new(SpaJson::wrap_string(json)) }
-	}
-
-	pub fn with_gstr(json: &'j GStr) -> Self {
-		unsafe { Self::new(SpaJson::wrap_gstr(json)) }
 	}
 
 	pub fn with_json<'a>(json: &'a SpaJson) -> &'a Self
@@ -158,19 +153,19 @@ impl<'j> SpaJsonRef<'j> {
 
 impl SpaJsonRef<'static> {
 	pub fn new_null() -> Self {
-		Self::with_gstr(gstr!("null"))
+		Self::with_str("null")
 	}
 
 	pub fn empty() -> Self {
-		Self::with_gstr(gstr!(""))
+		Self::with_str("")
 	}
 
 	pub fn empty_array() -> Self {
-		Self::with_gstr(gstr!("[]"))
+		Self::with_str("[]")
 	}
 
 	pub fn empty_object() -> Self {
-		Self::with_gstr(gstr!("{}"))
+		Self::with_str("{}")
 	}
 
 	pub fn into_json(self) -> SpaJson {

@@ -1,9 +1,7 @@
-#[cfg(any(feature = "v0_4_2"))]
-use crate::plugin::LookupDirs;
-#[cfg(feature = "lua")]
-use crate::{lua::ToLuaTable, plugin::ComponentLoader};
 use {
-	crate::{prelude::*, Core, InitFlags, Properties},
+	crate::{
+		core::BaseDirsFlags, plugin::ComponentLoader, prelude::*, spa::json::SpaJson, Conf, Core, InitFlags, Properties,
+	},
 	glib::{MainContext, MainLoop},
 	pipewire_sys::{pw_context, pw_core},
 };
@@ -33,42 +31,21 @@ impl Core {
 		unsafe { from_glib_full(ffi::wp_get_library_api_version()) }
 	}
 
-	#[doc(alias = "wp_get_module_dir")]
-	pub fn module_dir() -> String {
-		unsafe { from_glib_full(ffi::wp_get_module_dir()) }
-	}
-
-	#[cfg_attr(feature = "v0_4_2", deprecated = "use `find_file` instead")]
-	#[doc(alias = "wp_get_config_dir")]
-	pub fn config_dir() -> String {
-		unsafe { from_glib_full(ffi::wp_get_config_dir()) }
-	}
-
-	#[cfg_attr(feature = "v0_4_2", deprecated = "use `find_file` instead")]
-	#[doc(alias = "wp_get_data_dir")]
-	pub fn data_dir() -> String {
-		unsafe { from_glib_full(ffi::wp_get_data_dir()) }
-	}
-
-	#[cfg(feature = "v0_4_2")]
-	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-	#[doc(alias = "wp_find_file")]
-	pub fn find_file(dirs: LookupDirs, filename: &str, subdir: Option<&str>) -> Option<String> {
+	#[doc(alias = "wp_base_dirs_find_file")]
+	pub fn find_file(dirs: BaseDirsFlags, filename: &str, subdir: Option<&str>) -> Option<String> {
 		unsafe {
-			from_glib_full(ffi::wp_find_file(
+			from_glib_full(ffi::wp_base_dirs_find_file(
 				dirs.into_glib(),
-				filename.to_glib_none().0,
 				subdir.to_glib_none().0,
+				filename.to_glib_none().0,
 			))
 		}
 	}
 
-	#[cfg(feature = "v0_4_2")]
-	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-	#[doc(alias = "wp_new_files_iterator")]
-	pub fn find_files(dirs: LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> IntoValueIterator<String> {
+	#[doc(alias = "wp_base_dirs_new_files_iterator")]
+	pub fn find_files(dirs: BaseDirsFlags, subdir: Option<&str>, suffix: Option<&str>) -> IntoValueIterator<String> {
 		unsafe {
-			IntoValueIterator::with_inner(from_glib_full(ffi::wp_new_files_iterator(
+			IntoValueIterator::with_inner(from_glib_full(ffi::wp_base_dirs_new_files_iterator(
 				dirs.into_glib(),
 				subdir.to_glib_none().0,
 				suffix.to_glib_none().0,
@@ -101,18 +78,36 @@ impl Core {
 		unsafe { NonNull::new(ffi::wp_core_get_pw_context(self.to_glib_none().0)).expect("pw_context for WpCore") }
 	}
 
-	#[cfg(feature = "lua")]
 	#[cfg_attr(docsrs, doc(cfg(feature = "lua")))]
 	#[doc(alias = "wp_core_load_component")]
-	pub fn load_lua_script<A: ToLuaTable>(&self, script_path: &str, args: A) -> Result<(), Error> {
-		let args = args
-			.to_lua_variant()
-			.and_then(|v| v.map(|v| v.into_vardict()).transpose())?;
-		self.load_component(
-			script_path,
-			ComponentLoader::TYPE_LUA_SCRIPT,
-			args.as_ref().map(|v| v.as_variant()),
-		)
+	pub fn load_component_future<T: Into<Cow<'static, str>>>(
+		&self,
+		component: Option<Cow<'static, str>>,
+		type_: T,
+		args: Option<SpaJson>,
+		provides: Option<String>,
+	) -> Pin<Box<dyn Future<Output = Result<(), Error>> + 'static>> {
+		let type_ = type_.into();
+		Box::pin(gio::GioFuture::new(self, move |this, cancellable, send| {
+			this.load_component(
+				component.as_ref().map(|c| &c[..]),
+				&type_,
+				args.as_ref(),
+				provides.as_ref().map(|c| &c[..]),
+				Some(cancellable),
+				move |res| send.resolve(res),
+			);
+		}))
+	}
+
+	#[doc(alias = "wp_core_load_component")]
+	pub fn load_lua_script<S: Into<Cow<'static, str>>>(
+		&self,
+		script_path: S,
+		args: Option<SpaJson>,
+	) -> impl Future<Output = Result<(), Error>> {
+		let script_path = script_path.into();
+		self.load_component_future(Some(script_path), ComponentLoader::TYPE_LUA_SCRIPT, args, None)
 	}
 
 	#[cfg(feature = "futures")]
@@ -145,12 +140,12 @@ impl Core {
 		}
 	}
 
-	pub fn run<F: FnOnce(&MainContext, MainLoop, Core)>(props: Option<Properties>, setup: F) {
+	pub fn run<F: FnOnce(&MainContext, MainLoop, Core)>(conf: Option<Conf>, props: Option<Properties>, setup: F) {
 		let mainloop = MainLoop::new(None, false);
 		let context = mainloop.context();
 		let core = context
 			.with_thread_default(|| {
-				let core = Core::new(Some(&context), props);
+				let core = Core::new(Some(&context), conf, props);
 				let _disconnect_handler = core.connect_disconnected({
 					let mainloop = mainloop.clone();
 					move |_core| mainloop.quit()
@@ -171,9 +166,9 @@ impl Core {
 #[test]
 #[cfg(any(feature = "v0_4_2"))]
 fn wp_new_files_iterator() {
-	let file = Core::find_file(LookupDirs::PREFIX_SHARE, "create-item.lua", Some("scripts"));
+	let file = Core::find_file(BaseDirsFlags::CONFIGURATION, "create-item.lua", Some("scripts/node"));
 	assert!(file.is_some());
 
-	let files = Core::find_files(LookupDirs::PREFIX_SHARE, None, Some(".conf")).into_iter();
+	let files = Core::find_files(BaseDirsFlags::CONFIGURATION, None, Some(".conf")).into_iter();
 	assert_ne!(0, files.count());
 }

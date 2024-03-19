@@ -1,11 +1,9 @@
-#[cfg(feature = "v0_4_11")]
-use crate::dbus::{Dbus, DbusFeatures};
 use crate::{
-	core::ObjectExt,
-	local::{SpaDevice, SpaDeviceFeatures},
+	core::{Device, Factory, ObjectExt2},
+	local::{ImplMetadata, ImplNode, SpaDevice, SpaDeviceFeatures},
 	plugin::{Plugin, PluginFeatures},
 	prelude::*,
-	pw::{Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures, Proxy, ProxyFeatures},
+	pw::{Client, GlobalProxy, Link, Metadata, MetadataFeatures, Node, NodeFeatures, Port, Proxy, ProxyFeatures},
 	session::{SessionItem, SessionItemFeatures},
 };
 
@@ -54,7 +52,7 @@ impl ObjectFeatures {
 }
 
 macro_rules! impl_object_features {
-	($($id:ident:$ty:ident($($sub:ident),*),)*) => {
+	($($id:ident$(:$ty:ident)*($($sub:ident),*),)*) => {
 		$(
 			impl From<$id> for ObjectFeatures {
 				fn from(features: $id) -> Self {
@@ -82,64 +80,24 @@ macro_rules! impl_object_features {
 				}
 			)*
 
-			impl $ty {
-				#[doc(alias = "wp_object_activate")]
-				pub fn activate<P, Q, F: Into<$id>>(&self, features: F, cancellable: Option<&P>, callback: Q) where
-					P: IsA<::gio::Cancellable>,
-					Q: FnOnce(Result<(), Error>) + Send + 'static,
-				{
-					ObjectExt::activate(self, features.into().into(), cancellable, callback)
+			$(
+				impl ObjectExt2 for $ty {
+					type Features = $id;
 				}
-
-				#[doc(alias = "wp_object_activate_closure")]
-				pub fn activate_closure<P, F: Into<$id>>(&self, features: F, cancellable: Option<&P>, closure: glib::Closure) where
-					P: IsA<gio::Cancellable>,
-				{
-					ObjectExt::activate_closure(self, features.into().into(), cancellable, closure)
-				}
-
-				#[doc(alias = "wp_object_activate")]
-				pub fn activate_future<F: Into<$id>>(&self, features: F) -> impl Future<Output=Result<(), Error>> + Unpin {
-					ObjectExt::activate_future(self, features.into().into())
-				}
-
-				#[doc(alias = "wp_object_deactivate")]
-				pub fn deactivate<F: Into<$id>>(&self, features: F) {
-					ObjectExt::deactivate(self, features.into().into())
-				}
-
-				#[doc(alias = "wp_object_get_active_features")]
-				pub fn active_features(&self) -> $id {
-					ObjectExt::active_features(self)
-						.into()
-				}
-
-				#[doc(alias = "wp_object_get_supported_features")]
-				pub fn supported_features(&self) -> $id {
-					ObjectExt::supported_features(self)
-						.into()
-				}
-
-				#[doc(alias = "wp_object_update_features")]
-				pub fn update_features<A: Into<$id>, D: Into<$id>>(&self, activated: A, deactivated: D) {
-					ObjectExt::update_features(self, activated.into().into(), deactivated.into().into())
-				}
-			}
+			)*
 		)*
 	};
 }
 
 impl_object_features! {
-	MetadataFeatures:Metadata(ProxyFeatures),
+	MetadataFeatures:Metadata:ImplMetadata(ProxyFeatures),
 	NodeFeatures:Node(ProxyFeatures),
-	LinkFeatures:Link(ProxyFeatures),
 	PluginFeatures:Plugin(),
-	ProxyFeatures:Proxy(),
+	ProxyFeatures:Proxy:Factory:Device:Port:Client:Link:ImplNode:GlobalProxy(),
 	SessionItemFeatures:SessionItem(),
 	SpaDeviceFeatures:SpaDevice(ProxyFeatures),
 }
 
-#[cfg(feature = "v0_4_11")]
-impl_object_features! {
-	DbusFeatures:Dbus(),
+impl ObjectExt2 for Core {
+	type Features = ObjectFeatures;
 }

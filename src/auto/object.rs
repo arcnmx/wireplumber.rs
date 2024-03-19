@@ -25,8 +25,6 @@ mod sealed {
 }
 
 pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
-    #[cfg(feature = "v0_4_6")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     #[doc(alias = "wp_object_abort_activation")]
     fn abort_activation(&self, msg: &str) {
         unsafe {
@@ -34,8 +32,10 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
         }
     }
 
+    #[doc(hidden)]
     #[doc(alias = "wp_object_activate")]
-    fn activate<P: FnOnce(Result<(), glib::Error>) + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
+    #[doc(alias = "activate")]
+    fn object_activate<P: FnOnce(Result<(), glib::Error>) + 'static>(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, callback: P) {
         
                 let main_context = glib::MainContext::ref_thread_default();
                 let is_main_context_owner = main_context.is_owner();
@@ -48,7 +48,7 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
                 );
         
         let user_data: Box_<glib::thread_guard::ThreadGuard<P>> = Box_::new(glib::thread_guard::ThreadGuard::new(callback));
-        unsafe extern "C" fn activate_trampoline<P: FnOnce(Result<(), glib::Error>) + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
+        unsafe extern "C" fn object_activate_trampoline<P: FnOnce(Result<(), glib::Error>) + 'static>(_source_object: *mut glib::gobject_ffi::GObject, res: *mut gio::ffi::GAsyncResult, user_data: glib::ffi::gpointer) {
             let mut error = std::ptr::null_mut();
             let _ = ffi::wp_object_activate_finish(_source_object as *mut _, res, &mut error);
             let result = if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) };
@@ -56,17 +56,18 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
             let callback: P = callback.into_inner();
             callback(result);
         }
-        let callback = activate_trampoline::<P>;
+        let callback = object_activate_trampoline::<P>;
         unsafe {
             ffi::wp_object_activate(self.as_ref().to_glib_none().0, features.into_glib(), cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), Box_::into_raw(user_data) as *mut _);
         }
     }
 
     
-    fn activate_future(&self, features: ObjectFeatures) -> Pin<Box_<dyn std::future::Future<Output = Result<(), glib::Error>> + 'static>> {
+    #[doc(hidden)]
+    fn object_activate_future(&self, features: ObjectFeatures) -> Pin<Box_<dyn std::future::Future<Output = Result<(), glib::Error>> + 'static>> {
 
         Box_::pin(gio::GioFuture::new(self, move |obj, cancellable, send| {
-            obj.activate(
+            obj.object_activate(
                 features,
                 Some(cancellable),
                 move |res| {
@@ -77,22 +78,25 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
     }
 
     #[doc(alias = "wp_object_activate_closure")]
-    fn activate_closure(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: glib::Closure) {
+    fn object_activate_closure(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: glib::Closure) {
         unsafe {
             ffi::wp_object_activate_closure(self.as_ref().to_glib_none().0, features.into_glib(), cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.into_glib_ptr());
         }
     }
 
+    #[doc(hidden)]
     #[doc(alias = "wp_object_deactivate")]
-    fn deactivate(&self, features: ObjectFeatures) {
+    #[doc(alias = "deactivate")]
+    fn object_deactivate(&self, features: ObjectFeatures) {
         unsafe {
             ffi::wp_object_deactivate(self.as_ref().to_glib_none().0, features.into_glib());
         }
     }
 
+    #[doc(hidden)]
     #[doc(alias = "wp_object_get_active_features")]
     #[doc(alias = "get_active_features")]
-    fn active_features(&self) -> ObjectFeatures {
+    fn object_active_features(&self) -> ObjectFeatures {
         unsafe {
             from_glib(ffi::wp_object_get_active_features(self.as_ref().to_glib_none().0))
         }
@@ -106,16 +110,41 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
         }
     }
 
+    #[doc(alias = "wp_object_get_id")]
+    #[doc(alias = "get_id")]
+    fn id(&self) -> u32 {
+        unsafe {
+            ffi::wp_object_get_id(self.as_ref().to_glib_none().0)
+        }
+    }
+
+    #[doc(hidden)]
     #[doc(alias = "wp_object_get_supported_features")]
     #[doc(alias = "get_supported_features")]
-    fn supported_features(&self) -> ObjectFeatures {
+    fn object_supported_features(&self) -> ObjectFeatures {
         unsafe {
             from_glib(ffi::wp_object_get_supported_features(self.as_ref().to_glib_none().0))
         }
     }
 
+    #[doc(alias = "wp_object_test_active_features")]
+    fn test_active_features(&self, features: ObjectFeatures) -> bool {
+        unsafe {
+            from_glib(ffi::wp_object_test_active_features(self.as_ref().to_glib_none().0, features.into_glib()))
+        }
+    }
+
+    #[doc(alias = "wp_object_test_supported_features")]
+    fn test_supported_features(&self, features: ObjectFeatures) -> bool {
+        unsafe {
+            from_glib(ffi::wp_object_test_supported_features(self.as_ref().to_glib_none().0, features.into_glib()))
+        }
+    }
+
+    #[doc(hidden)]
     #[doc(alias = "wp_object_update_features")]
-    fn update_features(&self, activated: ObjectFeatures, deactivated: ObjectFeatures) {
+    #[doc(alias = "update_features")]
+    fn object_update_features(&self, activated: ObjectFeatures, deactivated: ObjectFeatures) {
         unsafe {
             ffi::wp_object_update_features(self.as_ref().to_glib_none().0, activated.into_glib(), deactivated.into_glib());
         }
@@ -131,6 +160,19 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::active-features\0".as_ptr() as *const _,
                 Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_active_features_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
+
+    #[doc(alias = "id")]
+    fn connect_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_id_trampoline<P: IsA<Object>, F: Fn(&P) + 'static>(this: *mut ffi::WpObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(Object::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::id\0".as_ptr() as *const _,
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 

@@ -25,39 +25,10 @@ mod r#ref;
 // and fix a lot of awkward unsafe code here...
 
 impl SpaJson {
-	#[doc(alias = "wp_spa_json_new_from_string")]
-	#[doc(alias = "new_from_string")]
-	#[doc(alias = "wp_spa_json_new_from_stringn")]
-	#[doc(alias = "new_from_stringn")]
-	pub fn from_string(json: &str) -> Self {
-		match () {
-			#[cfg(feature = "v0_4_10")]
-			() => unsafe { Self::wrap_string(json).copy() },
-			#[cfg(not(feature = "v0_4_10"))]
-			() => unsafe {
-				let s = GString::from(json);
-				let wrapped = Self::wrap_gstr(s.as_gstr());
-				wrapped.copy()
-			},
-		}
-	}
-
-	#[doc(alias = "wp_spa_json_new_from_string")]
-	#[doc(alias = "wp_spa_json_new_from_stringn")]
-	#[doc(alias = "new_from_string")]
-	#[doc(alias = "new_from_stringn")]
-	#[cfg(feature = "v0_4_10")]
-	pub unsafe fn wrap_string(json: &str) -> Self {
-		let len = json.len() as _;
-		from_glib_full(ffi::wp_spa_json_new_from_stringn(json.as_ptr() as _, len))
-	}
-
-	#[doc(alias = "wp_spa_json_new_from_string")]
-	#[doc(alias = "wp_spa_json_new_from_stringn")]
-	#[doc(alias = "new_from_string")]
-	#[doc(alias = "new_from_stringn")]
-	pub unsafe fn wrap_gstr(json: &GStr) -> Self {
-		from_glib_full(ffi::wp_spa_json_new_from_string(json.as_ptr()))
+	#[doc(alias = "wp_spa_json_new_wrap_string")]
+	#[doc(alias = "new_wrap_string")]
+	pub fn wrap_static_str(json: &'static str) -> Self {
+		unsafe { Self::wrap_string(json) }
 	}
 
 	#[doc(alias = "wp_spa_json_new_wrap")]
@@ -70,7 +41,7 @@ impl SpaJson {
 	#[doc(alias = "ensure_unique_owner")]
 	pub fn make_unique(&mut self) {
 		if !self.is_unique_owner() {
-			let empty = unsafe { SpaJson::wrap_gstr(gstr!("")) };
+			let empty = SpaJson::wrap_static_str("");
 			let this = mem::replace(self, empty);
 			drop(mem::replace(self, this.ensure_unique_owner()))
 		}

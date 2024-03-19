@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 use wireplumber::lua::from_variant;
 use {
 	futures::{channel::mpsc, future, FutureExt, StreamExt},
-	glib::{prelude::*, Error, SourceId, Variant},
+	glib::{prelude::*, Error, SourceId},
 	once_cell::unsync::OnceCell,
 	std::{future::Future, iter, pin::Pin},
 	wireplumber::{
@@ -22,12 +22,17 @@ use {
 		prelude::*,
 		pw::{self, Link, Node, Port, Properties, ProxyFeatures},
 		registry::{Constraint, ConstraintType, Interest, ObjectManager},
+		spa::json::SpaJson,
 	},
 };
 
-/// [GLib logging domain](glib::g_log) that doubles as the
-/// [plugin's name](glib::subclass::types::ObjectSubclass::NAME)
-const LOG_DOMAIN: &'static str = "static-link";
+/// The [plugin's name](glib::subclass::types::ObjectSubclass::NAME)
+const PLUGIN_NAME: &'static str = "static-link";
+
+log_topic! {
+	/// [GLib logging domain](wireplumber::log::LogTopic).
+	static TOPIC = "static-link";
+}
 
 /// A list of user-specified [Constraints](Constraint)
 /// used to find each end of the port to be linked.
@@ -148,7 +153,7 @@ pub async fn main_loop(
 
 		let mut links = Vec::new();
 		for (input, output) in pairs {
-			info!(domain: LOG_DOMAIN, "linking {input} to {output}");
+			info!(domain: TOPIC, "linking {input} to {output}");
 			if arg.port_mappings.is_empty() {
 				links.push(Link::new(&core, &output, &input, &link_props));
 			} else {
@@ -157,12 +162,12 @@ pub async fn main_loop(
 		}
 		let links = links.into_iter().filter_map(|l| match l {
 			Ok(link) => Some(link.activate_future(ProxyFeatures::MINIMAL).map(|res| match res {
-				Err(e) if Link::error_is_exists(&e) => info!(domain: LOG_DOMAIN, "{:?}", e),
-				Err(e) => warning!(domain: LOG_DOMAIN, "Failed to activate link: {:?}", e),
+				Err(e) if Link::error_is_exists(&e) => info!(domain: TOPIC, "{:?}", e),
+				Err(e) => warning!(domain: TOPIC, "Failed to activate link: {:?}", e),
 				Ok(_) => (),
 			})),
 			Err(e) => {
-				warning!(domain: LOG_DOMAIN, "Failed to create link: {:?}", e);
+				warning!(domain: TOPIC, "Failed to create link: {:?}", e);
 				None
 			},
 		});
@@ -261,7 +266,7 @@ impl AsyncPluginImpl for StaticLink {
 		let res = self
 			.handles
 			.try_init(context.clone())
-			.map_err(|_| error::invariant(format_args!("{LOG_DOMAIN} plugin has already been enabled")));
+			.map_err(|_| error::invariant(format_args!("{PLUGIN_NAME} plugin has already been enabled")));
 		async move {
 			res?;
 			let loops = this
@@ -295,18 +300,18 @@ impl SimplePlugin for StaticLink {
 		self.args.set(args).unwrap();
 	}
 
-	#[cfg(all(feature = "serde", feature = "lua"))]
-	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
+	#[cfg(feature = "serde")]
+	fn decode_args(args: Option<SpaJson>) -> Result<Self::Args, Error> {
 		args
-			.map(|args| from_variant(&args))
+			.map(|args| args.deserialize_to())
 			.unwrap_or(Ok(Default::default()))
 			.map_err(error::invalid_argument)
 	}
 
-	#[cfg(not(all(feature = "serde", feature = "lua")))]
-	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
+	#[cfg(not(feature = "serde"))]
+	fn decode_args(args: Option<SpaJson>) -> Result<Self::Args, Error> {
 		let args = args.map(|_args| {
-			warning!(domain: LOG_DOMAIN, "requires lua and serde build features");
+			warning!(domain: TOPIC, "requires serde build feature");
 			Default::default()
 		});
 		Ok(args.unwrap_or_default())
@@ -316,7 +321,7 @@ impl SimplePlugin for StaticLink {
 // macros take care of entry point boilerplate by impl'ing a bunch of traits for us
 
 plugin::simple_plugin_subclass! {
-	impl ObjectSubclass for LOG_DOMAIN as StaticLink { }
+	impl ObjectSubclass for PLUGIN_NAME as StaticLink { }
 }
 
 plugin::plugin_export!(StaticLink);

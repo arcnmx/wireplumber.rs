@@ -5,30 +5,30 @@
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
-#[cfg(feature = "lua")]
-use wireplumber::lua::LuaVariant;
-#[cfg(feature = "spa-json")]
-use wireplumber::spa::json::SpaJson;
 use {
 	anyhow::{format_err, Context, Result},
 	clap::{Parser, ValueEnum},
 	glib::Variant,
 	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
 	wireplumber::{
+		core::Conf,
 		log::{info, warning},
 		plugin::*,
 		prelude::*,
 		pw::{self, Properties},
+		spa::json::SpaJson,
 	},
 };
 
-/// [GLib logging domain](glib::g_log)
-const LOG_DOMAIN: &'static str = "wpexec.rs";
+log_topic! {
+	/// [GLib logging domain](wireplumber::log::LogTopic).
+	static TOPIC = "wpexec.rs";
+}
 
 /// The type of module to be loaded
 #[derive(ValueEnum, Copy, Clone, Debug)]
 enum ModuleType {
-	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
+	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/scripting/lua_api/lua_introduction.html)
 	Lua,
 	/// A [WirePlumber Lua configuration file](https://pipewire.pages.freedesktop.org/wireplumber/configuration/config_lua.html)
 	LuaConfig,
@@ -66,6 +66,10 @@ struct Args {
 
 	/// Name or full path of the module or script to load
 	module: Option<String>,
+
+	/// Optional `wireplumber.conf` path
+	#[clap(short = 'c', long = "config")]
+	config_path: Option<String>,
 }
 
 /// Load the script specified by [Args] and connect to the PipeWire daemon.
@@ -88,26 +92,27 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	}
 	.unwrap_or(path.into());
 
+	let component_args = args.args()?;
 	if let Some(module) = args.module_type.loader_module() {
 		core
-			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, None)
+			.load_component_future(
+				Some(module.into()),
+				ComponentLoader::TYPE_WIREPLUMBER_MODULE,
+				None,
+				None,
+			)
+			.await
 			.with_context(|| format!("failed to load the {:?} scripting module", args.module_type))?;
 	}
-	match args.module_type.is_lua() {
-		#[cfg(feature = "lua")]
-		true => {
-			let variant_args = args.lua_variant()?;
-			core
-				.load_lua_script(&path, variant_args)
-				.context("failed to load the lua script")?;
-		},
-		_ => {
-			let variant_args = args.args()?;
-			core
-				.load_component(&path, args.module_type.loader_type(), variant_args.as_ref())
-				.with_context(|| format!("failed to load {path} as a {}", args.module_type.loader_type()))?;
-		},
-	}
+	core
+		.load_component_future(
+			Some(path.clone().into()),
+			args.module_type.loader_type(),
+			component_args,
+			None,
+		)
+		.await
+		.with_context(|| format!("failed to load {path} as a {}", args.module_type.loader_type()))?;
 
 	core.connect_future().await?;
 
@@ -119,16 +124,15 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 			.with_context(|| format!("failed to activate {plugin_name:?} plugin"))?;
 	}
 	if plugin_names.is_empty() {
-		info!(domain: LOG_DOMAIN, "skipped activation, no plugin specified");
+		info!(domain: TOPIC, "skipped activation, no plugin specified");
 	}
 	if args.module_type.is_lua() {
-		// per-script plugins were introduced in wireplumber version 0.4.10
-		if let Some(script) = Plugin::find(&core, &format!("script:{path}")) {
-			script
-				.activate_future(PluginFeatures::ENABLED)
-				.await
-				.with_context(|| format!("failed to activate script:{path}"))?;
-		}
+		let script =
+			Plugin::find(&core, &format!("script:{path}")).ok_or_else(|| format_err!("lua script plugin not found"))?;
+		script
+			.activate_future(PluginFeatures::ENABLED)
+			.await
+			.with_context(|| format!("failed to activate script:{path}"))?;
 	}
 
 	Ok(())
@@ -152,11 +156,7 @@ fn main() -> Result<()> {
 	}
 
 	// bail out early if invalid args are provided
-	let _ = match args.module_type.is_lua() {
-		#[cfg(feature = "lua")]
-		true => args.lua_variant().map(drop)?,
-		_ => args.args().map(drop)?,
-	};
+	let _ = args.args()?;
 
 	// initialize the wireplumber and pipewire libraries
 	Core::init();
@@ -164,12 +164,18 @@ fn main() -> Result<()> {
 	// set up a cell to store the result of our main operation in
 	let main_res = Rc::new(RefCell::new(None));
 
+	// optionally parse the user's config file
+	let conf = match &args.config_path {
+		Some(config_path) => Conf::new_open(config_path, None)?,
+		None => None,
+	};
+
 	// tell the pipewire daemon a little bit about ourselves
 	let props = Properties::new();
-	props.insert(pw::PW_KEY_APP_NAME, LOG_DOMAIN);
+	props.insert(pw::PW_KEY_APP_NAME, TOPIC.name());
 
 	// run a (blocking) glib::MainLoop with associated core
-	Core::run(Some(props), |context, mainloop, core| {
+	Core::run(conf.clone(), Some(props), |context, mainloop, core| {
 		ctrlc::set_handler({
 			// exit this loop if we receive a SIGINT
 			let mainloop = mainloop.clone();
@@ -188,6 +194,10 @@ fn main() -> Result<()> {
 			*main_res.borrow_mut() = Some(res)
 		});
 	});
+
+	if let Some(conf) = conf {
+		conf.close();
+	}
 
 	let main_res = main_res.borrow_mut().take();
 	match main_res {
@@ -266,7 +276,7 @@ impl Args {
 					let module_path = concat!(env!("OUT_DIR"), "/../../../examples/libstatic_link_module.so"); // TODO: .so is so linux
 					if fs::metadata(module_path).is_err() {
 						warning!(
-							domain: LOG_DOMAIN,
+							domain: TOPIC,
 							"example module not found, try: cargo build -p wp-examples --example static-link-module"
 						);
 					}
@@ -277,39 +287,21 @@ impl Args {
 		}
 	}
 
-	/// A JSON-like blob of data to pass as an argument to the script to be loaded
-	#[cfg(feature = "lua")]
-	fn lua_variant(&self) -> Result<Option<LuaVariant>> {
+	/// A JSON-like blob of data to pass as an argument to the script or module to be loaded
+	fn args(&self) -> Result<Option<SpaJson>> {
 		#[allow(unreachable_patterns)]
 		match (&self.variant_arg, &self.json_arg) {
 			(None, None) => Ok(None),
 			(Some(v), _) => Variant::parse(None, v)
 				.map_err(Into::into)
-				.and_then(|v| LuaVariant::convert_from(&v).map_err(Into::into))
+				.and_then(|v| SpaJson::try_from_variant(&v).map_err(|e| format_err!("{e}")))
 				.map(Some),
-			#[cfg(feature = "spa-json")]
-			(None, Some(json)) => SpaJson::deserialize_from_string(json).map_err(Into::into).map(Some),
 			#[cfg(feature = "serde_json")]
-			(None, Some(json)) => serde_json::from_str(json).map_err(Into::into).map(Some),
-			(None, Some(..)) => panic!("spa-json or serde_json feature required to parse JSON arguments"),
-		}
-	}
-
-	/// A JSON-like blob of data to pass as an argument to the script or module to be loaded
-	///
-	/// In practice this must be a dictionary or array because lua scripts can't work with other
-	/// types of data as the top-level container, but more specific types may be usable by other
-	/// modules. See [wireplumber::lua] for a more detailed explanation.
-	fn args(&self) -> Result<Option<Variant>> {
-		#[allow(unreachable_patterns)]
-		match (&self.variant_arg, &self.json_arg) {
-			(None, None) => Ok(None),
-			(Some(v), _) => Variant::parse(None, v).map_err(Into::into).map(Some),
-			#[cfg(feature = "lua")]
-			(None, Some(..)) => self.lua_variant().map(|v| v.map(|v| v.into())),
-			#[cfg(feature = "spa-json")]
-			(None, Some(json)) => SpaJson::from_string(json).parse_variant().map_err(Into::into).map(Some),
-			(None, Some(..)) => panic!("spa-json or lua feature is required to convert JSON to Variant"),
+			(None, Some(json)) => SpaJson::deserialize_from_string(json).map_err(Into::into).map(Some),
+			(None, Some(json)) => {
+				let json = SpaJson::from_string(json);
+				json.check_parse().map_err(Into::into).map(|()| Some(json))
+			},
 		}
 	}
 }

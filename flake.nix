@@ -24,7 +24,7 @@
     devShells = {
       plain = {
         mkShell, writeShellScriptBin, wpexec
-      , wireplumber-0_4, pipewire, glib
+      , wireplumber, pipewire, glib
       , pkg-config
       , wireplumber-gir, gir-files, gir-rs-0_18
       , enableRustdoc ? false
@@ -33,7 +33,7 @@
       }: mkShell {
         inherit rustTools;
         strictDeps = true;
-        buildInputs = [ wireplumber-0_4 pipewire glib ];
+        buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [
           pkg-config
           gir-rs-0_18
@@ -58,7 +58,7 @@
             libspa-sys = pipewire;
           };
         } ++ nixlib.optionals enableRustdoc self.lib.crate.package.metadata.docs.rs.rustdoc-args;
-        WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
+        WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber.version}.gir";
         GIRSPATH = nixlib.makeSearchPathOutput "dev" "share/gir-1.0" [
           wireplumber-gir gir-files
         ];
@@ -79,7 +79,7 @@
     packages = {
       wpexec = {
         stdenv, rustPlatform, lib
-      , wireplumber-0_4, pipewire, glib
+      , wireplumber, pipewire, glib
       , pkg-config, libclang
       , buildType ? "release"
       , source
@@ -92,11 +92,11 @@
         src = source;
         inherit (self.lib.crate) cargoLock;
 
-        buildInputs = [ wireplumber-0_4 pipewire glib ];
+        buildInputs = [ wireplumber pipewire glib ];
         nativeBuildInputs = [ pkg-config ];
 
         cargoBuildFlags = "--workspace --bin wpexec";
-        buildFeatures = mapNullable singleton (self.lib.featureForVersion wireplumber-0_4.version);
+        buildFeatures = mapNullable singleton (self.lib.featureForVersion wireplumber.version);
 
         inherit buildType;
         doCheck = false;
@@ -134,9 +134,9 @@
         in if girIsBugged then "release" else "debug";
         doCheck = false;
       };
-      wireplumber-gir = { runCommand, runtimeShell, xmlstarlet, wireplumber-0_4 }: runCommand "wireplumber-${wireplumber-0_4.version}.gir" {
-        girName = "share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber-0_4.version}.gir";
-        wireplumber = wireplumber-0_4.dev;
+      wireplumber-gir = { runCommand, runtimeShell, xmlstarlet, wireplumber }: runCommand "wireplumber-${wireplumber.version}.gir" {
+        girName = "share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber.version}.gir";
+        wireplumber = wireplumber.dev;
         nativeBuildInputs = [ xmlstarlet ];
       } ''
         mkdir -p $out/$(dirname $girName)
@@ -224,17 +224,6 @@
         ];
         src = source;
       };
-    };
-    packages = {
-      wireplumber-0_4 = { wireplumber, lib }: let
-        drv = wireplumber.overrideAttrs (old: rec {
-          version = "0.4.17";
-          src = old.src.override {
-            rev = version;
-            hash = "sha256-vhpQT67+849WV1SFthQdUeFnYe/okudTQJoL3y+wXwI=";
-          };
-        });
-      in if nixlib.versionAtLeast wireplumber.version "0.5" then drv else wireplumber;
     };
     legacyPackages = {
       source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
@@ -395,12 +384,7 @@
     };
     lib = with nixlib; {
       featureVersions = [
-        "0.4.3" "0.4.5"
-        "0.4.6"
-        "0.4.8" "0.4.10"
-        "0.4.11" "0.4.12"
-        "0.4.15"
-        "0.4.16"
+        "0.5"
       ];
       asciidocAttributes = {
         inherit (self.lib.crate.package) repository;

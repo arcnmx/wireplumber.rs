@@ -10,23 +10,17 @@
 //! # See also
 //!
 //! C API docs for:
-//! - [Properties](https://pipewire.pages.freedesktop.org/wireplumber/c_api/properties_api.html)
-//! - [Proxy](https://pipewire.pages.freedesktop.org/wireplumber/c_api/proxy_api.html)
-//! - [PipewireObject](https://pipewire.pages.freedesktop.org/wireplumber/c_api/pipewire_object_api.html)
-//! - [GlobalProxy](https://pipewire.pages.freedesktop.org/wireplumber/c_api/global_proxy_api.html)
-//! - [Node](https://pipewire.pages.freedesktop.org/wireplumber/c_api/node_api.html)
-//! - [Port](https://pipewire.pages.freedesktop.org/wireplumber/c_api/port_api.html)
-//! - [Link](https://pipewire.pages.freedesktop.org/wireplumber/c_api/link_api.html)
-//! - [Device](https://pipewire.pages.freedesktop.org/wireplumber/c_api/device_api.html)
-//! - [Client](https://pipewire.pages.freedesktop.org/wireplumber/c_api/client_api.html)
-//! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/c_api/metadata_api.html)
-//! - [Endpoint](https://pipewire.pages.freedesktop.org/wireplumber/c_api/endpoint_api.html)
+//! - [Properties](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/properties_api.html)
+//! - [Proxy](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/proxy_api.html)
+//! - [PipewireObject](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/pipewire_object_api.html)
+//! - [GlobalProxy](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/global_proxy_api.html)
+//! - [Node](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/node_api.html)
+//! - [Port](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/port_api.html)
+//! - [Link](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/link_api.html)
+//! - [Device](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/device_api.html)
+//! - [Client](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/client_api.html)
+//! - [Metadata](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/metadata_api.html)
 
-#[cfg(feature = "v0_4_11")]
-pub use crate::auto::LinkState;
-#[cfg(feature = "v0_4_2")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-pub use crate::auto::PropertiesItem;
 #[cfg(feature = "libspa")]
 use libspa::utils::Direction as SpaDirection;
 pub use {
@@ -36,9 +30,9 @@ pub use {
 		proxy::{PipewireObjectExt2, ProxyExt2},
 	},
 	crate::auto::{
-		traits::{EndpointExt, GlobalProxyExt, MetadataExt, PipewireObjectExt, ProxyExt},
-		Client, Device, Direction, Endpoint, GlobalProxy, Link, LinkFeatures, Metadata, MetadataFeatures, Node,
-		NodeFeatures, NodeState, PipewireObject, Port, Properties, Proxy, ProxyFeatures,
+		traits::{GlobalProxyExt, MetadataExt, PipewireObjectExt, ProxyExt},
+		Client, Device, Direction, GlobalProxy, Link, LinkState, Metadata, MetadataFeatures, Node, NodeFeatures, NodeState,
+		PipewireObject, Port, Properties, PropertiesItem, Proxy, ProxyFeatures,
 	},
 };
 

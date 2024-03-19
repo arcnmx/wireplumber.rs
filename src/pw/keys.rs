@@ -207,7 +207,7 @@ pipewire_primitives! { @AsRef
 	String, glib::GString,
 }
 pipewire_primitives! { @&AsRef
-	str,
+	str, glib::GStr,
 }
 
 macro_rules! pipewire_keys {

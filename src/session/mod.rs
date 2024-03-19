@@ -4,14 +4,14 @@
 //!
 //! C API docs for:
 //!
-//! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_factory_api.html)
-//! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/c_api/session_item_api.html)
-//! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_interfaces_api.html)
+//! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/si_factory_api.html)
+//! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/session_item_api.html)
+//! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/si_interfaces_api.html)
 #[cfg(feature = "v0_4_10")]
 pub use crate::auto::SiAdapterPortsState;
 pub use crate::auto::{
-	traits::{SessionItemExt, SiAcquisitionExt, SiAdapterExt, SiEndpointExt, SiFactoryExt, SiLinkExt, SiLinkableExt},
-	SessionItem, SessionItemFeatures, SiAcquisition, SiAdapter, SiEndpoint, SiFactory, SiLink, SiLinkable,
+	traits::{SessionItemExt, SiAcquisitionExt, SiAdapterExt, SiFactoryExt, SiLinkExt, SiLinkableExt},
+	SessionItem, SessionItemFeatures, SiAcquisition, SiAdapter, SiFactory, SiLink, SiLinkable,
 };
 use crate::{prelude::*, spa::SpaPod};
 

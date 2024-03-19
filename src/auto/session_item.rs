@@ -62,14 +62,6 @@ pub trait SessionItemExt: IsA<SessionItem> + sealed::Sealed + 'static {
         }
     }
 
-    #[doc(alias = "wp_session_item_get_id")]
-    #[doc(alias = "get_id")]
-    fn id(&self) -> u32 {
-        unsafe {
-            ffi::wp_session_item_get_id(self.as_ref().to_glib_none().0)
-        }
-    }
-
     #[doc(alias = "wp_session_item_get_properties")]
     #[doc(alias = "get_properties")]
     fn properties(&self) -> Option<Properties> {
@@ -118,19 +110,6 @@ pub trait SessionItemExt: IsA<SessionItem> + sealed::Sealed + 'static {
     fn set_properties(&self, props: Properties) {
         unsafe {
             ffi::wp_session_item_set_properties(self.as_ref().to_glib_none().0, props.into_glib_ptr());
-        }
-    }
-
-    #[doc(alias = "id")]
-    fn connect_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_id_trampoline<P: IsA<SessionItem>, F: Fn(&P) + 'static>(this: *mut ffi::WpSessionItem, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
-            let f: &F = &*(f as *const F);
-            f(SessionItem::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::id\0".as_ptr() as *const _,
-                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(notify_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 

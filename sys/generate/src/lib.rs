@@ -8,7 +8,6 @@ use pipewire::{pw_core, pw_context, pw_permission, pw_proxy, pw_properties, pw_i
 use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 use crate::WpSpaType;
 
-#[cfg(feature = "v0_4_8")]
 use libspa::spa_json;
 
 use glib_sys as glib;
@@ -47,11 +46,6 @@ pub const WP_CONSTRAINT_VERB_MATCHES: WpConstraintVerb = 35;
 pub const WP_CONSTRAINT_VERB_IS_PRESENT: WpConstraintVerb = 43;
 pub const WP_CONSTRAINT_VERB_IS_ABSENT: WpConstraintVerb = 45;
 
-pub type WpDBusState = c_int;
-pub const WP_DBUS_STATE_CLOSED: WpDBusState = 0;
-pub const WP_DBUS_STATE_CONNECTING: WpDBusState = 1;
-pub const WP_DBUS_STATE_CONNECTED: WpDBusState = 2;
-
 pub type WpDirection = c_int;
 pub const WP_DIRECTION_INPUT: WpDirection = 0;
 pub const WP_DIRECTION_OUTPUT: WpDirection = 1;
@@ -60,6 +54,7 @@ pub type WpLibraryErrorEnum = c_int;
 pub const WP_LIBRARY_ERROR_INVARIANT: WpLibraryErrorEnum = 0;
 pub const WP_LIBRARY_ERROR_INVALID_ARGUMENT: WpLibraryErrorEnum = 1;
 pub const WP_LIBRARY_ERROR_OPERATION_FAILED: WpLibraryErrorEnum = 2;
+pub const WP_LIBRARY_ERROR_SERVICE_UNAVAILABLE: WpLibraryErrorEnum = 3;
 
 pub type WpLinkState = c_int;
 pub const WP_LINK_STATE_ERROR: WpLinkState = -2;
@@ -77,6 +72,15 @@ pub const WP_NODE_STATE_SUSPENDED: WpNodeState = 1;
 pub const WP_NODE_STATE_IDLE: WpNodeState = 2;
 pub const WP_NODE_STATE_RUNNING: WpNodeState = 3;
 
+pub type WpSettingsSpecType = c_int;
+pub const WP_SETTINGS_SPEC_TYPE_UNKNOWN: WpSettingsSpecType = 0;
+pub const WP_SETTINGS_SPEC_TYPE_BOOL: WpSettingsSpecType = 1;
+pub const WP_SETTINGS_SPEC_TYPE_INT: WpSettingsSpecType = 2;
+pub const WP_SETTINGS_SPEC_TYPE_FLOAT: WpSettingsSpecType = 3;
+pub const WP_SETTINGS_SPEC_TYPE_STRING: WpSettingsSpecType = 4;
+pub const WP_SETTINGS_SPEC_TYPE_ARRAY: WpSettingsSpecType = 5;
+pub const WP_SETTINGS_SPEC_TYPE_OBJECT: WpSettingsSpecType = 6;
+
 pub type WpSiAdapterPortsState = c_int;
 pub const WP_SI_ADAPTER_PORTS_STATE_NONE: WpSiAdapterPortsState = 0;
 pub const WP_SI_ADAPTER_PORTS_STATE_CONFIGURING: WpSiAdapterPortsState = 1;
@@ -88,18 +92,35 @@ pub const WP_TRANSITION_STEP_ERROR: WpTransitionStep = 1;
 pub const WP_TRANSITION_STEP_CUSTOM_START: WpTransitionStep = 16;
 
 // Constants
-pub const WP_INTEREST_MATCH_ALL: c_int = 15;
 pub const WP_ITERATOR_METHODS_VERSION: c_int = 0;
-pub const WP_LOG_LEVEL_TRACE: c_int = 256;
+pub const WP_LOG_LEVEL_TRACE: c_uint = 256;
 pub const WP_OBJECT_FEATURES_ALL: WpObjectFeatures = 4294967295;
 pub const WP_OBJECT_FORMAT: &[u8] = b"<%s:%p>\0";
-pub const WP_PIPEWIRE_OBJECT_FEATURES_ALL: c_int = 1009;
-pub const WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL: c_int = 17;
+pub const WP_SETTINGS_PERSISTENT_METADATA_NAME_PREFIX: &[u8] = b"persistent-\0";
+pub const WP_SETTINGS_SCHEMA_METADATA_NAME_PREFIX: &[u8] = b"schema-\0";
 pub const WP_SPA_TYPE_INVALID: WpSpaType = 4294967295;
 
 // Flags
-pub type WpDbusFeatures = c_uint;
-pub const WP_DBUS_FEATURE_ENABLED: WpDbusFeatures = 1;
+pub type WpBaseDirsFlags = c_uint;
+pub const WP_BASE_DIRS_ENV_CONFIG: WpBaseDirsFlags = 1;
+pub const WP_BASE_DIRS_ENV_DATA: WpBaseDirsFlags = 2;
+pub const WP_BASE_DIRS_ENV_MODULE: WpBaseDirsFlags = 4;
+pub const WP_BASE_DIRS_XDG_CONFIG_HOME: WpBaseDirsFlags = 256;
+pub const WP_BASE_DIRS_XDG_DATA_HOME: WpBaseDirsFlags = 512;
+pub const WP_BASE_DIRS_XDG_CONFIG_DIRS: WpBaseDirsFlags = 1024;
+pub const WP_BASE_DIRS_BUILD_SYSCONFDIR: WpBaseDirsFlags = 2048;
+pub const WP_BASE_DIRS_XDG_DATA_DIRS: WpBaseDirsFlags = 4096;
+pub const WP_BASE_DIRS_BUILD_DATADIR: WpBaseDirsFlags = 8192;
+pub const WP_BASE_DIRS_BUILD_LIBDIR: WpBaseDirsFlags = 16384;
+pub const WP_BASE_DIRS_FLAG_MODULE: WpBaseDirsFlags = 16777216;
+pub const WP_BASE_DIRS_FLAG_SUBDIR_WIREPLUMBER: WpBaseDirsFlags = 33554432;
+pub const WP_BASE_DIRS_CONFIGURATION: WpBaseDirsFlags = 33570049;
+pub const WP_BASE_DIRS_DATA: WpBaseDirsFlags = 33567234;
+pub const WP_BASE_DIRS_MODULE: WpBaseDirsFlags = 50348036;
+
+pub type WpCoreFeatures = c_uint;
+pub const WP_CORE_FEATURE_CONNECTED: WpCoreFeatures = 1;
+pub const WP_CORE_FEATURE_COMPONENTS: WpCoreFeatures = 2;
 
 pub type WpInitFlags = c_uint;
 pub const WP_INIT_PIPEWIRE: WpInitFlags = 1;
@@ -114,20 +135,16 @@ pub const WP_INTEREST_MATCH_GTYPE: WpInterestMatch = 1;
 pub const WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES: WpInterestMatch = 2;
 pub const WP_INTEREST_MATCH_PW_PROPERTIES: WpInterestMatch = 4;
 pub const WP_INTEREST_MATCH_G_PROPERTIES: WpInterestMatch = 8;
+pub const WP_INTEREST_MATCH_ALL: WpInterestMatch = 15;
 
 pub type WpInterestMatchFlags = c_uint;
 pub const WP_INTEREST_MATCH_FLAGS_NONE: WpInterestMatchFlags = 0;
 pub const WP_INTEREST_MATCH_FLAGS_CHECK_ALL: WpInterestMatchFlags = 1;
 
-pub type WpLinkFeatures = c_uint;
-pub const WP_LINK_FEATURE_ESTABLISHED: WpLinkFeatures = 65536;
-
-pub type WpLookupDirs = c_uint;
-pub const WP_LOOKUP_DIR_ENV_CONFIG: WpLookupDirs = 1;
-pub const WP_LOOKUP_DIR_ENV_DATA: WpLookupDirs = 2;
-pub const WP_LOOKUP_DIR_XDG_CONFIG_HOME: WpLookupDirs = 1024;
-pub const WP_LOOKUP_DIR_ETC: WpLookupDirs = 2048;
-pub const WP_LOOKUP_DIR_PREFIX_SHARE: WpLookupDirs = 4096;
+pub type WpLogTopicFlags = c_uint;
+pub const WP_LOG_TOPIC_LEVEL_MASK: WpLogTopicFlags = 65535;
+pub const WP_LOG_TOPIC_FLAG_STATIC: WpLogTopicFlags = 1073741824;
+pub const WP_LOG_TOPIC_FLAG_INITIALIZED: WpLogTopicFlags = 2147483648;
 
 pub type WpMetadataFeatures = c_uint;
 pub const WP_METADATA_FEATURE_DATA: WpMetadataFeatures = 65536;
@@ -146,10 +163,15 @@ pub const WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT: WpProxyFeatures = 64;
 pub const WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE: WpProxyFeatures = 128;
 pub const WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG: WpProxyFeatures = 256;
 pub const WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE: WpProxyFeatures = 512;
+pub const WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL: WpProxyFeatures = 17;
+pub const WP_PIPEWIRE_OBJECT_FEATURES_ALL: WpProxyFeatures = 1009;
 
 pub type WpSessionItemFeatures = c_uint;
 pub const WP_SESSION_ITEM_FEATURE_ACTIVE: WpSessionItemFeatures = 1;
 pub const WP_SESSION_ITEM_FEATURE_EXPORTED: WpSessionItemFeatures = 2;
+
+pub type WpSettingsFeatures = c_uint;
+pub const WP_SETTINGS_LOADED: WpSettingsFeatures = 1;
 
 pub type WpSpaDeviceFeatures = c_uint;
 pub const WP_SPA_DEVICE_FEATURE_ENABLED: WpSpaDeviceFeatures = 65536;
@@ -157,8 +179,24 @@ pub const WP_SPA_DEVICE_FEATURE_ENABLED: WpSpaDeviceFeatures = 65536;
 // Callbacks
 pub type WpIteratorFoldFunc = Option<unsafe extern "C" fn(*const gobject::GValue, *mut gobject::GValue, gpointer) -> gboolean>;
 pub type WpIteratorForeachFunc = Option<unsafe extern "C" fn(*const gobject::GValue, gpointer)>;
+pub type WpRuleMatchCallback = Option<unsafe extern "C" fn(gpointer, *const c_char, *mut WpSpaJson, *mut *mut glib::GError) -> gboolean>;
+pub type WpSettingsChangedCallback = Option<unsafe extern "C" fn(*mut WpSettings, *const c_char, *mut WpSpaJson, gpointer)>;
 
 // Records
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpAsyncEventHookClass {
+    pub parent_class: WpInterestEventHookClass,
+}
+
+impl ::std::fmt::Debug for WpAsyncEventHookClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpAsyncEventHookClass @ {self:p}"))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct WpClientClass {
@@ -175,19 +213,35 @@ impl ::std::fmt::Debug for WpClientClass {
 
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct WpComponentLoaderClass {
-    pub parent_class: WpPluginClass,
+pub struct WpComponentLoaderInterface {
+    pub interface: gobject::GTypeInterface,
     pub supports_type: Option<unsafe extern "C" fn(*mut WpComponentLoader, *const c_char) -> gboolean>,
-    pub load: Option<unsafe extern "C" fn(*mut WpComponentLoader, *const c_char, *const c_char, *mut glib::GVariant, *mut *mut glib::GError) -> gboolean>,
-    pub _wp_padding: [gpointer; 6],
+    pub load: Option<unsafe extern "C" fn(*mut WpComponentLoader, *mut WpCore, *const c_char, *const c_char, *mut WpSpaJson, *mut gio::GCancellable, gio::GAsyncReadyCallback, gpointer)>,
+    pub load_finish: Option<unsafe extern "C" fn(*mut WpComponentLoader, *mut gio::GAsyncResult, *mut *mut glib::GError) -> *mut gobject::GObject>,
+    pub _wp_padding: [gpointer; 5],
 }
 
-impl ::std::fmt::Debug for WpComponentLoaderClass {
+impl ::std::fmt::Debug for WpComponentLoaderInterface {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpComponentLoaderClass @ {self:p}"))
-         .field("parent_class", &self.parent_class)
+        f.debug_struct(&format!("WpComponentLoaderInterface @ {self:p}"))
+         .field("interface", &self.interface)
          .field("supports_type", &self.supports_type)
          .field("load", &self.load)
+         .field("load_finish", &self.load_finish)
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpConfClass {
+    pub parent_class: gobject::GObjectClass,
+}
+
+impl ::std::fmt::Debug for WpConfClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpConfClass @ {self:p}"))
+         .field("parent_class", &self.parent_class)
          .finish()
     }
 }
@@ -195,26 +249,12 @@ impl ::std::fmt::Debug for WpComponentLoaderClass {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct WpCoreClass {
-    pub parent_class: gobject::GObjectClass,
+    pub parent_class: WpObjectClass,
 }
 
 impl ::std::fmt::Debug for WpCoreClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpCoreClass @ {self:p}"))
-         .field("parent_class", &self.parent_class)
-         .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct WpDbusClass {
-    pub parent_class: WpObjectClass,
-}
-
-impl ::std::fmt::Debug for WpDbusClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpDbusClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -234,17 +274,50 @@ impl ::std::fmt::Debug for WpDeviceClass {
     }
 }
 
-#[derive(Copy, Clone)]
 #[repr(C)]
-pub struct WpEndpointClass {
-    pub parent_class: WpGlobalProxyClass,
-    pub _wp_padding: [gpointer; 4],
+pub struct WpEvent {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
 }
 
-impl ::std::fmt::Debug for WpEndpointClass {
+impl ::std::fmt::Debug for WpEvent {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpEndpointClass @ {self:p}"))
+        f.debug_struct(&format!("WpEvent @ {self:p}"))
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpEventDispatcherClass {
+    pub parent_class: gobject::GObjectClass,
+}
+
+impl ::std::fmt::Debug for WpEventDispatcherClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpEventDispatcherClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpEventHookClass {
+    pub parent_class: gobject::GObjectClass,
+    pub runs_for_event: Option<unsafe extern "C" fn(*mut WpEventHook, *mut WpEvent) -> gboolean>,
+    pub run: Option<unsafe extern "C" fn(*mut WpEventHook, *mut WpEvent, *mut gio::GCancellable, gio::GAsyncReadyCallback, gpointer)>,
+    pub finish: Option<unsafe extern "C" fn(*mut WpEventHook, *mut gio::GAsyncResult, *mut *mut glib::GError) -> gboolean>,
+    pub _wp_padding: [gpointer; 5],
+}
+
+impl ::std::fmt::Debug for WpEventHookClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpEventHookClass @ {self:p}"))
+         .field("parent_class", &self.parent_class)
+         .field("runs_for_event", &self.runs_for_event)
+         .field("run", &self.run)
+         .field("finish", &self.finish)
          .finish()
     }
 }
@@ -277,6 +350,14 @@ impl ::std::fmt::Debug for WpFeatureActivationTransitionClass {
     }
 }
 
+#[repr(C)]
+pub struct _WpGlobal {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+pub type WpGlobal = _WpGlobal;
+
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct WpGlobalProxyClass {
@@ -287,20 +368,6 @@ pub struct WpGlobalProxyClass {
 impl ::std::fmt::Debug for WpGlobalProxyClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpGlobalProxyClass @ {self:p}"))
-         .field("parent_class", &self.parent_class)
-         .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct WpImplEndpointClass {
-    pub parent_class: WpEndpointClass,
-}
-
-impl ::std::fmt::Debug for WpImplEndpointClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplEndpointClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -343,6 +410,21 @@ pub struct WpImplNodeClass {
 impl ::std::fmt::Debug for WpImplNodeClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpImplNodeClass @ {self:p}"))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpInterestEventHookClass {
+    pub parent_class: WpEventHookClass,
+    pub _wp_padding: [gpointer; 4],
+}
+
+impl ::std::fmt::Debug for WpInterestEventHookClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpInterestEventHookClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
          .finish()
     }
@@ -401,6 +483,23 @@ impl ::std::fmt::Debug for WpLinkClass {
 
 #[derive(Copy, Clone)]
 #[repr(C)]
+pub struct WpLogTopic {
+    pub topic_name: *const c_char,
+    pub flags: WpLogTopicFlags,
+    pub _wp_padding: [gpointer; 3],
+}
+
+impl ::std::fmt::Debug for WpLogTopic {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpLogTopic @ {self:p}"))
+         .field("topic_name", &self.topic_name)
+         .field("flags", &self.flags)
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
 pub struct WpMetadataClass {
     pub parent_class: WpGlobalProxyClass,
     pub _wp_padding: [gpointer; 4],
@@ -410,6 +509,19 @@ impl ::std::fmt::Debug for WpMetadataClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpMetadataClass @ {self:p}"))
          .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpMetadataItem {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpMetadataItem {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpMetadataItem @ {self:p}"))
          .finish()
     }
 }
@@ -624,6 +736,46 @@ impl ::std::fmt::Debug for WpSessionItemClass {
 
 #[derive(Copy, Clone)]
 #[repr(C)]
+pub struct WpSettingsClass {
+    pub parent_class: WpObjectClass,
+}
+
+impl ::std::fmt::Debug for WpSettingsClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSettingsClass @ {self:p}"))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpSettingsItem {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSettingsItem {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSettingsItem @ {self:p}"))
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpSettingsSpec {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSettingsSpec {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSettingsSpec @ {self:p}"))
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
 pub struct WpSiAcquisitionInterface {
     pub interface: gobject::GTypeInterface,
     pub acquire: Option<unsafe extern "C" fn(*mut WpSiAcquisition, *mut WpSiLink, *mut WpSiLinkable, gio::GAsyncReadyCallback, gpointer)>,
@@ -662,25 +814,6 @@ impl ::std::fmt::Debug for WpSiAdapterInterface {
          .field("set_ports_format", &self.set_ports_format)
          .field("set_ports_format_finish", &self.set_ports_format_finish)
          .field("get_ports_state", &self.get_ports_state)
-         .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct WpSiEndpointInterface {
-    pub interface: gobject::GTypeInterface,
-    pub get_registration_info: Option<unsafe extern "C" fn(*mut WpSiEndpoint) -> *mut glib::GVariant>,
-    pub get_properties: Option<unsafe extern "C" fn(*mut WpSiEndpoint) -> *mut WpProperties>,
-    pub _wp_padding: [gpointer; 6],
-}
-
-impl ::std::fmt::Debug for WpSiEndpointInterface {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpSiEndpointInterface @ {self:p}"))
-         .field("interface", &self.interface)
-         .field("get_registration_info", &self.get_registration_info)
-         .field("get_properties", &self.get_properties)
          .finish()
     }
 }
@@ -740,6 +873,20 @@ impl ::std::fmt::Debug for WpSiLinkableInterface {
          .field("interface", &self.interface)
          .field("get_ports", &self.get_ports)
          .field("get_acquisition", &self.get_acquisition)
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpSimpleEventHookClass {
+    pub parent_class: WpInterestEventHookClass,
+}
+
+impl ::std::fmt::Debug for WpSimpleEventHookClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSimpleEventHookClass @ {self:p}"))
+         .field("parent_class", &self.parent_class)
          .finish()
     }
 }
@@ -871,6 +1018,19 @@ impl ::std::fmt::Debug for WpTransitionClass {
 
 // Classes
 #[repr(C)]
+pub struct WpAsyncEventHook {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpAsyncEventHook {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpAsyncEventHook @ {self:p}"))
+         .finish()
+    }
+}
+
+#[repr(C)]
 pub struct WpClient {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -883,16 +1043,15 @@ impl ::std::fmt::Debug for WpClient {
     }
 }
 
-#[derive(Copy, Clone)]
 #[repr(C)]
-pub struct WpComponentLoader {
-    pub parent_instance: WpPlugin,
+pub struct WpConf {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
 }
 
-impl ::std::fmt::Debug for WpComponentLoader {
+impl ::std::fmt::Debug for WpConf {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpComponentLoader @ {self:p}"))
-         .field("parent_instance", &self.parent_instance)
+        f.debug_struct(&format!("WpConf @ {self:p}"))
          .finish()
     }
 }
@@ -911,19 +1070,6 @@ impl ::std::fmt::Debug for WpCore {
 }
 
 #[repr(C)]
-pub struct WpDbus {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-impl ::std::fmt::Debug for WpDbus {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpDbus @ {self:p}"))
-         .finish()
-    }
-}
-
-#[repr(C)]
 pub struct WpDevice {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -936,15 +1082,28 @@ impl ::std::fmt::Debug for WpDevice {
     }
 }
 
-#[derive(Copy, Clone)]
 #[repr(C)]
-pub struct WpEndpoint {
-    pub parent_instance: WpGlobalProxy,
+pub struct WpEventDispatcher {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
 }
 
-impl ::std::fmt::Debug for WpEndpoint {
+impl ::std::fmt::Debug for WpEventDispatcher {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpEndpoint @ {self:p}"))
+        f.debug_struct(&format!("WpEventDispatcher @ {self:p}"))
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpEventHook {
+    pub parent_instance: gobject::GObject,
+}
+
+impl ::std::fmt::Debug for WpEventHook {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpEventHook @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
          .finish()
     }
@@ -991,19 +1150,6 @@ impl ::std::fmt::Debug for WpGlobalProxy {
 }
 
 #[repr(C)]
-pub struct WpImplEndpoint {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-impl ::std::fmt::Debug for WpImplEndpoint {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("WpImplEndpoint @ {self:p}"))
-         .finish()
-    }
-}
-
-#[repr(C)]
 pub struct WpImplMetadata {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -1038,6 +1184,20 @@ pub struct WpImplNode {
 impl ::std::fmt::Debug for WpImplNode {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpImplNode @ {self:p}"))
+         .finish()
+    }
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct WpInterestEventHook {
+    pub parent_instance: WpEventHook,
+}
+
+impl ::std::fmt::Debug for WpInterestEventHook {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpInterestEventHook @ {self:p}"))
+         .field("parent_instance", &self.parent_instance)
          .finish()
     }
 }
@@ -1164,6 +1324,19 @@ impl ::std::fmt::Debug for WpSessionItem {
     }
 }
 
+#[repr(C)]
+pub struct WpSettings {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSettings @ {self:p}"))
+         .finish()
+    }
+}
+
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct WpSiFactory {
@@ -1174,6 +1347,19 @@ impl ::std::fmt::Debug for WpSiFactory {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("WpSiFactory @ {self:p}"))
          .field("parent_instance", &self.parent_instance)
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct WpSimpleEventHook {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpSimpleEventHook {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("WpSimpleEventHook @ {self:p}"))
          .finish()
     }
 }
@@ -1220,6 +1406,18 @@ impl ::std::fmt::Debug for WpTransition {
 
 // Interfaces
 #[repr(C)]
+pub struct WpComponentLoader {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for WpComponentLoader {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "WpComponentLoader @ {self:p}")
+    }
+}
+
+#[repr(C)]
 pub struct WpPipewireObject {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -1256,18 +1454,6 @@ impl ::std::fmt::Debug for WpSiAdapter {
 }
 
 #[repr(C)]
-pub struct WpSiEndpoint {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-impl ::std::fmt::Debug for WpSiEndpoint {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        write!(f, "WpSiEndpoint @ {self:p}")
-    }
-}
-
-#[repr(C)]
 pub struct WpSiLink {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
@@ -1292,7 +1478,7 @@ impl ::std::fmt::Debug for WpSiLinkable {
 }
 
 
-#[link(name = "wireplumber-0.4")]
+#[link(name = "wireplumber-0.5")]
 extern "C" {
 
     //=========================================================================
@@ -1304,13 +1490,6 @@ extern "C" {
     // WpConstraintVerb
     //=========================================================================
     pub fn wp_constraint_verb_get_type() -> GType;
-
-    //=========================================================================
-    // WpDBusState
-    //=========================================================================
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_state_get_type() -> GType;
 
     //=========================================================================
     // WpDirection
@@ -1325,8 +1504,6 @@ extern "C" {
     //=========================================================================
     // WpLinkState
     //=========================================================================
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_link_state_get_type() -> GType;
 
     //=========================================================================
@@ -1335,10 +1512,13 @@ extern "C" {
     pub fn wp_node_state_get_type() -> GType;
 
     //=========================================================================
+    // WpSettingsSpecType
+    //=========================================================================
+    pub fn wp_settings_spec_type_get_type() -> GType;
+
+    //=========================================================================
     // WpSiAdapterPortsState
     //=========================================================================
-    #[cfg(feature = "v0_4_10")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_si_adapter_ports_state_get_type() -> GType;
 
     //=========================================================================
@@ -1347,11 +1527,14 @@ extern "C" {
     pub fn wp_transition_step_get_type() -> GType;
 
     //=========================================================================
-    // WpDbusFeatures
+    // WpBaseDirsFlags
     //=========================================================================
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_features_get_type() -> GType;
+    pub fn wp_base_dirs_flags_get_type() -> GType;
+
+    //=========================================================================
+    // WpCoreFeatures
+    //=========================================================================
+    pub fn wp_core_features_get_type() -> GType;
 
     //=========================================================================
     // WpInitFlags
@@ -1369,16 +1552,9 @@ extern "C" {
     pub fn wp_interest_match_flags_get_type() -> GType;
 
     //=========================================================================
-    // WpLinkFeatures
+    // WpLogTopicFlags
     //=========================================================================
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_link_features_get_type() -> GType;
-
-    //=========================================================================
-    // WpLookupDirs
-    //=========================================================================
-    pub fn wp_lookup_dirs_get_type() -> GType;
+    pub fn wp_log_topic_flags_get_type() -> GType;
 
     //=========================================================================
     // WpMetadataFeatures
@@ -1406,9 +1582,33 @@ extern "C" {
     pub fn wp_session_item_features_get_type() -> GType;
 
     //=========================================================================
+    // WpSettingsFeatures
+    //=========================================================================
+    pub fn wp_settings_features_get_type() -> GType;
+
+    //=========================================================================
     // WpSpaDeviceFeatures
     //=========================================================================
     pub fn wp_spa_device_features_get_type() -> GType;
+
+    //=========================================================================
+    // WpEvent
+    //=========================================================================
+    pub fn wp_event_get_type() -> GType;
+    pub fn wp_event_new(type_: *const c_char, priority: c_int, properties: *mut WpProperties, source: *mut gobject::GObject, subject: *mut gobject::GObject) -> *mut WpEvent;
+    pub fn wp_event_collect_hooks(event: *mut WpEvent, dispatcher: *mut WpEventDispatcher) -> gboolean;
+    pub fn wp_event_get_cancellable(self_: *mut WpEvent) -> *mut gio::GCancellable;
+    pub fn wp_event_get_data(self_: *mut WpEvent, key: *const c_char) -> *const gobject::GValue;
+    pub fn wp_event_get_name(self_: *mut WpEvent) -> *const c_char;
+    pub fn wp_event_get_priority(self_: *mut WpEvent) -> c_int;
+    pub fn wp_event_get_properties(self_: *mut WpEvent) -> *mut WpProperties;
+    pub fn wp_event_get_source(self_: *mut WpEvent) -> *mut gobject::GObject;
+    pub fn wp_event_get_subject(self_: *mut WpEvent) -> *mut gobject::GObject;
+    pub fn wp_event_new_hooks_iterator(event: *mut WpEvent) -> *mut WpIterator;
+    pub fn wp_event_ref(self_: *mut WpEvent) -> *mut WpEvent;
+    pub fn wp_event_set_data(self_: *mut WpEvent, key: *const c_char, data: *const gobject::GValue);
+    pub fn wp_event_stop_processing(self_: *mut WpEvent);
+    pub fn wp_event_unref(self_: *mut WpEvent);
 
     //=========================================================================
     // WpIterator
@@ -1427,6 +1627,24 @@ extern "C" {
     //=========================================================================
     // WpIteratorMethods
     //=========================================================================
+
+    //=========================================================================
+    // WpLogTopic
+    //=========================================================================
+    pub fn wp_log_topic_init(topic: *mut WpLogTopic);
+    pub fn wp_log_topic_register(topic: *mut WpLogTopic);
+    pub fn wp_log_topic_unregister(topic: *mut WpLogTopic);
+
+    //=========================================================================
+    // WpMetadataItem
+    //=========================================================================
+    pub fn wp_metadata_item_get_type() -> GType;
+    pub fn wp_metadata_item_get_key(self_: *mut WpMetadataItem) -> *const c_char;
+    pub fn wp_metadata_item_get_subject(self_: *mut WpMetadataItem) -> u32;
+    pub fn wp_metadata_item_get_value(self_: *mut WpMetadataItem) -> *const c_char;
+    pub fn wp_metadata_item_get_value_type(self_: *mut WpMetadataItem) -> *const c_char;
+    pub fn wp_metadata_item_ref(self_: *mut WpMetadataItem) -> *mut WpMetadataItem;
+    pub fn wp_metadata_item_unref(self_: *mut WpMetadataItem);
 
     //=========================================================================
     // WpObjectInterest
@@ -1450,6 +1668,7 @@ extern "C" {
     pub fn wp_properties_new_copy(props: *const pw_properties) -> *mut WpProperties;
     pub fn wp_properties_new_copy_dict(dict: *const spa_dict) -> *mut WpProperties;
     pub fn wp_properties_new_empty() -> *mut WpProperties;
+    pub fn wp_properties_new_json(json: *const WpSpaJson) -> *mut WpProperties;
     pub fn wp_properties_new_string(str: *const c_char) -> *mut WpProperties;
     pub fn wp_properties_new_take(props: *mut pw_properties) -> *mut WpProperties;
     //pub fn wp_properties_new_valist(key: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpProperties;
@@ -1463,8 +1682,6 @@ extern "C" {
     pub fn wp_properties_copy(other: *mut WpProperties) -> *mut WpProperties;
     pub fn wp_properties_ensure_unique_owner(self_: *mut WpProperties) -> *mut WpProperties;
     pub fn wp_properties_get(self_: *mut WpProperties, key: *const c_char) -> *const c_char;
-    #[cfg(feature = "v0_4_10")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_properties_get_count(self_: *mut WpProperties) -> c_uint;
     pub fn wp_properties_matches(self_: *mut WpProperties, other: *mut WpProperties) -> gboolean;
     pub fn wp_properties_new_iterator(self_: *mut WpProperties) -> *mut WpIterator;
@@ -1479,246 +1696,127 @@ extern "C" {
     pub fn wp_properties_unref_and_take_pw_properties(self_: *mut WpProperties) -> *mut pw_properties;
     pub fn wp_properties_update(self_: *mut WpProperties, props: *mut WpProperties) -> c_int;
     pub fn wp_properties_update_from_dict(self_: *mut WpProperties, dict: *const spa_dict) -> c_int;
+    pub fn wp_properties_update_from_json(self_: *mut WpProperties, json: *const WpSpaJson) -> c_int;
     pub fn wp_properties_update_keys(self_: *mut WpProperties, props: *mut WpProperties, key1: *const c_char, ...) -> c_int;
     pub fn wp_properties_update_keys_array(self_: *mut WpProperties, props: *mut WpProperties, keys: *mut *const c_char) -> c_int;
     pub fn wp_properties_update_keys_from_dict(self_: *mut WpProperties, dict: *const spa_dict, key1: *const c_char, ...) -> c_int;
-    pub fn wp_properties_iterator_item_get_key(item: *const gobject::GValue) -> *const c_char;
-    pub fn wp_properties_iterator_item_get_value(item: *const gobject::GValue) -> *const c_char;
 
     //=========================================================================
     // WpPropertiesItem
     //=========================================================================
     pub fn wp_properties_item_get_type() -> GType;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_get_key(self_: *mut WpPropertiesItem) -> *const c_char;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_get_value(self_: *mut WpPropertiesItem) -> *const c_char;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_ref(self_: *mut WpPropertiesItem) -> *mut WpPropertiesItem;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_properties_item_unref(self_: *mut WpPropertiesItem);
+
+    //=========================================================================
+    // WpSettingsItem
+    //=========================================================================
+    pub fn wp_settings_item_get_type() -> GType;
+    pub fn wp_settings_item_get_key(self_: *mut WpSettingsItem) -> *const c_char;
+    pub fn wp_settings_item_get_value(self_: *mut WpSettingsItem) -> *mut WpSpaJson;
+    pub fn wp_settings_item_ref(self_: *mut WpSettingsItem) -> *mut WpSettingsItem;
+    pub fn wp_settings_item_unref(self_: *mut WpSettingsItem);
+
+    //=========================================================================
+    // WpSettingsSpec
+    //=========================================================================
+    pub fn wp_settings_spec_get_type() -> GType;
+    pub fn wp_settings_spec_check_value(self_: *mut WpSettingsSpec, value: *mut WpSpaJson) -> gboolean;
+    pub fn wp_settings_spec_get_default_value(self_: *mut WpSettingsSpec) -> *mut WpSpaJson;
+    pub fn wp_settings_spec_get_description(self_: *mut WpSettingsSpec) -> *const c_char;
+    pub fn wp_settings_spec_get_max_value(self_: *mut WpSettingsSpec) -> *mut WpSpaJson;
+    pub fn wp_settings_spec_get_min_value(self_: *mut WpSettingsSpec) -> *mut WpSpaJson;
+    pub fn wp_settings_spec_get_value_type(self_: *mut WpSettingsSpec) -> WpSettingsSpecType;
+    pub fn wp_settings_spec_ref(self_: *mut WpSettingsSpec) -> *mut WpSettingsSpec;
+    pub fn wp_settings_spec_unref(self_: *mut WpSettingsSpec);
 
     //=========================================================================
     // WpSpaJson
     //=========================================================================
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_type() -> GType;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_array(format: *const c_char, ...) -> *mut WpSpaJson;
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_new_array_valist(format: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_boolean(value: gboolean) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_float(value: c_float) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_from_string(json_str: *const c_char) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_10")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_spa_json_new_from_stringn(json_str: *const c_char, len: size_t) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_int(value: c_int) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_null() -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_object(key: *const c_char, format: *const c_char, ...) -> *mut WpSpaJson;
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_new_object_valist(key: *const c_char, format: *const c_char, args: /*Unimplemented*/va_list) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_string(value: *const c_char) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_wrap(json: *mut spa_json) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_new_wrap_string(json_str: *const c_char) -> *mut WpSpaJson;
+    pub fn wp_spa_json_new_wrap_stringn(json_str: *const c_char, len: size_t) -> *mut WpSpaJson;
     pub fn wp_spa_json_copy(other: *mut WpSpaJson) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_ensure_unique_owner(self_: *mut WpSpaJson) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_data(self_: *const WpSpaJson) -> *const c_char;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_size(self_: *const WpSpaJson) -> size_t;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_get_spa_json(self_: *const WpSpaJson) -> *const spa_json;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_array(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_boolean(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_is_container(self_: *mut WpSpaJson) -> gboolean;
     pub fn wp_spa_json_is_float(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_int(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_null(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_object(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_string(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_is_unique_owner(self_: *mut WpSpaJson) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_new_iterator(self_: *mut WpSpaJson) -> *mut WpIterator;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_object_get(self_: *mut WpSpaJson, ...) -> gboolean;
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_object_get_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_array(self_: *mut WpSpaJson, ...) -> gboolean;
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_parse_array_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_boolean(self_: *mut WpSpaJson, value: *mut gboolean) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_float(self_: *mut WpSpaJson, value: *mut c_float) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_int(self_: *mut WpSpaJson, value: *mut c_int) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_object(self_: *mut WpSpaJson, ...) -> gboolean;
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_parse_object_valist(self_: *mut WpSpaJson, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parse_string(self_: *mut WpSpaJson) -> *mut c_char;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_ref(self_: *mut WpSpaJson) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_spa_json_to_string(self_: *const WpSpaJson) -> *mut c_char;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_unref(self_: *mut WpSpaJson);
 
     //=========================================================================
     // WpSpaJsonBuilder
     //=========================================================================
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_get_type() -> GType;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_new_array() -> *mut WpSpaJsonBuilder;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_new_object() -> *mut WpSpaJsonBuilder;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add(self_: *mut WpSpaJsonBuilder, ...);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_boolean(self_: *mut WpSpaJsonBuilder, value: gboolean);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_float(self_: *mut WpSpaJsonBuilder, value: c_float);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_builder_add_from_string(self_: *mut WpSpaJsonBuilder, json_str: *const c_char);
+    pub fn wp_spa_json_builder_add_from_stringn(self_: *mut WpSpaJsonBuilder, json_str: *const c_char, len: size_t);
     pub fn wp_spa_json_builder_add_int(self_: *mut WpSpaJsonBuilder, value: c_int);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_json(self_: *mut WpSpaJsonBuilder, json: *mut WpSpaJson);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_null(self_: *mut WpSpaJsonBuilder);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_property(self_: *mut WpSpaJsonBuilder, key: *const c_char);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_add_string(self_: *mut WpSpaJsonBuilder, value: *const c_char);
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_builder_add_valist(self_: *mut WpSpaJsonBuilder, args: /*Unimplemented*/va_list);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_end(self_: *mut WpSpaJsonBuilder) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_ref(self_: *mut WpSpaJsonBuilder) -> *mut WpSpaJsonBuilder;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_builder_unref(self_: *mut WpSpaJsonBuilder);
 
     //=========================================================================
     // WpSpaJsonParser
     //=========================================================================
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_type() -> GType;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_new_array(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_new_object(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
+    pub fn wp_spa_json_parser_new_undefined(json: *mut WpSpaJson) -> *mut WpSpaJsonParser;
     pub fn wp_spa_json_parser_end(self_: *mut WpSpaJsonParser);
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get(self_: *mut WpSpaJsonParser, ...) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_boolean(self_: *mut WpSpaJsonParser, value: *mut gboolean) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_float(self_: *mut WpSpaJsonParser, value: *mut c_float) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_int(self_: *mut WpSpaJsonParser, value: *mut c_int) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_json(self_: *mut WpSpaJsonParser) -> *mut WpSpaJson;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_null(self_: *mut WpSpaJsonParser) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_get_string(self_: *mut WpSpaJsonParser) -> *mut c_char;
-    //#[cfg(feature = "v0_4_8")]
-    //#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     //pub fn wp_spa_json_parser_get_valist(self_: *mut WpSpaJsonParser, args: /*Unimplemented*/va_list) -> gboolean;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_ref(self_: *mut WpSpaJsonParser) -> *mut WpSpaJsonParser;
-    #[cfg(feature = "v0_4_8")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
     pub fn wp_spa_json_parser_unref(self_: *mut WpSpaJsonParser);
 
     //=========================================================================
@@ -1868,29 +1966,46 @@ extern "C" {
     pub fn wp_spa_pod_parser_unref(self_: *mut WpSpaPodParser);
 
     //=========================================================================
+    // WpAsyncEventHook
+    //=========================================================================
+    pub fn wp_async_event_hook_get_type() -> GType;
+    pub fn wp_async_event_hook_new(name: *const c_char, before: *mut *const c_char, after: *mut *const c_char, get_next_step: *mut gobject::GClosure, execute_step: *mut gobject::GClosure) -> *mut WpEventHook;
+
+    //=========================================================================
     // WpClient
     //=========================================================================
     pub fn wp_client_get_type() -> GType;
     pub fn wp_client_send_error(self_: *mut WpClient, id: u32, res: c_int, message: *const c_char);
     pub fn wp_client_update_permissions(self_: *mut WpClient, n_perm: c_uint, ...);
     pub fn wp_client_update_permissions_array(self_: *mut WpClient, n_perm: c_uint, permissions: *const pw_permission);
+    pub fn wp_client_update_properties(self_: *mut WpClient, updates: *mut WpProperties);
 
     //=========================================================================
-    // WpComponentLoader
+    // WpConf
     //=========================================================================
-    pub fn wp_component_loader_get_type() -> GType;
+    pub fn wp_conf_get_type() -> GType;
+    pub fn wp_conf_new(name: *const c_char, properties: *mut WpProperties) -> *mut WpConf;
+    pub fn wp_conf_new_open(name: *const c_char, properties: *mut WpProperties, error: *mut *mut glib::GError) -> *mut WpConf;
+    pub fn wp_conf_close(self_: *mut WpConf);
+    pub fn wp_conf_get_name(self_: *mut WpConf) -> *const c_char;
+    pub fn wp_conf_get_section(self_: *mut WpConf, section: *const c_char) -> *mut WpSpaJson;
+    pub fn wp_conf_is_open(self_: *mut WpConf) -> gboolean;
+    pub fn wp_conf_open(self_: *mut WpConf, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_conf_parse_pw_context_sections(self_: *mut WpConf, context: *mut pw_context);
+    pub fn wp_conf_section_update_props(self_: *mut WpConf, section: *const c_char, props: *mut WpProperties) -> c_int;
 
     //=========================================================================
     // WpCore
     //=========================================================================
     pub fn wp_core_get_type() -> GType;
-    pub fn wp_core_new(context: *mut glib::GMainContext, properties: *mut WpProperties) -> *mut WpCore;
+    pub fn wp_core_new(context: *mut glib::GMainContext, conf: *mut WpConf, properties: *mut WpProperties) -> *mut WpCore;
     pub fn wp_core_clone(self_: *mut WpCore) -> *mut WpCore;
     pub fn wp_core_connect(self_: *mut WpCore) -> gboolean;
     pub fn wp_core_disconnect(self_: *mut WpCore);
+    pub fn wp_core_find_object(self_: *mut WpCore, func: glib::GEqualFunc, data: gconstpointer) -> gpointer;
+    pub fn wp_core_get_conf(self_: *mut WpCore) -> *mut WpConf;
+    pub fn wp_core_get_export_core(self_: *mut WpCore) -> *mut WpCore;
     pub fn wp_core_get_g_main_context(self_: *mut WpCore) -> *mut glib::GMainContext;
-    #[cfg(feature = "v0_4_16")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_16")))]
     pub fn wp_core_get_own_bound_id(self_: *mut WpCore) -> u32;
     pub fn wp_core_get_properties(self_: *mut WpCore) -> *mut WpProperties;
     pub fn wp_core_get_pw_context(self_: *mut WpCore) -> *mut pw_context;
@@ -1901,41 +2016,22 @@ extern "C" {
     pub fn wp_core_get_remote_properties(self_: *mut WpCore) -> *mut WpProperties;
     pub fn wp_core_get_remote_user_name(self_: *mut WpCore) -> *const c_char;
     pub fn wp_core_get_remote_version(self_: *mut WpCore) -> *const c_char;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_core_get_vm_type(self_: *mut WpCore) -> *mut c_char;
     pub fn wp_core_idle_add(self_: *mut WpCore, source: *mut *mut glib::GSource, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     pub fn wp_core_idle_add_closure(self_: *mut WpCore, source: *mut *mut glib::GSource, closure: *mut gobject::GClosure);
     pub fn wp_core_install_object_manager(self_: *mut WpCore, om: *mut WpObjectManager);
     pub fn wp_core_is_connected(self_: *mut WpCore) -> gboolean;
-    pub fn wp_core_load_component(self_: *mut WpCore, component: *const c_char, type_: *const c_char, args: *mut glib::GVariant, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_core_load_component(self_: *mut WpCore, component: *const c_char, type_: *const c_char, args: *mut WpSpaJson, provides: *const c_char, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, data: gpointer);
+    pub fn wp_core_load_component_finish(self_: *mut WpCore, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_core_register_object(self_: *mut WpCore, obj: *mut gobject::GObject);
+    pub fn wp_core_remove_object(self_: *mut WpCore, obj: *mut gobject::GObject);
     pub fn wp_core_sync(self_: *mut WpCore, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer) -> gboolean;
-    #[cfg(feature = "v0_4_6")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     pub fn wp_core_sync_closure(self_: *mut WpCore, cancellable: *mut gio::GCancellable, closure: *mut gobject::GClosure) -> gboolean;
     pub fn wp_core_sync_finish(self_: *mut WpCore, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_core_test_feature(self_: *mut WpCore, feature: *const c_char) -> gboolean;
     pub fn wp_core_timeout_add(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, function: glib::GSourceFunc, data: gpointer, destroy: glib::GDestroyNotify);
     pub fn wp_core_timeout_add_closure(self_: *mut WpCore, source: *mut *mut glib::GSource, timeout_ms: c_uint, closure: *mut gobject::GClosure);
     pub fn wp_core_update_properties(self_: *mut WpCore, updates: *mut WpProperties);
-
-    //=========================================================================
-    // WpDbus
-    //=========================================================================
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_get_type() -> GType;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_get_instance(core: *mut WpCore, bus_type: gio::GBusType) -> *mut WpDbus;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_get_bus_type(self_: *mut WpDbus) -> gio::GBusType;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_get_connection(self_: *mut WpDbus) -> *mut gio::GDBusConnection;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-    pub fn wp_dbus_get_state(self_: *mut WpDbus) -> WpDBusState;
 
     //=========================================================================
     // WpDevice
@@ -1944,18 +2040,31 @@ extern "C" {
     pub fn wp_device_new_from_factory(core: *mut WpCore, factory_name: *const c_char, properties: *mut WpProperties) -> *mut WpDevice;
 
     //=========================================================================
-    // WpEndpoint
+    // WpEventDispatcher
     //=========================================================================
-    pub fn wp_endpoint_get_type() -> GType;
-    pub fn wp_endpoint_get_direction(self_: *mut WpEndpoint) -> WpDirection;
-    pub fn wp_endpoint_get_media_class(self_: *mut WpEndpoint) -> *const c_char;
-    pub fn wp_endpoint_get_name(self_: *mut WpEndpoint) -> *const c_char;
+    pub fn wp_event_dispatcher_get_type() -> GType;
+    pub fn wp_event_dispatcher_get_instance(core: *mut WpCore) -> *mut WpEventDispatcher;
+    pub fn wp_event_dispatcher_new_hooks_iterator(self_: *mut WpEventDispatcher) -> *mut WpIterator;
+    pub fn wp_event_dispatcher_push_event(self_: *mut WpEventDispatcher, event: *mut WpEvent);
+    pub fn wp_event_dispatcher_register_hook(self_: *mut WpEventDispatcher, hook: *mut WpEventHook);
+    pub fn wp_event_dispatcher_unregister_hook(self_: *mut WpEventDispatcher, hook: *mut WpEventHook);
+
+    //=========================================================================
+    // WpEventHook
+    //=========================================================================
+    pub fn wp_event_hook_get_type() -> GType;
+    pub fn wp_event_hook_finish(self_: *mut WpEventHook, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_event_hook_get_dispatcher(self_: *mut WpEventHook) -> *mut WpEventDispatcher;
+    pub fn wp_event_hook_get_name(self_: *mut WpEventHook) -> *const c_char;
+    pub fn wp_event_hook_get_runs_after_hooks(self_: *mut WpEventHook) -> *const *const c_char;
+    pub fn wp_event_hook_get_runs_before_hooks(self_: *mut WpEventHook) -> *const *const c_char;
+    pub fn wp_event_hook_run(self_: *mut WpEventHook, event: *mut WpEvent, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, callback_data: gpointer);
+    pub fn wp_event_hook_runs_for_event(self_: *mut WpEventHook, event: *mut WpEvent) -> gboolean;
+    pub fn wp_event_hook_set_dispatcher(self_: *mut WpEventHook, dispatcher: *mut WpEventDispatcher);
 
     //=========================================================================
     // WpFactory
     //=========================================================================
-    #[cfg(feature = "v0_4_5")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_5")))]
     pub fn wp_factory_get_type() -> GType;
 
     //=========================================================================
@@ -1974,32 +2083,17 @@ extern "C" {
     pub fn wp_global_proxy_request_destroy(self_: *mut WpGlobalProxy);
 
     //=========================================================================
-    // WpImplEndpoint
-    //=========================================================================
-    pub fn wp_impl_endpoint_get_type() -> GType;
-    pub fn wp_impl_endpoint_new(core: *mut WpCore, item: *mut WpSiEndpoint) -> *mut WpImplEndpoint;
-
-    //=========================================================================
     // WpImplMetadata
     //=========================================================================
     pub fn wp_impl_metadata_get_type() -> GType;
     pub fn wp_impl_metadata_new(core: *mut WpCore) -> *mut WpImplMetadata;
-    #[cfg(feature = "v0_4_3")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_3")))]
     pub fn wp_impl_metadata_new_full(core: *mut WpCore, name: *const c_char, properties: *mut WpProperties) -> *mut WpImplMetadata;
 
     //=========================================================================
     // WpImplModule
     //=========================================================================
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_impl_module_get_type() -> GType;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
     pub fn wp_impl_module_load(core: *mut WpCore, name: *const c_char, arguments: *const c_char, properties: *mut WpProperties) -> *mut WpImplModule;
-    #[cfg(feature = "v0_4_15")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_15")))]
-    pub fn wp_impl_module_load_file(core: *mut WpCore, name: *const c_char, filename: *const c_char, properties: *mut WpProperties) -> *mut WpImplModule;
 
     //=========================================================================
     // WpImplNode
@@ -2009,20 +2103,24 @@ extern "C" {
     pub fn wp_impl_node_new_wrap(core: *mut WpCore, node: *mut pw_impl_node) -> *mut WpImplNode;
 
     //=========================================================================
+    // WpInterestEventHook
+    //=========================================================================
+    pub fn wp_interest_event_hook_get_type() -> GType;
+    pub fn wp_interest_event_hook_add_interest(self_: *mut WpInterestEventHook, ...);
+    pub fn wp_interest_event_hook_add_interest_full(self_: *mut WpInterestEventHook, interest: *mut WpObjectInterest);
+
+    //=========================================================================
     // WpLink
     //=========================================================================
     pub fn wp_link_get_type() -> GType;
     pub fn wp_link_new_from_factory(core: *mut WpCore, factory_name: *const c_char, properties: *mut WpProperties) -> *mut WpLink;
     pub fn wp_link_get_linked_object_ids(self_: *mut WpLink, output_node: *mut u32, output_port: *mut u32, input_node: *mut u32, input_port: *mut u32);
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_link_get_state(self_: *mut WpLink, error: *mut *const c_char) -> WpLinkState;
 
     //=========================================================================
     // WpMetadata
     //=========================================================================
     pub fn wp_metadata_get_type() -> GType;
-    pub fn wp_metadata_iterator_item_extract(item: *const gobject::GValue, subject: *mut u32, key: *mut *const c_char, type_: *mut *const c_char, value: *mut *const c_char);
     pub fn wp_metadata_clear(self_: *mut WpMetadata);
     pub fn wp_metadata_find(self_: *mut WpMetadata, subject: u32, key: *const c_char, type_: *mut *const c_char) -> *const c_char;
     pub fn wp_metadata_new_iterator(self_: *mut WpMetadata, subject: u32) -> *mut WpIterator;
@@ -2048,8 +2146,6 @@ extern "C" {
     // WpObject
     //=========================================================================
     pub fn wp_object_get_type() -> GType;
-    #[cfg(feature = "v0_4_6")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     pub fn wp_object_abort_activation(self_: *mut WpObject, msg: *const c_char);
     pub fn wp_object_activate(self_: *mut WpObject, features: WpObjectFeatures, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
     pub fn wp_object_activate_closure(self_: *mut WpObject, features: WpObjectFeatures, cancellable: *mut gio::GCancellable, closure: *mut gobject::GClosure);
@@ -2057,7 +2153,10 @@ extern "C" {
     pub fn wp_object_deactivate(self_: *mut WpObject, features: WpObjectFeatures);
     pub fn wp_object_get_active_features(self_: *mut WpObject) -> WpObjectFeatures;
     pub fn wp_object_get_core(self_: *mut WpObject) -> *mut WpCore;
+    pub fn wp_object_get_id(self_: *mut WpObject) -> c_uint;
     pub fn wp_object_get_supported_features(self_: *mut WpObject) -> WpObjectFeatures;
+    pub fn wp_object_test_active_features(self_: *mut WpObject, features: WpObjectFeatures) -> gboolean;
+    pub fn wp_object_test_supported_features(self_: *mut WpObject, features: WpObjectFeatures) -> gboolean;
     pub fn wp_object_update_features(self_: *mut WpObject, activated: WpObjectFeatures, deactivated: WpObjectFeatures);
 
     //=========================================================================
@@ -2065,16 +2164,20 @@ extern "C" {
     //=========================================================================
     pub fn wp_object_manager_get_type() -> GType;
     pub fn wp_object_manager_new() -> *mut WpObjectManager;
+    pub fn wp_object_manager_add_global(self_: *mut WpObjectManager, global: *mut WpGlobal);
     pub fn wp_object_manager_add_interest(self_: *mut WpObjectManager, gtype: GType, ...);
     pub fn wp_object_manager_add_interest_full(self_: *mut WpObjectManager, interest: *mut WpObjectInterest);
+    pub fn wp_object_manager_add_object(self_: *mut WpObjectManager, object: gpointer);
     pub fn wp_object_manager_get_n_objects(self_: *mut WpObjectManager) -> c_uint;
     pub fn wp_object_manager_is_installed(self_: *mut WpObjectManager) -> gboolean;
     pub fn wp_object_manager_lookup(self_: *mut WpObjectManager, gtype: GType, ...) -> *mut gobject::GObject;
     pub fn wp_object_manager_lookup_full(self_: *mut WpObjectManager, interest: *mut WpObjectInterest) -> *mut gobject::GObject;
+    pub fn wp_object_manager_maybe_objects_changed(self_: *mut WpObjectManager);
     pub fn wp_object_manager_new_filtered_iterator(self_: *mut WpObjectManager, gtype: GType, ...) -> *mut WpIterator;
     pub fn wp_object_manager_new_filtered_iterator_full(self_: *mut WpObjectManager, interest: *mut WpObjectInterest) -> *mut WpIterator;
     pub fn wp_object_manager_new_iterator(self_: *mut WpObjectManager) -> *mut WpIterator;
     pub fn wp_object_manager_request_object_features(self_: *mut WpObjectManager, object_type: GType, wanted_features: WpObjectFeatures);
+    pub fn wp_object_manager_rm_object(self_: *mut WpObjectManager, object: gpointer);
 
     //=========================================================================
     // WpPlugin
@@ -2082,7 +2185,6 @@ extern "C" {
     pub fn wp_plugin_get_type() -> GType;
     pub fn wp_plugin_find(core: *mut WpCore, plugin_name: *const c_char) -> *mut WpPlugin;
     pub fn wp_plugin_get_name(self_: *mut WpPlugin) -> *const c_char;
-    pub fn wp_plugin_register(plugin: *mut WpPlugin);
 
     //=========================================================================
     // WpPort
@@ -2108,7 +2210,6 @@ extern "C" {
     pub fn wp_session_item_configure(self_: *mut WpSessionItem, props: *mut WpProperties) -> gboolean;
     pub fn wp_session_item_get_associated_proxy(self_: *mut WpSessionItem, proxy_type: GType) -> *mut WpProxy;
     pub fn wp_session_item_get_associated_proxy_id(self_: *mut WpSessionItem, proxy_type: GType) -> u32;
-    pub fn wp_session_item_get_id(self_: *mut WpSessionItem) -> c_uint;
     pub fn wp_session_item_get_properties(self_: *mut WpSessionItem) -> *mut WpProperties;
     pub fn wp_session_item_get_property(self_: *mut WpSessionItem, key: *const c_char) -> *const c_char;
     pub fn wp_session_item_is_configured(self_: *mut WpSessionItem) -> gboolean;
@@ -2118,14 +2219,40 @@ extern "C" {
     pub fn wp_session_item_set_properties(self_: *mut WpSessionItem, props: *mut WpProperties);
 
     //=========================================================================
+    // WpSettings
+    //=========================================================================
+    pub fn wp_settings_get_type() -> GType;
+    pub fn wp_settings_new(core: *mut WpCore, metadata_name: *const c_char) -> *mut WpSettings;
+    pub fn wp_settings_find(core: *mut WpCore, metadata_name: *const c_char) -> *mut WpSettings;
+    pub fn wp_settings_delete(self_: *mut WpSettings, name: *const c_char) -> gboolean;
+    pub fn wp_settings_delete_all(self_: *mut WpSettings);
+    pub fn wp_settings_get(self_: *mut WpSettings, name: *const c_char) -> *mut WpSpaJson;
+    pub fn wp_settings_get_saved(self_: *mut WpSettings, name: *const c_char) -> *mut WpSpaJson;
+    pub fn wp_settings_get_spec(self_: *mut WpSettings, name: *const c_char) -> *mut WpSettingsSpec;
+    pub fn wp_settings_new_iterator(self_: *mut WpSettings) -> *mut WpIterator;
+    pub fn wp_settings_reset(self_: *mut WpSettings, name: *const c_char) -> gboolean;
+    pub fn wp_settings_reset_all(self_: *mut WpSettings);
+    pub fn wp_settings_save(self_: *mut WpSettings, name: *const c_char) -> gboolean;
+    pub fn wp_settings_save_all(self_: *mut WpSettings);
+    pub fn wp_settings_set(self_: *mut WpSettings, name: *const c_char, value: *mut WpSpaJson) -> gboolean;
+    pub fn wp_settings_subscribe(self_: *mut WpSettings, pattern: *const c_char, callback: WpSettingsChangedCallback, user_data: gpointer) -> uintptr_t;
+    pub fn wp_settings_subscribe_closure(self_: *mut WpSettings, pattern: *const c_char, closure: *mut gobject::GClosure) -> uintptr_t;
+    pub fn wp_settings_unsubscribe(self_: *mut WpSettings, subscription_id: uintptr_t) -> gboolean;
+
+    //=========================================================================
     // WpSiFactory
     //=========================================================================
     pub fn wp_si_factory_get_type() -> GType;
     pub fn wp_si_factory_new_simple(factory_name: *const c_char, si_type: GType) -> *mut WpSiFactory;
     pub fn wp_si_factory_find(core: *mut WpCore, factory_name: *const c_char) -> *mut WpSiFactory;
-    pub fn wp_si_factory_register(core: *mut WpCore, factory: *mut WpSiFactory);
     pub fn wp_si_factory_construct(self_: *mut WpSiFactory, core: *mut WpCore) -> *mut WpSessionItem;
     pub fn wp_si_factory_get_name(self_: *mut WpSiFactory) -> *const c_char;
+
+    //=========================================================================
+    // WpSimpleEventHook
+    //=========================================================================
+    pub fn wp_simple_event_hook_get_type() -> GType;
+    pub fn wp_simple_event_hook_new(name: *const c_char, before: *mut *const c_char, after: *mut *const c_char, closure: *mut gobject::GClosure) -> *mut WpEventHook;
 
     //=========================================================================
     // WpSpaDevice
@@ -2135,8 +2262,6 @@ extern "C" {
     pub fn wp_spa_device_new_wrap(core: *mut WpCore, spa_device_handle: gpointer, properties: *mut WpProperties) -> *mut WpSpaDevice;
     pub fn wp_spa_device_get_managed_object(self_: *mut WpSpaDevice, id: c_uint) -> *mut gobject::GObject;
     pub fn wp_spa_device_get_properties(self_: *mut WpSpaDevice) -> *mut WpProperties;
-    #[cfg(feature = "v0_4_11")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     pub fn wp_spa_device_new_managed_object_iterator(self_: *mut WpSpaDevice) -> *mut WpIterator;
     pub fn wp_spa_device_store_managed_object(self_: *mut WpSpaDevice, id: c_uint, object: *mut gobject::GObject);
 
@@ -2163,6 +2288,7 @@ extern "C" {
     pub fn wp_state_get_name(self_: *mut WpState) -> *const c_char;
     pub fn wp_state_load(self_: *mut WpState) -> *mut WpProperties;
     pub fn wp_state_save(self_: *mut WpState, props: *mut WpProperties, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_state_save_after_timeout(self_: *mut WpState, core: *mut WpCore, props: *mut WpProperties);
 
     //=========================================================================
     // WpTransition
@@ -2181,6 +2307,11 @@ extern "C" {
     pub fn wp_transition_return_error(self_: *mut WpTransition, error: *mut glib::GError);
     pub fn wp_transition_set_data(self_: *mut WpTransition, data: gpointer, data_destroy: glib::GDestroyNotify);
     pub fn wp_transition_set_source_tag(self_: *mut WpTransition, tag: gpointer);
+
+    //=========================================================================
+    // WpComponentLoader
+    //=========================================================================
+    pub fn wp_component_loader_get_type() -> GType;
 
     //=========================================================================
     // WpPipewireObject
@@ -2209,18 +2340,9 @@ extern "C" {
     //=========================================================================
     pub fn wp_si_adapter_get_type() -> GType;
     pub fn wp_si_adapter_get_ports_format(self_: *mut WpSiAdapter, mode: *mut *const c_char) -> *mut WpSpaPod;
-    #[cfg(feature = "v0_4_10")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
     pub fn wp_si_adapter_get_ports_state(self_: *mut WpSiAdapter) -> WpSiAdapterPortsState;
     pub fn wp_si_adapter_set_ports_format(self_: *mut WpSiAdapter, format: *mut WpSpaPod, mode: *const c_char, callback: gio::GAsyncReadyCallback, data: gpointer);
     pub fn wp_si_adapter_set_ports_format_finish(self_: *mut WpSiAdapter, res: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
-
-    //=========================================================================
-    // WpSiEndpoint
-    //=========================================================================
-    pub fn wp_si_endpoint_get_type() -> GType;
-    pub fn wp_si_endpoint_get_properties(self_: *mut WpSiEndpoint) -> *mut WpProperties;
-    pub fn wp_si_endpoint_get_registration_info(self_: *mut WpSiEndpoint) -> *mut glib::GVariant;
 
     //=========================================================================
     // WpSiLink
@@ -2241,27 +2363,19 @@ extern "C" {
     //=========================================================================
     // Other functions
     //=========================================================================
+    pub fn wp_base_dirs_find_file(flags: WpBaseDirsFlags, subdir: *const c_char, filename: *const c_char) -> *mut c_char;
+    pub fn wp_base_dirs_new_files_iterator(flags: WpBaseDirsFlags, subdir: *const c_char, suffix: *const c_char) -> *mut WpIterator;
     pub fn wp_domain_library_quark() -> glib::GQuark;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-    pub fn wp_find_file(dirs: WpLookupDirs, filename: *const c_char, subdir: *const c_char) -> *mut c_char;
-    pub fn wp_get_config_dir() -> *const c_char;
-    pub fn wp_get_data_dir() -> *const c_char;
-    #[cfg(feature = "v0_4_12")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_12")))]
     pub fn wp_get_library_api_version() -> *const c_char;
-    #[cfg(feature = "v0_4_12")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_12")))]
     pub fn wp_get_library_version() -> *const c_char;
-    pub fn wp_get_module_dir() -> *const c_char;
     pub fn wp_init(flags: WpInitFlags);
-    pub fn wp_log_level_is_enabled(log_level: glib::GLogLevelFlags) -> gboolean;
-    pub fn wp_log_set_level(level_str: *const c_char);
-    pub fn wp_log_structured_standard(log_domain: *const c_char, log_level: glib::GLogLevelFlags, file: *const c_char, line: *const c_char, func: *const c_char, object_type: GType, object: gconstpointer, message_format: *const c_char, ...);
+    pub fn wp_json_utils_match_rules(json: *mut WpSpaJson, match_props: *mut WpProperties, callback: WpRuleMatchCallback, data: gpointer, error: *mut *mut glib::GError) -> gboolean;
+    pub fn wp_json_utils_match_rules_update_properties(json: *mut WpSpaJson, props: *mut WpProperties) -> c_int;
+    pub fn wp_json_utils_merge_containers(a: *mut WpSpaJson, b: *mut WpSpaJson) -> *mut WpSpaJson;
+    pub fn wp_log_checked(log_topic: *const c_char, log_level: glib::GLogLevelFlags, file: *const c_char, line: *const c_char, func: *const c_char, object_type: GType, object: gconstpointer, message_format: *const c_char, ...);
+    pub fn wp_log_init(flags: c_int);
+    pub fn wp_log_set_level(log_level: *const c_char) -> gboolean;
     pub fn wp_log_writer_default(log_level: glib::GLogLevelFlags, fields: *const glib::GLogField, n_fields: size_t, user_data: gpointer) -> glib::GLogWriterOutput;
-    #[cfg(feature = "v0_4_2")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-    pub fn wp_new_files_iterator(dirs: WpLookupDirs, subdir: *const c_char, suffix: *const c_char) -> *mut WpIterator;
     pub fn wp_spa_dynamic_id_table_register(name: *const c_char, values: *const spa_type_info) -> WpSpaIdTable;
     pub fn wp_spa_dynamic_type_deinit();
     pub fn wp_spa_dynamic_type_init();

@@ -10,12 +10,10 @@
 //! # See also
 //!
 //! C API docs for:
-//! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)
-//! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)
-//! - [SpaJson](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_json_api.html)
+//! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/spa_pod_api.html)
+//! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/spa_type_api.html)
+//! - [SpaJson](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/spa_json_api.html)
 
-#[cfg(feature = "v0_4_8")]
-pub use self::json::{SpaJson, SpaJsonRef};
 #[cfg(feature = "experimental")]
 pub use self::props::SpaProps;
 #[cfg(feature = "experimental")]
@@ -29,6 +27,7 @@ pub use {
 	self::{
 		id_table::SpaIdTable,
 		id_value::SpaIdValue,
+		json::{SpaJson, SpaJsonRef},
 		traits::{SpaBool, SpaPrimitive, SpaValue},
 		type_::SpaType,
 	},

@@ -169,8 +169,8 @@ def_signal! {
 }
 
 def_signal! {
-	impl Notifies<"endpoint-properties-changed" as EndpointPropertiesChanged> for crate::session::SiEndpoint {
-		impl {const SIGNAL_ENDPOINT_PROPERTIES_CHANGED};
+	impl Notifies<"link-properties-changed" as EndpointPropertiesChanged> for crate::session::SiLink {
+		impl {const SIGNAL_LINK_PROPERTIES_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		fn(&self)
 	}

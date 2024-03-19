@@ -1,8 +1,8 @@
 [options]
 library = "Wp"
-version = "0.4"
+version = "0.5"
 target_path = "."
-min_cfg_version = "0.4"
+min_cfg_version = "0.5"
 work_mode = "sys"
 split_build_rs = true
 single_version_file = "src/Gir-sys.version"

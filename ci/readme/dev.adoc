@@ -13,5 +13,5 @@ Adding link:{relative-tree}ci/bin[ci/bin] to your `+PATH+` is recommended - the 
 
 === GIR Schema
 
-The WirePlumber GIR data is kept in link:{relative-blob}sys/generate/src/Wp-0.4.gir[Wp-0.4.gir].
+The WirePlumber GIR data is kept in link:{relative-blob}sys/generate/src/Wp-0.5.gir[Wp-0.5.gir].
 A series of fixes must be applied to the upstream XML via the link:{relative-blob}ci/wp-gir-filter.sh[wp-gir-filter] script.

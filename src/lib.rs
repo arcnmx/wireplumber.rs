@@ -63,10 +63,8 @@ pub mod lib {
 }
 
 pub mod core;
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-pub mod dbus;
 pub mod error;
+pub mod event;
 pub mod local;
 pub mod log;
 #[cfg(feature = "lua")]
@@ -83,22 +81,16 @@ pub mod signals;
 pub mod spa;
 pub mod util;
 
-#[cfg(feature = "v0_4_2")]
-pub(crate) use self::pw::PropertiesItem;
-#[cfg(feature = "v0_4_10")]
-pub(crate) use self::session::SiAdapterPortsState;
-#[cfg(feature = "v0_4_8")]
-pub(crate) use self::spa::json::SpaJson;
-#[cfg(feature = "v0_4_11")]
-pub(crate) use self::{dbus::DBusState, pw::LinkState};
 /// gir needs to know where to find these
 pub(crate) use crate::{
-	core::{Object, ObjectFeatures},
-	plugin::Plugin,
-	pw::{Direction, Endpoint, GlobalProxy, Metadata, NodeState, PipewireObject, Port, Properties, Proxy},
+	core::{Conf, Object, ObjectFeatures},
+	event::EventHook,
+	pw::{
+		Direction, GlobalProxy, LinkState, Metadata, NodeState, PipewireObject, Port, Properties, PropertiesItem, Proxy,
+	},
 	registry::{ConstraintType, ConstraintVerb, InterestMatch, InterestMatchFlags, ObjectInterest, ObjectManager},
-	session::{SessionItem, SiAcquisition, SiEndpoint, SiLink, SiLinkable},
-	spa::SpaPod,
+	session::{SessionItem, SiAcquisition, SiAdapterPortsState, SiLink, SiLinkable},
+	spa::{json::SpaJson, SpaPod},
 	util::{Transition, WpIterator as Iterator},
 };
 #[doc(no_inline)]

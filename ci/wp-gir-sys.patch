@@ -2,7 +2,7 @@ diff --git a/sys/generate/src/lib.rs b/sys/generate/src/lib.rs
 index b5e84cbe..c7049504 100644
 --- a/sys/generate/src/lib.rs
 +++ b/sys/generate/src/lib.rs
-@@ -3,17 +3,11 @@
+@@ -3,16 +3,11 @@
  
  #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
  #![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
@@ -12,7 +12,6 @@ index b5e84cbe..c7049504 100644
 -use libspa::{spa_dict, spa_pod, spa_type_info, spa_log};
 -use crate::WpSpaType;
 -
--#[cfg(feature = "v0_4_8")]
 -use libspa::spa_json;
 -
  use glib_sys as glib;

@@ -30,13 +30,6 @@ impl SiFactory {
             from_glib_full(ffi::wp_si_factory_find(core.to_glib_none().0, factory_name.to_glib_none().0))
         }
     }
-
-    #[doc(alias = "wp_si_factory_register")]
-    pub fn register(core: &Core, factory: impl IsA<SiFactory>) {
-        unsafe {
-            ffi::wp_si_factory_register(core.to_glib_none().0, factory.upcast().into_glib_ptr());
-        }
-    }
 }
 
 mod sealed {

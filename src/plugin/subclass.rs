@@ -3,6 +3,7 @@ use {
 		core::{Core, Object, ObjectImpl},
 		plugin::{Plugin, PluginFeatures},
 		prelude::*,
+		spa::SpaJson,
 		util::Transition,
 	},
 	glib::{
@@ -238,12 +239,13 @@ pub trait SimplePlugin: ObjectSubclass {
 		self.obj()
 	}
 
-	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error>;
+	fn decode_args(args: Option<SpaJson>) -> Result<Self::Args, Error>;
 
 	fn init_args(&self, args: Self::Args) {
 		let _ = args;
 		unimplemented!()
 	}
+
 	fn new_plugin(core: &Core, args: Self::Args) -> Self::Type
 	where
 		Self::Type: IsA<GObject>,
@@ -303,14 +305,14 @@ macro_rules! simple_plugin_subclass {
 pub use simple_plugin_subclass;
 
 pub trait ModuleExport {
-	fn init(core: Core, args: Option<Variant>) -> Result<(), Error>;
+	fn init(core: Core, args: Option<SpaJson>) -> Result<Option<GObject>, Error>;
 }
 
 /// Catches panics from a [ModuleExport] initializer
 pub struct ModuleWrapper<T>(PhantomData<T>);
 
 impl<T: ModuleExport> ModuleExport for ModuleWrapper<T> {
-	fn init(core: Core, args: Option<Variant>) -> Result<(), Error> {
+	fn init(core: Core, args: Option<SpaJson>) -> Result<Option<GObject>, Error> {
 		let res = catch_unwind(|| T::init(core, args));
 		match res {
 			Ok(res) => res,
@@ -332,12 +334,11 @@ impl<T: SimplePlugin> ModuleExport for T
 where
 	T::Type: IsA<GObject> + IsA<Plugin>,
 {
-	fn init(core: Core, args: Option<Variant>) -> Result<(), Error> {
+	fn init(core: Core, args: Option<SpaJson>) -> Result<Option<GObject>, Error> {
 		// TODO: support optional args? annoying to do this properly though...
 		let args = T::decode_args(args)?;
 		let plugin = T::new_plugin(&core, args);
-		plugin.register();
-		Ok(())
+		Ok(Some(plugin.upcast()))
 	}
 }
 
@@ -353,19 +354,19 @@ macro_rules! plugin_export {
 	(@nowrap $desc:ty) => {
 		#[no_mangle]
 		pub unsafe extern "C" fn wireplumber__module_init(
-			core: std::ptr::NonNull<$crate::ffi::WpCore>,
-			args: *mut $crate::lib::glib::ffi::GVariant,
-			error: std::ptr::NonNull<*mut $crate::lib::glib::ffi::GError>,
-		) -> glib::ffi::gboolean {
-			use $crate::lib::glib::translate::{IntoGlib, IntoGlibPtr};
+			core: core::ptr::NonNull<$crate::ffi::WpCore>,
+			args: *mut $crate::ffi::WpSpaJson,
+			error: core::ptr::NonNull<*mut $crate::lib::glib::ffi::GError>,
+		) -> *mut $crate::lib::glib::gobject_ffi::GObject {
+			use $crate::lib::glib::translate::{from_glib_none, IntoGlibPtr, ToGlibPtr};
 
-			let core = unsafe { glib::translate::from_glib_none(core.as_ptr()) };
-			let args = unsafe { glib::translate::from_glib_none(args) };
+			let core = unsafe { from_glib_none(core.as_ptr()) };
+			let args = unsafe { from_glib_none(args) };
 			match <$desc as $crate::plugin::ModuleExport>::init(core, args) {
-				Ok(()) => true.into_glib(),
+				Ok(plugin) => plugin.to_glib_full(),
 				Err(e) => {
 					*error.as_ptr() = e.into_glib_ptr();
-					false.into_glib()
+					core::ptr::null_mut()
 				},
 			}
 		}

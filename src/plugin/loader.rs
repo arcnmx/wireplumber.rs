@@ -3,6 +3,7 @@ use {
 		error,
 		plugin::{ComponentLoader, PluginImpl},
 		prelude::*,
+		spa::SpaJson,
 	},
 	glib::subclass::prelude::*,
 	std::ptr,
@@ -27,25 +28,35 @@ pub trait ComponentLoaderImpl: ObjectImpl + ComponentLoaderImplExt {
 		self.parent_supports_type(loader, type_)
 	}
 
-	fn load(&self, loader: &Self::Type, component: String, type_: String, args: Option<Variant>) -> Result<(), Error> {
-		self.parent_load(loader, component, type_, args)
+	#[cfg(todo)]
+	fn load(
+		&self,
+		loader: &Self::Type,
+		core: Core,
+		component: String,
+		type_: String,
+		args: Option<Variant>,
+	) -> Result<(), Error> {
+		self.parent_load(loader, core, component, type_, args)
 	}
 }
 
 pub trait ComponentLoaderImplExt: ObjectSubclass {
-	fn parent_class(&self) -> &ffi::WpComponentLoaderClass;
+	fn parent_class(&self) -> &ffi::WpComponentLoaderInterface;
 	fn parent_supports_type(&self, loader: &Self::Type, type_: String) -> bool;
+	#[cfg(todo)]
 	fn parent_load(
 		&self,
 		loader: &Self::Type,
+		core: Core,
 		component: String,
 		type_: String,
-		args: Option<Variant>,
+		args: Option<SpaJson>,
 	) -> Result<(), Error>;
 }
 
 impl<T: ComponentLoaderImpl> ComponentLoaderImplExt for T {
-	fn parent_class(&self) -> &ffi::WpComponentLoaderClass {
+	fn parent_class(&self) -> &ffi::WpComponentLoaderInterface {
 		unsafe {
 			let data = T::type_data();
 			let parent_class = data.as_ref().parent_class() as *mut _;
@@ -66,12 +77,14 @@ impl<T: ComponentLoaderImpl> ComponentLoaderImplExt for T {
 		}
 	}
 
+	#[cfg(todo)]
 	fn parent_load(
 		&self,
 		loader: &Self::Type,
+		core: Core,
 		component: String,
 		type_: String,
-		args: Option<Variant>,
+		args: Option<SpaJson>,
 	) -> Result<(), Error> {
 		let parent = ComponentLoaderImplExt::parent_class(self);
 		let f = parent.load.expect("No parent class implementation for \"load\"");
@@ -79,6 +92,7 @@ impl<T: ComponentLoaderImpl> ComponentLoaderImplExt for T {
 			let mut error = ptr::null_mut();
 			let res = from_glib(f(
 				loader.unsafe_cast_ref::<ComponentLoader>().to_glib_none().0,
+				core.to_glib_none().0,
 				component.to_glib_none().0,
 				type_.to_glib_none().0,
 				args.to_glib_none().0,
@@ -93,6 +107,7 @@ impl<T: ComponentLoaderImpl> ComponentLoaderImplExt for T {
 	}
 }
 
+#[cfg(todo)]
 unsafe impl<T: ComponentLoaderImpl + PluginImpl> IsSubclassable<T> for ComponentLoader {
 	fn class_init(class: &mut glib::Class<Self>) {
 		Self::parent_class_init::<T>(class);

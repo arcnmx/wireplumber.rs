@@ -7,27 +7,19 @@ pub use self::client::Client;
 mod component_loader;
 pub use self::component_loader::ComponentLoader;
 
+mod conf;
+pub use self::conf::Conf;
+
 mod core;
 pub use self::core::Core;
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-mod dbus;
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-pub use self::dbus::Dbus;
 
 mod device;
 pub use self::device::Device;
 
-mod endpoint;
-pub use self::endpoint::Endpoint;
+mod event_hook;
+pub use self::event_hook::EventHook;
 
-#[cfg(feature = "v0_4_5")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_5")))]
 mod factory;
-#[cfg(feature = "v0_4_5")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_5")))]
 pub use self::factory::Factory;
 
 mod feature_activation_transition;
@@ -36,21 +28,17 @@ pub use self::feature_activation_transition::FeatureActivationTransition;
 mod global_proxy;
 pub use self::global_proxy::GlobalProxy;
 
-mod impl_endpoint;
-pub use self::impl_endpoint::ImplEndpoint;
-
 mod impl_metadata;
 pub use self::impl_metadata::ImplMetadata;
 
-#[cfg(feature = "v0_4_2")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 mod impl_module;
-#[cfg(feature = "v0_4_2")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 pub use self::impl_module::ImplModule;
 
 mod impl_node;
 pub use self::impl_node::ImplNode;
+
+mod interest_event_hook;
+pub use self::interest_event_hook::InterestEventHook;
 
 mod link;
 pub use self::link::Link;
@@ -88,9 +76,6 @@ pub use self::si_acquisition::SiAcquisition;
 mod si_adapter;
 pub use self::si_adapter::SiAdapter;
 
-mod si_endpoint;
-pub use self::si_endpoint::SiEndpoint;
-
 mod si_factory;
 pub use self::si_factory::SiFactory;
 
@@ -125,25 +110,13 @@ mod properties_item;
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 pub use self::properties_item::PropertiesItem;
 
-#[cfg(feature = "v0_4_8")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 mod spa_json;
-#[cfg(feature = "v0_4_8")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 pub use self::spa_json::SpaJson;
 
-#[cfg(feature = "v0_4_8")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 mod spa_json_builder;
-#[cfg(feature = "v0_4_8")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 pub use self::spa_json_builder::SpaJsonBuilder;
 
-#[cfg(feature = "v0_4_8")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 mod spa_json_parser;
-#[cfg(feature = "v0_4_8")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_8")))]
 pub use self::spa_json_parser::SpaJsonParser;
 
 mod spa_pod;
@@ -158,39 +131,34 @@ pub use self::spa_pod_parser::SpaPodParser;
 mod enums;
 pub use self::enums::ConstraintType;
 pub use self::enums::ConstraintVerb;
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-pub use self::enums::DBusState;
 pub use self::enums::Direction;
 pub use self::enums::LibraryErrorEnum;
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 pub use self::enums::LinkState;
 pub use self::enums::NodeState;
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
+pub use self::enums::SettingsSpecType;
 pub use self::enums::SiAdapterPortsState;
 pub use self::enums::TransitionStep;
 
 mod flags;
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-pub use self::flags::DbusFeatures;
+pub use self::flags::BaseDirsFlags;
+pub use self::flags::CoreFeatures;
 pub use self::flags::InitFlags;
 pub use self::flags::InterestMatch;
 pub use self::flags::InterestMatchFlags;
-pub use self::flags::LinkFeatures;
-pub use self::flags::LookupDirs;
+pub use self::flags::LogTopicFlags;
 pub use self::flags::MetadataFeatures;
 pub use self::flags::NodeFeatures;
 pub use self::flags::PluginFeatures;
 pub use self::flags::ProxyFeatures;
 pub use self::flags::SessionItemFeatures;
+pub use self::flags::SettingsFeatures;
 pub use self::flags::SpaDeviceFeatures;
 
 pub(crate) mod traits {
-    pub use super::endpoint::EndpointExt;
+    pub use super::component_loader::ComponentLoaderExt;
+    pub use super::event_hook::EventHookExt;
     pub use super::global_proxy::GlobalProxyExt;
+    pub use super::interest_event_hook::InterestEventHookExt;
     pub use super::metadata::MetadataExt;
     pub use super::object::ObjectExt;
     pub use super::pipewire_object::PipewireObjectExt;
@@ -199,7 +167,6 @@ pub(crate) mod traits {
     pub use super::session_item::SessionItemExt;
     pub use super::si_acquisition::SiAcquisitionExt;
     pub use super::si_adapter::SiAdapterExt;
-    pub use super::si_endpoint::SiEndpointExt;
     pub use super::si_factory::SiFactoryExt;
     pub use super::si_link::SiLinkExt;
     pub use super::si_linkable::SiLinkableExt;

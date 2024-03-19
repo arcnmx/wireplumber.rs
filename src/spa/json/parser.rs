@@ -70,7 +70,7 @@ impl<'r, 'j> SpaJsonParserRef<'r, 'j> {
 		let parser = match ty.or_else(|| json.spa_type().ok()) {
 			Some(SpaType::OBJECT) => SpaJsonParser::new_object_unchecked(json),
 			Some(SpaType::ARRAY) => SpaJsonParser::new_array_unchecked(json),
-			_ => panic!("SpaJsonParser requires a container to parse"),
+			_ => SpaJsonParser::new_undefined_unchecked(json),
 		};
 		Self::new(parser)
 	}
@@ -171,7 +171,10 @@ impl<'r, 'j> SpaJsonObjectParser<'r, 'j> {
 	}
 
 	pub unsafe fn with_json_unchecked(json: &'r SpaJson) -> Self {
-		let parser = SpaJsonParser::new_object_unchecked(json);
+		let parser = match json.is_object() {
+			true => SpaJsonParser::new_object_unchecked(json),
+			false => SpaJsonParser::new_undefined_unchecked(json),
+		};
 		Self::new(SpaJsonParserRef::new(parser))
 	}
 
@@ -389,27 +392,15 @@ mod serde_impl {
 	}
 
 	impl SpaJson {
-		#[cfg(feature = "v0_4_10")]
-		#[cfg_attr(docsrs, doc(cfg(all(feature = "serde", feature = "v0_4_10"))))]
+		#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 		pub fn deserialize_from_str<'a, T: Deserialize<'a>>(s: &'a str) -> Result<T, Error> {
 			let json = SpaJsonRef::with_str(s);
 			T::deserialize(json).map_err(Into::into)
 		}
 
 		#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
-		pub fn deserialize_from_gstr<'a, T: Deserialize<'a>>(s: &'a GStr) -> Result<T, Error> {
-			let json = SpaJsonRef::with_gstr(s);
-			T::deserialize(json).map_err(Into::into)
-		}
-
-		#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 		pub fn deserialize_from_string<'a, T: Deserialize<'a>>(s: &str) -> Result<T, Error> {
-			let json = match () {
-				#[cfg(feature = "v0_4_10")]
-				() => unsafe { Self::wrap_string(s) },
-				#[cfg(not(feature = "v0_4_10"))]
-				() => SpaJson::from_string(s),
-			};
+			let json = unsafe { Self::wrap_string(s) };
 			T::deserialize(json).map_err(Into::into)
 		}
 
@@ -520,13 +511,13 @@ mod serde_impl {
 			) -> Result<V::Value, Self::Error> {
 				let json = $json;
 				let $parser = match json.spa_type()? {
-					SpaType::OBJECT => SpaJsonObjectParser::with_json(json),
 					SpaType::STRING => return visitor.visit_enum($this),
-					found =>
+					found@SpaType::ARRAY =>
 						return Err(ParseError::TypeMismatch {
 							expected: SpaType::CHOICE,
 							found: Some(found),
 						}),
+					_ => SpaJsonObjectParser::with_json(json),
 				};
 				visitor.visit_enum($enum_access)
 			}

@@ -1,24 +1,7 @@
 diff --git a/src/auto/flags.rs b/src/auto/flags.rs
-index 5f67d788..fd8efb82 100644
 --- a/src/auto/flags.rs
 +++ b/src/auto/flags.rs
-@@ -367,8 +367,6 @@ bitflags! {
-         #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-         #[doc(alias = "WP_LINK_FEATURE_ESTABLISHED")]
-         const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as _;
--
--        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
-     }
- }
- 
-@@ -390,6 +388,4 @@ impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
-     }
- }
- 
--#[cfg(feature = "v0_4_11")]
--#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
- impl StaticType for LinkFeatures {
-@@ -530,8 +535,6 @@ bitflags! {
+@@ -272,8 +272,6 @@ bitflags! {
      pub struct MetadataFeatures: u32 {
          #[doc(alias = "WP_METADATA_FEATURE_DATA")]
          const DATA = ffi::WP_METADATA_FEATURE_DATA as _;
@@ -27,7 +10,7 @@ index 5f67d788..fd8efb82 100644
      }
  }
  
-@@ -612,8 +615,6 @@ bitflags! {
+@@ -355,8 +353,6 @@ bitflags! {
      pub struct NodeFeatures: u32 {
          #[doc(alias = "WP_NODE_FEATURE_PORTS")]
          const PORTS = ffi::WP_NODE_FEATURE_PORTS as _;
@@ -36,10 +19,10 @@ index 5f67d788..fd8efb82 100644
      }
  }
  
-@@ -786,10 +787,6 @@ bitflags! {
-         const PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG as _;
-         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE")]
-         const PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE as _;
+@@ -535,10 +531,6 @@ bitflags! {
+         const PIPEWIRE_OBJECT_FEATURES_MINIMAL = ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL as _;
+         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_ALL")]
+         const PIPEWIRE_OBJECT_FEATURES_ALL = ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL as _;
 -
 -        #[doc(alias = "WP_PROXY_FEATURE_CUSTOM_START")]
 -        const PROXY_FEATURE_CUSTOM_START = 1 << 16;
@@ -47,7 +30,16 @@ index 5f67d788..fd8efb82 100644
      }
  }
  
-@@ -952,8 +949,6 @@ bitflags! {
+@@ -622,8 +614,6 @@ bitflags! {
+         const ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE as _;
+         #[doc(alias = "WP_SESSION_ITEM_FEATURE_EXPORTED")]
+         const EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED as _;
+-
+-        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
+     }
+ }
+ 
+@@ -705,8 +695,6 @@ bitflags! {
      pub struct SpaDeviceFeatures: u32 {
          #[doc(alias = "WP_SPA_DEVICE_FEATURE_ENABLED")]
          const ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED as _;
@@ -57,7 +49,6 @@ index 5f67d788..fd8efb82 100644
  }
  
 diff --git a/src/auto/metadata.rs b/src/auto/metadata.rs
-index d42e4126..dc95659a 100644
 --- a/src/auto/metadata.rs
 +++ b/src/auto/metadata.rs
 @@ -47,7 +47,7 @@ pub trait MetadataExt: IsA<Metadata> + sealed::Sealed + 'static {
@@ -70,7 +61,6 @@ index d42e4126..dc95659a 100644
              (ret, from_glib_full(type_))
          }
 diff --git a/src/auto/si_adapter.rs b/src/auto/si_adapter.rs
-index 7f557d18..b0c60cb1 100644
 --- a/src/auto/si_adapter.rs
 +++ b/src/auto/si_adapter.rs
 @@ -38,7 +38,7 @@ pub trait SiAdapterExt: IsA<SiAdapter> + sealed::Sealed + 'static {
@@ -83,7 +73,6 @@ index 7f557d18..b0c60cb1 100644
              (ret, from_glib_full(mode))
          }
 diff --git a/src/auto/spa_pod_parser.rs b/src/auto/spa_pod_parser.rs
-index 42347fb0..590ce6ad 100644
 --- a/src/auto/spa_pod_parser.rs
 +++ b/src/auto/spa_pod_parser.rs
 @@ -135,7 +135,7 @@ impl SpaPodParser {
@@ -95,3 +84,28 @@ index 42347fb0..590ce6ad 100644
              let ret = from_glib(ffi::wp_spa_pod_parser_get_string(self.to_glib_none().0, &mut value));
              if ret { Some(from_glib_full(value)) } else { None }
          }
+diff --git a/src/auto/core.rs b/src/auto/core.rs
+--- a/src/auto/core.rs
++++ b/src/auto/core.rs
+@@ -202,7 +202,7 @@ impl Core {
+         }
+         let callback = load_component_trampoline::<P>;
+         unsafe {
+-            ffi::wp_core_load_component(self.to_glib_none().0, component.to_glib_none().0, type_.to_glib_none().0, args.to_glib_none().0, provides.to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), Box_::into_raw(user_data) as *mut _);
++            ffi::wp_core_load_component(self.to_glib_none().0, component.to_glib_none().0, type_.to_glib_none().0, args.to_glib_none().0, provides.to_glib_none().0, cancellable.map(|p| p.as_ref()).to_glib_none().0, Some(callback), data.to_glib_none_mut().0);
+         }
+     }
+ 
+diff --git a/src/auto/object.rs b/src/auto/object.rs
+--- a/src/auto/object.rs
++++ b/src/auto/object.rs
+@@ -75,8 +78,8 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
+     }
+ 
+     #[doc(alias = "wp_object_activate_closure")]
+-    fn object_activate_closure(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: glib::Closure) {
++    fn activate_closure(&self, features: ObjectFeatures, cancellable: Option<&impl IsA<gio::Cancellable>>, closure: glib::Closure) {
+         unsafe {
+             ffi::wp_object_activate_closure(self.as_ref().to_glib_none().0, features.into_glib(), cancellable.map(|p| p.as_ref()).to_glib_none().0, closure.into_glib_ptr());
+         }
+     }

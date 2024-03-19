@@ -2,7 +2,7 @@
 //!
 //! # See also
 //!
-//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
+//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/wperror_api.html)
 
 pub use crate::auto::LibraryErrorEnum;
 #[doc(no_inline)]
@@ -21,6 +21,7 @@ impl fmt::Display for LibraryErrorEnum {
 			LibraryErrorEnum::Invariant => "invariant check failed",
 			LibraryErrorEnum::InvalidArgument => "invalid argument",
 			LibraryErrorEnum::OperationFailed => "operation failed",
+			LibraryErrorEnum::ServiceUnavailable => "service unavailable",
 			LibraryErrorEnum::__Unknown(error) => return write!(f, "error {error}"),
 		};
 		f.write_str(name)
@@ -69,4 +70,6 @@ error_constructors! {
 	operation_failed => OperationFailed,
 	/// Wrap a new [Error] under the [LibraryErrorEnum::Invariant] domain
 	invariant => Invariant,
+	/// Wrap a new [Error] under the [LibraryErrorEnum::ServiceUnavailable] domain
+	service_unavailable => ServiceUnavailable,
 }

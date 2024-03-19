@@ -1,8 +1,8 @@
 [options]
 library = "Wp"
-version = "0.4"
+version = "0.5"
 target_path = "."
-min_cfg_version = "0.4"
+min_cfg_version = "0.5"
 work_mode = "normal"
 split_build_rs = true
 # trust_return_value_nullability = true # TODO: manually go through everything...
@@ -18,28 +18,29 @@ generate = [
 	"Wp.SiLink", "Wp.SiLinkable", "Wp.SiFactory",
 	"Wp.SpaDeviceFeatures",
 	"Wp.State",
-	"Wp.Dbus", "Wp.DbusFeatures",
 	"Wp.ProxyFeatures",
+	"Wp.CoreFeatures",
 	"Wp.PluginFeatures",
 	"Wp.NodeFeatures",
-	"Wp.Object",
 	"Wp.Device", "Wp.Endpoint", "Wp.Factory", "Wp.Port",
-	"Wp.ImplEndpoint",
 	"Wp.FeatureActivationTransition",
-	"Wp.SiEndpoint",
 	"Wp.ImplModule", "Wp.ImplNode",
-	"Wp.InitFlags", "Wp.InterestMatch", "Wp.InterestMatchFlags",
-	"Wp.LookupDirs",
+	"Wp.InitFlags",
+	"Wp.InterestMatch", "Wp.InterestMatchFlags", "Wp.InterestEventHook",
+	"Wp.BaseDirsFlags",
 	"Wp.MetadataFeatures", "Wp.Metadata",
+	"Wp.EventHook",
+	"Wp.LogTopicFlags",
+	"Wp.SettingsFeatures", "Wp.SettingsSpecType",
 ]
 
 manual = [
 	"Wp.SpaIdTable", "Wp.SpaIdValue",
 	"Wp.IteratorMethods",
+	"Wp.LogTopic",
 	"GLib.Error", "GLib.Variant", "GLib.MainContext", "GLib.Source", "GLib.SourceFunc", "GLib.DestroyNotify", "GLib.Quark", "GLib.LogLevelFlags", "GLib.LogField", "GLib.LogWriterOutput",
 	"GObject.Closure", "GObject.Value", "GObject.Object",
 	"Gio.Cancellable", "Gio.AsyncReadyCallback", "Gio.AsyncResult",
-	"Gio.DBusConnection", "Gio.BusType",
 ]
 
 [[object]]
@@ -52,6 +53,16 @@ name = "Wp.Core"
 status = "generate"
 	[[object.function]]
 	pattern = "(clone|get_pw_context|get_pw_core)"
+	manual = true
+	[[object.function]]
+	name = "load_component"
+	no_future = true
+
+[[object]]
+name = "Wp.Conf"
+status = "generate"
+	[[object.function]]
+	name = "parse_pw_context_sections"
 	manual = true
 
 [[object]]
@@ -137,6 +148,30 @@ status = "generate"
 	[[object.function]]
 	pattern = "(new|new_ptr_array|fold|foreach|get_user_data)"
 	manual = true
+
+[[object]]
+name = "Wp.Object"
+status = "generate"
+	[[object.function]]
+	name = "activate"
+	rename = "object_activate"
+	doc_hidden = true
+	[[object.function]]
+	name = "deactivate"
+	rename = "object_deactivate"
+	doc_hidden = true
+	[[object.function]]
+	name = "get_active_features"
+	rename = "object_active_features"
+	doc_hidden = true
+	[[object.function]]
+	name = "get_supported_features"
+	rename = "object_supported_features"
+	doc_hidden = true
+	[[object.function]]
+	name = "update_features"
+	rename = "object_update_features"
+	doc_hidden = true
 
 [[object]]
 name = "Wp.ObjectManager"
@@ -284,12 +319,15 @@ trust_return_value_nullability = true
 	pattern = "(.*valist|new_array|new_object|object_get|parse_array|parse_object)"
 	ignore = true
 	[[object.function]]
-	pattern = "(new_wrap|new_from_string|get_spa_json|get_data)"
+	pattern = "(new_wrap|new_wrap_string|new_from_string|get_spa_json|get_data)"
 	manual = true
 	[[object.function]]
 	name = "new_from_stringn"
-	rename = "new_from_string"
-	manual = true
+	rename = "from_string"
+	[[object.function]]
+	name = "new_wrap_stringn"
+	rename = "wrap_string"
+	unsafe = true
 	[[object.function]]
 	name = "to_string"
 	ignore = true
@@ -317,6 +355,10 @@ status = "generate"
 	[[object.function]]
 	name = "new_object"
 	rename = "new_object_unchecked"
+	unsafe = true
+	[[object.function]]
+	name = "new_undefined"
+	rename = "new_undefined_unchecked"
 	unsafe = true
 
 [[object]]
