@@ -8,11 +8,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     gir-src = {
-      url = "github:gtk-rs/gir/0.18";
+      url = "github:gtk-rs/gir/0.19";
       flake = false;
     };
     gir-files = {
-      url = "github:gtk-rs/gir-files/0.18";
+      url = "github:gtk-rs/gir-files/0.19";
       flake = false;
     };
   };
@@ -118,7 +118,7 @@
       };
       gir-rs-0_18 = { rustPlatform, gir-rs, fetchFromGitHub }: rustPlatform.buildRustPackage {
         inherit (gir-rs) postPatch meta pname;
-        version = "0.18-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
+        version = "0.19-${builtins.substring 0 8 inputs.gir-src.lastModifiedDate}";
 
         src = inputs.gir-src;
 
@@ -230,7 +230,7 @@
       source-package = { rust'builders }: rust'builders.wrapSource self.lib.crate.pkgSrc;
       source-package-sys = { rust'builders }: rust'builders.wrapSource self.lib.crate.members.sys.pkgSrc;
 
-      gir-files = { linkFarm }: linkFarm "gir-files-0.18-${builtins.substring 0 8 inputs.gir-files.lastModifiedDate}" [
+      gir-files = { linkFarm }: linkFarm "gir-files-0.19-${builtins.substring 0 8 inputs.gir-files.lastModifiedDate}" [
         {
           name = "share/gir-1.0";
           path = inputs.gir-files;
