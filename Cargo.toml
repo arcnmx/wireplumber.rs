@@ -1,6 +1,6 @@
 [package]
 name = "wireplumber"
-version = "0.1.0" # keep in sync with documentation and html_root_url
+version = "0.2.0" # keep in sync with documentation and html_root_url
 authors = ["arcnmx"]
 build = "build.rs"
 edition = "2021"
@@ -10,7 +10,7 @@ description = "WirePlumber bindings"
 keywords = ["pipewire", "wireplumber", "gobject"]
 categories = ["multimedia::audio", "api-bindings"]
 
-documentation = "https://arcnmx.github.io/wireplumber.rs/v0.1.0/wireplumber/"
+documentation = "https://arcnmx.github.io/wireplumber.rs/v0.2.0/wireplumber/"
 repository = "https://github.com/arcnmx/wireplumber.rs"
 readme = "src/README.md"
 license = "MIT"
@@ -40,7 +40,7 @@ pipewire-sys = { version = "0.8" }
 libspa-sys = { version = "0.8" }
 libspa = { version = "0.8", optional = true }
 serde = { version = "1.0", optional = true }
-ffi = { version = "0.1.0", path = "sys", package = "wireplumber-sys" }
+ffi = { version = "0.2.0", path = "sys", package = "wireplumber-sys" }
 bitflags = "2"
 futures-channel = { version = "0.3", optional = true }
 glib-signal = { version = "0.4", optional = true }

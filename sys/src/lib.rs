@@ -1,4 +1,4 @@
-#![doc(html_root_url = "https://arcnmx.github.io/wireplumber.rs/v0.1.0/")]
+#![doc(html_root_url = "https://arcnmx.github.io/wireplumber.rs/v0.2.0/")]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[path = "../generate/src/lib.rs"]
