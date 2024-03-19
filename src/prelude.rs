@@ -21,14 +21,15 @@ pub use {
 	crate::{
 		core::Core,
 		core::ObjectExt as _,
+		event::EventHookExt as _,
 		plugin::{AsyncPluginExt as _, PluginExt as _},
 		pw::{
-			EndpointExt as _, GlobalProxyExt as _, MetadataExt as _, PipewireObjectExt as _, PipewireObjectExt2 as _,
+			GlobalProxyExt as _, MetadataExt as _, PipewireObjectExt as _, PipewireObjectExt2 as _,
 			PipewirePropertyStringIterExt as _, ProxyExt as _, ProxyExt2 as _,
 		},
 		session::{
 			SessionItemExt as _, SiAcquisitionExt as _, SiAcquisitionExt2 as _, SiAdapterExt as _, SiAdapterExt2 as _,
-			SiEndpointExt as _, SiFactoryExt as _, SiLinkExt as _, SiLinkableExt as _,
+			SiFactoryExt as _, SiLinkExt as _, SiLinkableExt as _,
 		},
 		util::{TransitionExt as _, TransitionExt2 as _},
 	},
@@ -50,6 +51,7 @@ pub(crate) use {
 		value::{FromValue, ToValue},
 		Cast, FromVariant, IsA, Object as GObject, ObjectExt as GObjectExt, ObjectType, StaticType, StaticVariantType,
 		ToVariant, Type, Value, Variant, VariantClass, VariantTy,
+		GStr,
 	},
 	std::{
 		borrow::{Borrow, Cow},

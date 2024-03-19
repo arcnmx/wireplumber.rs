@@ -41,7 +41,7 @@ if [[ $GIR_FLAG_COUNT -eq 0 ]]; then
 		fi
 		mv Cargo.toml Cargo.template.toml
 		if [[ -n "${WP_GIR-}" ]]; then
-			cp -f "$WP_GIR" src/Wp-0.4.gir
+			cp -f "$WP_GIR" src/Wp-0.5.gir
 		fi
 	fi
 fi

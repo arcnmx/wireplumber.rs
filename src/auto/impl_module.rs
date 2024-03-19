@@ -47,15 +47,6 @@ impl ImplModule {
         }
     }
 
-    #[cfg(feature = "v0_4_15")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_15")))]
-    #[doc(alias = "wp_impl_module_load_file")]
-    pub fn load_file(core: &Core, name: &str, filename: &str, properties: Option<&Properties>) -> Option<ImplModule> {
-        unsafe {
-            from_glib_full(ffi::wp_impl_module_load_file(core.to_glib_none().0, name.to_glib_none().0, filename.to_glib_none().0, properties.to_glib_none().0))
-        }
-    }
-
     #[doc(alias = "properties")]
     pub fn connect_properties_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_properties_trampoline<F: Fn(&ImplModule) + 'static>(this: *mut ffi::WpImplModule, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {

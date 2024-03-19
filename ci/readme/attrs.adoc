@@ -12,5 +12,5 @@
 :url-pw: https://pipewire.org/
 :url-pw-api: https://docs.pipewire.org/page_api.html
 :url-wp: https://pipewire.pages.freedesktop.org/wireplumber/index.html
-:wprs-versionfeature: v0_4_16
+:wprs-versionfeature: v0_5
 :wprs-versionreq: 0.1

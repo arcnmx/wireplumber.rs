@@ -58,7 +58,7 @@
             libspa-sys = pipewire;
           };
         } ++ nixlib.optionals enableRustdoc self.lib.crate.package.metadata.docs.rs.rustdoc-args;
-        WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-0.4.gir";
+        WP_GIR = "${wireplumber-gir}/share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber.version}.gir";
         GIRSPATH = nixlib.makeSearchPathOutput "dev" "share/gir-1.0" [
           wireplumber-gir gir-files
         ];
@@ -384,12 +384,7 @@
     };
     lib = with nixlib; {
       featureVersions = [
-        "0.4.3" "0.4.5"
-        "0.4.6"
-        "0.4.8" "0.4.10"
-        "0.4.11" "0.4.12"
-        "0.4.15"
-        "0.4.16"
+        "0.5"
       ];
       asciidocAttributes = {
         inherit (self.lib.crate.package) repository;

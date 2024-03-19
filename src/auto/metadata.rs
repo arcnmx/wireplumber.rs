@@ -3,7 +3,7 @@
 
 use crate::{GlobalProxy,Iterator,Object,Proxy};
 use glib::{prelude::*,signal::{connect_raw, SignalHandlerId},translate::*};
-use std::{boxed::Box as Box_,mem,mem::transmute,ptr};
+use std::{boxed::Box as Box_,mem::transmute,ptr};
 
 glib::wrapper! {
     #[doc(alias = "WpMetadata")]
@@ -17,18 +17,6 @@ glib::wrapper! {
 impl Metadata {
         pub const NONE: Option<&'static Metadata> = None;
     
-
-    #[doc(alias = "wp_metadata_iterator_item_extract")]
-    pub fn iterator_item_extract(item: &glib::Value) -> (u32, glib::GString, glib::GString, glib::GString) {
-        unsafe {
-            let mut subject = mem::MaybeUninit::uninit();
-            let mut key = ptr::null();
-            let mut type_ = ptr::null();
-            let mut value = ptr::null();
-            ffi::wp_metadata_iterator_item_extract(item.to_glib_none().0, subject.as_mut_ptr(), &mut key, &mut type_, &mut value);
-            (subject.assume_init(), from_glib_none(key), from_glib_none(type_), from_glib_none(value))
-        }
-    }
 }
 
 mod sealed {

@@ -41,8 +41,8 @@
 //!
 //! C API docs for:
 //!
-//! - [ObjectManager](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_manager_api.html)
-//! - [Interest](https://pipewire.pages.freedesktop.org/wireplumber/c_api/obj_interest_api.html)
+//! - [ObjectManager](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/obj_manager_api.html)
+//! - [Interest](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/obj_interest_api.html)
 use crate::prelude::*;
 pub use {
 	self::interest::{Constraint, Interest, InterestContainer},

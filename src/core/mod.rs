@@ -32,18 +32,16 @@
 //!
 //! C API docs for:
 //!
-//! - [Initialization](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wp_api.html)
-//! - [Core](https://pipewire.pages.freedesktop.org/wireplumber/c_api/core_api.html)
-//! - [Object](https://pipewire.pages.freedesktop.org/wireplumber/c_api/object_api.html)
+//! - [Initialization](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/wp_api.html)
+//! - [Core](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/core_api.html)
+//! - [Object](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/object_api.html)
 
-#[cfg(feature = "v0_4_5")]
-pub use crate::auto::Factory;
 pub use {
 	self::{
 		features::ObjectFeatures,
 		subclass::{ObjectImpl, ObjectImplExt},
 	},
-	crate::auto::{traits::ObjectExt, Core, FeatureActivationTransition, InitFlags, Object},
+	crate::auto::{traits::ObjectExt, Core, FeatureActivationTransition, InitFlags, Object, Factory, BaseDirsFlags, CoreFeatures},
 };
 
 mod core;

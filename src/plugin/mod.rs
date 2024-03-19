@@ -96,8 +96,8 @@
 //!
 //! C API docs for:
 //!
-//! - [Plugin](https://pipewire.pages.freedesktop.org/wireplumber/c_api/plugin_api.html)
-//! - [Component Loader](https://pipewire.pages.freedesktop.org/wireplumber/c_api/component_loader_api.html)
+//! - [Plugin](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/plugin_api.html)
+//! - [Component Loader](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/component_loader_api.html)
 
 pub use {
 	self::{
@@ -107,7 +107,7 @@ pub use {
 			PluginImplExt, SimplePlugin, SimplePluginObject, SourceHandles, SourceHandlesCell,
 		},
 	},
-	crate::auto::{traits::PluginExt, ComponentLoader, LookupDirs, Plugin, PluginFeatures},
+	crate::auto::{traits::PluginExt, ComponentLoader, Plugin, PluginFeatures},
 };
 
 mod loader;

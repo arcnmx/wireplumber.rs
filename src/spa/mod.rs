@@ -7,8 +7,8 @@
 //! # See also
 //!
 //! C API docs for:
-//! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_pod_api.html)
-//! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/c_api/spa_type_api.html)
+//! - [SpaPod](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/spa_pod_api.html)
+//! - [SpaType](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/spa_type_api.html)
 
 #[cfg(feature = "experimental")]
 pub use self::props::SpaProps;

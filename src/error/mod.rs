@@ -2,7 +2,7 @@
 //!
 //! # See also
 //!
-//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/wperror_api.html)
+//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/wperror_api.html)
 
 pub use crate::auto::LibraryErrorEnum;
 #[doc(no_inline)]

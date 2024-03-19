@@ -2,20 +2,26 @@
 //!
 //! # See also
 //!
-//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/c_api/log_api.html)
+//! [C API docs](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/log_api.html)
 
 mod macros;
 
 #[doc(hidden)]
 pub use self::macros::_log_inner;
-pub use self::macros::{critical, debug, info, log, message, trace, warning};
 #[allow(unused_imports)]
 pub(crate) use self::macros::{wp_critical, wp_debug, wp_info, wp_message, wp_trace, wp_warning};
+pub use {
+	self::macros::{critical, debug, info, log, message, trace, warning},
+	crate::auto::LogTopicFlags,
+};
 use {
 	crate::prelude::*,
+	ffi::WpLogTopic,
 	glib::{GString, GStringBuilder, LogLevelFlags},
 	libspa_sys::spa_log,
 	std::env,
+	std::marker::PhantomPinned,
+	std::mem::transmute,
 };
 
 pub struct Log(());
@@ -31,21 +37,8 @@ impl Log {
 		LibraryErrorEnum::domain().as_str()
 	}
 
-	#[doc(alias = "wp_log_level_is_enabled")]
-	pub fn level_is_enabled<L: Into<LogLevelFlags>>(flags: L) -> bool {
-		unsafe { from_glib(ffi::wp_log_level_is_enabled(flags.into().into_glib())) }
-	}
-
-	#[doc(alias = "wp_log_set_level")]
 	pub fn set_level(level: &str) {
 		env::set_var("WIREPLUMBER_DEBUG", level); // XXX: this doesn't seem to work properly otherwise?
-		unsafe { ffi::wp_log_set_level(level.to_glib_none().0) }
-	}
-
-	pub fn set_default_level(level: &str) {
-		if env::var_os("WIREPLUMBER_DEBUG").is_none() {
-			Self::set_level(level)
-		}
 	}
 
 	#[doc(alias = "wp_spa_log_get_instance")]
@@ -126,5 +119,90 @@ impl<'a, O> StructuredLogContext<'a, O> {
 			object: self.object.map(|o| o.as_ref()),
 			object_type: self.object_type,
 		}
+	}
+}
+
+#[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(transparent)]
+pub struct LogTopic {
+	inner: WpLogTopic,
+	_pinned: PhantomPinned,
+}
+
+impl LogTopic {
+	pub fn new<N: Into<GString>, L: Into<LogLevelFlags>>(name: N, level: L) -> Self {
+		Self {
+			inner: WpLogTopic {
+				topic_name: unsafe { from_glib_full(name.into()) },
+				flags: LogTopicFlags::from(level.into()),
+				_wp_padding: [ptr::null_mut(); 3],
+			},
+			_pinned: PhantomPinned,
+		}
+	}
+
+	pub fn register(self) -> Pin<Box<Self>> {
+		let mut this = Box::pin(self);
+		unsafe {
+			this.as_mut().register_unchecked()
+		}
+		this
+	}
+
+	pub fn unregister(self: Pin<Box<Self>>) {
+		drop(self);
+	}
+
+	pub unsafe fn register_unchecked(&mut self) {
+		ffi::wp_log_topic_register(self.ffi_mut())
+	}
+
+	pub unsafe fn unregister_unchecked(&mut self) {
+		ffi::wp_log_topic_unregister(&mut self.inner)
+		// TODO: unset initialized flag?
+	}
+
+	pub fn ffi(&self) -> &WpLogTopic {
+		&self.inner
+	}
+
+	pub unsafe fn ffi_mut(&self) -> &mut WpLogTopic {
+		&mut self.inner
+	}
+
+	pub fn name(&self) -> &GStr {
+		unsafe {
+			GStr::from_utf8_with_nul_unchecked(self.inner.topic_name)
+		}
+	}
+
+	pub unsafe fn flags_mut(&mut self) -> &mut LogTopicFlags {
+		transmute(&mut self.inner.flags)
+	}
+}
+
+impl Drop for LogTopic {
+	fn drop(&mut self) {
+		if self.flags().contains(LogTopicFlags::FLAG_INITIALIZED) {
+			unsafe {
+				self.unregister_unchecked()
+			}
+		}
+	}
+}
+
+impl LogTopicFlags {
+	pub fn with_levels<L: Into<LogLevelFlags>>(levels: L) -> Self {
+		Self::from_bits_truncate(levels.into().bits() & Self::LEVEL_MASK)
+	}
+
+	pub fn levels(&self) -> LogLevelFlags {
+		LogLevelFlags::from_bits_truncate(self.bits() & Self::LEVEL_MASK)
+	}
+}
+
+impl From<LogLevelFlags> for LogTopicFlags {
+	fn from(levels: LogLevelFlags) -> Self {
+		LogTopicFlags::with_levels(levels)
 	}
 }

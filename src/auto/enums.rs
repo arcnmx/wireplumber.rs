@@ -247,135 +247,6 @@ impl From<ConstraintVerb> for glib::Value {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
-#[non_exhaustive]
-#[doc(alias = "WpDBusState")]
-pub enum DBusState {
-    #[doc(alias = "WP_DBUS_STATE_CLOSED")]
-    Closed,
-    #[doc(alias = "WP_DBUS_STATE_CONNECTING")]
-    Connecting,
-    #[doc(alias = "WP_DBUS_STATE_CONNECTED")]
-    Connected,
-#[doc(hidden)]
-    __Unknown(i32),
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl fmt::Display for DBusState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DBusState::{}", match *self {
-            Self::Closed => "Closed",
-            Self::Connecting => "Connecting",
-            Self::Connected => "Connected",
-            _ => "Unknown",
-        })
-    }
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-#[doc(hidden)]
-impl IntoGlib for DBusState {
-    type GlibType = ffi::WpDBusState;
-
-    #[inline]
-fn into_glib(self) -> ffi::WpDBusState {
-match self {
-            Self::Closed => ffi::WP_DBUS_STATE_CLOSED,
-            Self::Connecting => ffi::WP_DBUS_STATE_CONNECTING,
-            Self::Connected => ffi::WP_DBUS_STATE_CONNECTED,
-            Self::__Unknown(value) => value,
-}
-}
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-#[doc(hidden)]
-impl FromGlib<ffi::WpDBusState> for DBusState {
-    #[inline]
-unsafe fn from_glib(value: ffi::WpDBusState) -> Self {
-        
-match value {
-            ffi::WP_DBUS_STATE_CLOSED => Self::Closed,
-            ffi::WP_DBUS_STATE_CONNECTING => Self::Connecting,
-            ffi::WP_DBUS_STATE_CONNECTED => Self::Connected,
-            value => Self::__Unknown(value),
-}
-}
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl StaticType for DBusState {
-                #[inline]
-    #[doc(alias = "wp_dbus_state_get_type")]
-   fn static_type() -> glib::Type {
-                    unsafe { from_glib(ffi::wp_dbus_state_get_type()) }
-                }
-            }
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl glib::HasParamSpec for DBusState {
-                type ParamSpec = glib::ParamSpecEnum;
-                type SetValue = Self;
-                type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
-    
-                fn param_spec_builder() -> Self::BuilderFn {
-                    Self::ParamSpec::builder_with_default
-                }
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl glib::value::ValueType for DBusState {
-    type Type = Self;
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-unsafe impl<'a> glib::value::FromValue<'a> for DBusState {
-    type Checker = glib::value::GenericValueTypeChecker<Self>;
-
-    #[inline]
-    unsafe fn from_value(value: &'a glib::Value) -> Self {
-        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
-    }
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl ToValue for DBusState {
-    #[inline]
-    fn to_value(&self) -> glib::Value {
-        let mut value = glib::Value::for_value_type::<Self>();
-        unsafe {
-            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
-        }
-        value
-    }
-
-    #[inline]
-    fn value_type(&self) -> glib::Type {
-        Self::static_type()
-    }
-}
-
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl From<DBusState> for glib::Value {
-    #[inline]
-    fn from(v: DBusState) -> Self {
-        ToValue::to_value(&v)
-    }
-}
-
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
@@ -491,6 +362,8 @@ pub enum LibraryErrorEnum {
     InvalidArgument,
     #[doc(alias = "WP_LIBRARY_ERROR_OPERATION_FAILED")]
     OperationFailed,
+    #[doc(alias = "WP_LIBRARY_ERROR_SERVICE_UNAVAILABLE")]
+    ServiceUnavailable,
 #[doc(hidden)]
     __Unknown(i32),
 }
@@ -501,6 +374,7 @@ impl fmt::Display for LibraryErrorEnum {
             Self::Invariant => "Invariant",
             Self::InvalidArgument => "InvalidArgument",
             Self::OperationFailed => "OperationFailed",
+            Self::ServiceUnavailable => "ServiceUnavailable",
             _ => "Unknown",
         })
     }
@@ -516,6 +390,7 @@ match self {
             Self::Invariant => ffi::WP_LIBRARY_ERROR_INVARIANT,
             Self::InvalidArgument => ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT,
             Self::OperationFailed => ffi::WP_LIBRARY_ERROR_OPERATION_FAILED,
+            Self::ServiceUnavailable => ffi::WP_LIBRARY_ERROR_SERVICE_UNAVAILABLE,
             Self::__Unknown(value) => value,
 }
 }
@@ -530,6 +405,7 @@ match value {
             ffi::WP_LIBRARY_ERROR_INVARIANT => Self::Invariant,
             ffi::WP_LIBRARY_ERROR_INVALID_ARGUMENT => Self::InvalidArgument,
             ffi::WP_LIBRARY_ERROR_OPERATION_FAILED => Self::OperationFailed,
+            ffi::WP_LIBRARY_ERROR_SERVICE_UNAVAILABLE => Self::ServiceUnavailable,
             value => Self::__Unknown(value),
 }
 }
@@ -589,8 +465,6 @@ impl From<LibraryErrorEnum> for glib::Value {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
@@ -614,8 +488,6 @@ pub enum LinkState {
     __Unknown(i32),
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl fmt::Display for LinkState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "LinkState::{}", match *self {
@@ -631,8 +503,6 @@ impl fmt::Display for LinkState {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 #[doc(hidden)]
 impl IntoGlib for LinkState {
     type GlibType = ffi::WpLinkState;
@@ -652,8 +522,6 @@ match self {
 }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 #[doc(hidden)]
 impl FromGlib<ffi::WpLinkState> for LinkState {
     #[inline]
@@ -672,8 +540,6 @@ match value {
 }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl StaticType for LinkState {
                 #[inline]
     #[doc(alias = "wp_link_state_get_type")]
@@ -682,8 +548,6 @@ impl StaticType for LinkState {
                 }
             }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl glib::HasParamSpec for LinkState {
                 type ParamSpec = glib::ParamSpecEnum;
                 type SetValue = Self;
@@ -694,14 +558,10 @@ impl glib::HasParamSpec for LinkState {
                 }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl glib::value::ValueType for LinkState {
     type Type = Self;
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 unsafe impl<'a> glib::value::FromValue<'a> for LinkState {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
@@ -711,8 +571,6 @@ unsafe impl<'a> glib::value::FromValue<'a> for LinkState {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl ToValue for LinkState {
     #[inline]
     fn to_value(&self) -> glib::Value {
@@ -729,8 +587,6 @@ impl ToValue for LinkState {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl From<LinkState> for glib::Value {
     #[inline]
     fn from(v: LinkState) -> Self {
@@ -857,8 +713,120 @@ impl From<NodeState> for glib::Value {
     }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WpSettingsSpecType")]
+pub enum SettingsSpecType {
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_UNKNOWN")]
+    Unknown,
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_BOOL")]
+    Bool,
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_INT")]
+    Int,
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_FLOAT")]
+    Float,
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_STRING")]
+    String,
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_ARRAY")]
+    Array,
+    #[doc(alias = "WP_SETTINGS_SPEC_TYPE_OBJECT")]
+    Object,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[doc(hidden)]
+impl IntoGlib for SettingsSpecType {
+    type GlibType = ffi::WpSettingsSpecType;
+
+    #[inline]
+fn into_glib(self) -> ffi::WpSettingsSpecType {
+match self {
+            Self::Unknown => ffi::WP_SETTINGS_SPEC_TYPE_UNKNOWN,
+            Self::Bool => ffi::WP_SETTINGS_SPEC_TYPE_BOOL,
+            Self::Int => ffi::WP_SETTINGS_SPEC_TYPE_INT,
+            Self::Float => ffi::WP_SETTINGS_SPEC_TYPE_FLOAT,
+            Self::String => ffi::WP_SETTINGS_SPEC_TYPE_STRING,
+            Self::Array => ffi::WP_SETTINGS_SPEC_TYPE_ARRAY,
+            Self::Object => ffi::WP_SETTINGS_SPEC_TYPE_OBJECT,
+            Self::__Unknown(value) => value,
+}
+}
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WpSettingsSpecType> for SettingsSpecType {
+    #[inline]
+unsafe fn from_glib(value: ffi::WpSettingsSpecType) -> Self {
+        
+match value {
+            ffi::WP_SETTINGS_SPEC_TYPE_UNKNOWN => Self::Unknown,
+            ffi::WP_SETTINGS_SPEC_TYPE_BOOL => Self::Bool,
+            ffi::WP_SETTINGS_SPEC_TYPE_INT => Self::Int,
+            ffi::WP_SETTINGS_SPEC_TYPE_FLOAT => Self::Float,
+            ffi::WP_SETTINGS_SPEC_TYPE_STRING => Self::String,
+            ffi::WP_SETTINGS_SPEC_TYPE_ARRAY => Self::Array,
+            ffi::WP_SETTINGS_SPEC_TYPE_OBJECT => Self::Object,
+            value => Self::__Unknown(value),
+}
+}
+}
+
+impl StaticType for SettingsSpecType {
+                #[inline]
+    #[doc(alias = "wp_settings_spec_type_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_settings_spec_type_get_type()) }
+                }
+            }
+
+impl glib::HasParamSpec for SettingsSpecType {
+                type ParamSpec = glib::ParamSpecEnum;
+                type SetValue = Self;
+                type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+    
+                fn param_spec_builder() -> Self::BuilderFn {
+                    Self::ParamSpec::builder_with_default
+                }
+}
+
+impl glib::value::ValueType for SettingsSpecType {
+    type Type = Self;
+}
+
+unsafe impl<'a> glib::value::FromValue<'a> for SettingsSpecType {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    #[inline]
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for SettingsSpecType {
+    #[inline]
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    #[inline]
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+impl From<SettingsSpecType> for glib::Value {
+    #[inline]
+    fn from(v: SettingsSpecType) -> Self {
+        ToValue::to_value(&v)
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
@@ -874,8 +842,6 @@ pub enum SiAdapterPortsState {
     __Unknown(i32),
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl fmt::Display for SiAdapterPortsState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "SiAdapterPortsState::{}", match *self {
@@ -887,8 +853,6 @@ impl fmt::Display for SiAdapterPortsState {
     }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 #[doc(hidden)]
 impl IntoGlib for SiAdapterPortsState {
     type GlibType = ffi::WpSiAdapterPortsState;
@@ -904,8 +868,6 @@ match self {
 }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 #[doc(hidden)]
 impl FromGlib<ffi::WpSiAdapterPortsState> for SiAdapterPortsState {
     #[inline]
@@ -920,8 +882,6 @@ match value {
 }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl StaticType for SiAdapterPortsState {
                 #[inline]
     #[doc(alias = "wp_si_adapter_ports_state_get_type")]
@@ -930,8 +890,6 @@ impl StaticType for SiAdapterPortsState {
                 }
             }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl glib::HasParamSpec for SiAdapterPortsState {
                 type ParamSpec = glib::ParamSpecEnum;
                 type SetValue = Self;
@@ -942,14 +900,10 @@ impl glib::HasParamSpec for SiAdapterPortsState {
                 }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl glib::value::ValueType for SiAdapterPortsState {
     type Type = Self;
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 unsafe impl<'a> glib::value::FromValue<'a> for SiAdapterPortsState {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
@@ -959,8 +913,6 @@ unsafe impl<'a> glib::value::FromValue<'a> for SiAdapterPortsState {
     }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl ToValue for SiAdapterPortsState {
     #[inline]
     fn to_value(&self) -> glib::Value {
@@ -977,8 +929,6 @@ impl ToValue for SiAdapterPortsState {
     }
 }
 
-#[cfg(feature = "v0_4_10")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl From<SiAdapterPortsState> for glib::Value {
     #[inline]
     fn from(v: SiAdapterPortsState) -> Self {

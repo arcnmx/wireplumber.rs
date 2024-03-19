@@ -44,6 +44,21 @@ impl SpaJsonBuilder {
         }
     }
 
+    #[doc(alias = "wp_spa_json_builder_add_from_string")]
+    pub fn add_from_string(&self, json_str: &str) {
+        unsafe {
+            ffi::wp_spa_json_builder_add_from_string(self.to_glib_none().0, json_str.to_glib_none().0);
+        }
+    }
+
+    #[doc(alias = "wp_spa_json_builder_add_from_stringn")]
+    pub fn add_from_stringn(&self, json_str: &str) {
+        let len = json_str.len() as _;
+        unsafe {
+            ffi::wp_spa_json_builder_add_from_stringn(self.to_glib_none().0, json_str.to_glib_none().0, len);
+        }
+    }
+
     #[doc(alias = "wp_spa_json_builder_add_int")]
     pub fn add_int(&self, value: i32) {
         unsafe {

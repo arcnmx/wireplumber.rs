@@ -3,52 +3,70 @@
 
 use glib::{bitflags::bitflags,prelude::*,translate::*};
 
-#[cfg(feature = "v0_4_11")]
 bitflags! {
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-    #[doc(alias = "WpDbusFeatures")]
-    pub struct DbusFeatures: u32 {
-        #[doc(alias = "WP_DBUS_FEATURE_ENABLED")]
-        const ENABLED = ffi::WP_DBUS_FEATURE_ENABLED as _;
+    #[doc(alias = "WpBaseDirsFlags")]
+    pub struct BaseDirsFlags: u32 {
+        #[doc(alias = "WP_BASE_DIRS_ENV_CONFIG")]
+        const ENV_CONFIG = ffi::WP_BASE_DIRS_ENV_CONFIG as _;
+        #[doc(alias = "WP_BASE_DIRS_ENV_DATA")]
+        const ENV_DATA = ffi::WP_BASE_DIRS_ENV_DATA as _;
+        #[doc(alias = "WP_BASE_DIRS_ENV_MODULE")]
+        const ENV_MODULE = ffi::WP_BASE_DIRS_ENV_MODULE as _;
+        #[doc(alias = "WP_BASE_DIRS_XDG_CONFIG_HOME")]
+        const XDG_CONFIG_HOME = ffi::WP_BASE_DIRS_XDG_CONFIG_HOME as _;
+        #[doc(alias = "WP_BASE_DIRS_XDG_DATA_HOME")]
+        const XDG_DATA_HOME = ffi::WP_BASE_DIRS_XDG_DATA_HOME as _;
+        #[doc(alias = "WP_BASE_DIRS_XDG_CONFIG_DIRS")]
+        const XDG_CONFIG_DIRS = ffi::WP_BASE_DIRS_XDG_CONFIG_DIRS as _;
+        #[doc(alias = "WP_BASE_DIRS_BUILD_SYSCONFDIR")]
+        const BUILD_SYSCONFDIR = ffi::WP_BASE_DIRS_BUILD_SYSCONFDIR as _;
+        #[doc(alias = "WP_BASE_DIRS_XDG_DATA_DIRS")]
+        const XDG_DATA_DIRS = ffi::WP_BASE_DIRS_XDG_DATA_DIRS as _;
+        #[doc(alias = "WP_BASE_DIRS_BUILD_DATADIR")]
+        const BUILD_DATADIR = ffi::WP_BASE_DIRS_BUILD_DATADIR as _;
+        #[doc(alias = "WP_BASE_DIRS_BUILD_LIBDIR")]
+        const BUILD_LIBDIR = ffi::WP_BASE_DIRS_BUILD_LIBDIR as _;
+        #[doc(alias = "WP_BASE_DIRS_FLAG_MODULE")]
+        const FLAG_MODULE = ffi::WP_BASE_DIRS_FLAG_MODULE as _;
+        #[doc(alias = "WP_BASE_DIRS_FLAG_SUBDIR_WIREPLUMBER")]
+        const FLAG_SUBDIR_WIREPLUMBER = ffi::WP_BASE_DIRS_FLAG_SUBDIR_WIREPLUMBER as _;
+        #[doc(alias = "WP_BASE_DIRS_CONFIGURATION")]
+        const CONFIGURATION = ffi::WP_BASE_DIRS_CONFIGURATION as _;
+        #[doc(alias = "WP_BASE_DIRS_DATA")]
+        const DATA = ffi::WP_BASE_DIRS_DATA as _;
+        #[doc(alias = "WP_BASE_DIRS_MODULE")]
+        const MODULE = ffi::WP_BASE_DIRS_MODULE as _;
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 #[doc(hidden)]
-impl IntoGlib for DbusFeatures {
-    type GlibType = ffi::WpDbusFeatures;
+impl IntoGlib for BaseDirsFlags {
+    type GlibType = ffi::WpBaseDirsFlags;
 
     #[inline]
-    fn into_glib(self) -> ffi::WpDbusFeatures {
+    fn into_glib(self) -> ffi::WpBaseDirsFlags {
         self.bits()
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 #[doc(hidden)]
-impl FromGlib<ffi::WpDbusFeatures> for DbusFeatures {
+impl FromGlib<ffi::WpBaseDirsFlags> for BaseDirsFlags {
     #[inline]
-    unsafe fn from_glib(value: ffi::WpDbusFeatures) -> Self {
+    unsafe fn from_glib(value: ffi::WpBaseDirsFlags) -> Self {
         Self::from_bits_truncate(value)
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl StaticType for DbusFeatures {
+impl StaticType for BaseDirsFlags {
                 #[inline]
-    #[doc(alias = "wp_dbus_features_get_type")]
+    #[doc(alias = "wp_base_dirs_flags_get_type")]
    fn static_type() -> glib::Type {
-                    unsafe { from_glib(ffi::wp_dbus_features_get_type()) }
+                    unsafe { from_glib(ffi::wp_base_dirs_flags_get_type()) }
                 }
             }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl glib::HasParamSpec for DbusFeatures {
+impl glib::HasParamSpec for BaseDirsFlags {
                 type ParamSpec = glib::ParamSpecFlags;
                 type SetValue = Self;
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
@@ -58,15 +76,11 @@ impl glib::HasParamSpec for DbusFeatures {
                 }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl glib::value::ValueType for DbusFeatures {
+impl glib::value::ValueType for BaseDirsFlags {
     type Type = Self;
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-unsafe impl<'a> glib::value::FromValue<'a> for DbusFeatures {
+unsafe impl<'a> glib::value::FromValue<'a> for BaseDirsFlags {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
     #[inline]
@@ -75,9 +89,7 @@ unsafe impl<'a> glib::value::FromValue<'a> for DbusFeatures {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl ToValue for DbusFeatures {
+impl ToValue for BaseDirsFlags {
     #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
@@ -93,11 +105,92 @@ impl ToValue for DbusFeatures {
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl From<DbusFeatures> for glib::Value {
+impl From<BaseDirsFlags> for glib::Value {
     #[inline]
-    fn from(v: DbusFeatures) -> Self {
+    fn from(v: BaseDirsFlags) -> Self {
+        ToValue::to_value(&v)
+    }
+}
+
+bitflags! {
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+    #[doc(alias = "WpCoreFeatures")]
+    pub struct CoreFeatures: u32 {
+        #[doc(alias = "WP_CORE_FEATURE_CONNECTED")]
+        const CONNECTED = ffi::WP_CORE_FEATURE_CONNECTED as _;
+        #[doc(alias = "WP_CORE_FEATURE_COMPONENTS")]
+        const COMPONENTS = ffi::WP_CORE_FEATURE_COMPONENTS as _;
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for CoreFeatures {
+    type GlibType = ffi::WpCoreFeatures;
+
+    #[inline]
+    fn into_glib(self) -> ffi::WpCoreFeatures {
+        self.bits()
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WpCoreFeatures> for CoreFeatures {
+    #[inline]
+    unsafe fn from_glib(value: ffi::WpCoreFeatures) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+impl StaticType for CoreFeatures {
+                #[inline]
+    #[doc(alias = "wp_core_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_core_features_get_type()) }
+                }
+            }
+
+impl glib::HasParamSpec for CoreFeatures {
+                type ParamSpec = glib::ParamSpecFlags;
+                type SetValue = Self;
+                type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
+    
+                fn param_spec_builder() -> Self::BuilderFn {
+                    Self::ParamSpec::builder
+                }
+}
+
+impl glib::value::ValueType for CoreFeatures {
+    type Type = Self;
+}
+
+unsafe impl<'a> glib::value::FromValue<'a> for CoreFeatures {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    #[inline]
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for CoreFeatures {
+    #[inline]
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    #[inline]
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+impl From<CoreFeatures> for glib::Value {
+    #[inline]
+    fn from(v: CoreFeatures) -> Self {
         ToValue::to_value(&v)
     }
 }
@@ -205,6 +298,8 @@ bitflags! {
         const PW_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_PROPERTIES as _;
         #[doc(alias = "WP_INTEREST_MATCH_G_PROPERTIES")]
         const G_PROPERTIES = ffi::WP_INTEREST_MATCH_G_PROPERTIES as _;
+        #[doc(alias = "WP_INTEREST_MATCH_ALL")]
+        const ALL = ffi::WP_INTEREST_MATCH_ALL as _;
     }
 }
 
@@ -365,46 +460,44 @@ impl From<InterestMatchFlags> for glib::Value {
 
 bitflags! {
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-    #[doc(alias = "WpLinkFeatures")]
-    pub struct LinkFeatures: u32 {
-        #[cfg(feature = "v0_4_11")]
-        #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-        #[doc(alias = "WP_LINK_FEATURE_ESTABLISHED")]
-        const ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED as _;
-
-        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
+    #[doc(alias = "WpLogTopicFlags")]
+    pub struct LogTopicFlags: u32 {
+        #[doc(alias = "WP_LOG_TOPIC_LEVEL_MASK")]
+        const LEVEL_MASK = ffi::WP_LOG_TOPIC_LEVEL_MASK as _;
+        #[doc(alias = "WP_LOG_TOPIC_FLAG_STATIC")]
+        const FLAG_STATIC = ffi::WP_LOG_TOPIC_FLAG_STATIC as _;
+        #[doc(alias = "WP_LOG_TOPIC_FLAG_INITIALIZED")]
+        const FLAG_INITIALIZED = ffi::WP_LOG_TOPIC_FLAG_INITIALIZED as _;
     }
 }
 
 #[doc(hidden)]
-impl IntoGlib for LinkFeatures {
-    type GlibType = ffi::WpLinkFeatures;
+impl IntoGlib for LogTopicFlags {
+    type GlibType = ffi::WpLogTopicFlags;
 
     #[inline]
-    fn into_glib(self) -> ffi::WpLinkFeatures {
+    fn into_glib(self) -> ffi::WpLogTopicFlags {
         self.bits()
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
+impl FromGlib<ffi::WpLogTopicFlags> for LogTopicFlags {
     #[inline]
-    unsafe fn from_glib(value: ffi::WpLinkFeatures) -> Self {
+    unsafe fn from_glib(value: ffi::WpLogTopicFlags) -> Self {
         Self::from_bits_truncate(value)
     }
 }
 
-#[cfg(feature = "v0_4_11")]
-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
-impl StaticType for LinkFeatures {
+impl StaticType for LogTopicFlags {
                 #[inline]
-    #[doc(alias = "wp_link_features_get_type")]
+    #[doc(alias = "wp_log_topic_flags_get_type")]
    fn static_type() -> glib::Type {
-                    unsafe { from_glib(ffi::wp_link_features_get_type()) }
+                    unsafe { from_glib(ffi::wp_log_topic_flags_get_type()) }
                 }
             }
 
-impl glib::HasParamSpec for LinkFeatures {
+impl glib::HasParamSpec for LogTopicFlags {
                 type ParamSpec = glib::ParamSpecFlags;
                 type SetValue = Self;
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
@@ -414,11 +507,11 @@ impl glib::HasParamSpec for LinkFeatures {
                 }
 }
 
-impl glib::value::ValueType for LinkFeatures {
+impl glib::value::ValueType for LogTopicFlags {
     type Type = Self;
 }
 
-unsafe impl<'a> glib::value::FromValue<'a> for LinkFeatures {
+unsafe impl<'a> glib::value::FromValue<'a> for LogTopicFlags {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
     #[inline]
@@ -427,7 +520,7 @@ unsafe impl<'a> glib::value::FromValue<'a> for LinkFeatures {
     }
 }
 
-impl ToValue for LinkFeatures {
+impl ToValue for LogTopicFlags {
     #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
@@ -443,98 +536,9 @@ impl ToValue for LinkFeatures {
     }
 }
 
-impl From<LinkFeatures> for glib::Value {
+impl From<LogTopicFlags> for glib::Value {
     #[inline]
-    fn from(v: LinkFeatures) -> Self {
-        ToValue::to_value(&v)
-    }
-}
-
-bitflags! {
-    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-    #[doc(alias = "WpLookupDirs")]
-    pub struct LookupDirs: u32 {
-        #[doc(alias = "WP_LOOKUP_DIR_ENV_CONFIG")]
-        const ENV_CONFIG = ffi::WP_LOOKUP_DIR_ENV_CONFIG as _;
-        #[doc(alias = "WP_LOOKUP_DIR_ENV_DATA")]
-        const ENV_DATA = ffi::WP_LOOKUP_DIR_ENV_DATA as _;
-        #[doc(alias = "WP_LOOKUP_DIR_XDG_CONFIG_HOME")]
-        const XDG_CONFIG_HOME = ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME as _;
-        #[doc(alias = "WP_LOOKUP_DIR_ETC")]
-        const ETC = ffi::WP_LOOKUP_DIR_ETC as _;
-        #[doc(alias = "WP_LOOKUP_DIR_PREFIX_SHARE")]
-        const PREFIX_SHARE = ffi::WP_LOOKUP_DIR_PREFIX_SHARE as _;
-    }
-}
-
-#[doc(hidden)]
-impl IntoGlib for LookupDirs {
-    type GlibType = ffi::WpLookupDirs;
-
-    #[inline]
-    fn into_glib(self) -> ffi::WpLookupDirs {
-        self.bits()
-    }
-}
-
-#[doc(hidden)]
-impl FromGlib<ffi::WpLookupDirs> for LookupDirs {
-    #[inline]
-    unsafe fn from_glib(value: ffi::WpLookupDirs) -> Self {
-        Self::from_bits_truncate(value)
-    }
-}
-
-impl StaticType for LookupDirs {
-                #[inline]
-    #[doc(alias = "wp_lookup_dirs_get_type")]
-   fn static_type() -> glib::Type {
-                    unsafe { from_glib(ffi::wp_lookup_dirs_get_type()) }
-                }
-            }
-
-impl glib::HasParamSpec for LookupDirs {
-                type ParamSpec = glib::ParamSpecFlags;
-                type SetValue = Self;
-                type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
-    
-                fn param_spec_builder() -> Self::BuilderFn {
-                    Self::ParamSpec::builder
-                }
-}
-
-impl glib::value::ValueType for LookupDirs {
-    type Type = Self;
-}
-
-unsafe impl<'a> glib::value::FromValue<'a> for LookupDirs {
-    type Checker = glib::value::GenericValueTypeChecker<Self>;
-
-    #[inline]
-    unsafe fn from_value(value: &'a glib::Value) -> Self {
-        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
-    }
-}
-
-impl ToValue for LookupDirs {
-    #[inline]
-    fn to_value(&self) -> glib::Value {
-        let mut value = glib::Value::for_value_type::<Self>();
-        unsafe {
-            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
-        }
-        value
-    }
-
-    #[inline]
-    fn value_type(&self) -> glib::Type {
-        Self::static_type()
-    }
-}
-
-impl From<LookupDirs> for glib::Value {
-    #[inline]
-    fn from(v: LookupDirs) -> Self {
+    fn from(v: LogTopicFlags) -> Self {
         ToValue::to_value(&v)
     }
 }
@@ -804,6 +808,10 @@ bitflags! {
         const PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG as _;
         #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE")]
         const PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE as _;
+        #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL")]
+        const PIPEWIRE_OBJECT_FEATURES_MINIMAL = ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL as _;
+        #[doc(alias = "WP_PIPEWIRE_OBJECT_FEATURES_ALL")]
+        const PIPEWIRE_OBJECT_FEATURES_ALL = ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL as _;
 
         #[doc(alias = "WP_PROXY_FEATURE_CUSTOM_START")]
         const PROXY_FEATURE_CUSTOM_START = 1 << 16;
@@ -891,6 +899,8 @@ bitflags! {
         const ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE as _;
         #[doc(alias = "WP_SESSION_ITEM_FEATURE_EXPORTED")]
         const EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED as _;
+
+        const PROXY_FEATURES = ProxyFeatures::ALL.bits();
     }
 }
 
@@ -962,6 +972,87 @@ impl ToValue for SessionItemFeatures {
 impl From<SessionItemFeatures> for glib::Value {
     #[inline]
     fn from(v: SessionItemFeatures) -> Self {
+        ToValue::to_value(&v)
+    }
+}
+
+bitflags! {
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+    #[doc(alias = "WpSettingsFeatures")]
+    pub struct SettingsFeatures: u32 {
+        #[doc(alias = "WP_SETTINGS_LOADED")]
+        const LOADED = ffi::WP_SETTINGS_LOADED as _;
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for SettingsFeatures {
+    type GlibType = ffi::WpSettingsFeatures;
+
+    #[inline]
+    fn into_glib(self) -> ffi::WpSettingsFeatures {
+        self.bits()
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WpSettingsFeatures> for SettingsFeatures {
+    #[inline]
+    unsafe fn from_glib(value: ffi::WpSettingsFeatures) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+impl StaticType for SettingsFeatures {
+                #[inline]
+    #[doc(alias = "wp_settings_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_settings_features_get_type()) }
+                }
+            }
+
+impl glib::HasParamSpec for SettingsFeatures {
+                type ParamSpec = glib::ParamSpecFlags;
+                type SetValue = Self;
+                type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
+    
+                fn param_spec_builder() -> Self::BuilderFn {
+                    Self::ParamSpec::builder
+                }
+}
+
+impl glib::value::ValueType for SettingsFeatures {
+    type Type = Self;
+}
+
+unsafe impl<'a> glib::value::FromValue<'a> for SettingsFeatures {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    #[inline]
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for SettingsFeatures {
+    #[inline]
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    #[inline]
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+impl From<SettingsFeatures> for glib::Value {
+    #[inline]
+    fn from(v: SettingsFeatures) -> Self {
         ToValue::to_value(&v)
     }
 }

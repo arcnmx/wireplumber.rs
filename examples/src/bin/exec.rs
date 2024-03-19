@@ -24,7 +24,7 @@ const LOG_DOMAIN: &'static str = "wpexec.rs";
 /// The type of module to be loaded
 #[derive(ArgEnum, Copy, Clone, Debug)]
 enum ModuleType {
-	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
+	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/scripting/lua_api/lua_introduction.html)
 	Lua,
 	/// A [WirePlumber Lua configuration file](https://pipewire.pages.freedesktop.org/wireplumber/configuration/config_lua.html)
 	LuaConfig,

@@ -1,5 +1,4 @@
-#[cfg(any(feature = "v0_4_2"))]
-use crate::plugin::LookupDirs;
+use crate::core::BaseDirsFlags;
 use {
 	crate::{lua::ToLuaTable, plugin::ComponentLoader, prelude::*, Core, InitFlags, Properties},
 	glib::{MainContext, MainLoop},
@@ -31,42 +30,21 @@ impl Core {
 		unsafe { from_glib_full(ffi::wp_get_library_api_version()) }
 	}
 
-	#[doc(alias = "wp_get_module_dir")]
-	pub fn module_dir() -> String {
-		unsafe { from_glib_full(ffi::wp_get_module_dir()) }
-	}
-
-	#[cfg_attr(feature = "v0_4_2", deprecated = "use `find_file` instead")]
-	#[doc(alias = "wp_get_config_dir")]
-	pub fn config_dir() -> String {
-		unsafe { from_glib_full(ffi::wp_get_config_dir()) }
-	}
-
-	#[cfg_attr(feature = "v0_4_2", deprecated = "use `find_file` instead")]
-	#[doc(alias = "wp_get_data_dir")]
-	pub fn data_dir() -> String {
-		unsafe { from_glib_full(ffi::wp_get_data_dir()) }
-	}
-
-	#[cfg(feature = "v0_4_2")]
-	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-	#[doc(alias = "wp_find_file")]
-	pub fn find_file(dirs: LookupDirs, filename: &str, subdir: Option<&str>) -> Option<String> {
+	#[doc(alias = "wp_base_dirs_find_file")]
+	pub fn find_file(dirs: BaseDirsFlags, filename: &str, subdir: Option<&str>) -> Option<String> {
 		unsafe {
-			from_glib_full(ffi::wp_find_file(
+			from_glib_full(ffi::wp_base_dirs_find_file(
 				dirs.into_glib(),
-				filename.to_glib_none().0,
 				subdir.to_glib_none().0,
+				filename.to_glib_none().0,
 			))
 		}
 	}
 
-	#[cfg(feature = "v0_4_2")]
-	#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
-	#[doc(alias = "wp_new_files_iterator")]
-	pub fn find_files(dirs: LookupDirs, subdir: Option<&str>, suffix: Option<&str>) -> IntoValueIterator<String> {
+	#[doc(alias = "wp_base_dirs_new_files_iterator")]
+	pub fn find_files(dirs: BaseDirsFlags, subdir: Option<&str>, suffix: Option<&str>) -> IntoValueIterator<String> {
 		unsafe {
-			IntoValueIterator::with_inner(from_glib_full(ffi::wp_new_files_iterator(
+			IntoValueIterator::with_inner(from_glib_full(ffi::wp_base_dirs_new_files_iterator(
 				dirs.into_glib(),
 				subdir.to_glib_none().0,
 				suffix.to_glib_none().0,

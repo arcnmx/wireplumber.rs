@@ -1,11 +1,9 @@
-#[cfg(feature = "v0_4_11")]
-use crate::dbus::{Dbus, DbusFeatures};
 use crate::{
 	core::ObjectExt,
 	local::{SpaDevice, SpaDeviceFeatures},
 	plugin::{Plugin, PluginFeatures},
 	prelude::*,
-	pw::{Link, LinkFeatures, Metadata, MetadataFeatures, Node, NodeFeatures, Proxy, ProxyFeatures},
+	pw::{Metadata, MetadataFeatures, Node, NodeFeatures, Proxy, ProxyFeatures},
 	session::{SessionItem, SessionItemFeatures},
 };
 
@@ -132,14 +130,8 @@ macro_rules! impl_object_features {
 impl_object_features! {
 	MetadataFeatures:Metadata(ProxyFeatures),
 	NodeFeatures:Node(ProxyFeatures),
-	LinkFeatures:Link(ProxyFeatures),
 	PluginFeatures:Plugin(),
 	ProxyFeatures:Proxy(),
 	SessionItemFeatures:SessionItem(),
 	SpaDeviceFeatures:SpaDevice(ProxyFeatures),
-}
-
-#[cfg(feature = "v0_4_11")]
-impl_object_features! {
-	DbusFeatures:Dbus(),
 }

@@ -22,12 +22,22 @@ impl ObjectManager {
         }
     }
 
+    //#[doc(alias = "wp_object_manager_add_global")]
+    //pub fn add_global(&self, global: /*Ignored*/&mut Global) {
+    //    unsafe { TODO: call ffi:wp_object_manager_add_global() }
+    //}
+
     #[doc(alias = "wp_object_manager_add_interest_full")]
 #[allow(dead_code)]    pub(crate) fn add_interest_full(&self, interest: ObjectInterest) {
         unsafe {
             ffi::wp_object_manager_add_interest_full(self.to_glib_none().0, interest.into_glib_ptr());
         }
     }
+
+    //#[doc(alias = "wp_object_manager_add_object")]
+    //pub fn add_object(&self, object: /*Unimplemented*/Option<Basic: Pointer>) {
+    //    unsafe { TODO: call ffi:wp_object_manager_add_object() }
+    //}
 
     #[doc(alias = "wp_object_manager_get_n_objects")]
     #[doc(alias = "get_n_objects")]
@@ -49,6 +59,13 @@ impl ObjectManager {
     pub fn lookup_object(&self, interest: ObjectInterest) -> Option<glib::Object> {
         unsafe {
             from_glib_full(ffi::wp_object_manager_lookup_full(self.to_glib_none().0, interest.into_glib_ptr()))
+        }
+    }
+
+    #[doc(alias = "wp_object_manager_maybe_objects_changed")]
+    pub fn maybe_objects_changed(&self) {
+        unsafe {
+            ffi::wp_object_manager_maybe_objects_changed(self.to_glib_none().0);
         }
     }
 
@@ -74,6 +91,11 @@ impl ObjectManager {
             ffi::wp_object_manager_request_object_features(self.to_glib_none().0, object_type.into_glib(), wanted_features.into_glib());
         }
     }
+
+    //#[doc(alias = "wp_object_manager_rm_object")]
+    //pub fn rm_object(&self, object: /*Unimplemented*/Option<Basic: Pointer>) {
+    //    unsafe { TODO: call ffi:wp_object_manager_rm_object() }
+    //}
 
     pub fn core(&self) -> Option<Core> {
         ObjectExt::property(self, "core")

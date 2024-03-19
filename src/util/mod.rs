@@ -4,9 +4,9 @@
 //!
 //! C API docs for:
 //!
-//! - [WpIterator](https://pipewire.pages.freedesktop.org/wireplumber/c_api/iterator_api.html)
-//! - [Transition](https://pipewire.pages.freedesktop.org/wireplumber/c_api/transitions_api.html)
-//! - [State Storage](https://pipewire.pages.freedesktop.org/wireplumber/c_api/state_api.html)
+//! - [WpIterator](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/iterator_api.html)
+//! - [Transition](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/transitions_api.html)
+//! - [State Storage](https://pipewire.pages.freedesktop.org/wireplumber/library/c_api/state_api.html)
 
 pub use {
 	self::{

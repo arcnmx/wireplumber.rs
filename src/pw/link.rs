@@ -88,13 +88,6 @@ impl LinkTarget for Port {
 	}
 }
 
-#[cfg(not(feature = "v0_4_11"))]
-impl StaticType for pw::LinkFeatures {
-	fn static_type() -> Type {
-		pw::ProxyFeatures::static_type()
-	}
-}
-
 #[cfg(feature = "v0_4_11")]
 impl<E> From<Result<LinkState, E>> for LinkState {
 	fn from(res: Result<LinkState, E>) -> Self {

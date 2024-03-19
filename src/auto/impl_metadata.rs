@@ -21,8 +21,6 @@ impl ImplMetadata {
         }
     }
 
-    #[cfg(feature = "v0_4_3")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_3")))]
     #[doc(alias = "wp_impl_metadata_new_full")]
     #[doc(alias = "new_full")]
     pub fn with_properties(core: &Core, name: Option<&str>, properties: Option<Properties>) -> ImplMetadata {

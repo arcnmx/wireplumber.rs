@@ -4,7 +4,7 @@ This crate provides a high-level interface to [PipeWire](https://pipewire.org/)'
 
 ``` toml
 [dependencies]
-wireplumber = { version = "0.1", features = ["v0_4_16"], git = "https://github.com/arcnmx/wireplumber.rs" }
+wireplumber = { version = "0.1", features = ["v0_5"], git = "https://github.com/arcnmx/wireplumber.rs" }
 ```
 
 # Examples
@@ -57,4 +57,4 @@ Helper commands are available via [`cargo wp`](../ci/bin/cargo-wp) to facilitate
 
 ## GIR Schema
 
-The WirePlumber GIR data is kept in [Wp-0.4.gir](../sys/generate/src/Wp-0.4.gir). A series of fixes must be applied to the upstream XML via the [wp-gir-filter](../ci/wp-gir-filter.sh) script.
+The WirePlumber GIR data is kept in [Wp-0.5.gir](../sys/generate/src/Wp-0.5.gir). A series of fixes must be applied to the upstream XML via the [wp-gir-filter](../ci/wp-gir-filter.sh) script.

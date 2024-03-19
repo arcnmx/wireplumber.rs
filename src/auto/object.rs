@@ -25,8 +25,6 @@ mod sealed {
 }
 
 pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
-    #[cfg(feature = "v0_4_6")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_6")))]
     #[doc(alias = "wp_object_abort_activation")]
     fn abort_activation(&self, msg: &str) {
         unsafe {
@@ -106,11 +104,33 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
         }
     }
 
+    #[doc(alias = "wp_object_get_id")]
+    #[doc(alias = "get_id")]
+    fn id(&self) -> u32 {
+        unsafe {
+            ffi::wp_object_get_id(self.as_ref().to_glib_none().0)
+        }
+    }
+
     #[doc(alias = "wp_object_get_supported_features")]
     #[doc(alias = "get_supported_features")]
     fn supported_features(&self) -> ObjectFeatures {
         unsafe {
             from_glib(ffi::wp_object_get_supported_features(self.as_ref().to_glib_none().0))
+        }
+    }
+
+    #[doc(alias = "wp_object_test_active_features")]
+    fn test_active_features(&self, features: ObjectFeatures) -> bool {
+        unsafe {
+            from_glib(ffi::wp_object_test_active_features(self.as_ref().to_glib_none().0, features.into_glib()))
+        }
+    }
+
+    #[doc(alias = "wp_object_test_supported_features")]
+    fn test_supported_features(&self, features: ObjectFeatures) -> bool {
+        unsafe {
+            from_glib(ffi::wp_object_test_supported_features(self.as_ref().to_glib_none().0, features.into_glib()))
         }
     }
 
@@ -131,6 +151,19 @@ pub trait ObjectExt: IsA<Object> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::active-features\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(notify_active_features_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
+
+    #[doc(alias = "id")]
+    fn connect_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_id_trampoline<P: IsA<Object>, F: Fn(&P) + 'static>(this: *mut ffi::WpObject, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(Object::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::id\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
