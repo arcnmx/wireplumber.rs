@@ -197,7 +197,10 @@
       };
       commitlintrc = { rust'builders, wpdev-commitlintrc-generate }: rust'builders.check-generate {
         expected = wpdev-commitlintrc-generate;
-        src = ./.commitlintrc.json;
+        src = builtins.path {
+          name = "commitlintrc.json";
+          path = ./.commitlintrc.json;
+        };
         meta.name = "diff .commitlintrc.json (cargo wp generate)";
       };
       release-branch = { rust'builders, source }: let
@@ -386,6 +389,7 @@
         "0.4.8" "0.4.10"
         "0.4.11" "0.4.12"
         "0.4.15"
+        "0.4.16"
       ];
       asciidocAttributes = {
         inherit (self.lib.crate.package) repository;

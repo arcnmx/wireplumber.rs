@@ -25,7 +25,7 @@ include = [
 branches = ["main", "dev"]
 
 [package.metadata.docs.rs]
-features = ["v0_4_15", "experimental", "glib-signal", "libspa", "futures", "serde"]
+features = ["v0_4_16", "experimental", "glib-signal", "libspa", "futures", "serde"]
 rustc-args = ["--cfg", "docsrs"]
 rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
@@ -68,6 +68,7 @@ v0_4_10 = ["ffi/v0_4_10", "v0_4_8"]
 v0_4_11 = ["ffi/v0_4_11", "v0_4_10"]
 v0_4_12 = ["ffi/v0_4_12", "v0_4_11"]
 v0_4_15 = ["ffi/v0_4_15", "v0_4_12"]
+v0_4_16 = ["ffi/v0_4_16", "v0_4_15"]
 
 [workspace]
 members = ["sys", "examples"]

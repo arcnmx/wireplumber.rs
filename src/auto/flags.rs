@@ -39,11 +39,12 @@ impl FromGlib<ffi::WpDbusFeatures> for DbusFeatures {
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl StaticType for DbusFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_dbus_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_dbus_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_dbus_features_get_type()) }
+                }
+            }
 
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
@@ -53,7 +54,7 @@ impl glib::HasParamSpec for DbusFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -137,11 +138,12 @@ impl FromGlib<ffi::WpInitFlags> for InitFlags {
 }
 
 impl StaticType for InitFlags {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_init_flags_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_init_flags_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_init_flags_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for InitFlags {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -149,7 +151,7 @@ impl glib::HasParamSpec for InitFlags {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -225,11 +227,12 @@ impl FromGlib<ffi::WpInterestMatch> for InterestMatch {
 }
 
 impl StaticType for InterestMatch {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_interest_match_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_interest_match_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_interest_match_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for InterestMatch {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -237,7 +240,7 @@ impl glib::HasParamSpec for InterestMatch {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -307,11 +310,12 @@ impl FromGlib<ffi::WpInterestMatchFlags> for InterestMatchFlags {
 }
 
 impl StaticType for InterestMatchFlags {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_interest_match_flags_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_interest_match_flags_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_interest_match_flags_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for InterestMatchFlags {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -319,7 +323,7 @@ impl glib::HasParamSpec for InterestMatchFlags {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -390,13 +394,23 @@ impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
     }
 }
 
+#[cfg(feature = "v0_4_11")]
+#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
+impl StaticType for LinkFeatures {
+                #[inline]
+    #[doc(alias = "wp_link_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_link_features_get_type()) }
+                }
+            }
+
 impl glib::HasParamSpec for LinkFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
                 type SetValue = Self;
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -472,11 +486,12 @@ impl FromGlib<ffi::WpLookupDirs> for LookupDirs {
 }
 
 impl StaticType for LookupDirs {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_lookup_dirs_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_lookup_dirs_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_lookup_dirs_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for LookupDirs {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -484,7 +499,7 @@ impl glib::HasParamSpec for LookupDirs {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -554,11 +569,12 @@ impl FromGlib<ffi::WpMetadataFeatures> for MetadataFeatures {
 }
 
 impl StaticType for MetadataFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_metadata_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_metadata_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_metadata_features_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for MetadataFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -566,7 +582,7 @@ impl glib::HasParamSpec for MetadataFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -636,11 +652,12 @@ impl FromGlib<ffi::WpNodeFeatures> for NodeFeatures {
 }
 
 impl StaticType for NodeFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_node_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_node_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_node_features_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for NodeFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -648,7 +665,7 @@ impl glib::HasParamSpec for NodeFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -716,11 +733,12 @@ impl FromGlib<ffi::WpPluginFeatures> for PluginFeatures {
 }
 
 impl StaticType for PluginFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_plugin_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_plugin_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_plugin_features_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for PluginFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -728,7 +746,7 @@ impl glib::HasParamSpec for PluginFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -812,11 +830,12 @@ impl FromGlib<ffi::WpProxyFeatures> for ProxyFeatures {
 }
 
 impl StaticType for ProxyFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_proxy_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_proxy_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_proxy_features_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for ProxyFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -824,7 +843,7 @@ impl glib::HasParamSpec for ProxyFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -894,11 +913,12 @@ impl FromGlib<ffi::WpSessionItemFeatures> for SessionItemFeatures {
 }
 
 impl StaticType for SessionItemFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_session_item_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_session_item_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_session_item_features_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for SessionItemFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -906,7 +926,7 @@ impl glib::HasParamSpec for SessionItemFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 
@@ -976,11 +996,12 @@ impl FromGlib<ffi::WpSpaDeviceFeatures> for SpaDeviceFeatures {
 }
 
 impl StaticType for SpaDeviceFeatures {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_spa_device_features_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_spa_device_features_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_spa_device_features_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for SpaDeviceFeatures {
                 type ParamSpec = glib::ParamSpecFlags;
@@ -988,7 +1009,7 @@ impl glib::HasParamSpec for SpaDeviceFeatures {
                 type BuilderFn = fn(&str) -> glib::ParamSpecFlagsBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name| Self::ParamSpec::builder(name)
+                    Self::ParamSpec::builder
                 }
 }
 

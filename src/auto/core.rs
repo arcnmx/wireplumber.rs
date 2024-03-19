@@ -44,6 +44,16 @@ impl Core {
         }
     }
 
+    #[cfg(feature = "v0_4_16")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_16")))]
+    #[doc(alias = "wp_core_get_own_bound_id")]
+    #[doc(alias = "get_own_bound_id")]
+    pub fn own_bound_id(&self) -> u32 {
+        unsafe {
+            ffi::wp_core_get_own_bound_id(self.to_glib_none().0)
+        }
+    }
+
     #[doc(alias = "wp_core_get_properties")]
     #[doc(alias = "get_properties")]
     pub fn properties(&self) -> Option<Properties> {

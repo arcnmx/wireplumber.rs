@@ -1886,6 +1886,9 @@ extern "C" {
     pub fn wp_core_connect(self_: *mut WpCore) -> gboolean;
     pub fn wp_core_disconnect(self_: *mut WpCore);
     pub fn wp_core_get_g_main_context(self_: *mut WpCore) -> *mut glib::GMainContext;
+    #[cfg(feature = "v0_4_16")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_16")))]
+    pub fn wp_core_get_own_bound_id(self_: *mut WpCore) -> u32;
     pub fn wp_core_get_properties(self_: *mut WpCore) -> *mut WpProperties;
     pub fn wp_core_get_pw_context(self_: *mut WpCore) -> *mut pw_context;
     pub fn wp_core_get_pw_core(self_: *mut WpCore) -> *mut pw_core;

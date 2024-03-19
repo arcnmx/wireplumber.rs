@@ -11,20 +11,13 @@ index 5f67d788..fd8efb82 100644
      }
  }
  
-@@ -390,6 +388,13 @@ impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
+@@ -390,6 +388,4 @@ impl FromGlib<ffi::WpLinkFeatures> for LinkFeatures {
      }
  }
  
-+impl StaticType for LinkFeatures {
-+    #[inline]
-+    fn static_type() -> glib::Type {
-+        unsafe { from_glib(ffi::wp_link_features_get_type()) }
-+    }
-+}
-+
- impl glib::HasParamSpec for LinkFeatures {
-                 type ParamSpec = glib::ParamSpecFlags;
-                 type SetValue = Self;
+-#[cfg(feature = "v0_4_11")]
+-#[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
+ impl StaticType for LinkFeatures {
 @@ -530,8 +535,6 @@ bitflags! {
      pub struct MetadataFeatures: u32 {
          #[doc(alias = "WP_METADATA_FEATURE_DATA")]

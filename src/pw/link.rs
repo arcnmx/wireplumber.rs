@@ -3,7 +3,7 @@ use crate::pw::LinkState;
 use crate::{
 	core::Core,
 	prelude::*,
-	pw::{self, Direction, Link, LinkFeatures, Node, Port, Properties},
+	pw::{self, Direction, Link, Node, Port, Properties},
 };
 
 impl Link {
@@ -88,15 +88,8 @@ impl LinkTarget for Port {
 	}
 }
 
-#[cfg(feature = "v0_4_11")]
-impl StaticType for LinkFeatures {
-	fn static_type() -> Type {
-		unsafe { from_glib(ffi::wp_link_features_get_type()) }
-	}
-}
-
 #[cfg(not(feature = "v0_4_11"))]
-impl StaticType for LinkFeatures {
+impl StaticType for pw::LinkFeatures {
 	fn static_type() -> Type {
 		pw::ProxyFeatures::static_type()
 	}

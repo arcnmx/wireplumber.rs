@@ -65,11 +65,12 @@ match value {
 }
 
 impl StaticType for ConstraintType {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_constraint_type_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_constraint_type_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_constraint_type_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for ConstraintType {
                 type ParamSpec = glib::ParamSpecEnum;
@@ -77,7 +78,7 @@ impl glib::HasParamSpec for ConstraintType {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -193,11 +194,12 @@ match value {
 }
 
 impl StaticType for ConstraintVerb {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_constraint_verb_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_constraint_verb_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_constraint_verb_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for ConstraintVerb {
                 type ParamSpec = glib::ParamSpecEnum;
@@ -205,7 +207,7 @@ impl glib::HasParamSpec for ConstraintVerb {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -311,11 +313,12 @@ match value {
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl StaticType for DBusState {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_dbus_state_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_dbus_state_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_dbus_state_get_type()) }
+                }
+            }
 
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
@@ -325,7 +328,7 @@ impl glib::HasParamSpec for DBusState {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -424,11 +427,12 @@ match value {
 }
 
 impl StaticType for Direction {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_direction_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_direction_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_direction_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for Direction {
                 type ParamSpec = glib::ParamSpecEnum;
@@ -436,7 +440,7 @@ impl glib::HasParamSpec for Direction {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -532,11 +536,12 @@ match value {
 }
 
 impl StaticType for LibraryErrorEnum {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_library_error_enum_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_library_error_enum_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_library_error_enum_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for LibraryErrorEnum {
                 type ParamSpec = glib::ParamSpecEnum;
@@ -544,7 +549,7 @@ impl glib::HasParamSpec for LibraryErrorEnum {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -670,11 +675,12 @@ match value {
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
 impl StaticType for LinkState {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_link_state_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_link_state_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_link_state_get_type()) }
+                }
+            }
 
 #[cfg(feature = "v0_4_11")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_11")))]
@@ -684,7 +690,7 @@ impl glib::HasParamSpec for LinkState {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -798,11 +804,12 @@ match value {
 }
 
 impl StaticType for NodeState {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_node_state_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_node_state_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_node_state_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for NodeState {
                 type ParamSpec = glib::ParamSpecEnum;
@@ -810,7 +817,7 @@ impl glib::HasParamSpec for NodeState {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -916,11 +923,12 @@ match value {
 #[cfg(feature = "v0_4_10")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
 impl StaticType for SiAdapterPortsState {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_si_adapter_ports_state_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_si_adapter_ports_state_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_si_adapter_ports_state_get_type()) }
+                }
+            }
 
 #[cfg(feature = "v0_4_10")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_10")))]
@@ -930,7 +938,7 @@ impl glib::HasParamSpec for SiAdapterPortsState {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
@@ -1034,11 +1042,12 @@ match value {
 }
 
 impl StaticType for TransitionStep {
-    #[inline]
-    fn static_type() -> glib::Type {
-        unsafe { from_glib(ffi::wp_transition_step_get_type()) }
-    }
-}
+                #[inline]
+    #[doc(alias = "wp_transition_step_get_type")]
+   fn static_type() -> glib::Type {
+                    unsafe { from_glib(ffi::wp_transition_step_get_type()) }
+                }
+            }
 
 impl glib::HasParamSpec for TransitionStep {
                 type ParamSpec = glib::ParamSpecEnum;
@@ -1046,7 +1055,7 @@ impl glib::HasParamSpec for TransitionStep {
                 type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
     
                 fn param_spec_builder() -> Self::BuilderFn {
-                    |name, default_value| Self::ParamSpec::builder_with_default(name, default_value)
+                    Self::ParamSpec::builder_with_default
                 }
 }
 
