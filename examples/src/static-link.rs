@@ -5,11 +5,12 @@
 //! recommended. Additional explanation and documentation is located in the [plugin module
 //! documentation](wireplumber::plugin).
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 use {
 	futures::{channel::mpsc, future, FutureExt, StreamExt},
 	glib::{prelude::*, Error, SourceId, Variant},
 	once_cell::unsync::OnceCell,
-	serde::{Deserialize, Serialize},
 	std::{future::Future, iter, pin::Pin},
 	wireplumber::{
 		core::ObjectFeatures,
@@ -29,7 +30,8 @@ const LOG_DOMAIN: &'static str = "static-link";
 
 /// A list of user-specified [Constraints](Constraint)
 /// used to find each end of the port to be linked.
-#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct PortMapping {
 	/// A description of the output ports to link.
 	///
@@ -43,31 +45,33 @@ pub struct PortMapping {
 
 /// serde boolean default
 #[doc(hidden)]
+#[cfg(feature = "serde")]
 fn true_() -> bool {
 	true
 }
 
 /// User configuration for the [StaticLink] plugin
-#[derive(Debug, Clone, Deserialize, Serialize, Variant)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct StaticLinkArgs {
 	/// The source node to link to `input`
 	output: Vec<Constraint>,
 	/// The sink node to link to `output`
 	input: Vec<Constraint>,
 	/// Describes how to link the ports of the `input` node to the `output`
-	#[serde(default, rename = "mappings")]
+	#[cfg_attr(feature = "serde", serde(default, rename = "mappings"))]
 	port_mappings: Vec<PortMapping>,
 	/// Whether to mark any created links as `link.passive`
 	///
 	/// Defaults to `true`
-	#[serde(default = "true_")]
+	#[cfg_attr(feature = "serde", serde(default = "true_"))]
 	passive: bool,
 	/// Whether to mark any created links as `object.linger`
 	///
 	/// A lingering link will remain in place even after this module's parent process has exited.
 	///
 	/// Defaults to `true`
-	#[serde(default = "true_")]
+	#[cfg_attr(feature = "serde", serde(default = "true_"))]
 	linger: bool,
 }
 
@@ -290,11 +294,21 @@ impl SimplePlugin for StaticLink {
 		self.args.set(args).unwrap();
 	}
 
+	#[cfg(feature = "serde")]
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
 		args
 			.map(|args| from_variant(&args))
 			.unwrap_or(Ok(Default::default()))
 			.map_err(error::invalid_argument)
+	}
+
+	#[cfg(not(feature = "serde"))]
+	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
+		let args = args.map(|_args| {
+			warning!(domain: LOG_DOMAIN, "requires serde build feature");
+			Default::default()
+		});
+		Ok(args.unwrap_or_default())
 	}
 }
 

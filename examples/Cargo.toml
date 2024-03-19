@@ -17,12 +17,18 @@ path = "src/static-link.rs"
 
 [dependencies]
 futures = "0.3"
-wireplumber = { version = "0.1", features = ["futures", "glib-signal", "serde", "v0_4_3"], path = "../" }
+wireplumber = { version = "0.1", features = ["futures", "glib-signal", "v0_4_3"], path = "../" }
 pipewire-sys = "0.8"
 glib = { version = "0.19" }
 ctrlc = { version = "3.0", features = ["termination"] }
 once_cell = { version = "1.19" }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"], optional = true }
+serde_json = { version = "1.0", optional = true }
 clap = { version = "4.0", features = ["derive"] }
 anyhow = "1.0"
+
+[features]
+default = ["spa-json"]
+spa-json = ["wireplumber/v0_4_8", "serde"]
+serde = ["dep:serde", "wireplumber/serde"]
+serde_json = ["serde", "dep:serde_json"]

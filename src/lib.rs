@@ -86,7 +86,7 @@ pub(crate) use self::pw::PropertiesItem;
 #[cfg(feature = "v0_4_10")]
 pub(crate) use self::session::SiAdapterPortsState;
 #[cfg(feature = "v0_4_8")]
-pub(crate) use self::spa::SpaJson;
+pub(crate) use self::spa::json::SpaJson;
 #[cfg(feature = "v0_4_11")]
 pub(crate) use self::{dbus::DBusState, pw::LinkState};
 /// gir needs to know where to find these

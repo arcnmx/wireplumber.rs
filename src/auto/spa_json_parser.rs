@@ -17,17 +17,15 @@ glib::wrapper! {
 
 impl SpaJsonParser {
     #[doc(alias = "wp_spa_json_parser_new_array")]
-    pub fn new_array(json: &SpaJson) -> SpaJsonParser {
-        unsafe {
-            from_glib_full(ffi::wp_spa_json_parser_new_array(json.to_glib_none().0))
-        }
+    #[doc(alias = "new_array")]
+    pub unsafe fn new_array_unchecked(json: &SpaJson) -> SpaJsonParser {
+        from_glib_full(ffi::wp_spa_json_parser_new_array(json.to_glib_none().0))
     }
 
     #[doc(alias = "wp_spa_json_parser_new_object")]
-    pub fn new_object(json: &SpaJson) -> SpaJsonParser {
-        unsafe {
-            from_glib_full(ffi::wp_spa_json_parser_new_object(json.to_glib_none().0))
-        }
+    #[doc(alias = "new_object")]
+    pub unsafe fn new_object_unchecked(json: &SpaJson) -> SpaJsonParser {
+        from_glib_full(ffi::wp_spa_json_parser_new_object(json.to_glib_none().0))
     }
 
     #[doc(alias = "wp_spa_json_parser_end")]
@@ -67,17 +65,9 @@ impl SpaJsonParser {
         }
     }
 
-    #[doc(alias = "wp_spa_json_parser_get_json")]
-    #[doc(alias = "get_json")]
-    pub fn json(&self) -> Option<SpaJson> {
-        unsafe {
-            from_glib_full(ffi::wp_spa_json_parser_get_json(self.to_glib_none().0))
-        }
-    }
-
     #[doc(alias = "wp_spa_json_parser_get_null")]
     #[doc(alias = "get_null")]
-    pub fn is_null(&self) -> bool {
+    pub fn null(&self) -> bool {
         unsafe {
             from_glib(ffi::wp_spa_json_parser_get_null(self.to_glib_none().0))
         }
