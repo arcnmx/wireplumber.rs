@@ -25,7 +25,7 @@
 in {
   config = {
     name = "wireplumber.rs";
-    ci.version = "v0.6";
+    ci.version = "v0.7";
     ci.gh-actions = {
       enable = true;
       emit = true;
