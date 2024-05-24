@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/node.rs`."><title>node.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/node.rs`."><title>node.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -120,28 +122,28 @@
 <a href="#120" id="120">120</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
-	pw::{<a class="self" href="../lib.rs.html#75">self</a>, <a href="../auto/node.rs.html#8-15">Node</a>, <a href="../auto/enums.rs.html#739-752">NodeState</a>, <a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/port.rs.html#7-14">Port</a>},
-	registry::{<a href="../registry/interest.rs.html#39-42">Interest</a>, <a href="../registry/interest.rs.html#100-103">InterestContainer</a>, <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>},
+	pw::{<a class="self" href="../lib.rs.html#75">self</a>, <a href="../auto/node.rs.html#8-15">Node</a>, <a href="../auto/enums.rs.html#666-679">NodeState</a>, <a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/port.rs.html#7-14">Port</a>},
+	registry::{<a href="../registry/interest.rs.html#39-42">Interest</a>, <a href="../registry/interest.rs.html#100-103">InterestContainer</a>, <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>},
 };
 
 <span class="kw">impl </span><a href="../auto/node.rs.html#8-15">Node</a> {
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_get_state&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
-	</span><span class="kw">pub fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/enums.rs.html#739-752">NodeState</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_node_get_state(<a class="self" href="#10">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, ptr::null_mut())) }
+	<span class="attr">#[doc(alias = <span class="string">"wp_node_get_state"</span>)]
+	#[doc(alias = <span class="string">"get_state"</span>)]
+	</span><span class="kw">pub fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/enums.rs.html#666-679">NodeState</a> {
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_node_get_state(<a class="self" href="#10">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, ptr::null_mut())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_get_state&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
-	</span><span class="kw">pub fn </span>state_result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#739-752">NodeState</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+	<span class="attr">#[doc(alias = <span class="string">"wp_node_get_state"</span>)]
+	#[doc(alias = <span class="string">"get_state"</span>)]
+	</span><span class="kw">pub fn </span>state_result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#666-679">NodeState</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">unsafe </span>{
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null();
-			<span class="kw">match </span>from_glib(ffi::wp_node_get_state(<a class="self" href="#16">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <span class="kw-2">&amp;mut </span><a href="#18">error</a>)) {
-				<a href="../auto/enums.rs.html#741">NodeState::Error</a> =&gt; {
-					<span class="kw">let </span>msg: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring/struct.GStr.html">glib::GStr</a>&gt; = from_glib_none(<a href="#18">error</a>);
+			<span class="kw">match </span>from_glib(ffi::wp_node_get_state(<a class="self" href="#16">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <span class="kw-2">&amp;mut </span><a href="#18">error</a>)) {
+				<a href="../auto/enums.rs.html#668">NodeState::Error</a> =&gt; {
+					<span class="kw">let </span>msg: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GStr.html">glib::GStr</a>&gt; = from_glib_none(<a href="#18">error</a>);
 					<span class="prelude-val">Err</span>(Error::new(
-						<a href="../auto/enums.rs.html#489">LibraryErrorEnum::OperationFailed</a>,
-						<a href="#21">msg</a>.map(|s| <a href="#24">s</a>.as_str()).unwrap_or(<span class="string">&quot;unspecified node state error&quot;</span>),
+						<a href="../auto/enums.rs.html#442">LibraryErrorEnum::OperationFailed</a>,
+						<a href="#21">msg</a>.map(|s| <a href="#24">s</a>.as_str()).unwrap_or(<span class="string">"unspecified node state error"</span>),
 					))
 				},
 				state =&gt; <span class="prelude-val">Ok</span>(<a href="#27">state</a>),
@@ -149,29 +151,29 @@
 		}
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_new_ports_iterator&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;new_ports_iterator&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_node_new_ports_iterator"</span>)]
+	#[doc(alias = <span class="string">"new_ports_iterator"</span>)]
 	</span><span class="kw">pub fn </span>ports(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ValueIterator&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt; {
 		ValueIterator::with_inner(<a class="self" href="#34">self</a>.<a href="../auto/node.rs.html#72-76">ports_iterator</a>().unwrap())
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;wp_node_new_ports_filtered_iterator_full&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;new_ports_filtered_iterator&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;new_ports_filtered_iterator_full&quot;</span>)]
-	</span><span class="kw">pub fn </span>ports_filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>) -&gt; ValueIterator&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt; {
-		ValueIterator::with_inner(<a class="self" href="#42">self</a>.<a href="../auto/node.rs.html#64-68">ports_filtered_iterator</a>(<a href="#42">interest</a>).unwrap())
+	<span class="attr">#[doc(alias = <span class="string">"wp_node_new_ports_filtered_iterator"</span>)]
+	#[doc(alias = <span class="string">"wp_node_new_ports_filtered_iterator_full"</span>)]
+	#[doc(alias = <span class="string">"new_ports_filtered_iterator"</span>)]
+	#[doc(alias = <span class="string">"new_ports_filtered_iterator_full"</span>)]
+	</span><span class="kw">pub fn </span>ports_filtered(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>) -&gt; IntoValueIterator&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt; {
+		IntoValueIterator::with_inner(<a class="self" href="#42">self</a>.<a href="../auto/node.rs.html#64-68">ports_filtered_iterator</a>(<a href="#42">interest</a>).unwrap())
 	}
 
-	<span class="kw">pub fn </span>device_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
-		<a class="self" href="#46">self</a>.<a href="proxy.rs.html#58">pw_property_optional</a>(<span class="string">&quot;card.profile.device&quot;</span>)
+	<span class="kw">pub fn </span>device_index(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
+		<a class="self" href="#46">self</a>.<a href="proxy.rs.html#58">pw_property_optional</a>(<span class="string">"card.profile.device"</span>)
 	}
 
-	<span class="kw">pub fn </span>device_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+	<span class="kw">pub fn </span>device_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<a class="self" href="#50">self</a>.<a href="proxy.rs.html#58">pw_property_optional</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_DEVICE_ID</a>)
 	}
 
-	<span class="kw">pub fn </span>device_details(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;)&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt; {
+	<span class="kw">pub fn </span>device_details(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;)&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="self"><a href="#54">self</a>
 			</span>.<a href="#50-52">device_id</a>()
 			.and_then(|id| <a class="self" href="#54">self</a>.<a href="#46-48">device_index</a>().map(|index| <a href="#57">id</a>.map(|id| (<a href="#57">id</a>, <a href="#57">index</a>))))
@@ -182,9 +184,9 @@
 	}
 
 	<span class="kw">pub fn </span>props(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ! {
-		<span class="kw">for </span>param <span class="kw">in </span><span class="self">self</span>.enum_params_sync(<span class="string">&quot;Props&quot;</span>, <span class="prelude-val">None</span>).into_iter().flat_map(|p| p) {
-			<span class="comment">// if param.pod_type == &quot;Object&quot; &amp;&amp; pod.properties.volume != null
-			</span><span class="macro">println!</span>(<span class="string">&quot;out_params.init_from_pod({param:?})&quot;</span>);
+		<span class="kw">for </span>param <span class="kw">in </span><span class="self">self</span>.enum_params_sync(<span class="string">"Props"</span>, <span class="prelude-val">None</span>).into_iter().flat_map(|p| p) {
+			<span class="comment">// if param.pod_type == "Object" &amp;&amp; pod.properties.volume != null
+			</span><span class="macro">println!</span>(<span class="string">"out_params.init_from_pod({param:?})"</span>);
 		}
 		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>()
 	}
@@ -193,17 +195,17 @@
 </span>}
 
 <span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">Display</a> <span class="kw">for </span><a href="../auto/node.rs.html#8-15">Node</a> {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <a class="self" href="#76">self</a>.<a href="proxy.rs.html#53">with_pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_NODE_NAME</a>, |name| <a href="#76">f</a>.write_str(<a href="#77">name</a>)) {
 			<span class="kw">return </span><a href="#77">res</a>
 		}
 
-		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#76">f</a>, <span class="string">&quot;pw.node({})&quot;</span>, AsRef::&lt;PipewireObject&gt;::as_ref(<span class="self">self</span>))
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#76">f</a>, <span class="string">"pw.node({})"</span>, AsRef::&lt;PipewireObject&gt;::as_ref(<span class="self">self</span>))
 	}
 }
 
 <span class="kw">impl </span>InterestContainer&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt; <span class="kw">for </span><a href="../auto/node.rs.html#8-15">Node</a> {
-	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt;) -&gt; ValueIterator&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt; {
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt;) -&gt; IntoValueIterator&lt;<a href="../auto/port.rs.html#7-14">Port</a>&gt; {
 		<a class="self" href="#86">self</a>.<a href="#42-44">ports_filtered</a>(<a href="#86">interest</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
@@ -212,12 +214,12 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">IntoIterator</a> <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="../auto/node.rs.html#8-15">Node</a> {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">IntoIterator</a> <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="../auto/node.rs.html#8-15">Node</a> {
 	<span class="kw">type </span>Item = <a href="../auto/port.rs.html#7-14">Port</a>;
 	<span class="kw">type </span>IntoIter = ValueIterator&lt;<span class="self">Self</span>::Item&gt;;
 
 	<span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
-		<a class="self" href="#99">self</a>.<a href="#34-36">ports</a>()
+		<a class="self" href="#99">self</a>.<a href="#34-36">ports</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
 	}
 }
 
@@ -226,15 +228,15 @@
 	<span class="kw">type </span>IntoIter = ValueIterator&lt;<span class="self">Self</span>::Item&gt;;
 
 	<span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
-		<a class="self" href="#108">self</a>.<a href="#34-36">ports</a>()
+		<a class="self" href="#108">self</a>.<a href="#34-36">ports</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;E&gt; From&lt;<span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#739-752">NodeState</a>, E&gt;&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#739-752">NodeState</a> {
-	<span class="kw">fn </span>from(res: <span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#739-752">NodeState</a>, E&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;E&gt; From&lt;<span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#666-679">NodeState</a>, E&gt;&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#666-679">NodeState</a> {
+	<span class="kw">fn </span>from(res: <span class="prelude-ty">Result</span>&lt;<a href="../auto/enums.rs.html#666-679">NodeState</a>, E&gt;) -&gt; <span class="self">Self </span>{
 		<span class="kw">match </span><a href="#114">res</a> {
 			<span class="prelude-val">Ok</span>(state) =&gt; <a href="#116">state</a>,
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <a href="../auto/enums.rs.html#741">NodeState::Error</a>,
+			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <a href="../auto/enums.rs.html#668">NodeState::Error</a>,
 		}
 	}
 }

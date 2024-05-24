@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/session/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/session/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -149,44 +151,44 @@
 //! - [SiFactory](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_factory_api.html)
 //! - [Session Item](https://pipewire.pages.freedesktop.org/wireplumber/c_api/session_item_api.html)
 //! - [Interfaces](https://pipewire.pages.freedesktop.org/wireplumber/c_api/si_interfaces_api.html)
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)]
-</span><span class="kw">pub use </span><a href="../auto/enums.rs.html#859-868"><span class="kw">crate</span>::auto::SiAdapterPortsState</a>;
+</span><span class="attr">#[cfg(feature = <span class="string">"v0_4_10"</span>)]
+</span><span class="kw">pub use </span><a href="../auto/enums.rs.html#774-783"><span class="kw">crate</span>::auto::SiAdapterPortsState</a>;
 <span class="kw">pub use </span><span class="kw">crate</span>::auto::{
-	traits::{<a href="../auto/session_item.rs.html#41-149">SessionItemExt</a>, <a href="../auto/si_acquisition.rs.html#27-34">SiAcquisitionExt</a>, <a href="../auto/si_adapter.rs.html#36-71">SiAdapterExt</a>, <a href="../auto/si_endpoint.rs.html#27-56">SiEndpointExt</a>, <a href="../auto/si_factory.rs.html#47-62">SiFactoryExt</a>, <a href="../auto/si_link.rs.html#27-72">SiLinkExt</a>, <a href="../auto/si_linkable.rs.html#26-42">SiLinkableExt</a>},
-	<a href="../auto/session_item.rs.html#8-15">SessionItem</a>, <a href="../auto/flags.rs.html#867-876">SessionItemFeatures</a>, <a href="../auto/si_acquisition.rs.html#8-15">SiAcquisition</a>, <a href="../auto/si_adapter.rs.html#17-24">SiAdapter</a>, <a href="../auto/si_endpoint.rs.html#8-15">SiEndpoint</a>, <a href="../auto/si_factory.rs.html#7-14">SiFactory</a>, <a href="../auto/si_link.rs.html#8-15">SiLink</a>, <a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>,
+	traits::{<a href="../auto/session_item.rs.html#41-149">SessionItemExt</a>, <a href="../auto/si_acquisition.rs.html#26-33">SiAcquisitionExt</a>, <a href="../auto/si_adapter.rs.html#35-70">SiAdapterExt</a>, <a href="../auto/si_endpoint.rs.html#27-56">SiEndpointExt</a>, <a href="../auto/si_factory.rs.html#47-62">SiFactoryExt</a>, <a href="../auto/si_link.rs.html#27-72">SiLinkExt</a>, <a href="../auto/si_linkable.rs.html#26-42">SiLinkableExt</a>},
+	<a href="../auto/session_item.rs.html#8-15">SessionItem</a>, <a href="../auto/flags.rs.html#886-895">SessionItemFeatures</a>, <a href="../auto/si_acquisition.rs.html#7-14">SiAcquisition</a>, <a href="../auto/si_adapter.rs.html#16-23">SiAdapter</a>, <a href="../auto/si_endpoint.rs.html#8-15">SiEndpoint</a>, <a href="../auto/si_factory.rs.html#7-14">SiFactory</a>, <a href="../auto/si_link.rs.html#8-15">SiLink</a>, <a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>,
 };
-<span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/spa_pod.rs.html#8-17">spa::SpaPod</a>};
+<span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/spa_pod.rs.html#7-16">spa::SpaPod</a>};
 
-<span class="kw">pub trait </span><a href="../../../wireplumber/session/trait.SiAdapterExt2.html">SiAdapterExt2</a>: <span class="lifetime">&#39;static </span>{
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_si_adapter_set_ports_format&quot;</span>)]
-	</span><span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">pub trait </span><a href="../../../wireplumber/session/trait.SiAdapterExt2.html">SiAdapterExt2</a>: <span class="lifetime">'static </span>{
+	<span class="attr">#[doc(alias = <span class="string">"wp_si_adapter_set_ports_format"</span>)]
+	</span><span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;,
 		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
 		callback: P,
 	);
 
 	<span class="kw">fn </span>set_ports_format_future(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;,
 		mode: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt;;
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/si_adapter.rs.html#17-24">SiAdapter</a>&gt;&gt; <a href="#18-32">SiAdapterExt2</a> <span class="kw">for </span>O {
-	<span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/si_adapter.rs.html#16-23">SiAdapter</a>&gt;&gt; <a href="#18-32">SiAdapterExt2</a> <span class="kw">for </span>O {
+	<span class="kw">fn </span>set_ports_format&lt;P: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		format: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;,
 		mode: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;,
 		callback: P,
 	) {
-		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>;
+		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>;
 		<span class="kw">let </span>callback = Box::new(<a href="#39">callback</a>) <span class="kw">as </span>Box&lt;<a href="#41">DynCallback</a>&gt;;
 		<span class="kw">let </span>userdata = Box::into_raw(Box::new(<a href="#42">callback</a>));
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>set_ports_format_trampoline(
-			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
-			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
-			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>,
+		<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>set_ports_format_trampoline(
+			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
+			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
+			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>,
 		) {
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
 			<span class="kw">let _ </span>= ffi::wp_si_adapter_set_ports_format_finish(<a href="#45">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#46">res</a>, <span class="kw-2">&amp;mut </span><a href="#49">error</a>);
@@ -200,9 +202,9 @@
 		}
 		<span class="kw">unsafe </span>{
 			ffi::wp_si_adapter_set_ports_format(
-				<a class="self" href="#36">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#37">format</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_full</a>(),
-				<a href="#38">mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a class="self" href="#36">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#37">format</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_full</a>(),
+				<a href="#38">mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
 				<span class="prelude-val">Some</span>(<a href="#44-58">set_ports_format_trampoline</a>),
 				<a href="#43">userdata</a> <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>,
 			)
@@ -211,9 +213,9 @@
 
 	<span class="kw">fn </span>set_ports_format_future(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>&gt;,
+		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;,
 		mode: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
 		Box::pin(gio::GioFuture::new(<a class="self" href="#71">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
 			<a href="#75">obj</a>.<a href="#20-25">set_ports_format</a>(<a href="#72">format</a>.as_ref(), <a href="#73">mode</a>.as_ref().map(|s| <a href="#76">s</a>.as_str()), <span class="kw">move </span>|res| {
 				<a href="#75">send</a>.resolve(<a href="#76">res</a>)
@@ -222,34 +224,34 @@
 	}
 }
 
-<span class="kw">pub trait </span><a href="../../../wireplumber/session/trait.SiAcquisitionExt2.html">SiAcquisitionExt2</a>: <span class="lifetime">&#39;static </span>{
-	<span class="kw">fn </span>acquire&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">pub trait </span><a href="../../../wireplumber/session/trait.SiAcquisitionExt2.html">SiAcquisitionExt2</a>: <span class="lifetime">'static </span>{
+	<span class="kw">fn </span>acquire&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: <span class="kw-2">&amp;</span>P,
 		item: <span class="kw-2">&amp;</span>Q,
 		callback: R,
 	);
-	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
+	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt; + <span class="lifetime">'static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt; + <span class="lifetime">'static</span>, Q_: AsRef&lt;Q&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: P,
 		item: Q,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt;;
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/si_acquisition.rs.html#8-15">SiAcquisition</a>&gt;&gt; <a href="#83-95">SiAcquisitionExt2</a> <span class="kw">for </span>O {
-	<span class="kw">fn </span>acquire&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>&gt;(
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/si_acquisition.rs.html#7-14">SiAcquisition</a>&gt;&gt; <a href="#83-95">SiAcquisitionExt2</a> <span class="kw">for </span>O {
+	<span class="kw">fn </span>acquire&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt;, R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: <span class="kw-2">&amp;</span>P,
 		item: <span class="kw-2">&amp;</span>Q,
 		callback: R,
 	) {
-		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">&#39;static</span>;
+		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>;
 		<span class="kw">let </span>callback = Box::new(<a href="#102">callback</a>) <span class="kw">as </span>Box&lt;<a href="#104">DynCallback</a>&gt;;
 		<span class="kw">let </span>userdata = Box::into_raw(Box::new(<a href="#105">callback</a>));
-		<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>acquire_trampoline(
-			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
-			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
-			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib_sys/type.gpointer.html">gpointer</a>,
+		<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>acquire_trampoline(
+			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
+			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
+			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>,
 		) {
 			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
 			<span class="kw">let _ </span>= ffi::wp_si_acquisition_acquire_finish(<a href="#108">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#109">res</a>, <span class="kw-2">&amp;mut </span><a href="#112">error</a>);
@@ -263,20 +265,20 @@
 		}
 		<span class="kw">unsafe </span>{
 			ffi::wp_si_acquisition_acquire(
-				<a class="self" href="#99">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#100">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#101">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a class="self" href="#99">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#100">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#101">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
 				<span class="prelude-val">Some</span>(<a href="#107-121">acquire_trampoline</a>),
 				<a href="#106">userdata</a> <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>,
 			)
 		}
 	}
 
-	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt; + <span class="lifetime">&#39;static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt; + <span class="lifetime">&#39;static</span>, Q_: AsRef&lt;Q&gt;&gt;(
+	<span class="kw">fn </span>acquire_future&lt;P: IsA&lt;<a href="../auto/si_link.rs.html#8-15">SiLink</a>&gt; + <span class="lifetime">'static</span>, P_: AsRef&lt;P&gt;, Q: IsA&lt;<a href="../auto/si_linkable.rs.html#7-14">SiLinkable</a>&gt; + <span class="lifetime">'static</span>, Q_: AsRef&lt;Q&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acquisitor: P,
 		item: Q,
-	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
 		Box::pin(gio::GioFuture::new(<a class="self" href="#134">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
 			<a href="#138">obj</a>.<a href="#84-89">acquire</a>(<a href="#135">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <a href="#136">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="kw">move </span>|res| <a href="#138">send</a>.resolve(<a href="#139">res</a>))
 		}))

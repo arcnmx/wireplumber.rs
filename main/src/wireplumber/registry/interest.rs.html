@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/registry/interest.rs`."><title>interest.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/registry/interest.rs`."><title>interest.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -571,37 +573,47 @@
 <a href="#571" id="571">571</a>
 <a href="#572" id="572">572</a>
 <a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
 	pw::{<a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/properties.rs.html#7-16">Properties</a>},
-	registry::{<a href="../auto/enums.rs.html#11-22">ConstraintType</a>, <a href="../auto/enums.rs.html#124-141">ConstraintVerb</a>, <a href="../auto/flags.rs.html#192-207">InterestMatch</a>, <a href="../auto/flags.rs.html#280-289">InterestMatchFlags</a>, <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>},
+	registry::{<a href="../auto/enums.rs.html#10-21">ConstraintType</a>, <a href="../auto/enums.rs.html#112-129">ConstraintVerb</a>, <a href="../auto/flags.rs.html#194-209">InterestMatch</a>, <a href="../auto/flags.rs.html#283-292">InterestMatchFlags</a>, <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>},
 };
 
-<span class="kw">impl </span><a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a> {
-	<span class="comment">/*#[doc(alias = &quot;wp_object_interest_matches&quot;)]
+<span class="kw">impl </span><a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a> {
+	<span class="comment">/*#[doc(alias = "wp_object_interest_matches")]
 	pub fn matches&lt;O: IsA&lt;GObject&gt;&gt;(&amp;self, object: O) -&gt; bool {
 		unsafe {
 			from_glib(ffi::wp_object_interest_matches(self.to_glib_none().0, object.to_glib_none().0 as *mut _))
 		}
 	}*/
-	</span><span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
-	</span><span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+	</span><span class="attr">#[doc(alias = <span class="string">"wp_object_interest_matches"</span>)]
+	</span><span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">GObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<span class="kw">let </span>object = <a href="#15">object</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>();
-		<a class="self" href="#15">self</a>.<a href="../auto/object_interest.rs.html#37-41">matches</a>(InterestMatchFlags::CHECK_ALL, <a href="#16">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectExt.html">type_</a>(), <span class="prelude-val">Some</span>(<a href="#16">object</a>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>) == InterestMatch::all()
+		<a class="self" href="#15">self</a>.<a href="../auto/object_interest.rs.html#36-40">matches</a>(InterestMatchFlags::CHECK_ALL, <a href="#16">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html">type_</a>(), <span class="prelude-val">Some</span>(<a href="#16">object</a>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>) == InterestMatch::all()
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_object_interest_matches"</span>)]
 	</span><span class="kw">pub fn </span>matches_props(<span class="kw-2">&amp;</span><span class="self">self</span>, props: <span class="kw-2">&amp;</span><a href="../auto/properties.rs.html#7-16">Properties</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#21">self</a>.<a href="../auto/object_interest.rs.html#37-41">matches</a>(
+		<a class="self" href="#21">self</a>.<a href="../auto/object_interest.rs.html#36-40">matches</a>(
 			InterestMatchFlags::CHECK_ALL,
 			Properties::static_type(),
-			<span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;,
+			<span class="prelude-val">None</span>::&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">GObject</a>&gt;,
 			<span class="prelude-val">Some</span>(<a href="#21">props</a>),
 			<span class="prelude-val">None</span>,
 		) == InterestMatch::all()
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_object_interest_matches&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_object_interest_matches"</span>)]
 	</span><span class="kw">pub fn </span>matches_pw_object&lt;O: IsA&lt;<a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<a class="self" href="#32">self</a>.<a href="#21-29">matches_props</a>(<span class="kw-2">&amp;</span><a href="#32">object</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="../auto/pipewire_object.rs.html#96-100">properties</a>().unwrap())
 	}
@@ -609,50 +621,50 @@
 
 <span class="attr">#[derive(Clone, Debug)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span><a href="../../../wireplumber/registry/struct.Interest.html">Interest</a>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; {
-	interest: <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>,
+</span><span class="kw">pub struct </span><a href="../../../wireplumber/registry/struct.Interest.html">Interest</a>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; {
+	interest: <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>,
 	_type: PhantomData&lt;T&gt;,
 }
 
-<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; Interest&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; Interest&lt;T&gt; {
 	<span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{ <span class="self">Self</span>::wrap_unchecked(ObjectInterest::new(T::static_type())) }
 	}
 
-	<span class="kw">pub unsafe fn </span>wrap_unchecked(interest: <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub unsafe fn </span>wrap_unchecked(interest: <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#49">interest</a>,
 			_type: PhantomData,
 		}
 	}
 
-	<span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a> {
+	<span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a> {
 		<span class="kw-2">&amp;</span><a class="self" href="#56">self</a>.interest
 	}
 
-	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a> {
+	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a> {
 		<a class="self" href="#60">self</a>.interest
 	}
 
-	<span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>
+	<span class="kw">pub fn </span>matches_object&lt;O: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">GObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span>O) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>
 	<span class="kw">where
 		</span>T: IsA&lt;O&gt;,
 	{
 		<a class="self" href="#64">self</a>.interest.<a href="#15-18">matches_object</a>(<a href="#64">object</a>)
 	}
 
-	<span class="kw">pub fn </span>constrain&lt;<span class="lifetime">&#39;o</span>, O: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>O) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;o </span>T&gt;
+	<span class="kw">pub fn </span>constrain&lt;<span class="lifetime">'o</span>, O: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">GObject</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, object: <span class="kw-2">&amp;</span><span class="lifetime">'o </span>O) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'o </span>T&gt;
 	<span class="kw">where
 		</span>T: IsA&lt;O&gt;,
 	{
 		<span class="kw">if </span><span class="self">self</span>.matches_object(object) {
-			<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <a href="#71">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>() })
+			<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <a href="#71">object</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>() })
 		} <span class="kw">else </span>{
 			<span class="prelude-val">None
 		</span>}
 	}
 
-	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; ValueIterator&lt;T&gt; {
+	<span class="kw">pub fn </span>filter&lt;C: InterestContainer&lt;T&gt;&gt;(<span class="self">self</span>, container: <span class="kw-2">&amp;</span>C) -&gt; IntoValueIterator&lt;T&gt; {
 		<a href="#82">container</a>.<a href="#101">filter</a>(<a class="self" href="#82">self</a>)
 	}
 
@@ -664,26 +676,26 @@
 	// TODO: wrapper types for each constraint verb that type-ifies the expected arguments?
 </span>}
 
-<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; From&lt;Interest&lt;T&gt;&gt; <span class="kw">for </span><a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a> {
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; From&lt;Interest&lt;T&gt;&gt; <span class="kw">for </span><a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a> {
 	<span class="kw">fn </span>from(i: Interest&lt;T&gt;) -&gt; <span class="self">Self </span>{
 		<a href="#95">i</a>.<a href="#60-62">into_inner</a>()
 	}
 }
 
-<span class="kw">pub trait </span><a href="../../../wireplumber/registry/trait.InterestContainer.html">InterestContainer</a>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; {
-	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; ValueIterator&lt;T&gt;;
+<span class="kw">pub trait </span><a href="../../../wireplumber/registry/trait.InterestContainer.html">InterestContainer</a>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; {
+	<span class="kw">fn </span>filter(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; IntoValueIterator&lt;T&gt;;
 	<span class="kw">fn </span>lookup(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: Interest&lt;T&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;;
 }
 
-<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">Deref</a> <span class="kw">for </span>Interest&lt;T&gt; {
-	<span class="kw">type </span>Target = <a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>;
+<span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">Deref</a> <span class="kw">for </span>Interest&lt;T&gt; {
+	<span class="kw">type </span>Target = <a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>;
 
 	<span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
 		<a class="self" href="#108">self</a>.<a href="#56-58">inner</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;C: Borrow&lt;<a href="#131-136">Constraint</a>&gt;, T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; Extend&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
+<span class="kw">impl</span>&lt;C: Borrow&lt;<a href="#131-136">Constraint</a>&gt;, T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; Extend&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
 	<span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = C&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
 		<span class="kw">for </span>constraint <span class="kw">in </span>iter {
 			constraint.borrow().add_to(<span class="kw-2">&amp;</span><span class="self">self</span>)
@@ -691,7 +703,7 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;C: Borrow&lt;<a href="#131-136">Constraint</a>&gt;, T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; FromIterator&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
+<span class="kw">impl</span>&lt;C: Borrow&lt;<a href="#131-136">Constraint</a>&gt;, T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; FromIterator&lt;C&gt; <span class="kw">for </span>Interest&lt;T&gt; {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = C&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		<span class="kw">let </span><span class="kw-2">mut </span>interest = <span class="self">Self</span>::new();
 		<a href="#123">interest</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.Extend.html">extend</a>(<a href="#122">iter</a>);
@@ -702,126 +714,126 @@
 <span class="attr">#[must_use]
 #[derive(Clone, Debug, Variant)]
 </span><span class="kw">pub struct </span><a href="#131-136">Constraint</a> {
-	<span class="kw">pub </span>type_: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>,
+	<span class="kw">pub </span>type_: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>,
 	<span class="kw">pub </span>subject: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>,
-	<span class="kw">pub </span>verb: <a href="../auto/enums.rs.html#124-141">ConstraintVerb</a>,
-	<span class="kw">pub </span>value: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
+	<span class="kw">pub </span>verb: <a href="../auto/enums.rs.html#112-129">ConstraintVerb</a>,
+	<span class="kw">pub </span>value: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
 }
 
 <span class="kw">impl </span><a href="#131-136">Constraint</a> {
-	<span class="kw">pub fn </span>has&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;(type_: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>, subject: S, present: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>has&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;(type_: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>, subject: S, present: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#139">type_</a>,
 			subject: <a href="#139">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
 			verb: <span class="kw">if </span>present {
-				<a href="../auto/enums.rs.html#136">ConstraintVerb::IsPresent</a>
+				<a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a>
 			} <span class="kw">else </span>{
-				<a href="../auto/enums.rs.html#138">ConstraintVerb::IsAbsent</a>
+				<a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a>
 			},
 			value: <span class="prelude-val">None</span>,
 		}
 	}
 
-	<span class="kw">pub fn </span>compare&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a>&gt;(type_: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>, subject: S, value: V, equal: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>compare&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>&gt;(type_: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>, subject: S, value: V, equal: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#152">type_</a>,
 			subject: <a href="#152">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
 			verb: <span class="kw">if </span>equal {
-				<a href="../auto/enums.rs.html#126">ConstraintVerb::Equals</a>
+				<a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a>
 			} <span class="kw">else </span>{
-				<a href="../auto/enums.rs.html#128">ConstraintVerb::NotEquals</a>
+				<a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a>
 			},
-			value: <span class="prelude-val">Some</span>(<a href="#152">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
+			value: <span class="prelude-val">Some</span>(<a href="#152">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
 		}
 	}
 
-	<span class="kw">pub fn </span>matches&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;(type_: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>, subject: S, pattern: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>matches&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;(type_: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>, subject: S, pattern: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#165">type_</a>,
 			subject: <a href="#165">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
-			verb: <a href="../auto/enums.rs.html#134">ConstraintVerb::Matches</a>,
-			value: <span class="prelude-val">Some</span>(<a href="#165">pattern</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
+			verb: <a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a>,
+			value: <span class="prelude-val">Some</span>(<a href="#165">pattern</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
 		}
 	}
 
-	<span class="kw">pub fn </span>in_range&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a>&gt;(type_: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>, subject: S, low: V, high: V) -&gt; <span class="self">Self </span>{
+	<span class="kw">pub fn </span>in_range&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>&gt;(type_: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>, subject: S, low: V, high: V) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#174">type_</a>,
 			subject: <a href="#174">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
-			verb: <a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a>,
-			value: <span class="prelude-val">Some</span>((<a href="#174">low</a>, <a href="#174">high</a>).<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
+			verb: <a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a>,
+			value: <span class="prelude-val">Some</span>((<a href="#174">low</a>, <a href="#174">high</a>).<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
 		}
 	}
 
-	<span class="kw">pub fn </span>in_list&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, I: Iterator&lt;Item = V&gt;&gt;(
-		type_: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>,
+	<span class="kw">pub fn </span>in_list&lt;S: Into&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, I: Iterator&lt;Item = V&gt;&gt;(
+		type_: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>,
 		subject: S,
 		one_of: I,
 	) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>values = <a href="#186">one_of</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <a href="#188">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>());
+		<span class="kw">let </span>values = <a href="#186">one_of</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <a href="#188">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>());
 		<span class="self">Self </span>{
 			<a href="#184">type_</a>,
 			subject: <a href="#185">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
-			verb: <a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a>,
+			verb: <a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a>,
 			value: <span class="prelude-val">Some</span>(Variant::tuple_from_iter(<a href="#188">values</a>)),
 		}
 	}
 
-	<span class="kw">pub fn </span>add_to(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span><a href="../auto/object_interest.rs.html#8-17">ObjectInterest</a>) {
-		<a href="#197">interest</a>.<a href="../auto/object_interest.rs.html#29-33">add_constraint</a>(<a class="self" href="#197">self</a>.type_, <span class="kw-2">&amp;</span><a class="self" href="#197">self</a>.subject, <a class="self" href="#197">self</a>.verb, <a class="self" href="#197">self</a>.value.as_ref())
+	<span class="kw">pub fn </span>add_to(<span class="kw-2">&amp;</span><span class="self">self</span>, interest: <span class="kw-2">&amp;</span><a href="../auto/object_interest.rs.html#7-16">ObjectInterest</a>) {
+		<a href="#197">interest</a>.<a href="../auto/object_interest.rs.html#28-32">add_constraint</a>(<a class="self" href="#197">self</a>.type_, <span class="kw-2">&amp;</span><a class="self" href="#197">self</a>.subject, <a class="self" href="#197">self</a>.verb, <a class="self" href="#197">self</a>.value.as_ref())
 	}
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">FromStr</a> <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
-	<span class="kw">type </span><span class="prelude-val">Err </span>= <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>;
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">FromStr</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+	<span class="kw">type </span><span class="prelude-val">Err </span>= <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>;
 
 	<span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#205">s</a> {
-			<span class="string">&quot;equals&quot; </span>| <span class="string">&quot;=&quot; </span>=&gt; <a href="../auto/enums.rs.html#126">ConstraintVerb::Equals</a>,
-			<span class="string">&quot;not-equals&quot; </span>| <span class="string">&quot;!&quot; </span>=&gt; <a href="../auto/enums.rs.html#128">ConstraintVerb::NotEquals</a>,
-			<span class="string">&quot;in-list&quot; </span>| <span class="string">&quot;c&quot; </span>=&gt; <a href="../auto/enums.rs.html#130">ConstraintVerb::InList</a>,
-			<span class="string">&quot;in-range&quot; </span>| <span class="string">&quot;~&quot; </span>=&gt; <a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a>,
-			<span class="string">&quot;matches&quot; </span>| <span class="string">&quot;#&quot; </span>=&gt; <a href="../auto/enums.rs.html#134">ConstraintVerb::Matches</a>,
-			<span class="string">&quot;is-present&quot; </span>| <span class="string">&quot;+&quot; </span>=&gt; <a href="../auto/enums.rs.html#136">ConstraintVerb::IsPresent</a>,
-			<span class="string">&quot;is-absent&quot; </span>| <span class="string">&quot;-&quot; </span>=&gt; <a href="../auto/enums.rs.html#138">ConstraintVerb::IsAbsent</a>,
+			<span class="string">"equals" </span>| <span class="string">"=" </span>=&gt; <a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a>,
+			<span class="string">"not-equals" </span>| <span class="string">"!" </span>=&gt; <a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a>,
+			<span class="string">"in-list" </span>| <span class="string">"c" </span>=&gt; <a href="../auto/enums.rs.html#118">ConstraintVerb::InList</a>,
+			<span class="string">"in-range" </span>| <span class="string">"~" </span>=&gt; <a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a>,
+			<span class="string">"matches" </span>| <span class="string">"#" </span>=&gt; <a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a>,
+			<span class="string">"is-present" </span>| <span class="string">"+" </span>=&gt; <a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a>,
+			<span class="string">"is-absent" </span>| <span class="string">"-" </span>=&gt; <a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a>,
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-					<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
-					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;unknown constraint verb {s}&quot;</span>),
+					<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
+					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"unknown constraint verb {s}"</span>),
 				)),
 		})
 	}
 }
 
-<span class="kw">impl </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
+<span class="kw">impl </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
 	<span class="kw">type </span>Error = &lt;<span class="self">Self </span><span class="kw">as </span>FromStr&gt;::Err;
 
 	<span class="kw">fn </span>try_from(value: <a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#226">value</a> {
-			<span class="string">&#39;=&#39; </span>=&gt; <a href="../auto/enums.rs.html#126">ConstraintVerb::Equals</a>,
-			<span class="string">&#39;!&#39; </span>=&gt; <a href="../auto/enums.rs.html#128">ConstraintVerb::NotEquals</a>,
-			<span class="string">&#39;c&#39; </span>=&gt; <a href="../auto/enums.rs.html#130">ConstraintVerb::InList</a>,
-			<span class="string">&#39;~&#39; </span>=&gt; <a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a>,
-			<span class="string">&#39;#&#39; </span>=&gt; <a href="../auto/enums.rs.html#134">ConstraintVerb::Matches</a>,
-			<span class="string">&#39;+&#39; </span>=&gt; <a href="../auto/enums.rs.html#136">ConstraintVerb::IsPresent</a>,
-			<span class="string">&#39;-&#39; </span>=&gt; <a href="../auto/enums.rs.html#138">ConstraintVerb::IsAbsent</a>,
+			<span class="string">'=' </span>=&gt; <a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a>,
+			<span class="string">'!' </span>=&gt; <a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a>,
+			<span class="string">'c' </span>=&gt; <a href="../auto/enums.rs.html#118">ConstraintVerb::InList</a>,
+			<span class="string">'~' </span>=&gt; <a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a>,
+			<span class="string">'#' </span>=&gt; <a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a>,
+			<span class="string">'+' </span>=&gt; <a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a>,
+			<span class="string">'-' </span>=&gt; <a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a>,
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-					<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
-					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;unknown constraint verb {value}&quot;</span>),
+					<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
+					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"unknown constraint verb {value}"</span>),
 				)),
 		})
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
-	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">'static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
 		&lt;&lt;<span class="self">Self </span><span class="kw">as </span>IntoGlib&gt;::GlibType <span class="kw">as </span>StaticVariantType&gt;::static_variant_type()
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.FromVariant.html">FromVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
-	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.FromVariant.html">FromVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">match </span><a href="#251">variant</a>.classify() {
 			VariantClass::String =&gt; <a href="#251">variant</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;().and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#253">s</a>).ok()),
 			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>)) },
@@ -829,167 +841,177 @@
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
-	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> {
-		<a href="https://doc.rust-lang.org/nightly/core/str/converts/fn.from_utf8.html">str::from_utf8</a>(<span class="kw-2">&amp;</span>[<a class="self" href="#260">self</a>.<a href="#297-302">symbol</a>() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]).unwrap().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> {
+		<a href="https://doc.rust-lang.org/nightly/core/str/converts/fn.from_utf8.html">str::from_utf8</a>(<span class="kw-2">&amp;</span>[<a class="self" href="#260">self</a>.<a href="#297-302">symbol</a>() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]).unwrap().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
 	}
 }
 
-<span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#124-141">ConstraintVerb</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> {
-	<span class="kw">fn </span>from(v: <a href="../auto/enums.rs.html#124-141">ConstraintVerb</a>) -&gt; <span class="self">Self </span>{
-		<a href="#266">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
+<span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#112-129">ConstraintVerb</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> {
+	<span class="kw">fn </span>from(v: <a href="../auto/enums.rs.html#112-129">ConstraintVerb</a>) -&gt; <span class="self">Self </span>{
+		<a href="#266">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
 	}
 }
 
-<span class="kw">impl </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
+<span class="kw">impl </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
 	<span class="attr">#[rustfmt::skip]
 	</span><span class="kw">pub fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
 		<span class="kw">match </span><span class="self"><a href="#273">self</a> </span>{
-			<a href="../auto/enums.rs.html#140">ConstraintVerb::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;unknown constraint verb&quot;</span>),
-			<a href="../auto/enums.rs.html#136">ConstraintVerb::IsPresent</a> | <a href="../auto/enums.rs.html#138">ConstraintVerb::IsAbsent</a> =&gt; <span class="prelude-val">None</span>,
-			<a href="../auto/enums.rs.html#126">ConstraintVerb::Equals</a> | <a href="../auto/enums.rs.html#128">ConstraintVerb::NotEquals</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*one of [Type::STRING, Type::U32, Type::I32, Type::U64, Type::I64, Type::F64, Type::BOOL]*/</span>()),
-			<a href="../auto/enums.rs.html#134">ConstraintVerb::Matches</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*Type::STRING*/</span>()),
-			<a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*(T, T) where T is one of [I/U32, I/U64, DOUBLE]*/</span>()),
-			<a href="../auto/enums.rs.html#130">ConstraintVerb::InList</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*[T] where T is one of [I/U32, I/U64, DOUBLE] - also should be provided as a tuple and not an array/list???*/</span>()),
+			<a href="../auto/enums.rs.html#128">ConstraintVerb::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"unknown constraint verb"</span>),
+			<a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a> | <a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a> =&gt; <span class="prelude-val">None</span>,
+			<a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a> | <a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*one of [Type::STRING, Type::U32, Type::I32, Type::U64, Type::I64, Type::F64, Type::BOOL]*/</span>()),
+			<a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*Type::STRING*/</span>()),
+			<a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*(T, T) where T is one of [I/U32, I/U64, DOUBLE]*/</span>()),
+			<a href="../auto/enums.rs.html#118">ConstraintVerb::InList</a> =&gt; <span class="prelude-val">Some</span>(<span class="comment">/*[T] where T is one of [I/U32, I/U64, DOUBLE] - also should be provided as a tuple and not an array/list???*/</span>()),
 		}
 	}
 
-	<span class="kw">pub fn </span>nickname(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+	<span class="kw">pub fn </span>nickname(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
 		<span class="kw">match </span><span class="self"><a href="#284">self</a> </span>{
-			<a href="../auto/enums.rs.html#126">ConstraintVerb::Equals</a> =&gt; <span class="string">&quot;equals&quot;</span>,
-			<a href="../auto/enums.rs.html#128">ConstraintVerb::NotEquals</a> =&gt; <span class="string">&quot;not-equals&quot;</span>,
-			<a href="../auto/enums.rs.html#130">ConstraintVerb::InList</a> =&gt; <span class="string">&quot;in-list&quot;</span>,
-			<a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a> =&gt; <span class="string">&quot;in-range&quot;</span>,
-			<a href="../auto/enums.rs.html#134">ConstraintVerb::Matches</a> =&gt; <span class="string">&quot;matches&quot;</span>,
-			<a href="../auto/enums.rs.html#136">ConstraintVerb::IsPresent</a> =&gt; <span class="string">&quot;is-present&quot;</span>,
-			<a href="../auto/enums.rs.html#138">ConstraintVerb::IsAbsent</a> =&gt; <span class="string">&quot;is-absent&quot;</span>,
-			<a href="../auto/enums.rs.html#140">ConstraintVerb::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;unknown constraint verb&quot;</span>),
+			<a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a> =&gt; <span class="string">"equals"</span>,
+			<a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a> =&gt; <span class="string">"not-equals"</span>,
+			<a href="../auto/enums.rs.html#118">ConstraintVerb::InList</a> =&gt; <span class="string">"in-list"</span>,
+			<a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a> =&gt; <span class="string">"in-range"</span>,
+			<a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a> =&gt; <span class="string">"matches"</span>,
+			<a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a> =&gt; <span class="string">"is-present"</span>,
+			<a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a> =&gt; <span class="string">"is-absent"</span>,
+			<a href="../auto/enums.rs.html#128">ConstraintVerb::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"unknown constraint verb"</span>),
 		}
 	}
 
 	<span class="kw">pub fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a> {
 		<span class="kw">match </span><span class="self"><a href="#297">self</a> </span>{
-			<a href="../auto/enums.rs.html#140">ConstraintVerb::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;unknown constraint verb&quot;</span>),
-			<span class="kw">_ </span>=&gt; <a class="self" href="#297">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>,
+			<a href="../auto/enums.rs.html#128">ConstraintVerb::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"unknown constraint verb"</span>),
+			<span class="kw">_ </span>=&gt; <a class="self" href="#297">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>,
 		}
 	}
 }
 
-<span class="kw">impl </span>Into&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
+<span class="kw">impl </span>Into&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
 	<span class="kw">fn </span>into(<span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a> {
 		<a class="self" href="#306">self</a>.<a href="#297-302">symbol</a>()
 	}
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-		<a href="../auto/enums.rs.html#17">ConstraintType::PwProperty</a>
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<span class="kw">if </span>f.alternate() {
+			<a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<span class="kw-2">&amp;</span><a class="self" href="#312">self</a>.<a href="#284-295">nickname</a>(), <a href="#312">f</a>)
+		} <span class="kw">else </span>{
+			<a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display::fmt</a>(<span class="kw-2">&amp;</span><a class="self" href="#312">self</a>.<a href="#297-302">symbol</a>(), <a href="#312">f</a>)
+		}
 	}
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">FromStr</a> <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-	<span class="kw">type </span><span class="prelude-val">Err </span>= <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>;
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+		<a href="../auto/enums.rs.html#16">ConstraintType::PwProperty</a>
+	}
+}
+
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">FromStr</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+	<span class="kw">type </span><span class="prelude-val">Err </span>= <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>;
 
 	<span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
-		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#320">s</a> {
-			<span class="string">&quot;pw-global&quot; </span>=&gt; <a href="../auto/enums.rs.html#15">ConstraintType::PwGlobalProperty</a>,
-			<span class="string">&quot;pw&quot; </span>=&gt; <a href="../auto/enums.rs.html#17">ConstraintType::PwProperty</a>,
-			<span class="string">&quot;gobject&quot; </span>=&gt; <a href="../auto/enums.rs.html#19">ConstraintType::GProperty</a>,
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#330">s</a> {
+			<span class="string">"pw-global" </span>=&gt; <a href="../auto/enums.rs.html#14">ConstraintType::PwGlobalProperty</a>,
+			<span class="string">"pw" </span>=&gt; <a href="../auto/enums.rs.html#16">ConstraintType::PwProperty</a>,
+			<span class="string">"gobject" </span>=&gt; <a href="../auto/enums.rs.html#18">ConstraintType::GProperty</a>,
 			<span class="kw">_ </span>=&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-					<a href="../auto/enums.rs.html#487">LibraryErrorEnum::InvalidArgument</a>,
-					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;unknown constraint type {s}&quot;</span>),
+					<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
+					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"unknown constraint type {s}"</span>),
 				)),
 		})
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">&#39;static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">'static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
 		&lt;&lt;<span class="self">Self </span><span class="kw">as </span>IntoGlib&gt;::GlibType <span class="kw">as </span>StaticVariantType&gt;::static_variant_type()
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.FromVariant.html">FromVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">match </span><a href="#341">variant</a>.classify() {
-			VariantClass::String =&gt; <a href="#341">variant</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;().and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#343">s</a>).ok()),
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.FromVariant.html">FromVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+	<span class="kw">fn </span>from_variant(variant: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+		<span class="kw">match </span><a href="#351">variant</a>.classify() {
+			VariantClass::String =&gt; <a href="#351">variant</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;().and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#353">s</a>).ok()),
 			<span class="kw">_ </span>=&gt; <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(from_glib(variant.get()<span class="question-mark">?</span>)) },
 		}
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> {
-		<a class="self" href="#350">self</a>.<a href="#362-370">name</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> {
+		<a class="self" href="#360">self</a>.<a href="#372-380">name</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
 	}
 }
 
-<span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#11-22">ConstraintType</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a> {
-	<span class="kw">fn </span>from(t: <a href="../auto/enums.rs.html#11-22">ConstraintType</a>) -&gt; <span class="self">Self </span>{
-		<a href="#356">t</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
+<span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#10-21">ConstraintType</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> {
+	<span class="kw">fn </span>from(t: <a href="../auto/enums.rs.html#10-21">ConstraintType</a>) -&gt; <span class="self">Self </span>{
+		<a href="#366">t</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
 	}
 }
 
-<span class="kw">impl </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
-		<span class="kw">match </span><span class="self"><a href="#362">self</a> </span>{
-			<a href="../auto/enums.rs.html#17">ConstraintType::PwProperty</a> =&gt; <span class="string">&quot;pw&quot;</span>,
-			<a href="../auto/enums.rs.html#15">ConstraintType::PwGlobalProperty</a> =&gt; <span class="string">&quot;pw-global&quot;</span>,
-			<a href="../auto/enums.rs.html#19">ConstraintType::GProperty</a> =&gt; <span class="string">&quot;gobject&quot;</span>,
-			<a href="../auto/enums.rs.html#13">ConstraintType::None</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;no constraint type&quot;</span>),
-			<a href="../auto/enums.rs.html#21">ConstraintType::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;unknown constraint type&quot;</span>),
+<span class="kw">impl </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+	<span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+		<span class="kw">match </span><span class="self"><a href="#372">self</a> </span>{
+			<a href="../auto/enums.rs.html#16">ConstraintType::PwProperty</a> =&gt; <span class="string">"pw"</span>,
+			<a href="../auto/enums.rs.html#14">ConstraintType::PwGlobalProperty</a> =&gt; <span class="string">"pw-global"</span>,
+			<a href="../auto/enums.rs.html#18">ConstraintType::GProperty</a> =&gt; <span class="string">"gobject"</span>,
+			<a href="../auto/enums.rs.html#12">ConstraintType::None</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"no constraint type"</span>),
+			<a href="../auto/enums.rs.html#20">ConstraintType::__Unknown</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"unknown constraint type"</span>),
 		}
 	}
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"serde"</span>)]
 </span><span class="kw">mod </span>impl_serde {
 	<span class="kw">use </span>{
-		<span class="kw">super</span>::{<a href="#131-136">Constraint</a>, <a href="../auto/enums.rs.html#11-22">ConstraintType</a>, <a href="../auto/enums.rs.html#124-141">ConstraintVerb</a>},
+		<span class="kw">super</span>::{<a href="#131-136">Constraint</a>, <a href="../auto/enums.rs.html#10-21">ConstraintType</a>, <a href="../auto/enums.rs.html#112-129">ConstraintVerb</a>},
 		<span class="kw">crate</span>::lua::{<a href="../lua/error.rs.html#14-23">LuaError</a>, <a href="../lua/variant.rs.html#13-20">LuaVariant</a>},
-		glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, <a href="https://docs.rs/glib-macros/0.18.2/glib_macros/derive.Variant.html">Variant</a>},
+		glib::variant::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>},
 		serde::{
-			de::{<a class="self" href="https://docs.rs/serde/1.0.188/serde/de/index.html">self</a>, <a href="https://docs.rs/serde/1.0.188/serde/de/trait.Error.html">Error</a> <span class="kw">as _</span>, <a href="https://docs.rs/serde/1.0.188/serde/de/trait.MapAccess.html">MapAccess</a>, <a href="https://docs.rs/serde/1.0.188/serde/de/trait.SeqAccess.html">SeqAccess</a>, <a href="https://docs.rs/serde/1.0.188/serde/de/enum.Unexpected.html">Unexpected</a>, <a href="https://docs.rs/serde/1.0.188/serde/de/trait.Visitor.html">Visitor</a>},
-			<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a>,
-			<a href="https://docs.rs/serde_derive/1.0.188/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde/1.0.188/serde/de/trait.Deserializer.html">Deserializer</a>, <a href="https://docs.rs/serde_derive/1.0.188/serde_derive/derive.Serialize.html">Serialize</a>, <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">Serializer</a>,
+			de::{<a class="self" href="https://docs.rs/serde/1.0.197/serde/de/index.html">self</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html">Error</a> <span class="kw">as _</span>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.MapAccess.html">MapAccess</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html">SeqAccess</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/enum.Unexpected.html">Unexpected</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html">Visitor</a>},
+			<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a>,
+			<a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html">Deserializer</a>, <a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Serialize.html">Serialize</a>, <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>,
 		},
 		std::{<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">borrow::Cow</a>, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">str::FromStr</a>},
 	};
 
-	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
-		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
-			&lt;Cow&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;::deserialize(<a href="#388">deserializer</a>).and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#389">s</a>).map_err(D::Error::custom))
+	<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">'de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
+			&lt;Cow&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;::deserialize(<a href="#398">deserializer</a>).and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#399">s</a>).map_err(D::Error::custom))
 		}
 	}
 
-	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#124-141">ConstraintVerb</a> {
-		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-			<a class="self" href="#394">self</a>.<a href="#297-302">symbol</a>().<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a href="#394">serializer</a>)
+	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<a class="self" href="#404">self</a>.<a href="#297-302">symbol</a>().<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a href="#404">serializer</a>)
 		}
 	}
 
-	<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
-			&lt;Cow&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;::deserialize(<a href="#400">deserializer</a>).and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#401">s</a>).map_err(D::Error::custom))
+	<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">'de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
+			&lt;Cow&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;&gt;::deserialize(<a href="#410">deserializer</a>).and_then(|s| <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span><a href="#411">s</a>).map_err(D::Error::custom))
 		}
 	}
 
-	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#11-22">ConstraintType</a> {
-		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-			<a class="self" href="#406">self</a>.<a href="#362-370">name</a>().<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a href="#406">serializer</a>)
+	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<a class="self" href="#416">self</a>.<a href="#372-380">name</a>().<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a href="#416">serializer</a>)
 		}
 	}
 
-	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="#131-136">Constraint</a> {
-		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-			<span class="kw">let </span>compact = !<a href="#412">serializer</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">is_human_readable</a>();
-			<span class="kw">let </span><span class="kw-2">mut </span>state = serializer.serialize_struct(<span class="string">&quot;Constraint&quot;</span>, <span class="number">4</span>)<span class="question-mark">?</span>;
-			state.serialize_field(<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.type_)<span class="question-mark">?</span>;
-			state.serialize_field(<span class="string">&quot;subject&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.subject)<span class="question-mark">?</span>;
-			state.serialize_field(<span class="string">&quot;verb&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.verb)<span class="question-mark">?</span>;
+	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="#131-136">Constraint</a> {
+		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<span class="kw">let </span>compact = !<a href="#422">serializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">is_human_readable</a>();
+			<span class="kw">let </span><span class="kw-2">mut </span>state = serializer.serialize_struct(<span class="string">"Constraint"</span>, <span class="number">4</span>)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">"type"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.type_)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">"subject"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.subject)<span class="question-mark">?</span>;
+			state.serialize_field(<span class="string">"verb"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.verb)<span class="question-mark">?</span>;
 			state.serialize_field(
-				<span class="string">&quot;value&quot;</span>,
+				<span class="string">"value"</span>,
 				<span class="kw-2">&amp;</span><span class="self">self
 					</span>.value
 					.as_ref()
@@ -997,107 +1019,107 @@
 					.transpose()
 					.map_err(LuaError::serde_error_ser)<span class="question-mark">?</span>,
 			)<span class="question-mark">?</span>;
-			<a href="#414">state</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">end</a>()
+			<a href="#424">state</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">end</a>()
 		}
 	}
 
 	<span class="attr">#[rustfmt::skip]
-	</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="#131-136">Constraint</a> {
-		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
+	</span><span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><a href="#131-136">Constraint</a> {
+		<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">'de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt; {
 			<span class="kw">enum </span>Field { Type, Subject, Verb, Value }
 
-			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="#434">Field</a> {
-				<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#434">Field</a>, D::Error&gt; {
+			<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><a href="#444">Field</a> {
+				<span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">'de</span>&gt;&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#444">Field</a>, D::Error&gt; {
 					<span class="kw">struct </span>FieldVisitor;
 
-					<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="#438">FieldVisitor</a> {
-						<span class="kw">type </span>Value = <a href="#434">Field</a>;
+					<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><a href="#448">FieldVisitor</a> {
+						<span class="kw">type </span>Value = <a href="#444">Field</a>;
 
 						<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-							<a href="#443">formatter</a>.write_str(<span class="string">&quot;`type` or `subject` or `verb` or `value`&quot;</span>)
+							<a href="#453">formatter</a>.write_str(<span class="string">"`type` or `subject` or `verb` or `value`"</span>)
 						}
 
-						<span class="kw">fn </span>visit_str&lt;E: <a href="https://docs.rs/serde/1.0.188/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#434">Field</a>, E&gt; {
-							<span class="kw">match </span><a href="#447">value</a> {
-								<span class="string">&quot;type&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#434">Field::Type</a>),
-								<span class="string">&quot;subject&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#434">Field::Subject</a>),
-								<span class="string">&quot;verb&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#434">Field::Verb</a>),
-								<span class="string">&quot;value&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#434">Field::Value</a>),
-								<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(E::unknown_field(<a href="#447">value</a>, <a href="#569">FIELDS</a>)),
+						<span class="kw">fn </span>visit_str&lt;E: <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#444">Field</a>, E&gt; {
+							<span class="kw">match </span><a href="#457">value</a> {
+								<span class="string">"type" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#444">Field::Type</a>),
+								<span class="string">"subject" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#444">Field::Subject</a>),
+								<span class="string">"verb" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#444">Field::Verb</a>),
+								<span class="string">"value" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#444">Field::Value</a>),
+								<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(E::unknown_field(<a href="#457">value</a>, <a href="#579">FIELDS</a>)),
 							}
 						}
 					}
 
-					<a href="#437">deserializer</a>.<a href="https://docs.rs/serde/1.0.188/serde/de/trait.Deserializer.html">deserialize_identifier</a>(<a href="#438">FieldVisitor</a>)
+					<a href="#447">deserializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html">deserialize_identifier</a>(<a href="#448">FieldVisitor</a>)
 				}
 			}
 
 			<span class="kw">struct </span>ConstraintVisitor;
 
-			<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><a href="#462">ConstraintVisitor</a> {
+			<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><a href="#472">ConstraintVisitor</a> {
 				<span class="kw">type </span>Value = <a href="#131-136">Constraint</a>;
 
 				<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-					<a href="#467">formatter</a>.write_str(<span class="string">&quot;struct Constraint&quot;</span>)
+					<a href="#477">formatter</a>.write_str(<span class="string">"struct Constraint"</span>)
 				}
 
-				<span class="kw">fn </span>visit_seq&lt;V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
+				<span class="kw">fn </span>visit_seq&lt;V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
 					<span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
 
 					<span class="kw">let </span><span class="kw-2">mut </span>subject: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a> = seq.next_element()<span class="question-mark">?
-						</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <a href="#472">len</a> += <span class="number">1</span>;
+						</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <a href="#482">len</a> += <span class="number">1</span>;
 
-					<span class="kw">let </span>type_ = <span class="kw">match </span>ConstraintType::from_str(<span class="kw-2">&amp;</span><a href="#474">subject</a>) {
+					<span class="kw">let </span>type_ = <span class="kw">match </span>ConstraintType::from_str(<span class="kw-2">&amp;</span><a href="#484">subject</a>) {
 						<span class="prelude-val">Ok</span>(type_) =&gt; {
-							<a href="#474">subject</a> = seq.next_element()<span class="question-mark">?
-								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <a href="#472">len</a> += <span class="number">1</span>;
-							<a href="#478">type_</a>
+							<a href="#484">subject</a> = seq.next_element()<span class="question-mark">?
+								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <a href="#482">len</a> += <span class="number">1</span>;
+							<a href="#488">type_</a>
 						},
 						<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; ConstraintType::default(),
 					};
 
 					<span class="kw">let </span>verb = seq.next_element()<span class="question-mark">?
-						</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <a href="#472">len</a> += <span class="number">1</span>;
+						</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="self">self</span>))<span class="question-mark">?</span>; <a href="#482">len</a> += <span class="number">1</span>;
 
-					<span class="kw">let </span>value = <span class="kw">match </span><a href="#486">verb</a> {
-						<a href="../auto/enums.rs.html#140">ConstraintVerb::__Unknown</a>(v) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::invalid_value(Unexpected::Signed(<a href="#490">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()), <span class="kw-2">&amp;</span><span class="string">&quot;constraint verb&quot;</span>)),
-						<a href="../auto/enums.rs.html#136">ConstraintVerb::IsPresent</a> | <a href="../auto/enums.rs.html#138">ConstraintVerb::IsAbsent</a> =&gt; <span class="prelude-val">None</span>,
-						<a href="../auto/enums.rs.html#126">ConstraintVerb::Equals</a> | <a href="../auto/enums.rs.html#128">ConstraintVerb::NotEquals</a> =&gt; <span class="prelude-val">Some</span>(
+					<span class="kw">let </span>value = <span class="kw">match </span><a href="#496">verb</a> {
+						<a href="../auto/enums.rs.html#128">ConstraintVerb::__Unknown</a>(v) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::invalid_value(Unexpected::Signed(<a href="#500">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()), <span class="kw-2">&amp;</span><span class="string">"constraint verb"</span>)),
+						<a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a> | <a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a> =&gt; <span class="prelude-val">None</span>,
+						<a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a> | <a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a> =&gt; <span class="prelude-val">Some</span>(
 							seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">?
-								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">&quot;constraint value&quot;</span>))<span class="question-mark">?
+								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">"constraint value"</span>))<span class="question-mark">?
 								</span>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
 						),
-						<a href="../auto/enums.rs.html#134">ConstraintVerb::Matches</a> =&gt; <span class="prelude-val">Some</span>(
+						<a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a> =&gt; <span class="prelude-val">Some</span>(
 							seq.next_element::&lt;<span class="kw-2">&amp;</span>str&gt;()<span class="question-mark">?
-								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">&quot;constraint match pattern&quot;</span>))<span class="question-mark">?
-								</span>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
+								</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">"constraint match pattern"</span>))<span class="question-mark">?
+								</span>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()
 						),
-						<a href="../auto/enums.rs.html#132">ConstraintVerb::InRange</a> =&gt; <span class="prelude-val">Some</span>(Variant::tuple_from_iter([
+						<a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a> =&gt; <span class="prelude-val">Some</span>(Variant::tuple_from_iter([
 								seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">?
-									</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range min&quot;</span>))<span class="question-mark">?
+									</span>.ok_or_else(|| V::Error::invalid_length(len, <span class="kw-2">&amp;</span><span class="string">"constraint range min"</span>))<span class="question-mark">?
 									</span>.<a href="../lua/variant.rs.html#13-20">into_variant</a>(),
 								seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">?
-									</span>.ok_or_else(|| V::Error::invalid_length(len + <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">&quot;constraint range max&quot;</span>))<span class="question-mark">?
+									</span>.ok_or_else(|| V::Error::invalid_length(len + <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">"constraint range max"</span>))<span class="question-mark">?
 									</span>.<a href="../lua/variant.rs.html#13-20">into_variant</a>(),
 						])),
-						<a href="../auto/enums.rs.html#130">ConstraintVerb::InList</a> =&gt; {
-							<span class="kw">let </span><span class="kw-2">mut </span>values: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">glib::Variant</a>&gt; = Vec::with_capacity(<a href="#471">seq</a>.<a href="https://docs.rs/serde/1.0.188/serde/de/trait.SeqAccess.html">size_hint</a>().unwrap_or(<span class="number">0</span>));
+						<a href="../auto/enums.rs.html#118">ConstraintVerb::InList</a> =&gt; {
+							<span class="kw">let </span><span class="kw-2">mut </span>values: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">glib::Variant</a>&gt; = Vec::with_capacity(<a href="#481">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html">size_hint</a>().unwrap_or(<span class="number">0</span>));
 							<span class="kw">while let </span><span class="prelude-val">Some</span>(value) = seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">? </span>{
 								values.push(value.into());
 							}
-							<span class="prelude-val">Some</span>(glib::Variant::tuple_from_iter(<a href="#511">values</a>))
+							<span class="prelude-val">Some</span>(glib::Variant::tuple_from_iter(<a href="#521">values</a>))
 						},
 					};
 
 					<span class="prelude-val">Ok</span>(<a href="#131-136">Constraint</a> {
-						<a href="#477">type_</a>,
-						<a href="#474">subject</a>,
-						<a href="#486">verb</a>,
-						<a href="#489">value</a>,
+						<a href="#487">type_</a>,
+						<a href="#484">subject</a>,
+						<a href="#496">verb</a>,
+						<a href="#499">value</a>,
 					})
 				}
 
-				<span class="kw">fn </span>visit_map&lt;V: MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>map: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
+				<span class="kw">fn </span>visit_map&lt;V: MapAccess&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>map: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
 					<span class="kw">let </span><span class="kw-2">mut </span>type_ = <span class="prelude-val">None</span>;
 					<span class="kw">let </span><span class="kw-2">mut </span>subject = <span class="prelude-val">None</span>;
 					<span class="kw">let </span><span class="kw-2">mut </span>verb = <span class="prelude-val">None</span>;
@@ -1106,41 +1128,41 @@
 						<span class="kw">match </span>key {
 							Field::Type =&gt; {
 								<span class="kw">if </span>type_.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;type&quot;</span>))
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">"type"</span>))
 								}
 								type_ = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 							Field::Subject =&gt; {
 								<span class="kw">if </span>subject.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;subject&quot;</span>))
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">"subject"</span>))
 								}
 								subject = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 							Field::Verb =&gt; {
 								<span class="kw">if </span>verb.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;verb&quot;</span>))
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">"verb"</span>))
 								}
 								verb = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 							Field::Value =&gt; {
 								<span class="kw">if </span>value.is_some() {
-									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">&quot;value&quot;</span>))
+									<span class="kw">return </span><span class="prelude-val">Err</span>(V::Error::duplicate_field(<span class="string">"value"</span>))
 								}
 								value = <span class="prelude-val">Some</span>(map.next_value()<span class="question-mark">?</span>);
 							},
 						}
 					}
 					<span class="prelude-val">Ok</span>(<a href="#131-136">Constraint</a> {
-						type_: type_.ok_or_else(|| V::Error::missing_field(<span class="string">&quot;type&quot;</span>))<span class="question-mark">?</span>,
-						subject: subject.ok_or_else(|| V::Error::missing_field(<span class="string">&quot;subject&quot;</span>))<span class="question-mark">?</span>,
-						verb: verb.ok_or_else(|| V::Error::missing_field(<span class="string">&quot;verb&quot;</span>))<span class="question-mark">?</span>,
-						value: <a href="#531">value</a>.unwrap_or_default().map(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
+						type_: type_.ok_or_else(|| V::Error::missing_field(<span class="string">"type"</span>))<span class="question-mark">?</span>,
+						subject: subject.ok_or_else(|| V::Error::missing_field(<span class="string">"subject"</span>))<span class="question-mark">?</span>,
+						verb: verb.ok_or_else(|| V::Error::missing_field(<span class="string">"verb"</span>))<span class="question-mark">?</span>,
+						value: <a href="#541">value</a>.unwrap_or_default().map(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
 					})
 				}
 			}
 
-			<span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>] = <span class="kw-2">&amp;</span>[<span class="string">&quot;type&quot;</span>, <span class="string">&quot;subject&quot;</span>, <span class="string">&quot;verb&quot;</span>, <span class="string">&quot;value&quot;</span>];
-			<a href="#433">deserializer</a>.<a href="https://docs.rs/serde/1.0.188/serde/de/trait.Deserializer.html">deserialize_struct</a>(<span class="string">&quot;Constraint&quot;</span>, <a href="#569">FIELDS</a>, <a href="#462">ConstraintVisitor</a>)
+			<span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>] = <span class="kw-2">&amp;</span>[<span class="string">"type"</span>, <span class="string">"subject"</span>, <span class="string">"verb"</span>, <span class="string">"value"</span>];
+			<a href="#443">deserializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html">deserialize_struct</a>(<span class="string">"Constraint"</span>, <a href="#579">FIELDS</a>, <a href="#472">ConstraintVisitor</a>)
 		}
 	}
 }

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/props.rs`."><title>props.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/props.rs`."><title>props.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -82,26 +84,26 @@
 <a href="#82" id="82">82</a>
 <a href="#83" id="83">83</a>
 <a href="#84" id="84">84</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>};
+</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>};
 
-<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;experimental&quot;</span>)))]
+<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"experimental"</span>)))]
 #[derive(Debug)]
 </span><span class="kw">pub struct </span><a href="../../../wireplumber/spa/struct.SpaProps.html">SpaProps</a> {
-	params: <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>,
+	params: <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>,
 }
 
 <span class="kw">impl </span><a href="#5-7">SpaProps</a> {
-	<span class="kw">pub fn </span>with_params(params: <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
+	<span class="kw">pub fn </span>with_params(params: <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
 		<span class="comment">// TODO: assert id/type
 		</span><span class="prelude-val">Ok</span>(<span class="self">Self </span>{ <a href="#10">params</a> })
 	}
 
-	<span class="kw">pub fn </span>into_params(<span class="self">self</span>) -&gt; <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a> {
+	<span class="kw">pub fn </span>into_params(<span class="self">self</span>) -&gt; <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a> {
 		<a class="self" href="#15">self</a>.params
 	}
 
-	<span class="kw">pub fn </span>params(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="kw">impl </span>Iterator&lt;Item = (<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="../auto/spa_pod.rs.html#8-17">SpaPod</a>)&gt;&gt; {
-		<span class="kw">match </span><a class="self" href="#19">self</a>.params.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_params) {
+	<span class="kw">pub fn </span>params(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="kw">impl </span>Iterator&lt;Item = (<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>)&gt;&gt; {
+		<span class="kw">match </span><a class="self" href="#19">self</a>.params.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_params) {
 			<span class="prelude-val">Some</span>(params) =&gt; <a href="#21">params</a>.<a href="pod.rs.html#187-251">struct_fields</a>(<span class="bool-val">false</span>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(Vec::new().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()),
 		}
@@ -110,43 +112,43 @@
 	<span class="kw">pub fn </span>has_volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<span class="self"><a href="#26">self</a>
 			</span>.params
-			.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
+			.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
 			.is_some()
-			|| <a class="self" href="#26">self</a>.params.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).is_some()
+			|| <a class="self" href="#26">self</a>.params.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).is_some()
 	}
 
 	<span class="kw">pub fn </span>mute(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<span class="self"><a href="#34">self</a>
 			</span>.params
-			.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_mute)
-			.and_then(|pod| <a href="#38">pod</a>.<a href="../auto/spa_pod.rs.html#146-152">boolean</a>())
+			.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_mute)
+			.and_then(|pod| <a href="#38">pod</a>.<a href="../auto/spa_pod.rs.html#145-151">boolean</a>())
 			.unwrap_or_default()
 	}
 
 	<span class="kw">pub fn </span>channel_volume(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a> {
 		<span class="self"><a href="#42">self</a>
 			</span>.params
-			.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
+			.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes)
 			.and_then(|pod| <a href="#46">pod</a>.<a href="pod.rs.html#166-169">array_iterator</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">nth</a>(<a href="#42">channel_index</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>))
 			.or_else(|| {
 				<span class="self"><a href="#42">self</a>
 					</span>.params
-					.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
-					.and_then(|pod| <a href="#51">pod</a>.<a href="../auto/spa_pod.rs.html#197-203">float</a>())
+					.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume)
+					.and_then(|pod| <a href="#51">pod</a>.<a href="../auto/spa_pod.rs.html#196-202">float</a>())
 			})
 			.unwrap_or(<span class="number">1.0f32</span>)
 	}
 
 	<span class="kw">pub fn </span>set_channel_volume(<span class="kw-2">&amp;</span><span class="self">self</span>, channel_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, volume: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ()&gt; {
-		<span class="kw">let </span>succ = <span class="kw">match </span><a class="self" href="#56">self</a>.params.<a href="pod.rs.html#271-284">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes) {
+		<span class="kw">let </span>succ = <span class="kw">match </span><a class="self" href="#56">self</a>.params.<a href="pod.rs.html#272-285">find_spa_property</a>(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_channelVolumes) {
 			<span class="prelude-val">Some</span>(pod) =&gt; {
 				<span class="kw">let </span><span class="kw-2">mut </span>data: Vec&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt; = <a href="#58">pod</a>.<a href="pod.rs.html#166-169">array_iterator</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>();
 				<span class="kw-2">*</span>data.get_mut(channel_index <span class="kw">as </span>usize).ok_or(())<span class="question-mark">? </span>= <a href="#56">volume</a>;
-				<a href="#58">pod</a>.<a href="../auto/spa_pod.rs.html#489-493">set_pod</a>(<span class="kw-2">&amp;</span><a href="#59">data</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>())
+				<a href="#58">pod</a>.<a href="../auto/spa_pod.rs.html#488-492">set_pod</a>(<span class="kw-2">&amp;</span><a href="#59">data</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>())
 			},
 			<span class="prelude-val">None </span>=&gt; {
 				<span class="kw">let </span>pod = <span class="self">self</span>.params.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).ok_or(())<span class="question-mark">?</span>;
-				<a href="#64">pod</a>.<a href="../auto/spa_pod.rs.html#454-458">set_float</a>(<a href="#56">volume</a>)
+				<a href="#64">pod</a>.<a href="../auto/spa_pod.rs.html#453-457">set_float</a>(<a href="#56">volume</a>)
 			},
 		};
 		<span class="kw">if </span>succ {
@@ -157,7 +159,7 @@
 	}
 
 	<span class="kw">pub async fn </span>from_object&lt;O: IsA&lt;<a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>&gt;&gt;(obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">let </span>params = obj.params_future(<span class="prelude-val">Some</span>(<span class="string">&quot;Props&quot;</span>), <span class="prelude-val">None</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>params = obj.params_future(<span class="prelude-val">Some</span>(<span class="string">"Props"</span>), <span class="prelude-val">None</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">for </span>item <span class="kw">in </span>params {
 			<span class="kw">if </span>item.find_spa_property(<span class="kw-2">&amp;</span>libspa_sys::SPA_PROP_volume).is_some() {
 				<span class="kw">return </span><span class="self">Self</span>::with_params(item)

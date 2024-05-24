@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/type.rs`."><title>type.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/type.rs`."><title>type.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -170,8 +172,8 @@
 <a href="#170" id="170">170</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="id_table.rs.html#5-7">spa::SpaIdTable</a>};
 
-<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
-	<span class="attr">#[doc(alias = <span class="string">&quot;WpSpaType&quot;</span>)]
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
+	<span class="attr">#[doc(alias = <span class="string">"WpSpaType"</span>)]
 	#[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
 	</span><span class="kw">pub struct </span><a href="../../../wireplumber/spa/struct.SpaType.html">SpaType</a>(BoxedInline&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>&gt;);
 
@@ -238,7 +240,7 @@
 	}
 
 	<span class="kw">pub fn </span>number(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a> {
-		<a class="self" href="#70">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+		<a class="self" href="#70">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 	}
 
 	<span class="attr">#[cfg(libspa_linked)]
@@ -246,52 +248,52 @@
 		<span class="kw">unsafe </span>{ libspa_sys::spa_types.iter().map(|ty| <span class="self">Self</span>::from_id_unchecked(ty.type_)) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_get_object_id_values_table&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_object_id_values_table&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_get_object_id_values_table"</span>)]
+	#[doc(alias = <span class="string">"get_object_id_values_table"</span>)]
 	</span><span class="kw">pub fn </span>object_id_values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="id_table.rs.html#5-7">SpaIdTable</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_object_id_values_table(<a class="self" href="#81">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_object_id_values_table(<a class="self" href="#81">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_get_values_table&quot;</span>)]
-	#[doc(alias = <span class="string">&quot;get_values_table&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_get_values_table"</span>)]
+	#[doc(alias = <span class="string">"get_values_table"</span>)]
 	</span><span class="kw">pub fn </span>values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="id_table.rs.html#5-7">SpaIdTable</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_values_table(<a class="self" href="#87">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_values_table(<a class="self" href="#87">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_is_fundamental&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_is_fundamental"</span>)]
 	</span><span class="kw">pub fn </span>is_fundamental(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_fundamental(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_fundamental(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_is_id&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_is_id"</span>)]
 	</span><span class="kw">pub fn </span>is_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_id(<a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_id(<a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_is_object&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_is_object"</span>)]
 	</span><span class="kw">pub fn </span>is_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_object(<a class="self" href="#102">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_object(<a class="self" href="#102">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_name&quot;</span>)]
-	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_type_name(<a class="self" href="#107">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_name"</span>)]
+	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
+		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_type_name(<a class="self" href="#107">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_parent&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_parent"</span>)]
 	#[must_use]
 	</span><span class="kw">pub fn </span>parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#3-11">SpaType</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_parent(<a class="self" href="#113">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_parent(<a class="self" href="#113">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">&quot;wp_spa_type_from_name&quot;</span>)]
+	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_from_name"</span>)]
 	</span><span class="kw">pub fn </span>from_name(name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#3-11">SpaType</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_from_name(<a href="#118">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_from_name(<a href="#118">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 }
 
 <span class="kw">impl </span>TryFromGlib&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>&gt; <span class="kw">for </span><a href="#3-11">SpaType</a> {
-	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
+	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
 
 	<span class="kw">unsafe fn </span>try_from_glib(val: <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="self">Self</span>::try_from(<a href="#126">val</a>)
@@ -299,14 +301,14 @@
 }
 
 <span class="kw">impl </span>TryFrom&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>&gt; <span class="kw">for </span><a href="#3-11">SpaType</a> {
-	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
+	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
 
 	<span class="kw">fn </span>try_from(value: <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="self">Self</span>::from_id(<a href="#134">value</a>).ok_or(GlibNoneError)
 	}
 }
 
-<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">IntoGlib</a> <span class="kw">for </span><a href="#3-11">SpaType</a> {
+<span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">IntoGlib</a> <span class="kw">for </span><a href="#3-11">SpaType</a> {
 	<span class="kw">type </span>GlibType = <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>;
 	<span class="kw">fn </span>into_glib(<span class="self">self</span>) -&gt; <span class="self">Self</span>::GlibType {
 		<a class="self" href="#141">self</a>.inner
@@ -314,11 +316,11 @@
 }
 
 <span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="#3-11">SpaType</a> {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-		<span class="kw">let </span><span class="kw-2">mut </span>f = <a href="#147">f</a>.debug_struct(<span class="string">&quot;SpaType&quot;</span>);
-		<a href="#148">f</a>.field(<span class="string">&quot;id&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+		<span class="kw">let </span><span class="kw-2">mut </span>f = <a href="#147">f</a>.debug_struct(<span class="string">"SpaType"</span>);
+		<a href="#148">f</a>.field(<span class="string">"id"</span>, <span class="kw-2">&amp;</span><a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <a class="self" href="#147">self</a>.<a href="#107-109">name</a>() {
-			<a href="#148">f</a>.field(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><a href="#150">name</a>);
+			<a href="#148">f</a>.field(<span class="string">"name"</span>, <span class="kw-2">&amp;</span><a href="#150">name</a>);
 		}
 		<a href="#148">f</a>.finish()
 	}

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `examples/src/bin/exec.rs`."><title>exec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wpexec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../wpexec/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `examples/src/bin/exec.rs`."><title>exec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wpexec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../wpexec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -282,7 +284,7 @@
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
 </span><span class="kw">use </span>{
-	anyhow::{<a href="https://docs.rs/anyhow/1.0.75/anyhow/macro.anyhow.html">format_err</a>, <a href="https://docs.rs/anyhow/1.0.75/anyhow/trait.Context.html">Context</a>, <span class="prelude-ty">Result</span>},
+	anyhow::{<a href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err</a>, <a href="https://docs.rs/anyhow/1.0.81/anyhow/trait.Context.html">Context</a>, <span class="prelude-ty">Result</span>},
 	clap::{<a href="https://docs.rs/clap_derive/3.2.25/clap_derive/derive.ValueEnum.html">ArgEnum</a>, <a href="https://docs.rs/clap_derive/3.2.25/clap_derive/derive.Parser.html">Parser</a>},
 	std::{<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html">cell::RefCell</a>, <a href="https://doc.rust-lang.org/nightly/core/macro.env.html">env</a>, <a href="https://doc.rust-lang.org/nightly/std/fs/index.html">fs</a>, <a href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html">path::Path</a>, <a href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html">rc::Rc</a>},
 	wireplumber::{
@@ -295,7 +297,7 @@
 };
 
 <span class="doccomment">/// [GLib logging domain](glib::g_log)
-</span><span class="kw">const </span><a href="../../wpexec/constant.LOG_DOMAIN.html">LOG_DOMAIN</a>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">&quot;wpexec.rs&quot;</span>;
+</span><span class="kw">const </span><a href="../../wpexec/constant.LOG_DOMAIN.html">LOG_DOMAIN</a>: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">"wpexec.rs"</span>;
 
 <span class="doccomment">/// The type of module to be loaded
 </span><span class="attr">#[derive(ArgEnum, Copy, Clone, Debug)]
@@ -312,22 +314,22 @@
 
 <span class="attr">#[cfg_attr(
 	doc,
-	doc = <span class="string">&quot;Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)&quot;
+	doc = <span class="string">"Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)"
 </span>)]
 #[derive(Parser, Debug)]
 #[clap(version)]
 </span><span class="kw">struct </span><a href="#43-59">Args</a> {
-	<span class="attr">#[clap(arg_enum, short = <span class="string">&#39;t&#39;</span>, long = <span class="string">&quot;type&quot;</span>, default_value = <span class="string">&quot;lua&quot;</span>)]
+	<span class="attr">#[clap(arg_enum, short = <span class="string">'t'</span>, long = <span class="string">"type"</span>, default_value = <span class="string">"lua"</span>)]
 	</span>module_type: <a href="#26-35">ModuleType</a>,
 
 	<span class="doccomment">/// Arguments to pass to the loaded module
 	///
 	/// Lua scripts only support arrays and dictionary maps.
-	</span><span class="attr">#[clap(short = <span class="string">&#39;J&#39;</span>, long = <span class="string">&quot;json&quot;</span>)]
+	</span><span class="attr">#[clap(short = <span class="string">'J'</span>, long = <span class="string">"json"</span>)]
 	</span>json_arg: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
 
 	<span class="doccomment">/// Associated plugins to load, provided by the module
-	</span><span class="attr">#[clap(short, long = <span class="string">&quot;plugin&quot;</span>)]
+	</span><span class="attr">#[clap(short, long = <span class="string">"plugin"</span>)]
 	</span>plugins: Vec&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
 
 	<span class="doccomment">/// Name or full path of the module or script to load
@@ -339,7 +341,7 @@
 /// Once this function returns, the script will continue to run in the background until
 /// the service is interrupted.
 </span><span class="kw">async fn </span><a href="../../wpexec/fn.main_async.html">main_async</a>(core: <span class="kw-2">&amp;</span><a href="../../wireplumber/auto/core/struct.Core.html">Core</a>, args: <span class="kw-2">&amp;</span><a href="#43-59">Args</a>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-	<span class="kw">let </span>path = args.module().expect(<span class="string">&quot;already checked this in main()&quot;</span>);
+	<span class="kw">let </span>path = args.module().expect(<span class="string">"already checked this in main()"</span>);
 	<span class="kw">let </span>path = {
 		<span class="kw">let </span>path = Path::new(path);
 		<span class="kw">match </span>args.module_type.module_dir() {
@@ -358,12 +360,12 @@
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(module) = args.module_type.loader_module() {
 		core
 			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, <span class="prelude-val">None</span>)
-			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load the {:?} scripting module&quot;</span>, args.module_type))<span class="question-mark">?</span>;
+			.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load the {:?} scripting module"</span>, args.module_type))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>args.module_type.is_lua() {
 		core
 			.load_lua_script(<span class="kw-2">&amp;</span>path, variant_args)
-			.context(<span class="string">&quot;failed to load the lua script&quot;</span>)<span class="question-mark">?</span>;
+			.context(<span class="string">"failed to load the lua script"</span>)<span class="question-mark">?</span>;
 	} <span class="kw">else </span>{
 		core
 			.load_component(
@@ -371,28 +373,28 @@
 				args.module_type.loader_type(),
 				variant_args.as_ref().map(|v| v.as_variant()),
 			)
-			.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to load {path} as a {}&quot;</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
+			.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load {path} as a {}"</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
 	}
 
 	core.connect_future().<span class="kw">await</span><span class="question-mark">?</span>;
 
 	<span class="kw">let </span>plugin_names = args.plugins();
 	<span class="kw">for </span>plugin_name <span class="kw">in </span><span class="kw-2">&amp;</span>plugin_names {
-		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">&quot;plugin {plugin_name} not found&quot;</span>))<span class="question-mark">?</span>;
+		<span class="kw">let </span>p = Plugin::find(<span class="kw-2">&amp;</span>core, plugin_name).ok_or_else(|| <span class="macro">format_err!</span>(<span class="string">"plugin {plugin_name} not found"</span>))<span class="question-mark">?</span>;
 		p.activate_future(PluginFeatures::ENABLED)
 			.<span class="kw">await
-			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate {plugin_name:?} plugin&quot;</span>))<span class="question-mark">?</span>;
+			</span>.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to activate {plugin_name:?} plugin"</span>))<span class="question-mark">?</span>;
 	}
 	<span class="kw">if </span>plugin_names.is_empty() {
-		<span class="macro">info!</span>(domain: LOG_DOMAIN, <span class="string">&quot;skipped activation, no plugin specified&quot;</span>);
+		<span class="macro">info!</span>(domain: LOG_DOMAIN, <span class="string">"skipped activation, no plugin specified"</span>);
 	}
 	<span class="kw">if </span>args.module_type.is_lua() {
 		<span class="comment">// per-script plugins were introduced in wireplumber version 0.4.10
-		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;script:{path}&quot;</span>)) {
+		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(script) = Plugin::find(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"script:{path}"</span>)) {
 			script
 				.activate_future(PluginFeatures::ENABLED)
 				.<span class="kw">await
-				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;failed to activate script:{path}&quot;</span>))<span class="question-mark">?</span>;
+				</span>.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to activate script:{path}"</span>))<span class="question-mark">?</span>;
 		}
 	}
 
@@ -406,14 +408,14 @@
 ///
 /// See also: [Core::run]
 </span><span class="kw">fn </span><a href="../../wpexec/fn.main.html">main</a>() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-	<span class="comment">// info logging by default so we can see what&#39;s going on
-	</span>wireplumber::Log::set_default_level(<span class="string">&quot;3&quot;</span>);
+	<span class="comment">// info logging by default so we can see what's going on
+	</span>wireplumber::Log::set_default_level(<span class="string">"3"</span>);
 
 	<span class="comment">// let clap build a CLI from argv for us
 	</span><span class="kw">let </span>args = Args::parse();
 
 	<span class="kw">if </span>args.module().is_none() {
-		<span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">&quot;no default module available for {:?}&quot;</span>, args.module_type))
+		<span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"no default module available for {:?}"</span>, args.module_type))
 	}
 
 	<span class="comment">// bail out early if invalid args are provided
@@ -443,7 +445,7 @@
 			<span class="comment">// set up the requested module or script...
 			</span><span class="kw">let </span>res = main_async(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span>args).<span class="kw">await</span>;
 			<span class="kw">if </span>res.is_err() {
-				<span class="comment">// bail out if we couldn&#39;t successfully load it after all
+				<span class="comment">// bail out if we couldn't successfully load it after all
 				</span><a href="#157">mainloop</a>.quit();
 			}
 			<span class="kw-2">*</span><a href="#165">main_res</a>.borrow_mut() = <span class="prelude-val">Some</span>(<a href="#168">res</a>)
@@ -453,8 +455,8 @@
 	<span class="kw">let </span>main_res = <a href="#150">main_res</a>.borrow_mut().take();
 	<span class="kw">match </span><a href="#177">main_res</a> {
 		<span class="prelude-val">Some</span>(res) =&gt; <a href="#179">res</a>,
-		<span class="comment">// we didn&#39;t get far enough to store the result; likely it timed out or something
-		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">&quot;could not connect to pipewire&quot;</span>)),
+		<span class="comment">// we didn't get far enough to store the result; likely it timed out or something
+		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"could not connect to pipewire"</span>)),
 	}
 }
 
@@ -465,9 +467,9 @@
 
 	<span class="doccomment">/// Environment variable that affects path resolution for this module type
 	///
-	/// The wireplumber [ComponentLoader] generally doesn&#39;t accept absolute paths for modules.
+	/// The wireplumber [ComponentLoader] generally doesn't accept absolute paths for modules.
 	/// This environment variable can be modified in order to help it find the module to load.
-	</span><span class="kw">fn </span>module_dir(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
+	</span><span class="kw">fn </span>module_dir(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
 		<span class="kw">match </span><span class="self"><a href="#194">self</a> </span>{
 			<a href="#28">ModuleType::Lua</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <span class="prelude-val">None</span>,
 			<a href="#32">ModuleType::Wireplumber</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::DIR_WIREPLUMBER_MODULE),
@@ -480,7 +482,7 @@
 	/// While wireplumber has built-in support for loading modules, the Lua scripting engine is itself
 	/// implemented as a module, which must be loaded first. Afterwards, lua scripts may be loaded
 	/// as modules (well, components) themselves.
-	</span><span class="kw">fn </span>loader_module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
+	</span><span class="kw">fn </span>loader_module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
 		<span class="kw">match </span><span class="self"><a href="#207">self</a> </span>{
 			<a href="#28">ModuleType::Lua</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::MODULE_LOADER_LUA),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -490,7 +492,7 @@
 	<span class="doccomment">/// The type name expected by a [ComponentLoader]
 	///
 	/// This is passed on to [Core::load_component].
-	</span><span class="kw">fn </span>loader_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
+	</span><span class="kw">fn </span>loader_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
 		<span class="kw">match </span><span class="self"><a href="#217">self</a> </span>{
 			<a href="#28">ModuleType::Lua</a> =&gt; ComponentLoader::TYPE_LUA_SCRIPT,
 			<a href="#30">ModuleType::LuaConfig</a> =&gt; ComponentLoader::TYPE_LUA_CONFIG,
@@ -503,12 +505,12 @@
 <span class="kw">impl </span><a href="#43-59">Args</a> {
 	<span class="doccomment">/// The [Plugin] names to load as part of initialization
 	///
-	/// For example, the [ModuleType::Lua] module provides a `lua-scripting` plugin that&#39;s responsible
+	/// For example, the [ModuleType::Lua] module provides a `lua-scripting` plugin that's responsible
 	/// for loading and running lua scripts.
 	</span><span class="kw">fn </span>plugins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
 		<span class="kw">match </span><a class="self" href="#232">self</a>.module_type {
 			<a href="#28">ModuleType::Lua</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[ComponentLoader::PLUGIN_LOADER_LUA],
-			<a href="#32">ModuleType::Wireplumber</a> <span class="kw">if </span><a class="self" href="#232">self</a>.plugins.is_empty() &amp;&amp; <a class="self" href="#232">self</a>.module.is_none() =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[<span class="string">&quot;static-link&quot;</span>],
+			<a href="#32">ModuleType::Wireplumber</a> <span class="kw">if </span><a class="self" href="#232">self</a>.plugins.is_empty() &amp;&amp; <a class="self" href="#232">self</a>.module.is_none() =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[<span class="string">"static-link"</span>],
 			<a href="#32">ModuleType::Wireplumber</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <a class="self" href="#232">self</a>.plugins.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|s| <a href="#236">s</a>.as_str()).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
 			<a href="#34">ModuleType::Pipewire</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>(),
 		}
@@ -517,18 +519,18 @@
 	<span class="doccomment">/// The module or script to load
 	///
 	/// This can be a full path or often just be a name if WirePlumber knows where to find it
-	/// (the rules for this are convoluted though, so I won&#39;t get into that here)
+	/// (the rules for this are convoluted though, so I won't get into that here)
 	</span><span class="kw">fn </span>module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
 		<span class="kw">match </span><a class="self" href="#245">self</a>.module {
 			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>module) =&gt; <span class="prelude-val">Some</span>(<a href="#247">module</a>),
 			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><a class="self" href="#245">self</a>.module_type {
-				<a href="#28">ModuleType::Lua</a> =&gt; <span class="prelude-val">Some</span>(<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/script.lua&quot;</span>)),
+				<a href="#28">ModuleType::Lua</a> =&gt; <span class="prelude-val">Some</span>(<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/script.lua"</span>)),
 				<a href="#32">ModuleType::Wireplumber</a> =&gt; {
-					<span class="kw">let </span>module_path = <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/../../../examples/libstatic_link_module.so&quot;</span>); <span class="comment">// TODO: .so is so linux
+					<span class="kw">let </span>module_path = <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">"OUT_DIR"</span>), <span class="string">"/../../../examples/libstatic_link_module.so"</span>); <span class="comment">// TODO: .so is so linux
 					</span><span class="kw">if </span>fs::metadata(module_path).is_err() {
 						<a class="macro" href="../../wireplumber/macro.warning.html">warning!</a>(
 							domain: LOG_DOMAIN,
-							<span class="string">&quot;example module not found, try: cargo build -p wp-examples --example static-link-module&quot;
+							<span class="string">"example module not found, try: cargo build -p wp-examples --example static-link-module"
 						</span>);
 					}
 					<span class="prelude-val">Some</span>(<a href="#251">module_path</a>)
@@ -540,7 +542,7 @@
 
 	<span class="doccomment">/// A JSON-like blob of data to pass as an argument to the script or module to be loaded
 	///
-	/// In practice this must be a dictionary or array because lua scripts can&#39;t work with other
+	/// In practice this must be a dictionary or array because lua scripts can't work with other
 	/// types of data as the top-level container, but more specific types may be usable by other
 	/// modules. See [wireplumber::lua] for a more detailed explanation.
 	</span><span class="kw">fn </span>variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../wireplumber/lua/variant/struct.LuaVariant.html">LuaVariant</a>&gt;&gt; {

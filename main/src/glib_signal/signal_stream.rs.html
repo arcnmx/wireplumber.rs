@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glib-signal-0.3.0/src/signal_stream.rs`."><title>signal_stream.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../glib_signal/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glib-signal-0.4.0/src/signal_stream.rs`."><title>signal_stream.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../glib_signal/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -196,202 +198,212 @@
 <a href="#196" id="196">196</a>
 <a href="#197" id="197">197</a>
 <a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
-	<span class="kw">crate</span>::{<a href="borrowed_object.rs.html#12-15">BorrowedObject</a>, <a href="lib.rs.html#109-114">ConnectDetails</a>, <a href="lib.rs.html#53-71">DetailedSignal</a>, <a href="from_values.rs.html#9-17">FromValues</a>, <a href="lib.rs.html#189-207">ObjectSignalExt</a>, <a href="value_option.rs.html#3-7">ToValueOption</a>},
-	<a href="https://docs.rs/futures-channel/0.3.28/futures_channel/mpsc/index.html">futures_channel::mpsc</a>,
-	futures_core::{<a href="https://docs.rs/futures-core/0.3.28/futures_core/macro.ready.html">ready</a>, <a href="https://docs.rs/futures-core/0.3.28/futures_core/future/trait.FusedFuture.html">FusedFuture</a>, <a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.FusedStream.html">FusedStream</a>, <a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.Stream.html">Stream</a>},
-	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/macro.g_warning.html">g_warning</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/trait.FromValue.html">value::FromValue</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/closure/struct.Closure.html">Closure</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectExt.html">ObjectExt</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/struct.Value.html">Value</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.WeakRef.html">WeakRef</a>},
+	<span class="kw">crate</span>::{<a href="borrowed_object.rs.html#14-17">BorrowedObject</a>, <a href="lib.rs.html#111-116">ConnectDetails</a>, <a href="lib.rs.html#55-73">DetailedSignal</a>, <a href="from_values.rs.html#10-18">FromValues</a>, <a href="lib.rs.html#191-209">ObjectSignalExt</a>, <a href="value_option.rs.html#3-7">ToValueOption</a>},
+	<a href="https://docs.rs/futures-channel/0.3.30/futures_channel/mpsc/index.html">futures_channel::mpsc</a>,
+	futures_core::{<a href="https://docs.rs/futures-core/0.3.30/futures_core/macro.ready.html">ready</a>, <a href="https://docs.rs/futures-core/0.3.30/futures_core/future/trait.FusedFuture.html">FusedFuture</a>, <a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.FusedStream.html">FusedStream</a>, <a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.Stream.html">Stream</a>},
+	glib::{
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.g_warning.html">g_warning</a>,
+		object::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html">ObjectExt</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.FromValue.html">value::FromValue</a>,
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/closure/struct.Closure.html">Closure</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">Value</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.WeakRef.html">WeakRef</a>,
+	},
 	std::{
 		<a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">error::Error</a>, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html">future::Future</a>, <a href="https://doc.rust-lang.org/nightly/core/hint/fn.unreachable_unchecked.html">hint::unreachable_unchecked</a>, <a href="https://doc.rust-lang.org/nightly/std/io/index.html">io</a>, <a href="https://doc.rust-lang.org/nightly/core/mem/manually_drop/struct.ManuallyDrop.html">mem::ManuallyDrop</a>, <a href="https://doc.rust-lang.org/nightly/core/pin/struct.Pin.html">pin::Pin</a>, <a href="https://doc.rust-lang.org/nightly/core/ptr/index.html">ptr</a>, <a href="https://doc.rust-lang.org/nightly/core/task/poll/enum.Poll.html">task::Poll</a>,
 	},
 };
 
 <span class="attr">#[must_use]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;futures&quot;</span>)))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"futures"</span>)))]
 #[derive(Debug)]
-</span><span class="kw">pub struct </span><a href="../../glib_signal/struct.SignalStream.html">SignalStream</a>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; {
+</span><span class="kw">pub struct </span><a href="../../glib_signal/struct.SignalStream.html">SignalStream</a>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; {
 	rx: mpsc::UnboundedReceiver&lt;T&gt;,
 	target: WeakRef&lt;O&gt;,
-	handle: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>&gt;,
+	handle: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>&gt;,
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; SignalStream&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; SignalStream&lt;O, T&gt; {
 	<span class="kw">pub fn </span>connect&lt;F, S&gt;(target: <span class="kw-2">&amp;</span>O, signal: ConnectDetails&lt;S&gt;, res: F) -&gt; <span class="self">Self
 	</span><span class="kw">where
 		</span>S: DetailedSignal&lt;Arguments = T&gt;,
-		T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; FromValues&lt;<span class="lifetime">&#39;a</span>&gt; + <span class="lifetime">&#39;static</span>,
-		F: Fn(<span class="kw-2">&amp;</span>O, <span class="kw-2">&amp;</span>T) -&gt; &lt;&lt;S <span class="kw">as </span>DetailedSignal&gt;::Return <span class="kw">as </span>ToValueOption&gt;::Type + <span class="lifetime">&#39;static</span>,
-		<span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; BorrowedObject&lt;<span class="lifetime">&#39;a</span>, O&gt;: FromValue&lt;<span class="lifetime">&#39;a</span>&gt;,
+		T: <span class="kw">for</span>&lt;<span class="lifetime">'a</span>&gt; FromValues&lt;<span class="lifetime">'a</span>&gt; + <span class="lifetime">'static</span>,
+		F: Fn(<span class="kw-2">&amp;</span>O, <span class="kw-2">&amp;</span>T) -&gt; &lt;&lt;S <span class="kw">as </span>DetailedSignal&gt;::Return <span class="kw">as </span>ToValueOption&gt;::Type + <span class="lifetime">'static</span>,
+		<span class="kw">for</span>&lt;<span class="lifetime">'a</span>&gt; BorrowedObject&lt;<span class="lifetime">'a</span>, O&gt;: FromValue&lt;<span class="lifetime">'a</span>&gt;,
 	{
 		<span class="kw">let </span>(tx, rx) = futures_channel::mpsc::unbounded();
-		<span class="kw">let </span>callback = <span class="kw">move </span>|values: <span class="kw-2">&amp;</span>[<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/value/struct.Value.html">Value</a>]| {
-			<span class="kw">let </span>(this, args) = <a href="#29">values</a>.split_first().unwrap();
-			<span class="kw">let </span>this: BorrowedObject&lt;O&gt; = <a href="#30">this</a>.get().unwrap();
-			<span class="kw">let </span>args = <a href="from_values.rs.html#13-15">FromValues::from_values</a>(<a href="#30">args</a>).unwrap();
-			<span class="kw">let </span>res = <a href="#21">res</a>(<span class="kw-2">&amp;</span><a href="#31">this</a>, <span class="kw-2">&amp;</span><a href="#32">args</a>);
-			<span class="kw">match </span><a href="#28">tx</a>.unbounded_send(<a href="#32">args</a>) {
+		<span class="kw">let </span>callback = <span class="kw">move </span>|values: <span class="kw-2">&amp;</span>[<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">Value</a>]| {
+			<span class="kw">let </span>(this, args) = <a href="#34">values</a>.split_first().unwrap();
+			<span class="kw">let </span>this: BorrowedObject&lt;O&gt; = <a href="#35">this</a>.get().unwrap();
+			<span class="kw">let </span>args = <a href="from_values.rs.html#14-16">FromValues::from_values</a>(<a href="#35">args</a>).unwrap();
+			<span class="kw">let </span>res = <a href="#26">res</a>(<span class="kw-2">&amp;</span><a href="#36">this</a>, <span class="kw-2">&amp;</span><a href="#37">args</a>);
+			<span class="kw">match </span><a href="#33">tx</a>.unbounded_send(<a href="#37">args</a>) {
 				<span class="prelude-val">Ok</span>(()) =&gt; (),
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/macro.g_warning.html">g_warning!</a>(<span class="string">&quot;glib-signal&quot;</span>, <span class="string">&quot;Failed to signal {:?}: {:?}&quot;</span>, signal, e);
+					<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.g_warning.html">g_warning!</a>(<span class="string">"glib-signal"</span>, <span class="string">"Failed to signal {:?}: {:?}"</span>, signal, e);
 				},
 			}
-			<a href="#33">res</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="value_option.rs.html#6">to_value_option</a>()
+			<a href="#38">res</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="value_option.rs.html#6">to_value_option</a>()
 		};
-		<span class="kw">let </span>handle = <span class="kw">unsafe </span>{ <a href="#21">target</a>.<a href="lib.rs.html#190">handle_closure</a>(<span class="kw-2">&amp;</span><a href="#21">signal</a>.<a href="lib.rs.html#126-128">normalize</a>(), <span class="kw-2">&amp;</span>Closure::new_unsafe(<a href="#29">callback</a>)) }.unwrap();
+		<span class="kw">let </span>handle = <span class="kw">unsafe </span>{ <a href="#26">target</a>.<a href="lib.rs.html#192">handle_closure</a>(<span class="kw-2">&amp;</span><a href="#26">signal</a>.<a href="lib.rs.html#128-130">normalize</a>(), <span class="kw-2">&amp;</span>Closure::new_unsafe(<a href="#34">callback</a>)) }.unwrap();
 
-		<a href="#14-18">SignalStream</a> {
-			<a href="#28">rx</a>,
-			target: <a href="#21">target</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectExt.html">downgrade</a>(),
-			handle: <span class="prelude-val">Some</span>(<a href="#42">handle</a>),
+		<a href="#19-23">SignalStream</a> {
+			<a href="#33">rx</a>,
+			target: <a href="#26">target</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html">downgrade</a>(),
+			handle: <span class="prelude-val">Some</span>(<a href="#47">handle</a>),
 		}
 	}
 
 	<span class="kw">pub fn </span>once(<span class="self">self</span>) -&gt; OnceFuture&lt;O, T&gt; {
-		OnceFuture::new(<a class="self" href="#51">self</a>)
+		OnceFuture::new(<a class="self" href="#56">self</a>)
 	}
 
 	<span class="kw">pub fn </span>disconnect(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(handle) = <a class="self" href="#55">self</a>.handle.take() {
-			<span class="kw">if let </span><span class="prelude-val">Some</span>(target) = <a class="self" href="#55">self</a>.target.upgrade() {
-				<a href="#57">target</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectExt.html">disconnect</a>(<a href="#56">handle</a>);
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(handle) = <a class="self" href="#60">self</a>.handle.take() {
+			<span class="kw">if let </span><span class="prelude-val">Some</span>(target) = <a class="self" href="#60">self</a>.target.upgrade() {
+				<a href="#62">target</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html">disconnect</a>(<a href="#61">handle</a>);
 			}
 		}
 	}
 
 	<span class="kw">pub fn </span>into_target(<span class="self">self</span>) -&gt; WeakRef&lt;O&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>this = ManuallyDrop::new(<a class="self" href="#63">self</a>);
-		<a href="#64">this</a>.<a href="#55-61">disconnect</a>();
-		<span class="kw">unsafe </span>{ <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.read.html">ptr::read</a>(<span class="kw-2">&amp;</span><a href="#64">this</a>.target) }
+		<span class="kw">let </span><span class="kw-2">mut </span>this = ManuallyDrop::new(<a class="self" href="#68">self</a>);
+		<a href="#69">this</a>.<a href="#60-66">disconnect</a>();
+		<span class="kw">unsafe </span>{ <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.read.html">ptr::read</a>(<span class="kw-2">&amp;</span><a href="#69">this</a>.target) }
 	}
 
 	<span class="kw">pub fn </span>target(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>WeakRef&lt;O&gt; {
-		<span class="kw-2">&amp;</span><a class="self" href="#69">self</a>.target
+		<span class="kw-2">&amp;</span><a class="self" href="#74">self</a>.target
 	}
 
 	<span class="kw">pub fn </span>attach_target(<span class="self">self</span>) -&gt; SignalStreamSelf&lt;O, T&gt; {
-		SignalStreamSelf::from(<a class="self" href="#73">self</a>)
+		SignalStreamSelf::from(<a class="self" href="#78">self</a>)
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.Stream.html">Stream</a> <span class="kw">for </span>SignalStream&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.Stream.html">Stream</a> <span class="kw">for </span>SignalStream&lt;O, T&gt; {
 	<span class="kw">type </span>Item = T;
 
-	<span class="kw">fn </span>poll_next(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
-		<span class="kw">let </span>rx = <span class="kw">unsafe </span>{ <a class="self" href="#81">self</a>.map_unchecked_mut(|s| <span class="kw-2">&amp;mut </span><a href="#82">s</a>.rx) };
-		<a href="#82">rx</a>.<a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.Stream.html">poll_next</a>(<a href="#81">cx</a>)
+	<span class="kw">fn </span>poll_next(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
+		<span class="kw">let </span>rx = <span class="kw">unsafe </span>{ <a class="self" href="#86">self</a>.map_unchecked_mut(|s| <span class="kw-2">&amp;mut </span><a href="#87">s</a>.rx) };
+		<a href="#87">rx</a>.<a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.Stream.html">poll_next</a>(<a href="#86">cx</a>)
 	}
 
 	<span class="kw">fn </span>size_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) {
-		<a class="self" href="#86">self</a>.rx.<a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.Stream.html">size_hint</a>()
+		<a class="self" href="#91">self</a>.rx.<a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.Stream.html">size_hint</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.FusedStream.html">FusedStream</a> <span class="kw">for </span>SignalStream&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.FusedStream.html">FusedStream</a> <span class="kw">for </span>SignalStream&lt;O, T&gt; {
 	<span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#92">self</a>.rx.<a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.FusedStream.html">is_terminated</a>()
+		<a class="self" href="#97">self</a>.rx.<a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.FusedStream.html">is_terminated</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html">Drop</a> <span class="kw">for </span>SignalStream&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html">Drop</a> <span class="kw">for </span>SignalStream&lt;O, T&gt; {
 	<span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-		<a class="self" href="#98">self</a>.<a href="#55-61">disconnect</a>();
+		<a class="self" href="#103">self</a>.<a href="#60-66">disconnect</a>();
 	}
 }
 
 <span class="attr">#[derive(Debug, Copy, Clone)]
 </span><span class="kw">pub struct </span><a href="../../glib_signal/struct.ConnectEof.html">ConnectEof</a>;
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#104">ConnectEof</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#109">ConnectEof</a> {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#107">f</a>, <span class="string">&quot;unexpected connect handle EOF&quot;</span>)
+		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#112">f</a>, <span class="string">"unexpected connect handle EOF"</span>)
 	}
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> <span class="kw">for </span><a href="#104">ConnectEof</a> {}
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/error/trait.Error.html">Error</a> <span class="kw">for </span><a href="#109">ConnectEof</a> {}
 
-<span class="kw">impl </span>From&lt;<a href="#104">ConnectEof</a>&gt; <span class="kw">for </span><a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html">io::Error</a> {
-	<span class="kw">fn </span>from(eof: <a href="#104">ConnectEof</a>) -&gt; <span class="self">Self </span>{
-		io::Error::new(io::ErrorKind::UnexpectedEof, <a href="#115">eof</a>)
+<span class="kw">impl </span>From&lt;<a href="#109">ConnectEof</a>&gt; <span class="kw">for </span><a href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html">io::Error</a> {
+	<span class="kw">fn </span>from(eof: <a href="#109">ConnectEof</a>) -&gt; <span class="self">Self </span>{
+		io::Error::new(io::ErrorKind::UnexpectedEof, <a href="#120">eof</a>)
 	}
 }
 
-<span class="kw">impl </span>From&lt;<a href="#104">ConnectEof</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">glib::Error</a> {
-	<span class="kw">fn </span>from(eof: <a href="#104">ConnectEof</a>) -&gt; <span class="self">Self </span>{
-		glib::Error::new(glib::FileError::Pipe, <span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">&quot;{:?}&quot;</span>, eof))
+<span class="kw">impl </span>From&lt;<a href="#109">ConnectEof</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">glib::Error</a> {
+	<span class="kw">fn </span>from(eof: <a href="#109">ConnectEof</a>) -&gt; <span class="self">Self </span>{
+		glib::Error::new(glib::FileError::Pipe, <span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"{:?}"</span>, eof))
 	}
 }
 
-<span class="kw">pub struct </span><a href="../../glib_signal/struct.OnceFuture.html">OnceFuture</a>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; {
+<span class="kw">pub struct </span><a href="../../glib_signal/struct.OnceFuture.html">OnceFuture</a>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; {
 	stream: <span class="prelude-ty">Option</span>&lt;SignalStream&lt;O, T&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; OnceFuture&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; OnceFuture&lt;O, T&gt; {
 	<span class="kw">pub fn </span>new(stream: SignalStream&lt;O, T&gt;) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{ stream: <span class="prelude-val">Some</span>(<a href="#131">stream</a>) }
+		<span class="self">Self </span>{ stream: <span class="prelude-val">Some</span>(<a href="#136">stream</a>) }
 	}
 
 	<span class="doccomment">/// check `is_terminated` first!
 	</span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; SignalStream&lt;O, T&gt; {
-		<a class="self" href="#136">self</a>.stream.unwrap()
+		<a class="self" href="#141">self</a>.stream.unwrap()
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html">Future</a> <span class="kw">for </span>OnceFuture&lt;O, T&gt; {
-	<span class="kw">type </span>Output = <span class="prelude-ty">Result</span>&lt;(T, WeakRef&lt;O&gt;), <a href="#104">ConnectEof</a>&gt;;
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html">Future</a> <span class="kw">for </span>OnceFuture&lt;O, T&gt; {
+	<span class="kw">type </span>Output = <span class="prelude-ty">Result</span>&lt;(T, WeakRef&lt;O&gt;), <a href="#109">ConnectEof</a>&gt;;
 
-	<span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
+	<span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
 		<span class="comment">//let this = unsafe { self.get_unchecked_mut() };
 		</span><span class="kw">let </span>(res, stream) = <span class="kw">unsafe </span>{
-			<span class="kw">let </span><span class="kw-2">mut </span>stream = <a class="self" href="#144">self</a>.map_unchecked_mut(|this| <span class="kw-2">&amp;mut </span><a href="#147">this</a>.stream);
-			<span class="kw">let </span>res = <span class="kw">match </span><a href="#147">stream</a>.as_mut().as_pin_mut() {
-				<span class="prelude-val">Some</span>(stream) =&gt; <a class="macro" href="https://docs.rs/futures-core/0.3.28/futures_core/macro.ready.html">ready!</a>(stream.poll_next(cx)),
+			<span class="kw">let </span><span class="kw-2">mut </span>stream = <a class="self" href="#149">self</a>.map_unchecked_mut(|this| <span class="kw-2">&amp;mut </span><a href="#152">this</a>.stream);
+			<span class="kw">let </span>res = <span class="kw">match </span><a href="#152">stream</a>.as_mut().as_pin_mut() {
+				<span class="prelude-val">Some</span>(stream) =&gt; <a class="macro" href="https://docs.rs/futures-core/0.3.30/futures_core/macro.ready.html">ready!</a>(stream.poll_next(cx)),
 				<span class="prelude-val">None </span>=&gt; <span class="kw">return </span>Poll::Pending,
 			};
-			(<a href="#148">res</a>, <span class="kw">match </span><a href="#147">stream</a>.get_unchecked_mut().take() {
-				<span class="prelude-val">Some</span>(s) =&gt; <a href="#153">s</a>,
+			(<a href="#153">res</a>, <span class="kw">match </span><a href="#152">stream</a>.get_unchecked_mut().take() {
+				<span class="prelude-val">Some</span>(s) =&gt; <a href="#158">s</a>,
 				<span class="prelude-val">None </span>=&gt; <a href="https://doc.rust-lang.org/nightly/core/hint/fn.unreachable_unchecked.html">unreachable_unchecked</a>(),
 			})
 		};
-		<span class="kw">let </span>obj = <a href="#146">stream</a>.<a href="#63-67">into_target</a>();
-		Poll::Ready(<span class="kw">match </span><a href="#146">res</a> {
-			<span class="prelude-val">Some</span>(res) =&gt; <span class="prelude-val">Ok</span>((<a href="#159">res</a>, <a href="#157">obj</a>)),
-			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a href="#104">ConnectEof</a>),
+		<span class="kw">let </span>obj = <a href="#151">stream</a>.<a href="#68-72">into_target</a>();
+		Poll::Ready(<span class="kw">match </span><a href="#151">res</a> {
+			<span class="prelude-val">Some</span>(res) =&gt; <span class="prelude-val">Ok</span>((<a href="#164">res</a>, <a href="#162">obj</a>)),
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a href="#109">ConnectEof</a>),
 		})
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.28/futures_core/future/trait.FusedFuture.html">FusedFuture</a> <span class="kw">for </span>OnceFuture&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.30/futures_core/future/trait.FusedFuture.html">FusedFuture</a> <span class="kw">for </span>OnceFuture&lt;O, T&gt; {
 	<span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#166">self</a>.stream.as_ref().map(|s| <a href="#167">s</a>.<a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.FusedStream.html">is_terminated</a>()).unwrap_or(<span class="bool-val">true</span>)
+		<a class="self" href="#171">self</a>.stream.as_ref().map(|s| <a href="#172">s</a>.<a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.FusedStream.html">is_terminated</a>()).unwrap_or(<span class="bool-val">true</span>)
 	}
 }
 
-<span class="kw">pub struct </span>SignalStreamSelf&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; {
+<span class="kw">pub struct </span>SignalStreamSelf&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; {
 	inner: SignalStream&lt;O, T&gt;,
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; From&lt;SignalStream&lt;O, T&gt;&gt; <span class="kw">for </span>SignalStreamSelf&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; From&lt;SignalStream&lt;O, T&gt;&gt; <span class="kw">for </span>SignalStreamSelf&lt;O, T&gt; {
 	<span class="kw">fn </span>from(inner: SignalStream&lt;O, T&gt;) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{ <a href="#176">inner</a> }
+		<span class="self">Self </span>{ <a href="#181">inner</a> }
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.Stream.html">Stream</a> <span class="kw">for </span>SignalStreamSelf&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.Stream.html">Stream</a> <span class="kw">for </span>SignalStreamSelf&lt;O, T&gt; {
 	<span class="kw">type </span>Item = (<span class="prelude-ty">Option</span>&lt;O&gt;, T);
 
-	<span class="kw">fn </span>poll_next(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="kw">unsafe </span>{ <a class="self" href="#184">self</a>.map_unchecked_mut(|s| <span class="kw-2">&amp;mut </span><a href="#185">s</a>.inner) };
-		Poll::Ready(<a class="macro" href="https://docs.rs/futures-core/0.3.28/futures_core/macro.ready.html">ready!</a>(inner.as_mut().poll_next(cx)).map(|res| (<a href="#185">inner</a>.<a href="#69-71">target</a>().upgrade(), <a href="#186">res</a>)))
+	<span class="kw">fn </span>poll_next(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="kw">unsafe </span>{ <a class="self" href="#189">self</a>.map_unchecked_mut(|s| <span class="kw-2">&amp;mut </span><a href="#190">s</a>.inner) };
+		Poll::Ready(<a class="macro" href="https://docs.rs/futures-core/0.3.30/futures_core/macro.ready.html">ready!</a>(inner.as_mut().poll_next(cx)).map(|res| (<a href="#190">inner</a>.<a href="#74-76">target</a>().upgrade(), <a href="#191">res</a>)))
 	}
 
 	<span class="kw">fn </span>size_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) {
-		<a class="self" href="#189">self</a>.inner.<a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.Stream.html">size_hint</a>()
+		<a class="self" href="#194">self</a>.inner.<a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.Stream.html">size_hint</a>()
 	}
 }
 
-<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.FusedStream.html">FusedStream</a> <span class="kw">for </span>SignalStreamSelf&lt;O, T&gt; {
+<span class="kw">impl</span>&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>, T&gt; <a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.FusedStream.html">FusedStream</a> <span class="kw">for </span>SignalStreamSelf&lt;O, T&gt; {
 	<span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#195">self</a>.inner.<a href="https://docs.rs/futures-core/0.3.28/futures_core/stream/trait.FusedStream.html">is_terminated</a>()
+		<a class="self" href="#200">self</a>.inner.<a href="https://docs.rs/futures-core/0.3.30/futures_core/stream/trait.FusedStream.html">is_terminated</a>()
 	}
 }
 </code></pre></div></section></main></body></html>

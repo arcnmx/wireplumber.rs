@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/signals.rs`."><title>signals.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../wireplumber/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/signals.rs`."><title>signals.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -190,7 +192,7 @@
 //! These should not need to be used directly. Instead, use an associated const:
 //!
 //! ```
-//! # #[cfg(feature = &quot;futures&quot;)]
+//! # #[cfg(feature = "futures")]
 //! use futures_util::StreamExt;
 //! use wireplumber::{
 //!   prelude::*,
@@ -205,94 +207,94 @@
 //!
 //!   // register a callback for a signal...
 //!   om.handle(ObjectManager::SIGNAL_INSTALLED, |om, ()| {
-//!     println!(&quot;{om:?} installed&quot;);
+//!     println!("{om:?} installed");
 //!   });
 //!   // ... or receive events as an async Stream:
-//!   # #[cfg(feature = &quot;futures&quot;)]
+//!   # #[cfg(feature = "futures")]
 //!   let mut objects = om.signal_stream(ObjectManager::SIGNAL_OBJECT_ADDED);
 //!
 //!   om.request_object_features(Node::static_type(), ObjectFeatures::ALL);
 //!   core.install_object_manager(&amp;om);
 //!
-//!   # #[cfg(feature = &quot;futures&quot;)]
+//!   # #[cfg(feature = "futures")]
 //!   while let Some((obj,)) = objects.next().await {
 //!     let node = obj.dynamic_cast_ref::&lt;Node&gt;()
-//!       .expect(&quot;we&#39;re only interested in nodes&quot;);
-//!     println!(&quot;new object: {node:?}&quot;);
+//!       .expect("we're only interested in nodes");
+//!     println!("new object: {node:?}");
 //!   }
 //! }
 //! ```
 
 </span><span class="kw">use </span>{
 	<a href="lib.rs.html#74"><span class="kw">crate</span>::prelude</a>::<span class="kw-2">*</span>,
-	glib_signal::{<a href="../../glib_signal/macro.def_signal.html">def_signal</a>, Pointer, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/gobject/auto/flags/struct.SignalFlags.html">SignalFlags</a>},
+	glib_signal::{<a href="../../glib_signal/macro.def_signal.html">def_signal</a>, Pointer, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gobject/auto/flags/struct.SignalFlags.html">SignalFlags</a>},
 };
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;connected&quot; </span><span class="kw">as </span><a href="#44-49">Connected</a>&gt; <span class="kw">for </span><a href="auto/core.rs.html#8-15"><span class="kw">crate</span>::core::Core</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"connected" </span><span class="kw">as </span><a href="#44-49">Connected</a>&gt; <span class="kw">for </span><a href="auto/core.rs.html#8-15"><span class="kw">crate</span>::core::Core</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CONNECTED};
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;disconnected&quot; </span><span class="kw">as </span><a href="#50-55">Disconnected</a>&gt; <span class="kw">for </span><a href="auto/core.rs.html#8-15"><span class="kw">crate</span>::core::Core</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"disconnected" </span><span class="kw">as </span><a href="#50-55">Disconnected</a>&gt; <span class="kw">for </span><a href="auto/core.rs.html#8-15"><span class="kw">crate</span>::core::Core</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_DISCONNECTED};
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;installed&quot; </span><span class="kw">as </span><a href="#57-63">ManagerInstalled</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"installed" </span><span class="kw">as </span><a href="#57-63">ManagerInstalled</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_INSTALLED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;objects-changed&quot; </span><span class="kw">as </span><a href="#64-70">ObjectsChanged</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"objects-changed" </span><span class="kw">as </span><a href="#64-70">ObjectsChanged</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECTS_CHANGED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-added&quot; </span><span class="kw">as </span><a href="#71-77">ObjectAdded</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"object-added" </span><span class="kw">as </span><a href="#71-77">ObjectAdded</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECT_ADDED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">GObject</a>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-removed&quot; </span><span class="kw">as </span><a href="#78-84">ObjectRemoved</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"object-removed" </span><span class="kw">as </span><a href="#78-84">ObjectRemoved</a>&gt; <span class="kw">for </span><a href="auto/object_manager.rs.html#8-15"><span class="kw">crate</span>::registry::ObjectManager</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECT_REMOVED};
 		FLAGS = SignalFlags::RUN_FIRST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/object/struct.Object.html">GObject</a>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">GObject</a>)
 	}
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;bound&quot; </span><span class="kw">as </span><a href="#86-92">PwProxyBound</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"bound" </span><span class="kw">as </span><a href="#86-92">PwProxyBound</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_BOUND};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-created&quot; </span><span class="kw">as </span><a href="#93-99">PwProxyCreated</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"pw-proxy-created" </span><span class="kw">as </span><a href="#93-99">PwProxyCreated</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PW_PROXY_CREATED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_proxy.html">pipewire_sys::pw_proxy</a>&gt;)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;pw-proxy-destroyed&quot; </span><span class="kw">as </span><a href="#100-106">PwProxyDestroyed</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"pw-proxy-destroyed" </span><span class="kw">as </span><a href="#100-106">PwProxyDestroyed</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PW_PROXY_DESTROYED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, Pointer&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_proxy.html">pipewire_sys::pw_proxy</a>&gt;)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;error&quot; </span><span class="kw">as </span><a href="#107-113">PwProxyError</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"error" </span><span class="kw">as </span><a href="#107-113">PwProxyError</a>&gt; <span class="kw">for </span><a href="auto/proxy.rs.html#8-15"><span class="kw">crate</span>::pw::Proxy</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ERROR};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>)
@@ -300,7 +302,7 @@
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;params-changed&quot; </span><span class="kw">as </span><a href="#115-121">PwObjectParamsChanged</a>&gt; <span class="kw">for </span><a href="auto/pipewire_object.rs.html#8-15"><span class="kw">crate</span>::pw::PipewireObject</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"params-changed" </span><span class="kw">as </span><a href="#115-121">PwObjectParamsChanged</a>&gt; <span class="kw">for </span><a href="auto/pipewire_object.rs.html#8-15"><span class="kw">crate</span>::pw::PipewireObject</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PARAMS_CHANGED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>)
@@ -308,32 +310,32 @@
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;ports-changed&quot; </span><span class="kw">as </span><a href="#123-129">NodePortsChanged</a>&gt; <span class="kw">for </span><a href="auto/node.rs.html#8-15"><span class="kw">crate</span>::pw::Node</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"ports-changed" </span><span class="kw">as </span><a href="#123-129">NodePortsChanged</a>&gt; <span class="kw">for </span><a href="auto/node.rs.html#8-15"><span class="kw">crate</span>::pw::Node</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_PORTS_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;state-changed&quot; </span><span class="kw">as </span><a href="#130-136">NodeStateChanged</a>&gt; <span class="kw">for </span><a href="auto/node.rs.html#8-15"><span class="kw">crate</span>::pw::Node</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"state-changed" </span><span class="kw">as </span><a href="#130-136">NodeStateChanged</a>&gt; <span class="kw">for </span><a href="auto/node.rs.html#8-15"><span class="kw">crate</span>::pw::Node</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#739-752"><span class="kw">crate</span>::pw::NodeState</a>, <a href="auto/enums.rs.html#739-752"><span class="kw">crate</span>::pw::NodeState</a>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#666-679"><span class="kw">crate</span>::pw::NodeState</a>, <a href="auto/enums.rs.html#666-679"><span class="kw">crate</span>::pw::NodeState</a>)
 	}
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_11"</span>)]
 </span><a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
-	</span><span class="kw">impl </span>Notifies&lt;<span class="string">&quot;state-changed&quot; </span><span class="kw">as </span><a href="#139-146">LinkStateChanged</a>&gt; <span class="kw">for </span><a href="auto/link.rs.html#17-24"><span class="kw">crate</span>::pw::Link</a> {
+	<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
+	</span><span class="kw">impl </span>Notifies&lt;<span class="string">"state-changed" </span><span class="kw">as </span><a href="#139-146">LinkStateChanged</a>&gt; <span class="kw">for </span><a href="auto/link.rs.html#16-23"><span class="kw">crate</span>::pw::Link</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#593-610"><span class="kw">crate</span>::pw::LinkState</a>, <a href="auto/enums.rs.html#593-610"><span class="kw">crate</span>::pw::LinkState</a>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#536-553"><span class="kw">crate</span>::pw::LinkState</a>, <a href="auto/enums.rs.html#536-553"><span class="kw">crate</span>::pw::LinkState</a>)
 	}
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;changed&quot; </span><span class="kw">as </span><a href="#148-154">MetadataChanged</a>&gt; <span class="kw">for </span><a href="auto/metadata.rs.html#8-15"><span class="kw">crate</span>::pw::Metadata</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"changed" </span><span class="kw">as </span><a href="#148-154">MetadataChanged</a>&gt; <span class="kw">for </span><a href="auto/metadata.rs.html#8-15"><span class="kw">crate</span>::pw::Metadata</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;, <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;)
@@ -341,14 +343,14 @@
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;create-object&quot; </span><span class="kw">as </span><a href="#156-162">CreateObject</a>&gt; <span class="kw">for </span><a href="auto/spa_device.rs.html#11-18"><span class="kw">crate</span>::local::SpaDevice</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"create-object" </span><span class="kw">as </span><a href="#156-162">CreateObject</a>&gt; <span class="kw">for </span><a href="auto/spa_device.rs.html#11-18"><span class="kw">crate</span>::local::SpaDevice</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_CREATE_OBJECT};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="auto/properties.rs.html#7-16"><span class="kw">crate</span>::pw::Properties</a>)
 	}
 }
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;object-removed&quot; </span><span class="kw">as </span><a href="#163-169">SpaObjectRemoved</a>&gt; <span class="kw">for </span><a href="auto/spa_device.rs.html#11-18"><span class="kw">crate</span>::local::SpaDevice</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"object-removed" </span><span class="kw">as </span><a href="#163-169">SpaObjectRemoved</a>&gt; <span class="kw">for </span><a href="auto/spa_device.rs.html#11-18"><span class="kw">crate</span>::local::SpaDevice</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_OBJECT_REMOVED};
 		FLAGS = SignalFlags::RUN_FIRST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)
@@ -356,20 +358,20 @@
 }
 
 <a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="kw">impl </span>Notifies&lt;<span class="string">&quot;endpoint-properties-changed&quot; </span><span class="kw">as </span><a href="#171-177">EndpointPropertiesChanged</a>&gt; <span class="kw">for </span><a href="auto/si_endpoint.rs.html#8-15"><span class="kw">crate</span>::session::SiEndpoint</a> {
+	<span class="kw">impl </span>Notifies&lt;<span class="string">"endpoint-properties-changed" </span><span class="kw">as </span><a href="#171-177">EndpointPropertiesChanged</a>&gt; <span class="kw">for </span><a href="auto/si_endpoint.rs.html#8-15"><span class="kw">crate</span>::session::SiEndpoint</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ENDPOINT_PROPERTIES_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
 		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)
 	}
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_10"</span>)]
 </span><a class="macro" href="../../glib_signal/macro.def_signal.html">def_signal! </a>{
-	<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)))]
-	</span><span class="kw">impl </span>Notifies&lt;<span class="string">&quot;adapter-ports-state-changed&quot; </span><span class="kw">as </span><a href="#180-187">AdapterPortsStateChanged</a>&gt; <span class="kw">for </span><a href="auto/si_adapter.rs.html#17-24"><span class="kw">crate</span>::session::SiAdapter</a> {
+	<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v0_4_10"</span>)))]
+	</span><span class="kw">impl </span>Notifies&lt;<span class="string">"adapter-ports-state-changed" </span><span class="kw">as </span><a href="#180-187">AdapterPortsStateChanged</a>&gt; <span class="kw">for </span><a href="auto/si_adapter.rs.html#16-23"><span class="kw">crate</span>::session::SiAdapter</a> {
 		<span class="kw">impl </span>{<span class="kw">const </span>SIGNAL_ADAPTER_PORTS_STATE_CHANGED};
 		FLAGS = SignalFlags::RUN_LAST;
-		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#859-868"><span class="kw">crate</span>::session::SiAdapterPortsState</a>, <a href="auto/enums.rs.html#859-868"><span class="kw">crate</span>::session::SiAdapterPortsState</a>)
+		<span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <a href="auto/enums.rs.html#774-783"><span class="kw">crate</span>::session::SiAdapterPortsState</a>, <a href="auto/enums.rs.html#774-783"><span class="kw">crate</span>::session::SiAdapterPortsState</a>)
 	}
 }
 </code></pre></div></section></main></body></html>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../wireplumber/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -108,12 +110,12 @@
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
-</pre></div><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://arcnmx.github.io/wireplumber.rs/v0.1.0/&quot;</span>)]
+</pre></div><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">"https://arcnmx.github.io/wireplumber.rs/v0.1.0/"</span>)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 </span><span class="doccomment">//! [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/index.html) library bindings
 //!
-//! This crate provides a high-level interface to [PipeWire](https://pipewire.org/)&#39;s [API](https://docs.pipewire.org/page_api.html)
+//! This crate provides a high-level interface to [PipeWire](https://pipewire.org/)'s [API](https://docs.pipewire.org/page_api.html)
 //! via libwireplumber. Explore the documentation for the various [modules below](#modules) for
 //! information on how to start using WirePlumber with Rust.
 //!
@@ -121,7 +123,7 @@
 //!
 //! ## Service Daemon
 //!
-//! For creating a new wireplumber instance, you&#39;ll need to start with a [`Core`]. Start with the
+//! For creating a new wireplumber instance, you'll need to start with a [`Core`]. Start with the
 //! [module documentation](crate::core) for examples.
 //!
 //! ## Dynamic Modules
@@ -137,7 +139,7 @@
 //! # Examples
 //!
 //! Besides those found in this documentation,
-</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">&quot;[additional examples](https://github.com/arcnmx/wireplumber.rs/tree/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/examples/src)&quot;</span>)]
+</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">"[additional examples](https://github.com/arcnmx/wireplumber.rs/tree/"</span>, <span class="macro">env!</span>(<span class="string">"RELEASE_TAG"</span>), <span class="string">"/examples/src)"</span>)]
 </span><span class="doccomment">//! can be found alongside the [source code](https://github.com/arcnmx/wireplumber.rs), and can be
 //! built and run via Cargo:
 //!
@@ -153,10 +155,10 @@
 //!   cargo run -p wp-examples --bin wpexec -- --type wireplumber
 //! ```
 //!
-//! It&#39;s recommended to poke around their source code in a local checkout, but you can also view
+//! It's recommended to poke around their source code in a local checkout, but you can also view
 //! the generated documentation and source code online:
-</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">&quot;- [wpexec](https://arcnmx.github.io/wireplumber.rs/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/wpexec/index.html)&quot;</span>)]
-#![doc = <span class="macro">concat!</span>(<span class="string">&quot;- [static-link module](https://arcnmx.github.io/wireplumber.rs/&quot;</span>, <span class="macro">env!</span>(<span class="string">&quot;RELEASE_TAG&quot;</span>), <span class="string">&quot;/static_link_module/index.html)&quot;</span>)]
+</span><span class="attr">#![doc = <span class="macro">concat!</span>(<span class="string">"- [wpexec](https://arcnmx.github.io/wireplumber.rs/"</span>, <span class="macro">env!</span>(<span class="string">"RELEASE_TAG"</span>), <span class="string">"/wpexec/index.html)"</span>)]
+#![doc = <span class="macro">concat!</span>(<span class="string">"- [static-link module](https://arcnmx.github.io/wireplumber.rs/"</span>, <span class="macro">env!</span>(<span class="string">"RELEASE_TAG"</span>), <span class="string">"/static_link_module/index.html)"</span>)]
 </span><span class="doccomment">//! # Upstream Documentation
 //!
 //! WirePlumber is a [GObject library](https://gtk-rs.org/), and its [C API documentation](https://pipewire.pages.freedesktop.org/wireplumber/c_api.html)
@@ -164,56 +166,56 @@
 
 </span><span class="attr">#[allow(unused_imports)]
 #[rustfmt::skip]
-</span><span class="kw">mod </span><a href="auto/mod.rs.html#4-204">auto</a>;
+</span><span class="kw">mod </span><a href="auto/mod.rs.html#4-207">auto</a>;
 
 <span class="doccomment">/// Export dependencies for use from macros
 </span><span class="attr">#[doc(hidden)]
 </span><span class="kw">pub mod </span>lib {
-	<span class="kw">pub use </span>{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/gio/index.html">gio</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/index.html">glib</a>};
+	<span class="kw">pub use </span>{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio/index.html">gio</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/index.html">glib</a>};
 }
 
 <span class="kw">pub mod </span><a href="core/mod.rs.html#1-51">core</a>;
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)))]
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_11"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
 </span><span class="kw">pub mod </span><a href="dbus/mod.rs.html#1">dbus</a>;
-<span class="kw">pub mod </span><a href="error/mod.rs.html#1-60">error</a>;
-<span class="kw">pub mod </span><a href="local/mod.rs.html#1-14">local</a>;
+<span class="kw">pub mod </span><a href="error/mod.rs.html#1-72">error</a>;
+<span class="kw">pub mod </span><a href="local/mod.rs.html#1-17">local</a>;
 <span class="kw">pub mod </span><a href="log/mod.rs.html#1-130">log</a>;
 <span class="kw">pub mod </span><a href="lua/mod.rs.html#1-35">lua</a>;
 <span class="kw">pub mod </span><a href="plugin/mod.rs.html#1-114">plugin</a>;
-<span class="kw">pub mod </span><a href="prelude.rs.html#1-69">prelude</a>;
+<span class="kw">pub mod </span><a href="prelude.rs.html#1-73">prelude</a>;
 <span class="kw">pub mod </span><a href="pw/mod.rs.html#1-73">pw</a>;
 <span class="kw">pub mod </span><a href="registry/mod.rs.html#1-143">registry</a>;
 <span class="kw">pub mod </span><a href="session/mod.rs.html#1-142">session</a>;
-<span class="attr">#[cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;glib-signal&quot;</span>)))]
+<span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"glib-signal"</span>)))]
 </span><span class="kw">pub mod </span><a href="signals.rs.html#1-187">signals</a>;
 <span class="kw">pub mod </span><a href="spa/mod.rs.html#1-50">spa</a>;
-<span class="kw">pub mod </span><a href="util/mod.rs.html#1-19">util</a>;
+<span class="kw">pub mod </span><a href="util/mod.rs.html#1-22">util</a>;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_2&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_2"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/properties_item.rs.html#8-17"><span class="self">self</span>::pw::PropertiesItem</a>;
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_10&quot;</span>)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/enums.rs.html#859-868"><span class="self">self</span>::session::SiAdapterPortsState</a>;
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_8&quot;</span>)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/spa_json.rs.html#11-20"><span class="self">self</span>::spa::SpaJson</a>;
-<span class="attr">#[cfg(feature = <span class="string">&quot;v0_4_11&quot;</span>)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::{<a href="auto/enums.rs.html#254-263">dbus::DBusState</a>, <a href="auto/enums.rs.html#593-610">pw::LinkState</a>};
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_10"</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/enums.rs.html#774-783"><span class="self">self</span>::session::SiAdapterPortsState</a>;
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_8"</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/spa_json.rs.html#7-16"><span class="self">self</span>::spa::SpaJson</a>;
+<span class="attr">#[cfg(feature = <span class="string">"v0_4_11"</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::{<a href="auto/enums.rs.html#228-237">dbus::DBusState</a>, <a href="auto/enums.rs.html#536-553">pw::LinkState</a>};
 <span class="doccomment">/// gir needs to know where to find these
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use crate</span>::{
 	core::{<a href="auto/object.rs.html#8-15">Object</a>, <a href="core/features.rs.html#15">ObjectFeatures</a>},
 	<a href="auto/plugin.rs.html#7-14">plugin::Plugin</a>,
-	pw::{<a href="auto/enums.rs.html#380-387">Direction</a>, <a href="auto/endpoint.rs.html#8-15">Endpoint</a>, <a href="auto/global_proxy.rs.html#8-15">GlobalProxy</a>, <a href="auto/metadata.rs.html#8-15">Metadata</a>, <a href="auto/enums.rs.html#739-752">NodeState</a>, <a href="auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="auto/port.rs.html#7-14">Port</a>, <a href="auto/properties.rs.html#7-16">Properties</a>, <a href="auto/proxy.rs.html#8-15">Proxy</a>},
-	registry::{<a href="auto/enums.rs.html#11-22">ConstraintType</a>, <a href="auto/enums.rs.html#124-141">ConstraintVerb</a>, <a href="auto/flags.rs.html#192-207">InterestMatch</a>, <a href="auto/flags.rs.html#280-289">InterestMatchFlags</a>, <a href="auto/object_interest.rs.html#8-17">ObjectInterest</a>, <a href="auto/object_manager.rs.html#8-15">ObjectManager</a>},
-	session::{<a href="auto/session_item.rs.html#8-15">SessionItem</a>, <a href="auto/si_acquisition.rs.html#8-15">SiAcquisition</a>, <a href="auto/si_endpoint.rs.html#8-15">SiEndpoint</a>, <a href="auto/si_link.rs.html#8-15">SiLink</a>, <a href="auto/si_linkable.rs.html#7-14">SiLinkable</a>},
-	<a href="auto/spa_pod.rs.html#8-17">spa::SpaPod</a>,
+	pw::{<a href="auto/enums.rs.html#342-349">Direction</a>, <a href="auto/endpoint.rs.html#8-15">Endpoint</a>, <a href="auto/global_proxy.rs.html#8-15">GlobalProxy</a>, <a href="auto/metadata.rs.html#8-15">Metadata</a>, <a href="auto/enums.rs.html#666-679">NodeState</a>, <a href="auto/pipewire_object.rs.html#8-15">PipewireObject</a>, <a href="auto/port.rs.html#7-14">Port</a>, <a href="auto/properties.rs.html#7-16">Properties</a>, <a href="auto/proxy.rs.html#8-15">Proxy</a>},
+	registry::{<a href="auto/enums.rs.html#10-21">ConstraintType</a>, <a href="auto/enums.rs.html#112-129">ConstraintVerb</a>, <a href="auto/flags.rs.html#194-209">InterestMatch</a>, <a href="auto/flags.rs.html#283-292">InterestMatchFlags</a>, <a href="auto/object_interest.rs.html#7-16">ObjectInterest</a>, <a href="auto/object_manager.rs.html#8-15">ObjectManager</a>},
+	session::{<a href="auto/session_item.rs.html#8-15">SessionItem</a>, <a href="auto/si_acquisition.rs.html#7-14">SiAcquisition</a>, <a href="auto/si_endpoint.rs.html#8-15">SiEndpoint</a>, <a href="auto/si_link.rs.html#8-15">SiLink</a>, <a href="auto/si_linkable.rs.html#7-14">SiLinkable</a>},
+	<a href="auto/spa_pod.rs.html#7-16">spa::SpaPod</a>,
 	util::{<a href="auto/transition.rs.html#7-14">Transition</a>, <a href="auto/iterator.rs.html#6-15">WpIterator</a> <span class="kw">as </span>Iterator},
 };
 <span class="attr">#[doc(no_inline)]
 </span><span class="kw">pub use </span>{
 	<span class="self">self</span>::{
-		core::{<a href="auto/core.rs.html#8-15">Core</a>, <a href="auto/flags.rs.html#104-119">InitFlags</a>},
-		error::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/error/struct.Error.html">Error</a>, <span class="prelude-ty">Result</span>},
+		core::{<a href="auto/core.rs.html#8-15">Core</a>, <a href="auto/flags.rs.html#105-120">InitFlags</a>},
+		error::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>, <span class="prelude-ty">Result</span>},
 		<a href="log/mod.rs.html#21">log::Log</a>,
 	},
 	<a href="../../wireplumber_sys/index.html">ffi</a>,

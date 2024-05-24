@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/serializer.rs`."><title>serializer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (b4e54c6e3 2023-09-11)" data-channel="nightly" data-search-js="search-5d3eaacf19ebf04f.js" data-settings-js="settings-74424d7eec62a23e.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-8d035c8cea6edbc4.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../wireplumber/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/serializer.rs`."><title>serializer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -486,33 +488,39 @@
 <a href="#486" id="486">486</a>
 <a href="#487" id="487">487</a>
 <a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::{
 		lua::{<a href="error.rs.html#14-23">LuaError</a>, <a href="variant.rs.html#13-20">LuaVariant</a>},
 		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
 	},
-	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.VariantTypeMismatchError.html">variant::VariantTypeMismatchError</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, <a href="https://docs.rs/glib-macros/0.18.2/glib_macros/derive.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantType.html">VariantType</a>},
-	serde::{<a href="https://docs.rs/serde/1.0.188/serde/ser/index.html">ser</a>, <a href="https://docs.rs/serde_derive/1.0.188/serde_derive/derive.Serialize.html">Serialize</a>},
+	glib::{
+		variant::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.VariantTypeMismatchError.html">VariantTypeMismatchError</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantType.html">VariantType</a>,
+	},
+	serde::{<a href="https://docs.rs/serde/1.0.197/serde/ser/index.html">ser</a>, <a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Serialize.html">Serialize</a>},
 };
 
-<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
-</span><span class="kw">pub fn </span><a href="../../../wireplumber/lua/fn.to_variant.html">to_variant</a>&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">ser::Serialize</a>&gt;(v: S) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, <a href="error.rs.html#14-23">LuaError</a>&gt; {
-	<a href="#11">v</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(Serializer::new())
+<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"serde"</span>)))]
+</span><span class="kw">pub fn </span><a href="../../../wireplumber/lua/fn.to_variant.html">to_variant</a>&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">ser::Serialize</a>&gt;(v: S) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, <a href="error.rs.html#14-23">LuaError</a>&gt; {
+	<a href="#14">v</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(Serializer::new())
 }
 
-<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
+<span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"serde"</span>)))]
 #[derive(Debug, Copy, Clone)]
 </span><span class="kw">pub struct </span><a href="../../../wireplumber/lua/struct.Serializer.html">Serializer</a> {
 	humanize: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="#17-19">Serializer</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="#20-22">Serializer</a> {
 	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::new()
 	}
 }
 
-<span class="kw">impl </span><a href="#17-19">Serializer</a> {
+<span class="kw">impl </span><a href="#20-22">Serializer</a> {
 	<span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ humanize: <span class="bool-val">true </span>}
 	}
@@ -522,456 +530,456 @@
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">ser::Serializer</a> <span class="kw">for </span><a href="#17-19">Serializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">ser::Serializer</a> <span class="kw">for </span><a href="#20-22">Serializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
-	<span class="kw">type </span>SerializeSeq = <a href="#204-208">SeqSerializer</a>;
-	<span class="kw">type </span>SerializeTuple = <a href="#204-208">SeqSerializer</a>;
+	<span class="kw">type </span>SerializeSeq = <a href="#207-211">SeqSerializer</a>;
+	<span class="kw">type </span>SerializeTuple = <a href="#207-211">SeqSerializer</a>;
 	<span class="kw">type </span>SerializeTupleStruct = <span class="self">Self</span>::SerializeTuple;
 	<span class="kw">type </span>SerializeTupleVariant = VariantSerializer&lt;<span class="self">Self</span>::SerializeTuple&gt;;
-	<span class="kw">type </span>SerializeMap = <a href="#280-286">MapSerializer</a>;
-	<span class="kw">type </span>SerializeStruct = <a href="#361-364">StructSerializer</a>;
+	<span class="kw">type </span>SerializeMap = <a href="#283-289">MapSerializer</a>;
+	<span class="kw">type </span>SerializeStruct = <a href="#364-367">StructSerializer</a>;
 	<span class="kw">type </span>SerializeStructVariant = VariantSerializer&lt;<span class="self">Self</span>::SerializeStruct&gt;;
 
 	<span class="kw">fn </span>is_human_readable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#48">self</a>.humanize
+		<a class="self" href="#51">self</a>.humanize
 	}
 
 	<span class="kw">fn </span>serialize_bool(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#52">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#55">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_i8(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i8.html">i8</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#56">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_i16</a>(<a href="#56">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
+		<a class="self" href="#59">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_i16</a>(<a href="#59">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
 	<span class="kw">fn </span>serialize_i16(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#60">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#63">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_i32(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#64">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#67">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_i64(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#68">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#71">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_u8(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#72">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_u16</a>(<a href="#72">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
+		<a class="self" href="#75">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_u16</a>(<a href="#75">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
 	}
 
 	<span class="kw">fn </span>serialize_u16(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#76">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#79">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_u32(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#80">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#83">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_u64(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#84">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#87">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_f32(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#88">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_f64</a>(<a href="#88">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>)
+		<a class="self" href="#91">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_f64</a>(<a href="#91">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>)
 	}
 
 	<span class="kw">fn </span>serialize_f64(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#92">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#95">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_char(<span class="self">self</span>, v: <a href="https://doc.rust-lang.org/nightly/std/primitive.char.html">char</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#96">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_str</a>(<span class="kw-2">&amp;</span><a href="#96">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>())
+		<a class="self" href="#99">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_str</a>(<span class="kw-2">&amp;</span><a href="#99">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>())
 	}
 
 	<span class="kw">fn </span>serialize_str(<span class="self">self</span>, v: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#100">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		<a href="#103">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 
 	<span class="kw">fn </span>serialize_bytes(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(LuaVariant::with_bytes(<a href="#104">v</a>))
+		<span class="prelude-val">Ok</span>(LuaVariant::with_bytes(<a href="#107">v</a>))
 	}
 
 	<span class="kw">fn </span>serialize_none(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#108">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_unit</a>()
+		<a class="self" href="#111">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_unit</a>()
 	}
 
-	<span class="kw">fn </span>serialize_some&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#112">value</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#112">self</a>)
+	<span class="kw">fn </span>serialize_some&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
+		<a href="#115">value</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#115">self</a>)
 	}
 
 	<span class="kw">fn </span>serialize_unit(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(LuaVariant::nil())
 	}
 
-	<span class="kw">fn </span>serialize_unit_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#120">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_unit</a>()
+	<span class="kw">fn </span>serialize_unit_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
+		<a class="self" href="#123">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_unit</a>()
 	}
 
 	<span class="kw">fn </span>serialize_unit_variant(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">if </span><span class="self">self</span>.is_human_readable() {
-			<a class="self" href="#125">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_str</a>(<a href="#128">variant</a>)
+			<a class="self" href="#128">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_str</a>(<a href="#131">variant</a>)
 		} <span class="kw">else </span>{
-			<a class="self" href="#125">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_u32</a>(<a href="#127">variant_index</a>)
+			<a class="self" href="#128">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_u32</a>(<a href="#130">variant_index</a>)
 		}
 	}
 
-	<span class="kw">fn </span>serialize_newtype_struct&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(
+	<span class="kw">fn </span>serialize_newtype_struct&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(
 		<span class="self">self</span>,
-		_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		value: <span class="kw-2">&amp;</span>T,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="#140">value</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#138">self</a>)
+		<a href="#143">value</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#141">self</a>)
 	}
 
-	<span class="kw">fn </span>serialize_newtype_variant&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(
+	<span class="kw">fn </span>serialize_newtype_variant&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(
 		<span class="self">self</span>,
-		name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		value: <span class="kw-2">&amp;</span>T,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		VariantSerializer::new(<a class="self" href="#146">self</a>, <a href="#150">value</a>, <a href="#147">name</a>, <a href="#148">variant_index</a>, <a href="#149">variant</a>).<a href="#442-447">serialize</a>()
+		VariantSerializer::new(<a class="self" href="#149">self</a>, <a href="#153">value</a>, <a href="#150">name</a>, <a href="#151">variant_index</a>, <a href="#152">variant</a>).<a href="#445-450">serialize</a>()
 	}
 
 	<span class="kw">fn </span>serialize_seq(<span class="self">self</span>, len: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeSeq, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(SeqSerializer::new(<a class="self" href="#155">self</a>, <a href="#155">len</a>))
+		<span class="prelude-val">Ok</span>(SeqSerializer::new(<a class="self" href="#158">self</a>, <a href="#158">len</a>))
 	}
 
 	<span class="kw">fn </span>serialize_tuple(<span class="self">self</span>, len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTuple, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#159">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_seq</a>(<span class="prelude-val">Some</span>(<a href="#159">len</a>))
+		<a class="self" href="#162">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_seq</a>(<span class="prelude-val">Some</span>(<a href="#162">len</a>))
 	}
 
-	<span class="kw">fn </span>serialize_tuple_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleStruct, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#163">self</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_tuple</a>(<a href="#163">len</a>)
+	<span class="kw">fn </span>serialize_tuple_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleStruct, <span class="self">Self</span>::Error&gt; {
+		<a class="self" href="#166">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_tuple</a>(<a href="#166">len</a>)
 	}
 
 	<span class="kw">fn </span>serialize_tuple_variant(
 		<span class="self">self</span>,
-		name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleVariant, <span class="self">Self</span>::Error&gt; {
-		<span class="self"><a href="#168">self</a>
-			</span>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_tuple</a>(<a href="#172">len</a>)
-			.map(|ser| VariantSerializer::new(<a class="self" href="#168">self</a>, <a href="#176">ser</a>, <a href="#169">name</a>, <a href="#170">variant_index</a>, <a href="#171">variant</a>))
+		<span class="self"><a href="#171">self</a>
+			</span>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_tuple</a>(<a href="#175">len</a>)
+			.map(|ser| VariantSerializer::new(<a class="self" href="#171">self</a>, <a href="#179">ser</a>, <a href="#172">name</a>, <a href="#173">variant_index</a>, <a href="#174">variant</a>))
 	}
 
 	<span class="kw">fn </span>serialize_map(<span class="self">self</span>, len: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeMap, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(MapSerializer::new(<a class="self" href="#179">self</a>, <span class="prelude-val">None</span>, <a href="#179">len</a>))
+		<span class="prelude-val">Ok</span>(MapSerializer::new(<a class="self" href="#182">self</a>, <span class="prelude-val">None</span>, <a href="#182">len</a>))
 	}
 
-	<span class="kw">fn </span>serialize_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStruct, <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStruct, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">if </span><span class="self">self</span>.is_human_readable() {
-			<a href="#362">StructSerializer::Map</a>(MapSerializer::new(<a class="self" href="#183">self</a>, <span class="prelude-val">Some</span>(VariantTy::STRING), <span class="prelude-val">Some</span>(<a href="#183">len</a>)))
+			<a href="#365">StructSerializer::Map</a>(MapSerializer::new(<a class="self" href="#186">self</a>, <span class="prelude-val">Some</span>(VariantTy::STRING), <span class="prelude-val">Some</span>(<a href="#186">len</a>)))
 		} <span class="kw">else </span>{
-			<a href="#363">StructSerializer::Seq</a>(SeqSerializer::new(<a class="self" href="#183">self</a>, <span class="prelude-val">Some</span>(<a href="#183">len</a>)))
+			<a href="#366">StructSerializer::Seq</a>(SeqSerializer::new(<a class="self" href="#186">self</a>, <span class="prelude-val">Some</span>(<a href="#186">len</a>)))
 		})
 	}
 
 	<span class="kw">fn </span>serialize_struct_variant(
 		<span class="self">self</span>,
-		name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
-		variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+		variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStructVariant, <span class="self">Self</span>::Error&gt; {
-		<span class="self"><a href="#192">self</a>
-			</span>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">serialize_struct</a>(<a href="#193">name</a>, <a href="#196">len</a>)
-			.map(|ser| VariantSerializer::new(<a class="self" href="#192">self</a>, <a href="#200">ser</a>, <a href="#193">name</a>, <a href="#194">variant_index</a>, <a href="#195">variant</a>))
+		<span class="self"><a href="#195">self</a>
+			</span>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">serialize_struct</a>(<a href="#196">name</a>, <a href="#199">len</a>)
+			.map(|ser| VariantSerializer::new(<a class="self" href="#195">self</a>, <a href="#203">ser</a>, <a href="#196">name</a>, <a href="#197">variant_index</a>, <a href="#198">variant</a>))
 	}
 }
 
 <span class="kw">pub struct </span>SeqSerializer {
-	ser: <a href="#17-19">Serializer</a>,
+	ser: <a href="#20-22">Serializer</a>,
 	size: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;,
-	variants: Vec&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+	variants: Vec&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;,
 }
 
-<span class="kw">impl </span><a href="#204-208">SeqSerializer</a> {
-	<span class="kw">fn </span>new(ser: <a href="#17-19">Serializer</a>, size: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span><a href="#207-211">SeqSerializer</a> {
+	<span class="kw">fn </span>new(ser: <a href="#20-22">Serializer</a>, size: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			variants: Vec::with_capacity(<a href="#211">size</a>.unwrap_or_default()),
-			<a href="#211">ser</a>,
-			<a href="#211">size</a>,
+			variants: Vec::with_capacity(<a href="#214">size</a>.unwrap_or_default()),
+			<a href="#214">ser</a>,
+			<a href="#214">size</a>,
 		}
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeSeq.html">ser::SerializeSeq</a> <span class="kw">for </span><a href="#204-208">SeqSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeSeq.html">ser::SerializeSeq</a> <span class="kw">for </span><a href="#207-211">SeqSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_element&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>S) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a href="#224">value</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#224">self</a>.ser).map(|v| <a class="self" href="#224">self</a>.variants.push(<a href="#225">v</a>))
+	<span class="kw">fn </span>serialize_element&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>S) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a href="#227">value</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#227">self</a>.ser).map(|v| <a class="self" href="#227">self</a>.variants.push(<a href="#228">v</a>))
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">match </span><a class="self" href="#228">self</a>.size {
-			<span class="prelude-val">Some</span>(size) <span class="kw">if </span><a href="#230">size</a> != <a class="self" href="#228">self</a>.variants.len() =&gt;
+		<span class="kw">match </span><a class="self" href="#231">self</a>.size {
+			<span class="prelude-val">Some</span>(size) <span class="kw">if </span><a href="#233">size</a> != <a class="self" href="#231">self</a>.variants.len() =&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#22">LuaError::LengthMismatch</a> {
-					actual: <a class="self" href="#228">self</a>.variants.len(),
-					expected: <a href="#230">size</a>,
+					actual: <a class="self" href="#231">self</a>.variants.len(),
+					expected: <a href="#233">size</a>,
 				}),
 			<span class="kw">_ </span>=&gt; (),
 		}
-		<span class="prelude-val">Ok</span>(LuaVariant::from_iter(<a class="self" href="#228">self</a>.variants))
+		<span class="prelude-val">Ok</span>(LuaVariant::from_iter(<a class="self" href="#231">self</a>.variants))
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple</a> <span class="kw">for </span><a href="#204-208">SeqSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple</a> <span class="kw">for </span><a href="#207-211">SeqSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_element&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeSeq.html">ser::SerializeSeq::serialize_element</a>(<a class="self" href="#245">self</a>, <a href="#245">value</a>)
+	<span class="kw">fn </span>serialize_element&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeSeq.html">ser::SerializeSeq::serialize_element</a>(<a class="self" href="#248">self</a>, <a href="#248">value</a>)
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeSeq.html">ser::SerializeSeq::end</a>(<a class="self" href="#249">self</a>)
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeSeq.html">ser::SerializeSeq::end</a>(<a class="self" href="#252">self</a>)
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct</a> <span class="kw">for </span><a href="#204-208">SeqSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct</a> <span class="kw">for </span><a href="#207-211">SeqSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple::serialize_element</a>(<a class="self" href="#258">self</a>, <a href="#258">value</a>)
+	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple::serialize_element</a>(<a class="self" href="#261">self</a>, <a href="#261">value</a>)
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple::end</a>(<a class="self" href="#262">self</a>)
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple::end</a>(<a class="self" href="#265">self</a>)
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a> <span class="kw">for </span><a href="#204-208">SeqSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a> <span class="kw">for </span><a href="#207-211">SeqSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct::serialize_field</a>(<a class="self" href="#271">self</a>, <a href="#271">value</a>)
+	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct::serialize_field</a>(<a class="self" href="#274">self</a>, <a href="#274">value</a>)
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct::end</a>(<a class="self" href="#275">self</a>)
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct::end</a>(<a class="self" href="#278">self</a>)
 	}
 }
 
 <span class="kw">pub struct </span>MapSerializer {
-	ser: <a href="#17-19">Serializer</a>,
-	key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt;,
-	keys: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
-	values: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
+	ser: <a href="#20-22">Serializer</a>,
+	key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt;,
+	keys: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
+	values: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
 	size: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;,
 }
 
-<span class="kw">impl </span><a href="#280-286">MapSerializer</a> {
-	<span class="kw">fn </span>new(ser: <a href="#17-19">Serializer</a>, key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt;, size: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span><a href="#283-289">MapSerializer</a> {
+	<span class="kw">fn </span>new(ser: <a href="#20-22">Serializer</a>, key_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt;, size: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			<a href="#289">ser</a>,
-			<a href="#289">key_type</a>,
-			keys: Vec::with_capacity(<a href="#289">size</a>.unwrap_or_default()),
-			values: Vec::with_capacity(<a href="#289">size</a>.unwrap_or_default()),
-			<a href="#289">size</a>,
+			<a href="#292">ser</a>,
+			<a href="#292">key_type</a>,
+			keys: Vec::with_capacity(<a href="#292">size</a>.unwrap_or_default()),
+			values: Vec::with_capacity(<a href="#292">size</a>.unwrap_or_default()),
+			<a href="#292">size</a>,
 		}
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeMap.html">ser::SerializeMap</a> <span class="kw">for </span><a href="#280-286">MapSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeMap.html">ser::SerializeMap</a> <span class="kw">for </span><a href="#283-289">MapSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_key&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+	<span class="kw">fn </span>serialize_key&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>key = key.serialize(<span class="self">self</span>.ser)<span class="question-mark">?</span>;
-		<span class="kw">match </span><a class="self" href="#304">self</a>.key_type {
-			<span class="prelude-val">Some</span>(key_type) <span class="kw">if </span>!<a href="#305">key</a>.<a href="variant.rs.html#13-20">as_variant</a>().type_().is_subtype_of(<a href="#307">key_type</a>) =&gt;
+		<span class="kw">match </span><a class="self" href="#307">self</a>.key_type {
+			<span class="prelude-val">Some</span>(key_type) <span class="kw">if </span>!<a href="#308">key</a>.<a href="variant.rs.html#13-20">as_variant</a>().type_().is_subtype_of(<a href="#310">key_type</a>) =&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
-					<a href="#305">key</a>.<a href="variant.rs.html#13-20">as_variant</a>().type_().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
-					<a href="#307">key_type</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+					<a href="#308">key</a>.<a href="variant.rs.html#13-20">as_variant</a>().type_().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+					<a href="#310">key_type</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
 				))),
 			<span class="kw">_ </span>=&gt; (),
 		}
-		<span class="prelude-val">Ok</span>(<a class="self" href="#304">self</a>.keys.push(<a href="#305">key</a>.<a href="variant.rs.html#13-20">into_variant</a>()))
+		<span class="prelude-val">Ok</span>(<a class="self" href="#307">self</a>.keys.push(<a href="#308">key</a>.<a href="variant.rs.html#13-20">into_variant</a>()))
 	}
 
-	<span class="kw">fn </span>serialize_value&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a href="#317">value</a>.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#317">self</a>.ser).map(|v| <a class="self" href="#317">self</a>.values.push(<a href="#318">v</a>.<a href="variant.rs.html#13-20">into_variant</a>()))
+	<span class="kw">fn </span>serialize_value&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a href="#320">value</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#320">self</a>.ser).map(|v| <a class="self" href="#320">self</a>.values.push(<a href="#321">v</a>.<a href="variant.rs.html#13-20">into_variant</a>()))
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">match </span><a class="self" href="#321">self</a>.size {
-			<span class="prelude-val">Some</span>(expected) <span class="kw">if </span><a href="#323">expected</a> != <a class="self" href="#321">self</a>.values.len() =&gt;
+		<span class="kw">match </span><a class="self" href="#324">self</a>.size {
+			<span class="prelude-val">Some</span>(expected) <span class="kw">if </span><a href="#326">expected</a> != <a class="self" href="#324">self</a>.values.len() =&gt;
 				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#22">LuaError::LengthMismatch</a> {
-					actual: <a class="self" href="#321">self</a>.values.len(),
-					<a href="#323">expected</a>,
+					actual: <a class="self" href="#324">self</a>.values.len(),
+					<a href="#326">expected</a>,
 				}),
 			<span class="kw">_ </span>=&gt; (),
 		}
 
-		<span class="kw">let </span>key_type = <a class="self" href="#321">self</a>.key_type;
-		<span class="kw">let </span>elem_ty = VariantType::new_dict_entry(<span class="kw-2">&amp;</span><a class="self" href="#321">self</a>.key_type.unwrap_or(VariantTy::VARIANT), VariantTy::VARIANT);
+		<span class="kw">let </span>key_type = <a class="self" href="#324">self</a>.key_type;
+		<span class="kw">let </span>elem_ty = VariantType::new_dict_entry(<span class="kw-2">&amp;</span><a class="self" href="#324">self</a>.key_type.unwrap_or(VariantTy::VARIANT), VariantTy::VARIANT);
 
-		<span class="kw">let </span>entries = <span class="self"><a href="#321">self</a>
+		<span class="kw">let </span>entries = <span class="self"><a href="#324">self</a>
 			</span>.keys
 			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|k| <span class="kw">if </span>key_type.is_some() { <a href="#337">k</a> } <span class="kw">else </span>{ <a href="#337">k</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/trait.ToVariant.html">to_variant</a>() })
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">zip</a>(<a class="self" href="#321">self</a>.values.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>())
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span><a href="#339">k</a>, <span class="kw-2">&amp;</span><a href="#339">v</a>));
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|k| <span class="kw">if </span>key_type.is_some() { <a href="#340">k</a> } <span class="kw">else </span>{ <a href="#340">k</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>() })
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">zip</a>(<a class="self" href="#324">self</a>.values.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>())
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span><a href="#342">k</a>, <span class="kw-2">&amp;</span><a href="#342">v</a>));
 
-		Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span><a href="#332">elem_ty</a>, <a href="#334">entries</a>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
+		Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span><a href="#335">elem_ty</a>, <a href="#337">entries</a>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a> <span class="kw">for </span><a href="#280-286">MapSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a> <span class="kw">for </span><a href="#283-289">MapSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
+	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
 	<span class="kw">where
-		</span>T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a>,
+		</span>T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a>,
 	{
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeMap.html">ser::SerializeMap::serialize_entry</a>(<a class="self" href="#349">self</a>, <a href="#349">key</a>, <a href="#349">value</a>)
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeMap.html">ser::SerializeMap::serialize_entry</a>(<a class="self" href="#352">self</a>, <a href="#352">key</a>, <a href="#352">value</a>)
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeMap.html">ser::SerializeMap::end</a>(<a class="self" href="#356">self</a>)
+		<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeMap.html">ser::SerializeMap::end</a>(<a class="self" href="#359">self</a>)
 	}
 }
 
 <span class="kw">pub enum </span>StructSerializer {
-	Map(<a href="#280-286">MapSerializer</a>),
-	Seq(<a href="#204-208">SeqSerializer</a>),
+	Map(<a href="#283-289">MapSerializer</a>),
+	Seq(<a href="#207-211">SeqSerializer</a>),
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a> <span class="kw">for </span><a href="#361-364">StructSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a> <span class="kw">for </span><a href="#364-367">StructSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
+	<span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;
 	<span class="kw">where
-		</span>T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a>,
+		</span>T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a>,
 	{
-		<span class="kw">match </span><span class="self"><a href="#370">self</a> </span>{
-			<a href="#362">StructSerializer::Map</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::serialize_field</a>(<a href="#375">s</a>, <a href="#370">key</a>, <a href="#370">value</a>),
-			<a href="#363">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::serialize_field</a>(<a href="#376">s</a>, <a href="#370">key</a>, <a href="#370">value</a>),
+		<span class="kw">match </span><span class="self"><a href="#373">self</a> </span>{
+			<a href="#365">StructSerializer::Map</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::serialize_field</a>(<a href="#378">s</a>, <a href="#373">key</a>, <a href="#373">value</a>),
+			<a href="#366">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::serialize_field</a>(<a href="#379">s</a>, <a href="#373">key</a>, <a href="#373">value</a>),
 		}
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">match </span><span class="self"><a href="#380">self</a> </span>{
-			<a href="#362">StructSerializer::Map</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#382">s</a>),
-			<a href="#363">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#383">s</a>),
+		<span class="kw">match </span><span class="self"><a href="#383">self</a> </span>{
+			<a href="#365">StructSerializer::Map</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#385">s</a>),
+			<a href="#366">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#386">s</a>),
 		}
 	}
 }
 
-<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct</a> <span class="kw">for </span><a href="#361-364">StructSerializer</a> {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct</a> <span class="kw">for </span><a href="#364-367">StructSerializer</a> {
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<span class="kw">match </span><span class="self"><a href="#392">self</a> </span>{
-			<a href="#362">StructSerializer::Map</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unimplemented.html">unimplemented!</a>(),
-			<a href="#363">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct::serialize_field</a>(<a href="#395">s</a>, <a href="#392">value</a>),
+	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<span class="kw">match </span><span class="self"><a href="#395">self</a> </span>{
+			<a href="#365">StructSerializer::Map</a>(<span class="kw">_</span>) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unimplemented.html">unimplemented!</a>(),
+			<a href="#366">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTupleStruct.html">ser::SerializeTupleStruct::serialize_field</a>(<a href="#398">s</a>, <a href="#395">value</a>),
 		}
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">match </span><span class="self"><a href="#399">self</a> </span>{
-			<a href="#362">StructSerializer::Map</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#401">s</a>),
-			<a href="#363">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#402">s</a>),
+		<span class="kw">match </span><span class="self"><a href="#402">self</a> </span>{
+			<a href="#365">StructSerializer::Map</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#404">s</a>),
+			<a href="#366">StructSerializer::Seq</a>(s) =&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct::end</a>(<a href="#405">s</a>),
 		}
 	}
 }
 
 <span class="kw">struct </span>VariantSerializerState {
-	ser: <a href="#17-19">Serializer</a>,
-	_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+	ser: <a href="#20-22">Serializer</a>,
+	_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 	variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
-	variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+	variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 }
 
-<span class="kw">impl </span><a href="#407-412">VariantSerializerState</a> {
-	<span class="kw">fn </span>tag&lt;V: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt;(<span class="self">self</span>, variant: V) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, <a href="error.rs.html#14-23">LuaError</a>&gt; {
+<span class="kw">impl </span><a href="#410-415">VariantSerializerState</a> {
+	<span class="kw">fn </span>tag&lt;V: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;&gt;(<span class="self">self</span>, variant: V) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="kw">let </span>variant = LuaVariant::convert_from(variant.as_ref())<span class="question-mark">?</span>;
-		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serializer.html">ser::Serializer::is_human_readable</a>(<span class="kw-2">&amp;</span><a class="self" href="#415">self</a>.ser) {
-			<span class="bool-val">true </span>=&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/sources/once/fn.once.html">iter::once</a>((<a class="self" href="#415">self</a>.variant, <a href="#416">variant</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
-			<span class="bool-val">false </span>=&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/sources/once/fn.once.html">iter::once</a>((<a class="self" href="#415">self</a>.variant_index, <a href="#416">variant</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">ser::Serializer::is_human_readable</a>(<span class="kw-2">&amp;</span><a class="self" href="#418">self</a>.ser) {
+			<span class="bool-val">true </span>=&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/sources/once/fn.once.html">iter::once</a>((<a class="self" href="#418">self</a>.variant, <a href="#419">variant</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
+			<span class="bool-val">false </span>=&gt; <a href="https://doc.rust-lang.org/nightly/core/iter/sources/once/fn.once.html">iter::once</a>((<a class="self" href="#418">self</a>.variant_index, <a href="#419">variant</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
 		})
 	}
 }
 
 <span class="kw">pub struct </span>VariantSerializer&lt;S&gt; {
 	inner: S,
-	state: <a href="#407-412">VariantSerializerState</a>,
+	state: <a href="#410-415">VariantSerializerState</a>,
 }
 
 <span class="kw">impl</span>&lt;S&gt; VariantSerializer&lt;S&gt; {
-	<span class="kw">fn </span>new(ser: <a href="#17-19">Serializer</a>, inner: S, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, variant: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="self">Self </span>{
+	<span class="kw">fn </span>new(ser: <a href="#20-22">Serializer</a>, inner: S, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, variant_index: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			<a href="#430">inner</a>,
-			state: <a href="#407-412">VariantSerializerState</a> {
-				<a href="#430">ser</a>,
-				<a href="#430">_name</a>,
-				<a href="#430">variant_index</a>,
-				<a href="#430">variant</a>,
+			<a href="#433">inner</a>,
+			state: <a href="#410-415">VariantSerializerState</a> {
+				<a href="#433">ser</a>,
+				<a href="#433">_name</a>,
+				<a href="#433">variant_index</a>,
+				<a href="#433">variant</a>,
 			},
 		}
 	}
 
-	<span class="kw">fn </span>serialize(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;, <a href="error.rs.html#14-23">LuaError</a>&gt;
+	<span class="kw">fn </span>serialize(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, <a href="error.rs.html#14-23">LuaError</a>&gt;
 	<span class="kw">where
-		</span>S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a>,
+		</span>S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a>,
 	{
-		<a class="self" href="#442">self</a>.inner.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#442">self</a>.state.ser).and_then(|v| <a class="self" href="#442">self</a>.state.<a href="#415-421">tag</a>(<a href="#446">v</a>))
+		<a class="self" href="#445">self</a>.inner.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">serialize</a>(<a class="self" href="#445">self</a>.state.ser).and_then(|v| <a class="self" href="#445">self</a>.state.<a href="#418-424">tag</a>(<a href="#449">v</a>))
 	}
 }
 
-<span class="kw">impl</span>&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple</a>&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTupleVariant.html">ser::SerializeTupleVariant</a> <span class="kw">for </span>VariantSerializer&lt;S&gt;
+<span class="kw">impl</span>&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTuple.html">ser::SerializeTuple</a>&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTupleVariant.html">ser::SerializeTupleVariant</a> <span class="kw">for </span>VariantSerializer&lt;S&gt;
 <span class="kw">where
-	</span>S::Ok: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+	</span>S::Ok: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;,
 	S::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
 {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#458">self</a>.inner.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTuple.html">serialize_element</a>(<a href="#458">value</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>)
+	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a class="self" href="#461">self</a>.inner.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTuple.html">serialize_element</a>(<a href="#461">value</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>)
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>state = <a class="self" href="#462">self</a>.state;
-		<a class="self" href="#462">self</a>.inner.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeTuple.html">end</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>).and_then(|ok| <a href="#463">state</a>.<a href="#415-421">tag</a>(<a href="#464">ok</a>))
+		<span class="kw">let </span>state = <a class="self" href="#465">self</a>.state;
+		<a class="self" href="#465">self</a>.inner.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeTuple.html">end</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>).and_then(|ok| <a href="#466">state</a>.<a href="#418-424">tag</a>(<a href="#467">ok</a>))
 	}
 }
 
-<span class="kw">impl</span>&lt;S: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a>&gt; <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStructVariant.html">ser::SerializeStructVariant</a> <span class="kw">for </span>VariantSerializer&lt;S&gt;
+<span class="kw">impl</span>&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a>&gt; <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStructVariant.html">ser::SerializeStructVariant</a> <span class="kw">for </span>VariantSerializer&lt;S&gt;
 <span class="kw">where
-	</span>S::Ok: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.18/docs/glib/variant/struct.Variant.html">Variant</a>&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+	</span>S::Ok: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt; + Into&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;,
 	S::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
 {
-	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">&#39;static</span>&gt;;
+	<span class="kw">type </span><span class="prelude-val">Ok </span>= LuaVariant&lt;<span class="lifetime">'static</span>&gt;;
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
-	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.188/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#476">self</a>.inner.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">serialize_field</a>(<a href="#476">key</a>, <a href="#476">value</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>)
+	<span class="kw">fn </span>serialize_field&lt;T: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> + <span class="question-mark">?</span><a href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html">Sized</a>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a class="self" href="#479">self</a>.inner.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">serialize_field</a>(<a href="#479">key</a>, <a href="#479">value</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>)
 	}
 
-	<span class="kw">fn </span>skip_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#480">self</a>.inner.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">skip_field</a>(<a href="#480">key</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>)
+	<span class="kw">fn </span>skip_field(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+		<a class="self" href="#483">self</a>.inner.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">skip_field</a>(<a href="#483">key</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>)
 	}
 
 	<span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>state = <a class="self" href="#484">self</a>.state;
-		<a class="self" href="#484">self</a>.inner.<a href="https://docs.rs/serde/1.0.188/serde/ser/trait.SerializeStruct.html">end</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>).and_then(|ok| <a href="#485">state</a>.<a href="#415-421">tag</a>(<a href="#486">ok</a>))
+		<span class="kw">let </span>state = <a class="self" href="#487">self</a>.state;
+		<a class="self" href="#487">self</a>.inner.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">end</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>).and_then(|ok| <a href="#488">state</a>.<a href="#418-424">tag</a>(<a href="#489">ok</a>))
 	}
 }
 </code></pre></div></section></main></body></html>
