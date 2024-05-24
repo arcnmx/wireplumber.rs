@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `examples/src/bin/exec.rs`."><title>exec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wpexec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../wpexec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `examples/src/bin/exec.rs`."><title>exec.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wpexec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../wpexec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -409,50 +407,50 @@
 /// See also: [Core::run]
 </span><span class="kw">fn </span><a href="../../wpexec/fn.main.html">main</a>() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
 	<span class="comment">// info logging by default so we can see what's going on
-	</span>wireplumber::Log::set_default_level(<span class="string">"3"</span>);
+	</span><a href="../../wireplumber/log/struct.Log.html#method.set_default_level">wireplumber::Log::set_default_level</a>(<span class="string">"3"</span>);
 
 	<span class="comment">// let clap build a CLI from argv for us
-	</span><span class="kw">let </span>args = Args::parse();
+	</span><span class="kw">let </span>args = <a href="https://docs.rs/clap/3.2.25/clap/derive/trait.Parser.html#tymethod.parse">Args::parse</a>();
 
 	<span class="kw">if </span>args.module().is_none() {
 		<span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"no default module available for {:?}"</span>, args.module_type))
 	}
 
 	<span class="comment">// bail out early if invalid args are provided
-	</span><span class="kw">let _ </span>= args.variant()<span class="question-mark">?</span>;
+	</span><span class="kw">let _ </span>= <a href="#137">args</a>.<a href="#270-275">variant</a>()<span class="question-mark">?</span>;
 
 	<span class="comment">// initialize the wireplumber and pipewire libraries
-	</span>Core::init();
+	</span><a href="../../wireplumber/auto/core/struct.Core.html#method.init">Core::init</a>();
 
 	<span class="comment">// set up a cell to store the result of our main operation in
-	</span><span class="kw">let </span>main_res = Rc::new(RefCell::new(<span class="prelude-val">None</span>));
+	</span><span class="kw">let </span>main_res = <a href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html#method.new">Rc::new</a>(<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.new">RefCell::new</a>(<span class="prelude-val">None</span>));
 
 	<span class="comment">// tell the pipewire daemon a little bit about ourselves
-	</span><span class="kw">let </span>props = Properties::new();
-	<a href="#153">props</a>.insert(pw::PW_KEY_APP_NAME, <a href="#22">LOG_DOMAIN</a>);
+	</span><span class="kw">let </span>props = <a href="../../wireplumber/auto/properties/struct.Properties.html#method.new">Properties::new</a>();
+	<a href="#153">props</a>.<a href="../../wireplumber/auto/properties/struct.Properties.html#method.insert">insert</a>(<a href="../../wireplumber/pw/keys/constant.PW_KEY_APP_NAME.html">pw::PW_KEY_APP_NAME</a>, <a href="#22">LOG_DOMAIN</a>);
 
 	<span class="comment">// run a (blocking) glib::MainLoop with associated core
-	</span>Core::run(<span class="prelude-val">Some</span>(<a href="#153">props</a>), |context, mainloop, core| {
-		ctrlc::set_handler({
+	</span><a href="../../wireplumber/auto/core/struct.Core.html#method.run">Core::run</a>(<span class="prelude-val">Some</span>(<a href="#153">props</a>), |context, mainloop, core| {
+		<a href="https://docs.rs/ctrlc/3.4.4/ctrlc/fn.set_handler.html">ctrlc::set_handler</a>({
 			<span class="comment">// exit this loop if we receive a SIGINT
-			</span><span class="kw">let </span>mainloop = <a href="#157">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
-			<span class="kw">move </span>|| <a href="#160">mainloop</a>.quit()
+			</span><span class="kw">let </span>mainloop = <a href="#157">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
+			<span class="kw">move </span>|| <a href="#160">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
 		})
-		.unwrap();
+		.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>();
 
-		<span class="kw">let </span>main_res = <a href="#150">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
-		<a href="#157">context</a>.spawn_local(<span class="kw">async move </span>{
+		<span class="kw">let </span>main_res = <a href="#150">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
+		<a href="#157">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html#method.spawn_local">spawn_local</a>(<span class="kw">async move </span>{
 			<span class="comment">// set up the requested module or script...
-			</span><span class="kw">let </span>res = main_async(<span class="kw-2">&amp;</span>core, <span class="kw-2">&amp;</span>args).<span class="kw">await</span>;
+			</span><span class="kw">let </span>res = <a href="#65-124">main_async</a>(<span class="kw-2">&amp;</span><a href="#157">core</a>, <span class="kw-2">&amp;</span><a href="#137">args</a>).<span class="kw">await</span>;
 			<span class="kw">if </span>res.is_err() {
 				<span class="comment">// bail out if we couldn't successfully load it after all
-				</span><a href="#157">mainloop</a>.quit();
+				</span><a href="#157">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>();
 			}
-			<span class="kw-2">*</span><a href="#165">main_res</a>.borrow_mut() = <span class="prelude-val">Some</span>(<a href="#168">res</a>)
+			<span class="kw-2">*</span><a href="#165">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.borrow_mut">borrow_mut</a>() = <span class="prelude-val">Some</span>(<a href="#168">res</a>)
 		});
 	});
 
-	<span class="kw">let </span>main_res = <a href="#150">main_res</a>.borrow_mut().take();
+	<span class="kw">let </span>main_res = <a href="#150">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.borrow_mut">borrow_mut</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.take">take</a>();
 	<span class="kw">match </span><a href="#177">main_res</a> {
 		<span class="prelude-val">Some</span>(res) =&gt; <a href="#179">res</a>,
 		<span class="comment">// we didn't get far enough to store the result; likely it timed out or something
@@ -510,8 +508,8 @@
 	</span><span class="kw">fn </span>plugins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
 		<span class="kw">match </span><a class="self" href="#232">self</a>.module_type {
 			<a href="#28">ModuleType::Lua</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[ComponentLoader::PLUGIN_LOADER_LUA],
-			<a href="#32">ModuleType::Wireplumber</a> <span class="kw">if </span><a class="self" href="#232">self</a>.plugins.is_empty() &amp;&amp; <a class="self" href="#232">self</a>.module.is_none() =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[<span class="string">"static-link"</span>],
-			<a href="#32">ModuleType::Wireplumber</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <a class="self" href="#232">self</a>.plugins.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|s| <a href="#236">s</a>.as_str()).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
+			<a href="#32">ModuleType::Wireplumber</a> <span class="kw">if </span><a class="self" href="#232">self</a>.plugins.<a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.is_empty">is_empty</a>() &amp;&amp; <a class="self" href="#232">self</a>.module.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_none">is_none</a>() =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[<span class="string">"static-link"</span>],
+			<a href="#32">ModuleType::Wireplumber</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <a class="self" href="#232">self</a>.plugins.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|s| <a href="#236">s</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html#method.as_str">as_str</a>()).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>(),
 			<a href="#34">ModuleType::Pipewire</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>(),
 		}
 	}
@@ -548,7 +546,7 @@
 	</span><span class="kw">fn </span>variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../wireplumber/lua/variant/struct.LuaVariant.html">LuaVariant</a>&gt;&gt; {
 		<span class="kw">match </span><a class="self" href="#270">self</a>.json_arg {
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; serde_json::from_str(<a href="#273">json</a>).map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>).map(<span class="prelude-val">Some</span>),
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; <a href="https://docs.rs/serde_json/1.0.114/serde_json/de/fn.from_str.html">serde_json::from_str</a>(<a href="#273">json</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
 		}
 	}
 }

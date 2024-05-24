@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/type.rs`."><title>type.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/type.rs`."><title>type.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -172,7 +170,7 @@
 <a href="#170" id="170">170</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="id_table.rs.html#5-7">spa::SpaIdTable</a>};
 
-<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.wrapper.html">glib::wrapper!</a> {
 	<span class="attr">#[doc(alias = <span class="string">"WpSpaType"</span>)]
 	#[derive(PartialEq, Eq, PartialOrd, Ord, Hash)]
 	</span><span class="kw">pub struct </span><a href="../../../wireplumber/spa/struct.SpaType.html">SpaType</a>(BoxedInline&lt;<a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>&gt;);
@@ -183,55 +181,55 @@
 }
 
 <span class="kw">impl </span><a href="#3-11">SpaType</a> {
-	<span class="kw">pub const </span>ARRAY: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Array) };
-	<span class="kw">pub const </span>BITMAP: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Bitmap) };
-	<span class="kw">pub const </span>BOOL: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Bool) };
-	<span class="kw">pub const </span>BYTES: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Bytes) };
-	<span class="kw">pub const </span>CHOICE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Choice) };
-	<span class="kw">pub const </span>DOUBLE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Double) };
-	<span class="kw">pub const </span>FD: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Fd) };
-	<span class="kw">pub const </span>FLOAT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Float) };
-	<span class="kw">pub const </span>FRACTION: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Fraction) };
-	<span class="kw">pub const </span>ID: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Id) };
-	<span class="kw">pub const </span>INT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Int) };
-	<span class="kw">pub const </span>LONG: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Long) };
-	<span class="kw">pub const </span>NONE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_None) };
-	<span class="kw">pub const </span>OBJECT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Object) };
-	<span class="kw">pub const </span>OBJECT_FORMAT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Format) };
+	<span class="kw">pub const </span>ARRAY: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Array.html">libspa_sys::SPA_TYPE_Array</a>) };
+	<span class="kw">pub const </span>BITMAP: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Bitmap.html">libspa_sys::SPA_TYPE_Bitmap</a>) };
+	<span class="kw">pub const </span>BOOL: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Bool.html">libspa_sys::SPA_TYPE_Bool</a>) };
+	<span class="kw">pub const </span>BYTES: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Bytes.html">libspa_sys::SPA_TYPE_Bytes</a>) };
+	<span class="kw">pub const </span>CHOICE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Choice.html">libspa_sys::SPA_TYPE_Choice</a>) };
+	<span class="kw">pub const </span>DOUBLE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Double.html">libspa_sys::SPA_TYPE_Double</a>) };
+	<span class="kw">pub const </span>FD: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Fd.html">libspa_sys::SPA_TYPE_Fd</a>) };
+	<span class="kw">pub const </span>FLOAT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Float.html">libspa_sys::SPA_TYPE_Float</a>) };
+	<span class="kw">pub const </span>FRACTION: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Fraction.html">libspa_sys::SPA_TYPE_Fraction</a>) };
+	<span class="kw">pub const </span>ID: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Id.html">libspa_sys::SPA_TYPE_Id</a>) };
+	<span class="kw">pub const </span>INT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Int.html">libspa_sys::SPA_TYPE_Int</a>) };
+	<span class="kw">pub const </span>LONG: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Long.html">libspa_sys::SPA_TYPE_Long</a>) };
+	<span class="kw">pub const </span>NONE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_None.html">libspa_sys::SPA_TYPE_None</a>) };
+	<span class="kw">pub const </span>OBJECT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Object.html">libspa_sys::SPA_TYPE_Object</a>) };
+	<span class="kw">pub const </span>OBJECT_FORMAT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_Format.html">libspa_sys::SPA_TYPE_OBJECT_Format</a>) };
 	<span class="kw">pub const </span>OBJECT_PARAM_BUFFERS: <span class="self">Self </span>=
-		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamBuffers) };
-	<span class="kw">pub const </span>OBJECT_PARAM_IO: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamIO) };
+		<span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamBuffers.html">libspa_sys::SPA_TYPE_OBJECT_ParamBuffers</a>) };
+	<span class="kw">pub const </span>OBJECT_PARAM_IO: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamIO.html">libspa_sys::SPA_TYPE_OBJECT_ParamIO</a>) };
 	<span class="kw">pub const </span>OBJECT_PARAM_LATENCY: <span class="self">Self </span>=
-		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamLatency) };
-	<span class="kw">pub const </span>OBJECT_PARAM_META: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamMeta) };
+		<span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamLatency.html">libspa_sys::SPA_TYPE_OBJECT_ParamLatency</a>) };
+	<span class="kw">pub const </span>OBJECT_PARAM_META: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamMeta.html">libspa_sys::SPA_TYPE_OBJECT_ParamMeta</a>) };
 	<span class="kw">pub const </span>OBJECT_PARAM_PORT_CONFIG: <span class="self">Self </span>=
-		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamPortConfig) };
+		<span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamPortConfig.html">libspa_sys::SPA_TYPE_OBJECT_ParamPortConfig</a>) };
 	<span class="kw">pub const </span>OBJECT_PARAM_PROCESS_LATENCY: <span class="self">Self </span>=
-		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProcessLatency) };
+		<span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamProcessLatency.html">libspa_sys::SPA_TYPE_OBJECT_ParamProcessLatency</a>) };
 	<span class="kw">pub const </span>OBJECT_PARAM_PROFILE: <span class="self">Self </span>=
-		<span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamProfile) };
-	<span class="kw">pub const </span>OBJECT_PARAM_ROUTE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_ParamRoute) };
-	<span class="kw">pub const </span>OBJECT_PROFILER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Profiler) };
-	<span class="kw">pub const </span>OBJECT_PROP_INFO: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_PropInfo) };
-	<span class="kw">pub const </span>OBJECT_PROPS: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_OBJECT_Props) };
-	<span class="kw">pub const </span>POD: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Pod) };
-	<span class="kw">pub const </span>POINTER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Pointer) };
-	<span class="kw">pub const </span>RECTANGLE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Rectangle) };
-	<span class="kw">pub const </span>SEQUENCE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Sequence) };
-	<span class="kw">pub const </span>STRING: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_String) };
-	<span class="kw">pub const </span>STRUCT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_Struct) };
-	<span class="kw">pub const </span>POINTER_BUFFER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_POINTER_Buffer) };
-	<span class="kw">pub const </span>POINTER_DICT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_POINTER_Dict) };
-	<span class="kw">pub const </span>POINTER_META: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_POINTER_Meta) };
-	<span class="kw">pub const </span>COMMAND_DEVICE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_COMMAND_Device) };
-	<span class="kw">pub const </span>COMMAND_NODE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_COMMAND_Node) };
-	<span class="kw">pub const </span>EVENT_DEVICE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_EVENT_Device) };
-	<span class="kw">pub const </span>EVENT_NODE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ SpaType::from_id_unchecked(libspa_sys::SPA_TYPE_EVENT_Node) };
+		<span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamProfile.html">libspa_sys::SPA_TYPE_OBJECT_ParamProfile</a>) };
+	<span class="kw">pub const </span>OBJECT_PARAM_ROUTE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamRoute.html">libspa_sys::SPA_TYPE_OBJECT_ParamRoute</a>) };
+	<span class="kw">pub const </span>OBJECT_PROFILER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_Profiler.html">libspa_sys::SPA_TYPE_OBJECT_Profiler</a>) };
+	<span class="kw">pub const </span>OBJECT_PROP_INFO: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_PropInfo.html">libspa_sys::SPA_TYPE_OBJECT_PropInfo</a>) };
+	<span class="kw">pub const </span>OBJECT_PROPS: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_Props.html">libspa_sys::SPA_TYPE_OBJECT_Props</a>) };
+	<span class="kw">pub const </span>POD: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Pod.html">libspa_sys::SPA_TYPE_Pod</a>) };
+	<span class="kw">pub const </span>POINTER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Pointer.html">libspa_sys::SPA_TYPE_Pointer</a>) };
+	<span class="kw">pub const </span>RECTANGLE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Rectangle.html">libspa_sys::SPA_TYPE_Rectangle</a>) };
+	<span class="kw">pub const </span>SEQUENCE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Sequence.html">libspa_sys::SPA_TYPE_Sequence</a>) };
+	<span class="kw">pub const </span>STRING: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_String.html">libspa_sys::SPA_TYPE_String</a>) };
+	<span class="kw">pub const </span>STRUCT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_Struct.html">libspa_sys::SPA_TYPE_Struct</a>) };
+	<span class="kw">pub const </span>POINTER_BUFFER: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_POINTER_Buffer.html">libspa_sys::SPA_TYPE_POINTER_Buffer</a>) };
+	<span class="kw">pub const </span>POINTER_DICT: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_POINTER_Dict.html">libspa_sys::SPA_TYPE_POINTER_Dict</a>) };
+	<span class="kw">pub const </span>POINTER_META: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_POINTER_Meta.html">libspa_sys::SPA_TYPE_POINTER_Meta</a>) };
+	<span class="kw">pub const </span>COMMAND_DEVICE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_COMMAND_Device.html">libspa_sys::SPA_TYPE_COMMAND_Device</a>) };
+	<span class="kw">pub const </span>COMMAND_NODE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_COMMAND_Node.html">libspa_sys::SPA_TYPE_COMMAND_Node</a>) };
+	<span class="kw">pub const </span>EVENT_DEVICE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_EVENT_Device.html">libspa_sys::SPA_TYPE_EVENT_Device</a>) };
+	<span class="kw">pub const </span>EVENT_NODE: <span class="self">Self </span>= <span class="kw">unsafe </span>{ <a href="#66-68">SpaType::from_id_unchecked</a>(<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_EVENT_Node.html">libspa_sys::SPA_TYPE_EVENT_Node</a>) };
 
 	<span class="kw">pub fn </span>from_id(id: <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">match </span><a href="#59">id</a> {
-			ffi::WP_SPA_TYPE_INVALID =&gt; <span class="prelude-val">None</span>,
-			inner =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <span class="self">Self</span>::from_id_unchecked(<a href="#62">inner</a>) }),
+			<a href="../../../wireplumber_sys/sys/constant.WP_SPA_TYPE_INVALID.html">ffi::WP_SPA_TYPE_INVALID</a> =&gt; <span class="prelude-val">None</span>,
+			inner =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <a href="#66-68"><span class="self">Self</span>::from_id_unchecked</a>(<a href="#62">inner</a>) }),
 		}
 	}
 
@@ -240,7 +238,7 @@
 	}
 
 	<span class="kw">pub fn </span>number(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a> {
-		<a class="self" href="#70">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+		<a class="self" href="#70">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()
 	}
 
 	<span class="attr">#[cfg(libspa_linked)]
@@ -251,44 +249,44 @@
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_get_object_id_values_table"</span>)]
 	#[doc(alias = <span class="string">"get_object_id_values_table"</span>)]
 	</span><span class="kw">pub fn </span>object_id_values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="id_table.rs.html#5-7">SpaIdTable</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_object_id_values_table(<a class="self" href="#81">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_get_object_id_values_table.html">ffi::wp_spa_type_get_object_id_values_table</a>(<a class="self" href="#81">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_get_values_table"</span>)]
 	#[doc(alias = <span class="string">"get_values_table"</span>)]
 	</span><span class="kw">pub fn </span>values_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="id_table.rs.html#5-7">SpaIdTable</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_get_values_table(<a class="self" href="#87">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_get_values_table.html">ffi::wp_spa_type_get_values_table</a>(<a class="self" href="#87">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_is_fundamental"</span>)]
 	</span><span class="kw">pub fn </span>is_fundamental(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_fundamental(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_is_fundamental.html">ffi::wp_spa_type_is_fundamental</a>(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_is_id"</span>)]
 	</span><span class="kw">pub fn </span>is_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_id(<a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_is_id.html">ffi::wp_spa_type_is_id</a>(<a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_is_object"</span>)]
 	</span><span class="kw">pub fn </span>is_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_is_object(<a class="self" href="#102">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_is_object.html">ffi::wp_spa_type_is_object</a>(<a class="self" href="#102">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_name"</span>)]
 	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib_none(ffi::wp_spa_type_name(<a class="self" href="#107">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_none.html">from_glib_none</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_name.html">ffi::wp_spa_type_name</a>(<a class="self" href="#107">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_parent"</span>)]
 	#[must_use]
 	</span><span class="kw">pub fn </span>parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#3-11">SpaType</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_parent(<a class="self" href="#113">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>())) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_parent.html">ffi::wp_spa_type_parent</a>(<a class="self" href="#113">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>())) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_type_from_name"</span>)]
 	</span><span class="kw">pub fn </span>from_name(name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#3-11">SpaType</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_type_from_name(<a href="#118">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_type_from_name.html">ffi::wp_spa_type_from_name</a>(<a href="#118">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 }
 
@@ -296,7 +294,7 @@
 	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
 
 	<span class="kw">unsafe fn </span>try_from_glib(val: <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="self">Self</span>::try_from(<a href="#126">val</a>)
+		<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#tymethod.try_from"><span class="self">Self</span>::try_from</a>(<a href="#126">val</a>)
 	}
 }
 
@@ -304,7 +302,7 @@
 	<span class="kw">type </span>Error = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>;
 
 	<span class="kw">fn </span>try_from(value: <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="self">Self</span>::from_id(<a href="#134">value</a>).ok_or(GlibNoneError)
+		<a href="#59-64"><span class="self">Self</span>::from_id</a>(<a href="#134">value</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or">ok_or</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/struct.GlibNoneError.html">GlibNoneError</a>)
 	}
 }
 
@@ -317,12 +315,12 @@
 
 <span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="#3-11">SpaType</a> {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-		<span class="kw">let </span><span class="kw-2">mut </span>f = <a href="#147">f</a>.debug_struct(<span class="string">"SpaType"</span>);
-		<a href="#148">f</a>.field(<span class="string">"id"</span>, <span class="kw-2">&amp;</span><a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+		<span class="kw">let </span><span class="kw-2">mut </span>f = <a href="#147">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.debug_struct">debug_struct</a>(<span class="string">"SpaType"</span>);
+		<a href="#148">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"id"</span>, <span class="kw-2">&amp;</span><a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(name) = <a class="self" href="#147">self</a>.<a href="#107-109">name</a>() {
-			<a href="#148">f</a>.field(<span class="string">"name"</span>, <span class="kw-2">&amp;</span><a href="#150">name</a>);
+			<a href="#148">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.field">field</a>(<span class="string">"name"</span>, <span class="kw-2">&amp;</span><a href="#150">name</a>);
 		}
-		<a href="#148">f</a>.finish()
+		<a href="#148">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugStruct.html#method.finish">finish</a>()
 	}
 }
 

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/variant.rs`."><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lua/variant.rs`."><title>variant.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -604,7 +602,7 @@
 	<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">std::borrow::Cow</a>,
 };
 
-<a class="macro" href="macros.rs.html#2-199">newtype_wrapper! </a>{
+<a class="macro" href="macros.rs.html#2-199">newtype_wrapper!</a> {
 	<span class="doccomment">/// A [Variant](struct@Variant) that can be passed to a Lua script.
 	///
 	/// `LuaVariant` serves as a sort of adhoc ABI for WirePlumber modules
@@ -633,25 +631,25 @@
 				=&gt; <a href="#26">LuaType::Integer</a>,
 			ty <span class="kw">if </span><a href="#40">ty</a> == VariantTy::DOUBLE =&gt; <a href="#27">LuaType::Float</a>,
 			ty <span class="kw">if </span><a href="#41">ty</a> == VariantTy::STRING <span class="comment">/*|| ty == VariantTy::BYTE_STRING*/ </span>=&gt; <a href="#28">LuaType::String</a>,
-			ty <span class="kw">if </span><a href="#42">ty</a>.is_subtype_of(VariantTy::DICTIONARY) =&gt; <span class="kw">match </span><a href="#42">ty</a>.element() {
-				ty <span class="kw">if </span><span class="self">Self</span>::with_variant_type(<a href="#43">ty</a>.key()).is_some() &amp;&amp; <span class="self">Self</span>::with_variant_type(<a href="#43">ty</a>.value()).is_some() =&gt; <a href="#29">LuaType::Table</a>,
+			ty <span class="kw">if </span><a href="#42">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.is_subtype_of">is_subtype_of</a>(VariantTy::DICTIONARY) =&gt; <span class="kw">match </span><a href="#42">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.element">element</a>() {
+				ty <span class="kw">if </span><a href="#33-49"><span class="self">Self</span>::with_variant_type</a>(<a href="#43">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.key">key</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_some">is_some</a>() &amp;&amp; <a href="#33-49"><span class="self">Self</span>::with_variant_type</a>(<a href="#43">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.value">value</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_some">is_some</a>() =&gt; <a href="#29">LuaType::Table</a>,
 				<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 			},
-			ty <span class="kw">if </span><a href="#46">ty</a>.is_array() &amp;&amp; <span class="self">Self</span>::with_variant_type(<a href="#46">ty</a>.element()).is_some() =&gt; <a href="#29">LuaType::Table</a>,
+			ty <span class="kw">if </span><a href="#46">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.is_array">is_array</a>() &amp;&amp; <a href="#33-49"><span class="self">Self</span>::with_variant_type</a>(<a href="#46">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.element">element</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_some">is_some</a>() =&gt; <a href="#29">LuaType::Table</a>,
 			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
 
 	<span class="kw">pub fn </span>with_lua_variant(var: <span class="kw-2">&amp;</span><a href="#13-20">LuaVariant</a>) -&gt; <span class="self">Self </span>{
 		<span class="kw">const </span>MAX_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> = i64::MAX <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
-		<span class="kw">match </span><span class="self">Self</span>::with_variant_type(<a href="#51">var</a>.<a href="#13-20">as_variant</a>().type_()) {
+		<span class="kw">match </span><a href="#33-49"><span class="self">Self</span>::with_variant_type</a>(<a href="#51">var</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>()) {
 			<span class="prelude-val">Some</span>(ty) =&gt; <a href="#54">ty</a>,
-			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><a href="#51">var</a>.<a href="#13-20">as_variant</a>().classify() {
-				VariantClass::Uint64 =&gt; <span class="kw">match </span><a href="#51">var</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;() {
+			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><a href="#51">var</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+				<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint64">VariantClass::Uint64</a> =&gt; <span class="kw">match </span><a href="#51">var</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;() {
 					<span class="prelude-val">Some</span>(<span class="number">0</span>..=<a href="#52">MAX_SAFE_INTEGER</a>) =&gt; <a href="#26">LuaType::Integer</a>,
 					<span class="kw">_ </span>=&gt; <a href="#27">LuaType::Float</a>,
 				},
-				VariantClass::Variant =&gt; <span class="self">Self</span>::with_lua_variant(<span class="kw-2">&amp;</span><a href="#51">var</a>.<a href="#216-222">flattened</a>()),
+				<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <a href="#51-64"><span class="self">Self</span>::with_lua_variant</a>(<span class="kw-2">&amp;</span><a href="#51">var</a>.<a href="#216-222">flattened</a>()),
 				<span class="kw">_ </span>=&gt; <a href="#29">LuaType::Table</a>,
 			},
 		}
@@ -660,27 +658,27 @@
 	<span class="kw">pub fn </span>with_variant(var: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="kw">const </span>MAX_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> = i64::MAX <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
 
-		<span class="kw">let </span>ty = <a href="#66">var</a>.type_();
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = <span class="self">Self</span>::with_variant_type(<a href="#69">ty</a>) {
+		<span class="kw">let </span>ty = <a href="#66">var</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>();
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = <a href="#33-49"><span class="self">Self</span>::with_variant_type</a>(<a href="#69">ty</a>) {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<a href="#70">ty</a>)
 		}
 
-		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#66">var</a>.classify() {
-			VariantClass::Uint64 =&gt; <span class="kw">match </span><a href="#66">var</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;() {
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span><a href="#66">var</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint64">VariantClass::Uint64</a> =&gt; <span class="kw">match </span><a href="#66">var</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;() {
 				<span class="prelude-val">Some</span>(<span class="number">0</span>..=<a href="#67">MAX_SAFE_INTEGER</a>) =&gt; <a href="#26">LuaType::Integer</a>,
 				<span class="kw">_ </span>=&gt; <a href="#27">LuaType::Float</a>,
 			},
-			VariantClass::Variant =&gt; <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span>var.as_variant().expect(<span class="string">"VariantTy"</span>))<span class="question-mark">?</span>,
-			VariantClass::Array <span class="kw">if </span><a href="#69">ty</a>.element().is_dict_entry() =&gt; <span class="kw">match </span><a href="#66">var</a>
-				.iter()
-				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span><a href="#82">v</a>.child_value(<span class="number">0</span>)).and_then(|<span class="kw">_</span>| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span><a href="#82">v</a>.child_value(<span class="number">1</span>)).map(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)))
-				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>()
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <a href="#66-91"><span class="self">Self</span>::with_variant</a>(<span class="kw-2">&amp;</span><a href="#66">var</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.as_variant">as_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"VariantTy"</span>))<span class="question-mark">?</span>,
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Array">VariantClass::Array</a> <span class="kw">if </span><a href="#69">ty</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.element">element</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.is_dict_entry">is_dict_entry</a>() =&gt; <span class="kw">match </span><a href="#66">var</a>
+				.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.iter">iter</a>()
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|v| <a href="#66-91"><span class="self">Self</span>::with_variant</a>(<span class="kw-2">&amp;</span><a href="#82">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">0</span>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|<span class="kw">_</span>| <a href="#66-91"><span class="self">Self</span>::with_variant</a>(<span class="kw-2">&amp;</span><a href="#82">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">1</span>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)))
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>()
 			{
 				<span class="prelude-val">Ok</span>(()) =&gt; <a href="#29">LuaType::Table</a>,
 				<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="#86">e</a>),
 			},
-			VariantClass::Array <span class="kw">if </span><a href="#66">var</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">all</a>(|v| <span class="self">Self</span>::with_variant(<span class="kw-2">&amp;</span><a href="#88">v</a>).is_ok()) =&gt; <a href="#29">LuaType::Table</a>,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#21">LuaError::UnsupportedType</a>(Cow::Owned(<a href="#69">ty</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>()))),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Array">VariantClass::Array</a> <span class="kw">if </span><a href="#66">var</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.all">all</a>(|v| <a href="#66-91"><span class="self">Self</span>::with_variant</a>(<span class="kw-2">&amp;</span><a href="#88">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.is_ok">is_ok</a>()) =&gt; <a href="#29">LuaType::Table</a>,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#21">LuaError::UnsupportedType</a>(<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html#variant.Owned">Cow::Owned</a>(<a href="#69">ty</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>()))),
 		})
 	}
 
@@ -720,15 +718,15 @@
 
 	<span class="kw">pub fn </span>to_lua_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="string.rs.html#7-10">LuaString</a>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self"><a href="#127">self</a> </span>{
-			<a href="#107">LuaValue::Nil</a> =&gt; <span class="string">b"nil"</span>[..].<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
-			<a href="#108">LuaValue::Boolean</a>(v) =&gt; <a href="#130">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
-			<a href="#109">LuaValue::Integer</a>(v) =&gt; <a href="#131">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
-			<a href="#110">LuaValue::Float</a>(v) =&gt; <a href="#132">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
+			<a href="#107">LuaValue::Nil</a> =&gt; <span class="string">b"nil"</span>[..].<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>(),
+			<a href="#108">LuaValue::Boolean</a>(v) =&gt; <a href="#130">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html#tymethod.to_string">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>(),
+			<a href="#109">LuaValue::Integer</a>(v) =&gt; <a href="#131">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html#tymethod.to_string">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>(),
+			<a href="#110">LuaValue::Float</a>(v) =&gt; <a href="#132">v</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html#tymethod.to_string">to_string</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>(),
 			<a href="#111">LuaValue::String</a>(v) =&gt; <a href="#133">v</a>.<a href="string.rs.html#7-10">borrowed</a>(),
 			<a href="#112">LuaValue::Table</a>(<span class="kw">_</span>) =&gt;
-				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
-					VariantTy::VARDICT.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
-					VariantTy::STRING.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.VariantTypeMismatchError.html#method.new">VariantTypeMismatchError::new</a>(
+					VariantTy::VARDICT.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>(),
+					VariantTy::STRING.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>(),
 				))),
 		})
 	}
@@ -738,15 +736,15 @@
 			<a href="#109">LuaValue::Integer</a>(v) =&gt; <span class="prelude-val">Ok</span>(<a href="#144">v</a>),
 			<a href="#110">LuaValue::Float</a>(v) =&gt; <span class="prelude-val">Ok</span>(<a href="#145">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>),
 			<a href="#111">LuaValue::String</a>(<span class="kw-2">ref </span>s) =&gt; <a href="#146">s</a>.<a href="string.rs.html#31-39">parse</a>(),
-			<span class="kw-2">ref </span>v =&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
+			<span class="kw-2">ref </span>v =&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.VariantTypeMismatchError.html#method.new">VariantTypeMismatchError::new</a>(
 				<span class="kw">match </span><a href="#147">v</a> {
 					<a href="#107">LuaValue::Nil</a> =&gt; VariantTy::UNIT,
 					<a href="#108">LuaValue::Boolean</a>(..) =&gt; VariantTy::BOOLEAN,
-					<a href="#112">LuaValue::Table</a>(t) <span class="kw">if </span><a href="#151">t</a>.<a href="#455-464">is_array</a>().unwrap_or(<span class="bool-val">false</span>) =&gt; VariantTy::ARRAY,
+					<a href="#112">LuaValue::Table</a>(t) <span class="kw">if </span><a href="#151">t</a>.<a href="#455-464">is_array</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="bool-val">false</span>) =&gt; VariantTy::ARRAY,
 					<span class="kw">_ </span>=&gt; VariantTy::VARDICT,
 				}
-				.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
-				VariantTy::INT64.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+				.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>(),
+				VariantTy::INT64.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>(),
 			))),
 		}
 	}
@@ -754,117 +752,117 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; LuaVariant&lt;<span class="lifetime">'v</span>&gt; {
 	<span class="kw">pub fn </span>nil() -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from"><span class="self">Self</span>::unsafe_from</a>(().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html#tymethod.to_variant">to_variant</a>()) }
 	}
 
 	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="comment">// used by Self::wrap and Self::borrow
-		</span>LuaType::with_variant(<a href="#166">v</a>).map(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)
+		</span><a href="#66-91">LuaType::with_variant</a>(<a href="#166">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)
 	}
 
 	<span class="kw">pub fn </span>convert_from(v: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="kw">if </span><span class="self">Self</span>::check(<span class="kw-2">&amp;</span>v).is_ok() {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(<a href="#171">v</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>()) })
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from"><span class="self">Self</span>::unsafe_from</a>(<a href="#171">v</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>()) })
 		}
 
-		<span class="kw">match </span><a href="#171">v</a>.classify() {
-			VariantClass::Variant =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#171">v</a>.as_variant().expect(<span class="string">"VariantClass"</span>)),
-			VariantClass::Byte =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from(<a href="#171">v</a>.get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().expect(<span class="string">"VariantClass"</span>) <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)),
-			VariantClass::Maybe =&gt; <span class="kw">match </span><a href="#171">v</a>.as_maybe() {
-				<span class="prelude-val">Some</span>(v) =&gt; LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#180">v</a>),
-				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
+		<span class="kw">match </span><a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <a href="#171-193">LuaVariant::convert_from</a>(<span class="kw-2">&amp;</span><a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.as_variant">as_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"VariantClass"</span>)),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Byte">VariantClass::Byte</a> =&gt; <span class="prelude-val">Ok</span>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from"><span class="self">Self</span>::from</a>(<a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"VariantClass"</span>) <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Maybe">VariantClass::Maybe</a> =&gt; <span class="kw">match </span><a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.as_maybe">as_maybe</a>() {
+				<span class="prelude-val">Some</span>(v) =&gt; <a href="#171-193">LuaVariant::convert_from</a>(<span class="kw-2">&amp;</span><a href="#180">v</a>),
+				<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()),
 			},
-			VariantClass::Array <span class="kw">if </span><a href="#171">v</a>.type_().element().is_dict_entry() =&gt; <a href="#171">v</a>
-				.iter()
-				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| {
-					LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#185">v</a>.child_value(<span class="number">0</span>))
-						.and_then(|k| LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#185">v</a>.child_value(<span class="number">1</span>)).map(|v| (<a href="#187">k</a>, <a href="#187">v</a>)))
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Array">VariantClass::Array</a> <span class="kw">if </span><a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.element">element</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.is_dict_entry">is_dict_entry</a>() =&gt; <a href="#171">v</a>
+				.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.iter">iter</a>()
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|v| {
+					<a href="#171-193">LuaVariant::convert_from</a>(<span class="kw-2">&amp;</span><a href="#185">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">0</span>))
+						.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|k| <a href="#171-193">LuaVariant::convert_from</a>(<span class="kw-2">&amp;</span><a href="#185">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">1</span>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(|v| (<a href="#187">k</a>, <a href="#187">v</a>)))
 				})
-				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
-			VariantClass::Array | VariantClass::Tuple =&gt; <a href="#171">v</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| LuaVariant::convert_from(<span class="kw-2">&amp;</span><a href="#190">v</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>(),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#21">LuaError::UnsupportedType</a>(Cow::Owned(<a href="#171">v</a>.type_().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>()))),
+				.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>(),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Array">VariantClass::Array</a> | <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Tuple">VariantClass::Tuple</a> =&gt; <a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|v| <a href="#171-193">LuaVariant::convert_from</a>(<span class="kw-2">&amp;</span><a href="#190">v</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#21">LuaError::UnsupportedType</a>(<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html#variant.Owned">Cow::Owned</a>(<a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>()))),
 		}
 	}
 
 	<span class="kw">pub fn </span>with_bytes&lt;B: AsRef&lt;[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]&gt;&gt;(bytes: B) -&gt; <span class="self">Self </span>{
 		<span class="comment">// TODO: LuaString::from(bytes.as_ref()).into() if BYTE_STRINGs are ever supported upstream
-		</span><a href="#195">bytes</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|<span class="kw-2">&amp;</span>v| LuaVariant::from(<a href="#197">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>()
+		</span><a href="#195">bytes</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|<span class="kw-2">&amp;</span>v| <a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from">LuaVariant::from</a>(<a href="#197">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>()
 	}
 
 	<span class="kw">pub fn </span>lua_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#23-30">LuaType</a> {
-		LuaType::with_lua_variant(<a class="self" href="#200">self</a>)
+		<a href="#51-64">LuaType::with_lua_variant</a>(<a class="self" href="#200">self</a>)
 	}
 
 	<span class="kw">pub fn </span>lua_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#106-113">LuaValue</a> {
 		<span class="kw">match </span><a class="self" href="#204">self</a>.<a href="#200-202">lua_type</a>() {
 			<a href="#24">LuaType::Nil</a> =&gt; <span class="prelude-val">Some</span>(<a href="#107">LuaValue::Nil</a>),
-			<a href="#25">LuaType::Boolean</a> =&gt; <a class="self" href="#204">self</a>.<a href="#232-238">get_bool</a>().map(<a href="#108">LuaValue::Boolean</a>),
-			<a href="#26">LuaType::Integer</a> =&gt; <a class="self" href="#204">self</a>.<a href="#279-302">get_integer</a>().and_then(|i| <a href="#208">i</a>.ok()).map(<a href="#109">LuaValue::Integer</a>),
-			<a href="#27">LuaType::Float</a> =&gt; <a class="self" href="#204">self</a>.<a href="#251-276">get_float</a>().and_then(|f| <a href="#209">f</a>.ok()).map(<a href="#110">LuaValue::Float</a>),
-			<a href="#28">LuaType::String</a> =&gt; <a class="self" href="#204">self</a>.<a href="#247-249">get_string</a>().map(<a href="#111">LuaValue::String</a>),
-			<a href="#29">LuaType::Table</a> =&gt; LuaTable::borrow(<a class="self" href="#204">self</a>.<a href="#13-20">as_variant</a>()).ok().map(<a href="#112">LuaValue::Table</a>),
+			<a href="#25">LuaType::Boolean</a> =&gt; <a class="self" href="#204">self</a>.<a href="#232-238">get_bool</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="#108">LuaValue::Boolean</a>),
+			<a href="#26">LuaType::Integer</a> =&gt; <a class="self" href="#204">self</a>.<a href="#279-302">get_integer</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|i| <a href="#208">i</a>.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="#109">LuaValue::Integer</a>),
+			<a href="#27">LuaType::Float</a> =&gt; <a class="self" href="#204">self</a>.<a href="#251-276">get_float</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|f| <a href="#209">f</a>.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="#110">LuaValue::Float</a>),
+			<a href="#28">LuaType::String</a> =&gt; <a class="self" href="#204">self</a>.<a href="#247-249">get_string</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="#111">LuaValue::String</a>),
+			<a href="#29">LuaType::Table</a> =&gt; <a href="#317-321">LuaTable::borrow</a>(<a class="self" href="#204">self</a>.<a href="#13-20">as_variant</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="#112">LuaValue::Table</a>),
 		}
-		.expect(<span class="string">"LuaType"</span>)
+		.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"LuaType"</span>)
 	}
 
 	<span class="kw">pub fn </span>flattened(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span><a class="self" href="#216">self</a>.<a href="#13-20">as_variant</a>().classify() {
-			VariantClass::Variant =&gt;
-				<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a class="self" href="#216">self</a>.<a href="#13-20">as_variant</a>().as_variant().expect(<span class="string">"VariantClass"</span>)) }.<a href="#216-222">flattened</a>(),
-			<span class="kw">_ </span>=&gt; <a class="self" href="#216">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>(),
+		<span class="kw">match </span><a class="self" href="#216">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt;
+				<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a class="self" href="#216">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.as_variant">as_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"VariantClass"</span>)) }.<a href="#216-222">flattened</a>(),
+			<span class="kw">_ </span>=&gt; <a class="self" href="#216">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>(),
 		}
 	}
 
 	<span class="kw">pub fn </span>get_nil&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt; {
-		<span class="kw">match </span><a class="self" href="#224">self</a>.<a href="#13-20">as_variant</a>().classify() {
-			VariantClass::Tuple =&gt; <a class="self" href="#224">self</a>.<a href="#13-20">as_variant</a>().get(),
-			VariantClass::Variant =&gt; <a class="self" href="#224">self</a>.<a href="#216-222">flattened</a>().<a href="#224-230">get_nil</a>(),
+		<span class="kw">match </span><a class="self" href="#224">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Tuple">VariantClass::Tuple</a> =&gt; <a class="self" href="#224">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>(),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <a class="self" href="#224">self</a>.<a href="#216-222">flattened</a>().<a href="#224-230">get_nil</a>(),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
 	<span class="kw">pub fn </span>get_bool&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt; {
-		<span class="kw">match </span><a class="self" href="#232">self</a>.<a href="#13-20">as_variant</a>().classify() {
-			VariantClass::Boolean =&gt; <a class="self" href="#232">self</a>.<a href="#13-20">as_variant</a>().get(),
-			VariantClass::Variant =&gt; <a class="self" href="#232">self</a>.<a href="#216-222">flattened</a>().<a href="#232-238">get_bool</a>(),
+		<span class="kw">match </span><a class="self" href="#232">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Boolean">VariantClass::Boolean</a> =&gt; <a class="self" href="#232">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>(),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <a class="self" href="#232">self</a>.<a href="#216-222">flattened</a>().<a href="#232-238">get_bool</a>(),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
 	<span class="kw">pub fn </span>get_table&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaTable&lt;<span class="lifetime">'a</span>&gt;&gt; {
 		<span class="kw">match </span><a class="self" href="#240">self</a>.<a href="#200-202">lua_type</a>() {
-			<a href="#29">LuaType::Table</a> =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ LuaTable::unsafe_from(<a class="self" href="#240">self</a>.<a href="#216-222">flattened</a>().<a href="#13-20">into_inner</a>()) }),
+			<a href="#29">LuaType::Table</a> =&gt; <span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaTable::unsafe_from</a>(<a class="self" href="#240">self</a>.<a href="#216-222">flattened</a>().<a href="#13-20">into_inner</a>()) }),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
 	<span class="kw">pub fn </span>get_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="string.rs.html#7-10">LuaString</a>&gt; {
-		LuaString::try_from(<a class="self" href="#247">self</a>.<a href="#13-20">as_variant</a>()).ok()
+		<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#tymethod.try_from">LuaString::try_from</a>(<a class="self" href="#247">self</a>.<a href="#13-20">as_variant</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>()
 	}
 
 	<span class="kw">pub fn </span>get_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="prelude-ty">Result</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="error.rs.html#14-23">LuaError</a>&gt;&gt; {
 		<span class="kw">const </span>MAX_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
 		<span class="kw">const </span>MAX_SAFE_INTEGER_UNSIGNED: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> = <span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>;
 		<span class="kw">const </span>MIN_SAFE_INTEGER: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> = -(<span class="number">2 </span>^ <span class="number">53 </span>- <span class="number">1</span>);
-		<span class="prelude-val">Some</span>(<span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().classify() {
-			VariantClass::Double =&gt; <span class="prelude-val">Ok</span>(<a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt;().expect(<span class="string">"VariantClass"</span>)),
-			VariantClass::Boolean =&gt; u8::from(<a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;().unwrap())
-				.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>()
-				.map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Byte =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Uint16 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Uint32 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Uint64 =&gt; <span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;().unwrap() {
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Double">VariantClass::Double</a> =&gt; <span class="prelude-val">Ok</span>(<a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"VariantClass"</span>)),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Boolean">VariantClass::Boolean</a> =&gt; <a href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from">u8::from</a>(<a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>())
+				.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>()
+				.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Byte">VariantClass::Byte</a> =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint16">VariantClass::Uint16</a> =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint32">VariantClass::Uint32</a> =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint64">VariantClass::Uint64</a> =&gt; <span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>() {
 				v @ <span class="number">0</span>..=<a href="#253">MAX_SAFE_INTEGER_UNSIGNED</a> =&gt; <span class="prelude-val">Ok</span>(<a href="#264">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
-				v =&gt; <span class="prelude-val">Err</span>(i32::try_from(<a href="#265">v</a>).unwrap_err().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
+				v =&gt; <span class="prelude-val">Err</span>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#tymethod.try_from">i32::try_from</a>(<a href="#265">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap_err">unwrap_err</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()),
 			},
-			VariantClass::Int16 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Int32 =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Int64 =&gt; <span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;().unwrap() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Int16">VariantClass::Int16</a> =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Int32">VariantClass::Int32</a> =&gt; <a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Int64">VariantClass::Int64</a> =&gt; <span class="kw">match </span><a class="self" href="#251">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>() {
 				v @ <a href="#254">MIN_SAFE_INTEGER</a>..=<a href="#252">MAX_SAFE_INTEGER</a> =&gt; <span class="prelude-val">Ok</span>(<a href="#270">v</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
-				v =&gt; <span class="prelude-val">Err</span>(u32::try_from(<a href="#271">v</a>).unwrap_err().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
+				v =&gt; <span class="prelude-val">Err</span>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#tymethod.try_from">u32::try_from</a>(<a href="#271">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap_err">unwrap_err</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()),
 			},
-			VariantClass::Variant =&gt; <span class="kw">return </span><a class="self" href="#251">self</a>.<a href="#216-222">flattened</a>().<a href="#251-276">get_float</a>(),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <span class="kw">return </span><a class="self" href="#251">self</a>.<a href="#216-222">flattened</a>().<a href="#251-276">get_float</a>(),
 			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
@@ -881,16 +879,16 @@
 		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
 		T: TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;, &lt;T <span class="kw">as </span>TryFrom&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;&gt;::Error: Into&lt;<a href="error.rs.html#14-23">LuaError</a>&gt;,
 	{
-		<span class="prelude-val">Some</span>(<span class="kw">match </span><a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().classify() {
-			VariantClass::Boolean =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Byte =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Uint16 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Uint32 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Uint64 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Int16 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Int32 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Int64 =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().get::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;().unwrap().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>),
-			VariantClass::Variant =&gt; <span class="kw">return </span><a class="self" href="#279">self</a>.<a href="#216-222">flattened</a>().<a href="#279-302">get_integer</a>::&lt;T&gt;(),
+		<span class="prelude-val">Some</span>(<span class="kw">match </span><a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.classify">classify</a>() {
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Boolean">VariantClass::Boolean</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Byte">VariantClass::Byte</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint16">VariantClass::Uint16</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint32">VariantClass::Uint32</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Uint64">VariantClass::Uint64</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Int16">VariantClass::Int16</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Int32">VariantClass::Int32</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Int64">VariantClass::Int64</a> =&gt; <a class="self" href="#279">self</a>.<a href="#13-20">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.get">get</a>::&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html#variant.Variant">VariantClass::Variant</a> =&gt; <span class="kw">return </span><a class="self" href="#279">self</a>.<a href="#216-222">flattened</a>().<a href="#279-302">get_integer</a>::&lt;T&gt;(),
 			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
 		})
 	}
@@ -898,17 +896,17 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">'static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
-		VariantTy::VARIANT.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
+		VariantTy::VARIANT.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> {
-		Variant::from_variant(<a class="self" href="#312">self</a>.<a href="#13-20">as_variant</a>())
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.from_variant">Variant::from_variant</a>(<a class="self" href="#312">self</a>.<a href="#13-20">as_variant</a>())
 	}
 }
 
-<a class="macro" href="macros.rs.html#2-199">newtype_wrapper! </a>{
+<a class="macro" href="macros.rs.html#2-199">newtype_wrapper!</a> {
 	<span class="doccomment">/// A specialized [LuaVariant] that is both an array and dictionary.
 	</span><span class="attr">#[derive(Debug, Eq, Clone, Hash)]
 	</span><span class="kw">pub struct </span><a href="../../../wireplumber/lua/struct.LuaTable.html">LuaTable</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> ;<span class="question-mark">? </span><a href="error.rs.html#14-23">LuaError</a>);
@@ -917,25 +915,25 @@
 <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; LuaTable&lt;<span class="lifetime">'v</span>&gt; {
 	<span class="kw">fn </span>check(v: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="error.rs.html#14-23">LuaError</a>&gt; {
 		<span class="comment">// used by Self::wrap and Self::borrow
-		</span>LuaType::with_variant(<a href="#324">v</a>).and_then(|ty| <span class="kw">match </span><a href="#326">ty</a> {
+		</span><a href="#66-91">LuaType::with_variant</a>(<a href="#324">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|ty| <span class="kw">match </span><a href="#326">ty</a> {
 			<a href="#29">LuaType::Table</a> =&gt; <span class="prelude-val">Ok</span>(()),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(VariantTypeMismatchError::new(
-				<a href="#324">v</a>.type_().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
-				VariantTy::ARRAY.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>(),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#20">LuaError::TypeMismatch</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.VariantTypeMismatchError.html#method.new">VariantTypeMismatchError::new</a>(
+				<a href="#324">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>().<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>(),
+				VariantTy::ARRAY.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>(),
 			))),
 		})
 	}
 
 	<span class="kw">pub fn </span>into_lua_variant(<span class="self">self</span>) -&gt; LuaVariant&lt;<span class="lifetime">'v</span>&gt; {
-		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a class="self" href="#335">self</a>.<a href="#317-321">into_inner</a>()) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a class="self" href="#335">self</a>.<a href="#317-321">into_inner</a>()) }
 	}
 
 	<span class="kw">pub fn </span>lua_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#13-20">LuaVariant</a> {
-		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a class="self" href="#339">self</a>.<a href="#317-321">as_variant</a>()) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a class="self" href="#339">self</a>.<a href="#317-321">as_variant</a>()) }
 	}
 
 	<span class="kw">pub fn </span>entry_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
-		<a class="self" href="#343">self</a>.<a href="#317-321">as_variant</a>().n_children()
+		<a class="self" href="#343">self</a>.<a href="#317-321">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.n_children">n_children</a>()
 	}
 
 	<span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
@@ -945,25 +943,25 @@
 	<span class="doccomment">/// Lua's `n` field, if it exists
 	</span><span class="kw">pub fn </span>table_getn(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt; {
 		<span class="self"><a href="#352">self</a>
-			</span>.<a href="#448-453">by_key</a>(<span class="kw-2">&amp;</span><span class="string">"n"</span>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>())
-			.and_then(|v| <a href="#355">v</a>.<a href="#279-302">get_integer</a>())
-			.and_then(|v| <a href="#356">v</a>.ok())
+			</span>.<a href="#448-453">by_key</a>(<span class="kw-2">&amp;</span><span class="string">"n"</span>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>())
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|v| <a href="#355">v</a>.<a href="#279-302">get_integer</a>())
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|v| <a href="#356">v</a>.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>())
 	}
 
 	<span class="kw">pub fn </span>variant_is_dict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#359">self</a>.<a href="#317-321">as_variant</a>().type_().is_subtype_of(VariantTy::DICTIONARY)
+		<a class="self" href="#359">self</a>.<a href="#317-321">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html#method.is_subtype_of">is_subtype_of</a>(VariantTy::DICTIONARY)
 	}
 
 	<span class="kw">pub fn </span>iter_dict_entries&lt;<span class="lifetime">'a</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
 	) -&gt; <span class="kw">impl </span>Iterator&lt;Item = DictEntry&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;, LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;&gt; + <span class="lifetime">'a </span>{
-		<a class="self" href="#364">self</a>.<a href="#317-321">as_variant</a>().iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">enumerate</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{
+		<a class="self" href="#364">self</a>.<a href="#317-321">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.enumerate">enumerate</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(<span class="kw">move </span>|(i, v)| <span class="kw">unsafe </span>{
 			<span class="kw">match </span><a class="self" href="#364">self</a>.<a href="#359-361">variant_is_dict</a>() {
-				<span class="bool-val">true </span>=&gt; DictEntry::new(
-					LuaVariant::unsafe_from(<a href="#366">v</a>.child_value(<span class="number">0</span>)),
-					LuaVariant::unsafe_from(<a href="#366">v</a>.child_value(<span class="number">1</span>)),
+				<span class="bool-val">true </span>=&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.DictEntry.html#method.new">DictEntry::new</a>(
+					<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a href="#366">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">0</span>)),
+					<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a href="#366">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">1</span>)),
 				),
-				<span class="bool-val">false </span>=&gt; DictEntry::new((<a href="#366">i</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> + <span class="number">1</span>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(), LuaVariant::unsafe_from(<a href="#366">v</a>)),
+				<span class="bool-val">false </span>=&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.DictEntry.html#method.new">DictEntry::new</a>((<a href="#366">i</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> + <span class="number">1</span>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a href="#366">v</a>)),
 			}
 		})
 	}
@@ -971,15 +969,15 @@
 	<span class="kw">pub fn </span>iter_array_indices&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;&gt; + <span class="lifetime">'a </span>{
 		<span class="self"><a href="#377">self</a>
 			</span>.<a href="#317-321">as_variant</a>()
-			.iter()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">enumerate</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(i, v)| <span class="kw">match </span><a class="self" href="#377">self</a>.<a href="#359-361">variant_is_dict</a>() {
-				<span class="bool-val">true </span>=&gt; <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a href="#382">v</a>.child_value(<span class="number">0</span>)) }
+			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.iter">iter</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.enumerate">enumerate</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(<span class="kw">move </span>|(i, v)| <span class="kw">match </span><a class="self" href="#377">self</a>.<a href="#359-361">variant_is_dict</a>() {
+				<span class="bool-val">true </span>=&gt; <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a href="#382">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">0</span>)) }
 					.<a href="#204-214">lua_value</a>()
 					.<a href="#142-158">to_integer</a>()
-					.ok()
-					.and_then(|i| <a href="#387">i</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">try_into</a>().ok())
-					.and_then(|idx: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>| <a href="#388">idx</a>.checked_sub(<span class="number">1</span>)),
+					.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>()
+					.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|i| <a href="#387">i</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.ok">ok</a>())
+					.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|idx: <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>| <a href="#388">idx</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.num.html#method.checked_sub">checked_sub</a>(<span class="number">1</span>)),
 				<span class="bool-val">false </span>=&gt; <span class="prelude-val">Some</span>(<a href="#382">i</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>),
 			})
 	}
@@ -987,53 +985,53 @@
 	<span class="kw">pub fn </span>array_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>)&gt; {
 		<span class="kw">let </span><span class="kw-2">mut </span>indices: Vec&lt;<span class="kw">_</span>&gt; = <span class="self"><a href="#393">self</a>
 			</span>.<a href="#377-391">iter_array_indices</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">enumerate</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">filter_map</a>(|(i, idx)| <a href="#397">idx</a>.map(|idx| (<a href="#397">i</a>, <a href="#397">idx</a>)))
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>();
-		<a href="#394">indices</a>.sort_by_key(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#399">idx</a>);
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.enumerate">enumerate</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.filter_map">filter_map</a>(|(i, idx)| <a href="#397">idx</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|idx| (<a href="#397">i</a>, <a href="#397">idx</a>)))
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>();
+		<a href="#394">indices</a>.<a href="https://doc.rust-lang.org/nightly/alloc/foreigntype.slice.html#method.sort_by_key">sort_by_key</a>(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#399">idx</a>);
 		<a href="#394">indices</a>
 	}
 
 	<span class="kw">pub fn </span>iter_array_entries&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>, LuaVariant&lt;<span class="lifetime">'static</span>&gt;)&gt; + <span class="lifetime">'a </span>{
 		<span class="self"><a href="#403">self</a>
 			</span>.<a href="#393-401">array_indices</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(i, idx)| (<a href="#407">idx</a>, <a class="self" href="#403">self</a>.<a href="#439-446">value_at</a>(<a href="#407">i</a>).expect(<span class="string">"array_indices"</span>)))
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(<span class="kw">move </span>|(i, idx)| (<a href="#407">idx</a>, <a class="self" href="#403">self</a>.<a href="#439-446">value_at</a>(<a href="#407">i</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"array_indices"</span>)))
 	}
 
 	<span class="kw">pub fn </span>iter_array&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt;&gt; + <span class="lifetime">'a </span>{
 		<span class="kw">let </span>indices = <a class="self" href="#410">self</a>.<a href="#393-401">array_indices</a>();
-		<span class="kw">let </span>last = <a class="self" href="#410">self</a>.<a href="#352-357">table_getn</a>().or_else(|| <a href="#411">indices</a>.last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#412">idx</a>));
+		<span class="kw">let </span>last = <a class="self" href="#410">self</a>.<a href="#352-357">table_getn</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.or_else">or_else</a>(|| <a href="#411">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.last">last</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#412">idx</a>));
 
-		<span class="kw">let </span><span class="kw-2">mut </span>indices = <a href="#411">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">peekable</a>();
-		(<span class="number">0</span>..=<a href="#412">last</a>.unwrap_or(<span class="number">0</span>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|idx| <span class="kw">match </span><a href="#414">indices</a>.peek() {
-			<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span><a href="#415">idx</a> == <a href="#416">next</a> =&gt; <a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">next</a>().map(|(i, <span class="kw">_</span>)| <a class="self" href="#410">self</a>.<a href="#439-446">value_at</a>(<a href="#416">i</a>).expect(<span class="string">"array_indices"</span>)),
+		<span class="kw">let </span><span class="kw-2">mut </span>indices = <a href="#411">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.peekable">peekable</a>();
+		(<span class="number">0</span>..=<a href="#412">last</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="number">0</span>)).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(<span class="kw">move </span>|idx| <span class="kw">match </span><a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/adapters/peekable/struct.Peekable.html#method.peek">peek</a>() {
+			<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>(<span class="kw">_</span>, next)) <span class="kw">if </span><a href="#415">idx</a> == <a href="#416">next</a> =&gt; <a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.next">next</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|(i, <span class="kw">_</span>)| <a class="self" href="#410">self</a>.<a href="#439-446">value_at</a>(<a href="#416">i</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"array_indices"</span>)),
 			<span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-			<span class="prelude-val">None </span>=&gt; <a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">next</a>().map(|<span class="kw">_</span>| <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unreachable.html">unreachable!</a>(<span class="string">"array_indices"</span>)),
+			<span class="prelude-val">None </span>=&gt; <a href="#414">indices</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.next">next</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|<span class="kw">_</span>| <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.unreachable.html">unreachable!</a>(<span class="string">"array_indices"</span>)),
 		})
 	}
 
 	<span class="kw">pub fn </span>array_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> {
 		<span class="self"><a href="#422">self</a>
 			</span>.<a href="#352-357">table_getn</a>()
-			.or_else(|| <a class="self" href="#422">self</a>.<a href="#393-401">array_indices</a>().last().map(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#425">idx</a>))
-			.unwrap_or(<span class="number">0</span>)
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.or_else">or_else</a>(|| <a class="self" href="#422">self</a>.<a href="#393-401">array_indices</a>().<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.last">last</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|<span class="kw-2">&amp;</span>(<span class="kw">_</span>, idx)| <a href="#425">idx</a>))
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="number">0</span>)
 	}
 
 	<span class="kw">pub fn </span>key_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt; {
 		<span class="kw">match </span><a class="self" href="#429">self</a>.<a href="#359-361">variant_is_dict</a>() {
 			<span class="bool-val">true </span>=&gt; <span class="self"><a href="#429">self</a>
 				</span>.<a href="#317-321">as_variant</a>()
-				.try_child_value(<a href="#429">index</a>)
-				.map(|v| <span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a href="#434">v</a>.child_value(<span class="number">0</span>)) }),
+				.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.try_child_value">try_child_value</a>(<a href="#429">index</a>)
+				.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a href="#434">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">0</span>)) }),
 			<span class="bool-val">false </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
 	<span class="kw">pub fn </span>value_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt; {
-		<a class="self" href="#439">self</a>.<a href="#317-321">as_variant</a>().try_child_value(<a href="#439">index</a>).map(|v| <span class="kw">unsafe </span>{
-			LuaVariant::unsafe_from(<span class="kw">match </span><a class="self" href="#439">self</a>.<a href="#359-361">variant_is_dict</a>() {
-				<span class="bool-val">true </span>=&gt; <a href="#440">v</a>.child_value(<span class="number">1</span>),
+		<a class="self" href="#439">self</a>.<a href="#317-321">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.try_child_value">try_child_value</a>(<a href="#439">index</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <span class="kw">unsafe </span>{
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<span class="kw">match </span><a class="self" href="#439">self</a>.<a href="#359-361">variant_is_dict</a>() {
+				<span class="bool-val">true </span>=&gt; <a href="#440">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.child_value">child_value</a>(<span class="number">1</span>),
 				<span class="bool-val">false </span>=&gt; <a href="#440">v</a>,
 			})
 		})
@@ -1042,8 +1040,8 @@
 	<span class="kw">pub fn </span>by_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="#13-20">LuaVariant</a>) -&gt; <span class="prelude-ty">Option</span>&lt;LuaVariant&lt;<span class="lifetime">'static</span>&gt;&gt; {
 		<span class="self"><a href="#448">self</a>
 			</span>.<a href="#363-375">iter_dict_entries</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">find</a>(|e| <a href="#451">e</a>.key() == <a href="#448">key</a>)
-			.map(|e| <a href="#452">e</a>.value().<a href="#13-20">owned</a>())
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.find">find</a>(|e| <a href="#451">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.DictEntry.html#method.key">key</a>() == <a href="#448">key</a>)
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|e| <a href="#452">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.DictEntry.html#method.value">value</a>().<a href="#13-20">owned</a>())
 	}
 
 	<span class="kw">pub fn </span>is_array(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt; {
@@ -1051,14 +1049,14 @@
 			<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="bool-val">true</span>)
 		}
 
-		<span class="kw">match </span><a class="self" href="#455">self</a>.<a href="#377-391">iter_array_indices</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">all</a>(|i| <a href="#460">i</a>.is_some()) {
+		<span class="kw">match </span><a class="self" href="#455">self</a>.<a href="#377-391">iter_array_indices</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.all">all</a>(|i| <a href="#460">i</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_some">is_some</a>()) {
 			<span class="bool-val">true </span><span class="kw">if </span><a class="self" href="#455">self</a>.<a href="#347-349">is_empty</a>() =&gt; <span class="prelude-val">None</span>,
 			v =&gt; <span class="prelude-val">Some</span>(<a href="#462">v</a>),
 		}
 	}
 
 	<span class="kw">pub fn </span>is_vardict(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-		<a class="self" href="#466">self</a>.<a href="#317-321">as_variant</a>().type_() == VariantTy::VARDICT
+		<a class="self" href="#466">self</a>.<a href="#317-321">as_variant</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.type_">type_</a>() == VariantTy::VARDICT
 	}
 
 	<span class="kw">pub fn </span>into_vardict(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="error.rs.html#14-23">LuaError</a>&gt; {
@@ -1068,29 +1066,29 @@
 
 		<span class="self"><a href="#470">self</a>
 			</span>.<a href="#363-375">iter_dict_entries</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|e| {
-				<a href="#477">e</a>.key()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|e| {
+				<a href="#477">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.DictEntry.html#method.key">key</a>()
 					.<a href="#204-214">lua_value</a>()
 					.<a href="#127-140">to_lua_string</a>()
-					.and_then(|s| <a href="#481">s</a>.<a href="string.rs.html#17-22">into_string</a>().map_err(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">Into::into</a>))
-					.map(|s| (<a href="#482">s</a>, <a href="#477">e</a>.value().<a href="#13-20">owned</a>()))
+					.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|s| <a href="#481">s</a>.<a href="string.rs.html#17-22">into_string</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>))
+					.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(|s| (<a href="#482">s</a>, <a href="#477">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.DictEntry.html#method.value">value</a>().<a href="#13-20">owned</a>()))
 			})
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>()
 	}
 }
 
 <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'_</span>&gt; {
 	<span class="kw">fn </span>static_variant_type() -&gt; Cow&lt;<span class="lifetime">'static</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>&gt; {
-		VariantTy::VARDICT.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()
+		VariantTy::VARDICT.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>, V: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a> + Into&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt; FromIterator&lt;V&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = V&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{
-			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html">UnsafeFrom::unsafe_from</a>(Variant::array_from_iter_with_type(
-				<span class="kw-2">&amp;</span>V::static_variant_type(),
-				<a href="#495">iter</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|v| <a href="#499">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">to_variant</a>()),
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">UnsafeFrom::unsafe_from</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.array_from_iter_with_type">Variant::array_from_iter_with_type</a>(
+				<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html#tymethod.static_variant_type">V::static_variant_type</a>(),
+				<a href="#495">iter</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|v| <a href="#499">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html#tymethod.to_variant">to_variant</a>()),
 			))
 		}
 	}
@@ -1100,17 +1098,17 @@
 	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt;
 {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = (K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>entry_type = VariantType::new_dict_entry(<span class="kw-2">&amp;</span>K::static_variant_type(), <span class="kw-2">&amp;</span>V::static_variant_type());
+		<span class="kw">let </span>entry_type = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantType.html#method.new_dict_entry">VariantType::new_dict_entry</a>(<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html#tymethod.static_variant_type">K::static_variant_type</a>(), <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html#tymethod.static_variant_type">V::static_variant_type</a>());
 		<span class="kw">let </span>entries = <a href="#508">iter</a>
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|(k, v)| Variant::from_dict_entry(<span class="kw-2">&amp;</span><a href="#512">k</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="#13-20">into_variant</a>(), <span class="kw-2">&amp;</span><a href="#512">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="#13-20">into_variant</a>()));
-		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html">UnsafeFrom::unsafe_from</a>(Variant::array_from_iter_with_type(<span class="kw-2">&amp;</span><a href="#509">entry_type</a>, <a href="#510">entries</a>)) }
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|(k, v)| <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.from_dict_entry">Variant::from_dict_entry</a>(<span class="kw-2">&amp;</span><a href="#512">k</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>().<a href="#13-20">into_variant</a>(), <span class="kw-2">&amp;</span><a href="#512">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>().<a href="#13-20">into_variant</a>()));
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">UnsafeFrom::unsafe_from</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.array_from_iter_with_type">Variant::array_from_iter_with_type</a>(<span class="kw-2">&amp;</span><a href="#509">entry_type</a>, <a href="#510">entries</a>)) }
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>&gt; FromIterator&lt;LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>from_iter&lt;T: IntoIterator&lt;Item = LuaVariant&lt;<span class="lifetime">'v</span>&gt;&gt;&gt;(iter: T) -&gt; <span class="self">Self </span>{
-		LuaTable::from_iter(<a href="#518">iter</a>).<a href="#335-337">into_lua_variant</a>()
+		<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html#tymethod.from_iter">LuaTable::from_iter</a>(<a href="#518">iter</a>).<a href="#335-337">into_lua_variant</a>()
 	}
 }
 
@@ -1118,29 +1116,29 @@
 	FromIterator&lt;(K, V)&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt;
 {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = (K, V)&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		LuaTable::from_iter(<a href="#526">iter</a>).<a href="#335-337">into_lua_variant</a>()
+		<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html#tymethod.from_iter">LuaTable::from_iter</a>(<a href="#526">iter</a>).<a href="#335-337">into_lua_variant</a>()
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a> <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>to_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a> {
 		<span class="self"><a href="#532">self</a>
-			</span>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>()
+			</span>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>()
 			.<a href="#470-485">into_vardict</a>()
-			.expect(<span class="string">"VarDict requires UTF8 keys"</span>)
+			.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.expect">expect</a>(<span class="string">"VarDict requires UTF8 keys"</span>)
 			.<a href="#317-321">into_variant</a>()
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;LuaTable&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">fn </span>from(v: LuaTable&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ LuaVariant::unsafe_from(<a href="#542">v</a>.<a href="#317-321">into_inner</a>()) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from">LuaVariant::unsafe_from</a>(<a href="#542">v</a>.<a href="#317-321">into_inner</a>()) }
 	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; UnsafeFrom&lt;LuaVariant&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>LuaTable&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">unsafe fn </span>unsafe_from(v: LuaVariant&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::unsafe_from(<a href="#548">v</a>.<a href="#13-20">into_inner</a>())
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from"><span class="self">Self</span>::unsafe_from</a>(<a href="#548">v</a>.<a href="#13-20">into_inner</a>())
 	}
 }
 
@@ -1148,11 +1146,11 @@
 	<span class="kw">type </span>Error = <a href="error.rs.html#14-23">LuaError</a>;
 
 	<span class="kw">fn </span>try_from(v: LuaVariant&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="self">Self</span>::try_from(<a href="#556">v</a>.<a href="#13-20">into_inner</a>())
+		<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html#tymethod.try_from"><span class="self">Self</span>::try_from</a>(<a href="#556">v</a>.<a href="#13-20">into_inner</a>())
 	}
 }
 
-<span class="macro">macro_rules! </span>lua_primitives {
+<span class="macro">macro_rules!</span> lua_primitives {
 	($(<span class="macro-nonterminal">$ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
 		$(
 			<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="macro-nonterminal">$ty</span>&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'a</span>&gt; {
@@ -1166,7 +1164,7 @@
 	};
 }
 
-<a class="macro" href="#561-573">lua_primitives! </a>{
+<a class="macro" href="#561-573">lua_primitives!</a> {
 	<a href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
 	<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, (),
 }
@@ -1181,7 +1179,7 @@
 
 </span><span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, <span class="lifetime">'s</span>, S: Into&lt;LuaString&lt;<span class="lifetime">'s</span>&gt;&gt;&gt; From&lt;S&gt; <span class="kw">for </span>LuaVariant&lt;<span class="lifetime">'v</span>&gt; {
 	<span class="kw">fn </span>from(s: S) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::unsafe_from(<a href="#589">s</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="string.rs.html#24-29">to_variant</a>()) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.UnsafeFrom.html#tymethod.unsafe_from"><span class="self">Self</span>::unsafe_from</a>(<a href="#589">s</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>().<a href="string.rs.html#24-29">to_variant</a>()) }
 	}
 }
 </code></pre></div></section></main></body></html>

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/loader.rs`."><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/plugin/loader.rs`."><title>loader.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -192,8 +190,8 @@
 <span class="kw">impl</span>&lt;T: <a href="#25-33">ComponentLoaderImpl</a>&gt; <a href="#35-45">ComponentLoaderImplExt</a> <span class="kw">for </span>T {
 	<span class="kw">fn </span>parent_class(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoaderClass.html">ffi::WpComponentLoaderClass</a> {
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span>data = T::type_data();
-			<span class="kw">let </span>parent_class = <a href="#50">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
+			<span class="kw">let </span>data = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/types/trait.ObjectSubclassType.html#tymethod.type_data">T::type_data</a>();
+			<span class="kw">let </span>parent_class = <a href="#50">data</a>.<a href="https://doc.rust-lang.org/nightly/core/ptr/non_null/struct.NonNull.html#method.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/types/struct.TypeData.html#method.parent_class">parent_class</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>;
 			<span class="kw-2">&amp;*</span><a href="#51">parent_class</a>
 		}
 	}
@@ -202,11 +200,11 @@
 		<span class="kw">let </span>parent = <a href="#36">ComponentLoaderImplExt::parent_class</a>(<a class="self" href="#56">self</a>);
 		<span class="kw">let </span>f = <a href="#57">parent</a>
 			.supports_type
-			.expect(<span class="string">"No parent class implementation for \"supports_type\""</span>);
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"No parent class implementation for \"supports_type\""</span>);
 		<span class="kw">unsafe </span>{
-			from_glib(<a href="#58">f</a>(
-				<a href="#56">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#56">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="#58">f</a>(
+				<a href="#56">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html#tymethod.unsafe_cast_ref">unsafe_cast_ref</a>::&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#56">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 			))
 		}
 	}
@@ -219,19 +217,19 @@
 		args: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt;,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">let </span>parent = <a href="#36">ComponentLoaderImplExt::parent_class</a>(<a class="self" href="#70">self</a>);
-		<span class="kw">let </span>f = <a href="#76">parent</a>.load.expect(<span class="string">"No parent class implementation for \"load\""</span>);
+		<span class="kw">let </span>f = <a href="#76">parent</a>.load.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"No parent class implementation for \"load\""</span>);
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let </span>res = from_glib(<a href="#77">f</a>(
-				<a href="#71">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#72">component</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#73">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#74">args</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+			<span class="kw">let </span><span class="kw-2">mut </span>error = <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.null_mut.html">ptr::null_mut</a>();
+			<span class="kw">let </span>res = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="#77">f</a>(
+				<a href="#71">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html#tymethod.unsafe_cast_ref">unsafe_cast_ref</a>::&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#72">component</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#73">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#74">args</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 				<span class="kw-2">&amp;mut </span><a href="#79">error</a>,
 			));
-			<span class="kw">match </span>(<a href="#80">res</a>, <a href="#79">error</a>.is_null()) {
+			<span class="kw">match </span>(<a href="#80">res</a>, <a href="#79">error</a>.<a href="https://doc.rust-lang.org/nightly/core/ptr/foreigntype.mut_ptr.html#method.is_null">is_null</a>()) {
 				(<span class="bool-val">true</span>, <span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
-				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(from_glib_full(<a href="#79">error</a>)),
+				(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="#79">error</a>)),
 				(<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Err</span>(<a href="../error/mod.rs.html#65-72">error::invariant</a>(<span class="string">"GError NULL"</span>)),
 			}
 		}
@@ -244,44 +242,44 @@
 
 		<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>supports_type&lt;T: <a href="#25-33">ComponentLoaderImpl</a>&gt;(
 			loader: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoader.html">ffi::WpComponentLoader</a>,
-			type_: <span class="kw-2">*const </span>libc::c_char,
+			type_: <span class="kw-2">*const </span><a href="https://docs.rs/libc/0.2.153/libc/unix/linux_like/linux/gnu/b64/x86_64/type.c_char.html">libc::c_char</a>,
 		) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gboolean.html">glib::ffi::gboolean</a> {
 			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#101">loader</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = <a href="#104">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-			<span class="kw">let </span>loader: Borrowed&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt; = from_glib_borrow(<a href="#101">loader</a>);
+			<span class="kw">let </span>this = <a href="#104">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/types/trait.InstanceStructExt.html#tymethod.imp">imp</a>();
+			<span class="kw">let </span>loader: Borrowed&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt; = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_borrow.html">from_glib_borrow</a>(<a href="#101">loader</a>);
 
 			<a href="#105">this</a>
-				.<a href="#26-28">supports_type</a>(<a href="#106">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(), from_glib_none(<a href="#102">type_</a>))
-				.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+				.<a href="#26-28">supports_type</a>(<a href="#106">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html#tymethod.unsafe_cast_ref">unsafe_cast_ref</a>(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_none.html">from_glib_none</a>(<a href="#102">type_</a>))
+				.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()
 		}
 
 		<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>load&lt;T: <a href="#25-33">ComponentLoaderImpl</a>&gt;(
 			loader: <span class="kw-2">*mut </span><a href="../../../wireplumber_sys/sys/struct.WpComponentLoader.html">ffi::WpComponentLoader</a>,
-			component: <span class="kw-2">*const </span>libc::c_char,
-			type_: <span class="kw-2">*const </span>libc::c_char,
+			component: <span class="kw-2">*const </span><a href="https://docs.rs/libc/0.2.153/libc/unix/linux_like/linux/gnu/b64/x86_64/type.c_char.html">libc::c_char</a>,
+			type_: <span class="kw-2">*const </span><a href="https://docs.rs/libc/0.2.153/libc/unix/linux_like/linux/gnu/b64/x86_64/type.c_char.html">libc::c_char</a>,
 			args: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/struct.GVariant.html">glib::ffi::GVariant</a>,
 			error: <span class="kw-2">*mut *mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/struct.GError.html">glib::ffi::GError</a>,
 		) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gboolean.html">glib::ffi::gboolean</a> {
 			<span class="kw">let </span>this = <span class="kw-2">&amp;*</span>(<a href="#114">loader</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-			<span class="kw">let </span>this = <a href="#120">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-			<span class="kw">let </span>loader: Borrowed&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt; = from_glib_borrow(<a href="#114">loader</a>);
+			<span class="kw">let </span>this = <a href="#120">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/types/trait.InstanceStructExt.html#tymethod.imp">imp</a>();
+			<span class="kw">let </span>loader: Borrowed&lt;<a href="../auto/component_loader.rs.html#6-13">ComponentLoader</a>&gt; = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_borrow.html">from_glib_borrow</a>(<a href="#114">loader</a>);
 
 			<span class="kw">match </span><a href="#121">this</a>.<a href="#30-32">load</a>(
-				<a href="#122">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>(),
-				from_glib_none(<a href="#115">component</a>),
-				from_glib_none(<a href="#116">type_</a>),
-				from_glib_none(<a href="#117">args</a>),
+				<a href="#122">loader</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html#tymethod.unsafe_cast_ref">unsafe_cast_ref</a>(),
+				<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_none.html">from_glib_none</a>(<a href="#115">component</a>),
+				<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_none.html">from_glib_none</a>(<a href="#116">type_</a>),
+				<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_none.html">from_glib_none</a>(<a href="#117">args</a>),
 			) {
 				<span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">true</span>,
 				<span class="prelude-val">Err</span>(e) =&gt; {
-					<span class="kw-2">*</span><a href="#118">error</a> = <a href="#131">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
+					<span class="kw-2">*</span><a href="#118">error</a> = <a href="#131">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlibPtr.html#tymethod.into_glib_ptr">into_glib_ptr</a>();
 					<span class="bool-val">false
 				</span>},
 			}
-			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()
 		}
 
-		<span class="kw">let </span>klass = <a href="#97">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+		<span class="kw">let </span>klass = <a href="#97">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html#tymethod.as_mut">as_mut</a>();
 		<a href="#139">klass</a>.supports_type = <span class="prelude-val">Some</span>(supports_type::&lt;T&gt;);
 		<a href="#139">klass</a>.load = <span class="prelude-val">Some</span>(load::&lt;T&gt;);
 	}

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/spa_json.rs`."><title>spa_json.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/spa_json.rs`."><title>spa_json.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -232,7 +230,7 @@
 </span><span class="kw">use crate</span>::{<a href="iterator.rs.html#6-15">Iterator</a>};
 <span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>};
 
-<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.wrapper.html">glib::wrapper!</a> {
     <span class="attr">#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/spa/struct.SpaJson.html">SpaJson</a>(Shared&lt;<a href="../../../wireplumber_sys/sys/struct.WpSpaJson.html">ffi::WpSpaJson</a>&gt;);
 
@@ -247,14 +245,14 @@
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_new_boolean"</span>)]
     </span><span class="kw">pub fn </span>new_boolean(value: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="#7-16">SpaJson</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_boolean(<a href="#20">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_boolean.html">ffi::wp_spa_json_new_boolean</a>(<a href="#20">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_new_float"</span>)]
     </span><span class="kw">pub fn </span>new_float(value: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#7-16">SpaJson</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_float(<a href="#27">value</a>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_float.html">ffi::wp_spa_json_new_float</a>(<a href="#27">value</a>))
         }
     }
 
@@ -262,7 +260,7 @@
     #[doc(alias = <span class="string">"new_from_string"</span>)]
     </span><span class="kw">pub fn </span>from_string(json_str: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a href="#7-16">SpaJson</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_from_string(<a href="#35">json_str</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_from_string.html">ffi::wp_spa_json_new_from_string</a>(<a href="#35">json_str</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
@@ -271,30 +269,30 @@
     #[doc(alias = <span class="string">"wp_spa_json_new_from_stringn"</span>)]
     #[doc(alias = <span class="string">"new_from_stringn"</span>)]
     </span><span class="kw">pub fn </span>from_stringn(json_str: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a href="#7-16">SpaJson</a> {
-        <span class="kw">let </span>len = <a href="#45">json_str</a>.len() <span class="kw">as _</span>;
+        <span class="kw">let </span>len = <a href="#45">json_str</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.str.html#method.len">len</a>() <span class="kw">as _</span>;
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_from_stringn(<a href="#45">json_str</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#46">len</a>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_from_stringn.html">ffi::wp_spa_json_new_from_stringn</a>(<a href="#45">json_str</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#46">len</a>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_new_int"</span>)]
     </span><span class="kw">pub fn </span>new_int(value: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a href="#7-16">SpaJson</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_int(<a href="#53">value</a>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_int.html">ffi::wp_spa_json_new_int</a>(<a href="#53">value</a>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_new_null"</span>)]
     </span><span class="kw">pub fn </span>new_null() -&gt; <a href="#7-16">SpaJson</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_null())
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_null.html">ffi::wp_spa_json_new_null</a>())
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_new_string"</span>)]
     </span><span class="kw">pub fn </span>new_string(value: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a href="#7-16">SpaJson</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_string(<a href="#67">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_string.html">ffi::wp_spa_json_new_string</a>(<a href="#67">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
@@ -302,7 +300,7 @@
 #[must_use]
     </span><span class="kw">pub fn </span>copy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#7-16">SpaJson</a>&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_copy(<a class="self" href="#75">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_copy.html">ffi::wp_spa_json_copy</a>(<a class="self" href="#75">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
@@ -310,7 +308,7 @@
 #[must_use]
     </span><span class="kw">pub fn </span>ensure_unique_owner(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#7-16">SpaJson</a>&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_ensure_unique_owner(<a class="self" href="#83">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_ensure_unique_owner.html">ffi::wp_spa_json_ensure_unique_owner</a>(<a class="self" href="#83">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlibPtr.html#tymethod.into_glib_ptr">into_glib_ptr</a>()))
         }
     }
 
@@ -318,7 +316,7 @@
     #[doc(alias = <span class="string">"get_data"</span>)]
     </span><span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_none(ffi::wp_spa_json_get_data(<a class="self" href="#91">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_none.html">from_glib_none</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_get_data.html">ffi::wp_spa_json_get_data</a>(<a class="self" href="#91">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
@@ -326,7 +324,7 @@
     #[doc(alias = <span class="string">"get_size"</span>)]
     </span><span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
         <span class="kw">unsafe </span>{
-            ffi::wp_spa_json_get_size(<a class="self" href="#99">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)
+            <a href="../../../wireplumber_sys/sys/fn.wp_spa_json_get_size.html">ffi::wp_spa_json_get_size</a>(<a class="self" href="#99">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)
         }
     }
 
@@ -339,97 +337,97 @@
     </span><span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_array"</span>)]
     </span><span class="kw">pub fn </span>is_array(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_array(<a class="self" href="#112">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_array.html">ffi::wp_spa_json_is_array</a>(<a class="self" href="#112">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_boolean"</span>)]
     </span><span class="kw">pub fn </span>is_boolean(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_boolean(<a class="self" href="#119">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_boolean.html">ffi::wp_spa_json_is_boolean</a>(<a class="self" href="#119">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_float"</span>)]
     </span><span class="kw">pub fn </span>is_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_float(<a class="self" href="#126">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_float.html">ffi::wp_spa_json_is_float</a>(<a class="self" href="#126">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_int"</span>)]
     </span><span class="kw">pub fn </span>is_int(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_int(<a class="self" href="#133">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_int.html">ffi::wp_spa_json_is_int</a>(<a class="self" href="#133">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_null"</span>)]
     </span><span class="kw">pub fn </span>is_null(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_null(<a class="self" href="#140">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_null.html">ffi::wp_spa_json_is_null</a>(<a class="self" href="#140">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_object"</span>)]
     </span><span class="kw">pub fn </span>is_object(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_object(<a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_object.html">ffi::wp_spa_json_is_object</a>(<a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_string"</span>)]
     </span><span class="kw">pub fn </span>is_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_string(<a class="self" href="#154">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_string.html">ffi::wp_spa_json_is_string</a>(<a class="self" href="#154">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_is_unique_owner"</span>)]
     </span><span class="kw">pub fn </span>is_unique_owner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            from_glib(ffi::wp_spa_json_is_unique_owner(<a class="self" href="#161">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_is_unique_owner.html">ffi::wp_spa_json_is_unique_owner</a>(<a class="self" href="#161">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_new_iterator"</span>)]
     </span><span class="kw">pub fn </span>new_iterator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="iterator.rs.html#6-15">Iterator</a>&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_new_iterator(<a class="self" href="#168">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_new_iterator.html">ffi::wp_spa_json_new_iterator</a>(<a class="self" href="#168">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_parse_boolean"</span>)]
     </span><span class="kw">pub fn </span>parse_boolean(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>value = std::mem::MaybeUninit::uninit();
-            <span class="kw">let </span>ret = from_glib(ffi::wp_spa_json_parse_boolean(<a class="self" href="#175">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#177">value</a>.as_mut_ptr()));
-            <span class="kw">if </span>ret { <span class="prelude-val">Some</span>(from_glib(<a href="#177">value</a>.assume_init())) } <span class="kw">else </span>{ <span class="prelude-val">None </span>}
+            <span class="kw">let </span><span class="kw-2">mut </span>value = <a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.uninit">std::mem::MaybeUninit::uninit</a>();
+            <span class="kw">let </span>ret = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_parse_boolean.html">ffi::wp_spa_json_parse_boolean</a>(<a class="self" href="#175">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#177">value</a>.<a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.as_mut_ptr">as_mut_ptr</a>()));
+            <span class="kw">if </span>ret { <span class="prelude-val">Some</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="#177">value</a>.<a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.assume_init">assume_init</a>())) } <span class="kw">else </span>{ <span class="prelude-val">None </span>}
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_parse_float"</span>)]
     </span><span class="kw">pub fn </span>parse_float(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>value = std::mem::MaybeUninit::uninit();
-            <span class="kw">let </span>ret = from_glib(ffi::wp_spa_json_parse_float(<a class="self" href="#184">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#186">value</a>.as_mut_ptr()));
-            <span class="kw">if </span>ret { <span class="prelude-val">Some</span>(<a href="#186">value</a>.assume_init()) } <span class="kw">else </span>{ <span class="prelude-val">None </span>}
+            <span class="kw">let </span><span class="kw-2">mut </span>value = <a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.uninit">std::mem::MaybeUninit::uninit</a>();
+            <span class="kw">let </span>ret = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_parse_float.html">ffi::wp_spa_json_parse_float</a>(<a class="self" href="#184">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#186">value</a>.<a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.as_mut_ptr">as_mut_ptr</a>()));
+            <span class="kw">if </span>ret { <span class="prelude-val">Some</span>(<a href="#186">value</a>.<a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.assume_init">assume_init</a>()) } <span class="kw">else </span>{ <span class="prelude-val">None </span>}
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_parse_int"</span>)]
     </span><span class="kw">pub fn </span>parse_int(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>value = std::mem::MaybeUninit::uninit();
-            <span class="kw">let </span>ret = from_glib(ffi::wp_spa_json_parse_int(<a class="self" href="#193">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#195">value</a>.as_mut_ptr()));
-            <span class="kw">if </span>ret { <span class="prelude-val">Some</span>(<a href="#195">value</a>.assume_init()) } <span class="kw">else </span>{ <span class="prelude-val">None </span>}
+            <span class="kw">let </span><span class="kw-2">mut </span>value = <a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.uninit">std::mem::MaybeUninit::uninit</a>();
+            <span class="kw">let </span>ret = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_parse_int.html">ffi::wp_spa_json_parse_int</a>(<a class="self" href="#193">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#195">value</a>.<a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.as_mut_ptr">as_mut_ptr</a>()));
+            <span class="kw">if </span>ret { <span class="prelude-val">Some</span>(<a href="#195">value</a>.<a href="https://doc.rust-lang.org/nightly/core/mem/maybe_uninit/union.MaybeUninit.html#method.assume_init">assume_init</a>()) } <span class="kw">else </span>{ <span class="prelude-val">None </span>}
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">"wp_spa_json_parse_string"</span>)]
     </span><span class="kw">pub fn </span>parse_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_parse_string(<a class="self" href="#202">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_parse_string.html">ffi::wp_spa_json_parse_string</a>(<a class="self" href="#202">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 
@@ -439,7 +437,7 @@
     #[doc(alias = <span class="string">"to_string"</span>)]
     </span><span class="kw">pub fn </span>to_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GString.html">glib::GString</a> {
         <span class="kw">unsafe </span>{
-            from_glib_full(ffi::wp_spa_json_to_string(<a class="self" href="#212">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_json_to_string.html">ffi::wp_spa_json_to_string</a>(<a class="self" href="#212">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
         }
     }
 }
@@ -449,7 +447,7 @@
 </span><span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">std::fmt::Display</a> <span class="kw">for </span><a href="#7-16">SpaJson</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">std::fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">std::fmt::Result</a> {
-        <a href="#223">f</a>.write_str(<span class="kw-2">&amp;</span><a class="self" href="#223">self</a>.<a href="#212-216">to_str</a>())
+        <a href="#223">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.write_str">write_str</a>(<span class="kw-2">&amp;</span><a class="self" href="#223">self</a>.<a href="#212-216">to_str</a>())
     }
 }
 </code></pre></div></section></main></body></html>

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/pw/proxy.rs`."><title>proxy.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -169,11 +167,11 @@
 
 <span class="kw">impl </span><a href="../auto/flags.rs.html#789-812">ProxyFeatures</a> {
 	<span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURES_ALL"</span>)]
-	</span><span class="kw">pub const </span>ALL: <span class="self">Self </span>= <span class="self">Self</span>::from_bits_retain(ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>);
+	</span><span class="kw">pub const </span>ALL: <span class="self">Self </span>= <a href="../auto/flags.rs.html#789-812"><span class="self">Self</span>::from_bits_retain</a>(<a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURES_ALL.html">ffi::WP_PIPEWIRE_OBJECT_FEATURES_ALL</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>);
 
 	<span class="doccomment">/// ProxyFeatures::PROXY_FEATURE_BOUND | ProxyFeatures::PIPEWIRE_OBJECT_FEATURE_INFO
 	</span><span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL"</span>)]
-	</span><span class="kw">pub const </span>MINIMAL: <span class="self">Self </span>= <span class="self">Self</span>::from_bits_retain(ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>);
+	</span><span class="kw">pub const </span>MINIMAL: <span class="self">Self </span>= <a href="../auto/flags.rs.html#789-812"><span class="self">Self</span>::from_bits_retain</a>(<a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL.html">ffi::WP_PIPEWIRE_OBJECT_FEATURES_MINIMAL</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>);
 }
 
 <span class="kw">pub trait </span><a href="../../../wireplumber/pw/trait.ProxyExt2.html">ProxyExt2</a>: <span class="lifetime">'static </span>{
@@ -189,11 +187,11 @@
 
 <span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/proxy.rs.html#8-15">Proxy</a>&gt;&gt; <a href="#19-28">ProxyExt2</a> <span class="kw">for </span>O {
 	<span class="kw">fn </span>pw_proxy_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_proxy.html">pw_proxy</a> {
-		<span class="kw">unsafe </span>{ ffi::wp_proxy_get_pw_proxy(<a class="self" href="#31">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_proxy_get_pw_proxy.html">ffi::wp_proxy_get_pw_proxy</a>(<a class="self" href="#31">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>) }
 	}
 
 	<span class="kw">fn </span>set_pw_proxy_raw(<span class="kw-2">&amp;</span><span class="self">self</span>, proxy: <span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_proxy.html">pw_proxy</a>) {
-		<span class="kw">unsafe </span>{ ffi::wp_proxy_set_pw_proxy(<a class="self" href="#35">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#35">proxy</a>) }
+		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_proxy_set_pw_proxy.html">ffi::wp_proxy_set_pw_proxy</a>(<a class="self" href="#35">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#35">proxy</a>) }
 	}
 }
 
@@ -227,7 +225,7 @@
 
 <span class="kw">impl</span>&lt;O: IsA&lt;<a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>&gt;&gt; <a href="#40-66">PipewireObjectExt2</a> <span class="kw">for </span>O {
 	<span class="kw">fn </span>native_info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gconstpointer.html">gconstpointer</a> {
-		<span class="kw">unsafe </span>{ ffi::wp_pipewire_object_get_native_info(<a class="self" href="#69">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_pipewire_object_get_native_info.html">ffi::wp_pipewire_object_get_native_info</a>(<a class="self" href="#69">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>) }
 	}
 
 	<span class="kw">fn </span>object_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
@@ -235,45 +233,45 @@
 	}
 
 	<span class="kw">fn </span>get_pw_property_cstring(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/ffi/c_str/struct.CString.html">CString</a>&gt; {
-		<a class="self" href="#77">self</a>.<a href="#52">with_pw_property_cstr</a>(<a href="#77">key</a>, |cstr| <a href="#78">cstr</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>())
+		<a class="self" href="#77">self</a>.<a href="#52">with_pw_property_cstr</a>(<a href="#77">key</a>, |cstr| <a href="#78">cstr</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>())
 	}
 
 	<span class="kw">fn </span>get_pw_property(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; {
-		<a class="self" href="#81">self</a>.<a href="#53">with_pw_property</a>(<a href="#81">key</a>, |str| <a href="#82">str</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html">to_owned</a>())
+		<a class="self" href="#81">self</a>.<a href="#53">with_pw_property</a>(<a href="#81">key</a>, |str| <a href="#82">str</a>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/trait.ToOwned.html#tymethod.to_owned">to_owned</a>())
 	}
 
 	<span class="kw">fn </span>with_pw_property_cstr&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/core/ffi/c_str/struct.CStr.html">CStr</a>) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, f: F) -&gt; <span class="prelude-ty">Option</span>&lt;R&gt; {
-		<span class="kw">let </span>this = <a class="self" href="#85">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>();
+		<span class="kw">let </span>this = <a class="self" href="#85">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>();
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span>value = ffi::wp_pipewire_object_get_property(<a href="#86">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#85">key</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+			<span class="kw">let </span>value = <a href="../../../wireplumber_sys/sys/fn.wp_pipewire_object_get_property.html">ffi::wp_pipewire_object_get_property</a>(<a href="#86">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#85">key</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>);
 			<span class="kw">if </span>value.is_null() {
 				<span class="prelude-val">None
 			</span>} <span class="kw">else </span>{
-				<span class="prelude-val">Some</span>(<a href="#85">f</a>(CStr::from_ptr(<a href="#88">value</a>)))
+				<span class="prelude-val">Some</span>(<a href="#85">f</a>(<a href="https://doc.rust-lang.org/nightly/core/ffi/c_str/struct.CStr.html#method.from_ptr">CStr::from_ptr</a>(<a href="#88">value</a>)))
 			}
 		}
 	}
 
 	<span class="kw">fn </span>with_pw_property&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, f: F) -&gt; <span class="prelude-ty">Option</span>&lt;R&gt; {
-		<span class="kw">let </span>this = <a class="self" href="#97">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>();
+		<span class="kw">let </span>this = <a class="self" href="#97">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>();
 		<span class="self"><a href="#97">self</a>
-			</span>.<a href="#52">with_pw_property_cstr</a>(<a href="#97">key</a>, <span class="kw">move </span>|cstr| <span class="kw">match </span><a href="#100">cstr</a>.to_str() {
+			</span>.<a href="#52">with_pw_property_cstr</a>(<a href="#97">key</a>, <span class="kw">move </span>|cstr| <span class="kw">match </span><a href="#100">cstr</a>.<a href="https://doc.rust-lang.org/nightly/core/ffi/c_str/struct.CStr.html#method.to_str">to_str</a>() {
 				<span class="prelude-val">Err</span>(e) =&gt; {
 					<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="self">self</span>: this, <span class="string">"pw_property {key} ({cstr:?}) was not valid UTF-8: {e:?}"</span>);
 					<span class="prelude-val">None
 				</span>},
 				<span class="prelude-val">Ok</span>(str) =&gt; <span class="prelude-val">Some</span>(<a href="#97">f</a>(<a href="#105">str</a>)),
 			})
-			.flatten()
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.flatten">flatten</a>()
 	}
 
 	<span class="kw">fn </span>pw_property&lt;T: <a href="keys.rs.html#65-69">FromPipewirePropertyString</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;T, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">match </span><a class="self" href="#110">self</a>.<a href="#53">with_pw_property</a>(<a href="#110">key</a>, T::from_pipewire_string) {
-			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 				<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"pw_property {key} not found"</span>),
 			)),
-			<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; <span class="prelude-val">Err</span>(Error::new(
+			<span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; <span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 				<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"pw_property {key} failed to parse: {e:?}"</span>),
 			)),
@@ -284,9 +282,9 @@
 	<span class="kw">fn </span>pw_property_optional&lt;T: <a href="keys.rs.html#65-69">FromPipewirePropertyString</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="self"><a href="#124">self</a>
 			</span>.<a href="#53">with_pw_property</a>(<a href="#124">key</a>, T::from_pipewire_string)
-			.transpose()
-			.map_err(|e| {
-				Error::new(
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.transpose">transpose</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(|e| {
+				<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 					<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"pw_property {key} failed to parse: {e:?}"</span>),
 				)
@@ -299,21 +297,21 @@
 		filter: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;,
 	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;ValueIterator&lt;<a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
 		<span class="kw">let </span>res = <a class="self" href="#137">self</a>.<a href="../auto/pipewire_object.rs.html#57-71">enum_params_future</a>(<a href="#138">id</a>, <a href="#139">filter</a>);
-		Box::pin(<span class="kw">async move </span>{ res.<span class="kw">await</span>.map(|r| ValueIterator::with_inner(<a href="#142">r</a>.unwrap())) })
+		<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.pin">Box::pin</a>(<span class="kw">async move </span>{ <a href="#141">res</a>.<span class="kw">await</span>.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(|r| <a href="../util/iterator.rs.html#137-142">ValueIterator::with_inner</a>(<a href="#142">r</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>())) })
 	}
 }
 
 <span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">Display</a> <span class="kw">for </span><a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a> {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <a class="self" href="#147">self</a>.<a href="#53">with_pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_OBJECT_PATH</a>, |path| <a href="#147">f</a>.write_str(<a href="#148">path</a>)) {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(res) = <a class="self" href="#147">self</a>.<a href="#53">with_pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_OBJECT_PATH</a>, |path| <a href="#147">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.write_str">write_str</a>(<a href="#148">path</a>)) {
 			<span class="kw">return </span><a href="#148">res</a>
 		}
 
-		f.write_str(<span class="string">"pw.object"</span>)<span class="question-mark">?</span>;
+		<a href="#147">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.write_str">write_str</a>(<span class="string">"pw.object"</span>)<span class="question-mark">?</span>;
 
 		<span class="self"><a href="#147">self</a>
 			</span>.<a href="#53">with_pw_property</a>(<a href="keys.rs.html#224-252">pw::PW_KEY_OBJECT_ID</a>, |id| <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.write.html">write!</a>(<a href="#147">f</a>, <span class="string">"({id})"</span>))
-			.unwrap_or(<span class="prelude-val">Ok</span>(()))
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="prelude-val">Ok</span>(()))
 	}
 }
 </code></pre></div></section></main></body></html>

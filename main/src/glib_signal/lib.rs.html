@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glib-signal-0.4.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../glib_signal/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glib-signal-0.4.0/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glib_signal" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../glib_signal/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -292,7 +290,7 @@
 		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.FromValue.html">value::FromValue</a>,
 		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.BoolError.html">BoolError</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/closure/struct.Closure.html">Closure</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/quark/struct.Quark.html">Quark</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>,
 	},
-	std::{<a href="https://doc.rust-lang.org/nightly/core/fmt/macros/derive.Debug.html">fmt::Debug</a>, marker::PhantomData},
+	std::{<a href="https://doc.rust-lang.org/nightly/core/fmt/macros/derive.Debug.html">fmt::Debug</a>, <a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">marker::PhantomData</a>},
 };
 
 <span class="attr">#[cfg(feature = <span class="string">"futures"</span>)]
@@ -314,10 +312,10 @@
 	<span class="kw">type </span>Return: <a href="value_option.rs.html#3-7">ToValueOption</a>;
 
 	<span class="kw">const </span>NAME: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>;
-	<span class="kw">const </span>FLAGS: <a href="../../glib_signal/struct.SignalFlags.html">SignalFlags</a> = SignalFlags::empty();
+	<span class="kw">const </span>FLAGS: <a href="../../glib_signal/struct.SignalFlags.html">SignalFlags</a> = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gobject/auto/flags/struct.SignalFlags.html#method.empty">SignalFlags::empty</a>();
 
 	<span class="kw">fn </span>signal() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalId.html">SignalId</a> {
-		SignalId::lookup(<span class="self">Self</span>::NAME, &lt;<span class="self">Self</span>::Object <span class="kw">as </span>StaticType&gt;::static_type()).expect(<span class="self">Self</span>::NAME)
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalId.html#method.lookup">SignalId::lookup</a>(<span class="self">Self</span>::NAME, &lt;<span class="self">Self</span>::Object <span class="kw">as </span>StaticType&gt;::static_type()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="self">Self</span>::NAME)
 	}
 }
 
@@ -331,13 +329,13 @@
 
 	<span class="kw">fn </span>detail() -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/quark/struct.Quark.html">Quark</a>&gt; {
 		<span class="kw">match </span><span class="self">Self</span>::DETAIL {
-			<span class="prelude-val">Some</span>(detail) =&gt; <span class="prelude-val">Some</span>(Quark::try_from_str(<a href="#65">detail</a>).expect(<a href="#65">detail</a>)),
+			<span class="prelude-val">Some</span>(detail) =&gt; <span class="prelude-val">Some</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/quark/struct.Quark.html#method.try_from_str">Quark::try_from_str</a>(<a href="#65">detail</a>).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<a href="#65">detail</a>)),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
 
 	<span class="kw">fn </span>create_detail() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/quark/struct.Quark.html">Quark</a> {
-		Quark::from_str(<span class="self">Self</span>::DETAIL.expect(<span class="string">"detail string required"</span>))
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/quark/struct.Quark.html#method.from_str">Quark::from_str</a>(<span class="self">Self</span>::DETAIL.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"detail string required"</span>))
 	}
 }
 
@@ -359,17 +357,17 @@
 	</span>&lt;<span class="self">Self</span>::Return <span class="kw">as </span>ToValueOption&gt;::Type: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>,
 {
 	<span class="kw">fn </span>builder&lt;F: FnOnce(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalBuilder.html">SignalBuilder</a>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.Signal.html">glib::subclass::Signal</a>&gt;(f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.Signal.html">glib::subclass::Signal</a> {
-		<span class="kw">let </span>builder = glib::subclass::Signal::builder(<span class="self">Self</span>::NAME)
-			.param_types(&lt;<span class="self">Self</span>::Arguments <span class="kw">as </span>FromValues&gt;::static_types())
-			.return_type::&lt;&lt;<span class="self">Self</span>::Return <span class="kw">as </span>ToValueOption&gt;::Type&gt;()
-			.flags(<span class="self">Self</span>::FLAGS);
+		<span class="kw">let </span>builder = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.Signal.html#method.builder">glib::subclass::Signal::builder</a>(<span class="self">Self</span>::NAME)
+			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalBuilder.html#method.param_types">param_types</a>(&lt;<span class="self">Self</span>::Arguments <span class="kw">as </span>FromValues&gt;::static_types())
+			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalBuilder.html#method.return_type">return_type</a>::&lt;&lt;<span class="self">Self</span>::Return <span class="kw">as </span>ToValueOption&gt;::Type&gt;()
+			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalBuilder.html#method.flags">flags</a>(<span class="self">Self</span>::FLAGS);
 		<a href="#92">f</a>(<a href="#93">builder</a>)
 	}
 }
 
 <span class="kw">pub trait </span><a href="../../glib_signal/trait.BuildSignal.html">BuildSignal</a>: <a href="#84-86">BuildableSignal</a> {
 	<span class="kw">fn </span>build() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.Signal.html">glib::subclass::Signal</a> {
-		<span class="self">Self</span>::builder(|b| <a href="#103">b</a>.build())
+		<a href="#85"><span class="self">Self</span>::builder</a>(|b| <a href="#103">b</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalBuilder.html#method.build">build</a>())
 	}
 }
 
@@ -390,12 +388,12 @@
 			<a href="#119">signal</a>,
 			<a href="#119">detail</a>,
 			<a href="#119">run_after</a>,
-			_signal: PhantomData,
+			_signal: <a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">PhantomData</a>,
 		}
 	}
 
 	<span class="kw">pub fn </span>normalize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ConnectDetails&lt;()&gt; {
-		<span class="kw">unsafe </span>{ ConnectDetails::with_parts(<a class="self" href="#128">self</a>.<a href="#132-134">signal</a>(), <a class="self" href="#128">self</a>.<a href="#136-138">detail</a>(), <a class="self" href="#128">self</a>.run_after) }
+		<span class="kw">unsafe </span>{ <a href="#119-126">ConnectDetails::with_parts</a>(<a class="self" href="#128">self</a>.<a href="#132-134">signal</a>(), <a class="self" href="#128">self</a>.<a href="#136-138">detail</a>(), <a class="self" href="#128">self</a>.run_after) }
 	}
 
 	<span class="kw">pub fn </span>signal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalId.html">SignalId</a> {
@@ -409,15 +407,15 @@
 
 <span class="kw">impl</span>&lt;S: <a href="#55-73">DetailedSignal</a>&gt; ConnectDetails&lt;S&gt; {
 	<span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_after(<span class="bool-val">false</span>)
+		<a href="#146-153"><span class="self">Self</span>::with_after</a>(<span class="bool-val">false</span>)
 	}
 
 	<span class="kw">pub fn </span>with_after(run_after: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			signal: &lt;S::Signal <span class="kw">as </span>Signal&gt;::signal(),
-			detail: S::detail(),
+			detail: <a href="#63-68">S::detail</a>(),
 			<a href="#146">run_after</a>,
-			_signal: PhantomData,
+			_signal: <a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">PhantomData</a>,
 		}
 	}
 
@@ -430,18 +428,18 @@
 <span class="kw">impl</span>&lt;S: <a href="#42-53">Signal</a>&gt; ConnectDetails&lt;S&gt; {
 	<span class="kw">pub fn </span>with_detail&lt;D: Into&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/quark/struct.Quark.html">Quark</a>&gt;&gt;&gt;(detail: D) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
-			signal: S::signal(),
-			detail: <a href="#162">detail</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>(),
+			signal: <a href="#50-52">S::signal</a>(),
+			detail: <a href="#162">detail</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>(),
 			run_after: <span class="bool-val">false</span>,
-			_signal: PhantomData,
+			_signal: <a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">PhantomData</a>,
 		}
 	}
 }
 
 <span class="kw">impl </span>ConnectDetails&lt;()&gt; {
 	<span class="kw">pub fn </span>with_name&lt;O: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt;(signal: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, after: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">let </span>(signal, detail) = SignalId::parse_name(signal, O::static_type(), <span class="bool-val">false</span>)<span class="question-mark">?</span>;
-		<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_parts(<a href="#174">signal</a>, <a href="#174">detail</a>, <a href="#173">after</a>) })
+		<span class="kw">let </span>(signal, detail) = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/subclass/signal/struct.SignalId.html#method.parse_name">SignalId::parse_name</a>(<a href="#173">signal</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type">O::static_type</a>(), <span class="bool-val">false</span>)<span class="question-mark">?</span>;
+		<span class="prelude-val">Some</span>(<span class="kw">unsafe </span>{ <a href="#119-126"><span class="self">Self</span>::with_parts</a>(<a href="#174">signal</a>, <a href="#174">detail</a>, <a href="#173">after</a>) })
 	}
 }
 
@@ -453,7 +451,7 @@
 
 <span class="kw">impl</span>&lt;S: <a href="#55-73">DetailedSignal</a>&gt; From&lt;S&gt; <span class="kw">for </span>ConnectDetails&lt;S&gt; {
 	<span class="kw">fn </span>from(<span class="kw">_</span>: S) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::new()
+		<a href="#142-144"><span class="self">Self</span>::new</a>()
 	}
 }
 
@@ -482,12 +480,12 @@
 	for</span>&lt;<span class="lifetime">'a</span>&gt; BorrowedObject&lt;<span class="lifetime">'a</span>, O&gt;: FromValue&lt;<span class="lifetime">'a</span>&gt;,
 {
 	<span class="kw">unsafe fn </span>handle_closure(<span class="kw-2">&amp;</span><span class="self">self</span>, signal: <span class="kw-2">&amp;</span><a href="#111-116">ConnectDetails</a>, callback: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/closure/struct.Closure.html">Closure</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.BoolError.html">BoolError</a>&gt; {
-		<span class="kw">let </span>handle = glib::gobject_ffi::g_signal_connect_closure_by_id(
-			<a class="self" href="#215">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">as_object_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-			<a href="#215">signal</a>.<a href="#132-134">signal</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
-			<a href="#215">signal</a>.<a href="#136-138">detail</a>().map(|q| <a href="#219">q</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()).unwrap_or(<span class="number">0</span>),
-			<a href="#215">callback</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-			<a href="#215">signal</a>.run_after.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+		<span class="kw">let </span>handle = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_signal_connect_closure_by_id.html">glib::gobject_ffi::g_signal_connect_closure_by_id</a>(
+			<a class="self" href="#215">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html#tymethod.as_object_ref">as_object_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+			<a href="#215">signal</a>.<a href="#132-134">signal</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>(),
+			<a href="#215">signal</a>.<a href="#136-138">detail</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|q| <a href="#219">q</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="number">0</span>),
+			<a href="#215">callback</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+			<a href="#215">signal</a>.run_after.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>(),
 		);
 		<span class="kw">match </span><a href="#216">handle</a> {
 			<span class="number">0 </span>=&gt; <span class="prelude-val">Err</span>(<a class="macro" href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.bool_error.html">glib::bool_error!</a>(
@@ -506,20 +504,20 @@
 		S_: Into&lt;ConnectDetails&lt;S&gt;&gt;,
 		<span class="self">Self</span>: Notifies&lt;S::Signal&gt;,
 	{
-		<span class="kw">let </span>signal = <a href="#233">signal</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>();
+		<span class="kw">let </span>signal = <a href="#233">signal</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>();
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span>callback = Closure::new_unsafe(<span class="kw">move </span>|values| {
-				<span class="kw">let </span>(this, args) = <a href="#242">values</a>.split_first().unwrap();
-				<span class="kw">let </span>this: BorrowedObject&lt;<span class="self">Self</span>&gt; = <a href="#243">this</a>.get().unwrap();
-				<span class="kw">let </span>args = S::Arguments::from_values(<a href="#243">args</a>).unwrap();
-				<a href="#233">callback</a>(<span class="kw-2">&amp;</span><a href="#244">this</a>, <a href="#245">args</a>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>().<a href="value_option.rs.html#6">to_value_option</a>()
+			<span class="kw">let </span>callback = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/closure/struct.Closure.html#method.new_unsafe">Closure::new_unsafe</a>(<span class="kw">move </span>|values| {
+				<span class="kw">let </span>(this, args) = <a href="#242">values</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.split_first">split_first</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>();
+				<span class="kw">let </span>this: BorrowedObject&lt;<span class="self">Self</span>&gt; = <a href="#243">this</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html#method.get">get</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>();
+				<span class="kw">let </span>args = <a href="from_values.rs.html#14-16">S::Arguments::from_values</a>(<a href="#243">args</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>();
+				<a href="#233">callback</a>(<span class="kw-2">&amp;</span><a href="#244">this</a>, <a href="#245">args</a>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>().<a href="value_option.rs.html#6">to_value_option</a>()
 			});
-			<a class="self" href="#233">self</a>.<a href="#192">handle_closure</a>(<span class="kw-2">&amp;</span><a href="#240">signal</a>.<a href="#128-130">normalize</a>(), <span class="kw-2">&amp;</span><a href="#242">callback</a>).unwrap()
+			<a class="self" href="#233">self</a>.<a href="#192">handle_closure</a>(<span class="kw-2">&amp;</span><a href="#240">signal</a>.<a href="#128-130">normalize</a>(), <span class="kw-2">&amp;</span><a href="#242">callback</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>()
 		}
 	}
 
 	<span class="kw">fn </span>remove_handle(<span class="kw-2">&amp;</span><span class="self">self</span>, handle: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>) {
-		<a class="self" href="#252">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html">disconnect</a>(<a href="#252">handle</a>)
+		<a class="self" href="#252">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html#tymethod.disconnect">disconnect</a>(<a href="#252">handle</a>)
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">"futures"</span>)]
@@ -530,8 +528,8 @@
 		<span class="self">Self</span>: Notifies&lt;S::Signal&gt;,
 		&lt;S::Return <span class="kw">as </span>ToValueOption&gt;::Type: <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a>,
 	{
-		<span class="kw">let </span>signal = <a href="#257">signal</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>();
-		SignalStream::connect(<a class="self" href="#257">self</a>, <a href="#264">signal</a>, |<span class="kw">_</span>, <span class="kw">_</span>| <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default::default</a>())
+		<span class="kw">let </span>signal = <a href="#257">signal</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>();
+		<a href="signal_stream.rs.html#26-54">SignalStream::connect</a>(<a class="self" href="#257">self</a>, <a href="#264">signal</a>, |<span class="kw">_</span>, <span class="kw">_</span>| <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Default::default</a>())
 	}
 }
 </code></pre></div></section></main></body></html>

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/session/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/session/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -183,28 +181,28 @@
 		callback: P,
 	) {
 		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>;
-		<span class="kw">let </span>callback = Box::new(<a href="#39">callback</a>) <span class="kw">as </span>Box&lt;<a href="#41">DynCallback</a>&gt;;
-		<span class="kw">let </span>userdata = Box::into_raw(Box::new(<a href="#42">callback</a>));
+		<span class="kw">let </span>callback = <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.new">Box::new</a>(<a href="#39">callback</a>) <span class="kw">as </span>Box&lt;<a href="#41">DynCallback</a>&gt;;
+		<span class="kw">let </span>userdata = <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.into_raw">Box::into_raw</a>(<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.new">Box::new</a>(<a href="#42">callback</a>));
 		<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>set_ports_format_trampoline(
 			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
 			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
 			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>,
 		) {
-			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let _ </span>= ffi::wp_si_adapter_set_ports_format_finish(<a href="#45">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#46">res</a>, <span class="kw-2">&amp;mut </span><a href="#49">error</a>);
+			<span class="kw">let </span><span class="kw-2">mut </span>error = <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.null_mut.html">ptr::null_mut</a>();
+			<span class="kw">let _ </span>= <a href="../../../wireplumber_sys/sys/fn.wp_si_adapter_set_ports_format_finish.html">ffi::wp_si_adapter_set_ports_format_finish</a>(<a href="#45">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#46">res</a>, <span class="kw-2">&amp;mut </span><a href="#49">error</a>);
 			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
 				<span class="prelude-val">Ok</span>(())
 			} <span class="kw">else </span>{
-				<span class="prelude-val">Err</span>(from_glib_full(<a href="#49">error</a>))
+				<span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="#49">error</a>))
 			};
-			<span class="kw">let </span>callback = Box::from_raw(<a href="#47">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;<a href="#41">DynCallback</a>&gt;);
+			<span class="kw">let </span>callback = <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.from_raw">Box::from_raw</a>(<a href="#47">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;<a href="#41">DynCallback</a>&gt;);
 			<a href="#56">callback</a>(<a href="#51">result</a>)
 		}
 		<span class="kw">unsafe </span>{
-			ffi::wp_si_adapter_set_ports_format(
-				<a class="self" href="#36">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#37">format</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_full</a>(),
-				<a href="#38">mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+			<a href="../../../wireplumber_sys/sys/fn.wp_si_adapter_set_ports_format.html">ffi::wp_si_adapter_set_ports_format</a>(
+				<a class="self" href="#36">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#37">format</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_full">to_glib_full</a>(),
+				<a href="#38">mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 				<span class="prelude-val">Some</span>(<a href="#44-58">set_ports_format_trampoline</a>),
 				<a href="#43">userdata</a> <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>,
 			)
@@ -216,9 +214,9 @@
 		format: <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt;,
 		mode: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
 	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
-		Box::pin(gio::GioFuture::new(<a class="self" href="#71">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
-			<a href="#75">obj</a>.<a href="#20-25">set_ports_format</a>(<a href="#72">format</a>.as_ref(), <a href="#73">mode</a>.as_ref().map(|s| <a href="#76">s</a>.as_str()), <span class="kw">move </span>|res| {
-				<a href="#75">send</a>.resolve(<a href="#76">res</a>)
+		<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.pin">Box::pin</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio/gio_future/struct.GioFuture.html#method.new">gio::GioFuture::new</a>(<a class="self" href="#71">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
+			<a href="#75">obj</a>.<a href="#20-25">set_ports_format</a>(<a href="#72">format</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_ref">as_ref</a>(), <a href="#73">mode</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_ref">as_ref</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|s| <a href="#76">s</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html#method.as_str">as_str</a>()), <span class="kw">move </span>|res| {
+				<a href="#75">send</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio/gio_future/struct.GioFutureResult.html#method.resolve">resolve</a>(<a href="#76">res</a>)
 			})
 		}))
 	}
@@ -246,28 +244,28 @@
 		callback: R,
 	) {
 		<span class="kw">type </span>DynCallback = <span class="kw">dyn </span>FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;) + <a href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html">Send</a> + <span class="lifetime">'static</span>;
-		<span class="kw">let </span>callback = Box::new(<a href="#102">callback</a>) <span class="kw">as </span>Box&lt;<a href="#104">DynCallback</a>&gt;;
-		<span class="kw">let </span>userdata = Box::into_raw(Box::new(<a href="#105">callback</a>));
+		<span class="kw">let </span>callback = <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.new">Box::new</a>(<a href="#102">callback</a>) <span class="kw">as </span>Box&lt;<a href="#104">DynCallback</a>&gt;;
+		<span class="kw">let </span>userdata = <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.into_raw">Box::into_raw</a>(<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.new">Box::new</a>(<a href="#105">callback</a>));
 		<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>acquire_trampoline(
 			_source_object: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/struct.GObject.html">glib::gobject_ffi::GObject</a>,
 			res: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio_sys/struct.GAsyncResult.html">gio::ffi::GAsyncResult</a>,
 			user_data: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>,
 		) {
-			<span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
-			<span class="kw">let _ </span>= ffi::wp_si_acquisition_acquire_finish(<a href="#108">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#109">res</a>, <span class="kw-2">&amp;mut </span><a href="#112">error</a>);
+			<span class="kw">let </span><span class="kw-2">mut </span>error = <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.null_mut.html">ptr::null_mut</a>();
+			<span class="kw">let _ </span>= <a href="../../../wireplumber_sys/sys/fn.wp_si_acquisition_acquire_finish.html">ffi::wp_si_acquisition_acquire_finish</a>(<a href="#108">_source_object</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <a href="#109">res</a>, <span class="kw-2">&amp;mut </span><a href="#112">error</a>);
 			<span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
 				<span class="prelude-val">Ok</span>(())
 			} <span class="kw">else </span>{
-				<span class="prelude-val">Err</span>(from_glib_full(<a href="#112">error</a>))
+				<span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="#112">error</a>))
 			};
-			<span class="kw">let </span>callback = Box::from_raw(<a href="#110">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;<a href="#104">DynCallback</a>&gt;);
+			<span class="kw">let </span>callback = <a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.from_raw">Box::from_raw</a>(<a href="#110">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span>Box&lt;<a href="#104">DynCallback</a>&gt;);
 			<a href="#119">callback</a>(<a href="#114">result</a>)
 		}
 		<span class="kw">unsafe </span>{
-			ffi::wp_si_acquisition_acquire(
-				<a class="self" href="#99">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#100">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#101">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+			<a href="../../../wireplumber_sys/sys/fn.wp_si_acquisition_acquire.html">ffi::wp_si_acquisition_acquire</a>(
+				<a class="self" href="#99">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#100">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#101">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 				<span class="prelude-val">Some</span>(<a href="#107-121">acquire_trampoline</a>),
 				<a href="#106">userdata</a> <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">libc::c_void</a>,
 			)
@@ -279,8 +277,8 @@
 		acquisitor: P,
 		item: Q,
 	) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
-		Box::pin(gio::GioFuture::new(<a class="self" href="#134">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
-			<a href="#138">obj</a>.<a href="#84-89">acquire</a>(<a href="#135">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <a href="#136">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="kw">move </span>|res| <a href="#138">send</a>.resolve(<a href="#139">res</a>))
+		<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html#method.pin">Box::pin</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio/gio_future/struct.GioFuture.html#method.new">gio::GioFuture::new</a>(<a class="self" href="#134">self</a>, <span class="kw">move </span>|obj, _cancellable, send| {
+			<a href="#138">obj</a>.<a href="#84-89">acquire</a>(<a href="#135">acquisitor</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>(), <a href="#136">item</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>(), <span class="kw">move </span>|res| <a href="#138">send</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gio/gio_future/struct.GioFutureResult.html#method.resolve">resolve</a>(<a href="#139">res</a>))
 		}))
 	}
 }

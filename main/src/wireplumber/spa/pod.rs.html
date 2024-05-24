@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/pod.rs`."><title>pod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/spa/pod.rs`."><title>pod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -372,13 +370,13 @@
 	/// Does not tie lifetime of `bytes` to Self, so requires caller guarantee
 	</span><span class="kw">pub unsafe fn </span>with_pod_unchecked(bytes: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="self">Self </span>{
 		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= mem::size_of::&lt;spa_pod&gt;());
-		<span class="kw">let </span>pod = <a href="#18">bytes</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>;
+		<span class="kw">let </span>pod = <a href="#18">bytes</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.as_ptr">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*const </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>;
 
 		<span class="comment">// TODO: complicated, are unaligned pointers that bad if it gets copied anyway..?
 		</span><a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_eq.html">assert_eq!</a>(pod <span class="kw">as </span>usize % mem::align_of::&lt;spa_pod&gt;(), <span class="number">0</span>);
 		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize);
 
-		<span class="self">Self</span>::new_wrap_raw_const(<a href="#20">pod</a>)
+		<a href="#94-96"><span class="self">Self</span>::new_wrap_raw_const</a>(<a href="#20">pod</a>)
 	}
 
 	<span class="doccomment">/// # Safety
@@ -386,31 +384,31 @@
 	/// Does not tie lifetime of `bytes` to Self, so requires caller guarantee
 	</span><span class="kw">pub unsafe fn </span>with_pod_mut_unchecked(bytes: <span class="kw-2">&amp;mut </span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="self">Self </span>{
 		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= mem::size_of::&lt;spa_pod&gt;());
-		<span class="kw">let </span>pod = <a href="#32">bytes</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>;
+		<span class="kw">let </span>pod = <a href="#32">bytes</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.as_ptr">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>;
 
 		<span class="comment">// TODO: complicated, are unaligned pointers that bad if it gets copied anyway..?
 		</span><a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_eq.html">assert_eq!</a>(pod <span class="kw">as </span>usize % mem::align_of::&lt;spa_pod&gt;(), <span class="number">0</span>);
 		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(bytes.len() &gt;= (<span class="kw-2">*</span>pod).size <span class="kw">as </span>usize);
 
-		<span class="self">Self</span>::new_wrap_raw_mut(<a href="#34">pod</a>)
+		<a href="#88-90"><span class="self">Self</span>::new_wrap_raw_mut</a>(<a href="#34">pod</a>)
 	}
 
 	<span class="kw">pub fn </span>with_copy(pod: <span class="kw-2">&amp;</span><a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>) -&gt; <span class="self">Self </span>{
-		<a href="#43">pod</a>.<a href="../auto/spa_pod.rs.html#98-102">copy</a>().unwrap()
+		<a href="#43">pod</a>.<a href="../auto/spa_pod.rs.html#98-102">copy</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>()
 	}
 
 	<span class="kw">pub fn </span>with_pod(bytes: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <span class="self">Self </span>{
-		<span class="kw">unsafe </span>{ <span class="self">Self</span>::with_copy(<span class="kw-2">&amp;</span><span class="self">Self</span>::with_pod_unchecked(<a href="#47">bytes</a>)) }
+		<span class="kw">unsafe </span>{ <a href="#43-45"><span class="self">Self</span>::with_copy</a>(<span class="kw-2">&amp;</span><a href="#18-27"><span class="self">Self</span>::with_pod_unchecked</a>(<a href="#47">bytes</a>)) }
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">"libspa"</span>)]
 	</span><span class="kw">fn </span>parse_&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="../auto/spa_pod_parser.rs.html#7-16">SpaPodParser</a>, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;R, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
 		<span class="kw">let </span>(parser, id_name) = <span class="kw">match </span>() {
-			<span class="kw">_ if </span><span class="self">self</span>.is_object() =&gt; <span class="prelude-val">Ok</span>(SpaPodParser::new_object(<span class="self">self</span>)),
-			<span class="kw">_ if </span><span class="self">self</span>.is_struct() =&gt; <span class="prelude-val">Ok</span>((SpaPodParser::new_struct(<span class="self">self</span>), <span class="prelude-val">None</span>)),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
-				LibraryErrorEnum::InvalidArgument,
-				<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"unsupported SPA type {:?}"</span>, <span class="self">self</span>.spa_type()),
+			<span class="kw">_ if </span><a class="self" href="#52">self</a>.<a href="../auto/spa_pod.rs.html#369-373">is_object</a>() =&gt; <span class="prelude-val">Ok</span>(<a href="parser.rs.html#8-28">SpaPodParser::new_object</a>(<a class="self" href="#52">self</a>)),
+			<span class="kw">_ if </span><a class="self" href="#52">self</a>.<a href="../auto/spa_pod.rs.html#411-415">is_struct</a>() =&gt; <span class="prelude-val">Ok</span>((<a href="../auto/spa_pod_parser.rs.html#20-24">SpaPodParser::new_struct</a>(<a class="self" href="#52">self</a>), <span class="prelude-val">None</span>)),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
+				<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
+				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"unsupported SPA type {:?}"</span>, <span class="self">self</span>.spa_type()),
 			)),
 		}<span class="question-mark">?</span>;
 		<span class="kw">let </span>res = <a href="#52">f</a>(<span class="kw-2">&amp;</span><a href="#53">parser</a>, <a href="#53">id_name</a>);
@@ -420,12 +418,12 @@
 
 	<span class="attr">#[cfg(feature = <span class="string">"libspa"</span>)]
 	</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>parse_struct&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="../auto/spa_pod_parser.rs.html#7-16">SpaPodParser</a>) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
-		<a class="self" href="#67">self</a>.<a href="#52-64">parse_</a>(|parser, <span class="kw">_</span>| <a href="#67">f</a>(<a href="#68">parser</a>)).unwrap()
+		<a class="self" href="#67">self</a>.<a href="#52-64">parse_</a>(|parser, <span class="kw">_</span>| <a href="#67">f</a>(<a href="#68">parser</a>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>()
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">"libspa"</span>)]
 	</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>parse_object&lt;R, F: FnOnce(<span class="kw-2">&amp;</span><a href="../auto/spa_pod_parser.rs.html#7-16">SpaPodParser</a>, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; R&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; R {
-		<a class="self" href="#72">self</a>.<a href="#52-64">parse_</a>(|parser, id_name| <a href="#72">f</a>(<a href="#73">parser</a>, <a href="#73">id_name</a>)).unwrap()
+		<a class="self" href="#72">self</a>.<a href="#52-64">parse_</a>(|parser, id_name| <a href="#72">f</a>(<a href="#73">parser</a>, <a href="#73">id_name</a>)).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>()
 	}
 
 	<span class="kw">pub unsafe fn </span>as_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>] {
@@ -435,41 +433,41 @@
 	}
 
 	<span class="kw">pub fn </span>to_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt; {
-		<span class="kw">unsafe </span>{ <a class="self" href="#82">self</a>.<a href="#76-80">as_bytes</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>() }
+		<span class="kw">unsafe </span>{ <a class="self" href="#82">self</a>.<a href="#76-80">as_bytes</a>().<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>() }
 	}
 
 	<span class="doccomment">/// borrows pod for the lifetime of the returned object
 	</span><span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_new_wrap"</span>)]
 	</span><span class="kw">pub unsafe fn </span>new_wrap_raw_mut(pod: <span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>) -&gt; <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a> {
-		from_glib_full(ffi::wp_spa_pod_new_wrap(<a href="#88">pod</a>))
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_new_wrap.html">ffi::wp_spa_pod_new_wrap</a>(<a href="#88">pod</a>))
 	}
 
 	<span class="doccomment">/// borrows pod for the lifetime of the returned object
 	</span><span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_new_wrap_const"</span>)]
 	</span><span class="kw">pub unsafe fn </span>new_wrap_raw_const(pod: <span class="kw-2">*const </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a>) -&gt; <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a> {
-		from_glib_full(ffi::wp_spa_pod_new_wrap_const(<a href="#94">pod</a>))
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_new_wrap_const.html">ffi::wp_spa_pod_new_wrap_const</a>(<a href="#94">pod</a>))
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_new_bytes"</span>)]
 	</span><span class="kw">pub fn </span>new_bytes(value: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]) -&gt; <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a> {
-		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_bytes(<a href="#99">value</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, <a href="#99">value</a>.len() <span class="kw">as _</span>)) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_new_bytes.html">ffi::wp_spa_pod_new_bytes</a>(<a href="#99">value</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.as_ptr">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, <a href="#99">value</a>.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.len">len</a>() <span class="kw">as _</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_new_pointer"</span>)]
 	</span><span class="kw">pub fn </span>new_pointer(type_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>) -&gt; <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a> {
-		<span class="kw">unsafe </span>{ from_glib_full(ffi::wp_spa_pod_new_pointer(<a href="#104">type_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#104">value</a>)) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_new_pointer.html">ffi::wp_spa_pod_new_pointer</a>(<a href="#104">type_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>, <a href="#104">value</a>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_get_spa_type"</span>)]
 	#[doc(alias = <span class="string">"get_spa_type"</span>)]
 	</span><span class="kw">pub fn </span>spa_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="type.rs.html#3-11">SpaType</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_spa_type(<a class="self" href="#110">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_get_spa_type.html">ffi::wp_spa_pod_get_spa_type</a>(<a class="self" href="#110">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_get_bytes"</span>)]
 	#[doc(alias = <span class="string">"get_bytes"</span>)]
 	</span><span class="kw">pub fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>]&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>value = ptr::null();
+		<span class="kw">let </span><span class="kw-2">mut </span>value = <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.null.html">ptr::null</a>();
 		<span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
 		<span class="kw">unsafe </span>{
 			<span class="kw">if </span>from_glib(ffi::wp_spa_pod_get_bytes(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>value, <span class="kw-2">&amp;mut </span>len)) {
@@ -483,13 +481,13 @@
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_get_choice_type"</span>)]
 	#[doc(alias = <span class="string">"get_choice_type"</span>)]
 	</span><span class="kw">pub fn </span>choice_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="id_value.rs.html#11-13">SpaIdValue</a>&gt; {
-		<span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_pod_get_choice_type(<a class="self" href="#130">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_get_choice_type.html">ffi::wp_spa_pod_get_choice_type</a>(<a class="self" href="#130">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_get_pointer"</span>)]
 	#[doc(alias = <span class="string">"get_pointer"</span>)]
 	</span><span class="kw">pub fn </span>pointer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>res = ptr::null();
+		<span class="kw">let </span><span class="kw-2">mut </span>res = <a href="https://doc.rust-lang.org/nightly/core/ptr/fn.null.html">ptr::null</a>();
 		<span class="kw">unsafe </span>{
 			<span class="kw">if </span>from_glib(ffi::wp_spa_pod_get_pointer(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>res)) {
 				<span class="prelude-val">Some</span>(<a href="#137">res</a>)
@@ -502,61 +500,61 @@
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_set_pointer"</span>)]
 	</span><span class="kw">pub fn </span>set_pointer(<span class="kw-2">&amp;</span><span class="self">self</span>, type_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<span class="kw">unsafe </span>{
-			from_glib(ffi::wp_spa_pod_set_pointer(
-				<a class="self" href="#148">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#148">type_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_set_pointer.html">ffi::wp_spa_pod_set_pointer</a>(
+				<a class="self" href="#148">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#148">type_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 				<a href="#148">value</a>,
 			))
 		}
 	}
 
 	<span class="kw">pub fn </span>iterator(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; IntoValueIterator&lt;<a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt; {
-		IntoValueIterator::with_inner(<a class="self" href="#158">self</a>.<a href="../auto/spa_pod.rs.html#425-429">new_iterator</a>().unwrap())
+		<a href="../util/iterator.rs.html#63-68">IntoValueIterator::with_inner</a>(<a class="self" href="#158">self</a>.<a href="../auto/spa_pod.rs.html#425-429">new_iterator</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>())
 	}
 
 	<span class="kw">pub fn </span>array_pointers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; IntoValueIterator&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/type.Pointer.html">Pointer</a>&gt; {
-		IntoValueIterator::with_inner(<a class="self" href="#162">self</a>.<a href="../auto/spa_pod.rs.html#425-429">new_iterator</a>().unwrap())
+		<a href="../util/iterator.rs.html#63-68">IntoValueIterator::with_inner</a>(<a class="self" href="#162">self</a>.<a href="../auto/spa_pod.rs.html#425-429">new_iterator</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>())
 	}
 
 	<span class="kw">pub fn </span>array_iterator&lt;T: <a href="traits.rs.html#9-11">SpaPrimitive</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = T&gt; {
 		<span class="comment">// TODO: assert type via T!!!
-		</span><a class="self" href="#166">self</a>.<a href="#162-164">array_pointers</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|p| <span class="kw">unsafe </span>{ <span class="kw-2">*</span>(<a href="#168">p</a> <span class="kw">as </span><span class="kw-2">*const </span>T) })
+		</span><a class="self" href="#166">self</a>.<a href="#162-164">array_pointers</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|p| <span class="kw">unsafe </span>{ <span class="kw-2">*</span>(<a href="#168">p</a> <span class="kw">as </span><span class="kw-2">*const </span>T) })
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_spa_pod_get_spa_pod"</span>)]
 	#[doc(alias = <span class="string">"get_spa_pod"</span>)]
 	</span><span class="kw">pub fn </span>spa_pod_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_pod.html">spa_pod</a> {
-		<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>ffi::wp_spa_pod_get_spa_pod(<a class="self" href="#173">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+		<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span><a href="../../../wireplumber_sys/sys/fn.wp_spa_pod_get_spa_pod.html">ffi::wp_spa_pod_get_spa_pod</a>(<a class="self" href="#173">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>) }
 	}
 
 	<span class="kw">pub fn </span>spa_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_rectangle.html">spa_rectangle</a>&gt; {
-		<a class="self" href="#177">self</a>.<a href="../auto/spa_pod.rs.html#258-265">rectangle</a>().map(|(width, height)| <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_rectangle.html">spa_rectangle</a> { <a href="#178">width</a>, <a href="#178">height</a> })
+		<a class="self" href="#177">self</a>.<a href="../auto/spa_pod.rs.html#258-265">rectangle</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|(width, height)| <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_rectangle.html">spa_rectangle</a> { <a href="#178">width</a>, <a href="#178">height</a> })
 	}
 
 	<span class="kw">pub fn </span>spa_fraction(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_fraction.html">spa_fraction</a>&gt; {
-		<a class="self" href="#181">self</a>.<a href="../auto/spa_pod.rs.html#206-213">fraction</a>().map(|(num, denom)| <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_fraction.html">spa_fraction</a> { <a href="#182">num</a>, <a href="#182">denom</a> })
+		<a class="self" href="#181">self</a>.<a href="../auto/spa_pod.rs.html#206-213">fraction</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|(num, denom)| <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/struct.spa_fraction.html">spa_fraction</a> { <a href="#182">num</a>, <a href="#182">denom</a> })
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">"experimental"</span>)]
 	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"experimental"</span>)))]
 	</span><span class="kw">pub fn </span>struct_fields(<span class="kw-2">&amp;</span><span class="self">self</span>, length_prefix: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="kw">crate</span>::Result&lt;std::vec::IntoIter&lt;(<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>)&gt;&gt; {
-		<span class="kw">let </span><span class="kw-2">mut </span>params = <a class="self" href="#187">self</a>.<a href="#158-160">iterator</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>();
+		<span class="kw">let </span><span class="kw-2">mut </span>params = <a class="self" href="#187">self</a>.<a href="#158-160">iterator</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>();
 
 		<span class="kw">let </span>length: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt; = <span class="kw">if </span>length_prefix {
 			<span class="prelude-val">Some</span>(
-				params
-					.next()
-					.ok_or_else(|| {
-						Error::new(
-							LibraryErrorEnum::InvalidArgument,
-							<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"pod struct {self:?} is missing expected length prefix"</span>),
+				<a href="#188">params</a>
+					.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.next">next</a>()
+					.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| {
+						<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
+							<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
+							<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"pod struct {self:?} is missing expected length prefix"</span>),
 						)
 					})
-					.and_then(|pod| {
-						(<span class="kw-2">&amp;</span>pod).try_into().map_err(|e| {
-							Error::new(
-								LibraryErrorEnum::InvalidArgument,
-								<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"pod struct {self:?} length could not be parsed from {pod:?}: {e:?}"</span>),
+					.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|pod| {
+						(<span class="kw-2">&amp;</span><a href="#200">pod</a>).<a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">try_into</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(|e| {
+							<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
+								<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
+								<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"pod struct {self:?} length could not be parsed from {pod:?}: {e:?}"</span>),
 							)
 						})
 					})<span class="question-mark">?</span>,
@@ -566,14 +564,14 @@
 		</span>};
 		<span class="kw">let </span>length = <span class="kw">match </span><a href="#190">length</a> {
 			<span class="prelude-val">Some</span>(len) <span class="kw">if </span><a href="#213">len</a> &lt; <span class="number">0 </span>=&gt;
-				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 					<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"pod struct {self:?} has invalid length {len}"</span>),
 				)),
 			<span class="prelude-val">Some</span>(len) =&gt; <span class="prelude-val">Some</span>(<a href="#218">len</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
 		};
-		<span class="kw">let </span><span class="kw-2">mut </span>values = Vec::with_capacity(<a href="#212">length</a>.unwrap_or_default());
+		<span class="kw">let </span><span class="kw-2">mut </span>values = <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.with_capacity">Vec::with_capacity</a>(<a href="#212">length</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or_default">unwrap_or_default</a>());
 
 		<span class="comment">// TODO: use a proper chunks(2) iterator here?
 		</span><span class="kw">while let </span><span class="prelude-val">Some</span>(key) = params.next() {
@@ -602,22 +600,22 @@
 			};
 			values.push((key, value));
 		}
-		<span class="prelude-val">Ok</span>(<a href="#221">values</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>())
+		<span class="prelude-val">Ok</span>(<a href="#221">values</a>.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>())
 	}
 
 	<span class="kw">pub fn </span>spa_properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<span class="prelude-ty">Result</span>&lt;<a href="id_value.rs.html#11-13">SpaIdValue</a>, <a href="../../../wireplumber_sys/type.WpSpaType.html">ffi::WpSpaType</a>&gt;, <a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>)&gt; {
 		<span class="kw">let </span>type_ = <a class="self" href="#253">self</a>.<a href="#110-112">spa_type</a>();
-		<span class="kw">let </span>values = <a href="#254">type_</a>.and_then(|ty| <a href="#255">ty</a>.<a href="type.rs.html#87-89">values_table</a>());
+		<span class="kw">let </span>values = <a href="#254">type_</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|ty| <a href="#255">ty</a>.<a href="type.rs.html#87-89">values_table</a>());
 		<span class="self"><a href="#253">self</a>
 			</span>.<a href="#158-160">iterator</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html">into_iter</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|pod| <a href="#259">pod</a>.<a href="../auto/spa_pod.rs.html#247-254">property</a>().unwrap())
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(<span class="kw">move </span>|(key_name, pod)| {
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html#tymethod.into_iter">into_iter</a>()
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(<span class="kw">move </span>|pod| <a href="#259">pod</a>.<a href="../auto/spa_pod.rs.html#247-254">property</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>())
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(<span class="kw">move </span>|(key_name, pod)| {
 				(
-					SpaIdValue::value_or_name(
+					<a href="id_value.rs.html#52-61">SpaIdValue::value_or_name</a>(
 						<span class="kw-2">&amp;</span><a href="#254">type_</a>,
 						<span class="kw-2">&amp;</span><a href="#260">key_name</a>,
-						<a href="#255">values</a>.and_then(|values| <a href="#265">values</a>.<a href="id_table.rs.html#35-42">find_value_from_short_name</a>(<span class="kw-2">&amp;</span><a href="#260">key_name</a>)),
+						<a href="#255">values</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|values| <a href="#265">values</a>.<a href="id_table.rs.html#35-42">find_value_from_short_name</a>(<span class="kw-2">&amp;</span><a href="#260">key_name</a>)),
 					),
 					<a href="#260">pod</a>,
 				)
@@ -625,7 +623,7 @@
 	}
 
 	<span class="kw">pub fn </span>find_spa_property&lt;K: <a href="../pw/keys.rs.html#254-258">SpaPropertyKey</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../auto/spa_pod.rs.html#7-16">SpaPod</a>&gt; {
-		<span class="kw">let </span>values = <a class="self" href="#272">self</a>.<a href="#110-112">spa_type</a>().and_then(|ty| <a href="#273">ty</a>.<a href="type.rs.html#87-89">values_table</a>());
+		<span class="kw">let </span>values = <a class="self" href="#272">self</a>.<a href="#110-112">spa_type</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|ty| <a href="#273">ty</a>.<a href="type.rs.html#87-89">values_table</a>());
 		<span class="kw">let </span>find_id = <span class="kw">match </span><a href="#272">key</a>.<a href="../pw/keys.rs.html#257">spa_property_key_with_table</a>(<a href="#273">values</a>) {
 			<span class="prelude-val">Ok</span>(id) =&gt; <a href="#275">id</a>,
 			<span class="prelude-val">Err</span>(e) =&gt; {
@@ -635,8 +633,8 @@
 		};
 		<span class="self"><a href="#272">self</a>
 			</span>.<a href="#253-270">spa_properties</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">find</a>(|<span class="kw-2">&amp;</span>(id, ..)| SpaIdValue::result_number(<a href="#283">id</a>) == <a href="#274">find_id</a>)
-			.map(|(<span class="kw">_</span>, pod)| <a href="#284">pod</a>)
+			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.find">find</a>(|<span class="kw-2">&amp;</span>(id, ..)| <a href="id_value.rs.html#63-65">SpaIdValue::result_number</a>(<a href="#283">id</a>) == <a href="#274">find_id</a>)
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|(<span class="kw">_</span>, pod)| <a href="#284">pod</a>)
 	}
 
 	<span class="kw">pub fn </span>spa_property&lt;T, K: <a href="../pw/keys.rs.html#254-258">SpaPropertyKey</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
@@ -646,7 +644,7 @@
 	{
 		<span class="self"><a href="#287">self</a>
 			</span>.<a href="#272-285">find_spa_property</a>(<a href="#287">key</a>)
-			.and_then(|pod| <span class="kw">match </span><a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html">TryInto::try_into</a>(<span class="kw-2">&amp;</span><a href="#294">pod</a>) {
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.and_then">and_then</a>(|pod| <span class="kw">match </span><a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html#tymethod.try_into">TryInto::try_into</a>(<span class="kw-2">&amp;</span><a href="#294">pod</a>) {
 				<span class="prelude-val">Ok</span>(v) =&gt; <span class="prelude-val">Some</span>(<a href="#295">v</a>),
 				<span class="prelude-val">Err</span>(e) =&gt; {
 					<a class="macro" href="../log/macros.rs.html#42-49">wp_warning!</a>(<span class="string">"failed to convert spa key {key:?} for {self:?}: {e:?}"</span>);
@@ -672,28 +670,28 @@
 	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"experimental"</span>)))]
 	</span><span class="kw">pub fn </span>apply&lt;O: IsA&lt;<a href="../auto/pipewire_object.rs.html#8-15">PipewireObject</a>&gt;&gt;(<span class="self">self</span>, obj: <span class="kw-2">&amp;</span>O) -&gt; <span class="kw">crate</span>::Result&lt;()&gt; {
 		<span class="kw">if </span>!<span class="self">self</span>.is_object() {
-			<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+			<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 				<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"failed to apply spa pod to {obj:?}: {self:?} is not an object"</span>),
 			))
 		}
 
-		<span class="kw">let </span>type_ = <a class="self" href="#318">self</a>.<a href="#110-112">spa_type</a>().unwrap();
+		<span class="kw">let </span>type_ = <a class="self" href="#318">self</a>.<a href="#110-112">spa_type</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>();
 		<span class="kw">let </span>name = <span class="kw">match </span><a href="#326">type_</a>.<a href="type.rs.html#70-72">number</a>() {
-			libspa_sys::SPA_TYPE_OBJECT_Props =&gt; <span class="string">"Props"</span>,
-			libspa_sys::SPA_TYPE_OBJECT_ParamRoute =&gt; <span class="string">"Route"</span>,
+			<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_Props.html">libspa_sys::SPA_TYPE_OBJECT_Props</a> =&gt; <span class="string">"Props"</span>,
+			<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/constant.SPA_TYPE_OBJECT_ParamRoute.html">libspa_sys::SPA_TYPE_OBJECT_ParamRoute</a> =&gt; <span class="string">"Route"</span>,
 			<span class="kw">_ </span>=&gt;
-				<span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+				<span class="kw">return </span><span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 					<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 					<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"could not apply unknown spa type {type_:?} to {obj:?}"</span>),
 				)),
 		};
 
-		<span class="kw">let </span>flags = <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default::default</a>();
+		<span class="kw">let </span>flags = <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Default::default</a>();
 		<span class="kw">if </span>obj.set_param(name, flags, <span class="self">self</span>) {
 			<span class="prelude-val">Ok</span>(())
 		} <span class="kw">else </span>{
-			<span class="prelude-val">Err</span>(Error::new(
+			<span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 				<a href="../auto/enums.rs.html#440">LibraryErrorEnum::InvalidArgument</a>,
 				<span class="kw-2">&amp;</span><a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"failed to apply param {name} to {obj:?}"</span>),
 			))
@@ -703,7 +701,7 @@
 
 <span class="kw">impl</span>&lt;T: <a href="traits.rs.html#13-17">SpaValue</a>&gt; FromIterator&lt;T&gt; <span class="kw">for </span><a href="../auto/spa_pod.rs.html#7-16">SpaPod</a> {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		SpaPodBuilder::from_iter(<a href="#350">iter</a>).<a href="../auto/spa_pod_builder.rs.html#160-164">end</a>().unwrap()
+		<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html#tymethod.from_iter">SpaPodBuilder::from_iter</a>(<a href="#350">iter</a>).<a href="../auto/spa_pod_builder.rs.html#160-164">end</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>()
 	}
 }
 </code></pre></div></section></main></body></html>

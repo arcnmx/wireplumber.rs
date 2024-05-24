@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/flags.rs`."><title>flags.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/auto/flags.rs`."><title>flags.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1057,13 +1055,13 @@
 </span><span class="kw">use </span>glib::{<a href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags::bitflags</a>,<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>,<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>};
 
 <span class="attr">#[cfg(feature = <span class="string">"v0_4_11"</span>)]
-</span><a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+</span><a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpDbusFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/dbus/struct.DbusFeatures.html">DbusFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_DBUS_FEATURE_ENABLED"</span>)]
-        </span><span class="kw">const </span>ENABLED = ffi::WP_DBUS_FEATURE_ENABLED <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ENABLED = <a href="../../../wireplumber_sys/sys/constant.WP_DBUS_FEATURE_ENABLED.html">ffi::WP_DBUS_FEATURE_ENABLED</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1085,7 +1083,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpDbusFeatures.html">ffi::WpDbusFeatures</a>&gt; <span class="kw">for </span><a href="#7-15">DbusFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpDbusFeatures.html">ffi::WpDbusFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#34">value</a>)
+        <a href="#7-15"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#34">value</a>)
     }
 }
 
@@ -1095,7 +1093,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_dbus_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_dbus_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_dbus_features_get_type.html">ffi::wp_dbus_features_get_type</a>()) }
                 }
             }
 
@@ -1124,7 +1122,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#73">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#73">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1135,14 +1133,14 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#83">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#82">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#83">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#82">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#83">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
@@ -1151,24 +1149,24 @@
 </span><span class="kw">impl </span>From&lt;<a href="#7-15">DbusFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#7-15">DbusFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#100">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#100">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpInitFlags"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/core/struct.InitFlags.html">InitFlags</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_INIT_PIPEWIRE"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE = ffi::WP_INIT_PIPEWIRE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE = <a href="../../../wireplumber_sys/sys/constant.WP_INIT_PIPEWIRE.html">ffi::WP_INIT_PIPEWIRE</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INIT_SPA_TYPES"</span>)]
-        </span><span class="kw">const </span>SPA_TYPES = ffi::WP_INIT_SPA_TYPES <span class="kw">as _</span>;
+        </span><span class="kw">const </span>SPA_TYPES = <a href="../../../wireplumber_sys/sys/constant.WP_INIT_SPA_TYPES.html">ffi::WP_INIT_SPA_TYPES</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INIT_SET_PW_LOG"</span>)]
-        </span><span class="kw">const </span>SET_PW_LOG = ffi::WP_INIT_SET_PW_LOG <span class="kw">as _</span>;
+        </span><span class="kw">const </span>SET_PW_LOG = <a href="../../../wireplumber_sys/sys/constant.WP_INIT_SET_PW_LOG.html">ffi::WP_INIT_SET_PW_LOG</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INIT_SET_GLIB_LOG"</span>)]
-        </span><span class="kw">const </span>SET_GLIB_LOG = ffi::WP_INIT_SET_GLIB_LOG <span class="kw">as _</span>;
+        </span><span class="kw">const </span>SET_GLIB_LOG = <a href="../../../wireplumber_sys/sys/constant.WP_INIT_SET_GLIB_LOG.html">ffi::WP_INIT_SET_GLIB_LOG</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INIT_ALL"</span>)]
-        </span><span class="kw">const </span>ALL = ffi::WP_INIT_ALL <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ALL = <a href="../../../wireplumber_sys/sys/constant.WP_INIT_ALL.html">ffi::WP_INIT_ALL</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1186,7 +1184,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpInitFlags.html">ffi::WpInitFlags</a>&gt; <span class="kw">for </span><a href="#105-120">InitFlags</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpInitFlags.html">ffi::WpInitFlags</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#135">value</a>)
+        <a href="#105-120"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#135">value</a>)
     }
 }
 
@@ -1194,7 +1192,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_init_flags_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_init_flags_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_init_flags_get_type.html">ffi::wp_init_flags_get_type</a>()) }
                 }
             }
 
@@ -1217,7 +1215,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#166">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#166">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1226,38 +1224,38 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#174">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#173">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#174">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#173">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#174">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#105-120">InitFlags</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#105-120">InitFlags</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#189">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#189">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpInterestMatch"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/registry/struct.InterestMatch.html">InterestMatch</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_NONE"</span>)]
-        </span><span class="kw">const </span>NONE = ffi::WP_INTEREST_MATCH_NONE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>NONE = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_NONE.html">ffi::WP_INTEREST_MATCH_NONE</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_GTYPE"</span>)]
-        </span><span class="kw">const </span>GTYPE = ffi::WP_INTEREST_MATCH_GTYPE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>GTYPE = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_GTYPE.html">ffi::WP_INTEREST_MATCH_GTYPE</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES"</span>)]
-        </span><span class="kw">const </span>PW_GLOBAL_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PW_GLOBAL_PROPERTIES = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES.html">ffi::WP_INTEREST_MATCH_PW_GLOBAL_PROPERTIES</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_PW_PROPERTIES"</span>)]
-        </span><span class="kw">const </span>PW_PROPERTIES = ffi::WP_INTEREST_MATCH_PW_PROPERTIES <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PW_PROPERTIES = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_PW_PROPERTIES.html">ffi::WP_INTEREST_MATCH_PW_PROPERTIES</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_G_PROPERTIES"</span>)]
-        </span><span class="kw">const </span>G_PROPERTIES = ffi::WP_INTEREST_MATCH_G_PROPERTIES <span class="kw">as _</span>;
+        </span><span class="kw">const </span>G_PROPERTIES = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_G_PROPERTIES.html">ffi::WP_INTEREST_MATCH_G_PROPERTIES</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1275,7 +1273,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpInterestMatch.html">ffi::WpInterestMatch</a>&gt; <span class="kw">for </span><a href="#194-209">InterestMatch</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpInterestMatch.html">ffi::WpInterestMatch</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#224">value</a>)
+        <a href="#194-209"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#224">value</a>)
     }
 }
 
@@ -1283,7 +1281,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_interest_match_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_interest_match_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_interest_match_get_type.html">ffi::wp_interest_match_get_type</a>()) }
                 }
             }
 
@@ -1306,7 +1304,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#255">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#255">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1315,32 +1313,32 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#263">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#262">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#263">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#262">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#263">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#194-209">InterestMatch</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#194-209">InterestMatch</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#278">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#278">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpInterestMatchFlags"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/registry/struct.InterestMatchFlags.html">InterestMatchFlags</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_FLAGS_NONE"</span>)]
-        </span><span class="kw">const </span>NONE = ffi::WP_INTEREST_MATCH_FLAGS_NONE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>NONE = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_FLAGS_NONE.html">ffi::WP_INTEREST_MATCH_FLAGS_NONE</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_INTEREST_MATCH_FLAGS_CHECK_ALL"</span>)]
-        </span><span class="kw">const </span>CHECK_ALL = ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL <span class="kw">as _</span>;
+        </span><span class="kw">const </span>CHECK_ALL = <a href="../../../wireplumber_sys/sys/constant.WP_INTEREST_MATCH_FLAGS_CHECK_ALL.html">ffi::WP_INTEREST_MATCH_FLAGS_CHECK_ALL</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1358,7 +1356,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpInterestMatchFlags.html">ffi::WpInterestMatchFlags</a>&gt; <span class="kw">for </span><a href="#283-292">InterestMatchFlags</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpInterestMatchFlags.html">ffi::WpInterestMatchFlags</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#307">value</a>)
+        <a href="#283-292"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#307">value</a>)
     }
 }
 
@@ -1366,7 +1364,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_interest_match_flags_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_interest_match_flags_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_interest_match_flags_get_type.html">ffi::wp_interest_match_flags_get_type</a>()) }
                 }
             }
 
@@ -1389,7 +1387,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#338">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#338">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1398,34 +1396,34 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#346">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#345">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#346">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#345">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#346">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#283-292">InterestMatchFlags</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#283-292">InterestMatchFlags</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#361">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#361">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpLinkFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/pw/struct.LinkFeatures.html">LinkFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[cfg(feature = <span class="string">"v0_4_11"</span>)]
         #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v0_4_11"</span>)))]
         #[doc(alias = <span class="string">"WP_LINK_FEATURE_ESTABLISHED"</span>)]
-        </span><span class="kw">const </span>ESTABLISHED = ffi::WP_LINK_FEATURE_ESTABLISHED <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ESTABLISHED = <a href="../../../wireplumber_sys/sys/constant.WP_LINK_FEATURE_ESTABLISHED.html">ffi::WP_LINK_FEATURE_ESTABLISHED</a> <span class="kw">as _</span>;
 
-        <span class="kw">const </span>PROXY_FEATURES = ProxyFeatures::ALL.bits();
+        <span class="kw">const </span>PROXY_FEATURES = ProxyFeatures::ALL.<a href="#789-812">bits</a>();
     }
 }
 
@@ -1443,7 +1441,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpLinkFeatures.html">ffi::WpLinkFeatures</a>&gt; <span class="kw">for </span><a href="#366-377">LinkFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpLinkFeatures.html">ffi::WpLinkFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#392">value</a>)
+        <a href="#366-377"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#392">value</a>)
     }
 }
 
@@ -1453,7 +1451,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_link_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_link_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_link_features_get_type.html">ffi::wp_link_features_get_type</a>()) }
                 }
             }
 
@@ -1476,7 +1474,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#425">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#425">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1485,38 +1483,38 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#433">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#432">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#433">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#432">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#433">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#366-377">LinkFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#366-377">LinkFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#448">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#448">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpLookupDirs"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/plugin/struct.LookupDirs.html">LookupDirs</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_LOOKUP_DIR_ENV_CONFIG"</span>)]
-        </span><span class="kw">const </span>ENV_CONFIG = ffi::WP_LOOKUP_DIR_ENV_CONFIG <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ENV_CONFIG = <a href="../../../wireplumber_sys/sys/constant.WP_LOOKUP_DIR_ENV_CONFIG.html">ffi::WP_LOOKUP_DIR_ENV_CONFIG</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_LOOKUP_DIR_ENV_DATA"</span>)]
-        </span><span class="kw">const </span>ENV_DATA = ffi::WP_LOOKUP_DIR_ENV_DATA <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ENV_DATA = <a href="../../../wireplumber_sys/sys/constant.WP_LOOKUP_DIR_ENV_DATA.html">ffi::WP_LOOKUP_DIR_ENV_DATA</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_LOOKUP_DIR_XDG_CONFIG_HOME"</span>)]
-        </span><span class="kw">const </span>XDG_CONFIG_HOME = ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME <span class="kw">as _</span>;
+        </span><span class="kw">const </span>XDG_CONFIG_HOME = <a href="../../../wireplumber_sys/sys/constant.WP_LOOKUP_DIR_XDG_CONFIG_HOME.html">ffi::WP_LOOKUP_DIR_XDG_CONFIG_HOME</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_LOOKUP_DIR_ETC"</span>)]
-        </span><span class="kw">const </span>ETC = ffi::WP_LOOKUP_DIR_ETC <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ETC = <a href="../../../wireplumber_sys/sys/constant.WP_LOOKUP_DIR_ETC.html">ffi::WP_LOOKUP_DIR_ETC</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_LOOKUP_DIR_PREFIX_SHARE"</span>)]
-        </span><span class="kw">const </span>PREFIX_SHARE = ffi::WP_LOOKUP_DIR_PREFIX_SHARE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PREFIX_SHARE = <a href="../../../wireplumber_sys/sys/constant.WP_LOOKUP_DIR_PREFIX_SHARE.html">ffi::WP_LOOKUP_DIR_PREFIX_SHARE</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1534,7 +1532,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpLookupDirs.html">ffi::WpLookupDirs</a>&gt; <span class="kw">for </span><a href="#453-468">LookupDirs</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpLookupDirs.html">ffi::WpLookupDirs</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#483">value</a>)
+        <a href="#453-468"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#483">value</a>)
     }
 }
 
@@ -1542,7 +1540,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_lookup_dirs_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_lookup_dirs_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_lookup_dirs_get_type.html">ffi::wp_lookup_dirs_get_type</a>()) }
                 }
             }
 
@@ -1565,7 +1563,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#514">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#514">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1574,32 +1572,32 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#522">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#521">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#522">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#521">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#522">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#453-468">LookupDirs</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#453-468">LookupDirs</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#537">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#537">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpMetadataFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/pw/struct.MetadataFeatures.html">MetadataFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_METADATA_FEATURE_DATA"</span>)]
-        </span><span class="kw">const </span>DATA = ffi::WP_METADATA_FEATURE_DATA <span class="kw">as _</span>;
+        </span><span class="kw">const </span>DATA = <a href="../../../wireplumber_sys/sys/constant.WP_METADATA_FEATURE_DATA.html">ffi::WP_METADATA_FEATURE_DATA</a> <span class="kw">as _</span>;
 
-        <span class="kw">const </span>PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
+        <span class="kw">const </span>PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.<a href="#789-812">bits</a>();
     }
 }
 
@@ -1617,7 +1615,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpMetadataFeatures.html">ffi::WpMetadataFeatures</a>&gt; <span class="kw">for </span><a href="#542-551">MetadataFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpMetadataFeatures.html">ffi::WpMetadataFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#566">value</a>)
+        <a href="#542-551"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#566">value</a>)
     }
 }
 
@@ -1625,7 +1623,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_metadata_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_metadata_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_metadata_features_get_type.html">ffi::wp_metadata_features_get_type</a>()) }
                 }
             }
 
@@ -1648,7 +1646,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#597">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#597">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1657,32 +1655,32 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#605">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#604">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#605">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#604">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#605">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#542-551">MetadataFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#542-551">MetadataFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#620">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#620">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpNodeFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/pw/struct.NodeFeatures.html">NodeFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_NODE_FEATURE_PORTS"</span>)]
-        </span><span class="kw">const </span>PORTS = ffi::WP_NODE_FEATURE_PORTS <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PORTS = <a href="../../../wireplumber_sys/sys/constant.WP_NODE_FEATURE_PORTS.html">ffi::WP_NODE_FEATURE_PORTS</a> <span class="kw">as _</span>;
 
-        <span class="kw">const </span>PROXY_FEATURES = ProxyFeatures::ALL.bits();
+        <span class="kw">const </span>PROXY_FEATURES = ProxyFeatures::ALL.<a href="#789-812">bits</a>();
     }
 }
 
@@ -1700,7 +1698,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpNodeFeatures.html">ffi::WpNodeFeatures</a>&gt; <span class="kw">for </span><a href="#625-634">NodeFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpNodeFeatures.html">ffi::WpNodeFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#649">value</a>)
+        <a href="#625-634"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#649">value</a>)
     }
 }
 
@@ -1708,7 +1706,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_node_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_node_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_node_features_get_type.html">ffi::wp_node_features_get_type</a>()) }
                 }
             }
 
@@ -1731,7 +1729,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#680">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#680">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1740,30 +1738,30 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#688">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#687">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#688">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#687">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#688">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#625-634">NodeFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#625-634">NodeFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#703">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#703">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpPluginFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/plugin/struct.PluginFeatures.html">PluginFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_PLUGIN_FEATURE_ENABLED"</span>)]
-        </span><span class="kw">const </span>ENABLED = ffi::WP_PLUGIN_FEATURE_ENABLED <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ENABLED = <a href="../../../wireplumber_sys/sys/constant.WP_PLUGIN_FEATURE_ENABLED.html">ffi::WP_PLUGIN_FEATURE_ENABLED</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1781,7 +1779,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpPluginFeatures.html">ffi::WpPluginFeatures</a>&gt; <span class="kw">for </span><a href="#708-715">PluginFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpPluginFeatures.html">ffi::WpPluginFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#730">value</a>)
+        <a href="#708-715"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#730">value</a>)
     }
 }
 
@@ -1789,7 +1787,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_plugin_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_plugin_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_plugin_features_get_type.html">ffi::wp_plugin_features_get_type</a>()) }
                 }
             }
 
@@ -1812,7 +1810,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#761">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#761">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1821,42 +1819,42 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#769">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#768">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#769">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#768">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#769">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#708-715">PluginFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#708-715">PluginFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#784">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#784">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpProxyFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/pw/struct.ProxyFeatures.html">ProxyFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_PROXY_FEATURE_BOUND"</span>)]
-        </span><span class="kw">const </span>PROXY_FEATURE_BOUND = ffi::WP_PROXY_FEATURE_BOUND <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PROXY_FEATURE_BOUND = <a href="../../../wireplumber_sys/sys/constant.WP_PROXY_FEATURE_BOUND.html">ffi::WP_PROXY_FEATURE_BOUND</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURE_INFO"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_INFO = ffi::WP_PIPEWIRE_OBJECT_FEATURE_INFO <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_INFO = <a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURE_INFO.html">ffi::WP_PIPEWIRE_OBJECT_FEATURE_INFO</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS = <a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS.html">ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROPS</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT = <a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT.html">ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_FORMAT</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE = <a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE.html">ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PROFILE</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG = <a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG.html">ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_PORT_CONFIG</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE"</span>)]
-        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE = <a href="../../../wireplumber_sys/sys/constant.WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE.html">ffi::WP_PIPEWIRE_OBJECT_FEATURE_PARAM_ROUTE</a> <span class="kw">as _</span>;
 
         <span class="attr">#[doc(alias = <span class="string">"WP_PROXY_FEATURE_CUSTOM_START"</span>)]
         </span><span class="kw">const </span>PROXY_FEATURE_CUSTOM_START = <span class="number">1 </span>&lt;&lt; <span class="number">16</span>;
@@ -1878,7 +1876,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpProxyFeatures.html">ffi::WpProxyFeatures</a>&gt; <span class="kw">for </span><a href="#789-812">ProxyFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpProxyFeatures.html">ffi::WpProxyFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#827">value</a>)
+        <a href="#789-812"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#827">value</a>)
     }
 }
 
@@ -1886,7 +1884,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_proxy_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_proxy_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_proxy_features_get_type.html">ffi::wp_proxy_features_get_type</a>()) }
                 }
             }
 
@@ -1909,7 +1907,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#858">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#858">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -1918,32 +1916,32 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#866">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#865">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#866">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#865">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#866">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#789-812">ProxyFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#789-812">ProxyFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#881">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#881">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpSessionItemFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/session/struct.SessionItemFeatures.html">SessionItemFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_SESSION_ITEM_FEATURE_ACTIVE"</span>)]
-        </span><span class="kw">const </span>ACTIVE = ffi::WP_SESSION_ITEM_FEATURE_ACTIVE <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ACTIVE = <a href="../../../wireplumber_sys/sys/constant.WP_SESSION_ITEM_FEATURE_ACTIVE.html">ffi::WP_SESSION_ITEM_FEATURE_ACTIVE</a> <span class="kw">as _</span>;
         <span class="attr">#[doc(alias = <span class="string">"WP_SESSION_ITEM_FEATURE_EXPORTED"</span>)]
-        </span><span class="kw">const </span>EXPORTED = ffi::WP_SESSION_ITEM_FEATURE_EXPORTED <span class="kw">as _</span>;
+        </span><span class="kw">const </span>EXPORTED = <a href="../../../wireplumber_sys/sys/constant.WP_SESSION_ITEM_FEATURE_EXPORTED.html">ffi::WP_SESSION_ITEM_FEATURE_EXPORTED</a> <span class="kw">as _</span>;
     }
 }
 
@@ -1961,7 +1959,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpSessionItemFeatures.html">ffi::WpSessionItemFeatures</a>&gt; <span class="kw">for </span><a href="#886-895">SessionItemFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpSessionItemFeatures.html">ffi::WpSessionItemFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#910">value</a>)
+        <a href="#886-895"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#910">value</a>)
     }
 }
 
@@ -1969,7 +1967,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_session_item_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_session_item_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_session_item_features_get_type.html">ffi::wp_session_item_features_get_type</a>()) }
                 }
             }
 
@@ -1992,7 +1990,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#941">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#941">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -2001,32 +1999,32 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#949">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#948">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#949">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#948">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#949">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#886-895">SessionItemFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#886-895">SessionItemFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#964">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#964">v</a>)
     }
 }
 
-<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags! </a>{
+<a class="macro" href="https://docs.rs/bitflags/1.3.2/bitflags/macro.bitflags.html">bitflags!</a> {
     <span class="attr">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = <span class="string">"WpSpaDeviceFeatures"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../wireplumber/local/struct.SpaDeviceFeatures.html">SpaDeviceFeatures</a>: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="attr">#[doc(alias = <span class="string">"WP_SPA_DEVICE_FEATURE_ENABLED"</span>)]
-        </span><span class="kw">const </span>ENABLED = ffi::WP_SPA_DEVICE_FEATURE_ENABLED <span class="kw">as _</span>;
+        </span><span class="kw">const </span>ENABLED = <a href="../../../wireplumber_sys/sys/constant.WP_SPA_DEVICE_FEATURE_ENABLED.html">ffi::WP_SPA_DEVICE_FEATURE_ENABLED</a> <span class="kw">as _</span>;
 
-        <span class="kw">const </span>PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.bits();
+        <span class="kw">const </span>PROXY_FEATURE_BOUND = ProxyFeatures::PROXY_FEATURE_BOUND.<a href="#789-812">bits</a>();
     }
 }
 
@@ -2044,7 +2042,7 @@
 </span><span class="kw">impl </span>FromGlib&lt;<a href="../../../wireplumber_sys/sys/type.WpSpaDeviceFeatures.html">ffi::WpSpaDeviceFeatures</a>&gt; <span class="kw">for </span><a href="#969-978">SpaDeviceFeatures</a> {
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_glib(value: <a href="../../../wireplumber_sys/sys/type.WpSpaDeviceFeatures.html">ffi::WpSpaDeviceFeatures</a>) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>::from_bits_truncate(<a href="#993">value</a>)
+        <a href="#969-978"><span class="self">Self</span>::from_bits_truncate</a>(<a href="#993">value</a>)
     }
 }
 
@@ -2052,7 +2050,7 @@
                 <span class="attr">#[inline]
     #[doc(alias = <span class="string">"wp_spa_device_features_get_type"</span>)]
    </span><span class="kw">fn </span>static_type() -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-                    <span class="kw">unsafe </span>{ from_glib(ffi::wp_spa_device_features_get_type()) }
+                    <span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="../../../wireplumber_sys/sys/fn.wp_spa_device_features_get_type.html">ffi::wp_spa_device_features_get_type</a>()) }
                 }
             }
 
@@ -2075,7 +2073,7 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">unsafe fn </span>from_value(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a>) -&gt; <span class="self">Self </span>{
-        from_glib(glib::gobject_ffi::g_value_get_flags(<a href="#1024">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib.html">from_glib</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_get_flags.html">glib::gobject_ffi::g_value_get_flags</a>(<a href="#1024">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>))
     }
 }
 
@@ -2084,21 +2082,21 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::for_value_type::&lt;<span class="self">Self</span>&gt;();
         <span class="kw">unsafe </span>{
-            glib::gobject_ffi::g_value_set_flags(<a href="#1032">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#1031">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_value_set_flags.html">glib::gobject_ffi::g_value_set_flags</a>(<a href="#1032">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtrMut.html#tymethod.to_glib_none_mut">to_glib_none_mut</a>().<span class="number">0</span>, <a class="self" href="#1031">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>());
         }
         <a href="#1032">value</a>
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>value_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">glib::Type</a> {
-        <span class="self">Self</span>::static_type()
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type"><span class="self">Self</span>::static_type</a>()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="#969-978">SpaDeviceFeatures</a>&gt; <span class="kw">for </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">glib::Value</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(v: <a href="#969-978">SpaDeviceFeatures</a>) -&gt; <span class="self">Self </span>{
-        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#1047">v</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html#tymethod.to_value">ToValue::to_value</a>(<span class="kw-2">&amp;</span><a href="#1047">v</a>)
     }
 }
 

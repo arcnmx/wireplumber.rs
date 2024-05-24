@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/util/iterator.rs`."><title>iterator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/util/iterator.rs`."><title>iterator.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b21aa549bf6d91ff.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="wireplumber" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (c987ad527 2024-05-01)" data-channel="nightly" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../wireplumber/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -227,37 +225,37 @@
 <span class="kw">impl </span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
 	<span class="attr">#[doc(alias = <span class="string">"wp_iterator_new"</span>)]
 	</span><span class="kw">pub unsafe fn </span>with_impl_raw(methods: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="../../../wireplumber_sys/sys/struct.WpIteratorMethods.html">ffi::WpIteratorMethods</a>, userdata_size: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <span class="self">Self </span>{
-		from_glib_full(ffi::wp_iterator_new(<a href="#9">methods</a>, <a href="#9">userdata_size</a>))
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_iterator_new.html">ffi::wp_iterator_new</a>(<a href="#9">methods</a>, <a href="#9">userdata_size</a>))
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_iterator_new_ptr_array"</span>)]
 	</span><span class="kw">pub unsafe fn </span>with_ptr_array(array: <span class="kw-2">*mut </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/struct.GPtrArray.html">GPtrArray</a>, type_: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">Type</a>) -&gt; <span class="self">Self </span>{
-		from_glib_full(ffi::wp_iterator_new_ptr_array(<a href="#14">array</a>, <a href="#14">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()))
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_iterator_new_ptr_array.html">ffi::wp_iterator_new_ptr_array</a>(<a href="#14">array</a>, <a href="#14">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()))
 	}
 
 	<span class="kw">pub fn </span>empty(type_: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">Type</a>) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span>empty = glib::ffi::g_ptr_array_new();
-			<span class="self">Self</span>::with_ptr_array(<a href="#20">empty</a>, <a href="#18">type_</a>)
+			<span class="kw">let </span>empty = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/fn.g_ptr_array_new.html">glib::ffi::g_ptr_array_new</a>();
+			<a href="#14-16"><span class="self">Self</span>::with_ptr_array</a>(<a href="#20">empty</a>, <a href="#18">type_</a>)
 		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_iterator_get_user_data"</span>)]
 	#[doc(alias = <span class="string">"get_user_data"</span>)]
 	</span><span class="kw">pub fn </span>user_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a> {
-		<span class="kw">unsafe </span>{ ffi::wp_iterator_get_user_data(<a class="self" href="#27">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_iterator_get_user_data.html">ffi::wp_iterator_get_user_data</a>(<a class="self" href="#27">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>) }
 	}
 }
 
 <span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt; FromIterator&lt;T&gt; <span class="kw">for </span><a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
 		<span class="kw">unsafe </span>{
-			<span class="kw">let </span>free = glib::gobject_ffi::g_object_unref <span class="kw">as </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>;
-			<span class="kw">let </span>array = glib::ffi::g_ptr_array_new_with_free_func(<a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">transmute</a>(<a href="#35">free</a>));
+			<span class="kw">let </span>free = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/gobject_sys/fn.g_object_unref.html">glib::gobject_ffi::g_object_unref</a> <span class="kw">as </span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>;
+			<span class="kw">let </span>array = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/fn.g_ptr_array_new_with_free_func.html">glib::ffi::g_ptr_array_new_with_free_func</a>(<a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">transmute</a>(<a href="#35">free</a>));
 			<span class="kw">for </span>item <span class="kw">in </span>iter {
 				glib::ffi::g_ptr_array_add(array, item.to_glib_full() <span class="kw">as </span>gpointer);
 			}
-			<span class="self">Self</span>::with_ptr_array(<a href="#36">array</a>, T::static_type())
+			<a href="#14-16"><span class="self">Self</span>::with_ptr_array</a>(<a href="#36">array</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type">T::static_type</a>())
 		}
 	}
 }
@@ -266,7 +264,7 @@
 	<span class="kw">type </span>Item = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">Value</a>;
 
 	<span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
-		<span class="self">Self</span>::next(<a class="self" href="#48">self</a>)
+		<a href="../auto/iterator.rs.html#19-25"><span class="self">Self</span>::next</a>(<a class="self" href="#48">self</a>)
 	}
 }
 
@@ -283,7 +281,7 @@
 	<span class="kw">pub fn </span>with_inner(iter: <a href="../auto/iterator.rs.html#6-15">WpIterator</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#63">iter</a>,
-			_data: PhantomData,
+			_data: <a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">PhantomData</a>,
 		}
 	}
 
@@ -292,14 +290,14 @@
 		// known affected methods: wp_new_files_iterator
 		</span><a class="self" href="#70">self</a>.iter.<a href="../auto/iterator.rs.html#28-32">reset</a>();
 
-		ValueIterator::with_inner(<a class="self" href="#70">self</a>.iter)
+		<a href="#137-142">ValueIterator::with_inner</a>(<a class="self" href="#70">self</a>.iter)
 	}
 
 	<span class="kw">pub fn </span>upcast&lt;U: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt;(<span class="self">self</span>) -&gt; IntoValueIterator&lt;U&gt;
 	<span class="kw">where
 		</span>T: IsA&lt;U&gt;,
 	{
-		IntoValueIterator::with_inner(<a class="self" href="#78">self</a>.iter)
+		<a href="#63-68">IntoValueIterator::with_inner</a>(<a class="self" href="#78">self</a>.iter)
 	}
 
 	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
@@ -328,14 +326,14 @@
 
 <span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span>IntoValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_inner(WpIterator::empty(T::static_type()))
+		<a href="#63-68"><span class="self">Self</span>::with_inner</a>(<a href="#18-23">WpIterator::empty</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type">T::static_type</a>()))
 	}
 }
 
 <span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span>IntoValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
 		<span class="kw">let </span>name = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"IntoValueIterator&lt;{}&gt;"</span>, T::static_type().name());
-		<a href="#116">f</a>.debug_tuple(<span class="kw-2">&amp;</span><a href="#117">name</a>).field(<span class="kw-2">&amp;</span><a class="self" href="#116">self</a>.iter).finish()
+		<a href="#116">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.debug_tuple">debug_tuple</a>(<span class="kw-2">&amp;</span><a href="#117">name</a>).<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugTuple.html#method.field">field</a>(<span class="kw-2">&amp;</span><a class="self" href="#116">self</a>.iter).<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugTuple.html#method.finish">finish</a>()
 	}
 }
 
@@ -351,13 +349,13 @@
 	</span><span class="kw">where
 		</span><span class="self">Self</span>: FromIterator&lt;I::Item&gt;,
 	{
-		<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html">FromIterator::from_iter</a>(<a href="#130">iter</a>)
+		<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html#tymethod.from_iter">FromIterator::from_iter</a>(<a href="#130">iter</a>)
 	}
 
 	<span class="kw">pub fn </span>with_inner(iter: <a href="../auto/iterator.rs.html#6-15">WpIterator</a>) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			<a href="#137">iter</a>,
-			_data: PhantomData,
+			_data: <a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">PhantomData</a>,
 		}
 	}
 
@@ -369,7 +367,7 @@
 	<span class="kw">where
 		</span>T: IsA&lt;U&gt;,
 	{
-		ValueIterator::with_inner(<a class="self" href="#148">self</a>.iter)
+		<a href="#137-142">ValueIterator::with_inner</a>(<a class="self" href="#148">self</a>.iter)
 	}
 
 	<span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <a href="../auto/iterator.rs.html#6-15">WpIterator</a> {
@@ -383,27 +381,27 @@
 
 <span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_inner(WpIterator::empty(T::static_type()))
+		<a href="#137-142"><span class="self">Self</span>::with_inner</a>(<a href="#18-23">WpIterator::empty</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html#tymethod.static_type">T::static_type</a>()))
 	}
 }
 
 <span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
 		<span class="kw">let </span>name = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.format.html">format!</a>(<span class="string">"ValueIterator&lt;{}&gt;"</span>, T::static_type().name());
-		<a href="#171">f</a>.debug_tuple(<span class="kw-2">&amp;</span><a href="#172">name</a>).field(<span class="kw-2">&amp;</span><a class="self" href="#171">self</a>.iter).finish()
+		<a href="#171">f</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.debug_tuple">debug_tuple</a>(<span class="kw-2">&amp;</span><a href="#172">name</a>).<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugTuple.html#method.field">field</a>(<span class="kw-2">&amp;</span><a class="self" href="#171">self</a>.iter).<a href="https://doc.rust-lang.org/nightly/core/fmt/builders/struct.DebugTuple.html#method.finish">finish</a>()
 	}
 }
 
 <span class="kw">impl</span>&lt;T: <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>&gt; FromIterator&lt;T&gt; <span class="kw">for </span>ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = T&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::with_inner(<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html">FromIterator::from_iter</a>(<a href="#178">iter</a>))
+		<a href="#137-142"><span class="self">Self</span>::with_inner</a>(<a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html#tymethod.from_iter">FromIterator::from_iter</a>(<a href="#178">iter</a>))
 	}
 }
 
 <span class="kw">impl</span>&lt;T: <span class="kw">for</span>&lt;<span class="lifetime">'v</span>&gt; FromValue&lt;<span class="lifetime">'v</span>&gt;&gt; ValueIterator&lt;T&gt; {
 	<span class="kw">fn </span>with_next&lt;R, F: FnOnce(T) -&gt; R&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Option</span>&lt;R&gt; {
-		<span class="kw">let </span>value = <span class="self">self</span>.iter.next()<span class="question-mark">?</span>;
-		<span class="kw">let </span>value = <span class="kw">match </span><a href="#185">value</a>.get() {
+		<span class="kw">let </span>value = <a class="self" href="#184">self</a>.iter.<a href="../auto/iterator.rs.html#19-25">next</a>()<span class="question-mark">?</span>;
+		<span class="kw">let </span>value = <span class="kw">match </span><a href="#185">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html#method.get">get</a>() {
 			<span class="prelude-val">Ok</span>(value) =&gt; <a href="#187">value</a>,
 			<span class="prelude-val">Err</span>(e) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"iterator contained unexpected value type {e}"</span>),
 		};
