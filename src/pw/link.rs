@@ -105,13 +105,34 @@ impl<E> From<Result<LinkState, E>> for LinkState {
 	}
 }
 
-impl fmt::Display for Direction {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		let name = match self {
+impl Direction {
+	pub fn name(&self) -> &'static str {
+		match self {
 			Direction::Input => "input",
 			Direction::Output => "output",
 			Direction::__Unknown(direction) => panic!("unknown WP_DIRECTION {direction}"),
-		};
-		f.write_str(name)
+		}
+	}
+}
+
+impl fmt::Display for Direction {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		f.write_str(self.name())
+	}
+}
+
+impl FromStr for Direction {
+	type Err = Error;
+
+	fn from_str(s: &str) -> Result<Self, Self::Err> {
+		Ok(match s {
+			"input" => Direction::Input,
+			"output" => Direction::Output,
+			_ =>
+				return Err(Error::new(
+					LibraryErrorEnum::InvalidArgument,
+					&format!("unknown direction {s}"),
+				)),
+		})
 	}
 }
