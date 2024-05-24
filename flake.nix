@@ -24,7 +24,7 @@
     devShells = {
       plain = {
         mkShell, writeShellScriptBin, wpexec
-      , wireplumber, pipewire, glib
+      , wireplumber-0_4, pipewire, glib
       , pkg-config
       , wireplumber-gir, gir-files, gir-rs-0_18
       , enableRustdoc ? false
@@ -33,7 +33,7 @@
       }: mkShell {
         inherit rustTools;
         strictDeps = true;
-        buildInputs = [ wireplumber pipewire glib ];
+        buildInputs = [ wireplumber-0_4 pipewire glib ];
         nativeBuildInputs = [
           pkg-config
           gir-rs-0_18
@@ -79,7 +79,7 @@
     packages = {
       wpexec = {
         stdenv, rustPlatform, lib
-      , wireplumber, pipewire, glib
+      , wireplumber-0_4, pipewire, glib
       , pkg-config, libclang
       , buildType ? "release"
       , source
@@ -92,11 +92,11 @@
         src = source;
         inherit (self.lib.crate) cargoLock;
 
-        buildInputs = [ wireplumber pipewire glib ];
+        buildInputs = [ wireplumber-0_4 pipewire glib ];
         nativeBuildInputs = [ pkg-config ];
 
         cargoBuildFlags = "--workspace --bin wpexec";
-        buildFeatures = mapNullable singleton (self.lib.featureForVersion wireplumber.version);
+        buildFeatures = mapNullable singleton (self.lib.featureForVersion wireplumber-0_4.version);
 
         inherit buildType;
         doCheck = false;
@@ -134,9 +134,9 @@
         in if girIsBugged then "release" else "debug";
         doCheck = false;
       };
-      wireplumber-gir = { runCommand, runtimeShell, xmlstarlet, wireplumber }: runCommand "wireplumber-${wireplumber.version}.gir" {
-        girName = "share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber.version}.gir";
-        wireplumber = wireplumber.dev;
+      wireplumber-gir = { runCommand, runtimeShell, xmlstarlet, wireplumber-0_4 }: runCommand "wireplumber-${wireplumber-0_4.version}.gir" {
+        girName = "share/gir-1.0/Wp-${nixlib.versions.majorMinor wireplumber-0_4.version}.gir";
+        wireplumber = wireplumber-0_4.dev;
         nativeBuildInputs = [ xmlstarlet ];
       } ''
         mkdir -p $out/$(dirname $girName)
@@ -225,6 +225,17 @@
         src = source;
       };
     };
+    packages = {
+      wireplumber-0_4 = { wireplumber, lib }: let
+        drv = wireplumber.overrideAttrs (old: rec {
+          version = "0.4.17";
+          src = old.src.override {
+            rev = version;
+            hash = "sha256-vhpQT67+849WV1SFthQdUeFnYe/okudTQJoL3y+wXwI=";
+          };
+        });
+      in if nixlib.versionAtLeast wireplumber.version "0.5" then drv else wireplumber;
+    };
     legacyPackages = {
       source = { rust'builders }: rust'builders.wrapSource self.lib.crate.src;
       source-package = { rust'builders }: rust'builders.wrapSource self.lib.crate.pkgSrc;
@@ -261,7 +272,7 @@
 
       wpdev-commitlintrc = { writeText, nodePackages }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON
         (self.lib.commitlint.commitlintrc // {
-          extends = [ "${nodePackages."@commitlint/config-conventional"}/lib/node_modules/@commitlint/config-conventional/." ];
+          extends = [ "${nodePackages."@commitlint/config-conventional"}/lib/node_modules/@commitlint/config-conventional/lib/index.js" ];
         })
       );
       wpdev-commitlintrc-generate = { writeText }: writeText "wireplumber-rust.commitlintrc.json" (builtins.toJSON

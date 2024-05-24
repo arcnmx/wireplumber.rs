@@ -86,7 +86,7 @@ impl ObjectManager {
 	/// Note that the future does not take ownership over `self`, and will produce
 	/// an error in cases where there are no more references keeping it alive.
 	#[cfg(feature = "futures")]
-	#[cfg_attr(docsrs, doc(feature = "futures"))]
+	#[cfg_attr(docsrs, doc(cfg(feature = "futures")))]
 	pub fn installed_future(&self) -> impl Future<Output = Result<(), Error>> {
 		use crate::util::futures::signal_once;
 

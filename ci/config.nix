@@ -38,7 +38,7 @@ in {
       arc.enable = true;
     };
     channels = {
-      nixpkgs = mkIf (env.platform != "impure") "23.05";
+      nixpkgs = mkIf (env.platform != "impure") "23.11";
     };
     environment = {
       test = {
