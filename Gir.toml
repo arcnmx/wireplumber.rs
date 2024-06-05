@@ -5,7 +5,6 @@ target_path = "."
 min_cfg_version = "0.4"
 work_mode = "normal"
 split_build_rs = true
-generate_display_trait = false
 # trust_return_value_nullability = true # TODO: manually go through everything...
 single_version_file = "sys/generate/src/Gir.version"
 girs_directories = ["sys/generate/src", "gir-files"]
@@ -229,47 +228,38 @@ status = "generate"
 [[object]]
 name = "Wp.ConstraintVerb"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.ConstraintType"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.Direction"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.LibraryErrorEnum"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.NodeState"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.DBusState"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.LinkState"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.SiAdapterPortsState"
 status = "generate"
-generate_display_trait = true
 
 [[object]]
 name = "Wp.TransitionStep"
 status = "generate"
-generate_display_trait = true
 
 # flags
 
