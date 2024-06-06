@@ -113,6 +113,8 @@ impl Core {
 
 	#[cfg(feature = "futures")]
 	#[cfg_attr(docsrs, doc(cfg(feature = "futures")))]
+	#[doc(alias = "wp_core_connect")]
+	#[doc(alias = "connect")]
 	pub fn connect_future(&self) -> impl Future<Output = Result<(), Error>> {
 		use crate::util::futures::signal_once;
 
