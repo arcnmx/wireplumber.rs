@@ -69,6 +69,8 @@ pub mod dbus;
 pub mod error;
 pub mod local;
 pub mod log;
+#[cfg(feature = "lua")]
+#[cfg_attr(docsrs, doc(cfg(feature = "lua")))]
 pub mod lua;
 pub mod plugin;
 pub mod prelude;

@@ -1,7 +1,9 @@
 #[cfg(any(feature = "v0_4_2"))]
 use crate::plugin::LookupDirs;
+#[cfg(feature = "lua")]
+use crate::{lua::ToLuaTable, plugin::ComponentLoader};
 use {
-	crate::{lua::ToLuaTable, plugin::ComponentLoader, prelude::*, Core, InitFlags, Properties},
+	crate::{prelude::*, Core, InitFlags, Properties},
 	glib::{MainContext, MainLoop},
 	pipewire_sys::{pw_context, pw_core},
 };
@@ -99,6 +101,8 @@ impl Core {
 		unsafe { NonNull::new(ffi::wp_core_get_pw_context(self.to_glib_none().0)).expect("pw_context for WpCore") }
 	}
 
+	#[cfg(feature = "lua")]
+	#[cfg_attr(docsrs, doc(cfg(feature = "lua")))]
 	#[doc(alias = "wp_core_load_component")]
 	pub fn load_lua_script<A: ToLuaTable>(&self, script_path: &str, args: A) -> Result<(), Error> {
 		let args = args

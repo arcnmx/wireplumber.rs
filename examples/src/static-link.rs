@@ -7,6 +7,8 @@
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
+#[cfg(feature = "lua")]
+use wireplumber::lua::from_variant;
 use {
 	futures::{channel::mpsc, future, FutureExt, StreamExt},
 	glib::{prelude::*, Error, SourceId, Variant},
@@ -16,7 +18,6 @@ use {
 		core::ObjectFeatures,
 		error,
 		log::{info, warning},
-		lua::from_variant,
 		plugin::{self, AsyncPluginImpl, SimplePlugin, SimplePluginObject, SourceHandlesCell},
 		prelude::*,
 		pw::{self, Link, Node, Port, Properties, ProxyFeatures},
@@ -294,7 +295,7 @@ impl SimplePlugin for StaticLink {
 		self.args.set(args).unwrap();
 	}
 
-	#[cfg(feature = "serde")]
+	#[cfg(all(feature = "serde", feature = "lua"))]
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
 		args
 			.map(|args| from_variant(&args))
@@ -302,10 +303,10 @@ impl SimplePlugin for StaticLink {
 			.map_err(error::invalid_argument)
 	}
 
-	#[cfg(not(feature = "serde"))]
+	#[cfg(not(all(feature = "serde", feature = "lua")))]
 	fn decode_args(args: Option<Variant>) -> Result<Self::Args, Error> {
 		let args = args.map(|_args| {
-			warning!(domain: LOG_DOMAIN, "requires serde build feature");
+			warning!(domain: LOG_DOMAIN, "requires lua and serde build features");
 			Default::default()
 		});
 		Ok(args.unwrap_or_default())

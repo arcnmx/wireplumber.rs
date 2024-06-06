@@ -388,16 +388,20 @@ impl ConstraintType {
 
 #[cfg(feature = "serde")]
 mod impl_serde {
+	#[cfg(feature = "lua")]
+	use crate::lua::{LuaError, LuaVariant};
+	#[cfg(feature = "v0_4_8")]
+	use crate::spa::json::{BuildError, ParseError, SpaJson};
 	use {
-		super::{Constraint, ConstraintType, ConstraintVerb},
-		crate::lua::{LuaError, LuaVariant},
-		glib::variant::{ToVariant, Variant},
+		crate::{
+			prelude::*,
+			registry::{Constraint, ConstraintType, ConstraintVerb},
+		},
 		serde::{
 			de::{self, Error as _, MapAccess, SeqAccess, Unexpected, Visitor},
 			ser::SerializeStruct,
 			Deserialize, Deserializer, Serialize, Serializer,
 		},
-		std::{borrow::Cow, fmt, str::FromStr},
 	};
 
 	impl<'de> Deserialize<'de> for ConstraintVerb {
@@ -431,15 +435,22 @@ mod impl_serde {
 			state.serialize_field("type", &self.type_)?;
 			state.serialize_field("subject", &self.subject)?;
 			state.serialize_field("verb", &self.verb)?;
-			state.serialize_field(
-				"value",
-				&self
-					.value
-					.as_ref()
-					.map(LuaVariant::convert_from)
-					.transpose()
-					.map_err(LuaError::serde_error_ser)?,
-			)?;
+			#[allow(unreachable_patterns)]
+			match &self.value {
+				None => state.serialize_field("value", &None::<()>),
+				#[cfg(feature = "lua")]
+				Some(value) => state.serialize_field(
+					"value",
+					&Some(LuaVariant::convert_from(value).map_err(LuaError::serde_error_ser)?),
+				),
+				#[cfg(feature = "v0_4_8")]
+				Some(value) => state.serialize_field(
+					"value",
+					&Some(SpaJson::try_from_variant(value).map_err(BuildError::into_ser_error)?),
+				),
+				#[cfg(not(any(feature = "lua", feature = "v0_4_8")))]
+				Some(..) => panic!("Constraint value serialization requires the lua or v0_4_8 build feature"),
+			}?;
 			state.end()
 		}
 	}
@@ -502,34 +513,71 @@ mod impl_serde {
 					let verb = seq.next_element()?
 						.ok_or_else(|| V::Error::invalid_length(len, &self))?; len += 1;
 
+					#[allow(unreachable_patterns)]
 					let value = match verb {
 						ConstraintVerb::__Unknown(v) => return Err(V::Error::invalid_value(Unexpected::Signed(v.into()), &"constraint verb")),
 						ConstraintVerb::IsPresent | ConstraintVerb::IsAbsent => None,
-						ConstraintVerb::Equals | ConstraintVerb::NotEquals => Some(
-							seq.next_element::<LuaVariant>()?
-								.ok_or_else(|| V::Error::invalid_length(len, &"constraint value"))?
-								.into()
-						),
+						#[cfg(any(feature = "lua", feature = "v0_4_8"))]
+						ConstraintVerb::Equals | ConstraintVerb::NotEquals => Some({
+							let value = match () {
+								#[cfg(feature = "lua")]
+								() => seq.next_element::<LuaVariant>()?
+									.map(Into::into),
+								#[cfg(feature = "v0_4_8")]
+								() => seq.next_element::<SpaJson>()?
+									.map(|v| v.parse_variant()).transpose().map_err(ParseError::into_serde_error)?,
+							};
+							value.ok_or_else(|| V::Error::invalid_length(len, &"constraint value"))?
+						}),
 						ConstraintVerb::Matches => Some(
 							seq.next_element::<&str>()?
 								.ok_or_else(|| V::Error::invalid_length(len, &"constraint match pattern"))?
 								.to_variant()
 						),
-						ConstraintVerb::InRange => Some(Variant::tuple_from_iter([
-								seq.next_element::<LuaVariant>()?
-									.ok_or_else(|| V::Error::invalid_length(len, &"constraint range min"))?
-									.into_variant(),
-								seq.next_element::<LuaVariant>()?
-									.ok_or_else(|| V::Error::invalid_length(len + 1, &"constraint range max"))?
-									.into_variant(),
-						])),
+						#[cfg(any(feature = "lua", feature = "v0_4_8"))]
+						ConstraintVerb::InRange => Some({
+							let (min, max) = match () {
+								#[cfg(feature = "lua")]
+								() => (
+									seq.next_element::<LuaVariant>()?
+										.map(LuaVariant::into_variant),
+									seq.next_element::<LuaVariant>()?
+										.map(LuaVariant::into_variant),
+								),
+								#[cfg(feature = "v0_4_8")]
+								() => (
+									seq.next_element::<SpaJson>()?
+										.as_ref().map(SpaJson::parse_variant)
+										.transpose().map_err(ParseError::into_serde_error)?,
+									seq.next_element::<SpaJson>()?
+										.as_ref().map(SpaJson::parse_variant)
+										.transpose().map_err(ParseError::into_serde_error)?,
+								),
+							};
+							Variant::tuple_from_iter([
+								min
+									.ok_or_else(|| V::Error::invalid_length(len, &"constraint range min"))?,
+								max
+									.ok_or_else(|| V::Error::invalid_length(len + 1, &"constraint range max"))?,
+							])
+						}),
+						#[cfg(any(feature = "lua", feature = "v0_4_8"))]
 						ConstraintVerb::InList => {
-							let mut values: Vec<glib::Variant> = Vec::with_capacity(seq.size_hint().unwrap_or(0));
-							while let Some(value) = seq.next_element::<LuaVariant>()? {
-								values.push(value.into());
+							let mut values: Vec<Variant> = Vec::with_capacity(seq.size_hint().unwrap_or(0));
+							match () {
+								#[cfg(feature = "lua")]
+								() => while let Some(value) = seq.next_element::<LuaVariant>()? {
+									values.push(value.into());
+								},
+								#[cfg(feature = "v0_4_8")]
+								() => while let Some(value) = seq.next_element::<SpaJson>()? {
+									values.push(value.parse_variant().map_err(ParseError::into_serde_error)?);
+								},
 							}
-							Some(glib::Variant::tuple_from_iter(values))
+							Some(Variant::tuple_from_iter(values))
 						},
+						#[cfg(not(any(feature = "lua", feature = "v0_4_8")))]
+						verb => panic!("{verb:?} serialization requires the lua or v0_4_8 build feature"),
 					};
 
 					Ok(Constraint {
@@ -544,8 +592,9 @@ mod impl_serde {
 					let mut type_ = None;
 					let mut subject = None;
 					let mut verb = None;
-					let mut value = None::<Option<LuaVariant>>;
+					let mut value = None::<Option<Variant>>;
 					while let Some(key) = map.next_key()? {
+						#[allow(unreachable_patterns)]
 						match key {
 							Field::Type => {
 								if type_.is_some() {
@@ -569,7 +618,18 @@ mod impl_serde {
 								if value.is_some() {
 									return Err(V::Error::duplicate_field("value"))
 								}
-								value = Some(map.next_value()?);
+								value = Some(match () {
+									#[cfg(feature = "lua")]
+									() => map.next_value::<Option<LuaVariant>>()?.map(Into::into),
+									#[cfg(feature = "v0_4_8")]
+									() => map.next_value::<Option<SpaJson>>()?.map(|v| v.parse_variant())
+										.transpose().map_err(ParseError::into_serde_error)?,
+									#[cfg(not(any(feature = "lua", feature = "v0_4_8")))]
+									() => match map.next_value::<Option<de::IgnoredAny>>() {
+										None => None,
+										Some(..) => panic!("Constraint value serialization requires the lua or v0_4_8 build feature"),
+									},
+								});
 							},
 						}
 					}

@@ -5,15 +5,17 @@
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
+#[cfg(feature = "lua")]
+use wireplumber::lua::LuaVariant;
 #[cfg(feature = "spa-json")]
 use wireplumber::spa::json::SpaJson;
 use {
 	anyhow::{format_err, Context, Result},
 	clap::{Parser, ValueEnum},
+	glib::Variant,
 	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
 	wireplumber::{
 		log::{info, warning},
-		lua::LuaVariant,
 		plugin::*,
 		prelude::*,
 		pw::{self, Properties},
@@ -41,16 +43,22 @@ enum ModuleType {
 	doc = "Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)"
 )]
 #[derive(Parser, Debug)]
-#[clap(version)]
+#[clap(version, disable_version_flag(true))]
 struct Args {
 	#[clap(value_enum, short = 't', long = "type", default_value = "lua")]
 	module_type: ModuleType,
 
-	/// Arguments to pass to the loaded module
+	/// JSON arguments to pass to the loaded module
 	///
 	/// Lua scripts only support arrays and dictionary maps.
 	#[clap(short = 'J', long = "json")]
 	json_arg: Option<String>,
+
+	/// GLIB Variant argument to pass to the loaded module
+	///
+	/// https://docs.gtk.org/glib/gvariant-text-format.html
+	#[clap(short = 'V', long = "variant")]
+	variant_arg: Option<String>,
 
 	/// Associated plugins to load, provided by the module
 	#[clap(short, long = "plugin")]
@@ -80,24 +88,25 @@ async fn main_async(core: &Core, args: &Args) -> Result<()> {
 	}
 	.unwrap_or(path.into());
 
-	let variant_args = args.variant()?;
 	if let Some(module) = args.module_type.loader_module() {
 		core
 			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, None)
 			.with_context(|| format!("failed to load the {:?} scripting module", args.module_type))?;
 	}
-	if args.module_type.is_lua() {
-		core
-			.load_lua_script(&path, variant_args)
-			.context("failed to load the lua script")?;
-	} else {
-		core
-			.load_component(
-				&path,
-				args.module_type.loader_type(),
-				variant_args.as_ref().map(|v| v.as_variant()),
-			)
-			.with_context(|| format!("failed to load {path} as a {}", args.module_type.loader_type()))?;
+	match args.module_type.is_lua() {
+		#[cfg(feature = "lua")]
+		true => {
+			let variant_args = args.lua_variant()?;
+			core
+				.load_lua_script(&path, variant_args)
+				.context("failed to load the lua script")?;
+		},
+		_ => {
+			let variant_args = args.args()?;
+			core
+				.load_component(&path, args.module_type.loader_type(), variant_args.as_ref())
+				.with_context(|| format!("failed to load {path} as a {}", args.module_type.loader_type()))?;
+		},
 	}
 
 	core.connect_future().await?;
@@ -143,7 +152,11 @@ fn main() -> Result<()> {
 	}
 
 	// bail out early if invalid args are provided
-	let _ = args.variant()?;
+	let _ = match args.module_type.is_lua() {
+		#[cfg(feature = "lua")]
+		true => args.lua_variant().map(drop)?,
+		_ => args.args().map(drop)?,
+	};
 
 	// initialize the wireplumber and pipewire libraries
 	Core::init();
@@ -264,18 +277,39 @@ impl Args {
 		}
 	}
 
+	/// A JSON-like blob of data to pass as an argument to the script to be loaded
+	#[cfg(feature = "lua")]
+	fn lua_variant(&self) -> Result<Option<LuaVariant>> {
+		#[allow(unreachable_patterns)]
+		match (&self.variant_arg, &self.json_arg) {
+			(None, None) => Ok(None),
+			(Some(v), _) => Variant::parse(None, v)
+				.map_err(Into::into)
+				.and_then(|v| LuaVariant::convert_from(&v).map_err(Into::into))
+				.map(Some),
+			#[cfg(feature = "spa-json")]
+			(None, Some(json)) => SpaJson::deserialize_from_string(json).map_err(Into::into).map(Some),
+			#[cfg(feature = "serde_json")]
+			(None, Some(json)) => serde_json::from_str(json).map_err(Into::into).map(Some),
+			(None, Some(..)) => panic!("spa-json or serde_json feature required to parse JSON arguments"),
+		}
+	}
+
 	/// A JSON-like blob of data to pass as an argument to the script or module to be loaded
 	///
 	/// In practice this must be a dictionary or array because lua scripts can't work with other
 	/// types of data as the top-level container, but more specific types may be usable by other
 	/// modules. See [wireplumber::lua] for a more detailed explanation.
-	fn variant(&self) -> Result<Option<LuaVariant>> {
-		match self.json_arg {
-			None => Ok(None),
+	fn args(&self) -> Result<Option<Variant>> {
+		#[allow(unreachable_patterns)]
+		match (&self.variant_arg, &self.json_arg) {
+			(None, None) => Ok(None),
+			(Some(v), _) => Variant::parse(None, v).map_err(Into::into).map(Some),
+			#[cfg(feature = "lua")]
+			(None, Some(..)) => self.lua_variant().map(|v| v.map(|v| v.into())),
 			#[cfg(feature = "spa-json")]
-			Some(ref json) => SpaJson::deserialize_from_string(json).map_err(Into::into).map(Some),
-			#[cfg(all(feature = "serde_json", not(feature = "spa-json")))]
-			Some(ref json) => serde_json::from_str(json).map_err(Into::into).map(Some),
+			(None, Some(json)) => SpaJson::from_string(json).parse_variant().map_err(Into::into).map(Some),
+			(None, Some(..)) => panic!("spa-json or lua feature is required to convert JSON to Variant"),
 		}
 	}
 }

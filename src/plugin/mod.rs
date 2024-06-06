@@ -10,6 +10,7 @@
 //! ```
 //! use wireplumber::plugin::{Plugin, PluginFeatures};
 //!
+//! # #[cfg(feature = "lua")]
 //! # async fn load_lua(core: wireplumber::core::Core) -> wireplumber::Result<()> {
 //! core.load_component("libwireplumber-module-lua-scripting", "module", None)?;
 //! core.load_lua_script("create-item.lua", ())?;
