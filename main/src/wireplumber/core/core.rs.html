@@ -171,6 +171,8 @@
 <a href="#171" id="171">171</a>
 <a href="#172" id="172">172</a>
 <a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>))]
 </span><span class="kw">use </span><a href="../auto/flags.rs.html#453-468"><span class="kw">crate</span>::plugin::LookupDirs</a>;
 <span class="kw">use </span>{
@@ -286,18 +288,20 @@
 
 	<span class="attr">#[cfg(feature = <span class="string">"futures"</span>)]
 	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"futures"</span>)))]
+	#[doc(alias = <span class="string">"wp_core_connect"</span>)]
+	#[doc(alias = <span class="string">"connect"</span>)]
 	</span><span class="kw">pub fn </span>connect_future(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt;&gt; {
 		<span class="kw">use </span><a href="../util/futures.rs.html#44-48"><span class="kw">crate</span>::util::futures::signal_once</a>;
 
 		<span class="kw">let </span>connect = <a href="../util/futures.rs.html#44-48">signal_once</a>(<span class="kw">match </span>() {
 			<span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
-			</span>() =&gt; <a class="self" href="#116">self</a>.<a href="../../../glib_signal/trait.ObjectSignalExt.html#tymethod.signal_stream">signal_stream</a>(<span class="self">Self</span>::SIGNAL_CONNECTED),
+			</span>() =&gt; <a class="self" href="#118">self</a>.<a href="../../../glib_signal/trait.ObjectSignalExt.html#tymethod.signal_stream">signal_stream</a>(<span class="self">Self</span>::SIGNAL_CONNECTED),
 			<span class="attr">#[cfg(not(feature = <span class="string">"glib-signal"</span>))]
 			</span>() =&gt; |handler| <span class="self">self</span>.connect_connected(handler),
 		});
 
-		<span class="kw">let </span>res = <span class="kw">match </span><a class="self" href="#116">self</a>.<a href="../auto/core.rs.html#26-30">connect</a>() {
-			<span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#119">connect</a>),
+		<span class="kw">let </span>res = <span class="kw">match </span><a class="self" href="#118">self</a>.<a href="../auto/core.rs.html#26-30">connect</a>() {
+			<span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#121">connect</a>),
 			<span class="bool-val">false </span>=&gt; <span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 				<a href="../auto/enums.rs.html#442">LibraryErrorEnum::OperationFailed</a>,
 				<span class="string">"failed to connect to pipewire"</span>,
@@ -305,33 +309,33 @@
 		};
 
 		<span class="kw">async move </span>{
-			<span class="kw">match </span><a href="#126">res</a> {
-				<span class="prelude-val">Ok</span>(connect) =&gt; <a href="#136">connect</a>.<span class="kw">await</span>,
-				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<a href="#137">e</a>),
+			<span class="kw">match </span><a href="#128">res</a> {
+				<span class="prelude-val">Ok</span>(connect) =&gt; <a href="#138">connect</a>.<span class="kw">await</span>,
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<a href="#139">e</a>),
 			}
 		}
 	}
 
 	<span class="kw">pub fn </span>run&lt;F: FnOnce(<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html">MainLoop</a>, <a href="../auto/core.rs.html#8-15">Core</a>)&gt;(props: <span class="prelude-ty">Option</span>&lt;<a href="../auto/properties.rs.html#7-16">Properties</a>&gt;, setup: F) {
 		<span class="kw">let </span>mainloop = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.new">MainLoop::new</a>(<span class="prelude-val">None</span>, <span class="bool-val">false</span>);
-		<span class="kw">let </span>context = <a href="#143">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.context">context</a>();
-		<span class="kw">let </span>core = <a href="#144">context</a>
+		<span class="kw">let </span>context = <a href="#145">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.context">context</a>();
+		<span class="kw">let </span>core = <a href="#146">context</a>
 			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html#method.with_thread_default">with_thread_default</a>(|| {
-				<span class="kw">let </span>core = <a href="../auto/core.rs.html#19-23">Core::new</a>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><a href="#144">context</a>), <a href="#142">props</a>);
-				<span class="kw">let </span>_disconnect_handler = <a href="#147">core</a>.<a href="../auto/core.rs.html#278-288">connect_disconnected</a>({
-					<span class="kw">let </span>mainloop = <a href="#143">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
-					<span class="kw">move </span>|_core| <a href="#149">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
+				<span class="kw">let </span>core = <a href="../auto/core.rs.html#19-23">Core::new</a>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><a href="#146">context</a>), <a href="#144">props</a>);
+				<span class="kw">let </span>_disconnect_handler = <a href="#149">core</a>.<a href="../auto/core.rs.html#278-288">connect_disconnected</a>({
+					<span class="kw">let </span>mainloop = <a href="#145">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
+					<span class="kw">move </span>|_core| <a href="#151">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
 				});
 
-				<a href="#142">setup</a>(<span class="kw-2">&amp;</span><a href="#144">context</a>, <a href="#143">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>(), <a href="#147">core</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>());
+				<a href="#144">setup</a>(<span class="kw-2">&amp;</span><a href="#146">context</a>, <a href="#145">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>(), <a href="#149">core</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>());
 
-				<a href="#143">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.run">run</a>();
+				<a href="#145">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.run">run</a>();
 
-				<a href="#147">core</a>
+				<a href="#149">core</a>
 			})
 			.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>();
 
-		<a href="#145">core</a>.<a href="../auto/core.rs.html#33-37">disconnect</a>();
+		<a href="#147">core</a>.<a href="../auto/core.rs.html#33-37">disconnect</a>();
 	}
 }
 
