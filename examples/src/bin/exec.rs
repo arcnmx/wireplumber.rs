@@ -7,7 +7,7 @@
 
 use {
 	anyhow::{format_err, Context, Result},
-	clap::{ArgEnum, Parser},
+	clap::{Parser, ValueEnum},
 	std::{cell::RefCell, env, fs, path::Path, rc::Rc},
 	wireplumber::{
 		log::{info, warning},
@@ -22,7 +22,7 @@ use {
 const LOG_DOMAIN: &'static str = "wpexec.rs";
 
 /// The type of module to be loaded
-#[derive(ArgEnum, Copy, Clone, Debug)]
+#[derive(ValueEnum, Copy, Clone, Debug)]
 enum ModuleType {
 	/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
 	Lua,
@@ -41,7 +41,7 @@ enum ModuleType {
 #[derive(Parser, Debug)]
 #[clap(version)]
 struct Args {
-	#[clap(arg_enum, short = 't', long = "type", default_value = "lua")]
+	#[clap(value_enum, short = 't', long = "type", default_value = "lua")]
 	module_type: ModuleType,
 
 	/// Arguments to pass to the loaded module

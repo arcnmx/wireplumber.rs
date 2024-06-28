@@ -12,7 +12,7 @@ use {
 	serde::{Deserialize, Serialize},
 	std::{future::Future, iter, pin::Pin},
 	wireplumber::{
-		core::{Object, ObjectFeatures},
+		core::ObjectFeatures,
 		error,
 		log::{info, warning},
 		lua::from_variant,
