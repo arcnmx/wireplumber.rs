@@ -314,12 +314,12 @@
 
 </span><span class="kw">use </span>{
 	futures::{<a href="https://docs.rs/futures-channel/0.3.30/futures_channel/mpsc/index.html">channel::mpsc</a>, <a href="https://docs.rs/futures-util/0.3.30/futures_util/future/index.html">future</a>, <a href="https://docs.rs/futures-util/0.3.30/futures_util/future/future/trait.FutureExt.html">FutureExt</a>, <a href="https://docs.rs/futures-util/0.3.30/futures_util/stream/stream/trait.StreamExt.html">StreamExt</a>},
-	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/source/struct.SourceId.html">SourceId</a>, <a href="https://docs.rs/glib-macros/0.19.3/glib_macros/derive.Variant.html">Variant</a>},
+	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/source/struct.SourceId.html">SourceId</a>, <a href="https://docs.rs/glib-macros/0.19.9/glib_macros/derive.Variant.html">Variant</a>},
 	<a href="https://docs.rs/once_cell/1.19.0/once_cell/unsync/struct.OnceCell.html">once_cell::unsync::OnceCell</a>,
-	serde::{<a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Serialize.html">Serialize</a>},
+	serde::{<a href="https://docs.rs/serde_derive/1.0.203/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde_derive/1.0.203/serde_derive/derive.Serialize.html">Serialize</a>},
 	std::{<a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html">future::Future</a>, <a href="https://doc.rust-lang.org/nightly/core/iter/index.html">iter</a>, <a href="https://doc.rust-lang.org/nightly/core/pin/struct.Pin.html">pin::Pin</a>},
 	wireplumber::{
-		core::{<a href="../../wireplumber/auto/object/struct.Object.html">Object</a>, <a href="../../wireplumber/core/features/struct.ObjectFeatures.html">ObjectFeatures</a>},
+		<a href="../../wireplumber/core/features/struct.ObjectFeatures.html">core::ObjectFeatures</a>,
 		<a href="../../wireplumber/error/index.html">error</a>,
 		log::{<a href="../../wireplumber/macro.info.html">info</a>, <a href="../../wireplumber/macro.warning.html">warning</a>},
 		<a href="../../wireplumber/lua/deserializer/fn.from_variant.html">lua::from_variant</a>,

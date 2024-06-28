@@ -982,9 +982,9 @@
 		<span class="kw">crate</span>::lua::{<a href="../lua/error.rs.html#14-23">LuaError</a>, <a href="../lua/variant.rs.html#13-20">LuaVariant</a>},
 		glib::variant::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>},
 		serde::{
-			de::{<a class="self" href="https://docs.rs/serde/1.0.197/serde/de/index.html">self</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html">Error</a> <span class="kw">as _</span>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.MapAccess.html">MapAccess</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html">SeqAccess</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/enum.Unexpected.html">Unexpected</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html">Visitor</a>},
-			<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a>,
-			<a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html">Deserializer</a>, <a href="https://docs.rs/serde_derive/1.0.197/serde_derive/derive.Serialize.html">Serialize</a>, <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>,
+			de::{<a class="self" href="https://docs.rs/serde/1.0.203/serde/de/index.html">self</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html">Error</a> <span class="kw">as _</span>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.MapAccess.html">MapAccess</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html">SeqAccess</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/enum.Unexpected.html">Unexpected</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html">Visitor</a>},
+			<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.SerializeStruct.html">ser::SerializeStruct</a>,
+			<a href="https://docs.rs/serde_derive/1.0.203/serde_derive/derive.Deserialize.html">Deserialize</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html">Deserializer</a>, <a href="https://docs.rs/serde_derive/1.0.203/serde_derive/derive.Serialize.html">Serialize</a>, <a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serializer.html">Serializer</a>,
 		},
 		std::{<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">borrow::Cow</a>, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">str::FromStr</a>},
 	};
@@ -995,9 +995,9 @@
 		}
 	}
 
-	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
-		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-			<a class="self" href="#410">self</a>.<a href="#297-302">symbol</a>().<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html#tymethod.serialize">serialize</a>(<a href="#410">serializer</a>)
+	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#112-129">ConstraintVerb</a> {
+		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<a class="self" href="#410">self</a>.<a href="#297-302">symbol</a>().<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serialize.html#tymethod.serialize">serialize</a>(<a href="#410">serializer</a>)
 		}
 	}
 
@@ -1007,20 +1007,20 @@
 		}
 	}
 
-	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
-		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-			<a class="self" href="#422">self</a>.<a href="#378-386">name</a>().<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html#tymethod.serialize">serialize</a>(<a href="#422">serializer</a>)
+	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="../auto/enums.rs.html#10-21">ConstraintType</a> {
+		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<a class="self" href="#422">self</a>.<a href="#378-386">name</a>().<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serialize.html#tymethod.serialize">serialize</a>(<a href="#422">serializer</a>)
 		}
 	}
 
-	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="#131-136">Constraint</a> {
-		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
-			<span class="kw">let </span>compact = !<a href="#428">serializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html#tymethod.is_human_readable">is_human_readable</a>();
-			<span class="kw">let </span><span class="kw-2">mut </span>state = <a href="#428">serializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.Serializer.html#tymethod.serialize_struct">serialize_struct</a>(<span class="string">"Constraint"</span>, <span class="number">4</span>)<span class="question-mark">?</span>;
-			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(<span class="string">"type"</span>, <span class="kw-2">&amp;</span><a class="self" href="#428">self</a>.type_)<span class="question-mark">?</span>;
-			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(<span class="string">"subject"</span>, <span class="kw-2">&amp;</span><a class="self" href="#428">self</a>.subject)<span class="question-mark">?</span>;
-			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(<span class="string">"verb"</span>, <span class="kw-2">&amp;</span><a class="self" href="#428">self</a>.verb)<span class="question-mark">?</span>;
-			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(
+	<span class="kw">impl </span><a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serialize.html">Serialize</a> <span class="kw">for </span><a href="#131-136">Constraint</a> {
+		<span class="kw">fn </span>serialize&lt;S: <a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serializer.html">Serializer</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt; {
+			<span class="kw">let </span>compact = !<a href="#428">serializer</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serializer.html#tymethod.is_human_readable">is_human_readable</a>();
+			<span class="kw">let </span><span class="kw-2">mut </span>state = <a href="#428">serializer</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.Serializer.html#tymethod.serialize_struct">serialize_struct</a>(<span class="string">"Constraint"</span>, <span class="number">4</span>)<span class="question-mark">?</span>;
+			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(<span class="string">"type"</span>, <span class="kw-2">&amp;</span><a class="self" href="#428">self</a>.type_)<span class="question-mark">?</span>;
+			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(<span class="string">"subject"</span>, <span class="kw-2">&amp;</span><a class="self" href="#428">self</a>.subject)<span class="question-mark">?</span>;
+			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(<span class="string">"verb"</span>, <span class="kw-2">&amp;</span><a class="self" href="#428">self</a>.verb)<span class="question-mark">?</span>;
+			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.SerializeStruct.html#tymethod.serialize_field">serialize_field</a>(
 				<span class="string">"value"</span>,
 				<span class="kw-2">&amp;</span><span class="self"><a href="#428">self</a>
 					</span>.value
@@ -1029,7 +1029,7 @@
 					.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.transpose">transpose</a>()
 					.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(LuaError::serde_error_ser)<span class="question-mark">?</span>,
 			)<span class="question-mark">?</span>;
-			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.197/serde/ser/trait.SerializeStruct.html#tymethod.end">end</a>()
+			<a href="#430">state</a>.<a href="https://docs.rs/serde/1.0.203/serde/ser/trait.SerializeStruct.html#tymethod.end">end</a>()
 		}
 	}
 
@@ -1049,18 +1049,18 @@
 							<a href="#459">formatter</a>.<a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html#method.write_str">write_str</a>(<span class="string">"`type` or `subject` or `verb` or `value`"</span>)
 						}
 
-						<span class="kw">fn </span>visit_str&lt;E: <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#450">Field</a>, E&gt; {
+						<span class="kw">fn </span>visit_str&lt;E: <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html">de::Error</a>&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#450">Field</a>, E&gt; {
 							<span class="kw">match </span><a href="#463">value</a> {
 								<span class="string">"type" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#450">Field::Type</a>),
 								<span class="string">"subject" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#450">Field::Subject</a>),
 								<span class="string">"verb" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#450">Field::Verb</a>),
 								<span class="string">"value" </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#450">Field::Value</a>),
-								<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.unknown_field">E::unknown_field</a>(<a href="#463">value</a>, <a href="#585">FIELDS</a>)),
+								<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.unknown_field">E::unknown_field</a>(<a href="#463">value</a>, <a href="#585">FIELDS</a>)),
 							}
 						}
 					}
 
-					<a href="#453">deserializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_identifier">deserialize_identifier</a>(<a href="#454">FieldVisitor</a>)
+					<a href="#453">deserializer</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_identifier">deserialize_identifier</a>(<a href="#454">FieldVisitor</a>)
 				}
 			}
 
@@ -1076,44 +1076,44 @@
 				<span class="kw">fn </span>visit_seq&lt;V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>seq: V) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, V::Error&gt; {
 					<span class="kw">let </span><span class="kw-2">mut </span>len = <span class="number">0</span>;
 
-					<span class="kw">let </span><span class="kw-2">mut </span>subject: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a> = <a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>()<span class="question-mark">?
-						</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><a class="self" href="#487">self</a>))<span class="question-mark">?</span>; <a href="#488">len</a> += <span class="number">1</span>;
+					<span class="kw">let </span><span class="kw-2">mut </span>subject: <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a> = <a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>()<span class="question-mark">?
+						</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><a class="self" href="#487">self</a>))<span class="question-mark">?</span>; <a href="#488">len</a> += <span class="number">1</span>;
 
 					<span class="kw">let </span>type_ = <span class="kw">match </span><a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html#tymethod.from_str">ConstraintType::from_str</a>(<span class="kw-2">&amp;</span><a href="#490">subject</a>) {
 						<span class="prelude-val">Ok</span>(type_) =&gt; {
-							<a href="#490">subject</a> = <a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>()<span class="question-mark">?
-								</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><a class="self" href="#487">self</a>))<span class="question-mark">?</span>; <a href="#488">len</a> += <span class="number">1</span>;
+							<a href="#490">subject</a> = <a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>()<span class="question-mark">?
+								</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><a class="self" href="#487">self</a>))<span class="question-mark">?</span>; <a href="#488">len</a> += <span class="number">1</span>;
 							<a href="#494">type_</a>
 						},
 						<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">ConstraintType::default</a>(),
 					};
 
-					<span class="kw">let </span>verb = <a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>()<span class="question-mark">?
-						</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><a class="self" href="#487">self</a>))<span class="question-mark">?</span>; <a href="#488">len</a> += <span class="number">1</span>;
+					<span class="kw">let </span>verb = <a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>()<span class="question-mark">?
+						</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><a class="self" href="#487">self</a>))<span class="question-mark">?</span>; <a href="#488">len</a> += <span class="number">1</span>;
 
 					<span class="kw">let </span>value = <span class="kw">match </span><a href="#502">verb</a> {
-						<a href="../auto/enums.rs.html#128">ConstraintVerb::__Unknown</a>(v) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_value">V::Error::invalid_value</a>(<a href="https://docs.rs/serde/1.0.197/serde/de/enum.Unexpected.html#variant.Signed">Unexpected::Signed</a>(<a href="#506">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()), <span class="kw-2">&amp;</span><span class="string">"constraint verb"</span>)),
+						<a href="../auto/enums.rs.html#128">ConstraintVerb::__Unknown</a>(v) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_value">V::Error::invalid_value</a>(<a href="https://docs.rs/serde/1.0.203/serde/de/enum.Unexpected.html#variant.Signed">Unexpected::Signed</a>(<a href="#506">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()), <span class="kw-2">&amp;</span><span class="string">"constraint verb"</span>)),
 						<a href="../auto/enums.rs.html#124">ConstraintVerb::IsPresent</a> | <a href="../auto/enums.rs.html#126">ConstraintVerb::IsAbsent</a> =&gt; <span class="prelude-val">None</span>,
 						<a href="../auto/enums.rs.html#114">ConstraintVerb::Equals</a> | <a href="../auto/enums.rs.html#116">ConstraintVerb::NotEquals</a> =&gt; <span class="prelude-val">Some</span>(
-							<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<a href="../lua/variant.rs.html#13-20">LuaVariant</a>&gt;()<span class="question-mark">?
-								</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><span class="string">"constraint value"</span>))<span class="question-mark">?
+							<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<a href="../lua/variant.rs.html#13-20">LuaVariant</a>&gt;()<span class="question-mark">?
+								</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><span class="string">"constraint value"</span>))<span class="question-mark">?
 								</span>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>()
 						),
 						<a href="../auto/enums.rs.html#122">ConstraintVerb::Matches</a> =&gt; <span class="prelude-val">Some</span>(
-							<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;()<span class="question-mark">?
-								</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><span class="string">"constraint match pattern"</span>))<span class="question-mark">?
+							<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;()<span class="question-mark">?
+								</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><span class="string">"constraint match pattern"</span>))<span class="question-mark">?
 								</span>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html#tymethod.to_variant">to_variant</a>()
 						),
 						<a href="../auto/enums.rs.html#120">ConstraintVerb::InRange</a> =&gt; <span class="prelude-val">Some</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.tuple_from_iter">Variant::tuple_from_iter</a>([
-								<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<a href="../lua/variant.rs.html#13-20">LuaVariant</a>&gt;()<span class="question-mark">?
-									</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><span class="string">"constraint range min"</span>))<span class="question-mark">?
+								<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<a href="../lua/variant.rs.html#13-20">LuaVariant</a>&gt;()<span class="question-mark">?
+									</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a>, <span class="kw-2">&amp;</span><span class="string">"constraint range min"</span>))<span class="question-mark">?
 									</span>.<a href="../lua/variant.rs.html#13-20">into_variant</a>(),
-								<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<a href="../lua/variant.rs.html#13-20">LuaVariant</a>&gt;()<span class="question-mark">?
-									</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a> + <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">"constraint range max"</span>))<span class="question-mark">?
+								<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.next_element">next_element</a>::&lt;<a href="../lua/variant.rs.html#13-20">LuaVariant</a>&gt;()<span class="question-mark">?
+									</span>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.invalid_length">V::Error::invalid_length</a>(<a href="#488">len</a> + <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="string">"constraint range max"</span>))<span class="question-mark">?
 									</span>.<a href="../lua/variant.rs.html#13-20">into_variant</a>(),
 						])),
 						<a href="../auto/enums.rs.html#118">ConstraintVerb::InList</a> =&gt; {
-							<span class="kw">let </span><span class="kw-2">mut </span>values: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">glib::Variant</a>&gt; = <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.with_capacity">Vec::with_capacity</a>(<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.SeqAccess.html#tymethod.size_hint">size_hint</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="number">0</span>));
+							<span class="kw">let </span><span class="kw-2">mut </span>values: Vec&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">glib::Variant</a>&gt; = <a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.with_capacity">Vec::with_capacity</a>(<a href="#487">seq</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.SeqAccess.html#tymethod.size_hint">size_hint</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="number">0</span>));
 							<span class="kw">while let </span><span class="prelude-val">Some</span>(value) = seq.next_element::&lt;LuaVariant&gt;()<span class="question-mark">? </span>{
 								values.push(value.into());
 							}
@@ -1163,16 +1163,16 @@
 						}
 					}
 					<span class="prelude-val">Ok</span>(<a href="#131-136">Constraint</a> {
-						type_: <a href="#544">type_</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.missing_field">V::Error::missing_field</a>(<span class="string">"type"</span>))<span class="question-mark">?</span>,
-						subject: <a href="#545">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.missing_field">V::Error::missing_field</a>(<span class="string">"subject"</span>))<span class="question-mark">?</span>,
-						verb: <a href="#546">verb</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Error.html#tymethod.missing_field">V::Error::missing_field</a>(<span class="string">"verb"</span>))<span class="question-mark">?</span>,
+						type_: <a href="#544">type_</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.missing_field">V::Error::missing_field</a>(<span class="string">"type"</span>))<span class="question-mark">?</span>,
+						subject: <a href="#545">subject</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.missing_field">V::Error::missing_field</a>(<span class="string">"subject"</span>))<span class="question-mark">?</span>,
+						verb: <a href="#546">verb</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Error.html#tymethod.missing_field">V::Error::missing_field</a>(<span class="string">"verb"</span>))<span class="question-mark">?</span>,
 						value: <a href="#547">value</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or_default">unwrap_or_default</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>),
 					})
 				}
 			}
 
 			<span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>] = <span class="kw-2">&amp;</span>[<span class="string">"type"</span>, <span class="string">"subject"</span>, <span class="string">"verb"</span>, <span class="string">"value"</span>];
-			<a href="#449">deserializer</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_struct">deserialize_struct</a>(<span class="string">"Constraint"</span>, <a href="#585">FIELDS</a>, <a href="#478">ConstraintVisitor</a>)
+			<a href="#449">deserializer</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_struct">deserialize_struct</a>(<span class="string">"Constraint"</span>, <a href="#585">FIELDS</a>, <a href="#478">ConstraintVisitor</a>)
 		}
 	}
 }

@@ -282,8 +282,8 @@
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
 </span><span class="kw">use </span>{
-	anyhow::{<a href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err</a>, <a href="https://docs.rs/anyhow/1.0.81/anyhow/trait.Context.html">Context</a>, <span class="prelude-ty">Result</span>},
-	clap::{<a href="https://docs.rs/clap_derive/3.2.25/clap_derive/derive.ValueEnum.html">ArgEnum</a>, <a href="https://docs.rs/clap_derive/3.2.25/clap_derive/derive.Parser.html">Parser</a>},
+	anyhow::{<a href="https://docs.rs/anyhow/1.0.85/anyhow/macro.anyhow.html">format_err</a>, <a href="https://docs.rs/anyhow/1.0.85/anyhow/trait.Context.html">Context</a>, <span class="prelude-ty">Result</span>},
+	clap::{<a href="https://docs.rs/clap_derive/4.5.8/clap_derive/derive.Parser.html">Parser</a>, <a href="https://docs.rs/clap_derive/4.5.8/clap_derive/derive.ValueEnum.html">ValueEnum</a>},
 	std::{<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html">cell::RefCell</a>, <a href="https://doc.rust-lang.org/nightly/core/macro.env.html">env</a>, <a href="https://doc.rust-lang.org/nightly/std/fs/index.html">fs</a>, <a href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html">path::Path</a>, <a href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html">rc::Rc</a>},
 	wireplumber::{
 		log::{<a href="../../wireplumber/macro.info.html">info</a>, <a href="../../wireplumber/macro.warning.html">warning</a>},
@@ -298,7 +298,7 @@
 </span><span class="kw">const </span><a href="../../wpexec/constant.LOG_DOMAIN.html">LOG_DOMAIN</a>: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> = <span class="string">"wpexec.rs"</span>;
 
 <span class="doccomment">/// The type of module to be loaded
-</span><span class="attr">#[derive(ArgEnum, Copy, Clone, Debug)]
+</span><span class="attr">#[derive(ValueEnum, Copy, Clone, Debug)]
 </span><span class="kw">enum </span><a href="#26-35">ModuleType</a> {
 	<span class="doccomment">/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
 	</span>Lua,
@@ -317,7 +317,7 @@
 #[derive(Parser, Debug)]
 #[clap(version)]
 </span><span class="kw">struct </span><a href="#43-59">Args</a> {
-	<span class="attr">#[clap(arg_enum, short = <span class="string">'t'</span>, long = <span class="string">"type"</span>, default_value = <span class="string">"lua"</span>)]
+	<span class="attr">#[clap(value_enum, short = <span class="string">'t'</span>, long = <span class="string">"type"</span>, default_value = <span class="string">"lua"</span>)]
 	</span>module_type: <a href="#26-35">ModuleType</a>,
 
 	<span class="doccomment">/// Arguments to pass to the loaded module
@@ -410,10 +410,10 @@
 	</span><a href="../../wireplumber/log/struct.Log.html#method.set_default_level">wireplumber::Log::set_default_level</a>(<span class="string">"3"</span>);
 
 	<span class="comment">// let clap build a CLI from argv for us
-	</span><span class="kw">let </span>args = <a href="https://docs.rs/clap/3.2.25/clap/derive/trait.Parser.html#tymethod.parse">Args::parse</a>();
+	</span><span class="kw">let </span>args = <a href="https://docs.rs/clap_builder/4.5.8/clap_builder/derive/trait.Parser.html#tymethod.parse">Args::parse</a>();
 
 	<span class="kw">if </span>args.module().is_none() {
-		<span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"no default module available for {:?}"</span>, args.module_type))
+		<span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.85/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"no default module available for {:?}"</span>, args.module_type))
 	}
 
 	<span class="comment">// bail out early if invalid args are provided
@@ -454,7 +454,7 @@
 	<span class="kw">match </span><a href="#177">main_res</a> {
 		<span class="prelude-val">Some</span>(res) =&gt; <a href="#179">res</a>,
 		<span class="comment">// we didn't get far enough to store the result; likely it timed out or something
-		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.81/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"could not connect to pipewire"</span>)),
+		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.85/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"could not connect to pipewire"</span>)),
 	}
 }
 
@@ -546,7 +546,7 @@
 	</span><span class="kw">fn </span>variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../wireplumber/lua/variant/struct.LuaVariant.html">LuaVariant</a>&gt;&gt; {
 		<span class="kw">match </span><a class="self" href="#270">self</a>.json_arg {
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; <a href="https://docs.rs/serde_json/1.0.114/serde_json/de/fn.from_str.html">serde_json::from_str</a>(<a href="#273">json</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; <a href="https://docs.rs/serde_json/1.0.118/serde_json/de/fn.from_str.html">serde_json::from_str</a>(<a href="#273">json</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
 		}
 	}
 }

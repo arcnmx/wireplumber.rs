@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"wpexec":[["impl <a class=\"trait\" href=\"https://docs.rs/clap_builder/4.5.8/clap_builder/derive/trait.ValueEnum.html\" title=\"trait clap_builder::derive::ValueEnum\">ValueEnum</a> for <a class=\"enum\" href=\"wpexec/enum.ModuleType.html\" title=\"enum wpexec::ModuleType\">ModuleType</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

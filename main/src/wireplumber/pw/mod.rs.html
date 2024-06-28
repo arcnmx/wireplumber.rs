@@ -71,6 +71,8 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! PipeWire proxy objects
 //!
 //! All types derived from [Proxy] describe an [object](PipewireObject) on the remote service, with
@@ -100,9 +102,11 @@
 <span class="attr">#[cfg(feature = <span class="string">"v0_4_2"</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v0_4_2"</span>)))]
 </span><span class="kw">pub use </span><a href="../auto/properties_item.rs.html#8-17"><span class="kw">crate</span>::auto::PropertiesItem</a>;
+<span class="attr">#[cfg(feature = <span class="string">"libspa"</span>)]
+</span><span class="kw">use </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/utils/direction/struct.Direction.html">libspa::utils::Direction</a> <span class="kw">as </span>SpaDirection;
 <span class="kw">pub use </span>{
 	<span class="self">self</span>::{
-		<a href="#44">keys</a>::<span class="kw-2">*</span>,
+		<a href="#46">keys</a>::<span class="kw-2">*</span>,
 		<a href="link.rs.html#58-60">link::LinkTarget</a>,
 		proxy::{<a href="proxy.rs.html#40-66">PipewireObjectExt2</a>, <a href="proxy.rs.html#19-28">ProxyExt2</a>},
 	},
@@ -123,24 +127,24 @@
 
 <span class="attr">#[cfg(feature = <span class="string">"libspa"</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"libspa"</span>)))]
-</span><span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#342-349">Direction</a>&gt; <span class="kw">for </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html">libspa::Direction</a> {
+</span><span class="kw">impl </span>From&lt;<a href="../auto/enums.rs.html#342-349">Direction</a>&gt; <span class="kw">for </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/utils/direction/struct.Direction.html">SpaDirection</a> {
 	<span class="kw">fn </span>from(dir: <a href="../auto/enums.rs.html#342-349">Direction</a>) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span><a href="#54">dir</a> {
+		<span class="kw">match </span><a href="#56">dir</a> {
 			<a href="../auto/enums.rs.html#344">Direction::Input</a> =&gt; <span class="self">Self</span>::Input,
 			<a href="../auto/enums.rs.html#346">Direction::Output</a> =&gt; <span class="self">Self</span>::Output,
-			<a href="../auto/enums.rs.html#348">Direction::__Unknown</a>(v) =&gt; <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html#method.from_raw"><span class="self">Self</span>::from_raw</a>(<a href="#58">v</a> <span class="kw">as </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/type.spa_direction.html">libspa_sys::spa_direction</a>),
+			<a href="../auto/enums.rs.html#348">Direction::__Unknown</a>(v) =&gt; <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/utils/direction/struct.Direction.html#method.from_raw"><span class="self">Self</span>::from_raw</a>(<a href="#60">v</a> <span class="kw">as </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa_sys/bindings/type.spa_direction.html">libspa_sys::spa_direction</a>),
 		}
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">"libspa"</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"libspa"</span>)))]
-</span><span class="kw">impl </span>From&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html">libspa::Direction</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#342-349">Direction</a> {
-	<span class="kw">fn </span>from(dir: <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html">libspa::Direction</a>) -&gt; <span class="self">Self </span>{
-		<span class="kw">match </span><a href="#66">dir</a> {
-			libspa::Direction::Input =&gt; <span class="self">Self</span>::Input,
-			libspa::Direction::Output =&gt; <span class="self">Self</span>::Output,
-			dir =&gt; <a href="../auto/enums.rs.html#348"><span class="self">Self</span>::__Unknown</a>(<a href="#70">dir</a>.<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/direction/struct.Direction.html#method.as_raw">as_raw</a>() <span class="kw">as </span><a href="../../../wireplumber_sys/sys/type.WpDirection.html"><span class="kw">crate</span>::ffi::WpDirection</a>),
+</span><span class="kw">impl </span>From&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/utils/direction/struct.Direction.html">SpaDirection</a>&gt; <span class="kw">for </span><a href="../auto/enums.rs.html#342-349">Direction</a> {
+	<span class="kw">fn </span>from(dir: <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/utils/direction/struct.Direction.html">SpaDirection</a>) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span><a href="#68">dir</a> {
+			SpaDirection::Input =&gt; <span class="self">Self</span>::Input,
+			SpaDirection::Output =&gt; <span class="self">Self</span>::Output,
+			dir =&gt; <a href="../auto/enums.rs.html#348"><span class="self">Self</span>::__Unknown</a>(<a href="#72">dir</a>.<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/libspa/utils/direction/struct.Direction.html#method.as_raw">as_raw</a>() <span class="kw">as </span><a href="../../../wireplumber_sys/sys/type.WpDirection.html"><span class="kw">crate</span>::ffi::WpDirection</a>),
 		}
 	}
 }

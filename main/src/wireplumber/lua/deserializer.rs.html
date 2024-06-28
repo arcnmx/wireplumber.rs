@@ -458,14 +458,14 @@
 <a href="#458" id="458">458</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>{
 	<span class="kw">crate</span>::lua::{<a href="error.rs.html#14-23">LuaError</a>, <a href="variant.rs.html#317-321">LuaTable</a>, <a href="variant.rs.html#23-30">LuaType</a>, <a href="variant.rs.html#13-20">LuaVariant</a>},
-	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.VariantTypeMismatchError.html">variant::VariantTypeMismatchError</a>, <a href="https://docs.rs/glib-macros/0.19.3/glib_macros/derive.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>},
-	serde::de::{<a class="self" href="https://docs.rs/serde/1.0.197/serde/de/index.html">self</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.IntoDeserializer.html">IntoDeserializer</a>, <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html">Visitor</a>},
+	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.VariantTypeMismatchError.html">variant::VariantTypeMismatchError</a>, <a href="https://docs.rs/glib-macros/0.19.9/glib_macros/derive.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>},
+	serde::de::{<a class="self" href="https://docs.rs/serde/1.0.203/serde/de/index.html">self</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.IntoDeserializer.html">IntoDeserializer</a>, <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html">Visitor</a>},
 	<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">std::borrow::Cow</a>,
 };
 
 <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"serde"</span>)))]
 </span><span class="kw">pub fn </span><a href="../../../wireplumber/lua/fn.from_variant.html">from_variant</a>&lt;<span class="lifetime">'de</span>, D: de::Deserialize&lt;<span class="lifetime">'de</span>&gt;, V: AsRef&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt;&gt;(v: V) -&gt; <span class="prelude-ty">Result</span>&lt;D, <a href="error.rs.html#14-23">LuaError</a>&gt; {
-	<a href="variant.rs.html#171-193">LuaVariant::convert_from</a>(<a href="#9">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|v| <a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserialize.html#tymethod.deserialize">D::deserialize</a>(<a href="#10">v</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.IntoDeserializer.html#tymethod.into_deserializer">into_deserializer</a>()))
+	<a href="variant.rs.html#171-193">LuaVariant::convert_from</a>(<a href="#9">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref">as_ref</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|v| <a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserialize.html#tymethod.deserialize">D::deserialize</a>(<a href="#10">v</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.IntoDeserializer.html#tymethod.into_deserializer">into_deserializer</a>()))
 }
 
 <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"serde"</span>)))]
@@ -540,77 +540,77 @@
 
 	<span class="kw">fn </span>deserialize_any&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#83">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_unit">deserialize_unit</a>(<a href="#83">visitor</a>),
-			<a href="variant.rs.html#25">LuaType::Boolean</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_bool">deserialize_bool</a>(<a href="#83">visitor</a>),
-			<a href="variant.rs.html#26">LuaType::Integer</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_i64">deserialize_i64</a>(<a href="#83">visitor</a>),
-			<a href="variant.rs.html#27">LuaType::Float</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_f64">deserialize_f64</a>(<a href="#83">visitor</a>),
-			<a href="variant.rs.html#28">LuaType::String</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#83">visitor</a>),
+			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_unit">deserialize_unit</a>(<a href="#83">visitor</a>),
+			<a href="variant.rs.html#25">LuaType::Boolean</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_bool">deserialize_bool</a>(<a href="#83">visitor</a>),
+			<a href="variant.rs.html#26">LuaType::Integer</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_i64">deserialize_i64</a>(<a href="#83">visitor</a>),
+			<a href="variant.rs.html#27">LuaType::Float</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_f64">deserialize_f64</a>(<a href="#83">visitor</a>),
+			<a href="variant.rs.html#28">LuaType::String</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#83">visitor</a>),
 			<a href="variant.rs.html#29">LuaType::Table</a> <span class="kw">if </span><a class="self" href="#83">self</a>.variant.<a href="variant.rs.html#240-245">get_table</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"LuaType"</span>).<a href="variant.rs.html#455-464">is_array</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or">unwrap_or</a>(<span class="bool-val">true</span>) =&gt;
-				<a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_seq">deserialize_seq</a>(<a href="#83">visitor</a>),
-			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_map">deserialize_map</a>(<a href="#83">visitor</a>),
+				<a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_seq">deserialize_seq</a>(<a href="#83">visitor</a>),
+			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a class="self" href="#83">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_map">deserialize_map</a>(<a href="#83">visitor</a>),
 		}
 	}
 
 	<span class="kw">fn </span>deserialize_bool&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#96">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_bool">visit_bool</a>(<a class="self" href="#96">self</a>.variant.<a href="variant.rs.html#232-238">get_bool</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a class="self" href="#96">self</a>.<a href="#42-47">error</a>(VariantTy::BOOLEAN))<span class="question-mark">?</span>)
+		<a href="#96">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_bool">visit_bool</a>(<a class="self" href="#96">self</a>.variant.<a href="variant.rs.html#232-238">get_bool</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a class="self" href="#96">self</a>.<a href="#42-47">error</a>(VariantTy::BOOLEAN))<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_i8&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#100">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_i8">visit_i8</a>(<a class="self" href="#100">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#100">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT16)<span class="question-mark">?</span>)
+		<a href="#100">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_i8">visit_i8</a>(<a class="self" href="#100">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#100">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT16)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_i16&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#104">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_i16">visit_i16</a>(<a class="self" href="#104">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#104">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT16)<span class="question-mark">?</span>)
+		<a href="#104">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_i16">visit_i16</a>(<a class="self" href="#104">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#104">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT16)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_i32&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#108">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_i32">visit_i32</a>(<a class="self" href="#108">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#108">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT32)<span class="question-mark">?</span>)
+		<a href="#108">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_i32">visit_i32</a>(<a class="self" href="#108">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#108">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT32)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_i64&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#112">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_i64">visit_i64</a>(<a class="self" href="#112">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#112">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT64)<span class="question-mark">?</span>)
+		<a href="#112">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_i64">visit_i64</a>(<a class="self" href="#112">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#112">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::INT64)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_u8&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#116">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_u8">visit_u8</a>(<a class="self" href="#116">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#116">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::BYTE)<span class="question-mark">?</span>)
+		<a href="#116">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_u8">visit_u8</a>(<a class="self" href="#116">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#116">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::BYTE)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_u16&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#120">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_u16">visit_u16</a>(<a class="self" href="#120">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#120">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::UINT16)<span class="question-mark">?</span>)
+		<a href="#120">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_u16">visit_u16</a>(<a class="self" href="#120">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#120">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::UINT16)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_u32&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#124">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_u32">visit_u32</a>(<a class="self" href="#124">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#124">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::UINT32)<span class="question-mark">?</span>)
+		<a href="#124">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_u32">visit_u32</a>(<a class="self" href="#124">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#124">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::UINT32)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_u64&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#128">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_u64">visit_u64</a>(<a class="self" href="#128">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#128">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::UINT64)<span class="question-mark">?</span>)
+		<a href="#128">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_u64">visit_u64</a>(<a class="self" href="#128">self</a>.<a href="#53-58">try_num</a>(<a class="self" href="#128">self</a>.variant.<a href="variant.rs.html#279-302">get_integer</a>(), VariantTy::UINT64)<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_f32&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#132">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_f32">visit_f32</a>(<a class="self" href="#132">self</a>.<a href="#60-65">try_get_float</a>()<span class="question-mark">? </span><span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>)
+		<a href="#132">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_f32">visit_f32</a>(<a class="self" href="#132">self</a>.<a href="#60-65">try_get_float</a>()<span class="question-mark">? </span><span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>)
 	}
 
 	<span class="kw">fn </span>deserialize_f64&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#136">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_f64">visit_f64</a>(<a class="self" href="#136">self</a>.<a href="#60-65">try_get_float</a>()<span class="question-mark">?</span>)
+		<a href="#136">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_f64">visit_f64</a>(<a class="self" href="#136">self</a>.<a href="#60-65">try_get_float</a>()<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_char&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#140">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#140">visitor</a>)
+		<a class="self" href="#140">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#140">visitor</a>)
 	}
 
 	<span class="kw">fn </span>deserialize_str&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#144">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_str">visit_str</a>(<span class="kw-2">&amp;</span><a class="self" href="#144">self</a>.<a href="#67-73">str</a>()<span class="question-mark">?</span>)
+		<a href="#144">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_str">visit_str</a>(<span class="kw-2">&amp;</span><a class="self" href="#144">self</a>.<a href="#67-73">str</a>()<span class="question-mark">?</span>)
 	}
 
 	<span class="kw">fn </span>deserialize_string&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#148">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_string">visit_string</a>(<a class="self" href="#148">self</a>.<a href="#67-73">str</a>()<span class="question-mark">?</span>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html#method.into_owned">into_owned</a>())
+		<a href="#148">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_string">visit_string</a>(<a class="self" href="#148">self</a>.<a href="#67-73">str</a>()<span class="question-mark">?</span>.<a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html#method.into_owned">into_owned</a>())
 	}
 
 	<span class="kw">fn </span>deserialize_bytes&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#152">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#28">LuaType::String</a> =&gt; <a class="self" href="#152">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#152">visitor</a>),
-			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a href="#152">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_seq">visit_seq</a>(<a href="#379-381">SeqDeserializer::new</a>(
+			<a href="variant.rs.html#28">LuaType::String</a> =&gt; <a class="self" href="#152">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#152">visitor</a>),
+			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a href="#152">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_seq">visit_seq</a>(<a href="#379-381">SeqDeserializer::new</a>(
 				<a class="self" href="#152">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>().variant.<a href="variant.rs.html#240-245">get_table</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="variant.rs.html#410-420">iter_array</a>(),
 				<a class="self" href="#152">self</a>,
 			)),
@@ -619,26 +619,26 @@
 	}
 
 	<span class="kw">fn </span>deserialize_byte_buf&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#163">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_bytes">deserialize_bytes</a>(<a href="#163">visitor</a>)
+		<a class="self" href="#163">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_bytes">deserialize_bytes</a>(<a href="#163">visitor</a>)
 	}
 
 	<span class="kw">fn </span>deserialize_option&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#167">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a href="#167">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>(),
-			<span class="kw">_ </span>=&gt; <a href="#167">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_some">visit_some</a>(<a class="self" href="#167">self</a>),
+			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a href="#167">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>(),
+			<span class="kw">_ </span>=&gt; <a href="#167">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_some">visit_some</a>(<a class="self" href="#167">self</a>),
 		}
 	}
 
 	<span class="kw">fn </span>deserialize_unit&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<a class="self" href="#174">self</a>.variant.<a href="variant.rs.html#224-230">get_nil</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a class="self" href="#174">self</a>.<a href="#42-47">error</a>(VariantTy::UNIT))<span class="question-mark">?</span>;
 		<span class="kw">match </span><a class="self" href="#174">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a href="#174">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>(),
+			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a href="#174">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>(),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a class="self" href="#174">self</a>.<a href="#42-47">error</a>(VariantTy::UNIT)),
 		}
 	}
 
 	<span class="kw">fn </span>deserialize_unit_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#182">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_unit">deserialize_unit</a>(<a href="#182">visitor</a>)
+		<a class="self" href="#182">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_unit">deserialize_unit</a>(<a href="#182">visitor</a>)
 	}
 
 	<span class="kw">fn </span>deserialize_newtype_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
@@ -646,12 +646,12 @@
 		_name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#189">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_newtype_struct">visit_newtype_struct</a>(<a class="self" href="#187">self</a>)
+		<a href="#189">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_newtype_struct">visit_newtype_struct</a>(<a class="self" href="#187">self</a>)
 	}
 
 	<span class="kw">fn </span>deserialize_seq&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#194">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a href="#194">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_seq">visit_seq</a>(<a href="#379-381">SeqDeserializer::new</a>(
+			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a href="#194">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_seq">visit_seq</a>(<a href="#379-381">SeqDeserializer::new</a>(
 				<a class="self" href="#194">self</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>().variant.<a href="variant.rs.html#240-245">get_table</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap">unwrap</a>().<a href="variant.rs.html#410-420">iter_array</a>(),
 				<a class="self" href="#194">self</a>,
 			)),
@@ -661,13 +661,13 @@
 
 	<span class="kw">fn </span>deserialize_tuple&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#204">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a href="#204">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>(),
+			<a href="variant.rs.html#24">LuaType::Nil</a> =&gt; <a href="#204">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>(),
 			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <span class="kw">match </span><a class="self" href="#204">self</a>.variant.<a href="variant.rs.html#240-245">get_table</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"LuaType"</span>).<a href="variant.rs.html#422-427">array_len</a>() {
 				actual <span class="kw">if </span><a href="#208">actual</a> != <a href="#204">len</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> =&gt; <span class="prelude-val">Err</span>(<a href="error.rs.html#22">LuaError::LengthMismatch</a> {
 					actual: <a href="#208">actual</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
 					expected: <a href="#204">len</a>,
 				}),
-				<span class="kw">_ </span>=&gt; <a class="self" href="#204">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_seq">deserialize_seq</a>(<a href="#204">visitor</a>),
+				<span class="kw">_ </span>=&gt; <a class="self" href="#204">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_seq">deserialize_seq</a>(<a href="#204">visitor</a>),
 			},
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a class="self" href="#204">self</a>.<a href="#42-47">error</a>(VariantTy::TUPLE)),
 		}
@@ -679,11 +679,11 @@
 		len: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a class="self" href="#219">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_tuple">deserialize_tuple</a>(<a href="#221">len</a>, <a href="#222">visitor</a>)
+		<a class="self" href="#219">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_tuple">deserialize_tuple</a>(<a href="#221">len</a>, <a href="#222">visitor</a>)
 	}
 
 	<span class="kw">fn </span>deserialize_map&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#227">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_map">visit_map</a>(<a href="#406-408">MapDeserializer::new</a>(<a class="self" href="#227">self</a>))
+		<a href="#227">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_map">visit_map</a>(<a href="#406-408">MapDeserializer::new</a>(<a class="self" href="#227">self</a>))
 	}
 
 	<span class="kw">fn </span>deserialize_struct&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
@@ -697,9 +697,9 @@
 			.<a href="variant.rs.html#240-245">get_table</a>()
 			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| <a class="self" href="#232">self</a>.<a href="#42-47">error</a>(VariantTy::DICTIONARY))<span class="question-mark">?</span>;
 		<span class="kw">if </span>table.is_array().unwrap_or(<span class="bool-val">false</span>) {
-			<a class="self" href="#232">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_seq">deserialize_seq</a>(<a href="#235">visitor</a>)
+			<a class="self" href="#232">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_seq">deserialize_seq</a>(<a href="#235">visitor</a>)
 		} <span class="kw">else </span>{
-			<a class="self" href="#232">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_map">deserialize_map</a>(<a href="#235">visitor</a>)
+			<a class="self" href="#232">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_map">deserialize_map</a>(<a href="#235">visitor</a>)
 		}
 	}
 
@@ -710,20 +710,20 @@
 		visitor: V,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#249">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a href="#252">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_enum">visit_enum</a>(<a href="#280-282">EnumDeserializer::new</a>(<a class="self" href="#249">self</a>)),
-			<span class="kw">_ </span>=&gt; <a href="#252">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_enum">visit_enum</a>(<a href="#334-336">UnitEnumDeserializer::new</a>(<a class="self" href="#249">self</a>)),
+			<a href="variant.rs.html#29">LuaType::Table</a> =&gt; <a href="#252">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_enum">visit_enum</a>(<a href="#280-282">EnumDeserializer::new</a>(<a class="self" href="#249">self</a>)),
+			<span class="kw">_ </span>=&gt; <a href="#252">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_enum">visit_enum</a>(<a href="#334-336">UnitEnumDeserializer::new</a>(<a class="self" href="#249">self</a>)),
 		}
 	}
 
 	<span class="kw">fn </span>deserialize_ignored_any&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
-		<a href="#260">visitor</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>()
+		<a href="#260">visitor</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Visitor.html#tymethod.visit_unit">visit_unit</a>()
 	}
 
 	<span class="kw">fn </span>deserialize_identifier&lt;V: Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">match </span><a class="self" href="#264">self</a>.variant.<a href="variant.rs.html#200-202">lua_type</a>() {
-			<a href="variant.rs.html#26">LuaType::Integer</a> =&gt; <a class="self" href="#264">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_i64">deserialize_i64</a>(<a href="#264">visitor</a>),
-			<a href="variant.rs.html#27">LuaType::Float</a> =&gt; <a class="self" href="#264">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_f64">deserialize_f64</a>(<a href="#264">visitor</a>),
-			<a href="variant.rs.html#28">LuaType::String</a> =&gt; <a class="self" href="#264">self</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#264">visitor</a>),
+			<a href="variant.rs.html#26">LuaType::Integer</a> =&gt; <a class="self" href="#264">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_i64">deserialize_i64</a>(<a href="#264">visitor</a>),
+			<a href="variant.rs.html#27">LuaType::Float</a> =&gt; <a class="self" href="#264">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_f64">deserialize_f64</a>(<a href="#264">visitor</a>),
+			<a href="variant.rs.html#28">LuaType::String</a> =&gt; <a class="self" href="#264">self</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.Deserializer.html#tymethod.deserialize_str">deserialize_str</a>(<a href="#264">visitor</a>),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<a class="self" href="#264">self</a>.<a href="#42-47">error</a>(VariantTy::OBJECT_PATH)),
 		}
 	}
@@ -799,7 +799,7 @@
 	<span class="kw">type </span>Variant = <span class="self">Self</span>;
 
 	<span class="kw">fn </span>variant_seed&lt;V: de::DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, <span class="self">Self</span>::Variant), <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>value = <a href="#343">seed</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a class="self" href="#343">self</a>.de.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>())<span class="question-mark">?</span>;
+		<span class="kw">let </span>value = <a href="#343">seed</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a class="self" href="#343">self</a>.de.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>())<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>((<a href="#344">value</a>, <a class="self" href="#343">self</a>))
 	}
 }
@@ -846,7 +846,7 @@
 		<span class="self"><a href="#387">self</a>
 			</span>.iter
 			.<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.next">next</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#387">seed</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a class="self" href="#387">self</a>.de.<a href="#35-40">change_variant</a>(<a href="#391">v</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or_else">unwrap_or_else</a>(|| <a href="variant.rs.html#162-164">LuaVariant::nil</a>()))))
+			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#387">seed</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a class="self" href="#387">self</a>.de.<a href="#35-40">change_variant</a>(<a href="#391">v</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or_else">unwrap_or_else</a>(|| <a href="variant.rs.html#162-164">LuaVariant::nil</a>()))))
 			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.transpose">transpose</a>()
 	}
 
@@ -879,8 +879,8 @@
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
 		}
 		<span class="kw">match </span><a href="#419">table</a>.<a href="variant.rs.html#429-437">key_at</a>(<a class="self" href="#418">self</a>.index) {
-			<span class="prelude-val">Some</span>(key) =&gt; <a href="#418">seed</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a href="#424">key</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.IntoDeserializer.html#tymethod.into_deserializer">into_deserializer</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
-			<span class="prelude-val">None </span><span class="kw">if </span>!<a href="#419">table</a>.<a href="variant.rs.html#359-361">variant_is_dict</a>() =&gt; <a href="#418">seed</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>((<a class="self" href="#418">self</a>.index + <span class="number">1</span>).<a href="https://docs.rs/serde/1.0.197/serde/de/trait.IntoDeserializer.html#tymethod.into_deserializer">into_deserializer</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			<span class="prelude-val">Some</span>(key) =&gt; <a href="#418">seed</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a href="#424">key</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.IntoDeserializer.html#tymethod.into_deserializer">into_deserializer</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			<span class="prelude-val">None </span><span class="kw">if </span>!<a href="#419">table</a>.<a href="variant.rs.html#359-361">variant_is_dict</a>() =&gt; <a href="#418">seed</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>((<a class="self" href="#418">self</a>.index + <span class="number">1</span>).<a href="https://docs.rs/serde/1.0.203/serde/de/trait.IntoDeserializer.html#tymethod.into_deserializer">into_deserializer</a>()).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
 		}
 	}
@@ -891,7 +891,7 @@
 			.<a href="variant.rs.html#439-446">value_at</a>(<a class="self" href="#430">self</a>.index)
 			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.ok_or_else">ok_or_else</a>(|| -&gt; <a href="error.rs.html#14-23">LuaError</a> { <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>() })<span class="question-mark">?</span>;
 		<a class="self" href="#430">self</a>.index += <span class="number">1</span>;
-		<a href="#430">seed</a>.<a href="https://docs.rs/serde/1.0.197/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a class="self" href="#430">self</a>.de.<a href="#35-40">change_variant</a>(<a href="#431">value</a>))
+		<a href="#430">seed</a>.<a href="https://docs.rs/serde/1.0.203/serde/de/trait.DeserializeSeed.html#tymethod.deserialize">deserialize</a>(<a class="self" href="#430">self</a>.de.<a href="#35-40">change_variant</a>(<a href="#431">value</a>))
 	}
 
 	<span class="comment">/*fn next_entry_seed&lt;K: de::DeserializeSeed&lt;'de&gt;, V: de::DeserializeSeed&lt;'de&gt;&gt;(&amp;mut self, kseed: K, vseed: V) -&gt; Result&lt;Option&lt;(K::Value, V::Value)&gt;, Self::Error&gt; {
