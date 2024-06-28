@@ -271,6 +271,7 @@ impl<'v, 'o> DebugValue<'v, 'o> {
 	}
 }
 
+#[allow(non_local_definitions)]
 impl<'v, 'o> Debug for DebugValue<'v, 'o> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		struct DebugType(SpaType);

@@ -66,8 +66,8 @@ libc = "0.2"
 glib-sys = { version = "0.19" }
 gobject-sys = { version = "0.19" }
 gio-sys = { version = "0.19" }
-pipewire = { version = "0.7", package = "pipewire-sys" }
-libspa = { version = "0.7", package = "libspa-sys" }
+pipewire = { version = "0.8", package = "pipewire-sys" }
+libspa = { version = "0.8", package = "libspa-sys" }
 
 [build-dependencies]
 system-deps = "6"

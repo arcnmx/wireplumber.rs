@@ -27,6 +27,8 @@ pub use crate::auto::LinkState;
 #[cfg(feature = "v0_4_2")]
 #[cfg_attr(docsrs, doc(cfg(feature = "v0_4_2")))]
 pub use crate::auto::PropertiesItem;
+#[cfg(feature = "libspa")]
+use libspa::utils::Direction as SpaDirection;
 pub use {
 	self::{
 		keys::*,
@@ -50,7 +52,7 @@ mod proxy;
 
 #[cfg(feature = "libspa")]
 #[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
-impl From<Direction> for libspa::Direction {
+impl From<Direction> for SpaDirection {
 	fn from(dir: Direction) -> Self {
 		match dir {
 			Direction::Input => Self::Input,
@@ -62,11 +64,11 @@ impl From<Direction> for libspa::Direction {
 
 #[cfg(feature = "libspa")]
 #[cfg_attr(docsrs, doc(cfg(feature = "libspa")))]
-impl From<libspa::Direction> for Direction {
-	fn from(dir: libspa::Direction) -> Self {
+impl From<SpaDirection> for Direction {
+	fn from(dir: SpaDirection) -> Self {
 		match dir {
-			libspa::Direction::Input => Self::Input,
-			libspa::Direction::Output => Self::Output,
+			SpaDirection::Input => Self::Input,
+			SpaDirection::Output => Self::Output,
 			dir => Self::__Unknown(dir.as_raw() as crate::ffi::WpDirection),
 		}
 	}
