@@ -274,6 +274,45 @@
 <a href="#274" id="274">274</a>
 <a href="#275" id="275">275</a>
 <a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! wpexec example
 //!
 //! An example showing how to write a simple WirePlumber service.
@@ -281,13 +320,17 @@
 //!
 //! Roughly based on the original [wpexec.c](https://gitlab.freedesktop.org/pipewire/wireplumber/-/blob/master/src/tools/wpexec.c)
 
-</span><span class="kw">use </span>{
+</span><span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+</span><span class="kw">use </span><a href="../../wireplumber/lua/variant/struct.LuaVariant.html">wireplumber::lua::LuaVariant</a>;
+<span class="attr">#[cfg(feature = <span class="string">"spa-json"</span>)]
+</span><span class="kw">use </span><a href="../../wireplumber/auto/spa_json/struct.SpaJson.html">wireplumber::spa::json::SpaJson</a>;
+<span class="kw">use </span>{
 	anyhow::{<a href="https://docs.rs/anyhow/1.0.85/anyhow/macro.anyhow.html">format_err</a>, <a href="https://docs.rs/anyhow/1.0.85/anyhow/trait.Context.html">Context</a>, <span class="prelude-ty">Result</span>},
 	clap::{<a href="https://docs.rs/clap_derive/4.5.8/clap_derive/derive.Parser.html">Parser</a>, <a href="https://docs.rs/clap_derive/4.5.8/clap_derive/derive.ValueEnum.html">ValueEnum</a>},
+	<a href="https://docs.rs/glib-macros/0.19.9/glib_macros/derive.Variant.html">glib::Variant</a>,
 	std::{<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html">cell::RefCell</a>, <a href="https://doc.rust-lang.org/nightly/core/macro.env.html">env</a>, <a href="https://doc.rust-lang.org/nightly/std/fs/index.html">fs</a>, <a href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html">path::Path</a>, <a href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html">rc::Rc</a>},
 	wireplumber::{
 		log::{<a href="../../wireplumber/macro.info.html">info</a>, <a href="../../wireplumber/macro.warning.html">warning</a>},
-		<a href="../../wireplumber/lua/variant/struct.LuaVariant.html">lua::LuaVariant</a>,
 		<a href="../../wireplumber/plugin/index.html">plugin</a>::<span class="kw-2">*</span>,
 		<a href="../../wireplumber/prelude/index.html">prelude</a>::<span class="kw-2">*</span>,
 		pw::{<a class="self" href="../../wireplumber/pw/index.html">self</a>, <a href="../../wireplumber/auto/properties/struct.Properties.html">Properties</a>},
@@ -299,7 +342,7 @@
 
 <span class="doccomment">/// The type of module to be loaded
 </span><span class="attr">#[derive(ValueEnum, Copy, Clone, Debug)]
-</span><span class="kw">enum </span><a href="#26-35">ModuleType</a> {
+</span><span class="kw">enum </span><a href="#30-39">ModuleType</a> {
 	<span class="doccomment">/// A [Lua WirePlumber script](https://pipewire.pages.freedesktop.org/wireplumber/lua_api/lua_introduction.html)
 	</span>Lua,
 	<span class="doccomment">/// A [WirePlumber Lua configuration file](https://pipewire.pages.freedesktop.org/wireplumber/configuration/config_lua.html)
@@ -315,16 +358,22 @@
 	doc = <span class="string">"Command-line arguments parsed via [clap](https://docs.rs/clap/latest/clap/)"
 </span>)]
 #[derive(Parser, Debug)]
-#[clap(version)]
-</span><span class="kw">struct </span><a href="#43-59">Args</a> {
+#[clap(version, disable_version_flag(<span class="bool-val">true</span>))]
+</span><span class="kw">struct </span><a href="#47-69">Args</a> {
 	<span class="attr">#[clap(value_enum, short = <span class="string">'t'</span>, long = <span class="string">"type"</span>, default_value = <span class="string">"lua"</span>)]
-	</span>module_type: <a href="#26-35">ModuleType</a>,
+	</span>module_type: <a href="#30-39">ModuleType</a>,
 
-	<span class="doccomment">/// Arguments to pass to the loaded module
+	<span class="doccomment">/// JSON arguments to pass to the loaded module
 	///
 	/// Lua scripts only support arrays and dictionary maps.
 	</span><span class="attr">#[clap(short = <span class="string">'J'</span>, long = <span class="string">"json"</span>)]
 	</span>json_arg: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
+
+	<span class="doccomment">/// GLIB Variant argument to pass to the loaded module
+	///
+	/// https://docs.gtk.org/glib/gvariant-text-format.html
+	</span><span class="attr">#[clap(short = <span class="string">'V'</span>, long = <span class="string">"variant"</span>)]
+	</span>variant_arg: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt;,
 
 	<span class="doccomment">/// Associated plugins to load, provided by the module
 	</span><span class="attr">#[clap(short, long = <span class="string">"plugin"</span>)]
@@ -338,7 +387,7 @@
 ///
 /// Once this function returns, the script will continue to run in the background until
 /// the service is interrupted.
-</span><span class="kw">async fn </span><a href="../../wpexec/fn.main_async.html">main_async</a>(core: <span class="kw-2">&amp;</span><a href="../../wireplumber/auto/core/struct.Core.html">Core</a>, args: <span class="kw-2">&amp;</span><a href="#43-59">Args</a>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">async fn </span><a href="../../wpexec/fn.main_async.html">main_async</a>(core: <span class="kw-2">&amp;</span><a href="../../wireplumber/auto/core/struct.Core.html">Core</a>, args: <span class="kw-2">&amp;</span><a href="#47-69">Args</a>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
 	<span class="kw">let </span>path = args.module().expect(<span class="string">"already checked this in main()"</span>);
 	<span class="kw">let </span>path = {
 		<span class="kw">let </span>path = Path::new(path);
@@ -354,24 +403,25 @@
 	}
 	.unwrap_or(path.into());
 
-	<span class="kw">let </span>variant_args = args.variant()<span class="question-mark">?</span>;
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(module) = args.module_type.loader_module() {
 		core
 			.load_component(module, ComponentLoader::TYPE_WIREPLUMBER_MODULE, <span class="prelude-val">None</span>)
 			.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load the {:?} scripting module"</span>, args.module_type))<span class="question-mark">?</span>;
 	}
-	<span class="kw">if </span>args.module_type.is_lua() {
-		core
-			.load_lua_script(<span class="kw-2">&amp;</span>path, variant_args)
-			.context(<span class="string">"failed to load the lua script"</span>)<span class="question-mark">?</span>;
-	} <span class="kw">else </span>{
-		core
-			.load_component(
-				<span class="kw-2">&amp;</span>path,
-				args.module_type.loader_type(),
-				variant_args.as_ref().map(|v| v.as_variant()),
-			)
-			.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load {path} as a {}"</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
+	<span class="kw">match </span>args.module_type.is_lua() {
+		<span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+		</span><span class="bool-val">true </span>=&gt; {
+			<span class="kw">let </span>variant_args = args.lua_variant()<span class="question-mark">?</span>;
+			core
+				.load_lua_script(<span class="kw-2">&amp;</span>path, variant_args)
+				.context(<span class="string">"failed to load the lua script"</span>)<span class="question-mark">?</span>;
+		},
+		<span class="kw">_ </span>=&gt; {
+			<span class="kw">let </span>variant_args = args.args()<span class="question-mark">?</span>;
+			core
+				.load_component(<span class="kw-2">&amp;</span>path, args.module_type.loader_type(), variant_args.as_ref())
+				.with_context(|| <span class="macro">format!</span>(<span class="string">"failed to load {path} as a {}"</span>, args.module_type.loader_type()))<span class="question-mark">?</span>;
+		},
 	}
 
 	core.connect_future().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -417,7 +467,11 @@
 	}
 
 	<span class="comment">// bail out early if invalid args are provided
-	</span><span class="kw">let _ </span>= <a href="#137">args</a>.<a href="#270-275">variant</a>()<span class="question-mark">?</span>;
+	</span><span class="kw">let _ </span>= <span class="kw">match </span><a href="#148">args</a>.module_type.<a href="#201-203">is_lua</a>() {
+		<span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+		</span><span class="bool-val">true </span>=&gt; <a href="#148">args</a>.<a href="#282-296">lua_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)<span class="question-mark">?</span>,
+		<span class="kw">_ </span>=&gt; <a href="#148">args</a>.<a href="#303-314">args</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<a href="https://doc.rust-lang.org/nightly/core/mem/fn.drop.html">drop</a>)<span class="question-mark">?</span>,
+	};
 
 	<span class="comment">// initialize the wireplumber and pipewire libraries
 	</span><a href="../../wireplumber/auto/core/struct.Core.html#method.init">Core::init</a>();
@@ -427,38 +481,38 @@
 
 	<span class="comment">// tell the pipewire daemon a little bit about ourselves
 	</span><span class="kw">let </span>props = <a href="../../wireplumber/auto/properties/struct.Properties.html#method.new">Properties::new</a>();
-	<a href="#153">props</a>.<a href="../../wireplumber/auto/properties/struct.Properties.html#method.insert">insert</a>(<a href="../../wireplumber/pw/keys/constant.PW_KEY_APP_NAME.html">pw::PW_KEY_APP_NAME</a>, <a href="#22">LOG_DOMAIN</a>);
+	<a href="#168">props</a>.<a href="../../wireplumber/auto/properties/struct.Properties.html#method.insert">insert</a>(<a href="../../wireplumber/pw/keys/constant.PW_KEY_APP_NAME.html">pw::PW_KEY_APP_NAME</a>, <a href="#26">LOG_DOMAIN</a>);
 
 	<span class="comment">// run a (blocking) glib::MainLoop with associated core
-	</span><a href="../../wireplumber/auto/core/struct.Core.html#method.run">Core::run</a>(<span class="prelude-val">Some</span>(<a href="#153">props</a>), |context, mainloop, core| {
+	</span><a href="../../wireplumber/auto/core/struct.Core.html#method.run">Core::run</a>(<span class="prelude-val">Some</span>(<a href="#168">props</a>), |context, mainloop, core| {
 		<a href="https://docs.rs/ctrlc/3.4.4/ctrlc/fn.set_handler.html">ctrlc::set_handler</a>({
 			<span class="comment">// exit this loop if we receive a SIGINT
-			</span><span class="kw">let </span>mainloop = <a href="#157">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
-			<span class="kw">move </span>|| <a href="#160">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
+			</span><span class="kw">let </span>mainloop = <a href="#172">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
+			<span class="kw">move </span>|| <a href="#175">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
 		})
 		.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>();
 
-		<span class="kw">let </span>main_res = <a href="#150">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
-		<a href="#157">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html#method.spawn_local">spawn_local</a>(<span class="kw">async move </span>{
+		<span class="kw">let </span>main_res = <a href="#165">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
+		<a href="#172">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html#method.spawn_local">spawn_local</a>(<span class="kw">async move </span>{
 			<span class="comment">// set up the requested module or script...
-			</span><span class="kw">let </span>res = <a href="#65-124">main_async</a>(<span class="kw-2">&amp;</span><a href="#157">core</a>, <span class="kw-2">&amp;</span><a href="#137">args</a>).<span class="kw">await</span>;
+			</span><span class="kw">let </span>res = <a href="#75-135">main_async</a>(<span class="kw-2">&amp;</span><a href="#172">core</a>, <span class="kw-2">&amp;</span><a href="#148">args</a>).<span class="kw">await</span>;
 			<span class="kw">if </span>res.is_err() {
 				<span class="comment">// bail out if we couldn't successfully load it after all
-				</span><a href="#157">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>();
+				</span><a href="#172">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>();
 			}
-			<span class="kw-2">*</span><a href="#165">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.borrow_mut">borrow_mut</a>() = <span class="prelude-val">Some</span>(<a href="#168">res</a>)
+			<span class="kw-2">*</span><a href="#180">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.borrow_mut">borrow_mut</a>() = <span class="prelude-val">Some</span>(<a href="#183">res</a>)
 		});
 	});
 
-	<span class="kw">let </span>main_res = <a href="#150">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.borrow_mut">borrow_mut</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.take">take</a>();
-	<span class="kw">match </span><a href="#177">main_res</a> {
-		<span class="prelude-val">Some</span>(res) =&gt; <a href="#179">res</a>,
+	<span class="kw">let </span>main_res = <a href="#165">main_res</a>.<a href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html#method.borrow_mut">borrow_mut</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.take">take</a>();
+	<span class="kw">match </span><a href="#192">main_res</a> {
+		<span class="prelude-val">Some</span>(res) =&gt; <a href="#194">res</a>,
 		<span class="comment">// we didn't get far enough to store the result; likely it timed out or something
 		</span><span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<a class="macro" href="https://docs.rs/anyhow/1.0.85/anyhow/macro.anyhow.html">format_err!</a>(<span class="string">"could not connect to pipewire"</span>)),
 	}
 }
 
-<span class="kw">impl </span><a href="#26-35">ModuleType</a> {
+<span class="kw">impl </span><a href="#30-39">ModuleType</a> {
 	<span class="kw">fn </span>is_lua(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
 		<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.matches.html">matches!</a>(<span class="self">self</span>, ModuleType::Lua)
 	}
@@ -468,10 +522,10 @@
 	/// The wireplumber [ComponentLoader] generally doesn't accept absolute paths for modules.
 	/// This environment variable can be modified in order to help it find the module to load.
 	</span><span class="kw">fn </span>module_dir(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
-		<span class="kw">match </span><span class="self"><a href="#194">self</a> </span>{
-			<a href="#28">ModuleType::Lua</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <span class="prelude-val">None</span>,
-			<a href="#32">ModuleType::Wireplumber</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::DIR_WIREPLUMBER_MODULE),
-			<a href="#34">ModuleType::Pipewire</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::DIR_PIPEWIRE_MODULE),
+		<span class="kw">match </span><span class="self"><a href="#209">self</a> </span>{
+			<a href="#32">ModuleType::Lua</a> | <a href="#34">ModuleType::LuaConfig</a> =&gt; <span class="prelude-val">None</span>,
+			<a href="#36">ModuleType::Wireplumber</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::DIR_WIREPLUMBER_MODULE),
+			<a href="#38">ModuleType::Pipewire</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::DIR_PIPEWIRE_MODULE),
 		}
 	}
 
@@ -481,8 +535,8 @@
 	/// implemented as a module, which must be loaded first. Afterwards, lua scripts may be loaded
 	/// as modules (well, components) themselves.
 	</span><span class="kw">fn </span>loader_module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
-		<span class="kw">match </span><span class="self"><a href="#207">self</a> </span>{
-			<a href="#28">ModuleType::Lua</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::MODULE_LOADER_LUA),
+		<span class="kw">match </span><span class="self"><a href="#222">self</a> </span>{
+			<a href="#32">ModuleType::Lua</a> | <a href="#34">ModuleType::LuaConfig</a> =&gt; <span class="prelude-val">Some</span>(ComponentLoader::MODULE_LOADER_LUA),
 			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 		}
 	}
@@ -491,26 +545,26 @@
 	///
 	/// This is passed on to [Core::load_component].
 	</span><span class="kw">fn </span>loader_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a> {
-		<span class="kw">match </span><span class="self"><a href="#217">self</a> </span>{
-			<a href="#28">ModuleType::Lua</a> =&gt; ComponentLoader::TYPE_LUA_SCRIPT,
-			<a href="#30">ModuleType::LuaConfig</a> =&gt; ComponentLoader::TYPE_LUA_CONFIG,
-			<a href="#32">ModuleType::Wireplumber</a> =&gt; ComponentLoader::TYPE_WIREPLUMBER_MODULE,
-			<a href="#34">ModuleType::Pipewire</a> =&gt; ComponentLoader::TYPE_PIPEWIRE_MODULE,
+		<span class="kw">match </span><span class="self"><a href="#232">self</a> </span>{
+			<a href="#32">ModuleType::Lua</a> =&gt; ComponentLoader::TYPE_LUA_SCRIPT,
+			<a href="#34">ModuleType::LuaConfig</a> =&gt; ComponentLoader::TYPE_LUA_CONFIG,
+			<a href="#36">ModuleType::Wireplumber</a> =&gt; ComponentLoader::TYPE_WIREPLUMBER_MODULE,
+			<a href="#38">ModuleType::Pipewire</a> =&gt; ComponentLoader::TYPE_PIPEWIRE_MODULE,
 		}
 	}
 }
 
-<span class="kw">impl </span><a href="#43-59">Args</a> {
+<span class="kw">impl </span><a href="#47-69">Args</a> {
 	<span class="doccomment">/// The [Plugin] names to load as part of initialization
 	///
 	/// For example, the [ModuleType::Lua] module provides a `lua-scripting` plugin that's responsible
 	/// for loading and running lua scripts.
 	</span><span class="kw">fn </span>plugins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
-		<span class="kw">match </span><a class="self" href="#232">self</a>.module_type {
-			<a href="#28">ModuleType::Lua</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[ComponentLoader::PLUGIN_LOADER_LUA],
-			<a href="#32">ModuleType::Wireplumber</a> <span class="kw">if </span><a class="self" href="#232">self</a>.plugins.<a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.is_empty">is_empty</a>() &amp;&amp; <a class="self" href="#232">self</a>.module.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_none">is_none</a>() =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[<span class="string">"static-link"</span>],
-			<a href="#32">ModuleType::Wireplumber</a> | <a href="#30">ModuleType::LuaConfig</a> =&gt; <a class="self" href="#232">self</a>.plugins.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|s| <a href="#236">s</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html#method.as_str">as_str</a>()).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>(),
-			<a href="#34">ModuleType::Pipewire</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>(),
+		<span class="kw">match </span><a class="self" href="#247">self</a>.module_type {
+			<a href="#32">ModuleType::Lua</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[ComponentLoader::PLUGIN_LOADER_LUA],
+			<a href="#36">ModuleType::Wireplumber</a> <span class="kw">if </span><a class="self" href="#247">self</a>.plugins.<a href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html#method.is_empty">is_empty</a>() &amp;&amp; <a class="self" href="#247">self</a>.module.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.is_none">is_none</a>() =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[<span class="string">"static-link"</span>],
+			<a href="#36">ModuleType::Wireplumber</a> | <a href="#34">ModuleType::LuaConfig</a> =&gt; <a class="self" href="#247">self</a>.plugins.<a href="https://doc.rust-lang.org/nightly/core/foreigntype.slice.html#method.iter">iter</a>().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.map">map</a>(|s| <a href="#251">s</a>.<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html#method.as_str">as_str</a>()).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html#tymethod.collect">collect</a>(),
+			<a href="#38">ModuleType::Pipewire</a> =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.todo.html">todo!</a>(),
 		}
 	}
 
@@ -519,11 +573,11 @@
 	/// This can be a full path or often just be a name if WirePlumber knows where to find it
 	/// (the rules for this are convoluted though, so I won't get into that here)
 	</span><span class="kw">fn </span>module(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; {
-		<span class="kw">match </span><a class="self" href="#245">self</a>.module {
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>module) =&gt; <span class="prelude-val">Some</span>(<a href="#247">module</a>),
-			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><a class="self" href="#245">self</a>.module_type {
-				<a href="#28">ModuleType::Lua</a> =&gt; <span class="prelude-val">Some</span>(<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/script.lua"</span>)),
-				<a href="#32">ModuleType::Wireplumber</a> =&gt; {
+		<span class="kw">match </span><a class="self" href="#260">self</a>.module {
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>module) =&gt; <span class="prelude-val">Some</span>(<a href="#262">module</a>),
+			<span class="prelude-val">None </span>=&gt; <span class="kw">match </span><a class="self" href="#260">self</a>.module_type {
+				<a href="#32">ModuleType::Lua</a> =&gt; <span class="prelude-val">Some</span>(<a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/script.lua"</span>)),
+				<a href="#36">ModuleType::Wireplumber</a> =&gt; {
 					<span class="kw">let </span>module_path = <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.concat.html">concat!</a>(<span class="macro">env!</span>(<span class="string">"OUT_DIR"</span>), <span class="string">"/../../../examples/libstatic_link_module.so"</span>); <span class="comment">// TODO: .so is so linux
 					</span><span class="kw">if </span>fs::metadata(module_path).is_err() {
 						<a class="macro" href="../../wireplumber/macro.warning.html">warning!</a>(
@@ -531,10 +585,28 @@
 							<span class="string">"example module not found, try: cargo build -p wp-examples --example static-link-module"
 						</span>);
 					}
-					<span class="prelude-val">Some</span>(<a href="#251">module_path</a>)
+					<span class="prelude-val">Some</span>(<a href="#266">module_path</a>)
 				},
 				<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 			},
+		}
+	}
+
+	<span class="doccomment">/// A JSON-like blob of data to pass as an argument to the script to be loaded
+	</span><span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+	</span><span class="kw">fn </span>lua_variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../wireplumber/lua/variant/struct.LuaVariant.html">LuaVariant</a>&gt;&gt; {
+		<span class="attr">#[allow(unreachable_patterns)]
+		</span><span class="kw">match </span>(<span class="kw-2">&amp;</span><a class="self" href="#282">self</a>.variant_arg, <span class="kw-2">&amp;</span><a class="self" href="#282">self</a>.json_arg) {
+			(<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+			(<span class="prelude-val">Some</span>(v), <span class="kw">_</span>) =&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.parse">Variant::parse</a>(<span class="prelude-val">None</span>, <a href="#286">v</a>)
+				.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>)
+				.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|v| <a href="../../wireplumber/lua/variant/struct.LuaVariant.html#method.convert_from">LuaVariant::convert_from</a>(<span class="kw-2">&amp;</span><a href="#288">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>))
+				.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			<span class="attr">#[cfg(feature = <span class="string">"spa-json"</span>)]
+			</span>(<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(json)) =&gt; <a href="../../wireplumber/auto/spa_json/struct.SpaJson.html#method.deserialize_from_string">SpaJson::deserialize_from_string</a>(<a href="#291">json</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			<span class="attr">#[cfg(feature = <span class="string">"serde_json"</span>)]
+			</span>(<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(json)) =&gt; <a href="https://docs.rs/serde_json/1.0.118/serde_json/de/fn.from_str.html">serde_json::from_str</a>(<a href="#293">json</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			(<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(..)) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"spa-json or serde_json feature required to parse JSON arguments"</span>),
 		}
 	}
 
@@ -543,10 +615,16 @@
 	/// In practice this must be a dictionary or array because lua scripts can't work with other
 	/// types of data as the top-level container, but more specific types may be usable by other
 	/// modules. See [wireplumber::lua] for a more detailed explanation.
-	</span><span class="kw">fn </span>variant(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../wireplumber/lua/variant/struct.LuaVariant.html">LuaVariant</a>&gt;&gt; {
-		<span class="kw">match </span><a class="self" href="#270">self</a>.json_arg {
-			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
-			<span class="prelude-val">Some</span>(<span class="kw-2">ref </span>json) =&gt; <a href="https://docs.rs/serde_json/1.0.118/serde_json/de/fn.from_str.html">serde_json::from_str</a>(<a href="#273">json</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+	</span><span class="kw">fn </span>args(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html">Variant</a>&gt;&gt; {
+		<span class="attr">#[allow(unreachable_patterns)]
+		</span><span class="kw">match </span>(<span class="kw-2">&amp;</span><a class="self" href="#303">self</a>.variant_arg, <span class="kw-2">&amp;</span><a class="self" href="#303">self</a>.json_arg) {
+			(<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+			(<span class="prelude-val">Some</span>(v), <span class="kw">_</span>) =&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/struct.Variant.html#method.parse">Variant::parse</a>(<span class="prelude-val">None</span>, <a href="#307">v</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			<span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+			</span>(<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(..)) =&gt; <a class="self" href="#303">self</a>.<a href="#282-296">lua_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(|v| <a href="#309">v</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#309">v</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">into</a>())),
+			<span class="attr">#[cfg(feature = <span class="string">"spa-json"</span>)]
+			</span>(<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(json)) =&gt; <a href="../../wireplumber/auto/spa_json/struct.SpaJson.html#method.from_string">SpaJson::from_string</a>(<a href="#311">json</a>).<a href="../../wireplumber/auto/spa_json/struct.SpaJson.html#method.parse_variant">parse_variant</a>().<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map_err">map_err</a>(<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into">Into::into</a>).<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.map">map</a>(<span class="prelude-val">Some</span>),
+			(<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(..)) =&gt; <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">"spa-json or lua feature is required to convert JSON to Variant"</span>),
 		}
 	}
 }

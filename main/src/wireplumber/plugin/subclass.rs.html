@@ -376,7 +376,7 @@
 	<span class="kw">crate</span>::{
 		core::{<a href="../auto/core.rs.html#8-15">Core</a>, <a href="../auto/object.rs.html#8-15">Object</a>, <a href="../core/subclass.rs.html#9-37">ObjectImpl</a>},
 		plugin::{<a href="../auto/plugin.rs.html#7-14">Plugin</a>, <a href="../auto/flags.rs.html#708-715">PluginFeatures</a>},
-		<a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>,
+		<a href="../lib.rs.html#76">prelude</a>::<span class="kw-2">*</span>,
 		<a href="../auto/transition.rs.html#7-14">util::Transition</a>,
 	},
 	glib::{
@@ -500,7 +500,7 @@
 	}
 
 	<span class="kw">fn </span>plugin_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a> {
-		<a class="self" href="#128">self</a>.<a href="#100">plugin_core</a>().<a href="../core/core.rs.html#84-88">default_context</a>()
+		<a class="self" href="#128">self</a>.<a href="#100">plugin_core</a>().<a href="../core/core.rs.html#86-90">default_context</a>()
 	}
 
 	<span class="kw">fn </span>spawn_local&lt;F: Future&lt;Output = ()&gt; + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) {

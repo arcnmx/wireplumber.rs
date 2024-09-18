@@ -112,6 +112,7 @@
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
 <a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Externally loaded modules
 //!
 //! [Plugins](Plugin) can be provided via
@@ -124,6 +125,7 @@
 //! ```
 //! use wireplumber::plugin::{Plugin, PluginFeatures};
 //!
+//! # #[cfg(feature = "lua")]
 //! # async fn load_lua(core: wireplumber::core::Core) -&gt; wireplumber::Result&lt;()&gt; {
 //! core.load_component("libwireplumber-module-lua-scripting", "module", None)?;
 //! core.load_lua_script("create-item.lua", ())?;

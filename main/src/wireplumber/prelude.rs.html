@@ -71,6 +71,7 @@
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Extension traits
 //!
 //! Wildcard imports give you access to all the goodies:
@@ -121,12 +122,13 @@
 	glib::{
 		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/trait.ErrorDomain.html">error::ErrorDomain</a>,
 		ffi::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gconstpointer.html">gconstpointer</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib_sys/type.gpointer.html">gpointer</a>},
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/macro.gstr.html">gstr</a>,
 		object::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.Cast.html">Cast</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.IsA.html">IsA</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/struct.Object.html">Object</a> <span class="kw">as </span>GObject, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectExt.html">ObjectExt</a> <span class="kw">as </span>GObjectExt, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/object/trait.ObjectType.html">ObjectType</a>},
 		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>,
 		types::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/type.Pointee.html">Pointee</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/type.Pointer.html">Pointer</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/trait.StaticType.html">StaticType</a>},
 		value::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.FromValue.html">FromValue</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/trait.ToValue.html">ToValue</a>},
 		variant::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.FromVariant.html">FromVariant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.StaticVariantType.html">StaticVariantType</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant/trait.ToVariant.html">ToVariant</a>},
-		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">Type</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">Value</a>, <a href="https://docs.rs/glib-macros/0.19.9/glib_macros/derive.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html">VariantClass</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>,
+		<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GStr.html">GStr</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/gstring/struct.GString.html">GString</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/types/struct.Type.html">Type</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/value/struct.Value.html">Value</a>, <a href="https://docs.rs/glib-macros/0.19.9/glib_macros/derive.Variant.html">Variant</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/enums/enum.VariantClass.html">VariantClass</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/variant_type/struct.VariantTy.html">VariantTy</a>,
 	},
 	std::{
 		borrow::{<a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html">Borrow</a>, <a href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html">Cow</a>},
@@ -137,7 +139,7 @@
 		iter::{<a class="self" href="https://doc.rust-lang.org/nightly/core/iter/index.html">self</a>, <a href="https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.FromIterator.html">FromIterator</a>},
 		<a href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html">marker::PhantomData</a>,
 		<a href="https://doc.rust-lang.org/nightly/core/mem/index.html">mem</a>,
-		<a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">ops::Deref</a>,
+		ops::{<a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html">Deref</a>, <a href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.DerefMut.html">DerefMut</a>},
 		<a href="https://doc.rust-lang.org/nightly/core/pin/struct.Pin.html">pin::Pin</a>,
 		ptr::{<a class="self" href="https://doc.rust-lang.org/nightly/core/ptr/index.html">self</a>, <a href="https://doc.rust-lang.org/nightly/core/ptr/non_null/struct.NonNull.html">NonNull</a>},
 		<a href="https://doc.rust-lang.org/nightly/alloc/slice/index.html">slice</a>,

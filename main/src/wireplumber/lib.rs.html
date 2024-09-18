@@ -108,6 +108,8 @@
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
 </pre></div><pre class="rust"><code><span class="attr">#![doc(html_root_url = <span class="string">"https://arcnmx.github.io/wireplumber.rs/v0.1.0/"</span>)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
@@ -179,16 +181,18 @@
 <span class="kw">pub mod </span><a href="error/mod.rs.html#1-72">error</a>;
 <span class="kw">pub mod </span><a href="local/mod.rs.html#1-17">local</a>;
 <span class="kw">pub mod </span><a href="log/mod.rs.html#1-130">log</a>;
-<span class="kw">pub mod </span><a href="lua/mod.rs.html#1-35">lua</a>;
-<span class="kw">pub mod </span><a href="plugin/mod.rs.html#1-114">plugin</a>;
-<span class="kw">pub mod </span><a href="prelude.rs.html#1-73">prelude</a>;
+<span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"lua"</span>)))]
+</span><span class="kw">pub mod </span><a href="lua/mod.rs.html#1-35">lua</a>;
+<span class="kw">pub mod </span><a href="plugin/mod.rs.html#1-115">plugin</a>;
+<span class="kw">pub mod </span><a href="prelude.rs.html#1-74">prelude</a>;
 <span class="kw">pub mod </span><a href="pw/mod.rs.html#1-75">pw</a>;
 <span class="kw">pub mod </span><a href="registry/mod.rs.html#1-143">registry</a>;
 <span class="kw">pub mod </span><a href="session/mod.rs.html#1-142">session</a>;
 <span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"glib-signal"</span>)))]
 </span><span class="kw">pub mod </span><a href="signals.rs.html#1-187">signals</a>;
-<span class="kw">pub mod </span><a href="spa/mod.rs.html#1-50">spa</a>;
+<span class="kw">pub mod </span><a href="spa/mod.rs.html#1-55">spa</a>;
 <span class="kw">pub mod </span><a href="util/mod.rs.html#1-22">util</a>;
 
 <span class="attr">#[cfg(feature = <span class="string">"v0_4_2"</span>)]
@@ -196,7 +200,7 @@
 <span class="attr">#[cfg(feature = <span class="string">"v0_4_10"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/enums.rs.html#774-783"><span class="self">self</span>::session::SiAdapterPortsState</a>;
 <span class="attr">#[cfg(feature = <span class="string">"v0_4_8"</span>)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/spa_json.rs.html#7-16"><span class="self">self</span>::spa::SpaJson</a>;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><a href="auto/spa_json.rs.html#7-16"><span class="self">self</span>::spa::json::SpaJson</a>;
 <span class="attr">#[cfg(feature = <span class="string">"v0_4_11"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::{<a href="auto/enums.rs.html#228-237">dbus::DBusState</a>, <a href="auto/enums.rs.html#536-553">pw::LinkState</a>};
 <span class="doccomment">/// gir needs to know where to find these

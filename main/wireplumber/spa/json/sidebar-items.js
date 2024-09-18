@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["BuildError","ParseError"],"struct":["SpaJson","SpaJsonBuilder","SpaJsonChildSerializer","SpaJsonObjectBuilder","SpaJsonObjectParser","SpaJsonParser","SpaJsonParserRef","SpaJsonPropertySerializer","SpaJsonRef","SpaJsonSerializer"]};

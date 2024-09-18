@@ -173,10 +173,16 @@
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(any(feature = <span class="string">"v0_4_2"</span>))]
 </span><span class="kw">use </span><a href="../auto/flags.rs.html#453-468"><span class="kw">crate</span>::plugin::LookupDirs</a>;
+<span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+</span><span class="kw">use crate</span>::{<a href="../lua/traits.rs.html#6-8">lua::ToLuaTable</a>, <a href="../auto/component_loader.rs.html#6-13">plugin::ComponentLoader</a>};
 <span class="kw">use </span>{
-	<span class="kw">crate</span>::{<a href="../lua/traits.rs.html#6-8">lua::ToLuaTable</a>, <a href="../auto/component_loader.rs.html#6-13">plugin::ComponentLoader</a>, <a href="../lib.rs.html#74">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/core.rs.html#8-15">Core</a>, <a href="../auto/flags.rs.html#105-120">InitFlags</a>, <a href="../auto/properties.rs.html#7-16">Properties</a>},
+	<span class="kw">crate</span>::{<a href="../lib.rs.html#76">prelude</a>::<span class="kw-2">*</span>, <a href="../auto/core.rs.html#8-15">Core</a>, <a href="../auto/flags.rs.html#105-120">InitFlags</a>, <a href="../auto/properties.rs.html#7-16">Properties</a>},
 	glib::{<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html">MainLoop</a>},
 	pipewire_sys::{<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_context.html">pw_context</a>, <a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_core.html">pw_core</a>},
 };
@@ -184,12 +190,12 @@
 <span class="kw">impl </span><a href="../auto/core.rs.html#8-15">Core</a> {
 	<span class="attr">#[doc(alias = <span class="string">"wp_init"</span>)]
 	</span><span class="kw">pub fn </span>init_with_flags(flags: <a href="../auto/flags.rs.html#105-120">InitFlags</a>) {
-		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_init.html">ffi::wp_init</a>(<a href="#11">flags</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()) }
+		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_init.html">ffi::wp_init</a>(<a href="#13">flags</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>()) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_init"</span>)]
 	</span><span class="kw">pub fn </span>init() {
-		<a href="#11-13"><span class="self">Self</span>::init_with_flags</a>(InitFlags::ALL)
+		<a href="#13-15"><span class="self">Self</span>::init_with_flags</a>(InitFlags::ALL)
 	}
 
 	<span class="attr">#[cfg(feature = <span class="string">"v0_4_12"</span>)]
@@ -229,9 +235,9 @@
 	</span><span class="kw">pub fn </span>find_file(dirs: <a href="../auto/flags.rs.html#453-468">LookupDirs</a>, filename: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, subdir: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; {
 		<span class="kw">unsafe </span>{
 			<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_find_file.html">ffi::wp_find_file</a>(
-				<a href="#54">dirs</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>(),
-				<a href="#54">filename</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#54">subdir</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#56">dirs</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>(),
+				<a href="#56">filename</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#56">subdir</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 			))
 		}
 	}
@@ -242,22 +248,22 @@
 	</span><span class="kw">pub fn </span>find_files(dirs: <a href="../auto/flags.rs.html#453-468">LookupDirs</a>, subdir: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;, suffix: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; IntoValueIterator&lt;<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>&gt; {
 		<span class="kw">unsafe </span>{
 			<a href="../util/iterator.rs.html#63-68">IntoValueIterator::with_inner</a>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_new_files_iterator.html">ffi::wp_new_files_iterator</a>(
-				<a href="#67">dirs</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>(),
-				<a href="#67">subdir</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
-				<a href="#67">suffix</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#69">dirs</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.IntoGlib.html#tymethod.into_glib">into_glib</a>(),
+				<a href="#69">subdir</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
+				<a href="#69">suffix</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>,
 			)))
 		}
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_core_clone"</span>)]
 	</span><span class="kw">pub fn </span>clone_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_core_clone.html">ffi::wp_core_clone</a>(<a class="self" href="#78">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)) }
+		<span class="kw">unsafe </span>{ <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/fn.from_glib_full.html">from_glib_full</a>(<a href="../../../wireplumber_sys/sys/fn.wp_core_clone.html">ffi::wp_core_clone</a>(<a class="self" href="#80">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_core_get_g_main_context"</span>)]
 	#[doc(alias = <span class="string">"get_g_main_context"</span>)]
 	</span><span class="kw">pub fn </span>default_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a> {
-		<span class="self"><a href="#84">self</a>
+		<span class="self"><a href="#86">self</a>
 			</span>.<a href="../auto/core.rs.html#41-45">g_main_context</a>()
 			.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.unwrap_or_else">unwrap_or_else</a>(|| <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html#method.ref_thread_default">MainContext::ref_thread_default</a>())
 	}
@@ -265,24 +271,26 @@
 	<span class="attr">#[doc(alias = <span class="string">"wp_core_get_pw_core"</span>)]
 	#[doc(alias = <span class="string">"get_pw_core"</span>)]
 	</span><span class="kw">pub fn </span>pw_core_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span><a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_core.html">pw_core</a> {
-		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_core_get_pw_core.html">ffi::wp_core_get_pw_core</a>(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>) }
+		<span class="kw">unsafe </span>{ <a href="../../../wireplumber_sys/sys/fn.wp_core_get_pw_core.html">ffi::wp_core_get_pw_core</a>(<a class="self" href="#94">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>) }
 	}
 
 	<span class="attr">#[doc(alias = <span class="string">"wp_core_get_pw_context"</span>)]
 	#[doc(alias = <span class="string">"get_pw_context"</span>)]
 	</span><span class="kw">pub fn </span>pw_context_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NonNull&lt;<a href="https://pipewire.pages.freedesktop.org/pipewire-rs/pipewire_sys/bindings/struct.pw_context.html">pw_context</a>&gt; {
-		<span class="kw">unsafe </span>{ <a href="https://doc.rust-lang.org/nightly/core/ptr/non_null/struct.NonNull.html#method.new">NonNull::new</a>(<a href="../../../wireplumber_sys/sys/fn.wp_core_get_pw_context.html">ffi::wp_core_get_pw_context</a>(<a class="self" href="#98">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"pw_context for WpCore"</span>) }
+		<span class="kw">unsafe </span>{ <a href="https://doc.rust-lang.org/nightly/core/ptr/non_null/struct.NonNull.html#method.new">NonNull::new</a>(<a href="../../../wireplumber_sys/sys/fn.wp_core_get_pw_context.html">ffi::wp_core_get_pw_context</a>(<a class="self" href="#100">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">to_glib_none</a>().<span class="number">0</span>)).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.expect">expect</a>(<span class="string">"pw_context for WpCore"</span>) }
 	}
 
-	<span class="attr">#[doc(alias = <span class="string">"wp_core_load_component"</span>)]
+	<span class="attr">#[cfg(feature = <span class="string">"lua"</span>)]
+	#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"lua"</span>)))]
+	#[doc(alias = <span class="string">"wp_core_load_component"</span>)]
 	</span><span class="kw">pub fn </span>load_lua_script&lt;A: <a href="../lua/traits.rs.html#6-8">ToLuaTable</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, script_path: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, args: A) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html">Error</a>&gt; {
-		<span class="kw">let </span>args = <a href="#103">args</a>
+		<span class="kw">let </span>args = <a href="#107">args</a>
 			.<a href="../lua/traits.rs.html#7">to_lua_variant</a>()
-			.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|v| <a href="#106">v</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#106">v</a>.<a href="../lua/variant.rs.html#470-485">into_vardict</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.transpose">transpose</a>())<span class="question-mark">?</span>;
-		<a class="self" href="#103">self</a>.<a href="../auto/core.rs.html#168-175">load_component</a>(
-			<a href="#103">script_path</a>,
+			.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.and_then">and_then</a>(|v| <a href="#110">v</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#110">v</a>.<a href="../lua/variant.rs.html#470-485">into_vardict</a>()).<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.transpose">transpose</a>())<span class="question-mark">?</span>;
+		<a class="self" href="#107">self</a>.<a href="../auto/core.rs.html#168-175">load_component</a>(
+			<a href="#107">script_path</a>,
 			ComponentLoader::TYPE_LUA_SCRIPT,
-			<a href="#104">args</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_ref">as_ref</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#110">v</a>.<a href="../lua/variant.rs.html#317-321">as_variant</a>()),
+			<a href="#108">args</a>.<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.as_ref">as_ref</a>().<a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#method.map">map</a>(|v| <a href="#114">v</a>.<a href="../lua/variant.rs.html#317-321">as_variant</a>()),
 		)
 	}
 
@@ -295,13 +303,13 @@
 
 		<span class="kw">let </span>connect = <a href="../util/futures.rs.html#44-48">signal_once</a>(<span class="kw">match </span>() {
 			<span class="attr">#[cfg(feature = <span class="string">"glib-signal"</span>)]
-			</span>() =&gt; <a class="self" href="#118">self</a>.<a href="../../../glib_signal/trait.ObjectSignalExt.html#tymethod.signal_stream">signal_stream</a>(<span class="self">Self</span>::SIGNAL_CONNECTED),
+			</span>() =&gt; <a class="self" href="#122">self</a>.<a href="../../../glib_signal/trait.ObjectSignalExt.html#tymethod.signal_stream">signal_stream</a>(<span class="self">Self</span>::SIGNAL_CONNECTED),
 			<span class="attr">#[cfg(not(feature = <span class="string">"glib-signal"</span>))]
 			</span>() =&gt; |handler| <span class="self">self</span>.connect_connected(handler),
 		});
 
-		<span class="kw">let </span>res = <span class="kw">match </span><a class="self" href="#118">self</a>.<a href="../auto/core.rs.html#26-30">connect</a>() {
-			<span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#121">connect</a>),
+		<span class="kw">let </span>res = <span class="kw">match </span><a class="self" href="#122">self</a>.<a href="../auto/core.rs.html#26-30">connect</a>() {
+			<span class="bool-val">true </span>=&gt; <span class="prelude-val">Ok</span>(<a href="#125">connect</a>),
 			<span class="bool-val">false </span>=&gt; <span class="prelude-val">Err</span>(<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/error/struct.Error.html#method.new">Error::new</a>(
 				<a href="../auto/enums.rs.html#442">LibraryErrorEnum::OperationFailed</a>,
 				<span class="string">"failed to connect to pipewire"</span>,
@@ -309,33 +317,33 @@
 		};
 
 		<span class="kw">async move </span>{
-			<span class="kw">match </span><a href="#128">res</a> {
-				<span class="prelude-val">Ok</span>(connect) =&gt; <a href="#138">connect</a>.<span class="kw">await</span>,
-				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<a href="#139">e</a>),
+			<span class="kw">match </span><a href="#132">res</a> {
+				<span class="prelude-val">Ok</span>(connect) =&gt; <a href="#142">connect</a>.<span class="kw">await</span>,
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<a href="#143">e</a>),
 			}
 		}
 	}
 
 	<span class="kw">pub fn </span>run&lt;F: FnOnce(<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html">MainContext</a>, <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html">MainLoop</a>, <a href="../auto/core.rs.html#8-15">Core</a>)&gt;(props: <span class="prelude-ty">Option</span>&lt;<a href="../auto/properties.rs.html#7-16">Properties</a>&gt;, setup: F) {
 		<span class="kw">let </span>mainloop = <a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.new">MainLoop::new</a>(<span class="prelude-val">None</span>, <span class="bool-val">false</span>);
-		<span class="kw">let </span>context = <a href="#145">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.context">context</a>();
-		<span class="kw">let </span>core = <a href="#146">context</a>
+		<span class="kw">let </span>context = <a href="#149">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.context">context</a>();
+		<span class="kw">let </span>core = <a href="#150">context</a>
 			.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_context/struct.MainContext.html#method.with_thread_default">with_thread_default</a>(|| {
-				<span class="kw">let </span>core = <a href="../auto/core.rs.html#19-23">Core::new</a>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><a href="#146">context</a>), <a href="#144">props</a>);
-				<span class="kw">let </span>_disconnect_handler = <a href="#149">core</a>.<a href="../auto/core.rs.html#278-288">connect_disconnected</a>({
-					<span class="kw">let </span>mainloop = <a href="#145">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
-					<span class="kw">move </span>|_core| <a href="#151">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
+				<span class="kw">let </span>core = <a href="../auto/core.rs.html#19-23">Core::new</a>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><a href="#150">context</a>), <a href="#148">props</a>);
+				<span class="kw">let </span>_disconnect_handler = <a href="#153">core</a>.<a href="../auto/core.rs.html#278-288">connect_disconnected</a>({
+					<span class="kw">let </span>mainloop = <a href="#149">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>();
+					<span class="kw">move </span>|_core| <a href="#155">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.quit">quit</a>()
 				});
 
-				<a href="#144">setup</a>(<span class="kw-2">&amp;</span><a href="#146">context</a>, <a href="#145">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>(), <a href="#149">core</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>());
+				<a href="#148">setup</a>(<span class="kw-2">&amp;</span><a href="#150">context</a>, <a href="#149">mainloop</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>(), <a href="#153">core</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">clone</a>());
 
-				<a href="#145">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.run">run</a>();
+				<a href="#149">mainloop</a>.<a href="https://gtk-rs.org/gtk-rs-core/stable/0.19/docs/glib/auto/main_loop/struct.MainLoop.html#method.run">run</a>();
 
-				<a href="#149">core</a>
+				<a href="#153">core</a>
 			})
 			.<a href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html#method.unwrap">unwrap</a>();
 
-		<a href="#147">core</a>.<a href="../auto/core.rs.html#33-37">disconnect</a>();
+		<a href="#151">core</a>.<a href="../auto/core.rs.html#33-37">disconnect</a>();
 	}
 }
 
